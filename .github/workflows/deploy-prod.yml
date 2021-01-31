@@ -36,14 +36,7 @@ jobs:
         run: |
           export SERVERLESS_ACCESS_KEY="$AWS_ACCESS_KEY_ID"
 
-      - name: Deploy Web
+      - name: Deploy
         run: |
-          cd ChumsWeb
-          npm install
-          npm run deploy-prod
-      
-      - name: Deploy App
-        run: |
-          cd ChumsApp
           npm install
           npm run deploy-prod
