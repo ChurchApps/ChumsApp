@@ -1,0 +1,33 @@
+on:
+  pull_request:
+    branches: [master]
+
+name: Run Tests
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: |
+          cd ChumsApp
+          npm install
+
+      - name: Test
+        timeout-minutes: 10
+        run: |
+          cd CypressTests
+          npm install
+          npm test

@@ -1,0 +1,19 @@
+name: E2E Test
+
+on:
+  push:
+  pull_request:
+    - master
+
+jobs:
+  cypress_tests:
+    name: Run Cypress Tests
+    runs-on: ubuntu_latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies in webApp
+        run: npm install
+        working-directory: ./ChumsApp
+
