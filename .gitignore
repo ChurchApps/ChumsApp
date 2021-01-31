@@ -1,3 +1,6 @@
+*.bat
+/build
+
 # Logs
 logs
 *.log
