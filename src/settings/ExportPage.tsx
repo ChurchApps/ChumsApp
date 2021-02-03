@@ -1,7 +1,7 @@
 import React from "react";
 import { DisplayBox, InputBox, ApiHelper, UploadHelper, ArrayHelper, PersonHelper } from "./components";
 import { Row, Col } from "react-bootstrap";
-import { ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportHelper, ImportPersonInterface, ImportGroupInterface, ImportGroupServiceTimeInterface, ImportGroupMemberInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportSessionInterface, ImportVisitInterface, ImportVisitSessionInterface } from "../helpers/ImportHelper";
+import { ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportHelper, ImportPersonInterface, ImportGroupInterface, ImportGroupServiceTimeInterface, ImportGroupMemberInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportSessionInterface, ImportVisitInterface, ImportVisitSessionInterface, ImportFormsInterface } from "../helpers/ImportHelper";
 import Papa from "papaparse";
 
 
@@ -29,6 +29,8 @@ export const ExportPage = () => {
     var visits: ImportVisitInterface[] = [];
     var visitSessions: ImportVisitSessionInterface[] = [];
 
+    var forms: ImportFormsInterface[] = [];
+
     const setProgress = (name: string, status: string) => {
         progress[name] = status;
         setStatus({ ...progress });
@@ -42,7 +44,7 @@ export const ExportPage = () => {
     const getExportSteps = () => {
         if (!exporting) return null;
         else {
-            var steps = ["Campuses/Services/Times", "People", "Photos", "Groups", "Group Members", "Donations", "Attendance", "Compressing"];
+            var steps = ["Campuses/Services/Times", "People", "Photos", "Groups", "Group Members", "Donations", "Attendance", "Forms", "Compressing"];
             var stepsHtml: JSX.Element[] = [];
             steps.forEach((s) => stepsHtml.push(getProgress(s)));
 
@@ -123,6 +125,23 @@ export const ExportPage = () => {
             });
         });
         setProgress("Groups", "complete");
+        return Papa.unparse(data);
+    }
+
+    const getForms = async () => {
+        setProgress("Forms", "runnings");
+        
+        forms = await ApiHelper.get("/forms", "MembershipApi");
+        var data: any[] = [];
+        forms.forEach((f) => {
+            var row = {
+                importKey: f.id,
+                name: f.name,
+                contentType: f.contentType
+            }
+            data.push(row)
+        })
+        setProgress("Forms", "complete");
         return Papa.unparse(data);
     }
 
@@ -212,6 +231,7 @@ export const ExportPage = () => {
         files.push({ name: "groupmembers.csv", contents: await getGroupMembers() });
         files.push({ name: "donations.csv", contents: await getDonations() });
         files.push({ name: "attendance.csv", contents: await getAttendance() });
+        files.push({ name: "forms.csv", contents: await getForms() });
         setProgress("Compressing", "running");
         UploadHelper.zipFiles(files, "export.zip");
         setProgress("Compressing", "complete");

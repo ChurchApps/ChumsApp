@@ -1,6 +1,6 @@
 import React from "react";
 import { DisplayBox, ImportHelper, ApiHelper, InputBox } from ".";
-import { ImportGroupInterface, ImportGroupMemberInterface, ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportGroupServiceTimeInterface, ImportPersonInterface, ImportHouseholdInterface, ImportVisitInterface, ImportSessionInterface, ImportVisitSessionInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportDataInterface } from "../../helpers/ImportHelper";
+import { ImportGroupInterface, ImportGroupMemberInterface, ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportGroupServiceTimeInterface, ImportPersonInterface, ImportHouseholdInterface, ImportVisitInterface, ImportSessionInterface, ImportVisitSessionInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportDataInterface, ImportFormsInterface } from "../../helpers/ImportHelper";
 
 interface Props { importData: ImportDataInterface }
 
@@ -185,6 +185,16 @@ export const ImportStatus: React.FC<Props> = (props) => {
         return tmpPeople;
     }
 
+    const importForms = async () => {
+        var tmpForms: ImportFormsInterface[] = [...props.importData.forms];
+
+        await runImport("Forms", async () => {
+            await ApiHelper.post("/forms", tmpForms, "MembershipApi").then(result => {
+                for (let i = 0; i < result.length; i++) tmpForms[i].id = result[i].id;
+            })
+        })
+    }
+
     const handleImport = async () => {
         if (window.confirm("Are you sure you wish to load the list of people below into your database?")) {
             setImporting(true);
@@ -193,6 +203,7 @@ export const ImportStatus: React.FC<Props> = (props) => {
             var tmpGroups = await importGroups(tmpPeople, campusResult.serviceTimes);
             await importAttendance(tmpPeople, tmpGroups, campusResult.services, campusResult.serviceTimes);
             await importDonations(tmpPeople);
+            await importForms();
         }
     }
 
@@ -208,7 +219,7 @@ export const ImportStatus: React.FC<Props> = (props) => {
     }
 
     if (importing) {
-        var steps = ["Campuses", "Services", "Service Times", "Households", "People", "Groups", "Group Service Times", "Group Members", "Group Sessions", "Visits", "Group Attendance", "Funds", "Donation Batches", "Donations", "Donation Funds"];
+        var steps = ["Campuses", "Services", "Service Times", "Households", "People", "Groups", "Group Service Times", "Group Members", "Group Sessions", "Visits", "Group Attendance", "Funds", "Donation Batches", "Donations", "Donation Funds", "Forms"];
         var stepsHtml: JSX.Element[] = [];
         steps.forEach((s) => stepsHtml.push(getProgress(s)));
         return (
@@ -226,6 +237,7 @@ export const ImportStatus: React.FC<Props> = (props) => {
                 <li>{props.importData.groups.length} groups</li>
                 <li>{props.importData.visitSessions.length} attendance records</li>
                 <li>{props.importData.fundDonations.length} donations</li>
+                <li>{props.importData.forms.length} forms</li>
             </ul>
                 Please carefully review the preview data and if it looks good, click the Import button to start the import process.
         </InputBox>

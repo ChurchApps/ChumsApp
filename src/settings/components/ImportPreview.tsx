@@ -122,6 +122,23 @@ export const ImportPreview: React.FC<Props> = (props) => {
         }
     }
 
+    const getFormsTable = () => {
+        if (props.importData.forms.length === 0) return null;
+        else {
+            var rows = [];
+            for (let i = 0, totalForms = props.importData.forms.length; i < totalForms; i++) {
+                var form = props.importData.forms[i];
+                rows.push(<tr key={i}><td>{form.name}</td><td>{form.contentType}</td></tr>)
+            }
+            return (
+                <Table>
+                    <thead><tr><th>Name</th><th>Content Type</th></tr></thead>
+                    <tbody>{rows}</tbody>
+                </Table>
+            )
+        }
+    }
+
     if (props.importData.people.length === 0) return (<Alert variant="info"><b>Important:</b> This tool is designed to help you load your initial data into the system.  Using it after you have been using Chums for a while is risky and may result in duplicated data.</Alert>);
     else return (<>
         <h2>Preview</h2>
@@ -130,6 +147,7 @@ export const ImportPreview: React.FC<Props> = (props) => {
             <Tab eventKey="groups" title="Groups"><DisplayBox headerIcon="" headerText="Groups">{getGroupsTable()}</DisplayBox></Tab>
             <Tab eventKey="attendance" title="Attendance"><DisplayBox headerIcon="" headerText="Attendance">{getAttendanceTable()}</DisplayBox></Tab>
             <Tab eventKey="donations" title="Donations"><DisplayBox headerIcon="" headerText="Donations">{getDonationsTable()}</DisplayBox></Tab>
+            <Tab eventKey="forms" title="Forms"><DisplayBox headerIcon="" headerText="Forms">{getFormsTable()}</DisplayBox></Tab>
         </Tabs>
     </>);
 }
