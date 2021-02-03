@@ -8,8 +8,6 @@ interface Props { importData: ImportDataInterface, triggerRender: number }
 export const ImportPreview: React.FC<Props> = (props) => {
     let x: number;
     let y: number;
-    let z: number;
-    let p: number;
     let d: number;
     let f: number;
     let n: number;
@@ -52,35 +50,34 @@ export const ImportPreview: React.FC<Props> = (props) => {
         else {
             var rows = [];
             for (let i = 0; i < props.importData.campuses.length; i++) {
-
                 var campus = props.importData.campuses[i];
                 var filteredServices = ImportHelper.getServices(props.importData.services, campus.importKey);
+                
                 for (var j = 0; j < filteredServices.length; j++) {
                     var service = filteredServices[j];
                     var filteredTimes = ImportHelper.getServiceTimes(props.importData.serviceTimes, service.importKey);
+                    
                     for (var k = 0; k < filteredTimes.length; k++) {
-                        p = k + 1;
                         var time = filteredTimes[k];
                         var filteredGroupServiceTimes = ImportHelper.getGroupServiceTimes(props.importData.groupServiceTimes, time.importKey);
+ 
                         for (var l = 0; l < filteredGroupServiceTimes.length; l++) {
-                            let r = k + 1;
-                            let loop = y + p + l + 1;
-                            z = r * loop;
-                            var group = ImportHelper.getByImportKey(props.importData.groups, props.importData.groupServiceTimes[l].groupKey) as ImportGroupInterface;
-                            rows.push(<tr key={z}><td>{props.importData.campuses[i].name}</td><td>{props.importData.services[j].name}</td><td>{props.importData.serviceTimes[k].name}</td><td>{group.categoryName}</td><td>{group.name}</td><td>{getMemberCount(group.importKey)}</td></tr>);
+                            var group = ImportHelper.getByImportKey(props.importData.groups, filteredGroupServiceTimes[l].groupKey) as ImportGroupInterface;
+
+                            rows.push(<tr key={group.name + Math.random()}><td>{campus.name}</td><td>{service.name}</td><td>{time.name}</td><td>{group.categoryName}</td><td>{group.name}</td><td>{getMemberCount(group.importKey)}</td></tr>);
                         }
                     }
                 }
             }
-            for (let i = 0; i < props.importData.groups.length; i++) {
-                d = y + i + 1;
 
+            for (let i = 0; i < props.importData.groups.length; i++) {
                 var groupServiceTimes = ImportHelper.getGroupServiceTimesByGroupKey(props.importData.groupServiceTimes, props.importData.groups[i].importKey);
-                if (groupServiceTimes.length === 0) rows.push(<tr key={d}><td></td><td></td><td></td><td>{props.importData.groups[i].categoryName}</td><td>{props.importData.groups[i].name}</td><td>{getMemberCount(props.importData.groups[i].importKey)}</td></tr>);
+                if (groupServiceTimes.length === 0) rows.push(<tr key={Math.random() * 10000}><td></td><td></td><td></td><td>{props.importData.groups[i].categoryName}</td><td>{props.importData.groups[i].name}</td><td>{getMemberCount(props.importData.groups[i].importKey)}</td></tr>);
             }
+
             return (<Table size="sm">
                 <thead><tr><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th><th>Members</th></tr></thead>
-                <tbody >{rows}</tbody>
+                <tbody>{rows}</tbody>
             </Table >);
         }
     }
@@ -124,8 +121,6 @@ export const ImportPreview: React.FC<Props> = (props) => {
             </Table>);
         }
     }
-
-
 
     if (props.importData.people.length === 0) return (<Alert variant="info"><b>Important:</b> This tool is designed to help you load your initial data into the system.  Using it after you have been using Chums for a while is risky and may result in duplicated data.</Alert>);
     else return (<>

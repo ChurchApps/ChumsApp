@@ -115,9 +115,9 @@ export const ExportPage = () => {
                 var row = {
                     importKey: g.id,
                     serviceTimeKey: serviceTimeId,
-                    category: g.categoryName,
+                    categoryName: g.categoryName,
                     name: g.name,
-                    trackAttendance: g.trackAttendance
+                    trackAttendance: g.trackAttendance ? "TRUE" : "FALSE"
                 }
                 data.push(row);
             });
