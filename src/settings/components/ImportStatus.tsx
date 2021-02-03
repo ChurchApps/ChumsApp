@@ -1,6 +1,6 @@
 import React from "react";
 import { DisplayBox, ImportHelper, ApiHelper, InputBox } from ".";
-import { ImportGroupInterface, ImportGroupMemberInterface, ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportGroupServiceTimeInterface, ImportPersonInterface, ImportHouseholdInterface, ImportVisitInterface, ImportSessionInterface, ImportVisitSessionInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportDataInterface, ImportFormsInterface } from "../../helpers/ImportHelper";
+import { ImportGroupInterface, ImportGroupMemberInterface, ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportGroupServiceTimeInterface, ImportPersonInterface, ImportHouseholdInterface, ImportVisitInterface, ImportSessionInterface, ImportVisitSessionInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportDataInterface, ImportFormsInterface, ImportQuestionsInterface } from "../../helpers/ImportHelper";
 
 interface Props { importData: ImportDataInterface }
 
@@ -195,6 +195,16 @@ export const ImportStatus: React.FC<Props> = (props) => {
         })
     }
 
+    const importQuestions = async () => {
+        var tmpQuestions: ImportQuestionsInterface[] = [...props.importData.questions];
+       
+        await runImport("Questions", async () => {
+            await ApiHelper.post("/questions", tmpQuestions, "MembershipApi").then(result => {
+                for (let i = 0; i < result.length; i++) tmpQuestions[i].id = result[i].id;
+            })
+        })
+    }
+
     const handleImport = async () => {
         if (window.confirm("Are you sure you wish to load the list of people below into your database?")) {
             setImporting(true);
@@ -204,6 +214,7 @@ export const ImportStatus: React.FC<Props> = (props) => {
             await importAttendance(tmpPeople, tmpGroups, campusResult.services, campusResult.serviceTimes);
             await importDonations(tmpPeople);
             await importForms();
+            await importQuestions();
         }
     }
 
@@ -219,7 +230,7 @@ export const ImportStatus: React.FC<Props> = (props) => {
     }
 
     if (importing) {
-        var steps = ["Campuses", "Services", "Service Times", "Households", "People", "Groups", "Group Service Times", "Group Members", "Group Sessions", "Visits", "Group Attendance", "Funds", "Donation Batches", "Donations", "Donation Funds", "Forms"];
+        var steps = ["Campuses", "Services", "Service Times", "Households", "People", "Groups", "Group Service Times", "Group Members", "Group Sessions", "Visits", "Group Attendance", "Funds", "Donation Batches", "Donations", "Donation Funds", "Forms", "Questions"];
         var stepsHtml: JSX.Element[] = [];
         steps.forEach((s) => stepsHtml.push(getProgress(s)));
         return (

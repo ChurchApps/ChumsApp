@@ -7,6 +7,7 @@ import {
     , ImportVisitInterface, ImportSessionInterface, ImportVisitSessionInterface
     , ImportDonationBatchInterface, ImportFundInterface, ImportDonationInterface
     , ImportFundDonationInterface, ImportDataInterface, ImportFormsInterface
+    , ImportQuestionsInterface
 } from "../helpers/ImportHelper";
 import { Row, Col } from "react-bootstrap";
 import AdmZip from "adm-zip";
@@ -34,6 +35,7 @@ export const ImportPage = () => {
     const [fundDonations, setFundDonations] = React.useState<ImportFundDonationInterface[]>([]);
 
     const [forms, setForms] = React.useState<ImportFormsInterface[]>([]);
+    const [questions, setQuestions] = React.useState<ImportQuestionsInterface[]>([]);
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -58,15 +60,24 @@ export const ImportPage = () => {
         loadAttendance(UploadHelper.readZippedCsv(files, "attendance.csv"), tmpServiceTimes);
         loadDonations(UploadHelper.readZippedCsv(files, "donations.csv"));
         loadForms(UploadHelper.readZippedCsv(files, "forms.csv"));
+        loadQuestions(UploadHelper.readZippedCsv(files, "questions.csv"));
+    }
+
+    const loadQuestions = (data: any) => {
+        var questions: ImportQuestionsInterface[] = [];
+
+        for (let i = 0; i < data.length; i++) if (data[i].title !== undefined) {
+            questions.push(data[i]);
+        }
+
+        setQuestions(questions);
     }
 
     const loadForms = (data: any) => {
         var forms: ImportFormsInterface[] = [];
 
         for (let i = 0; i < data.length; i++) if (data[i].name !== undefined) {
-            var f = data[i];
-            console.log('f: ', f);
-            forms.push(f);
+            forms.push(data[i]);
         }
 
         setForms(forms);
@@ -201,7 +212,7 @@ export const ImportPage = () => {
             groupServiceTimes: groupServiceTimes, groups: groups, groupMembers: groupMembers,
             visits: visits, sessions: sessions, visitSessions: visitSessions,
             batches: batches, donations: donations, funds: funds, fundDonations: fundDonations,
-            forms: forms
+            forms: forms, questions: questions
         } as ImportDataInterface
 
     }
