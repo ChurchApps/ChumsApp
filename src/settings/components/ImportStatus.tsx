@@ -187,18 +187,18 @@ export const ImportStatus: React.FC<Props> = (props) => {
 
     const importForms = async () => {
         var tmpForms: ImportFormsInterface[] = [...props.importData.forms];
+        var tmpQuestions: ImportQuestionsInterface[] = [...props.importData.questions];
 
         await runImport("Forms", async () => {
             await ApiHelper.post("/forms", tmpForms, "MembershipApi").then(result => {
                 for (let i = 0; i < result.length; i++) tmpForms[i].id = result[i].id;
             })
         })
-    }
 
-    const importQuestions = async () => {
-        var tmpQuestions: ImportQuestionsInterface[] = [...props.importData.questions];
-       
         await runImport("Questions", async () => {
+            tmpQuestions.forEach(q => {
+                q.formId = ImportHelper.getByImportKey(tmpForms, q.formKey).id;
+            })
             await ApiHelper.post("/questions", tmpQuestions, "MembershipApi").then(result => {
                 for (let i = 0; i < result.length; i++) tmpQuestions[i].id = result[i].id;
             })
@@ -214,7 +214,6 @@ export const ImportStatus: React.FC<Props> = (props) => {
             await importAttendance(tmpPeople, tmpGroups, campusResult.services, campusResult.serviceTimes);
             await importDonations(tmpPeople);
             await importForms();
-            await importQuestions();
         }
     }
 

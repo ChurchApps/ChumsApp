@@ -153,8 +153,7 @@ export const ExportPage = () => {
         var data: any[] = [];
         questions.forEach(q => {
             var row = {
-                importKey: q.id,
-                formId: q.formId,
+                formKey: q.formId,
                 fieldType: q.fieldType,
                 title: q.title
             }

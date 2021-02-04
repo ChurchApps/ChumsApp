@@ -21,7 +21,7 @@ export interface ImportDonationInterface extends DonationInterface { importKey: 
 export interface ImportFundDonationInterface extends FundDonationInterface { fundKey: string, donationKey: string }
 
 export interface ImportFormsInterface extends FormInterface { importKey: string }
-export interface ImportQuestionsInterface extends QuestionInterface { importKey: string }
+export interface ImportQuestionsInterface extends QuestionInterface { formKey: string }
 
 export interface ImportDataInterface {
     people: ImportPersonInterface[],
