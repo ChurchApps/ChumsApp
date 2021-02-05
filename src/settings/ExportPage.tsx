@@ -1,7 +1,7 @@
 import React from "react";
 import { DisplayBox, InputBox, ApiHelper, UploadHelper, ArrayHelper, PersonHelper } from "./components";
 import { Row, Col } from "react-bootstrap";
-import { ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportHelper, ImportPersonInterface, ImportGroupInterface, ImportGroupServiceTimeInterface, ImportGroupMemberInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportSessionInterface, ImportVisitInterface, ImportVisitSessionInterface, ImportFormsInterface, ImportQuestionsInterface } from "../helpers/ImportHelper";
+import { ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportHelper, ImportPersonInterface, ImportGroupInterface, ImportGroupServiceTimeInterface, ImportGroupMemberInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportSessionInterface, ImportVisitInterface, ImportVisitSessionInterface, ImportFormsInterface, ImportQuestionsInterface, ImportFormSubmissions, ImportAnswerInterface } from "../helpers/ImportHelper";
 import Papa from "papaparse";
 
 
@@ -31,6 +31,8 @@ export const ExportPage = () => {
 
     var forms: ImportFormsInterface[] = [];
     var questions: ImportQuestionsInterface[] = [];
+    var formSubmissions: ImportFormSubmissions[] = [];
+    var answers: ImportAnswerInterface[] = [];
 
     const setProgress = (name: string, status: string) => {
         progress[name] = status;
@@ -45,7 +47,7 @@ export const ExportPage = () => {
     const getExportSteps = () => {
         if (!exporting) return null;
         else {
-            var steps = ["Campuses/Services/Times", "People", "Photos", "Groups", "Group Members", "Donations", "Attendance", "Forms", "Questions", "Compressing"];
+            var steps = ["Campuses/Services/Times", "People", "Photos", "Groups", "Group Members", "Donations", "Attendance", "Forms", "Questions", "Answers", "Form Submissions", "Compressing"];
             var stepsHtml: JSX.Element[] = [];
             steps.forEach((s) => stepsHtml.push(getProgress(s)));
 
@@ -153,6 +155,7 @@ export const ExportPage = () => {
         var data: any[] = [];
         questions.forEach(q => {
             var row = {
+                questionKey: q.id,
                 formKey: q.formId,
                 fieldType: q.fieldType,
                 title: q.title
@@ -161,6 +164,45 @@ export const ExportPage = () => {
         })
 
         setProgress("Questions", "complete");
+        return Papa.unparse(data);
+    }
+
+    const getFormSubmissions = async () => {
+        setProgress("Form Submissions", "running");
+
+        formSubmissions = await ApiHelper.get("/formsubmissions", "MembershipApi");
+
+        var data: any[] = [];
+        formSubmissions.forEach(fs => {
+            var row = {
+                formKey: fs.formId,
+                personKey: fs.contentId,
+                contentType: fs.contentType
+            }
+            data.push(row);
+        })
+
+        setProgress("Form Submissions", "complete");
+        return Papa.unparse(data);
+    }
+
+    const getAnswers = async () => {
+        setProgress("Answers", "running");
+
+        answers = await ApiHelper.get("/answers", "MembershipApi");
+
+        var data: any[] = [];
+
+        answers.forEach(a => {
+            var row = {
+                questionKey: a.questionId,
+                formSubmissionKey: a.formSubmissionId,
+                value: a.value
+            }
+            data.push(row);
+        })
+
+        setProgress("Answers", "complete");
         return Papa.unparse(data);
     }
 
@@ -252,6 +294,8 @@ export const ExportPage = () => {
         files.push({ name: "attendance.csv", contents: await getAttendance() });
         files.push({ name: "forms.csv", contents: await getForms() });
         files.push({ name: "questions.csv", contents: await getQuestions() });
+        files.push({ name: "formSubmissions.csv", contents: await getFormSubmissions() });
+        files.push({ name: "answers.csv", contents: await getAnswers() });
         setProgress("Compressing", "running");
         UploadHelper.zipFiles(files, "export.zip");
         setProgress("Compressing", "complete");

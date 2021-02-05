@@ -7,7 +7,7 @@ import {
     , ImportVisitInterface, ImportSessionInterface, ImportVisitSessionInterface
     , ImportDonationBatchInterface, ImportFundInterface, ImportDonationInterface
     , ImportFundDonationInterface, ImportDataInterface, ImportFormsInterface
-    , ImportQuestionsInterface
+    , ImportQuestionsInterface, ImportFormSubmissions, ImportAnswerInterface
 } from "../helpers/ImportHelper";
 import { Row, Col } from "react-bootstrap";
 import AdmZip from "adm-zip";
@@ -36,6 +36,8 @@ export const ImportPage = () => {
 
     const [forms, setForms] = React.useState<ImportFormsInterface[]>([]);
     const [questions, setQuestions] = React.useState<ImportQuestionsInterface[]>([]);
+    const [formSubmissions, setFormSubmissions] = React.useState<ImportFormSubmissions[]>([]);
+    const [answers, setAnswers] = React.useState<ImportAnswerInterface[]>([]);
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -61,6 +63,28 @@ export const ImportPage = () => {
         loadDonations(UploadHelper.readZippedCsv(files, "donations.csv"));
         loadForms(UploadHelper.readZippedCsv(files, "forms.csv"));
         loadQuestions(UploadHelper.readZippedCsv(files, "questions.csv"));
+        loadFormSubmissions(UploadHelper.readZippedCsv(files, "formSubmissions.csv"));
+        loadAnswers(UploadHelper.readZippedCsv(files, "answers.csv"));
+    }
+
+    const loadAnswers = (data: any) => {
+        var answers: ImportAnswerInterface[] = [];
+
+        for (let i = 0; i < data.length; i++) if (data[i].value !== undefined) {
+            answers.push(data[i]);
+        }
+
+        setAnswers(answers);
+    }
+
+    const loadFormSubmissions = (data: any) => {
+        var formSubmissions: ImportFormSubmissions[] = [];
+
+        for(let i = 0; i < data.length; i++) if (data[i].personKey !== undefined) {
+            formSubmissions.push(data[i]);
+        }
+
+        setFormSubmissions(formSubmissions);
     }
 
     const loadQuestions = (data: any) => {
@@ -212,7 +236,7 @@ export const ImportPage = () => {
             groupServiceTimes: groupServiceTimes, groups: groups, groupMembers: groupMembers,
             visits: visits, sessions: sessions, visitSessions: visitSessions,
             batches: batches, donations: donations, funds: funds, fundDonations: fundDonations,
-            forms: forms, questions: questions
+            forms: forms, questions: questions, formSubmissions: formSubmissions, answers: answers
         } as ImportDataInterface
 
     }

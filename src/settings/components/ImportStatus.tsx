@@ -1,6 +1,6 @@
 import React from "react";
 import { DisplayBox, ImportHelper, ApiHelper, InputBox } from ".";
-import { ImportGroupInterface, ImportGroupMemberInterface, ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportGroupServiceTimeInterface, ImportPersonInterface, ImportHouseholdInterface, ImportVisitInterface, ImportSessionInterface, ImportVisitSessionInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportDataInterface, ImportFormsInterface, ImportQuestionsInterface } from "../../helpers/ImportHelper";
+import { ImportGroupInterface, ImportGroupMemberInterface, ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportGroupServiceTimeInterface, ImportPersonInterface, ImportHouseholdInterface, ImportVisitInterface, ImportSessionInterface, ImportVisitSessionInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportDataInterface, ImportFormsInterface, ImportQuestionsInterface, ImportFormSubmissions, ImportAnswerInterface } from "../../helpers/ImportHelper";
 
 interface Props { importData: ImportDataInterface }
 
@@ -185,9 +185,11 @@ export const ImportStatus: React.FC<Props> = (props) => {
         return tmpPeople;
     }
 
-    const importForms = async () => {
+    const importForms = async (tmpPeople: ImportPersonInterface[]) => {
         var tmpForms: ImportFormsInterface[] = [...props.importData.forms];
         var tmpQuestions: ImportQuestionsInterface[] = [...props.importData.questions];
+        var tmpFormSubmissions: ImportFormSubmissions[] = [...props.importData.formSubmissions];
+        var tmpAnswers: ImportAnswerInterface[] = [...props.importData.answers];
 
         await runImport("Forms", async () => {
             await ApiHelper.post("/forms", tmpForms, "MembershipApi").then(result => {
@@ -203,6 +205,35 @@ export const ImportStatus: React.FC<Props> = (props) => {
                 for (let i = 0; i < result.length; i++) tmpQuestions[i].id = result[i].id;
             })
         })
+
+        await runImport("Form Submissions", async () => {
+            tmpFormSubmissions.forEach(fs => {
+                var formId = ImportHelper.getByImportKey(tmpForms, fs.formKey).id;;
+                fs.formId = formId;
+                fs.contentId = ImportHelper.getByImportKey(tmpPeople, fs.personKey).id;
+                
+                var questions: any[] = [];
+                var answers: any[] = [];
+                tmpQuestions.forEach(q => {
+                    if (q.formId === formId) {
+                        questions.push(q);
+
+                        tmpAnswers.forEach(a => {
+                            if (a.questionKey === q.questionKey) {
+                                answers.push({questionId: q.id, value: a.value});
+                            }
+                        })
+                        
+                    }
+                })
+                fs.questions = questions;
+                fs.answers = answers;
+            })
+            await ApiHelper.post("/formsubmissions", tmpFormSubmissions, "MembershipApi").then(result => {
+                for (let i = 0; i < result.length; i++) tmpFormSubmissions[i].id = result[i].id;
+            })
+        })
+
     }
 
     const handleImport = async () => {
@@ -213,7 +244,7 @@ export const ImportStatus: React.FC<Props> = (props) => {
             var tmpGroups = await importGroups(tmpPeople, campusResult.serviceTimes);
             await importAttendance(tmpPeople, tmpGroups, campusResult.services, campusResult.serviceTimes);
             await importDonations(tmpPeople);
-            await importForms();
+            await importForms(tmpPeople);
         }
     }
 
@@ -229,7 +260,7 @@ export const ImportStatus: React.FC<Props> = (props) => {
     }
 
     if (importing) {
-        var steps = ["Campuses", "Services", "Service Times", "Households", "People", "Groups", "Group Service Times", "Group Members", "Group Sessions", "Visits", "Group Attendance", "Funds", "Donation Batches", "Donations", "Donation Funds", "Forms", "Questions"];
+        var steps = ["Campuses", "Services", "Service Times", "Households", "People", "Groups", "Group Service Times", "Group Members", "Group Sessions", "Visits", "Group Attendance", "Funds", "Donation Batches", "Donations", "Donation Funds", "Forms", "Questions", "Form Submissions"];
         var stepsHtml: JSX.Element[] = [];
         steps.forEach((s) => stepsHtml.push(getProgress(s)));
         return (
