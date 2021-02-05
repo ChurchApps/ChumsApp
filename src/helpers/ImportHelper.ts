@@ -1,4 +1,4 @@
-import { PersonInterface, CampusInterface, ServiceInterface, ServiceTimeInterface, GroupInterface, GroupMemberInterface, GroupServiceTimeInterface, HouseholdInterface, SessionInterface, VisitInterface, VisitSessionInterface, DonationBatchInterface, FundInterface, DonationInterface, FundDonationInterface, ArrayHelper } from './';
+import { PersonInterface, CampusInterface, ServiceInterface, ServiceTimeInterface, GroupInterface, GroupMemberInterface, GroupServiceTimeInterface, HouseholdInterface, SessionInterface, VisitInterface, VisitSessionInterface, DonationBatchInterface, FundInterface, DonationInterface, FundDonationInterface, ArrayHelper, FormInterface, QuestionInterface, FormSubmissionInterface, AnswerInterface } from './';
 
 export interface ImportCampusInterface extends CampusInterface { importKey: string }
 export interface ImportServiceInterface extends ServiceInterface { importKey: string, campusKey?: string }
@@ -20,6 +20,11 @@ export interface ImportFundInterface extends FundInterface { importKey: string }
 export interface ImportDonationInterface extends DonationInterface { importKey: string, batchKey: string, personKey: string }
 export interface ImportFundDonationInterface extends FundDonationInterface { fundKey: string, donationKey: string }
 
+export interface ImportFormsInterface extends FormInterface { importKey: string }
+export interface ImportQuestionsInterface extends QuestionInterface { formKey: string, questionKey: string }
+export interface ImportFormSubmissions extends FormSubmissionInterface { formKey: string, personKey: string }
+export interface ImportAnswerInterface extends AnswerInterface { questionKey: string, formSubmissionKey: string }
+
 export interface ImportDataInterface {
     people: ImportPersonInterface[],
     households: ImportHouseholdInterface[]
@@ -36,6 +41,10 @@ export interface ImportDataInterface {
     donations: ImportDonationInterface[]
     funds: ImportFundInterface[]
     fundDonations: ImportFundDonationInterface[]
+    forms: ImportFormsInterface[]
+    questions: ImportQuestionsInterface[]
+    formSubmissions: ImportFormSubmissions[]
+    answers: ImportAnswerInterface[]
 }
 
 
