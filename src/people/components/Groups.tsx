@@ -21,6 +21,6 @@ export const Groups: React.FC<Props> = (props) => {
     } else {
         items.push(<tr key="0"><td>Not part of any group yet.</td></tr>);
     }
-		console.log('items', items);
+
     return <DisplayBox headerIcon="fas fa-list" headerText="Groups"><Table size="sm"><tbody>{items}</tbody></Table></DisplayBox>
 }
