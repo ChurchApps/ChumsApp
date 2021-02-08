@@ -45,9 +45,9 @@ export const PersonView: React.FC<Props> = (props) => {
 
         if (p.contactInfo.address1 !== undefined && p.contactInfo.address1 !== "") {
             var lines = [];
-            lines.push(<div>{p.contactInfo.address1}</div>);
-            if (p.contactInfo.address2 !== "") lines.push(<div>{p.contactInfo.address2}</div>);
-            lines.push(<div>{p.contactInfo.city}, {p.contactInfo.state} {p.contactInfo.zip}</div>);
+            lines.push(<div key="address1">{p.contactInfo.address1}</div>);
+            if (p.contactInfo.address2 !== "") lines.push(<div key="address2">{p.contactInfo.address2}</div>);
+            lines.push(<div key="contactInfo">{p.contactInfo.city}, {p.contactInfo.state} {p.contactInfo.zip}</div>);
 
             contactMethods.push(<tr key="address"><td><label>{homeLabel}</label></td><td><i className="fas fa-map-marker-alt"></i></td><td>{lines}</td></tr>);
         }

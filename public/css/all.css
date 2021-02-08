@@ -537,3 +537,7 @@ label .description {
   position: unset;
   margin-right: 0.5rem;
 }
+
+.alert p {
+  margin-bottom: 0;
+}
