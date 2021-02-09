@@ -35,6 +35,7 @@ function alreadyLoggedIn() {
 
         routes.map(route => {
             cy.visitAndVerify(route)
+            return null;
         })
     })
 }
@@ -44,6 +45,7 @@ function notLoggedIn() {
         routes.map(route => {
             cy.visit(route);
             cy.verifyRoute("/login");
+            return null;
         })
     })
 }
