@@ -50,6 +50,7 @@ function deleteGroup() {
     };
 
     cy.createGroup(group);
+    cy.visit('/groups');
     cy.containsClick(group.name);
     cy.get("h1").should("exist").should("contain", group.name);
     cy.get("[data-cy=edit-button]").should("exist").click();
@@ -68,6 +69,7 @@ function trackAttendanceAndTabs() {
     };
 
     cy.createGroup(group);
+    cy.visit('/groups')
     cy.containsClick(group.name);
     cy.get("h1").should("exist").should("contain", group.name);
     cy.get("[data-cy=edit-button]").should("exist").click();
@@ -89,7 +91,7 @@ function addRemovePersonGroup() {
 
     cy.createGroup(group);
     cy.createPeople(people);
-
+    cy.visit('/groups');
     cy.containsClick(group.name);
     cy.get("h1").should("exist").should("contain", group.name);
     cy.enterText("[data-cy=person-search-bar]", people[0].first);
