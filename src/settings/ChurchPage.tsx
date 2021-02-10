@@ -71,7 +71,7 @@ export const ChurchPage: React.FC = () => {
 
   React.useEffect(loadData, []);
 
-  if (!UserHelper.checkAccess(Permissions.attendanceApi.admin.editSettings)) {
+  if (!UserHelper.checkAccess(Permissions.attendanceApi.settings.edit)) {
     return <></>;
   }
   return (
