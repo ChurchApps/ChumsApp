@@ -43,7 +43,7 @@ export const Notes: React.FC<Props> = (props) => {
       <Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} />
     );
 
-  var canEdit = UserHelper.checkAccess(Permissions.membershipApi.people.editNotes);
+  var canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
   if (!canEdit)
     return (
       <DisplayBox headerIcon="far fa-sticky-note" headerText="Notes">
