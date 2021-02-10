@@ -1,5 +1,3 @@
-const api_domain = Cypress.env("CHUMS_API_URL");
-
 Cypress.Commands.add("login", () => {
   cy.request({
     method: "POST",
@@ -15,6 +13,7 @@ Cypress.Commands.add("login", () => {
     .then((churches) => {
       const apis = churches[0].apis;
       apis.map((api) => {
+        cy.setCookie(api.keyName, api.jwt)
         if (api.keyName === "AccessApi") {
           cy.setCookie("jwt", api.jwt);
         }
@@ -25,7 +24,7 @@ Cypress.Commands.add("login", () => {
 Cypress.Commands.add("createPeople", (people) => {
   const housePayload = people.map((p) => ({ name: p.last }));
 
-  cy.makeApiCall("POST", "/households", housePayload).then((houseHolds) => {
+  cy.makeApiCall("POST", "/households", "MembershipApi", housePayload).then((houseHolds) => {
     let peoplePayload = houseHolds.map((h) => {
       const person = people.filter((p) => p.last === h.name);
       return {
@@ -34,16 +33,16 @@ Cypress.Commands.add("createPeople", (people) => {
       };
     });
 
-    cy.makeApiCall("POST", "/people", peoplePayload);
+    cy.makeApiCall("POST", "/people", "MembershipApi", peoplePayload);
   });
 });
 
 Cypress.Commands.add("createGroup", (group) => {
-  cy.makeApiCall("POST", "/groups", [group]);
+  cy.makeApiCall("POST", "/groups", "MembershipApi", [group]);
 });
 
 Cypress.Commands.add("getPerson", (personId) => {
-  cy.makeApiCall("GET", `/people/${personId}`);
+  cy.makeApiCall("GET", `/people/${personId}`, "MembershipApi");
 });
 
 Cypress.Commands.add("getToken", () => {
@@ -51,28 +50,28 @@ Cypress.Commands.add("getToken", () => {
 });
 
 Cypress.Commands.add("makeApiCall", (method, route, apiName, payload) => {
-  const api_domain = getDomain(apiName);
+  const { domain, token } = getApiInfo(apiName);
 
   cy.request({
     method,
-    url: api_domain + route,
-    headers: { Authorization: `Bearer ${getCookie("jwt")}` },
+    url: domain + route,
+    headers: { Authorization: `Bearer ${token}` },
     [payload ? "body" : null]: payload,
   }).its("body");
 });
 
 Cypress.Commands.add("makeAsyncApiCall", (method, route, apiName, payload) => {
-  const api_domain = getDomain(apiName);
+  const { domain, token } = getApiInfo(apiName);
   
   const requestOptions = {
     method: method,
     headers: {
-      Authorization: "Bearer " + getCookie("jwt"),
+      Authorization: "Bearer " + token,
       "Content-Type": "application/json",
     },
   };
   if (payload !== undefined && payload !== null) requestOptions.body = payload;
-  return fetch(api_domain + route, requestOptions).then(async (response) => {
+  return fetch(domain + route, requestOptions).then(async (response) => {
     try {
       return await response.json();
     } catch {
@@ -102,13 +101,13 @@ function getCookie(cname) {
   return "";
 }
 
-export function getDomain(apiName) {
-  const apis = [
-    { name: "AccessApi", domain: Cypress.env("ACCESS_API") },
-    { name: "AttendanceApi", domain: Cypress.env("ATTENDANCE_API") },
-    { name: "GivingApi", domain: Cypress.env("GIVING_API") },
-    { name: "MembershipApi", domain: Cypress.env("MEMBERSHIP_API") }
-  ];
+export function getApiInfo(apiName) {
+  const domains = {
+    AccessApi: Cypress.env("ACCESS_API"),
+    AttendanceApi: Cypress.env("ATTENDANCE_API"),
+    GivingApi: Cypress.env("GIVING_API"),
+    MembershipApi: Cypress.env("MEMBERSHIP_API")
+  }
 
-  return apis.filter(a => a.name === apiName)[0].domain;
+  return { domain: domains[apiName], token: getCookie(apiName) }
 }
