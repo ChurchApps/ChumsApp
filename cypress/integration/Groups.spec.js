@@ -50,6 +50,7 @@ function deleteGroup() {
     };
 
     cy.createGroup(group);
+    cy.visit('/groups');
     cy.containsClick(group.name);
     cy.get("h1").should("exist").should("contain", group.name);
     cy.get("[data-cy=edit-button]").should("exist").click();
@@ -68,6 +69,7 @@ function trackAttendanceAndTabs() {
     };
 
     cy.createGroup(group);
+    cy.visit('/groups')
     cy.containsClick(group.name);
     cy.get("h1").should("exist").should("contain", group.name);
     cy.get("[data-cy=edit-button]").should("exist").click();
@@ -75,7 +77,7 @@ function trackAttendanceAndTabs() {
     cy.get("[data-cy=select-attendance-type]").should("exist").select("Yes").should("have.value", "true");
     cy.get("[data-cy=save-button]").click();
     cy.containsAll("[data-cy=group-details-box]", ["Yes"]);
-    cy.containsAll("[data-cy=group-tabs]", ["Members", "Sessions", "Trends"]);
+    cy.containsAll("[data-cy=group-tabs]", ["Members", "Sessions"]);
   });
 }
 
@@ -89,7 +91,7 @@ function addRemovePersonGroup() {
 
     cy.createGroup(group);
     cy.createPeople(people);
-
+    cy.visit('/groups');
     cy.containsClick(group.name);
     cy.get("h1").should("exist").should("contain", group.name);
     cy.enterText("[data-cy=person-search-bar]", people[0].first);
@@ -149,10 +151,6 @@ function addPersonToSession() {
     cy.containsAll("[data-cy=available-group-members]", [fullPersonName]);
     cy.get("[data-cy=add-member-to-session]").should("exist").click();
     cy.containsAll("[data-cy=group-session-box] > [data-cy=content]", [fullPersonName]);
-
-    // check chart presence
-    cy.get("[data-cy=trends-tab]").should("exist").click();
-    cy.get("#column-chart-cy").should("exist");
   });
 }
 
@@ -164,7 +162,7 @@ function createTestData(people, group, service) {
       const personId = people[0].id;
 
       cy.getPerson(personId).then((person) => {
-        cy.makeApiCall("POST", "/groupmembers", [{ groupId, personId, person }])
+        cy.makeApiCall("POST", "/groupmembers", "MembershipApi", [{ groupId, personId, person }])
       });
     });
   });
@@ -172,10 +170,10 @@ function createTestData(people, group, service) {
   cy.makeApiCall("POST", "/campuses", "AttendanceApi", [{ id: 0, name: service.campusName }]).then((res) => {
     const campusId = res[0].id;
 
-    cy.makeApiCall("POST", "/services", [{ id: 0, campusId, name: service.name }]).then((services) => {
+    cy.makeApiCall("POST", "/services", "AttendanceApi", [{ id: 0, campusId, name: service.name }]).then((services) => {
       const serviceId = services[0].id;
 
-      cy.makeApiCall("POST", "/servicetimes", [{ id: 0, serviceId, name: service.time }])
+      cy.makeApiCall("POST", "/servicetimes", "AttendanceApi", [{ id: 0, serviceId, name: service.time }])
     });
   });
 }

@@ -56,6 +56,7 @@ function addANote() {
   const noteText = 'This is a test note'
   it("Add a Note to person", () => {
     cy.createPeople([{ first, last }]);
+    cy.visit('/people');
     cy.containsClick(`${first} ${last}`);
     cy.enterText("[data-cy=enter-note]", noteText);
     cy.get("[data-cy=save-button]").should('exist').click();
@@ -70,6 +71,7 @@ function removePerson() {
 
   it("Remove person", () => {
     cy.createPeople([{ first, last }]);
+    cy.visit('/people');
     cy.containsClick(`${first} ${last}`);
     cy.containsAll("[data-cy=household-box]", [ `${first} ${last}` ]);
     cy.get("[data-cy=edit-person-button]").should('exist').click();
@@ -97,6 +99,7 @@ function editPerson() {
 
   it("Edit and verify Person", () => {
     cy.createPeople([{ first, last }]);
+    cy.visit('/people');
     cy.containsClick(`${first} ${last}`);
     cy.containsAll("[data-cy=household-box]", [ `${first} ${last}` ]);
     cy.get("[data-cy=edit-person-button]").should('exist').click();
@@ -126,6 +129,7 @@ function changeHouseholdName() {
     const first = "Beth", last = "Hart", newHouseHoldName = "Harmon";
 
     cy.createPeople([{ first, last}]);
+    cy.visit('/people');
     cy.containsClick(`${first} ${last}`);
     cy.containsAll("[data-cy=household-box]", [ `${first} ${last}` ]);
     cy.get("[data-cy=edit-button]").should('exist').click();
@@ -148,7 +152,7 @@ function createTestData(people, contactInfo) {
             ...contactInfo[index]
           }
         }
-        cy.makeApiCall("POST", "/people", [newPerson]);
+        cy.makeApiCall("POST", "/people", "MembershipApi", [newPerson]);
       });      
     })
 
@@ -175,7 +179,7 @@ function noAddressChange() {
   ]
   it("Add member to household without address change", () => {
     createTestData(people, contactInfo);
-
+    cy.visit('/people');
     const person1 = people[0], person2 = people[1];
 
     cy.containsClick(`${person2.first} ${person2.last}`);
@@ -214,7 +218,7 @@ function withAddressChange() {
   ]
   it("Add member to household with its address changed", () => {
     createTestData(people, contactInfo);
-
+    cy.visit("/people");
     const person1 = people[0], person2 = people[1];
 
     cy.containsClick(`${person1.first} ${person1.last}`);
@@ -259,7 +263,7 @@ function mergePerson() {
   it("Merge person records", () => {
 
     createTestData(people, contactInfo)
-
+    cy.visit("/people");
     const person1 = people[0], person2 = people[1];
 
     cy.containsClick(`${person1.first} ${person1.last}`);
@@ -285,7 +289,7 @@ function mergePerson() {
 
 function createTestDataWithMembers(peopleToCreate, contactInfo) {
   cy.createPeople(peopleToCreate).then(() => {
-    cy.makeApiCall("GET", "/people/search?term=").then(people => {
+    cy.makeApiCall("GET", "/people/search?term=", "MembershipApi").then(people => {
       let members = [];
       const [person1, person2] = peopleToCreate;
       people.map(p => {
@@ -303,8 +307,8 @@ function createTestDataWithMembers(peopleToCreate, contactInfo) {
             }
         }
       })
-      cy.makeApiCall("POST", "/people", updatehouseHoldMembers);
-      cy.makeApiCall("POST", `/people/household/${members[0].householdId}`, updatehouseHoldMembers);
+      cy.makeApiCall("POST", "/people", "MembershipApi", updatehouseHoldMembers);
+      cy.makeApiCall("POST", `/people/household/${members[0].householdId}`, "MembershipApi", updatehouseHoldMembers);
     })
 
   });
@@ -337,6 +341,7 @@ function changeAddressOfAllHousehold() {
 
   it("Change Address of all household members on changing address of one member", () => {
     createTestDataWithMembers(people, contactInfo);
+    cy.visit('/people');
     const person1 = people[0], person2 = people[1];
 
     cy.containsClick(`${person1.first} ${person1.last}`);
@@ -382,6 +387,7 @@ function changeAddressOfOnlyCurrentPerson() {
 
   it("Verify change in address causes change in address only for that person", () => {
     createTestDataWithMembers(people, contactInfo);
+    cy.visit("/people");
     const person1 = people[0], person2 = people[1];
 
     cy.containsClick(`${person1.first} ${person1.last}`);

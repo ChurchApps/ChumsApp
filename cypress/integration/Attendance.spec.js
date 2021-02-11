@@ -22,7 +22,7 @@ function cleanupAttendance() {
   cy.clearServiceTimes();
 
   // remove groups & its related sessions
-  cy.makeApiCall("GET", "/groups").then(groups => {
+  cy.makeApiCall("GET", "/groups", "MembershipApi").then(groups => {
     groups.map((group) => { removeGroupAndItsSessions(group) })
   });
 }
@@ -41,17 +41,17 @@ function createTestData(campusServiceTime, groups, people) {
 }
 
 function createTestGroup(group, personToAdd, index) {
-  cy.makeApiCall("POST", "/groups", [group]).then((data) => {
+  cy.makeApiCall("POST", "/groups", "MembershipApi", [group]).then((data) => {
     const groupId = data[0].id;
 
-    cy.makeApiCall("GET", "/servicetimes").then((servicesTimes) => {
+    cy.makeApiCall("GET", "/servicetimes", "AttendanceApi").then((servicesTimes) => {
       const serviceTimeId = servicesTimes[index].id;
 
-      cy.makeApiCall("POST", "/groupservicetimes", [{ groupId: groupId, serviceTimeId: serviceTimeId, }]);
-      cy.makeApiCall("GET", `/groups/${groupId}`).then((group) => {
+      cy.makeApiCall("POST", "/groupservicetimes", "AttendanceApi", [{ groupId: groupId, serviceTimeId: serviceTimeId, }]);
+      cy.makeApiCall("GET", `/groups/${groupId}`, "MembershipApi").then((group) => {
         const updatedGroup = { ...group, trackAttendance: true, };
 
-        cy.makeApiCall("POST", "/groups", [updatedGroup]);
+        cy.makeApiCall("POST", "/groups", "MembershipApi", [updatedGroup]);
         createSessionAndAddPerson(groupId, personToAdd);
       });
     });
@@ -129,11 +129,11 @@ function verifyGroupsAttendance() {
     // apply & test filters
     [0, 1].map((e, index) => {
       const selection = {
-        'select-campus': campusServiceTime[index].campus_name,
-        'select-service': campusServiceTime[index].service_name,
-        'select-service-time': `${campusServiceTime[index].campus_name} - ${campusServiceTime[index].service_name} - ${campusServiceTime[index].service_time}`,
-        'select-category': groups[index].categoryName,
-        'select-group': groups[index].name
+        'select-campusId': campusServiceTime[index].campus_name,
+        'select-serviceId': campusServiceTime[index].service_name,
+        'select-serviceTimeId': campusServiceTime[index].service_time,
+        'select-categoryName': groups[index].categoryName,
+        'select-groupId': groups[index].name
       }
 
       const keys = Object.keys(selection);
@@ -159,8 +159,8 @@ function addEditService() {
     const BEFORE_SERVICE_NAME = "Inter Galactic";
     const AFTER_SERVICE_NAME = "Inter Solar";
 
-    cy.makeApiCall("POST", "/campuses", [{ id: 0, name: CAMPUS_NAME }]);
-
+    cy.makeApiCall("POST", "/campuses", "AttendanceApi", [{ id: 0, name: CAMPUS_NAME }]);
+    cy.visit('/attendance');
     cy.containsAll("[data-cy=attendance-groups] > [data-cy=content]", [CAMPUS_NAME])
     cy.get("[data-cy=add-button]").should("exist").click();
     cy.get("[data-cy=add-service]").should("exist").click();
@@ -187,9 +187,9 @@ function addEditServiceTime() {
     const BEFORE_SERVICE_TIME = "11:00";
     const AFTER_SERVICE_TIME = "7:00";
 
-    cy.makeApiCall("POST", "/campuses", [{ id: 0, name: CAMPUS_NAME }]).then(res => {
+    cy.makeApiCall("POST", "/campuses", "AttendanceApi", [{ id: 0, name: CAMPUS_NAME }]).then(res => {
       const campus = res[0];
-      cy.makeApiCall("POST", "/services", [{ id: 0, campusId: campus.id, name: SERVICE_NAME }]);
+      cy.makeApiCall("POST", "/services", "AttendanceApi", [{ id: 0, campusId: campus.id, name: SERVICE_NAME }]);
     });
 
     cy.visit("/attendance");
@@ -210,26 +210,26 @@ function addEditServiceTime() {
 
 
 function createCompleteService({ campus_name, service_name, service_time }) {
-  cy.makeApiCall("POST", "/campuses", [{ id: 0, name: campus_name }]).then((res) => {
+  cy.makeApiCall("POST", "/campuses", "AttendanceApi", [{ id: 0, name: campus_name }]).then((res) => {
     const campus = res[0];
-    cy.makeApiCall("POST", "/services", [{ id: 0, campusId: campus.id, name: service_name }]).then((services) => {
+    cy.makeApiCall("POST", "/services", "AttendanceApi", [{ id: 0, campusId: campus.id, name: service_name }]).then((services) => {
       const service = services[0];
-      cy.makeApiCall("POST", "/servicetimes", [{ id: 0, serviceId: service.id, name: service_time }]);
+      cy.makeApiCall("POST", "/servicetimes", "AttendanceApi", [{ id: 0, serviceId: service.id, name: service_time }]);
     });
   });
 }
 
 function createSessionAndAddPerson(groupId, personToAdd) {
-  cy.makeApiCall("GET", `/groupservicetimes?groupId=${groupId}`).then((gsts) => {
+  cy.makeApiCall("GET", `/groupservicetimes?groupId=${groupId}`, "AttendanceApi").then((gsts) => {
     const serviceTimeId = gsts[0].serviceTimeId;
 
-    cy.makeApiCall("POST", `/sessions`, [{ groupId, serviceTimeId, sessionDate: new Date() }]).then((sessions) => {
+    cy.makeApiCall("POST", `/sessions`, "AttendanceApi", [{ groupId, serviceTimeId, sessionDate: new Date() }]).then((sessions) => {
       const sessionsId = sessions[0].id;
 
-      cy.makeApiCall("GET", "/people/search?term=").then((people) => {
+      cy.makeApiCall("GET", "/people/search?term=", "MembershipApi").then((people) => {
         people.map((person) => {
           if (person.name.first === personToAdd.first) {
-            cy.makeApiCall("POST", "/visitsessions/log", { checkinTime: new Date(), personId: person.id, visitSessions: [{ sessionId: sessionsId }] });
+            cy.makeApiCall("POST", "/visitsessions/log", "AttendanceApi", { checkinTime: new Date(), personId: person.id, visitSessions: [{ sessionId: sessionsId }] });
           }
         });
       });
@@ -253,5 +253,5 @@ function removeGroupAndItsSessions(group) {
   //     }
   //   );
   // });
-  cy.makeAsyncApiCall("DELETE", `/groups/${group.id}`);
+  cy.makeAsyncApiCall("DELETE", `/groups/${group.id}`, "MembershipApi");
 }
