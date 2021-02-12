@@ -1,5 +1,4 @@
 context('Forms', () => {
-    Cypress.Cookies.defaults({ whitelist: ['.AspNetCore.Session', '.AspNetCore.Cookies'] })
     cy.on('window:confirm', (str) => { return true; });
     it('Log into App', () => { cy.login(); });
     it('Load forms tab', () => { cy.loadTab('mainFormsTab', 'formsBox'); });

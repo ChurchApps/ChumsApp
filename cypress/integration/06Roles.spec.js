@@ -1,5 +1,4 @@
 context('Roles', () => {
-    Cypress.Cookies.defaults({ whitelist: ['.AspNetCore.Session', '.AspNetCore.Cookies'] })
     cy.on('window:confirm', (str) => { return true; });
     it('Log into app', () => { cy.login() });
     prepWork();
