@@ -41,6 +41,10 @@ Cypress.Commands.add("createGroup", (group) => {
   cy.makeApiCall("POST", "/groups", "MembershipApi", [group]);
 });
 
+Cypress.Commands.add("createForms", (forms) => {
+  cy.makeApiCall("POST", '/forms', "MembershipApi", forms)
+})
+
 Cypress.Commands.add("getPerson", (personId) => {
   cy.makeApiCall("GET", `/people/${personId}`, "MembershipApi");
 });
