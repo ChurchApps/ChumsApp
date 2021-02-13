@@ -23,3 +23,15 @@ Cypress.Commands.add("clearServiceTimes", () => {
     serviceTimes.map((st) => { cy.makeAsyncApiCall("DELETE", `/servicetimes/${st.id}`, "AttendanceApi") });
   });
 })
+
+Cypress.Commands.add("clearForms", () => {
+  cy.makeApiCall("GET", "/forms", "MembershipApi").then(forms => {
+    forms.map((f) => { cy.makeAsyncApiCall("DELETE", `/forms/${f.id}`, "MembershipApi") });
+  })
+})
+
+Cypress.Commands.add("clearQuestions", () => {
+  cy.makeApiCall("GET", "/questions", "MembershipApi").then(questions => {
+    questions.map(q => { cy.makeAsyncApiCall("DELETE", `/questions/${q.id}`, "MembershipApi") }); 
+  })
+})

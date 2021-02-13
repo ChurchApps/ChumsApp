@@ -41,7 +41,7 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
         if (question.fieldType === "Multiple Choice") return (<ChoicesEdit question={question} updatedFunction={handleChoicesUpdated} />)
         else return (<div className="form-group">
             <label>Placeholder (optional)</label>
-            <input type="text" className="form-control" name="placeholder" value={question.placeholder} onChange={handleChange} />
+            <input type="text" className="form-control" data-cy="placeholder" name="placeholder" value={question.placeholder} onChange={handleChange} />
         </div>);
     }
 
@@ -53,7 +53,7 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
         <InputBox id="questionBox" headerIcon="fas fa-question" headerText="Edit Question" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(props.questionId > 0) ? handleDelete : undefined} >
             <div className="form-group">
                 <label>Question Type</label>
-                <select className="form-control" name="fieldType" value={question.fieldType} onChange={handleChange} onKeyDown={handleKeyDown} >
+                <select className="form-control" data-cy="type" name="fieldType" value={question.fieldType} onChange={handleChange} onKeyDown={handleKeyDown} >
                     <option value="Textbox">Textbox</option>
                     <option value="Whole Number">Whole Number</option>
                     <option value="Decimal">Decimal</option>
@@ -67,11 +67,11 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
             </div>
             <div className="form-group">
                 <label>Title</label>
-                <input type="text" className="form-control" name="title" value={question.title} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <input type="text" className="form-control" data-cy="title" name="title" value={question.title} onChange={handleChange} onKeyDown={handleKeyDown} />
             </div>
             <div className="form-group">
                 <label>Description (optional)</label>
-                <input type="text" className="form-control" name="description" value={question.description} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <input type="text" className="form-control" data-cy="description" name="description" value={question.description} onChange={handleChange} onKeyDown={handleKeyDown} />
             </div>
             {getTypeSpecific()}
         </InputBox>
