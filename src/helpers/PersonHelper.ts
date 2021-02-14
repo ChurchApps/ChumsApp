@@ -3,7 +3,7 @@ import { EnvironmentHelper } from '../components';
 
 export class PersonHelper {
     static getPhotoUrl(person: PersonInterface) {
-        return EnvironmentHelper.ContentRoot + person?.photo;
+        return person?.photo ? EnvironmentHelper.ContentRoot + person?.photo : '/images/sample-profile.png';
     }
 
     static getAge(birthdate: Date): string {
