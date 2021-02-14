@@ -15,10 +15,13 @@ export const Login: React.FC = (props: any) => {
   };
 
   const successCallback = () => {
-    ApiHelper.get("/people/userid/" + UserHelper.user.id, "MembershipApi").then((person: PersonInterface) => {
-      UserHelper.person = person;
-      context.setUserName(UserHelper.currentChurch.id.toString());
-    });
+      ApiHelper.get("/people/userid/" + UserHelper.user.id, "MembershipApi").then((person: PersonInterface) => {
+        UserHelper.person = person;
+        context.setUserName(UserHelper.currentChurch.id.toString());
+      }).catch(err => {
+        context.setUserName(UserHelper.currentChurch.id.toString());
+        console.log(err)
+      });    
   }
 
   const context = React.useContext(UserContext);
