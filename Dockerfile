@@ -8,11 +8,11 @@ WORKDIR /app
 
 COPY ./package.json . 
 
+RUN git submodule init && git submodule update
+
 RUN npm install
 
 COPY . .
-
-RUN git submodule init && git submodule update
 
 CMD npm start
 
