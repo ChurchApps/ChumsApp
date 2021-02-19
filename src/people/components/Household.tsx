@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox, PersonHelper, ApiHelper, HouseholdEdit, UserHelper, PersonInterface, Permissions } from ".";
+import { DisplayBox, PersonHelper, ApiHelper, HouseholdEdit, UserHelper, PersonInterface, Permissions, UniqueIdHelper } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
@@ -14,7 +14,7 @@ export const Household: React.FC<Props> = (props) => {
     const handleEdit = () => setMode("edit");
     const handleUpdate = () => { loadData(); loadMembers(); setMode("display"); }
     const loadData = () => {
-        if (props.person?.householdId > 0) ApiHelper.get("/households/" + props?.person.householdId, "MembershipApi").then(data => setHousehold(data));
+        if (!UniqueIdHelper.isMissing(props.person?.householdId)) ApiHelper.get("/households/" + props?.person.householdId, "MembershipApi").then(data => setHousehold(data));
     }
     const loadMembers = () => { if (household != null) { ApiHelper.get("/people/household/" + household.id, "MembershipApi").then(data => setMembers(data)); } }
     const getEditFunction = () => { return (UserHelper.checkAccess(Permissions.membershipApi.households.edit)) ? handleEdit : null }

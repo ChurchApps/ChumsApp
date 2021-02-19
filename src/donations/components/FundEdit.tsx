@@ -3,7 +3,7 @@ import { ApiHelper, InputBox, FundInterface } from ".";
 
 interface Props { fund: FundInterface, updatedFunction: () => void }
 export const FundEdit: React.FC<Props> = (props) => {
-    const [fund, setFund] = React.useState<FundInterface>({ id: 0, name: "" });
+    const [fund, setFund] = React.useState<FundInterface>({ id: "", name: "" });
     const handleCancel = () => props.updatedFunction();
     const handleSave = () => ApiHelper.post("/funds", [fund], "GivingApi").then(() => props.updatedFunction());
     const handleDelete = () => {
@@ -23,7 +23,7 @@ export const FundEdit: React.FC<Props> = (props) => {
 
 
     return (
-        <InputBox id="fundsBox" headerIcon="fas fa-hand-holding-usd" headerText="Edit Fund" cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === 0) ? undefined : handleDelete} >
+        <InputBox id="fundsBox" headerIcon="fas fa-hand-holding-usd" headerText="Edit Fund" cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete} >
             <div className="form-group">
                 <label>Name</label>
                 <input name="fundName" type="text" className="form-control" value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />

@@ -73,10 +73,10 @@ export const AttendanceTrend = () => {
 
     const initFilter = async () => {
         const promises: Promise<any>[] = [];
-        promises.push(ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => { data.unshift({ id: 0, name: "Any" }); setCampuses(data); }));
-        promises.push(ApiHelper.get("/services", "AttendanceApi").then((data: ServiceInterface[]) => { data.unshift({ id: 0, name: "Any" }); setServices(data); }));
-        promises.push(ApiHelper.get("/servicetimes", "AttendanceApi").then((data: ServiceTimeInterface[]) => { data.unshift({ id: 0, name: "Any" }); setServiceTimes(data); }));
-        promises.push(ApiHelper.get("/groups", "MembershipApi").then((data: GroupInterface[]) => { data.unshift({ id: 0, name: "Any" }); setGroups(data); }));
+        promises.push(ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => { data.unshift({ id: "", name: "Any" }); setCampuses(data); }));
+        promises.push(ApiHelper.get("/services", "AttendanceApi").then((data: ServiceInterface[]) => { data.unshift({ id: "", name: "Any" }); setServices(data); }));
+        promises.push(ApiHelper.get("/servicetimes", "AttendanceApi").then((data: ServiceTimeInterface[]) => { data.unshift({ id: "", name: "Any" }); setServiceTimes(data); }));
+        promises.push(ApiHelper.get("/groups", "MembershipApi").then((data: GroupInterface[]) => { data.unshift({ id: "", name: "Any" }); setGroups(data); }));
         await Promise.all(promises).then(() => {
             setUpdateFilter(true);
         });

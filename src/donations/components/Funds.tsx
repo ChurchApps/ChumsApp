@@ -11,7 +11,7 @@ export const Funds: React.FC = () => {
     const loadData = () => ApiHelper.get("/funds", "GivingApi").then(data => { if (isSubscribed.current) { setFunds(data) } });
     const handleFundUpdated = () => { loadData(); setEditFund(null); }
     const getEditSection = () => {
-        if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditFund({ id: 0, name: "" }) }}><i className="fas fa-plus"></i></a>);
+        if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditFund({ id: "", name: "" }) }}><i className="fas fa-plus"></i></a>);
         else return null;
     }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, GroupInterface, GroupServiceTimeInterface, InputBox, ErrorMessages, SessionInterface, Helper } from ".";
+import { ApiHelper, GroupInterface, GroupServiceTimeInterface, InputBox, ErrorMessages, SessionInterface, Helper, UniqueIdHelper } from ".";
 
 interface Props { group: GroupInterface, updatedFunction: (session: SessionInterface) => void }
 
@@ -7,7 +7,7 @@ export const SessionAdd: React.FC<Props> = (props) => {
     const [errors, setErrors] = React.useState<string[]>([]);
     const [sessionDate, setSessionDate] = React.useState<Date>(new Date());
     const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
-    const [serviceTimeId, setServiceTimeId] = React.useState(0);
+    const [serviceTimeId, setServiceTimeId] = React.useState("");
 
     const handleCancel = () => { props.updatedFunction(null); }
     const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
@@ -21,7 +21,7 @@ export const SessionAdd: React.FC<Props> = (props) => {
     const handleSave = () => {
         if (validate()) {
             var s = { groupId: props.group.id, sessionDate: sessionDate } as SessionInterface
-            if (serviceTimeId > 0) s.serviceTimeId = serviceTimeId;
+            if (!UniqueIdHelper.isMissing(serviceTimeId)) s.serviceTimeId = serviceTimeId;
             ApiHelper.post("/sessions", [s], "AttendanceApi").then(() => {
                 props.updatedFunction(s);
                 setSessionDate(new Date());
@@ -48,7 +48,7 @@ export const SessionAdd: React.FC<Props> = (props) => {
             return (
                 <div className="form-group">
                     <label>Service Time</label>
-                    <select className="form-control" value={serviceTimeId} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setServiceTimeId(parseInt(e.currentTarget.value)) }} onKeyDown={handleKeyDown} >{options}</select>
+                    <select className="form-control" value={serviceTimeId} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setServiceTimeId(e.currentTarget.value) }} onKeyDown={handleKeyDown} >{options}</select>
                 </div>);
         }
     }

@@ -1,8 +1,8 @@
 import React from "react";
-import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, FundDonations, Helper, PersonInterface } from ".";
+import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, FundDonations, Helper, PersonInterface, UniqueIdHelper } from ".";
 
 
-interface Props { donationId: number, batchId: number, funds: FundInterface[], updatedFunction: () => void }
+interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
 
 export const DonationEdit: React.FC<Props> = (props) => {
 
@@ -26,7 +26,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
 
     const handleCancel = () => { props.updatedFunction(); }
     const handleDelete = () => { ApiHelper.delete("/donations/" + donation.id, "GivingApi").then(() => { props.updatedFunction() }); }
-    const getDeleteFunction = () => { return (props.donationId > 0) ? handleDelete : undefined; }
+    const getDeleteFunction = () => { return (UniqueIdHelper.isMissing(props.donationId)) ? handleDelete : undefined; }
 
     const handleSave = () => {
         ApiHelper.post("/donations", [donation], "GivingApi").then(data => {
@@ -36,7 +36,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
             for (let i = fDonations.length - 1; i >= 0; i--) {
                 var fd = fundDonations[i];
                 if (fd.amount === undefined || fd.amount === 0) {
-                    if (fd.id > 0) promises.push(ApiHelper.delete("/funddonations/" + fd.id, "GivingApi"));
+                    if (!UniqueIdHelper.isMissing(fd.id)) promises.push(ApiHelper.delete("/funddonations/" + fd.id, "GivingApi"));
                     fDonations.splice(i, 1);
                 } else (fd.donationId = id)
             }
@@ -46,7 +46,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
     }
 
     const loadData = () => {
-        if (props.donationId === 0) {
+        if (UniqueIdHelper.isMissing(props.donationId)) {
             setDonation({ donationDate: new Date(), batchId: props.batchId, amount: 0, method: "Cash" });
             var fd: FundDonationInterface = { amount: 0, fundId: props.funds[0].id };
             setFundDonations([fd]);
@@ -59,7 +59,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
 
 
     const populatePerson = async (data: DonationInterface) => {
-        if (data.personId > 0) data.person = await ApiHelper.get("/people/" + data.personId.toString(), "MembershipApi");
+        if (!UniqueIdHelper.isMissing(data.personId)) data.person = await ApiHelper.get("/people/" + data.personId.toString(), "MembershipApi");
         setDonation(data);
     }
 
@@ -76,7 +76,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
         var d = { ...donation } as DonationInterface;
         if (p === null) {
             d.person = null;
-            d.personId = 0;
+            d.personId = "";
         } else {
             d.person = p;
             d.personId = p.id;

@@ -53,7 +53,7 @@ export class ImportHelper {
     static getPerson(people: ImportPersonInterface[], importKey: string) { return ArrayHelper.getOne(people, 'importKey', importKey) as ImportPersonInterface; }
     static getServiceTime(serviceTimes: ImportServiceTimeInterface[], importKey: string) { return ArrayHelper.getOne(serviceTimes, 'importKey', importKey) as ImportServiceTimeInterface; }
     static getByImportKey(items: any[], importKey: string) { return ArrayHelper.getOne(items, 'importKey', importKey); }
-    static getById(items: any[], id: number) { return ArrayHelper.getOne(items, 'id', id); }
+    static getById(items: any[], id: string) { return ArrayHelper.getOne(items, 'id', id); }
 
     //get all
     static getVisitSessions(visitSessions: ImportVisitSessionInterface[], sessionKey: string) { return ArrayHelper.getAll(visitSessions, 'sessionKey', sessionKey) as ImportServiceTimeInterface[]; }

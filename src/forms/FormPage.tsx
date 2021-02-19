@@ -7,12 +7,12 @@ type TParams = { id?: string };
 export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
     const [form, setForm] = React.useState<FormInterface>({} as FormInterface);
     const [questions, setQuestions] = React.useState<QuestionInterface[]>([]);
-    const [editQuestionId, setEditQuestionId] = React.useState(-1);
+    const [editQuestionId, setEditQuestionId] = React.useState("notset");
 
-    const questionUpdated = () => { loadQuestions(); setEditQuestionId(-1); }
+    const questionUpdated = () => { loadQuestions(); setEditQuestionId("notset"); }
     const loadData = () => { ApiHelper.get("/forms/" + match.params.id, "MembershipApi").then(data => setForm(data)); loadQuestions(); }
     const loadQuestions = () => ApiHelper.get("/questions?formId=" + match.params.id, "MembershipApi").then(data => setQuestions(data));
-    const getEditContent = () => { return (<a href="about:blank" data-cy="edit-question-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditQuestionId(0); }} ><i className="fas fa-plus"></i></a>); }
+    const getEditContent = () => { return (<a href="about:blank" data-cy="edit-question-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditQuestionId(""); }} ><i className="fas fa-plus"></i></a>); }
     const handleClick = (e: React.MouseEvent) => {
         e.preventDefault();
         var anchor = e.currentTarget as HTMLAnchorElement;
@@ -64,7 +64,7 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
 
     const getSidebarModules = () => {
         var result = [];
-        if (editQuestionId > -1) result.push(<FormQuestionEdit questionId={editQuestionId} updatedFunction={questionUpdated} formId={form.id} />)
+        if (editQuestionId !== "notset") result.push(<FormQuestionEdit questionId={editQuestionId} updatedFunction={questionUpdated} formId={form.id} />)
         return result;
     }
 

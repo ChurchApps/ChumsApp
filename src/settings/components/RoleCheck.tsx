@@ -5,7 +5,7 @@ interface Props {
     contentType: string,
     action: string,
     label: string,
-    roleId: number,
+    roleId: string,
     rolePermissions: RolePermissionInterface[]
 }
 

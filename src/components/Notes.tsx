@@ -1,8 +1,8 @@
 import React from "react";
-import { ApiHelper, Note, DisplayBox, InputBox, UserHelper, Permissions } from "./";
+import { ApiHelper, Note, DisplayBox, InputBox, UserHelper, Permissions, UniqueIdHelper } from "./";
 
 interface Props {
-  contentId: number;
+  contentId: string;
   contentType: string;
 }
 
@@ -13,7 +13,7 @@ export const Notes: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setNoteText(e.currentTarget.value);
   const loadNotes = () => {
-    if (props.contentId > 0)
+    if (!UniqueIdHelper.isMissing(props.contentId))
       ApiHelper.get(
         "/notes/" + props.contentType + "/" + props.contentId, "MembershipApi"
       ).then((data) => setNotes(data));
@@ -32,7 +32,7 @@ export const Notes: React.FC<Props> = (props) => {
 
   React.useEffect(loadNotes, [props.contentId]);
 
-  const handleDelete = (noteId: number) => () => {
+  const handleDelete = (noteId: string) => () => {
     ApiHelper.delete(`/notes/${noteId}`, "MembershipApi");
     setNotes(notes.filter((note) => note.id !== noteId));
   };

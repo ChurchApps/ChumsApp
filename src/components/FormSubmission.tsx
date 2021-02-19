@@ -1,10 +1,10 @@
 import React from "react";
-import { Question, ApiHelper, FormSubmissionInterface, UserHelper, Permissions } from "./";
+import { Question, ApiHelper, FormSubmissionInterface, UserHelper, Permissions, UniqueIdHelper } from "./";
 import { Row, Col } from "react-bootstrap";
 
 interface Props {
-    formSubmissionId: number,
-    editFunction: (formSubmissionId: number) => void
+    formSubmissionId: string,
+    editFunction: (formSubmissionId: string) => void
 
 }
 
@@ -17,13 +17,13 @@ export const FormSubmission: React.FC<Props> = (props) => {
         else return (<a href="about:blank" className="fa-pull-right" onClick={handleEdit}><i className="fas fa-pencil-alt"></i></a>);
     }
     const loadData = () => {
-        if (props.formSubmissionId > 0) {
+        if (!UniqueIdHelper.isMissing(props.formSubmissionId)) {
             try {
                 ApiHelper.get("/formsubmissions/" + props.formSubmissionId + "/?include=questions,answers", "MembershipApi").then((data: FormSubmissionInterface) => setFormSubmission(data));
             } catch { }
         }
     }
-    const getAnswer = (questionId: number) => {
+    const getAnswer = (questionId: string) => {
         var answers = formSubmission.answers;
         for (var i = 0; i < answers.length; i++) if (answers[i].questionId === questionId) return answers[i];
         return null;

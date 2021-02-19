@@ -24,7 +24,7 @@ export const FundDonation: React.FC<Props> = (props) => {
                 fd.amount = parseFloat(e.target.value.replace("$", "").replace(",", ""));
                 break;
             case "fund":
-                fd.fundId = parseInt(e.target.value);
+                fd.fundId = e.target.value;
                 break;
         }
         props.updatedFunction(fd, props.index);

@@ -34,7 +34,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
     const handleRemove = (e: React.MouseEvent) => {
         e.preventDefault();
         var anchor = e.currentTarget as HTMLAnchorElement;
-        var personId = parseInt(anchor.getAttribute("data-personid"));
+        var personId = anchor.getAttribute("data-personid");
         ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + personId, "AttendanceApi").then(loadAttendance);
     }
     const handleAdd = (e: React.MouseEvent) => { e.preventDefault(); props.sidebarVisibilityFunction("addSession", true); }
@@ -59,7 +59,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
 
 
     const selectSession = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        for (let i = 0; i < sessions.length; i++) if (sessions[i].id === parseInt(e.currentTarget.value)) setSession(sessions[i]);
+        for (let i = 0; i < sessions.length; i++) if (sessions[i].id === e.currentTarget.value) setSession(sessions[i]);
     }
 
     const getSessionOptions = () => {

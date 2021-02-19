@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, RoleInterface, PersonAdd, PersonInterface, RoleMemberInterface, UserHelper, Permissions } from "./components";
+import { ApiHelper, DisplayBox, RoleInterface, PersonAdd, PersonInterface, RoleMemberInterface, UserHelper, Permissions, UniqueIdHelper } from "./components";
 import { RouteComponentProps } from "react-router-dom"
 import { RoleMembers } from "./components/RoleMembers";
 import { RolePermissions } from "./components/RolePermissions";
@@ -22,7 +22,7 @@ export const RolePage = ({ match }: RouteComponentProps<TParams>) => {
             };
         }
         ApiHelper.post("/rolemembers", [rm], "AccessApi").then(async (data: RoleMemberInterface[]) => {
-            if (p.userId === undefined || p.userId === null || p.userId === 0) {
+            if (UniqueIdHelper.isMissing(p.userId)) {
                 p.userId = data[0].userId;
                 await ApiHelper.post("/people", [p], "MembershipApi");
             }

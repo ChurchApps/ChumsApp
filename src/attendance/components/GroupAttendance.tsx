@@ -65,7 +65,7 @@ export const GroupAttendance = () => {
 
     const initFilter = async () => {
         const promises: Promise<any>[] = [];
-        promises.push(ApiHelper.get("/services", "AttendanceApi").then((data: ServiceInterface[]) => { data.unshift({ id: 0, name: "Any" }); setServices(data); }));
+        promises.push(ApiHelper.get("/services", "AttendanceApi").then((data: ServiceInterface[]) => { data.unshift({ id: "", name: "Any" }); setServices(data); }));
         promises.push(ApiHelper.get("/groups", "MembershipApi").then((data: GroupInterface[]) => { setGroups(data); }));
         await Promise.all(promises).then(() => {
             setUpdateFilter(true);

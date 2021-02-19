@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
 
   const switchChurch = (e: React.MouseEvent) => {
     e.preventDefault();
-    const id = parseInt(e.currentTarget.getAttribute("data-id"));
+    const id = e.currentTarget.getAttribute("data-id");
     UserHelper.selectChurch(context, id);
   }
 

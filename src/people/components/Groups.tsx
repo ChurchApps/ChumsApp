@@ -1,15 +1,15 @@
 import React from "react";
-import { DisplayBox, ApiHelper } from "."
+import { DisplayBox, ApiHelper, UniqueIdHelper } from "."
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
-interface Props { personId: number }
+interface Props { personId: string }
 
 export const Groups: React.FC<Props> = (props) => {
     const [groupMembers, setGroupMembers] = React.useState(null);
 
     React.useEffect(() => {
-        if (props.personId > 0) ApiHelper.get("/groupmembers?personId=" + props.personId, "MembershipApi").then(data => setGroupMembers(data))
+        if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/groupmembers?personId=" + props.personId, "MembershipApi").then(data => setGroupMembers(data))
     }, [props.personId]);
 
     const items = [];
