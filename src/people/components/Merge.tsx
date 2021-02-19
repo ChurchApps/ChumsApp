@@ -29,7 +29,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         props.hideMergeBox();
     }
 
-    const handleMerge = (personId: number) => {
+    const handleMerge = (personId: string) => {
         const person: PersonInterface[] = [...searchResults].filter(p => p.id === personId);
         setPersonToMerge(person[0]);
         setShowMergeModal(true);
@@ -47,7 +47,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
 
     }
 
-    const fetchHouseholdMembers = async (householdId: number) => {
+    const fetchHouseholdMembers = async (householdId: string) => {
         try {
             const members: PersonInterface[] = await ApiHelper.get("/people/household/" + householdId, "MembershipApi");
             return members;
@@ -56,7 +56,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         }
     }
 
-    const fetchGroupMembers = async (personId: number) => {
+    const fetchGroupMembers = async (personId: string) => {
         try {
             const groups: GroupMemberInterface[] = await ApiHelper.get(`/groupmembers?personId=${personId}`, "MembershipApi");
             return groups;
@@ -65,7 +65,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         }
     }
 
-    const fetchNotes = async (contentId: number) => {
+    const fetchNotes = async (contentId: string) => {
         try {
             const notes: NoteInterface[] = await ApiHelper.get(`/notes/person/${contentId}`, "MembershipApi");
             return notes;
@@ -74,7 +74,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         }
     }
 
-    const fetchVisits = async (personId: number) => {
+    const fetchVisits = async (personId: string) => {
         try {
             const visits: VisitInterface[] = await ApiHelper.get(`/visits?personId=${personId}`, "AttendanceApi");
             return visits;
@@ -83,7 +83,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         }
     }
 
-    const fetchDonations = async (personId: number) => {
+    const fetchDonations = async (personId: string) => {
         try {
             const donations: DonationInterface[] = await ApiHelper.get(`/donations?personId=${personId}`, "GivingApi");
             return donations;
@@ -92,7 +92,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         }
     }
 
-    const fetchFormSubmissions = async (personId: number) => {
+    const fetchFormSubmissions = async (personId: string) => {
         try {
             const formSubmissions: FormSubmissionInterface[] = await ApiHelper.get(`/formsubmissions?personId=${personId}`, "MembershipApi");
             return formSubmissions;

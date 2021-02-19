@@ -6,13 +6,13 @@ import { Row, Col } from "react-bootstrap";
 type TParams = { id?: string };
 
 export const DonationBatchPage = ({ match }: RouteComponentProps<TParams>) => {
-    const [editDonationId, setEditDonationId] = React.useState(-1);
+    const [editDonationId, setEditDonationId] = React.useState("notset");
     const [batch, setBatch] = React.useState<DonationBatchInterface>({});
     const [funds, setFunds] = React.useState<FundInterface[]>([]);
 
-    const showAddDonation = () => { setEditDonationId(0); }
-    const showEditDonation = (id: number) => { setEditDonationId(id); }
-    const donationUpdated = () => { setEditDonationId(-1); loadData(); }
+    const showAddDonation = () => { setEditDonationId(""); }
+    const showEditDonation = (id: string) => { setEditDonationId(id); }
+    const donationUpdated = () => { setEditDonationId("notset"); loadData(); }
 
     const loadData = () => {
         ApiHelper.get("/donationbatches/" + match.params.id, "GivingApi").then(data => setBatch(data));
@@ -21,7 +21,7 @@ export const DonationBatchPage = ({ match }: RouteComponentProps<TParams>) => {
 
     const getSidebarModules = () => {
         var result = [];
-        if (editDonationId > -1) result.push(<DonationEdit donationId={editDonationId} updatedFunction={donationUpdated} funds={funds} batchId={batch.id} />)
+        if (editDonationId !== "notset") result.push(<DonationEdit donationId={editDonationId} updatedFunction={donationUpdated} funds={funds} batchId={batch.id} />)
         return result;
     }
 

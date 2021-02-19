@@ -28,7 +28,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
         ApiHelper.delete("/groupmembers/" + member.id, "MembershipApi");
     }
 
-    const getMemberByPersonId = React.useCallback((personId: number) => {
+    const getMemberByPersonId = React.useCallback((personId: string) => {
         var result = null;
         for (var i = 0; i < groupMembers.length; i++) if (groupMembers[i].personId === personId) result = groupMembers[i];
         return result;

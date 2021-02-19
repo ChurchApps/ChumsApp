@@ -1,39 +1,39 @@
 import React from "react";
-import { InputBox, QuestionEdit, ApiHelper, FormSubmissionInterface } from "./";
+import { InputBox, QuestionEdit, ApiHelper, FormSubmissionInterface, UniqueIdHelper } from "./";
 import { AnswerInterface, QuestionInterface } from "../helpers";
 
 interface Props {
-    addFormId: number,
+    addFormId: string,
     contentType: string,
-    contentId: number,
-    formSubmissionId: number,
-    updatedFunction: (formId: number) => void
+    contentId: string,
+    formSubmissionId: string,
+    updatedFunction: (formId: string) => void
 }
 
 export const FormSubmissionEdit: React.FC<Props> = (props) => {
     const [formSubmission, setFormSubmission] = React.useState(null);
 
-    const handleCancel = () => props.updatedFunction(0);
+    const handleCancel = () => props.updatedFunction("");
 
-    const getDeleteFunction = () => { return (formSubmission?.id > 0) ? handleDelete : undefined; }
+    const getDeleteFunction = () => { return (!UniqueIdHelper.isMissing(formSubmission?.id)) ? handleDelete : undefined; }
     const handleDelete = () => {
         if (window.confirm("Are you sure you wish to delete this form data?")) {
             ApiHelper.delete("/formsubmissions/" + formSubmission.id, "MembershipApi").then(() => {
-                props.updatedFunction(0)
+                props.updatedFunction("");
             });
         }
     }
 
 
-    const getAnswer = (questionId: number) => {
+    const getAnswer = (questionId: string) => {
         var answers = formSubmission.answers;
         for (var i = 0; i < answers.length; i++) if (answers[i].questionId === questionId) return answers[i];
         return null;
     }
 
     const loadData = () => {
-        if (props.formSubmissionId > 0) { ApiHelper.get("/formsubmissions/" + props.formSubmissionId + "/?include=questions,answers,form", "MembershipApi").then(data => setFormSubmission(data)); }
-        else if (props.addFormId > 0) {
+        if (!UniqueIdHelper.isMissing(props.formSubmissionId)) { ApiHelper.get("/formsubmissions/" + props.formSubmissionId + "/?include=questions,answers,form", "MembershipApi").then(data => setFormSubmission(data)); }
+        else if (!UniqueIdHelper.isMissing(props.addFormId)) {
             ApiHelper.get("/questions/?formId=" + props.addFormId, "MembershipApi").then(data => {
                 var fs: FormSubmissionInterface = {
                     formId: props.addFormId, contentType: props.contentType, contentId: props.contentId, answers: []
@@ -64,13 +64,11 @@ export const FormSubmissionEdit: React.FC<Props> = (props) => {
         ApiHelper.post("/formsubmissions/", [fs], "MembershipApi")
             .then(data => {
                 fs.id = data[0];
-                //var addedFormId = (fs.formSubmissionId===0) ? props.addFormId
-                //setFormSubmission(fs);
                 props.updatedFunction(fs.formId);
             });
     }
 
-    const handleChange = (questionId: number, value: string) => {
+    const handleChange = (questionId: string, value: string) => {
         var fs = { ...formSubmission };
         var answer: AnswerInterface = null;
         for (var i = 0; i < fs.answers.length; i++) if (fs.answers[i].questionId === questionId) answer = fs.answers[i];
@@ -82,7 +80,7 @@ export const FormSubmissionEdit: React.FC<Props> = (props) => {
         setFormSubmission(fs);
     }
 
-    const checkFormAdded = () => { if (props.addFormId > 0) loadData(); }
+    const checkFormAdded = () => { if (!UniqueIdHelper.isMissing(props.addFormId)) loadData(); }
 
     React.useEffect(loadData, [props.formSubmissionId]);
     React.useEffect(checkFormAdded, [props.addFormId]);

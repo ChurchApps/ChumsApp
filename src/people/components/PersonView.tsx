@@ -6,9 +6,9 @@ interface Props {
     id?: string,
     person: PersonInterface
     editFunction: (e: React.MouseEvent) => void,
-    addFormId: number,
+    addFormId: string,
     photoUrl: string
-    formAddedFunction: (formId: number) => void
+    formAddedFunction: (formId: string) => void
 }
 
 export const PersonView: React.FC<Props> = (props) => {

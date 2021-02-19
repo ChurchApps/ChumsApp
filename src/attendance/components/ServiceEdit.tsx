@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { ServiceInterface, InputBox, ErrorMessages, ApiHelper, CampusInterface } from "./";
+import { ServiceInterface, InputBox, ErrorMessages, ApiHelper, CampusInterface, UniqueIdHelper } from "./";
 
 interface Props {
     service: ServiceInterface,
@@ -14,7 +14,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     const handleSave = () => {
         if (validate()) {
             var s = { ...service };
-            if (s.campusId === 0) s.campusId = campuses[0].id;
+            if (UniqueIdHelper.isMissing(s.campusId)) s.campusId = campuses[0].id;
             ApiHelper.post("/services", [s], "AttendanceApi").then(props.updatedFunction);
         }
     }
@@ -24,7 +24,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         ApiHelper.get("/campuses", "AttendanceApi").then(data => {
             setCampuses(data);
             if (data.length > 0) {
-                if (service?.campusId === undefined || service?.campusId === null || service?.campusId === 0) {
+                if (UniqueIdHelper.isMissing(service?.campusId)) {
                     var s = { ...props.service };
                     s.campusId = data[0].id;
                     setService(s);
@@ -46,7 +46,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         var s = { ...service };
         switch (e.currentTarget.name) {
             case "serviceName": s.name = e.currentTarget.value; break;
-            case "campus": s.campusId = parseInt(e.currentTarget.value); break;
+            case "campus": s.campusId = e.currentTarget.value; break;
         }
         setService(s);
     }

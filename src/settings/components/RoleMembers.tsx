@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, UserHelper, RoleMemberInterface, PersonHelper, PersonInterface, RoleInterface, ExportLink, Permissions } from ".";
+import { ApiHelper, DisplayBox, UserHelper, RoleMemberInterface, PersonHelper, PersonInterface, RoleInterface, ExportLink, Permissions, UniqueIdHelper } from ".";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserInterface } from "../../helpers";
@@ -30,8 +30,8 @@ export const RoleMembers: React.FC<Props> = (props) => {
         ApiHelper.delete("/rolemembers/" + member.id, "AccessApi");
     }
 
-    const getMemberByPersonId = React.useCallback((personId: number) => {
-        if (personId > 0) return null;
+    const getMemberByPersonId = React.useCallback((personId: string) => {
+        if (!UniqueIdHelper.isMissing(personId)) return null;
         else return null;
     }, []);
 

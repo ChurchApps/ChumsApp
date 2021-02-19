@@ -1,17 +1,17 @@
 import React from "react";
-import { DisplayBox, ApiHelper, AttendanceRecordInterface, Helper, GroupInterface } from ".";
+import { DisplayBox, ApiHelper, AttendanceRecordInterface, Helper, GroupInterface, UniqueIdHelper } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
 
-interface Props { personId: number }
+interface Props { personId: string }
 
 export const PersonAttendance: React.FC<Props> = (props) => {
     const [records, setRecords] = React.useState<AttendanceRecordInterface[]>([]);
     const [groups, setGroups] = React.useState<GroupInterface[]>([]);
 
     const loadData = () => {
-        if (props.personId > 0) {
+        if (!UniqueIdHelper.isMissing(props.personId)) {
             ApiHelper.get("/attendancerecords?personId=" + props.personId, "AttendanceApi").then(data => setRecords(data));
             ApiHelper.get("/groups", "MembershipApi").then(data => setGroups(data));
         }
@@ -21,8 +21,8 @@ export const PersonAttendance: React.FC<Props> = (props) => {
         var rows: JSX.Element[] = [];
 
         var lastVisitDate = new Date(2000, 1, 1);
-        var lastCampusId = -1;
-        var lastServiceId = -1;
+        var lastCampusId = "notset";
+        var lastServiceId = "notset";
 
         for (let i = 0; i < records.length; i++) {
             var r = records[i];

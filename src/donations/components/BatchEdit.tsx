@@ -1,14 +1,14 @@
 import React from "react";
-import { ApiHelper, InputBox, Helper, DonationBatchInterface } from ".";
+import { ApiHelper, InputBox, Helper, DonationBatchInterface, UniqueIdHelper } from ".";
 
-interface Props { batchId: number, updatedFunction: () => void }
+interface Props { batchId: string, updatedFunction: () => void }
 
 export const BatchEdit: React.FC<Props> = (props) => {
     const [batch, setBatch] = React.useState<DonationBatchInterface>({ batchDate: new Date(), name: "" });
 
     const handleCancel = () => { props.updatedFunction(); }
     const handleSave = () => ApiHelper.post("/donationbatches", [batch], "GivingApi").then(() => props.updatedFunction());
-    const getDeleteFunction = () => { return (props.batchId > 0) ? handleDelete : undefined; }
+    const getDeleteFunction = () => { return (!UniqueIdHelper.isMissing(props.batchId)) ? handleDelete : undefined; }
     const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
 
     const handleDelete = () => {
@@ -30,7 +30,7 @@ export const BatchEdit: React.FC<Props> = (props) => {
     }
 
     const loadData = () => {
-        if (props.batchId === 0) setBatch({ batchDate: new Date(), name: "" });
+        if (UniqueIdHelper.isMissing(props.batchId)) setBatch({ batchDate: new Date(), name: "" });
         else ApiHelper.get("/donationbatches/" + props.batchId, "GivingApi").then(data => setBatch(data));
     }
 

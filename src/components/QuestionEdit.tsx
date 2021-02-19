@@ -4,7 +4,7 @@ import { AnswerInterface, QuestionInterface } from "./";
 interface Props {
     answer: AnswerInterface
     question: QuestionInterface,
-    changeFunction: (questionId: number, value: string) => void
+    changeFunction: (questionId: string, value: string) => void
 }
 
 export const QuestionEdit: React.FC<Props> = (props) => {

@@ -5,7 +5,7 @@ import { Row, Col, Table } from "react-bootstrap";
 
 export const FormsPage = () => {
     const [forms, setForms] = React.useState<FormInterface[]>([]);
-    const [selectedFormId, setSelectedFormId] = React.useState(-1);
+    const [selectedFormId, setSelectedFormId] = React.useState("notset");
     const isSubscribed = useRef(true)
 
     const loadData = () => { ApiHelper.get("/forms", "MembershipApi").then(data => { if (isSubscribed.current) { setForms(data) } }); }
@@ -23,16 +23,16 @@ export const FormsPage = () => {
         return result;
     }
 
-    const handleUpdate = () => { loadData(); setSelectedFormId(-1); }
+    const handleUpdate = () => { loadData(); setSelectedFormId("notset"); }
 
     const getSidebar = () => {
-        if (selectedFormId === -1) return <></>
+        if (selectedFormId === "notset") return <></>
         else return (<FormEdit formId={selectedFormId} updatedFunction={handleUpdate} ></FormEdit>)
     }
 
     const getEditContent = () => {
         if (!UserHelper.checkAccess(Permissions.membershipApi.forms.edit)) return null;
-        else return (<a href="about:blank" data-cy="add-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); setSelectedFormId(0); }} ><i className="fas fa-plus"></i></a>);
+        else return (<a href="about:blank" data-cy="add-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); setSelectedFormId(""); }} ><i className="fas fa-plus"></i></a>);
     }
 
     React.useEffect(() => { loadData(); return () => { isSubscribed.current = false } }, []);

@@ -7,7 +7,7 @@ import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilt
 import { ArrayHelper, DateHelper } from "../appBase/helpers";
 
 export const DonationsPage = () => {
-    const [editBatchId, setEditBatchId] = React.useState(-1);
+    const [editBatchId, setEditBatchId] = React.useState("notset");
     const [batches, setBatches] = React.useState<DonationBatchInterface[]>([]);
     const isSubscribed = useRef(true)
 
@@ -56,14 +56,14 @@ export const DonationsPage = () => {
         return result;
     }
 
-    const showAddBatch = (e: React.MouseEvent) => { e.preventDefault(); setEditBatchId(0); }
+    const showAddBatch = (e: React.MouseEvent) => { e.preventDefault(); setEditBatchId(""); }
     const showEditBatch = (e: React.MouseEvent) => {
         e.preventDefault();
         var anchor = e.currentTarget as HTMLAnchorElement;
-        var id = parseInt(anchor.getAttribute("data-id"));
+        var id = anchor.getAttribute("data-id");
         setEditBatchId(id);
     }
-    const batchUpdated = () => { setEditBatchId(-1); loadData(); }
+    const batchUpdated = () => { setEditBatchId("notset"); loadData(); }
     const loadData = useCallback(() => {
         ApiHelper.get("/donationbatches", "GivingApi").then(data => { if (isSubscribed.current) { setBatches(data); console.log(data) } });
     }, [])
@@ -78,7 +78,7 @@ export const DonationsPage = () => {
     const getSidebarModules = () => {
         var result = [];
         //result.push(<ReportFilter key={result.length - 1} filter={filter} updateFunction={handleFilterUpdate} />);
-        if (editBatchId > -1) result.push(<BatchEdit key={result.length - 1} batchId={editBatchId} updatedFunction={batchUpdated} />)
+        if (editBatchId !== "notset") result.push(<BatchEdit key={result.length - 1} batchId={editBatchId} updatedFunction={batchUpdated} />)
         result.push(<Funds key={result.length - 1} />);
         return result;
     }

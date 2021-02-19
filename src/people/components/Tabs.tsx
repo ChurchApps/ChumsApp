@@ -1,7 +1,7 @@
 import React from "react";
 import { UserHelper, Notes, PersonAttendance, PersonDonations, Permissions } from ".";
 
-interface Props { personId: number }
+interface Props { personId: string }
 
 export const Tabs: React.FC<Props> = (props) => {
     const [personId, setPersonId] = React.useState(props.personId);

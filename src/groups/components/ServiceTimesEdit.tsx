@@ -11,7 +11,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
 
     const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
     const [serviceTimes, setServiceTimes] = React.useState<ServiceTimeInterface[]>([]);
-    const [addServiceTimeId, setAddServiceTimeId] = React.useState(0);
+    const [addServiceTimeId, setAddServiceTimeId] = React.useState("");
 
     const loadData = React.useCallback(() => {
         ApiHelper.get("/groupservicetimes?groupId=" + props.group.id, "AttendanceApi").then(data => setGroupServiceTimes(data));
@@ -46,11 +46,11 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     const handleRemove = (e: React.MouseEvent) => {
         e.preventDefault();
         var anchor = e.currentTarget as HTMLAnchorElement;
-        var id = parseInt(anchor.getAttribute("data-id"));
+        var id = anchor.getAttribute("data-id");
         ApiHelper.delete("/groupservicetimes/" + id.toString(), "AttendanceApi").then(loadData);
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => setAddServiceTimeId(parseInt(e.currentTarget.value));
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => setAddServiceTimeId(e.currentTarget.value);
 
     React.useEffect(() => { if (props.group.id !== undefined) loadData(); }, [props.group, loadData]);
 

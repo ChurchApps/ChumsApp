@@ -2,31 +2,32 @@ import React from "react";
 import { FormSubmission, FormSubmissionEdit, FormSubmissionInterface, UserHelper, ApiHelper, Permissions } from "./";
 import { Button } from "react-bootstrap";
 import { JsxElement } from "typescript";
+import { UniqueIdHelper } from "../helpers";
 
 
 interface Props {
-    addFormId: number,
+    addFormId: string,
     contentType: string,
-    contentId: number,
+    contentId: string,
     formSubmissions: FormSubmissionInterface[],
-    formAddedFunction: (formId: number) => void
+    formAddedFunction: (formId: string) => void
 }
 
 export const AssociatedForms: React.FC<Props> = (props) => {
     const [mode, setMode] = React.useState("display");
-    const [editFormSubmissionId, setEditFormSubmissionId] = React.useState(0);
+    const [editFormSubmissionId, setEditFormSubmissionId] = React.useState("");
 
     const [allForms, setAllForms] = React.useState(null);
     const [unsubmittedForms, setUnsubmittedForms] = React.useState([]);
 
-    const handleEdit = (formSubmissionId: number) => { setMode("edit"); setEditFormSubmissionId(formSubmissionId); }
-    const handleUpdate = (formId: number) => { setMode("display"); props.formAddedFunction(0); }
+    const handleEdit = (formSubmissionId: string) => { setMode("edit"); setEditFormSubmissionId(formSubmissionId); }
+    const handleUpdate = (formId: string) => { setMode("display"); props.formAddedFunction(formId); }
     const handleAdd = (e: React.MouseEvent) => {
         e.preventDefault();
         //setMode("display");
         var anchor = e.currentTarget as HTMLAnchorElement;
         console.log(anchor);
-        const formId = parseInt(anchor.getAttribute("data-formid"));
+        const formId = anchor.getAttribute("data-formid");
         console.warn(formId);
         props.formAddedFunction(formId);
     }
@@ -96,7 +97,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
     React.useEffect(() => { ApiHelper.get("/forms?contentType=person", "MembershipApi").then(data => setAllForms(data)); }, []);
     React.useEffect(determineUnsubmitted, [allForms, props]);
     React.useEffect(() => {
-        if (props.addFormId > 0) setEditFormSubmissionId(0);
+        if (!UniqueIdHelper.isMissing(props.addFormId)) setEditFormSubmissionId("");
     }, [props.addFormId]);
 
 
@@ -104,6 +105,6 @@ export const AssociatedForms: React.FC<Props> = (props) => {
 
 
     if (!UserHelper.checkAccess(Permissions.membershipApi.forms.view)) return <></>
-    if (mode === "edit" || props.addFormId > 0) return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={props.addFormId} contentType={props.contentType} contentId={props.contentId} />
+    if (mode === "edit" || !UniqueIdHelper.isMissing(props.addFormId)) return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={props.addFormId} contentType={props.contentType} contentId={props.contentId} />
     else return <div className="accordion" id="formSubmissionsAccordion">{getCards()}</div>;
 }

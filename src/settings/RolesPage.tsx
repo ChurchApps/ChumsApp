@@ -6,12 +6,12 @@ import { Row, Col, Table } from "react-bootstrap";
 export const RolesPage = () => {
 
     const [roles, setRoles] = React.useState<RoleInterface[]>([]);
-    const [selectedRoleId, setSelectedRoleId] = React.useState(-1);
+    const [selectedRoleId, setSelectedRoleId] = React.useState("notset");
 
     const loadData = () => { ApiHelper.get("/roles/app/CHUMS", "AccessApi").then(data => setRoles(data)); }
     const getEditContent = () => {
         if (!UserHelper.checkAccess(Permissions.accessApi.roles.edit)) return null;
-        else return (<a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setSelectedRoleId(0); }} ><i className="fas fa-plus"></i></a>);
+        else return (<a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setSelectedRoleId(""); }} ><i className="fas fa-plus"></i></a>);
     }
 
     const getRows = () => {
@@ -27,10 +27,10 @@ export const RolesPage = () => {
         return result;
     }
 
-    const handleUpdate = () => { loadData(); setSelectedRoleId(-1); }
+    const handleUpdate = () => { loadData(); setSelectedRoleId("notset"); }
 
     const getSidebar = () => {
-        if (selectedRoleId === -1) return <></>
+        if (selectedRoleId === "notset") return <></>
         else return (<RoleEdit roleId={selectedRoleId} updatedFunction={handleUpdate} ></RoleEdit>)
     }
 

@@ -75,7 +75,7 @@ export const AttendancePage = () => {
         return result;
     }
 
-    const getGroups = (serviceTimeId: number) => {
+    const getGroups = (serviceTimeId: string) => {
         const result: GroupInterface[] = [];
         const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes, "serviceTimeId", serviceTimeId);
         gsts.forEach(gst => {
@@ -90,9 +90,9 @@ export const AttendancePage = () => {
             <>
                 <a id="addBtnGroup" data-cy="add-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="about:blank" ><i className="fas fa-plus"></i></a>
                 <div className="dropdown-menu" aria-labelledby="addBtnGroup">
-                    <a className="dropdown-item" data-cy="add-campus" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectCampus({ id: 0, name: "New Campus" }); }} ><i className="fas fa-church"></i> Add Campus</a>
-                    <a className="dropdown-item" data-cy="add-service" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectService({ id: 0, campusId: 0, name: "New Service" }); }} ><i className="fas fa-calendar-alt"></i> Add Service</a>
-                    <a className="dropdown-item" data-cy="add-service-time" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectServiceTime({ id: 0, serviceId: 0, name: "New Service Time" }); }} ><i className="far fa-clock"></i> Add Service Time</a>
+                    <a className="dropdown-item" data-cy="add-campus" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectCampus({ id: "", name: "New Campus" }); }} ><i className="fas fa-church"></i> Add Campus</a>
+                    <a className="dropdown-item" data-cy="add-service" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectService({ id: "", campusId: "", name: "New Service" }); }} ><i className="fas fa-calendar-alt"></i> Add Service</a>
+                    <a className="dropdown-item" data-cy="add-service-time" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectServiceTime({ id: "", serviceId: "", name: "New Service Time" }); }} ><i className="far fa-clock"></i> Add Service Time</a>
                 </div>
             </>
         );

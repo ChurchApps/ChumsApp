@@ -42,7 +42,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
         var st = { ...serviceTime };
         switch (e.currentTarget.name) {
             case "serviceTimeName": st.name = e.currentTarget.value; break;
-            case "service": st.serviceId = parseInt(e.currentTarget.value); break;
+            case "service": st.serviceId = e.currentTarget.value; break;
         }
         setServiceTime(st);
     }

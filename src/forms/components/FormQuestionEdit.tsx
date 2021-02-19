@@ -1,9 +1,9 @@
 import React from "react";
-import { ApiHelper, InputBox, QuestionInterface, ChoicesEdit } from ".";
+import { ApiHelper, InputBox, QuestionInterface, ChoicesEdit, UniqueIdHelper } from ".";
 
 interface Props {
-    questionId: number,
-    formId: number,
+    questionId: string,
+    formId: string,
     updatedFunction: () => void
 }
 
@@ -12,7 +12,7 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
     const [question, setQuestion] = React.useState<QuestionInterface>({} as QuestionInterface);
 
     const loadData = () => {
-        if (props.questionId > 0) ApiHelper.get("/questions/" + props.questionId, "MembershipApi").then((data: QuestionInterface) => setQuestion(data));
+        if (!UniqueIdHelper.isMissing(props.questionId)) ApiHelper.get("/questions/" + props.questionId, "MembershipApi").then((data: QuestionInterface) => setQuestion(data));
         else setQuestion({ formId: props.formId, fieldType: "Textbox" } as QuestionInterface);
     }
 
@@ -50,7 +50,7 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
 
 
     return (
-        <InputBox id="questionBox" headerIcon="fas fa-question" headerText="Edit Question" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(props.questionId > 0) ? handleDelete : undefined} >
+        <InputBox id="questionBox" headerIcon="fas fa-question" headerText="Edit Question" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(!UniqueIdHelper.isMissing(props.questionId)) ? handleDelete : undefined} >
             <div className="form-group">
                 <label>Question Type</label>
                 <select className="form-control" data-cy="type" name="fieldType" value={question.fieldType} onChange={handleChange} onKeyDown={handleKeyDown} >

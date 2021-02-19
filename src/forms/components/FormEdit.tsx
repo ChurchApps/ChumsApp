@@ -1,13 +1,13 @@
 import React from "react";
-import { ApiHelper, InputBox, FormInterface } from ".";
+import { ApiHelper, InputBox, FormInterface, UniqueIdHelper } from ".";
 
-interface Props { formId: number, updatedFunction: () => void }
+interface Props { formId: string, updatedFunction: () => void }
 
 export const FormEdit: React.FC<Props> = (props) => {
     const [form, setForm] = React.useState<FormInterface>({} as FormInterface);
 
     const loadData = () => {
-        if (props.formId > 0) ApiHelper.get("/forms/" + props.formId, "MembershipApi").then((data: FormInterface) => setForm(data));
+        if (!UniqueIdHelper.isMissing(props.formId)) ApiHelper.get("/forms/" + props.formId, "MembershipApi").then((data: FormInterface) => setForm(data));
         else setForm({ contentType: "person" } as FormInterface);
     }
 
@@ -34,7 +34,7 @@ export const FormEdit: React.FC<Props> = (props) => {
 
 
     return (
-        <InputBox id="formBox" headerIcon="fas fa-align-left" headerText="Edit Form" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(props.formId > 0) ? handleDelete : undefined} >
+        <InputBox id="formBox" headerIcon="fas fa-align-left" headerText="Edit Form" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(!UniqueIdHelper.isMissing(props.formId)) ? handleDelete : undefined} >
             <div className="form-group">
                 <label>Form Name</label>
                 <input name="formName" data-cy="form-name" type="text" className="form-control" value={form.name} onChange={handleChange} onKeyDown={handleKeyDown} />

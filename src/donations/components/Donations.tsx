@@ -1,9 +1,9 @@
 import React from "react";
-import { ApiHelper, UserHelper, DonationInterface, Helper, DisplayBox, DonationBatchInterface, ExportLink, Permissions } from ".";
+import { ApiHelper, UserHelper, DonationInterface, Helper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper } from ".";
 import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
 
-interface Props { batch: DonationBatchInterface, addFunction: () => void, editFunction: (id: number) => void }
+interface Props { batch: DonationBatchInterface, addFunction: () => void, editFunction: (id: string) => void }
 
 export const Donations: React.FC<Props> = (props) => {
     const [donations, setDonations] = React.useState<DonationInterface[]>([]);
@@ -18,7 +18,7 @@ export const Donations: React.FC<Props> = (props) => {
         const peopleIds = ArrayHelper.getIds(data, "personId");
         if (peopleIds.length > 0) {
             const people = await ApiHelper.get("/people/ids?ids=" + escape(peopleIds.join(",")), "MembershipApi");
-            data.forEach(d => { if (d.personId > 0) d.person = ArrayHelper.getOne(people, "id", d.personId); });
+            data.forEach(d => { if (!UniqueIdHelper.isMissing(d.personId)) d.person = ArrayHelper.getOne(people, "id", d.personId); });
         }
         setDonations(data);
     }
@@ -26,7 +26,7 @@ export const Donations: React.FC<Props> = (props) => {
     const showEditDonation = (e: React.MouseEvent) => {
         e.preventDefault();
         var anchor = e.currentTarget as HTMLAnchorElement;
-        var id = parseInt(anchor.getAttribute("data-id"));
+        var id = anchor.getAttribute("data-id");
         props.editFunction(id);
     }
 
@@ -46,7 +46,7 @@ export const Donations: React.FC<Props> = (props) => {
         return rows;
     }
 
-    React.useEffect(() => { if (props.batch?.id > 0) loadData() }, [props.batch, loadData]);
+    React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.batch?.id)) loadData() }, [props.batch, loadData]);
     //React.useEffect(populatePeople, [donations]);
 
     return (

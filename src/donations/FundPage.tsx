@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, Helper, UserHelper, FundDonationInterface, ExportLink, Permissions } from "./components";
+import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, Helper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper } from "./components";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { Row, Col, FormGroup, FormControl, FormLabel, Table } from "react-bootstrap";
 
@@ -41,7 +41,7 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
         var result = [];
         for (let i = 0; i < fundDonations.length; i++) {
             var fd = fundDonations[i];
-            var personCol = (fd.donation?.personId === 0) ? (<td>Anonymous</td>)
+            var personCol = (UniqueIdHelper.isMissing(fd.donation?.personId)) ? (<td>Anonymous</td>)
                 : (<td><Link to={"/people/" + fd.donation?.personId}>{fd.donation.person?.name.display || "Anonymous"}</Link></td>);
             result.push(<tr>
                 <td>{Helper.formatHtml5Date(fd.donation.donationDate)}</td>

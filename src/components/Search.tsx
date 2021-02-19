@@ -6,7 +6,7 @@ interface Props {
   handleSearch: (text: string) => void,
   searchResults: PersonInterface[],
   buttonText: string,
-  handleClickAction: (id: number) => void,
+  handleClickAction: (id: string) => void,
 }
 
 export const Search: React.FC<Props> = (props) => {
