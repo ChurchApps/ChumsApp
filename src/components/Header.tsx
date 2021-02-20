@@ -13,6 +13,7 @@ export const Header: React.FC = () => {
     e.preventDefault();
     const id = e.currentTarget.getAttribute("data-id");
     UserHelper.selectChurch(context, id);
+    UserHelper.churchChanged = true;
   }
 
   const getChurchLinks = () => {
