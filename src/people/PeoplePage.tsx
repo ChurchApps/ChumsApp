@@ -9,7 +9,8 @@ export const PeoplePage = () => {
 
     const handleSubmit = (e: React.MouseEvent) => {
         if (e !== null) e.preventDefault();
-        ApiHelper.get("/people/search?term=" + escape(searchText), "MembershipApi").then(data => setSearchResults(data));
+        let term = escape(searchText.trim());
+        ApiHelper.get("/people/search?term=" + term, "MembershipApi").then(data => setSearchResults(data));
     }
 
     const loadData = () => {
