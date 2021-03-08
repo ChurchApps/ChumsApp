@@ -27,12 +27,7 @@ jobs:
       - name: Install Test Project
         run: |
           cd ..
-          mkdir ChumsTests
-          cd ChumsTests
           git clone https://github.com/LiveChurchSolutions/ChumsTests.git
-
-      - name: Test
-        timeout-minutes: 10
-        run: |
+          cd ChumsTests
           npm install
           npm test
