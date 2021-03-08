@@ -22,21 +22,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install Dependencies
-        run: |
-          cd ChumsApp
-          git submodule init && git submodule update
-          npm install
-          cd ..
-
       - name: Checkout Tests
         uses: actions/checkout@v2
         with:
           repository: LiveChurchSolutions/ChumsTests
           path: ChumsTests
 
+      - name: Install Dependencies
+        run: |
+          cd ChumsApp
+          git submodule init && git submodule update
+          npm install
+
       - name: Install Test Project
         run: |
+          cd ..
           cd ChumsTests
           npm install
 
