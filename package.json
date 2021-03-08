@@ -44,7 +44,6 @@
     "exec-deploy-prod": "aws s3 sync build/ s3://chums-app",
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3FB2K4FSP7ZUB --paths \"/*\"",
     "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod",
-    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
