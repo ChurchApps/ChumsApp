@@ -22,7 +22,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cd ChumsApp
           npm install
 
       - name: Install Test Project
