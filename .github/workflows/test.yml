@@ -25,9 +25,14 @@ jobs:
           cd ChumsApp
           npm install
 
+      - name: Install Test Project
+        run: |
+          cd ..
+          git clone https://github.com/LiveChurchSolutions/ChumsTests.git
+
       - name: Test
         timeout-minutes: 10
         run: |
-          cd CypressTests
+          cd ChumsTests
           npm install
           npm test
