@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          path: ChumsApp
 
       - uses: actions/cache@v2
         with:
@@ -22,12 +24,18 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          cd ChumsApp
           npm install
+          cd ..
+
+      - name: Checkout Tests
+        uses: actions/checkout@v2
+        with:
+          repository: LiveChurchSolutions/ChumsTests
+          path: ChumsTests
 
       - name: Install Test Project
         run: |
-          cd ..
-          git clone https://github.com/LiveChurchSolutions/ChumsTests.git
           cd ChumsTests
           npm install
           npm test
