@@ -43,7 +43,7 @@
     "predeploy-prod": "export REACT_APP_STAGE=prod&& npm run build",
     "exec-deploy-prod": "aws s3 sync build/ s3://chums-app",
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3FB2K4FSP7ZUB --paths \"/*\"",
-    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod",
+    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod"
   },
   "eslintConfig": {
     "extends": "react-app"
