@@ -36,7 +36,6 @@ jobs:
 
       - name: Install Test Project
         run: |
-          cd ..
           cd ChumsTests
           npm install
 
