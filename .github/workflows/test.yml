@@ -25,6 +25,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd ChumsApp
+          git submodule init && git submodule update
           npm install
           cd ..
 
