@@ -32,7 +32,6 @@ jobs:
         working-directory: ~/ChumsApp
         run: git submodule init && git submodule update
           
-
       - name: Install Dependencies
         working-directory: ~/ChumsApp
         run: npm install
