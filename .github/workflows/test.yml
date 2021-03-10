@@ -35,6 +35,10 @@ jobs:
       - name: Install Dependencies
         working-directory: ~/ChumsApp
         run: npm install
+
+      - name: Copy .env
+        working-directory: ~/ChumsApp
+        run: cp dotenv.sample.txt .env
   
       - name: Install Test Project
         working-directory: ~/ChumsTests
