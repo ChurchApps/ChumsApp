@@ -29,21 +29,18 @@ jobs:
             ${{ runner.os }}-node-
     
       - name: Fetch Submodules
-        run: 
-          git submodule init && git submodule update
-          working-directory: ~/ChumsApp
+        working-directory: ~/ChumsApp
+        run: git submodule init && git submodule update
+          
 
       - name: Install Dependencies
-        run: 
-          npm install
-          working-directory: ~/ChumsApp
+        working-directory: ~/ChumsApp
+        run: npm install
   
       - name: Install Test Project
-        run: 
-          npm install
-          working-directory: ~/ChumsTests
-
+        working-directory: ~/ChumsTests
+        run: npm install
+          
       - name: Run Tests
-        run:
-          npm test
-          working-directory: ~/ChumsTests
+        working-directory: ~/ChumsTests
+        run: npm test
