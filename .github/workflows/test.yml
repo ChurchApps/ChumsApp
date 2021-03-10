@@ -13,7 +13,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          path: ChumsApp
+          path: ~/ChumsApp
+
+      - name: Checkout Tests
+        uses: actions/checkout@v2
+        with:
+          repository: LiveChurchSolutions/ChumsTests
+          path: ~/ChumsTests
 
       - uses: actions/cache@v2
         with:
@@ -21,24 +27,23 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
-      - name: Checkout Tests
-        uses: actions/checkout@v2
-        with:
-          repository: LiveChurchSolutions/ChumsTests
-          path: ChumsTests
+    
+      - name: Fetch Submodules
+        run: 
+          git submodule init && git submodule update
+          working-directory: ~/ChumsApp
 
       - name: Install Dependencies
-        run: |
-          cd ChumsApp
-          git submodule init && git submodule update
+        run: 
           npm install
-
+          working-directory: ~/ChumsApp
+  
       - name: Install Test Project
-        run: |
-          cd ChumsTests
+        run: 
           npm install
+          working-directory: ~/ChumsTests
 
       - name: Run Tests
-        run: |
+        run:
           npm test
+          working-directory: ~/ChumsTests
