@@ -43,8 +43,7 @@
     "predeploy-prod": "export REACT_APP_STAGE=prod&& npm run build",
     "exec-deploy-prod": "aws s3 sync build/ s3://chums-app",
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3FB2K4FSP7ZUB --paths \"/*\"",
-    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod",
-    "cypress:open": "cypress open"
+    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,8 +62,6 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.1",
-    "cypress": "^6.4.0",
-    "eslint-plugin-cypress": "^2.11.2",
     "google-charts": "^2.0.0"
   }
 }

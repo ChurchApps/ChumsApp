@@ -1,0 +1,49 @@
+on:
+  pull_request:
+    branches: [main]
+
+name: Run Tests
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ~/ChumsApp
+
+      - name: Checkout Tests
+        uses: actions/checkout@v2
+        with:
+          repository: LiveChurchSolutions/ChumsTests
+          path: ~/ChumsTests
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+    
+      - name: Fetch Submodules
+        working-directory: ~/ChumsApp
+        run: git submodule init && git submodule update
+          
+      - name: Install Dependencies
+        working-directory: ~/ChumsApp
+        run: npm install
+
+      - name: Copy .env
+        working-directory: ~/ChumsApp
+        run: cp dotenv.sample.txt .env
+  
+      - name: Install Test Project
+        working-directory: ~/ChumsTests
+        run: npm install
+          
+      - name: Run Tests
+        working-directory: ~/ChumsTests
+        run: npm test
