@@ -6,7 +6,7 @@ REACT_APP_ATTENDANCE_API=https://attendanceapi.staging.churchapps.org
 REACT_APP_GIVING_API=https://givingapi.staging.churchapps.org
 REACT_APP_MEMBERSHIP_API=https://membershipapi.staging.churchapps.org
 
-REACT_APP_CONTENT_ROOT=https://app.staging.chums.org
+REACT_APP_CONTENT_ROOT=https://content.staging.churchapps.org
 
 #Optional - UA-123456789-1
 REACT_APP_GOOGLE_ANALYTICS=
