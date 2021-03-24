@@ -20,7 +20,7 @@ export const Household: React.FC<Props> = (props) => {
     const getEditFunction = () => { return (UserHelper.checkAccess(Permissions.membershipApi.households.edit)) ? handleEdit : null }
 
     React.useEffect(loadData, [props.person]);
-    React.useEffect(loadMembers, [household?.id | props.reload]);
+    React.useEffect(loadMembers, [household?.id, props.reload]);
 
     var rows = [];
     if (mode === "display") {

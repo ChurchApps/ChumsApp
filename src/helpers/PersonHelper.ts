@@ -3,8 +3,6 @@ import { EnvironmentHelper } from '../components';
 
 export class PersonHelper {
     static getPhotoUrl(person: PersonInterface) {
-        console.log(EnvironmentHelper.ContentRoot)
-        console.log(person?.photo);
         return person?.photo ? EnvironmentHelper.ContentRoot + person?.photo : '/images/sample-profile.png';
     }
 

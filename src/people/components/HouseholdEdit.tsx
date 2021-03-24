@@ -114,7 +114,7 @@ export const HouseholdEdit: React.FC<Props> = (props) => {
                 <Table size="sm" id="householdMemberTable">
                     <tbody>
                         {rows}
-                        <tr><td></td><td></td><td><a href="about:blank" className="text-success" onClick={handleAdd}> <i className="fas fa-user"></i> Add</a></td></tr>
+                        <tr><td></td><td></td><td><a href="about:blank" className="text-success" data-cy="add-button" onClick={handleAdd}> <i className="fas fa-user"></i> Add</a></td></tr>
                     </tbody>
                 </Table>
                 {personAdd}
