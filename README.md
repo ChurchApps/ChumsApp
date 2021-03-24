@@ -23,9 +23,3 @@ For the APIs, you may either set them up on your local machine first, or point t
 4. run `npm start` to launch the project.
 
 You may create a test account at https://staging.chums.org/ if you are using the staging api urls.
-
-#### Cypress
-To open Cypress UI app, run:
-```
-npm run cypress:open
-```
