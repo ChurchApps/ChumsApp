@@ -39,19 +39,26 @@ jobs:
       - name: Copy .env
         working-directory: ~/ChumsApp
         run: cp dotenv.sample.txt .env
+
+      - name: Start Server
+        run: npm start
   
       - name: Install Test Project
         working-directory: ~/ChumsTests
         run: npm install
           
-      - name: Run Tests
-        working-directory: ~/ChumsTests
-        run: npm test
-        env:
-          ACCESS_API: https://accessapi.staging.churchapps.org
-          ATTENDANCE_API: https://attendanceapi.staging.churchapps.org
-          GIVING_API: https://givingapi.staging.churchapps.org
-          MEMBERSHIP_API: https://membershipapi.staging.churchapps.org
-          appName: CHUMS
-          email: cypress.test@chums.org
-          password: password
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          working-directory: ~/ChumsTests
+          wait-on: 'http://localhost:3101'
+          spec: |
+            cypress/integration/*.spec.js
+          env:
+            CYPRESS_ACCESS_API: https://accessapi.staging.churchapps.org
+            CYPRESS_ATTENDANCE_API: https://attendanceapi.staging.churchapps.org
+            CYPRESS_GIVING_API: https://givingapi.staging.churchapps.org
+            CYPRESS_MEMBERSHIP_API: https://membershipapi.staging.churchapps.org
+            CYPRESS_appName: CHUMS
+            CYPRESS_email: cypress.test@chums.org
+            CYPRESS_password: password
