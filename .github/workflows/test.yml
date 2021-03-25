@@ -47,3 +47,11 @@ jobs:
       - name: Run Tests
         working-directory: ~/ChumsTests
         run: npm test
+        env:
+          ACCESS_API: https://accessapi.staging.churchapps.org
+          ATTENDANCE_API: https://attendanceapi.staging.churchapps.org
+          GIVING_API: https://givingapi.staging.churchapps.org
+          MEMBERSHIP_API: https://membershipapi.staging.churchapps.org
+          appName: CHUMS
+          email: cypress.test@chums.org
+          password: password
