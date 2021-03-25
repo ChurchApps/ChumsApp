@@ -41,6 +41,7 @@ jobs:
         run: cp dotenv.sample.txt .env
 
       - name: Start Server
+        working-directory: ~/ChumsApp
         run: npm start
   
       - name: Install Test Project
