@@ -13,7 +13,7 @@ export const FundDonation: React.FC<Props> = (props) => {
 
     const getOptions = () => {
         var result = [];
-        for (let i = 0; i < props.funds.length; i++) result.push(<option value={props.funds[i].id}>{props.funds[i].name}</option>);
+        for (let i = 0; i < props.funds.length; i++) result.push(<option key={i} value={props.funds[i].id}>{props.funds[i].name}</option>);
         return result;
     }
 

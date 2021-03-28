@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, Helper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper } from "./components";
+import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, Helper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper } from "./components";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { Row, Col, FormGroup, FormControl, FormLabel, Table } from "react-bootstrap";
 
@@ -13,17 +13,33 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
     const [fundDonations, setFundDonations] = React.useState<FundDonationInterface[]>([]);
     const [startDate, setStartDate] = React.useState<Date>(initialDate);
     const [endDate, setEndDate] = React.useState<Date>(new Date());
+    const [people, setPeople] = React.useState<{ [key: string]: string }>({});
 
     const getEditContent = () => { return (<ExportLink data={fundDonations} spaceAfter={true} filename="funddonations.csv" />) }
 
     const loadData = () => {
-        ApiHelper.get("/funds/" + match.params.id, "GivingApi").then(data => { console.log(data, "........"); setFund(data) });
+        ApiHelper.get("/funds/" + match.params.id, "GivingApi").then(data => { setFund(data) });
         loadDonations();
     }
 
     const loadDonations = () => {
         ApiHelper.get("/funddonations?fundId=" + match.params.id + "&startDate=" + Helper.formatHtml5Date(startDate) + "&endDate=" + Helper.formatHtml5Date(endDate), "GivingApi")
-            .then(data => { console.log(data, "donations...."); setFundDonations(data) });
+            .then((d: FundDonationInterface[]) => {
+                // fetch people who have made donations if any
+                const peopleIds = ArrayHelper.getUniqueValues(d, "donation.personId").filter(f => f !== null);
+                if (peopleIds.length > 0) {
+                    ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi")
+                        .then((people: PersonInterface[]) => { 
+                            const data: any = {};
+                            people.forEach((p) => {
+                                data[p.id] = p.name?.display;
+                            })
+
+                            setPeople(data);
+                        });
+                }
+                setFundDonations(d)
+            });
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +58,8 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
         for (let i = 0; i < fundDonations.length; i++) {
             var fd = fundDonations[i];
             var personCol = (UniqueIdHelper.isMissing(fd.donation?.personId)) ? (<td>Anonymous</td>)
-                : (<td><Link to={"/people/" + fd.donation?.personId}>{fd.donation.person?.name.display || "Anonymous"}</Link></td>);
-            result.push(<tr>
+                : (<td><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || "Anonymous"}</Link></td>);
+            result.push(<tr key={i}>
                 <td>{Helper.formatHtml5Date(fd.donation.donationDate)}</td>
                 <td><Link to={"/donations/" + fd.donation.batchId}>{fd.donation.batchId}</Link></td>
                 {personCol}

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React from "react";
 import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, Helper, Funds, UserHelper, ExportLink, DonationSummaryInterface, Permissions } from "./components";
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
@@ -9,7 +9,6 @@ import { ArrayHelper, DateHelper } from "../appBase/helpers";
 export const DonationsPage = () => {
     const [editBatchId, setEditBatchId] = React.useState("notset");
     const [batches, setBatches] = React.useState<DonationBatchInterface[]>([]);
-    const isSubscribed = useRef(true)
 
     const getFilter = (): ReportFilterInterface => {
         return ({
@@ -64,14 +63,14 @@ export const DonationsPage = () => {
         setEditBatchId(id);
     }
     const batchUpdated = () => { setEditBatchId("notset"); loadData(); }
-    const loadData = useCallback(() => {
-        ApiHelper.get("/donationbatches", "GivingApi").then(data => { if (isSubscribed.current) { setBatches(data); console.log(data) } });
-    }, [])
+    const loadData = () => {
+        ApiHelper.get("/donationbatches", "GivingApi").then(data => { setBatches(data); });
+    }
 
 
 
     const getEditContent = () => {
-        return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><a href="about:blank" onClick={showAddBatch} ><i className="fas fa-plus"></i></a></>) : null;
+        return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><a href="about:blank" data-cy="add-batch" onClick={showAddBatch} ><i className="fas fa-plus"></i></a></>) : null;
     }
 
 
@@ -89,7 +88,7 @@ export const DonationsPage = () => {
         var canViewBatcht = UserHelper.checkAccess(Permissions.givingApi.donations.view);
         for (let i = 0; i < batches.length; i++) {
             var b = batches[i];
-            const editLink = (canEdit) ? (<a href="about:blank" data-id={b.id} onClick={showEditBatch}><i className="fas fa-pencil-alt" /></a>) : null;
+            const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch}><i className="fas fa-pencil-alt" /></a>) : null;
             const batchLink = (canViewBatcht) ? (<Link to={"/donations/" + b.id}>{b.id}</Link>) : <>{b.id}</>;
             result.push(<tr key={i}>
                 <td>{batchLink}</td>
@@ -103,7 +102,7 @@ export const DonationsPage = () => {
         return result;
     }
 
-    React.useEffect(() => { loadData(); return () => { isSubscribed.current = false } }, [batches, editBatchId, loadData]);
+    React.useEffect(loadData, []);
 
     if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
     else return (
@@ -112,7 +111,7 @@ export const DonationsPage = () => {
             <ReportWithFilter fetchReport={loadReport} filter={getFilter()} />
             <Row>
                 <Col lg={8}>
-                    <DisplayBox id="batchesBox" headerIcon="fas fa-hand-holding-usd" headerText="Batches" editContent={getEditContent()}  >
+                    <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="fas fa-hand-holding-usd" headerText="Batches" editContent={getEditContent()}  >
                         <Table>
                             <tbody>
                                 <tr><th>Id</th><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></tr>

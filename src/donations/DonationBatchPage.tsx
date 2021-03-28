@@ -21,7 +21,7 @@ export const DonationBatchPage = ({ match }: RouteComponentProps<TParams>) => {
 
     const getSidebarModules = () => {
         var result = [];
-        if (editDonationId !== "notset") result.push(<DonationEdit donationId={editDonationId} updatedFunction={donationUpdated} funds={funds} batchId={batch.id} />)
+        if (editDonationId !== "notset") result.push(<DonationEdit key="donationEdit" donationId={editDonationId} updatedFunction={donationUpdated} funds={funds} batchId={batch.id} />)
         return result;
     }
 

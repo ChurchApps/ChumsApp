@@ -135,7 +135,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
             <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
             <div className="form-group">
                 <label>Notes</label>
-                <textarea className="form-control" name="notes" value={donation.notes} onChange={handleChange} onKeyDown={handleKeyDown}></textarea>
+                <textarea className="form-control" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown}></textarea>
             </div>
         </InputBox >
     );
