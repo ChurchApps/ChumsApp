@@ -11,7 +11,7 @@ export const Donations: React.FC<Props> = (props) => {
     const loadData = React.useCallback(() => { ApiHelper.get("/donations?batchId=" + props.batch?.id, "GivingApi").then(data => populatePeople(data)); }, [props.batch]);
     const showAddDonation = (e: React.MouseEvent) => { e.preventDefault(); props.addFunction() }
     const getEditContent = () => {
-        return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={donations} spaceAfter={true} filename="donations.csv" /><a href="about:blank" onClick={showAddDonation} ><i className="fas fa-plus"></i></a></>) : null;
+        return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={donations} spaceAfter={true} filename="donations.csv" /><a href="about:blank" data-cy="make-donation" onClick={showAddDonation} ><i className="fas fa-plus"></i></a></>) : null;
     }
 
     const populatePeople = async (data: DonationInterface[]) => {
@@ -35,7 +35,7 @@ export const Donations: React.FC<Props> = (props) => {
         var canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
         for (let i = 0; i < donations.length; i++) {
             var d = donations[i];
-            const editLink = (canEdit) ? (<a href="about:blank" onClick={showEditDonation} data-id={d.id}>{d.id}</a>) : (<>{d.id}</>);
+            const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-link-${i}`} onClick={showEditDonation} data-id={d.id}>{d.id}</a>) : (<>{d.id}</>);
             rows.push(<tr key={i}>
                 <td>{editLink}</td>
                 <td>{d.person?.name.display || "Anonymous"}</td>
