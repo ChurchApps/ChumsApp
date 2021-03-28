@@ -61,7 +61,7 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
                 : (<td><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || "Anonymous"}</Link></td>);
             result.push(<tr key={i}>
                 <td>{Helper.formatHtml5Date(fd.donation.donationDate)}</td>
-                <td><Link to={"/donations/" + fd.donation.batchId}>{fd.donation.batchId}</Link></td>
+                <td><Link data-cy={`batchId-${fd.donation.batchId}-${i}`} to={"/donations/" + fd.donation.batchId}>{fd.donation.batchId}</Link></td>
                 {personCol}
                 <td>{Helper.formatCurrency(fd.amount)}</td>
             </tr>);
