@@ -26,7 +26,7 @@ export const FundEdit: React.FC<Props> = (props) => {
         <InputBox id="fundsBox" headerIcon="fas fa-hand-holding-usd" headerText="Edit Fund" cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete} >
             <div className="form-group">
                 <label>Name</label>
-                <input name="fundName" type="text" className="form-control" value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <input name="fundName" type="text" data-cy="fund-name" className="form-control" value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />
             </div>
         </InputBox >
 

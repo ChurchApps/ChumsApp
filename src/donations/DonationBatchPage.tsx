@@ -21,7 +21,7 @@ export const DonationBatchPage = ({ match }: RouteComponentProps<TParams>) => {
 
     const getSidebarModules = () => {
         var result = [];
-        if (editDonationId !== "notset") result.push(<DonationEdit donationId={editDonationId} updatedFunction={donationUpdated} funds={funds} batchId={batch.id} />)
+        if (editDonationId !== "notset") result.push(<DonationEdit key="donationEdit" donationId={editDonationId} updatedFunction={donationUpdated} funds={funds} batchId={batch.id} />)
         return result;
     }
 
@@ -30,9 +30,9 @@ export const DonationBatchPage = ({ match }: RouteComponentProps<TParams>) => {
     if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return (<></>);
     return (
         <>
-            <h1><i className="fas fa-hand-holding-usd"></i> Batch #{batch.id}</h1>
+            <h1 data-cy="batch-heading"><i className="fas fa-hand-holding-usd"></i> Batch #{batch.id}</h1>
             <Row>
-                <Col lg={8}><Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} /></Col>
+                <Col lg={8}><Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} funds={funds} /></Col>
                 <Col lg={4}>{getSidebarModules()}</Col>
             </Row>
         </>

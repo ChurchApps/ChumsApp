@@ -13,7 +13,7 @@ export const FundDonation: React.FC<Props> = (props) => {
 
     const getOptions = () => {
         var result = [];
-        for (let i = 0; i < props.funds.length; i++) result.push(<option value={props.funds[i].id}>{props.funds[i].name}</option>);
+        for (let i = 0; i < props.funds.length; i++) result.push(<option key={i} value={props.funds[i].id}>{props.funds[i].name}</option>);
         return result;
     }
 
@@ -35,7 +35,7 @@ export const FundDonation: React.FC<Props> = (props) => {
             <Col>
                 <FormGroup>
                     <FormLabel>Amount</FormLabel>
-                    <FormControl name="amount" type="number" lang="en-150" min="0.00" step="0.01" value={props.fundDonation.amount} onChange={handleChange} />
+                    <FormControl name="amount" type="number" data-cy="amount" lang="en-150" min="0.00" step="0.01" value={props.fundDonation.amount} onChange={handleChange} />
                 </FormGroup>
             </Col>
             <Col>

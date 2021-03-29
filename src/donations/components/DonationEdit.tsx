@@ -26,7 +26,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
 
     const handleCancel = () => { props.updatedFunction(); }
     const handleDelete = () => { ApiHelper.delete("/donations/" + donation.id, "GivingApi").then(() => { props.updatedFunction() }); }
-    const getDeleteFunction = () => { return (UniqueIdHelper.isMissing(props.donationId)) ? handleDelete : undefined; }
+    const getDeleteFunction = () => { return (UniqueIdHelper.isMissing(props.donationId)) ? undefined : handleDelete; }
 
     const handleSave = () => {
         ApiHelper.post("/donations", [donation], "GivingApi").then(data => {
@@ -106,7 +106,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
         else {
             var personText = (donation.person === undefined || donation.person === null) ? ("Anonymous") : donation.person.name.display;
             return (<div>
-                <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowSelectPerson(true); }}>{personText}</a>
+                <a href="about:blank" data-cy="donating-person" onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowSelectPerson(true); }}>{personText}</a>
             </div>);
         }
     }
@@ -114,7 +114,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
     React.useEffect(loadData, [props.donationId]);
 
     return (
-        <InputBox id="donationBox" headerIcon="fas fa-hand-holding-usd" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} >
+        <InputBox id="donationBox" data-cy="donation-box" headerIcon="fas fa-hand-holding-usd" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} >
             <div className="form-group">
                 <label>Person</label>
                 {getPersonSection()}
@@ -135,7 +135,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
             <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
             <div className="form-group">
                 <label>Notes</label>
-                <textarea className="form-control" name="notes" value={donation.notes} onChange={handleChange} onKeyDown={handleKeyDown}></textarea>
+                <textarea className="form-control" data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown}></textarea>
             </div>
         </InputBox >
     );
