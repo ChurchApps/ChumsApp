@@ -1,9 +1,9 @@
 import React from "react";
-import { ApiHelper, UserHelper, DonationInterface, Helper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper } from ".";
+import { ApiHelper, UserHelper, DonationInterface, Helper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface } from ".";
 import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
 
-interface Props { batch: DonationBatchInterface, addFunction: () => void, editFunction: (id: string) => void }
+interface Props { batch: DonationBatchInterface, funds: FundInterface[], addFunction: () => void, editFunction: (id: string) => void }
 
 export const Donations: React.FC<Props> = (props) => {
     const [donations, setDonations] = React.useState<DonationInterface[]>([]);
@@ -11,6 +11,7 @@ export const Donations: React.FC<Props> = (props) => {
     const loadData = React.useCallback(() => { ApiHelper.get("/donations?batchId=" + props.batch?.id, "GivingApi").then(data => populatePeople(data)); }, [props.batch]);
     const showAddDonation = (e: React.MouseEvent) => { e.preventDefault(); props.addFunction() }
     const getEditContent = () => {
+        if (props.funds.length === 0) return null;
         return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={donations} spaceAfter={true} filename="donations.csv" /><a href="about:blank" data-cy="make-donation" onClick={showAddDonation} ><i className="fas fa-plus"></i></a></>) : null;
     }
 
@@ -32,6 +33,11 @@ export const Donations: React.FC<Props> = (props) => {
 
     const getRows = () => {
         var rows: React.ReactNode[] = [];
+        if (props.funds.length === 0) {
+            rows.push(<tr key="0" data-cy="error-message">No fund found. Please create a fund before making a donation</tr>)
+            return rows;
+        }
+        rows.push(<tr><th>Id</th><th>Name</th><th>Date</th><th>Amount</th></tr>);
         var canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
         for (let i = 0; i < donations.length; i++) {
             var d = donations[i];
@@ -52,8 +58,7 @@ export const Donations: React.FC<Props> = (props) => {
     return (
         <DisplayBox id="donationsBox" headerIcon="fas fa-hand-holding-usd" headerText="Donations" editContent={getEditContent()} >
             <Table>
-                <tbody>
-                    <tr><th>Id</th><th>Name</th><th>Date</th><th>Amount</th></tr>
+                <tbody>                            
                     {getRows()}
                 </tbody>
             </Table>

@@ -32,7 +32,7 @@ export const DonationBatchPage = ({ match }: RouteComponentProps<TParams>) => {
         <>
             <h1 data-cy="batch-heading"><i className="fas fa-hand-holding-usd"></i> Batch #{batch.id}</h1>
             <Row>
-                <Col lg={8}><Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} /></Col>
+                <Col lg={8}><Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} funds={funds} /></Col>
                 <Col lg={4}>{getSidebarModules()}</Col>
             </Row>
         </>
