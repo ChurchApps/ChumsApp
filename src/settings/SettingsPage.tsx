@@ -1,16 +1,30 @@
 import React from "react";
-import { UserHelper, BigLinkButton, Permissions } from "./components";
+import { UserHelper, BigLinkButton, Permissions, ChurchAppInterface, ApiHelper, ArrayHelper, EnvironmentHelper } from "./components";
 import { Row } from "react-bootstrap";
 
 export const SettingsPage = () => {
+    const [churchApps, setChurchApps] = React.useState<ChurchAppInterface[]>([]);
+
+    const getLoginLink = (church: ChurchAppInterface): string => {
+        const jwt = ApiHelper.getConfig("AccessApi").jwt;
+
+        return EnvironmentHelper.AccountsAppUrl + "/login/?jwt=" + jwt + "&churchId=" + church.churchId.toString();
+    }
+
     const getLinks = () => {
+        const accessMangementApp = ArrayHelper.getOne(churchApps, "appName", "AccessManagement");
+
         var result = [];
-        if (UserHelper.checkAccess(Permissions.accessApi.settings.edit)) result.push(<BigLinkButton key={result.length - 2} href="/settings/import" icon="fas fa-upload" text="Import Data" />);
-        if (UserHelper.checkAccess(Permissions.accessApi.settings.edit)) result.push(<BigLinkButton key={result.length - 1} href="/settings/export" icon="fas fa-download" text="Export Data" />);
-        if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) result.push(<BigLinkButton key={result.length} href="/settings/roles" icon="fas fa-lock" text="Manage Permissions" />);
-        if (UserHelper.checkAccess(Permissions.attendanceApi.settings.edit)) result.push(<BigLinkButton key={result.length - 3} href="/settings/church" icon="fas fa-church" text="Church Settings" />);
+        if (UserHelper.checkAccess(Permissions.accessApi.settings.edit)) result.push(<BigLinkButton key="import" href="/settings/import" icon="fas fa-upload" text="Import Data" />);
+        if (UserHelper.checkAccess(Permissions.accessApi.settings.edit)) result.push(<BigLinkButton key="export" href="/settings/export" icon="fas fa-download" text="Export Data" />);
+        if (accessMangementApp) result.push(<BigLinkButton key="managePermissions" outsideLink={true} href={getLoginLink(accessMangementApp)} icon="fas fa-lock" text="Manage Permissions" />);
+        if (UserHelper.checkAccess(Permissions.attendanceApi.settings.edit)) result.push(<BigLinkButton key="churchSettings" href="/settings/church" icon="fas fa-church" text="Church Settings" />);
         return result;
     }
+
+    React.useEffect(() => {
+        ApiHelper.get('/churchApps/', "AccessApi").then(data => setChurchApps(data));
+    }, [])
 
     return (
         <>
