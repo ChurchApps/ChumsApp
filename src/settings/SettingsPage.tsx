@@ -23,7 +23,7 @@ export const SettingsPage = () => {
     }
 
     React.useEffect(() => {
-        ApiHelper.get('/churchApps/', "AccessApi").then(data => setChurchApps(data));
+        UserHelper.getChurchApps().then(apps => { setChurchApps(apps) });
     }, [])
 
     return (
