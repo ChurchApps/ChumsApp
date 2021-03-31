@@ -44,12 +44,24 @@ export const PersonEdit: React.FC<Props> = (props) => {
             case "city": p.contactInfo.city = val; break;
             case "state": p.contactInfo.state = val; break;
             case "zip": p.contactInfo.zip = val; break;
-            case "homePhone": p.contactInfo.homePhone = val; break;
-            case "workPhone": p.contactInfo.workPhone = val; break;
-            case "mobilePhone": p.contactInfo.mobilePhone = val; break;
+            case "homePhone": p.contactInfo.homePhone = formattedPhoneNumber(val); break;
+            case "workPhone": p.contactInfo.workPhone = formattedPhoneNumber(val); break;
+            case "mobilePhone": p.contactInfo.mobilePhone = formattedPhoneNumber(val); break;
             case "email": p.contactInfo.email = val; break;
         }
         setPerson(p);
+    }
+
+    const formattedPhoneNumber = (value: string) => {
+        value = value.replace(/[^0-9-]/g, "");
+        value = value.replaceAll("-", "");
+  
+        if(value.length > 3 && value.length <= 6) 
+          value = value.slice(0,3) + "-" + value.slice(3);
+        else if(value.length > 6) 
+          value = value.slice(0,3) + "-" + value.slice(3,6) + "-" + value.slice(6);
+        
+        return value;
     }
 
     const handleCancel = () => props.updatedFunction(person);
@@ -277,15 +289,15 @@ export const PersonEdit: React.FC<Props> = (props) => {
                             <div className="section">Phone</div>
                             <FormGroup>
                                 <FormLabel>Home</FormLabel>
-                                <FormControl type="text" name="homePhone" data-cy="homePhone" value={person?.contactInfo?.homePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                                <FormControl type="text" name="homePhone" maxLength={12} data-cy="homePhone" value={person?.contactInfo?.homePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
                             </FormGroup>
                             <FormGroup>
                                 <FormLabel>Work</FormLabel>
-                                <FormControl type="text" name="workPhone" data-cy="workPhone" value={person?.contactInfo?.workPhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                                <FormControl type="text" name="workPhone" maxLength={12} data-cy="workPhone" value={person?.contactInfo?.workPhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
                             </FormGroup>
                             <FormGroup>
                                 <FormLabel>Mobile</FormLabel>
-                                <FormControl type="text" name="mobilePhone" data-cy="mobilePhone" value={person?.contactInfo?.mobilePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                                <FormControl type="text" name="mobilePhone" maxLength={12} data-cy="mobilePhone" value={person?.contactInfo?.mobilePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
                             </FormGroup>
                         </Col>
                         <Col xs={3}>
