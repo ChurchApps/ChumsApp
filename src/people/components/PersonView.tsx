@@ -27,8 +27,8 @@ export const PersonView: React.FC<Props> = (props) => {
         var p = props.person;
         if (p.gender !== undefined) leftAttributes.push(<div key="gender"><label>Gender:</label> {p.gender}</div>);
         if (p.birthDate !== undefined) leftAttributes.push(<div key="age"><label>Age:</label> {PersonHelper.getAge(p.birthDate)}</div>);
-        if (p.maritalStatus !== undefined) {
-            if (p.anniversary !== undefined) leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> {p.maritalStatus} ({new Date(p.anniversary).toLocaleDateString()})</div>);
+        if (p.maritalStatus && p.maritalStatus !== "Single") {
+            if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> {p.maritalStatus} ({new Date(p.anniversary).toLocaleDateString()})</div>);
             else leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> {p.maritalStatus}</div>);
         }
         if (p.membershipStatus !== undefined) leftAttributes.push(<div key="membership"><label>Membership:</label> {p.membershipStatus}</div>);
