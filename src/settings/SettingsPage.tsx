@@ -8,7 +8,7 @@ export const SettingsPage = () => {
     const getLoginLink = (church: ChurchAppInterface): string => {
         const jwt = ApiHelper.getConfig("AccessApi").jwt;
 
-        return EnvironmentHelper.AccountsAppUrl + "/login/?jwt=" + jwt + "&churchId=" + church.churchId.toString();
+        return `${EnvironmentHelper.AccountsAppUrl}/login/?jwt=${jwt}&returnUrl=/churches/${church.churchId.toString()}/CHUMS`;
     }
 
     const getLinks = () => {
