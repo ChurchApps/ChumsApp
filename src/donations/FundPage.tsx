@@ -90,11 +90,11 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
                     <InputBox headerIcon="fas fa-filter" headerText="Donation Filter" saveFunction={loadDonations} saveText="Filter" >
                         <FormGroup>
                             <FormLabel>Start Date</FormLabel>
-                            <FormControl name="startDate" type="date" value={Helper.formatHtml5Date(startDate)} onChange={handleChange} />
+                            <FormControl name="startDate" type="date" data-cy="start-date" value={Helper.formatHtml5Date(startDate)} onChange={handleChange} />
                         </FormGroup>
                         <FormGroup>
                             <FormLabel>End Date</FormLabel>
-                            <FormControl name="endDate" type="date" value={Helper.formatHtml5Date(endDate)} onChange={handleChange} />
+                            <FormControl name="endDate" type="date" data-cy="end-date" value={Helper.formatHtml5Date(endDate)} onChange={handleChange} />
                         </FormGroup>
                     </InputBox >
                 </Col>
