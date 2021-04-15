@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, UserHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, Permissions } from "./components";
+import { ApiHelper, UserHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, Permissions, PersonHelper } from "./components";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
@@ -31,7 +31,7 @@ export const GroupPage = ({ match }: RouteComponentProps<TParams>) => {
     const getSidebarModules = () => {
         const result = [] as JSX.Element[];
         if (addSessionVisible) result.push(<SessionAdd key="sessionAdd" group={group} updatedFunction={handleSessionAdd} />);
-        if (addPersonVisible) result.push(<DisplayBox key="displayBox" id="personAddBox" headerIcon="fas fa-user" headerText="Add Person"><PersonAdd addFunction={addPerson} /></DisplayBox>);
+        if (addPersonVisible) result.push(<DisplayBox key="displayBox" id="personAddBox" headerIcon="fas fa-user" headerText="Add Person"><PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} /></DisplayBox>);
         if (addMemberVisible) result.push(<MembersAdd key="membersAdd" group={group} addFunction={addPerson} />);
         return result;
     }

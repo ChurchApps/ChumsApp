@@ -1,4 +1,4 @@
-export { ErrorMessages, ExportLink, DisplayBox, InputBox } from "../appBase/components"
+export { ErrorMessages, ExportLink, DisplayBox, InputBox, PersonAdd } from "../appBase/components"
 export * from '../helpers'
 export { Header } from './Header'
 export { Footer } from './Footer'
@@ -8,7 +8,6 @@ export { FormSubmissionEdit } from './FormSubmissionEdit'
 export { NavItems } from './NavItems'
 export { Note } from './Note'
 export { Notes } from './Notes'
-export { PersonAdd } from './PersonAdd'
 export { Question } from './Question'
 export { QuestionEdit } from './QuestionEdit'
 export { Search } from './Search'

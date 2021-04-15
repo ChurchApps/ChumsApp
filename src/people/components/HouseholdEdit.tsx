@@ -102,7 +102,7 @@ export const HouseholdEdit: React.FC<Props> = (props) => {
         }
     }
 
-    var personAdd = (showAdd) ? <PersonAdd addFunction={handlePersonAdd} person={props.person} /> : null;
+    var personAdd = (showAdd) ? <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={props.person} /> : null;
     return (
         <>
             <UpdateHouseHold show={showUpdateAddressModal} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} text={text} />
