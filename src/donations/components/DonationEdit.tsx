@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, FundDonations, Helper, PersonInterface, UniqueIdHelper } from ".";
+import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, FundDonations, Helper, PersonInterface, UniqueIdHelper, PersonHelper } from ".";
 
 
 interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
@@ -98,7 +98,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
 
     const getPersonSection = () => {
         if (showSelectPerson) return (<>
-            <PersonAdd addFunction={handlePersonAdd} />
+            <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} />
             <hr />
             <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); handlePersonAdd(null); }}>Anonymous</a>
         </>
