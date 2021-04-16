@@ -8,6 +8,7 @@ REACT_APP_MEMBERSHIP_API=https://membershipapi.staging.churchapps.org
 
 REACT_APP_CONTENT_ROOT=https://content.staging.churchapps.org
 REACT_APP_ACCOUNTS_APP=https://accounts.staging.churchapps.org
+REACT_APP_CHURCH_APPS=https://staging.churchapps.org
 
 #Optional - UA-123456789-1
 REACT_APP_GOOGLE_ANALYTICS=
