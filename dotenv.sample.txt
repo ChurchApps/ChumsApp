@@ -11,5 +11,3 @@ REACT_APP_ACCOUNTS_APP=https://accounts.staging.churchapps.org
 
 #Optional - UA-123456789-1
 REACT_APP_GOOGLE_ANALYTICS=
-
-REACT_APP_SUPPORT_EMAIL=

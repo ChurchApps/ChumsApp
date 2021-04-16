@@ -9,7 +9,6 @@ export class EnvironmentHelper {
     static ContentRoot = "";
     static AccountsAppUrl = "";
     static GoogleAnalyticsTag = "";
-    static supportEmail = process.env.REACT_APP_SUPPORT_EMAIL;
 
     static init = () => {
         switch (process.env.REACT_APP_STAGE) {
