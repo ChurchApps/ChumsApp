@@ -89,7 +89,7 @@ export const GroupsPage = () => {
       return rows;
     }
 
-    rows.push(<tr><th>Category</th><th>Name</th><th>People</th></tr>);
+    rows.push(<tr key="header"><th>Category</th><th>Name</th><th>People</th></tr>);
     return rows;
   }
 
