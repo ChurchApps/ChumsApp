@@ -24,35 +24,35 @@ export const PersonView: React.FC<Props> = (props) => {
     var leftAttributes = [];
     var contactMethods = [];
     if (props.person) {
-        var p = props.person;
-        if (p.gender !== undefined) leftAttributes.push(<div key="gender"><label>Gender:</label> {p.gender}</div>);
-        if (p.birthDate !== undefined) leftAttributes.push(<div key="age"><label>Age:</label> {PersonHelper.getAge(p.birthDate)}</div>);
+        const p = {...props.person};
+        if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>Gender:</label> {p.gender}</div>);
+        if (p.birthDate) leftAttributes.push(<div key="age"><label>Age:</label> {PersonHelper.getAge(p.birthDate)}</div>);
         if (p.maritalStatus && p.maritalStatus !== "Single") {
             if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> {p.maritalStatus} ({new Date(p.anniversary).toLocaleDateString()})</div>);
             else leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> {p.maritalStatus}</div>);
         }
-        if (p.membershipStatus !== undefined) leftAttributes.push(<div key="membership"><label>Membership:</label> {p.membershipStatus}</div>);
+        if (p.membershipStatus) leftAttributes.push(<div key="membership"><label>Membership:</label> {p.membershipStatus}</div>);
 
         var homeLabel = "Home";
-        if (p.contactInfo.email !== undefined && p.contactInfo.email !== "") {
+        if (p.contactInfo.email) {
             contactMethods.push(<tr key="email"><td><label>{homeLabel}</label></td><td><i className="far fa-envelope"></i></td><td><a href={"mailto:" + p.contactInfo.email}>{p.contactInfo.email}</a></td></tr>);
             homeLabel = "";
         }
-        if (p.contactInfo.homePhone !== undefined && p.contactInfo.homePhone !== "") {
+        if (p.contactInfo.homePhone) {
             contactMethods.push(<tr key="homePhone"><td><label>{homeLabel}</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.homePhone}</td></tr>);
             homeLabel = "";
         }
 
-        if (p.contactInfo.address1 !== undefined && p.contactInfo.address1 !== "") {
+        if (p.contactInfo.address1) {
             var lines = [];
             lines.push(<div key="address1">{p.contactInfo.address1}</div>);
-            if (p.contactInfo.address2 !== "") lines.push(<div key="address2">{p.contactInfo.address2}</div>);
+            if (p.contactInfo.address2) lines.push(<div key="address2">{p.contactInfo.address2}</div>);
             lines.push(<div key="contactInfo">{p.contactInfo.city}, {p.contactInfo.state} {p.contactInfo.zip}</div>);
 
             contactMethods.push(<tr key="address"><td><label>{homeLabel}</label></td><td><i className="fas fa-map-marker-alt"></i></td><td>{lines}</td></tr>);
         }
-        if (p.contactInfo.mobilePhone !== undefined && p.contactInfo.mobilePhone !== "") contactMethods.push(<tr key="mobilePHone"><td><label>Mobile</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.mobilePhone}</td></tr>);
-        if (p.contactInfo.workPhone !== undefined && p.contactInfo.workPhone !== "") contactMethods.push(<tr key="workPhone"><td><label>Work</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.workPhone}</td></tr>);
+        if (p.contactInfo.mobilePhone) contactMethods.push(<tr key="mobilePHone"><td><label>Mobile</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.mobilePhone}</td></tr>);
+        if (p.contactInfo.workPhone) contactMethods.push(<tr key="workPhone"><td><label>Work</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.workPhone}</td></tr>);
     }
 
     return (
