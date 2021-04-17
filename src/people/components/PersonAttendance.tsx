@@ -21,7 +21,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
         var rows: JSX.Element[] = [];
  
         if (records.length === 0) {
-            rows.push(<tr key="0"><td>Attendance will appear once service has been attended.</td></tr>);
+            rows.push(<tr key="0">Attendance will appear once service has been attended.</tr>);
             return rows;
         }
 

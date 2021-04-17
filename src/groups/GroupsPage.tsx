@@ -51,7 +51,7 @@ export const GroupsPage = () => {
     var rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
-      rows.push(<tr key="0"><td>No groups found. Please create a group.</td></tr>);
+      rows.push(<tr key="0">No groups found. Please create a group.</tr>);
       return rows;
     }
 

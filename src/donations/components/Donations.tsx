@@ -37,6 +37,10 @@ export const Donations: React.FC<Props> = (props) => {
             rows.push(<tr key="0" data-cy="error-message">No fund found. Please create a fund before making a donation</tr>)
             return rows;
         }
+        if (donations.length === 0) {
+            rows.push(<tr key="0">No donations made! Start donating and they will show up here.</tr>)
+            return rows;
+        }
         rows.push(<tr><th>Id</th><th>Name</th><th>Date</th><th>Amount</th></tr>);
         var canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
         for (let i = 0; i < donations.length; i++) {

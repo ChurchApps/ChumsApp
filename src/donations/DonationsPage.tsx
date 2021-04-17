@@ -83,7 +83,13 @@ export const DonationsPage = () => {
     }
 
     const getRows = () => {
-        var result: React.ReactNode[] = [];
+        const result: JSX.Element[] = [];
+
+        if (batches.length === 0) {
+            result.push(<tr key="0">No batches found.</tr>)
+            return result;
+        }
+
         var canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
         var canViewBatcht = UserHelper.checkAccess(Permissions.givingApi.donations.view);
         for (let i = 0; i < batches.length; i++) {
@@ -102,6 +108,17 @@ export const DonationsPage = () => {
         return result;
     }
 
+    const getTableHeader = () => {
+        const rows: JSX.Element[] = [];
+
+        if (batches.length === 0) {
+            return rows;
+        }
+
+        rows.push(<tr key="header"><th>Id</th><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></tr>);
+        return rows;
+    }
+
     React.useEffect(loadData, []);
 
     if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
@@ -113,10 +130,8 @@ export const DonationsPage = () => {
                 <Col lg={8}>
                     <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="fas fa-hand-holding-usd" headerText="Batches" editContent={getEditContent()}  >
                         <Table>
-                            <tbody>
-                                <tr><th>Id</th><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></tr>
-                                {getRows()}
-                            </tbody>
+                            <thead>{getTableHeader()}</thead>
+                            <tbody>{getRows()}</tbody>
                         </Table>
                     </DisplayBox >
                 </Col>

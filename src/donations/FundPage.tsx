@@ -54,7 +54,13 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
     }
 
     const getRows = () => {
-        var result = [];
+        var result: JSX.Element[] = [];
+
+        if (fundDonations.length === 0) {
+            result.push(<tr key="0">No donations yet!</tr>);
+            return result;
+        }
+
         for (let i = 0; i < fundDonations.length; i++) {
             var fd = fundDonations[i];
             var personCol = (UniqueIdHelper.isMissing(fd.donation?.personId)) ? (<td>Anonymous</td>)
@@ -70,6 +76,17 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
         return result;
     }
 
+    const getTableHeader = () => {
+        const rows: JSX.Element[] = [];
+
+        if (fundDonations.length === 0) {
+            return rows;
+        }
+
+        rows.push(<tr key="header"><th>Date</th><th>Batch</th><th>Donor</th><th>Amount</th></tr>);
+        return rows;
+    }
+
 
     React.useEffect(loadData, [match.params.id]);
 
@@ -81,7 +98,7 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
                 <Col lg={8}>
                     <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations" editContent={getEditContent()}>
                         <Table>
-                            <thead><tr><th>Date</th><th>Batch</th><th>Donor</th><th>Amount</th></tr></thead>
+                            <thead>{getTableHeader()}</thead>
                             <tbody>{getRows()}</tbody>
                         </Table>
                     </DisplayBox>

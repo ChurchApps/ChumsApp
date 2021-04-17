@@ -19,7 +19,7 @@ export const Groups: React.FC<Props> = (props) => {
             items.push(<tr key={gm.id}><td><i className="fas fa-list"></i> <Link to={"/groups/" + gm.groupId}>{gm.group.name}</Link></td></tr>);
         }
     } else {
-        items.push(<tr key="0"><td>Not part of any group yet.</td></tr>);
+        items.push(<tr key="0">Not part of any group yet.</tr>);
     }
 
     return <DisplayBox headerIcon="fas fa-list" headerText="Groups"><Table size="sm"><tbody>{items}</tbody></Table></DisplayBox>

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { ApiHelper, FundInterface, FundEdit, DisplayBox, UserHelper, Permissions } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
@@ -6,9 +6,10 @@ import { Table } from "react-bootstrap";
 export const Funds: React.FC = () => {
     const [funds, setFunds] = React.useState<FundInterface[]>([]);
     const [editFund, setEditFund] = React.useState<FundInterface>(null);
-    const isSubscribed = useRef(true);
 
-    const loadData = () => ApiHelper.get("/funds", "GivingApi").then(data => { if (isSubscribed.current) { setFunds(data) } });
+    const loadData = () => {
+        ApiHelper.get("/funds", "GivingApi").then(data => { setFunds(data) });
+    }
     const handleFundUpdated = () => { loadData(); setEditFund(null); }
     const getEditSection = () => {
         if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<a href="about:blank" data-cy="add-fund" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditFund({ id: "", name: "" }) }}><i className="fas fa-plus"></i></a>);
@@ -23,7 +24,13 @@ export const Funds: React.FC = () => {
     }
 
     const getRows = () => {
-        var result = [];
+        const result: JSX.Element[] = [];
+
+        if (funds.length === 0) {
+            result.push(<tr key="0">No funds found.</tr>);
+            return result;
+        }
+
         var canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
         var canViewIndividual = UserHelper.checkAccess(Permissions.givingApi.donations.view);
         for (let i = 0; i < funds.length; i++) {
@@ -40,7 +47,7 @@ export const Funds: React.FC = () => {
         return result;
     }
 
-    React.useEffect(() => { loadData(); return () => { isSubscribed.current = false } }, []);
+    React.useEffect(loadData, []);
 
     if (editFund === null) return (
         <DisplayBox id="fundsBox" headerIcon="fas fa-hand-holding-usd" data-cy="funds-box" headerText="Funds" editContent={getEditSection()} >

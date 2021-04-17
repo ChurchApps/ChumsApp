@@ -13,7 +13,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
         var rows: JSX.Element[] = [];
 
         if (donations.length === 0) {
-            rows.push(<tr key="0"><td>Donations will appear once a donation has been made.</td></tr>);
+            rows.push(<tr key="0">Donations will appear once a donation has been made.</tr>);
             return rows;
         }
 
@@ -36,7 +36,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
         const rows: JSX.Element[] = []
 
         if (donations.length > 0) {
-            rows.push(<tr><th>Batch</th><th>Date</th><th>Method</th><th>Fund</th><th>Amount</th></tr>);
+            rows.push(<tr key="header"><th>Batch</th><th>Date</th><th>Method</th><th>Fund</th><th>Amount</th></tr>);
         }
 
         return rows;

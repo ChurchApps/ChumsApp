@@ -50,7 +50,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
         var rows: JSX.Element[] = [];
 
         if (groupMembers.length === 0) {
-            rows.push(<tr key="0"><td>No group members found.</td></tr>)
+            rows.push(<tr key="0">No group members found.</tr>)
             return rows;
         }
 

@@ -40,7 +40,7 @@ export const AttendancePage = () => {
         const rows: JSX.Element[] = [];
 
         if (attendance.length === 0) {
-            rows.push(<tr key="0"><td>Group attendance will show up once people start attending group meetings.</td></tr>);
+            rows.push(<tr key="0">Group attendance will show up once people start attending group meetings.</tr>);
             return rows;
         }
 
