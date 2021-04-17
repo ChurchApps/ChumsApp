@@ -11,7 +11,11 @@ export const FormsPage = () => {
     const loadData = () => { ApiHelper.get("/forms", "MembershipApi").then(data => { if (isSubscribed.current) { setForms(data) } }); }
 
     const getRows = () => {
-        var result = [];
+        const result: JSX.Element[] = [];
+        if (forms.length === 0) {
+            result.push(<tr key="0">No forms found! Create one and they will start appearing here.</tr>);
+            return result;
+        }
         const canEdit = UserHelper.checkAccess(Permissions.membershipApi.forms.edit)
         for (let i = 0; i < forms.length; i++) {
             const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${forms[i].name}`} onClick={(e: React.MouseEvent) => { e.preventDefault(); setSelectedFormId(forms[i].id); }}><i className="fas fa-pencil-alt"></i></a>) : null;
@@ -21,6 +25,15 @@ export const FormsPage = () => {
             </tr>);
         }
         return result;
+    }
+
+    const getTableHeader = () => {
+        const rows: JSX.Element[] = [];
+        if (forms.length === 0) {
+            return rows;
+        }
+        rows.push(<tr key="header"><th colSpan={2}>Name</th></tr>);
+        return rows;
     }
 
     const handleUpdate = () => { loadData(); setSelectedFormId("notset"); }
@@ -45,7 +58,7 @@ export const FormsPage = () => {
                 <Col lg={8}>
                     <DisplayBox id="formsBox" headerText="Forms" headerIcon="fas fa-align-left" editContent={getEditContent()} >
                         <Table>
-                            <thead><tr><th colSpan={2}>Name</th></tr></thead>
+                            <thead>{getTableHeader()}</thead>
                             <tbody>{getRows()}</tbody>
                         </Table>
                     </DisplayBox>

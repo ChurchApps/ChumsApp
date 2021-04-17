@@ -41,7 +41,7 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
         if (question.fieldType === "Multiple Choice") return (<ChoicesEdit question={question} updatedFunction={handleChoicesUpdated} />)
         else return (<div className="form-group">
             <label>Placeholder (optional)</label>
-            <input type="text" className="form-control" data-cy="placeholder" name="placeholder" value={question.placeholder} onChange={handleChange} />
+            <input type="text" className="form-control" data-cy="placeholder" name="placeholder" value={question.placeholder || ""} onChange={handleChange} />
         </div>);
     }
 

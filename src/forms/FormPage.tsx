@@ -47,7 +47,11 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
 
 
     const getRows = () => {
-        var rows = [];
+        const rows: JSX.Element[] = [];
+        if (questions.length === 0) {
+            rows.push(<tr key="0">No question found! Add a question and they will be listed here.</tr>);
+            return rows;
+        }
         for (let i = 0; i < questions.length; i++) {
             var upArrow = (i === 0) ? <span style={{ display: "inline-block", width: 20 }} /> : <><a href="about:blank" onClick={moveUp}><i className="fas fa-arrow-up" /></a> </>
             var downArrow = (i === questions.length - 1) ? <></> : <> &nbsp; <a href="about:blank" onClick={moveDown}><i className="fas fa-arrow-down" /></a></>
@@ -62,9 +66,18 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
         return rows;
     }
 
+    const getTableHeader = () => {
+        const rows: JSX.Element[] = [];
+        if (questions.length === 0) {
+            return rows;
+        }
+        rows.push(<tr key="header"><th>Question</th><th>Type</th><th>Action</th></tr>);
+        return rows;
+    }
+
     const getSidebarModules = () => {
         var result = [];
-        if (editQuestionId !== "notset") result.push(<FormQuestionEdit questionId={editQuestionId} updatedFunction={questionUpdated} formId={form.id} />)
+        if (editQuestionId !== "notset") result.push(<FormQuestionEdit key="form-questions" questionId={editQuestionId} updatedFunction={questionUpdated} formId={form.id} />)
         return result;
     }
 
@@ -79,7 +92,7 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
                 <Col lg={8}>
                     <DisplayBox id="questionsBox" headerText="Questions" headerIcon="fas fa-question" editContent={getEditContent()} >
                         <Table>
-                            <thead><tr><th>Question</th><th>Type</th><th>Action</th></tr></thead>
+                            <thead>{getTableHeader()}</thead>
                             <tbody>{getRows()}</tbody>
                         </Table>
                     </DisplayBox>
