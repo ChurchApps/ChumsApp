@@ -37,7 +37,13 @@ export const AttendancePage = () => {
     React.useEffect(() => { loadData(); }, []);
 
     const getRows = () => {
-        var rows = [];
+        const rows: JSX.Element[] = [];
+
+        if (attendance.length === 0) {
+            rows.push(<tr key="0">Group attendance will show up once people start attending group meetings.</tr>);
+            return rows;
+        }
+
         for (var i = 0; i < attendance.length; i++) {
             const a = attendance[i];
             const filteredGroups = (a.serviceTime === undefined) ? [] : getGroups(a.serviceTime.id);
@@ -98,6 +104,17 @@ export const AttendancePage = () => {
         );
     }
 
+    const getTableHeader = () => {
+        const rows: JSX.Element[] = [];
+
+        if (attendance.length === 0) {
+            return rows;
+        }
+
+        rows.push(<tr key="header"><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></tr>);
+        return rows;
+    }
+
     /*
     const handleFilterUpdated = (f: AttendanceFilterInterface) => {
         setFilter({ ...f });
@@ -111,7 +128,7 @@ export const AttendancePage = () => {
                 <Col lg={8}>
                     <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="fas fa-list" headerText="Groups" editContent={getEditLinks()} >
                         <Table size="sm">
-                            <thead><tr><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></tr></thead>
+                            <thead>{getTableHeader()}</thead>
                             <tbody>{getRows()}</tbody>
                         </Table >
                     </DisplayBox >

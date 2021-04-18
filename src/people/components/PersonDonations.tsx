@@ -11,6 +11,12 @@ export const PersonDonations: React.FC<Props> = (props) => {
     const loadData = () => { if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/donations?personId=" + props.personId, "GivingApi").then(data => setDonations(data)); }
     const getRows = () => {
         var rows: JSX.Element[] = [];
+
+        if (donations.length === 0) {
+            rows.push(<tr key="0">Donations will appear once a donation has been made.</tr>);
+            return rows;
+        }
+
         for (let i = 0; i < donations.length; i++) {
             var d = donations[i];
             rows.push(
@@ -26,12 +32,22 @@ export const PersonDonations: React.FC<Props> = (props) => {
         return rows;
     }
 
+    const getTableHeader = () => {
+        const rows: JSX.Element[] = []
+
+        if (donations.length > 0) {
+            rows.push(<tr key="header"><th>Batch</th><th>Date</th><th>Method</th><th>Fund</th><th>Amount</th></tr>);
+        }
+
+        return rows;
+    }
+
     React.useEffect(loadData, [props.personId]);
 
     return (
         <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations" >
             <Table>
-                <thead><tr><th>Batch</th><th>Date</th><th>Method</th><th>Fund</th><th>Amount</th></tr></thead>
+                <thead>{getTableHeader()}</thead>
                 <tbody>{getRows()}</tbody>
             </Table>
         </DisplayBox>

@@ -23,7 +23,11 @@ export const MembersAdd: React.FC<Props> = (props) => {
     }
 
     const getRows = () => {
-        var rows = [];
+        const rows: JSX.Element[] = [];
+        if (groupMembers.length === 0) {
+            rows.push(<tr>No group members available.</tr>);
+            return rows;
+        }
         for (let i = 0; i < groupMembers.length; i++) {
             var gm = groupMembers[i];
             rows.push(
@@ -37,12 +41,22 @@ export const MembersAdd: React.FC<Props> = (props) => {
         return rows;
     }
 
+    const getTableHeader = () => {
+        const rows: JSX.Element[] = [];
+
+        if (groupMembers.length === 0) {
+            return rows;
+        }
+        rows.push(<tr><th></th><th>Name</th><th>Action</th></tr>);
+        return rows;
+    }
+
     React.useEffect(() => { if (props.group !== null) loadData(); return () => { isSubscribed.current = false } }, [props.group, loadData]);
 
     return (
         <DisplayBox headerIcon="fas fa-user" headerText="Available Group Members" data-cy="available-group-members" >
             <Table className="personSideTable">
-                <thead><tr><th></th><th>Name</th><th>Action</th></tr></thead>
+                <thead>{getTableHeader()}</thead>
                 <tbody>{getRows()}</tbody>
             </Table>
         </DisplayBox>

@@ -19,6 +19,11 @@ export const PersonAttendance: React.FC<Props> = (props) => {
 
     const getRows = () => {
         var rows: JSX.Element[] = [];
+ 
+        if (records.length === 0) {
+            rows.push(<tr key="0">Attendance will appear once service has been attended.</tr>);
+            return rows;
+        }
 
         var lastVisitDate = new Date(2000, 1, 1);
         var lastCampusId = "notset";
@@ -60,6 +65,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
     }
 
     React.useEffect(loadData, [props.personId]);
+
 
     return (
         <DisplayBox headerIcon="far fa-calendar-alt" headerText="Attendance" >

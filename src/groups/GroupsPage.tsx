@@ -45,12 +45,16 @@ export const GroupsPage = () => {
     });
   };
 
-  React.useEffect(() => {
-    loadData();
-  }, []);
+  React.useEffect(loadData, []);
 
   const getRows = () => {
-    var rows = [];
+    var rows: JSX.Element[] = [];
+
+    if (groups.length === 0) {
+      rows.push(<tr key="0">No groups found. Please create a group.</tr>);
+      return rows;
+    }
+
     var lastCat = "";
     for (var i = 0; i < groups.length; i++) {
       var g = groups[i];
@@ -79,6 +83,16 @@ export const GroupsPage = () => {
     return rows;
   };
 
+  const getTableHeader = () => {
+    const rows: JSX.Element[] = [];
+    if (groups.length === 0) {
+      return rows;
+    }
+
+    rows.push(<tr key="header"><th>Category</th><th>Name</th><th>People</th></tr>);
+    return rows;
+  }
+
   var addBox = showAdd ? (
     <GroupAdd updatedFunction={handleAddUpdated} />
   ) : (
@@ -101,13 +115,7 @@ export const GroupsPage = () => {
               editContent={getEditContent()}
             >
               <Table>
-                <thead>
-                  <tr>
-                    <th>Category</th>
-                    <th>Name</th>
-                    <th>People</th>
-                  </tr>
-                </thead>
+                <thead>{getTableHeader()}</thead>
                 <tbody>{getRows()}</tbody>
               </Table>
             </DisplayBox>

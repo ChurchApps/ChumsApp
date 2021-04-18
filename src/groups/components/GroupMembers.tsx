@@ -47,7 +47,13 @@ export const GroupMembers: React.FC<Props> = (props) => {
 
     const getRows = () => {
         var canEdit = UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit);
-        var rows = [];
+        var rows: JSX.Element[] = [];
+
+        if (groupMembers.length === 0) {
+            rows.push(<tr key="0">No group members found.</tr>)
+            return rows;
+        }
+
         for (let i = 0; i < groupMembers.length; i++) {
             var gm = groupMembers[i];
             var editLink = (canEdit) ? <a href="about:blank" onClick={handleRemove} data-index={i} data-cy={`remove-member-${i}`} className="text-danger" ><i className="fas fa-user-times"></i> Remove</a> : <></>
@@ -59,6 +65,16 @@ export const GroupMembers: React.FC<Props> = (props) => {
                 </tr>
             );
         }
+        return rows;
+    }
+
+    const getTableHeader = () => {
+        const rows: JSX.Element[] = [];
+        if (groupMembers.length === 0) {
+            return rows;
+        }
+
+        rows.push(<tr key="header"><th></th><th>Name</th><th>Action</th></tr>);
         return rows;
     }
 
@@ -76,7 +92,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
     return (
         <DisplayBox id="groupMembersBox" data-cy="group-members-tab" headerText="Group Members" headerIcon="fas fa-users" editContent={getEditContent()} >
             <Table id="groupMemberTable">
-                <thead><tr><th></th><th>Name</th><th>Action</th></tr></thead>
+                <thead>{getTableHeader()}</thead>
                 <tbody>{getRows()}</tbody>
             </Table>
         </DisplayBox>
