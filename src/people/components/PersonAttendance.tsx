@@ -19,9 +19,9 @@ export const PersonAttendance: React.FC<Props> = (props) => {
 
     const getRows = () => {
         var rows: JSX.Element[] = [];
- 
+
         if (records.length === 0) {
-            rows.push(<tr key="0">Attendance will appear once service has been attended.</tr>);
+            rows.push(<tr key="0">No attendance records.  Attendance will appear once attendance has been tracked for a group session.</tr>);
             return rows;
         }
 

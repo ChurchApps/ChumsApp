@@ -13,7 +13,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
         var rows: JSX.Element[] = [];
 
         if (donations.length === 0) {
-            rows.push(<tr key="0">Donations will appear once a donation has been made.</tr>);
+            rows.push(<tr key="0">Donations will appear once a donation has been entered.</tr>);
             return rows;
         }
 

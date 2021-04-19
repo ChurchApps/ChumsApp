@@ -49,7 +49,7 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
     const getRows = () => {
         const rows: JSX.Element[] = [];
         if (questions.length === 0) {
-            rows.push(<tr key="0">No question found! Add a question and they will be listed here.</tr>);
+            rows.push(<tr key="0">No custom questions have been created yet.  Questions will be listed here.</tr>);
             return rows;
         }
         for (let i = 0; i < questions.length; i++) {

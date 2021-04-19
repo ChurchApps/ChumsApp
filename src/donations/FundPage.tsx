@@ -29,7 +29,7 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
                 const peopleIds = ArrayHelper.getUniqueValues(d, "donation.personId").filter(f => f !== null);
                 if (peopleIds.length > 0) {
                     ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi")
-                        .then((people: PersonInterface[]) => { 
+                        .then((people: PersonInterface[]) => {
                             const data: any = {};
                             people.forEach((p) => {
                                 data[p.id] = p.name?.display;
@@ -57,7 +57,7 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
         var result: JSX.Element[] = [];
 
         if (fundDonations.length === 0) {
-            result.push(<tr key="0">No donations yet!</tr>);
+            result.push(<tr key="0">No donations yet</tr>);
             return result;
         }
 

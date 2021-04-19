@@ -13,7 +13,7 @@ export const FormsPage = () => {
     const getRows = () => {
         const result: JSX.Element[] = [];
         if (forms.length === 0) {
-            result.push(<tr key="0">No forms found! Create one and they will start appearing here.</tr>);
+            result.push(<tr key="0">No custom forms have been created yet.  They will appearing here when added.</tr>);
             return result;
         }
         const canEdit = UserHelper.checkAccess(Permissions.membershipApi.forms.edit)

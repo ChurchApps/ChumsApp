@@ -38,7 +38,7 @@ export const Donations: React.FC<Props> = (props) => {
             return rows;
         }
         if (donations.length === 0) {
-            rows.push(<tr key="0">No donations made! Start donating and they will show up here.</tr>)
+            rows.push(<tr key="0">No donations have been tracked. Once donations are entered they will show up here.</tr>)
             return rows;
         }
         rows.push(<tr><th>Id</th><th>Name</th><th>Date</th><th>Amount</th></tr>);
@@ -62,7 +62,7 @@ export const Donations: React.FC<Props> = (props) => {
     return (
         <DisplayBox id="donationsBox" headerIcon="fas fa-hand-holding-usd" headerText="Donations" editContent={getEditContent()} >
             <Table>
-                <tbody>                            
+                <tbody>
                     {getRows()}
                 </tbody>
             </Table>
