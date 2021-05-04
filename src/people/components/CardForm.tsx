@@ -10,11 +10,11 @@ export const CardForm: React.FC<Props> = (props) => {
     const stripe = useStripe();
     const elements = useElements();
     const formStyling = { style: { base: { fontSize: '18px' } } };
+    const [showSave, setShowSave] = React.useState(true);
     const handleCancel = () => { props.setMode('display'); }
     const handleSave = () => { setShowSave(false); props.card.id ? updateCard() : createCard(); }
     const saveDisabled = () => {}
     const handleDelete = () => { props.deletePayment(); }
-    const [showSave, setShowSave] = React.useState(true);
 
     const handleKeyPress = (e: React.KeyboardEvent<any>) => {
         const pattern = /^\d+$/;
