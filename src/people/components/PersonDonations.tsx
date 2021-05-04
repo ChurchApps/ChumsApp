@@ -8,13 +8,9 @@ interface Props { personId: string }
 
 export const PersonDonations: React.FC<Props> = (props) => {
     const [donations, setDonations] = React.useState<DonationInterface[]>([]);
-    const [gateway, setGateway] = React.useState(null);
 
     const loadData = () => {
-        if (!UniqueIdHelper.isMissing(props.personId)) {
-            ApiHelper.get("/donations?personId=" + props.personId, "GivingApi").then(data => setDonations(data));
-            ApiHelper.get("/gateways", "GivingApi").then(data => setGateway(data));
-        }
+        if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/donations?personId=" + props.personId, "GivingApi").then(data => setDonations(data));
     }
 
     const getRows = () => {
@@ -54,7 +50,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
 
     return (
         <>
-            <PersonPaymentMethods gateway={gateway} personId={props.personId}></PersonPaymentMethods>
+            <PersonPaymentMethods personId={props.personId}></PersonPaymentMethods>
             <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations">
                 <Table>
                     <thead>{getTableHeader()}</thead>

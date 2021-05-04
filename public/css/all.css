@@ -29,6 +29,10 @@ h1 {
   margin-bottom: 25px;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 .btn-warning,
 .btn-warning:hover {
   color: #fff;
