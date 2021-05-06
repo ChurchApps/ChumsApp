@@ -34,14 +34,18 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
     const loadData = () => {
         if (!UniqueIdHelper.isMissing(props.personId)) {
             ApiHelper.get("/gateways", "GivingApi").then(data => {
-                if (data.length && data?.publicKey) {
+                if (data.length && data[0]?.publicKey) {
                     setStripe(loadStripe(data[0].publicKey));
                     ApiHelper.get("/paymentmethods/personid/" + props.personId, "GivingApi").then(results => {
-                        let cards = results.cards.data.map((card: any) => new PaymentMethod(card));
-                        let banks = results.banks.data.map((bank: any) => new PaymentMethod(bank));
-                        let methods = cards.concat(banks);
-                        setPaymentMethods(methods);
-                        setCustomerId(results.customer.customerId);
+                        if (results.lenth) {
+                            let cards = results.cards.data.map((card: any) => new StripePaymentMethod(card));
+                            let banks = results.banks.data.map((bank: any) => new StripePaymentMethod(bank));
+                            let methods = cards.concat(banks);
+                            setPaymentMethods(methods);
+                            setCustomerId(results.customer.customerId);
+                        } else {
+                            setPaymentMethods([]);
+                        }
                     });
                     ApiHelper.get("/people/" + props.personId, "MembershipApi").then(data => { setPerson(data) });
                 }
