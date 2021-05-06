@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { InputBox, ApiHelper, PaymentMethod, PersonInterface } from ".";
+import { InputBox, ApiHelper, StripePaymentMethod, PersonInterface, PaymentMethodInterface, StripeCardUpdateInterface } from ".";
 
-interface Props { card: PaymentMethod, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: any }
+interface Props { card: StripePaymentMethod, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: any }
 
 export const CardForm: React.FC<Props> = (props) => {
     const form = useRef(null);
@@ -11,6 +11,8 @@ export const CardForm: React.FC<Props> = (props) => {
     const elements = useElements();
     const formStyling = { style: { base: { fontSize: '18px' } } };
     const [showSave, setShowSave] = React.useState(true);
+    const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethodInterface>({ customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email });
+    const [cardUpdate, setCardUpdate] = React.useState<StripeCardUpdateInterface>({ paymentMethodId: props.card.id } as StripeCardUpdateInterface);
     const handleCancel = () => { props.setMode('display'); }
     const handleSave = () => { setShowSave(false); props.card.id ? updateCard() : createCard(); }
     const saveDisabled = () => {}
@@ -23,21 +25,25 @@ export const CardForm: React.FC<Props> = (props) => {
 
     const createCard = async () => {
         const cardData = elements.getElement(CardElement);
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const stripePM = await stripe.createPaymentMethod({
             type: 'card',
             card: cardData
         });
-        const newCard = { paymentMethod, customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email };
-        const result = await ApiHelper.post("/paymentmethods/addcard", newCard, "GivingApi");
-        props.updateList(new PaymentMethod(result));
-        props.setMode('display');
+        let pm = { ...paymentMethod };
+        pm.id = stripePM.paymentMethod.id;
+        setPaymentMethod(pm);
+        await ApiHelper.post("/paymentmethods/addcard", paymentMethod, "GivingApi").then(result => {
+            props.updateList(new StripePaymentMethod(result));
+            props.setMode('display');
+        });
     }
 
     const updateCard = async () => {
-        const expMonth = form.current['exp-month'].value;
-        const expYear = form.current['exp-year'].value;
-        const card = {paymentMethodId: props.card.id, cardData: {card: {exp_month: expMonth, exp_year: expYear}}};
-        ApiHelper.post("/paymentmethods/updatecard", card, "GivingApi");
+        let cu = { ...cardUpdate };
+        cu.cardData.card.exp_month = form.current['exp-month'].value;
+        cu.cardData.card.exp_year = form.current['exp-year'].value;
+        setCardUpdate(cu);
+        ApiHelper.post("/paymentmethods/updatecard", cu, "GivingApi");
         props.setMode('display');
     }
 

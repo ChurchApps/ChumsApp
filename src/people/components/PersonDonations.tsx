@@ -60,4 +60,3 @@ export const PersonDonations: React.FC<Props> = (props) => {
         </>
     );
 }
-

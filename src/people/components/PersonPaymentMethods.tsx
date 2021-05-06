@@ -2,19 +2,19 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { DisplayBox, ApiHelper, UniqueIdHelper, UserHelper, Permissions, PaymentMethod, PersonInterface, CardForm, BankForm } from ".";
+import { DisplayBox, ApiHelper, UniqueIdHelper, UserHelper, Permissions, StripePaymentMethod, PersonInterface, CardForm, BankForm } from ".";
 
 interface Props { personId: string }
 
 export const PersonPaymentMethods: React.FC<Props> = (props) => {
-    const [editPaymentMethod, setEditPaymentMethod] = React.useState<PaymentMethod>(new PaymentMethod());
-    const [paymentMethods, setPaymentMethods] = React.useState<PaymentMethod[]>(null);
+    const [editPaymentMethod, setEditPaymentMethod] = React.useState<StripePaymentMethod>(new StripePaymentMethod());
+    const [paymentMethods, setPaymentMethods] = React.useState<StripePaymentMethod[]>(null);
     const [customerId, setCustomerId] = React.useState(null);
     const [mode, setMode] = React.useState("display");
     const [person, setPerson] = React.useState<PersonInterface>(null);
     const [stripePromise, setStripe] = React.useState<Promise<Stripe>>(null);
 
-    const handleEdit = (pm?: PaymentMethod) => (e: React.MouseEvent) =>{
+    const handleEdit = (pm?: StripePaymentMethod) => (e: React.MouseEvent) =>{
         e.preventDefault();
         setEditPaymentMethod(pm);
         setMode("edit");
@@ -56,14 +56,14 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
             <>
                 <a id="addBtnGroup" data-cy="add-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="about:blank" ><i className="fas fa-plus"></i></a>
                 <div className="dropdown-menu" aria-labelledby="addBtnGroup">
-                    <a className="dropdown-item" data-cy="add-card" href="about:blank" onClick={handleEdit(new PaymentMethod({type: 'card'}))} ><i className="fas fa-credit-card"></i> Add Card</a>
-                    <a className="dropdown-item" data-cy="add-bank" href="about:blank" onClick={handleEdit(new PaymentMethod({type: 'bank'}))} ><i className="fas fa-university"></i> Add Bank</a>
+                    <a className="dropdown-item" data-cy="add-card" href="about:blank" onClick={handleEdit(new StripePaymentMethod({type: 'card'}))} ><i className="fas fa-credit-card"></i> Add Card</a>
+                    <a className="dropdown-item" data-cy="add-bank" href="about:blank" onClick={handleEdit(new StripePaymentMethod({type: 'bank'}))} ><i className="fas fa-university"></i> Add Bank</a>
                 </div>
             </>
         );
     }
 
-    const getEditOptions = (pm: PaymentMethod) => {
+    const getEditOptions = (pm: StripePaymentMethod) => {
         if (!UserHelper.checkAccess(Permissions.givingApi.settings.edit)) return null;
         return <a data-cy="edit-button" onClick={handleEdit(pm)} href="about:blank" ><i className="fas fa-pencil-alt"></i></a>;
     }
@@ -71,7 +71,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
     const getPaymentRows = () => {
         let rows: JSX.Element[] = [];
 
-        paymentMethods.forEach((method: PaymentMethod) => {
+        paymentMethods.forEach((method: StripePaymentMethod) => {
             rows.push(
                 <tr key={method.id}>
                     <td className="capitalize">{method.name + ' ****' + method.last4}</td>
@@ -96,7 +96,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
         else return <div>No payment methods.</div>
     }
 
-    const updatePaymentList = (newPaymentMethod?: PaymentMethod) => {
+    const updatePaymentList = (newPaymentMethod?: StripePaymentMethod) => {
         const newPaymentMethodList = paymentMethods.slice();
         newPaymentMethodList.push(newPaymentMethod);
         setPaymentMethods(newPaymentMethodList);

@@ -1,13 +1,16 @@
 import React, { useRef } from "react";
 import { Row, Col, FormControl } from "react-bootstrap";
 import { useStripe } from '@stripe/react-stripe-js';
-import { InputBox, ApiHelper, PaymentMethod, PersonInterface } from ".";
+import { InputBox, ApiHelper, StripePaymentMethod, PaymentMethodInterface, PersonInterface, StripeBankAccountInterface, StripeBankAccountUpdateInterface } from ".";
 
-interface Props { bank: PaymentMethod, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: any }
+interface Props { bank: StripePaymentMethod, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: any }
 
 export const BankForm: React.FC<Props> = (props) => {
     const form = useRef(null);
     const stripe = useStripe();
+    const [newBankData, setNewBankData] = React.useState<StripeBankAccountInterface>({country: 'US', currency: 'usd'} as StripeBankAccountInterface);
+    const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethodInterface>({ customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email });
+    const [updateBankData, setUpdateBankData] = React.useState<StripeBankAccountUpdateInterface>({paymentMethodId: props.bank.id, customerId: props.customerId } as StripeBankAccountUpdateInterface);
     const [showSave, setShowSave] = React.useState(true);
     const handleSave = () => { setShowSave(false); props.bank.id ? updateBank() : createBank(); }
     const saveDisabled = () => {}
@@ -24,22 +27,23 @@ export const BankForm: React.FC<Props> = (props) => {
             routing_number: form.current['routing-number'].value
         }
 
-        const { token } = await stripe.createToken('bank_account', bankData);
-        const newBank = { token, customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email };
-        const result = await ApiHelper.post("/paymentmethods/addbankaccount", newBank, "GivingApi");
-        props.updateList(new PaymentMethod(result));
-        props.setMode('display');
+        const { token } = await stripe.createToken('bank_account', bankData)
+
+        const pm = { ...paymentMethod };
+        pm.id = token.id;
+        setPaymentMethod(pm);
+        ApiHelper.post("/paymentmethods/addbankaccount", paymentMethod, "GivingApi").then(result => {
+            props.updateList(new StripePaymentMethod(result));
+            props.setMode('display');
+        });
     }
 
-    const updateBank = async () => {
-        const accountHolderName = form.current['account-holder-name'].value;
-        const accountHolderType = form.current['account-holder-type'].value;
-        const bank = {
-            paymentMethodId: props.bank.id,
-            bankData: {account_holder_name: accountHolderName, account_holder_type: accountHolderType},
-            customerId: props.customerId
-        };
-        ApiHelper.post("/paymentmethods/updatebank", bank, "GivingApi");
+    const updateBank = () => {
+        const ub = { ...updateBankData };
+        ub.bankData.account_holder_name = form.current['account-holder-name'].value;
+        ub.bankData.account_holder_type = form.current['account-holder-type'].value;
+        setUpdateBankData(ub);
+        ApiHelper.post("/paymentmethods/updatebank", updateBankData, "GivingApi");
         props.setMode('display');
     }
 
