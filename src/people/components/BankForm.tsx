@@ -1,8 +1,7 @@
 import React from "react";
 import { Row, Col, FormControl } from "react-bootstrap";
 import { useStripe } from '@stripe/react-stripe-js';
-import { InputBox, ApiHelper, StripePaymentMethod, PaymentMethodInterface, PersonInterface, StripeBankAccountInterface, StripeBankAccountUpdateInterface } from ".";
-import { StripeBankAccountVerifyInterface } from "../../helpers";
+import { InputBox, ApiHelper, StripePaymentMethod, PaymentMethodInterface, PersonInterface, StripeBankAccountInterface, StripeBankAccountUpdateInterface, StripeBankAccountVerifyInterface } from ".";
 
 interface Props { bank: StripePaymentMethod, showVerifyForm: boolean, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: any }
 
