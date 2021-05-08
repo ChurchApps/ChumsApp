@@ -13,10 +13,12 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
     const [mode, setMode] = React.useState("display");
     const [person, setPerson] = React.useState<PersonInterface>(null);
     const [stripePromise, setStripe] = React.useState<Promise<Stripe>>(null);
+    const [verify, setVerify] = React.useState<boolean>(false);
 
-    const handleEdit = (pm?: StripePaymentMethod) => (e: React.MouseEvent) =>{
+    const handleEdit = (pm?: StripePaymentMethod, verifyAccount?: boolean) => (e: React.MouseEvent) => {
         e.preventDefault();
         setEditPaymentMethod(pm);
+        setVerify(verifyAccount)
         setMode("edit");
     }
 
@@ -36,21 +38,21 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
             ApiHelper.get("/gateways", "GivingApi").then(data => {
                 if (data.length && data[0]?.publicKey) {
                     setStripe(loadStripe(data[0].publicKey));
+                            console.log(props.personId);
                     ApiHelper.get("/paymentmethods/personid/" + props.personId, "GivingApi").then(results => {
-                        if (results.lenth) {
-                            let cards = results.cards.data.map((card: any) => new StripePaymentMethod(card));
-                            let banks = results.banks.data.map((bank: any) => new StripePaymentMethod(bank));
+                        if (results.length) {
+                            let cards = results[0].cards.data.map((card: any) => new StripePaymentMethod(card));
+                            let banks = results[0].banks.data.map((bank: any) => new StripePaymentMethod(bank));
                             let methods = cards.concat(banks);
                             setPaymentMethods(methods);
-                            setCustomerId(results.customer.customerId);
+                            setCustomerId(results[0].customer.customerId);
                         } else {
-                            setPaymentMethods([]);
+                            setPaymentMethods(results);
                         }
                     });
                     ApiHelper.get("/people/" + props.personId, "MembershipApi").then(data => { setPerson(data) });
                 }
             });
-
         }
     }
 
@@ -79,7 +81,8 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
             rows.push(
                 <tr key={method.id}>
                     <td className="capitalize">{method.name + ' ****' + method.last4}</td>
-                    <td>{getEditOptions(method)}</td>
+                    <td>{method?.status === 'new' && <a href="about:blank"  onClick={handleEdit(method, true)}>Verify Account</a> }</td>
+                    <td className="text-right">{getEditOptions(method)}</td>
                 </tr>
             );
         });
@@ -100,18 +103,11 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
         else return <div>No payment methods.</div>
     }
 
-    const updatePaymentList = (newPaymentMethod?: StripePaymentMethod) => {
-        const newPaymentMethodList = paymentMethods.slice();
-        newPaymentMethodList.push(newPaymentMethod);
-        setPaymentMethods(newPaymentMethodList);
-        setMode("display");
-    }
-
     const EditForm = () => {
         return (
             <Elements stripe={stripePromise}>
-                { editPaymentMethod.type === 'card' && <CardForm card={editPaymentMethod} customerId={customerId} person={person} setMode={setMode} deletePayment={handleDelete} updateList={updatePaymentList} /> }
-                { editPaymentMethod.type === 'bank' && <BankForm bank={editPaymentMethod} customerId={customerId} person={person} setMode={setMode} deletePayment={handleDelete} updateList={updatePaymentList} /> }
+                { editPaymentMethod.type === 'card' && <CardForm card={editPaymentMethod} customerId={customerId} person={person} setMode={setMode} deletePayment={handleDelete} updateList={loadData} /> }
+                { editPaymentMethod.type === 'bank' && <BankForm bank={editPaymentMethod} showVerifyForm={verify} customerId={customerId} person={person} setMode={setMode} deletePayment={handleDelete} updateList={loadData} /> }
             </Elements>
         );
     }
