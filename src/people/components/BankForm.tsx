@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, FormControl } from "react-bootstrap";
 import { useStripe } from '@stripe/react-stripe-js';
-import { InputBox, ApiHelper, StripePaymentMethod, PaymentMethodInterface, PersonInterface, StripeBankAccountInterface, StripeBankAccountUpdateInterface, StripeBankAccountVerifyInterface } from ".";
+import { InputBox, ApiHelper, StripePaymentMethod, PaymentMethodInterface, PersonInterface, StripeBankAccountInterface, StripeBankAccountUpdateInterface, StripeBankAccountVerifyInterface, ErrorMessages } from ".";
 
 interface Props { bank: StripePaymentMethod, showVerifyForm: boolean, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: any }
 
@@ -11,7 +11,8 @@ export const BankForm: React.FC<Props> = (props) => {
     const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethodInterface>({ customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email });
     const [updateBankData, setUpdateBankData] = React.useState<StripeBankAccountUpdateInterface>({ paymentMethodId: props.bank.id, customerId: props.customerId, bankData: {} } as StripeBankAccountUpdateInterface);
     const [verifyBankData, setVerifyBankData] = React.useState<StripeBankAccountVerifyInterface>({ paymentMethodId: props.bank.id, customerId: props.customerId, amountData: { amounts: [] } });
-    const [showSave, setShowSave] = React.useState(true);
+    const [showSave, setShowSave] = React.useState<boolean>(true);
+    const [errorMessage, setErrorMessage] = React.useState<string>(null);
     const saveDisabled = () => {}
     const handleCancel = () => { props.setMode('display'); }
     const handleDelete = () => { props.deletePayment(); }
@@ -24,12 +25,25 @@ export const BankForm: React.FC<Props> = (props) => {
     }
 
     const createBank = async () => {
-        const { token } = await stripe.createToken('bank_account', bankAccount)
-        const pm = { ...paymentMethod };
-        pm.id = token.id;
-        ApiHelper.post("/paymentmethods/addbankaccount", pm, "GivingApi").then(result => {
-            props.updateList();
-            props.setMode('display');
+        await stripe.createToken('bank_account', bankAccount).then(response => {
+            if (response?.error?.message) {
+                setErrorMessage(response.error.message);
+                setShowSave(true);
+            }
+            else {
+                const pm = { ...paymentMethod };
+                pm.id = response.token.id;
+                ApiHelper.post("/paymentmethods/addbankaccount", pm, "GivingApi").then(result => {
+                    if (result?.raw?.message) {
+                        setErrorMessage(result.raw.message);
+                        setShowSave(true);
+                    }
+                    else {
+                        props.updateList();
+                        props.setMode('display');
+                    }
+                });
+            }
         });
     }
 
@@ -43,9 +57,16 @@ export const BankForm: React.FC<Props> = (props) => {
 
     const verifyBank = () => {
         if (verifyBankData?.amountData?.amounts?.length === 2) {
-            ApiHelper.post("/paymentmethods/verifyBank", verifyBankData, "GivingApi");
-            props.updateList();
-            props.setMode('display');
+            ApiHelper.post("/paymentmethods/verifyBank", verifyBankData, "GivingApi").then(response => {
+                if (response?.raw?.message) {
+                    setErrorMessage(response.raw.message);
+                    setShowSave(true);
+                }
+                else {
+                    props.updateList();
+                    props.setMode('display');
+                }
+            });
         }
     }
 
@@ -75,6 +96,7 @@ export const BankForm: React.FC<Props> = (props) => {
 
     return (
         <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.bank.id && !props.showVerifyForm ? handleDelete : undefined}>
+            { errorMessage && <ErrorMessages errors={[errorMessage]}></ErrorMessages> }
             <form style={{margin: "10px"}}>
                 { props.showVerifyForm
                     ?   <Row>

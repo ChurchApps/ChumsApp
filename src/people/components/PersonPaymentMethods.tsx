@@ -38,7 +38,6 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
             ApiHelper.get("/gateways", "GivingApi").then(data => {
                 if (data.length && data[0]?.publicKey) {
                     setStripe(loadStripe(data[0].publicKey));
-                            console.log(props.personId);
                     ApiHelper.get("/paymentmethods/personid/" + props.personId, "GivingApi").then(results => {
                         if (results.length) {
                             let cards = results[0].cards.data.map((card: any) => new StripePaymentMethod(card));
