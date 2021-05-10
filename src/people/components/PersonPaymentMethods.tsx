@@ -44,7 +44,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
                             let banks = results[0].banks.data.map((bank: any) => new StripePaymentMethod(bank));
                             let methods = cards.concat(banks);
                             setPaymentMethods(methods);
-                            setCustomerId(results[0].customer.customerId);
+                            setCustomerId(results[0].customer.id);
                         } else {
                             setPaymentMethods(results);
                         }
