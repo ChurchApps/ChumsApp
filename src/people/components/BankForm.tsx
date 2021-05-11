@@ -7,9 +7,9 @@ interface Props { bank: StripePaymentMethod, showVerifyForm: boolean, customerId
 
 export const BankForm: React.FC<Props> = (props) => {
     const stripe = useStripe();
-    const [bankAccount, setBankAccount] = React.useState<StripeBankAccountInterface>({ account_holder_type: 'individual', country: 'US', currency: 'usd' } as StripeBankAccountInterface);
+    const [bankAccount, setBankAccount] = React.useState<StripeBankAccountInterface>({ account_holder_name: props.bank.account_holder_name, account_holder_type: props.bank.account_holder_type, country: 'US', currency: 'usd' } as StripeBankAccountInterface);
     const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethodInterface>({ customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email });
-    const [updateBankData, setUpdateBankData] = React.useState<StripeBankAccountUpdateInterface>({ paymentMethodId: props.bank.id, customerId: props.customerId, bankData: {} } as StripeBankAccountUpdateInterface);
+    const [updateBankData, setUpdateBankData] = React.useState<StripeBankAccountUpdateInterface>({ paymentMethodId: props.bank.id, customerId: props.customerId, bankData: { account_holder_name: props.bank.account_holder_name, account_holder_type: props.bank.account_holder_type} } as StripeBankAccountUpdateInterface);
     const [verifyBankData, setVerifyBankData] = React.useState<StripeBankAccountVerifyInterface>({ paymentMethodId: props.bank.id, customerId: props.customerId, amountData: { amounts: [] } });
     const [showSave, setShowSave] = React.useState<boolean>(true);
     const [errorMessage, setErrorMessage] = React.useState<string>(null);
@@ -52,6 +52,7 @@ export const BankForm: React.FC<Props> = (props) => {
         bank.bankData.account_holder_name = bankAccount.account_holder_name;
         bank.bankData.account_holder_type = bankAccount.account_holder_type;
         ApiHelper.post("/paymentmethods/updatebank", bank, "GivingApi");
+        props.updateList();
         props.setMode('display');
     }
 
@@ -113,11 +114,11 @@ export const BankForm: React.FC<Props> = (props) => {
                         <Row>
                             <Col>
                                 <label>Account Holder Name</label>
-                                <input type="text" name="account_holder_name" placeholder="Account Holder Name" className="form-control" onChange={handleChange} />
+                                <input type="text" name="account_holder_name" placeholder="Account Holder Name" value={bankAccount.account_holder_name} className="form-control" onChange={handleChange} />
                             </Col>
                             <Col>
                                 <label>Account Holder Type</label>
-                                <FormControl as="select" name="account_holder_type" data-cy="account-holder-type" onChange={handleChange} >
+                                <FormControl as="select" name="account_holder_type" data-cy="account-holder-type" value={bankAccount.account_holder_type} onChange={handleChange} >
                                     <option value="individual">Individual</option>
                                     <option value="company">Company</option>
                                 </FormControl>
