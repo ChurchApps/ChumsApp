@@ -2,13 +2,17 @@ import React from "react";
 import { DisplayBox, ApiHelper, Helper, DonationInterface, UniqueIdHelper } from ".";
 import { Link } from "react-router-dom"
 import { Table } from "react-bootstrap";
+import { PersonPaymentMethods } from "./PersonPaymentMethods";
 
 interface Props { personId: string }
 
 export const PersonDonations: React.FC<Props> = (props) => {
     const [donations, setDonations] = React.useState<DonationInterface[]>([]);
 
-    const loadData = () => { if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/donations?personId=" + props.personId, "GivingApi").then(data => setDonations(data)); }
+    const loadData = () => {
+        if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/donations?personId=" + props.personId, "GivingApi").then(data => setDonations(data));
+    }
+
     const getRows = () => {
         var rows: JSX.Element[] = [];
 
@@ -45,12 +49,14 @@ export const PersonDonations: React.FC<Props> = (props) => {
     React.useEffect(loadData, [props.personId]);
 
     return (
-        <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations" >
-            <Table>
-                <thead>{getTableHeader()}</thead>
-                <tbody>{getRows()}</tbody>
-            </Table>
-        </DisplayBox>
+        <>
+            <PersonPaymentMethods personId={props.personId}></PersonPaymentMethods>
+            <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations">
+                <Table>
+                    <thead>{getTableHeader()}</thead>
+                    <tbody>{getRows()}</tbody>
+                </Table>
+            </DisplayBox>
+        </>
     );
 }
-
