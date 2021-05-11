@@ -10,7 +10,7 @@ export const CardForm: React.FC<Props> = (props) => {
     const elements = useElements();
     const formStyling = { style: { base: { fontSize: '18px' } } };
     const [showSave, setShowSave] = React.useState(true);
-    const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethodInterface>({ id: props.card.id, customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email });
+    const [paymentMethod] = React.useState<PaymentMethodInterface>({ id: props.card.id, customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email });
     const [cardUpdate, setCardUpdate] = React.useState<StripeCardUpdateInterface>({ paymentMethodId: props.card.id, cardData: { card: {}} } as StripeCardUpdateInterface);
     const handleCancel = () => { props.setMode('display'); }
     const handleSave = () => { setShowSave(false); props.card.id ? updateCard() : createCard(); }
