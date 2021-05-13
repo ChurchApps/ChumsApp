@@ -76,8 +76,12 @@ export const PersonEdit: React.FC<Props> = (props) => {
         let errors: string[] = [];
         const { name: { first, last }, contactInfo: contactFromState, birthDate } = person;
 
-        if (!first) errors.push('First name is required');
-        if (!last) errors.push('Last name is requried');
+        if (!first.trim()) {
+            errors.push('First name is required');
+        } else person.name.first = first.trim();
+        if (!last.trim()) {
+            errors.push('Last name is requried');
+        } else person.name.last = last.trim();
         if (contactFromState.email && !ValidateHelper.email(contactFromState.email)) errors.push('Enter a valid email address');
         if (birthDate && birthDate > new Date()) errors.push('Enter a valid birth date');
 
