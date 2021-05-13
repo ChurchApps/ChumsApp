@@ -1,5 +1,5 @@
-import React from "react";
-import { ApiHelper, InputBox, QuestionInterface, ChoicesEdit, UniqueIdHelper } from ".";
+import React, { useState } from "react";
+import { ApiHelper, InputBox, QuestionInterface, ChoicesEdit, UniqueIdHelper, ErrorMessages } from ".";
 
 interface Props {
     questionId: string,
@@ -9,7 +9,8 @@ interface Props {
 
 
 export const FormQuestionEdit: React.FC<Props> = (props) => {
-    const [question, setQuestion] = React.useState<QuestionInterface>({} as QuestionInterface);
+    const [question, setQuestion] = useState<QuestionInterface>({} as QuestionInterface);
+    const [errors, setErrors] = useState<string[]>([]);
 
     const loadData = () => {
         if (!UniqueIdHelper.isMissing(props.questionId)) ApiHelper.get("/questions/" + props.questionId, "MembershipApi").then((data: QuestionInterface) => setQuestion(data));
@@ -29,7 +30,18 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
 
     const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
     const handleChoicesUpdated = (q: QuestionInterface) => { setQuestion(q); }
-    const handleSave = () => ApiHelper.post("/questions", [question], "MembershipApi").then(() => props.updatedFunction());
+    const handleSave = () => {
+        let errors: string[] = [];
+        if (!question.title?.trim()) errors.push('Please enter Title');
+        if (errors.length > 0) {
+            setErrors(errors);
+            setQuestion({ ...question, title: '' });
+            return;
+        }
+
+        setQuestion({ ...question, title: question.title.trim() });
+        ApiHelper.post("/questions", [question], "MembershipApi").then(() => props.updatedFunction());
+    }
     const handleCancel = () => props.updatedFunction();
     const handleDelete = () => {
         if (window.confirm("Are you sure you wish to permanently delete this question?")) {
@@ -51,6 +63,7 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
 
     return (
         <InputBox id="questionBox" headerIcon="fas fa-question" headerText="Edit Question" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(!UniqueIdHelper.isMissing(props.questionId)) ? handleDelete : undefined} >
+            <ErrorMessages errors={errors} />
             <div className="form-group">
                 <label>Question Type</label>
                 <select className="form-control" data-cy="type" name="fieldType" value={question.fieldType} onChange={handleChange} onKeyDown={handleKeyDown} >
