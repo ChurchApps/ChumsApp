@@ -1,5 +1,5 @@
-import React from "react";
-import { ApiHelper, Note, DisplayBox, InputBox, UserHelper, Permissions, UniqueIdHelper } from "./";
+import React, { useState } from "react";
+import { ApiHelper, Note, DisplayBox, InputBox, UserHelper, Permissions, UniqueIdHelper, ErrorMessages } from "./";
 
 interface Props {
   contentId: string;
@@ -7,8 +7,9 @@ interface Props {
 }
 
 export const Notes: React.FC<Props> = (props) => {
-  const [notes, setNotes] = React.useState([]);
-  const [noteText, setNoteText] = React.useState("");
+  const [notes, setNotes] = useState([]);
+  const [noteText, setNoteText] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setNoteText(e.currentTarget.value);
@@ -19,6 +20,16 @@ export const Notes: React.FC<Props> = (props) => {
       ).then((data) => setNotes(data));
   };
   const handleSave = () => {
+    const errors: string[] = [];
+    if (!noteText.trim()) errors.push('Enter some text for note.')
+
+    if (errors.length > 0) {
+      setErrors(errors);
+      setNoteText("");
+      return;
+    }
+
+    setErrors([]);
     var n = {
       contentId: props.contentId,
       contentType: props.contentType,
@@ -62,6 +73,7 @@ export const Notes: React.FC<Props> = (props) => {
       >
         {noteArray}
         <br />
+        <ErrorMessages errors={errors} />
         <div className="form-group">
           <label>Add a Note</label>
           <textarea

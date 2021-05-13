@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { PersonHelper, Helper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold } from "."
+import React, { useCallback, useState } from "react";
+import { PersonHelper, Helper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, ErrorMessages, ValidateHelper } from "."
 import { Redirect } from "react-router-dom";
 import { Row, Col, FormControl, FormGroup, FormLabel, Button } from "react-bootstrap";
 
@@ -13,11 +13,12 @@ interface Props {
 }
 
 export const PersonEdit: React.FC<Props> = (props) => {
-    const [person, setPerson] = React.useState<PersonInterface>({} as PersonInterface);
-    const [redirect, setRedirect] = React.useState("");
-    const [showUpdateAddressModal, setShowUpdateAddressModal] = React.useState<boolean>(false)
-    const [text, setText] = React.useState("");
-    const [members, setMembers] = React.useState<PersonInterface[]>(null)
+    const [person, setPerson] = useState<PersonInterface>({} as PersonInterface);
+    const [redirect, setRedirect] = useState("");
+    const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
+    const [text, setText] = useState("");
+    const [members, setMembers] = useState<PersonInterface[]>(null);
+    const [errors, setErrors] = useState<string[]>([]);
 
     const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
 
@@ -72,8 +73,24 @@ export const PersonEdit: React.FC<Props> = (props) => {
     }
 
     const handleSave = () => {
+        let errors: string[] = [];
+        const { name: { first, last }, contactInfo: contactFromState, birthDate } = person;
+
+        if (!first.trim()) {
+            errors.push('First name is required');
+        } else person.name.first = first.trim();
+        if (!last.trim()) {
+            errors.push('Last name is requried');
+        } else person.name.last = last.trim();
+        if (contactFromState.email && !ValidateHelper.email(contactFromState.email)) errors.push('Enter a valid email address');
+        if (birthDate && birthDate > new Date()) errors.push('Enter a valid birth date');
+
+        if (errors.length > 0) {
+            setErrors(errors);
+            return;
+        }
+
         const { contactInfo: contactFromProps } = props.person
-        const { contactInfo: contactFromState } = person
         if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, contactFromState)) {
             setText(`You updated the address to ${PersonHelper.addressToString(contactFromState)} for ${person.name.display}.  Would you like to apply that to the entire ${person.name.last} family?`)
             setShowUpdateAddressModal(true)
@@ -170,6 +187,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
             <>
                 <UpdateHouseHold show={showUpdateAddressModal} text={text} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} />
                 <InputBox id={props.id} data-cy="person-details-box" headerIcon="fas fa-user" headerText="Personal Details" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave} headerActionContent={<Button id="mergeButton" data-cy="merge-button" variant="primary" size="sm" onClick={handleMerge}>Merge</Button>} >
+                    <ErrorMessages errors={errors} />
                     <Row>
                         <Col sm={3} className="my-auto">{getPhoto()}</Col>
                         <Col sm={9}>
@@ -316,8 +334,4 @@ export const PersonEdit: React.FC<Props> = (props) => {
             </>
         )
     }
-
-
-
-
 }
