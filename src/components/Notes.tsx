@@ -73,6 +73,7 @@ export const Notes: React.FC<Props> = (props) => {
       >
         {noteArray}
         <br />
+        <ErrorMessages errors={errors} />
         <div className="form-group">
           <label>Add a Note</label>
           <textarea
@@ -84,7 +85,6 @@ export const Notes: React.FC<Props> = (props) => {
             value={noteText}
           />
         </div>
-        <ErrorMessages errors={errors} />
       </InputBox>
     );
 };

@@ -187,6 +187,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
             <>
                 <UpdateHouseHold show={showUpdateAddressModal} text={text} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} />
                 <InputBox id={props.id} data-cy="person-details-box" headerIcon="fas fa-user" headerText="Personal Details" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave} headerActionContent={<Button id="mergeButton" data-cy="merge-button" variant="primary" size="sm" onClick={handleMerge}>Merge</Button>} >
+                    <ErrorMessages errors={errors} />
                     <Row>
                         <Col sm={3} className="my-auto">{getPhoto()}</Col>
                         <Col sm={9}>
@@ -329,7 +330,6 @@ export const PersonEdit: React.FC<Props> = (props) => {
                             </FormGroup>
                         </Col>
                     </Row>
-                    <ErrorMessages errors={errors} />
                 </InputBox>
             </>
         )
