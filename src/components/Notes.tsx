@@ -51,7 +51,7 @@ export const Notes: React.FC<Props> = (props) => {
   var noteArray: React.ReactNode[] = [];
   for (var i = 0; i < notes.length; i++)
     noteArray.push(
-      <Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} />
+      <Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} updateFunction={loadNotes} />
     );
 
   var canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
