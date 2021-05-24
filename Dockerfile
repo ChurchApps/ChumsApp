@@ -1,17 +1,22 @@
-
+# pull official base image
 FROM node:12-alpine
 
-RUN apk update && \
-    apk add git
-
+# set working directory
 WORKDIR /app
 
-RUN git clone https://github.com/LiveChurchSolutions/ChumsApp.git .
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-RUN git submodule init && git submodule update
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install --silent
 
-RUN npm install
+# add app
+COPY . ./
 
-CMD npm run $ENVIRONMENT
+# start app
+CMD ["npm", "start"]
 
+# expose port
 EXPOSE 3101
