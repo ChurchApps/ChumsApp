@@ -31,8 +31,8 @@ export class EnvironmentHelper {
         EnvironmentHelper.GivingApi = process.env.REACT_APP_GIVING_API || "";
         EnvironmentHelper.MembershipApi = process.env.REACT_APP_MEMBERSHIP_API || "";
         EnvironmentHelper.ContentRoot = process.env.REACT_APP_CONTENT_ROOT || "";
-        EnvironmentHelper.AccountsAppUrl = process.env.REACT_APP_ACCOUNTS_APP || "";
-        EnvironmentHelper.ChurchAppsUrl = process.env.REACT_APP_CHURCH_APPS || "";
+        EnvironmentHelper.AccountsAppUrl = process.env.REACT_APP_ACCOUNTS_APP_URL || "";
+        EnvironmentHelper.ChurchAppsUrl = process.env.REACT_APP_CHURCH_APPS_URL || "";
         EnvironmentHelper.GoogleAnalyticsTag = process.env.REACT_APP_GOOGLE_ANALYTICS || "";
     }
 
