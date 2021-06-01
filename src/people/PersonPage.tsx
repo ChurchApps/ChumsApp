@@ -18,7 +18,7 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
     const getImageEditor = () => { return (editPhotoUrl === null) ? null : <ImageEditor updatedFunction={handlePhotoUpdated} doneFunction={handlePhotoDone} person={person} /> }
     const togglePhotoEditor = (show: boolean) => { setEditPhotoUrl((show) ? PersonHelper.getPhotoUrl(person) : null); }
     const getGroups = () => { return (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) ? <Groups personId={person?.id} /> : null }
-    const handleUpdated = (p: PersonInterface) => { setPerson(p); loadData(); }
+
     const handleShowSearch = () => {
         setShowMergeSearch(true)
     }
@@ -33,7 +33,7 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
     return (
         <Row>
             <Col lg={8}>
-                <Person id="personDetailsBox" person={person} photoUrl={photoUrl} togglePhotoEditor={togglePhotoEditor} updatedFunction={handleUpdated} showMergeSearch={handleShowSearch} />
+                <Person id="personDetailsBox" person={person} photoUrl={photoUrl} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
                 <Tabs personId={person?.id} />
             </Col>
             <Col lg={4}>

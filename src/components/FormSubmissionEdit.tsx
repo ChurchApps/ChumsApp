@@ -7,19 +7,17 @@ interface Props {
     contentType: string,
     contentId: string,
     formSubmissionId: string,
-    updatedFunction: (formId: string) => void
+    updatedFunction: () => void
 }
 
 export const FormSubmissionEdit: React.FC<Props> = (props) => {
     const [formSubmission, setFormSubmission] = React.useState(null);
 
-    const handleCancel = () => props.updatedFunction("");
-
     const getDeleteFunction = () => { return (!UniqueIdHelper.isMissing(formSubmission?.id)) ? handleDelete : undefined; }
     const handleDelete = () => {
         if (window.confirm("Are you sure you wish to delete this form data?")) {
             ApiHelper.delete("/formsubmissions/" + formSubmission.id, "MembershipApi").then(() => {
-                props.updatedFunction("");
+                props.updatedFunction();
             });
         }
     }
@@ -62,9 +60,8 @@ export const FormSubmissionEdit: React.FC<Props> = (props) => {
     const handleSave = () => {
         const fs = formSubmission;
         ApiHelper.post("/formsubmissions/", [fs], "MembershipApi")
-            .then(data => {
-                fs.id = data[0];
-                props.updatedFunction(fs.formId);
+            .then(() => {
+                props.updatedFunction();
             });
     }
 
@@ -80,10 +77,7 @@ export const FormSubmissionEdit: React.FC<Props> = (props) => {
         setFormSubmission(fs);
     }
 
-    const checkFormAdded = () => { if (!UniqueIdHelper.isMissing(props.addFormId)) loadData(); }
-
-    React.useEffect(loadData, [props.formSubmissionId]);
-    React.useEffect(checkFormAdded, [props.addFormId]);
+    React.useEffect(loadData, []);
 
     var questionList = [];
     if (formSubmission != null) {
@@ -91,7 +85,7 @@ export const FormSubmissionEdit: React.FC<Props> = (props) => {
         for (var i = 0; i < questions.length; i++) questionList.push(<QuestionEdit key={questions[i].id} question={questions[i]} answer={getAnswer(questions[i].id)} changeFunction={handleChange} />);
     }
 
-    return <InputBox id="formSubmissionBox" headerText={formSubmission?.form?.name || "Edit Form"} headerIcon="fas fa-user" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} >{questionList}</InputBox>;
+    return <InputBox id="formSubmissionBox" headerText={formSubmission?.form?.name || "Edit Form"} headerIcon="fas fa-user" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={getDeleteFunction()} >{questionList}</InputBox>;
 }
 
 
