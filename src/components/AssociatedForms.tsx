@@ -24,11 +24,9 @@ export const AssociatedForms: React.FC<Props> = (props) => {
     const handleUpdate = (formId: string) => { setMode("display"); props.formAddedFunction(formId); }
     const handleAdd = (e: React.MouseEvent) => {
         e.preventDefault();
-        //setMode("display");
+        setMode("edit");
         var anchor = e.currentTarget as HTMLAnchorElement;
-        console.log(anchor);
         const formId = anchor.getAttribute("data-formid");
-        console.warn(formId);
         props.formAddedFunction(formId);
     }
 
@@ -103,8 +101,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
 
 
 
-
     if (!UserHelper.checkAccess(Permissions.membershipApi.forms.view)) return <></>
-    if (mode === "edit" || !UniqueIdHelper.isMissing(props.addFormId)) return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={props.addFormId} contentType={props.contentType} contentId={props.contentId} />
+    if (mode === "edit" || props.addFormId) return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={props.addFormId} contentType={props.contentType} contentId={props.contentId} />
     else return <div className="accordion" id="formSubmissionsAccordion">{getCards()}</div>;
 }

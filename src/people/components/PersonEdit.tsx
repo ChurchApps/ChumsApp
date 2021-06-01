@@ -5,7 +5,7 @@ import { Row, Col, FormControl, FormGroup, FormLabel, Button } from "react-boots
 
 interface Props {
     id?: string,
-    updatedFunction: (person: PersonInterface) => void,
+    updatedFunction: () => void,
     togglePhotoEditor: (show: boolean) => void,
     person: PersonInterface,
     photoUrl: string,
@@ -65,7 +65,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
         return value;
     }
 
-    const handleCancel = () => props.updatedFunction(person);
+    const handleCancel = () => props.updatedFunction();
 
     const handleDelete = () => {
         if (window.confirm("Are you sure you wish to permanently delete this person record?"))
@@ -106,7 +106,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
                 p.id = data[0];
                 p.name.display = PersonHelper.getDisplayName(p.name.first, p.name.last, p.name.nick);
                 setPerson(p);
-                props.updatedFunction(p);
+                props.updatedFunction();
             });
     }
 
@@ -153,7 +153,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
             })
 
         )
-        props.updatedFunction(person)
+        props.updatedFunction()
     }
 
     const handleNo = () => {
