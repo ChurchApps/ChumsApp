@@ -545,3 +545,8 @@ label .description {
 .alert p {
   margin-bottom: 0;
 }
+
+.no-default-style {
+  border: none;
+  background: none;
+}
