@@ -67,8 +67,6 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.0",
     "google-charts": "^2.0.0",
     "prettier": "^2.3.0"
   }
