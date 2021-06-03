@@ -36,20 +36,24 @@ export const AttendancePage = () => {
 
     React.useEffect(() => { loadData(); }, []);
 
+    const compare = (a: GroupInterface, b: GroupInterface) => {
+        return a.categoryName.localeCompare(b.categoryName) || a.name.localeCompare(b.name);
+    }
+
     const getRows = () => {
         const rows: JSX.Element[] = [];
 
         if (attendance.length === 0) {
-            rows.push(<tr key="0">Group attendance will show up once sessions have been added to a group and people have attended those sessions.</tr>);
+            rows.push(<tr key="0"><td>Group attendance will show up once sessions have been added to a group and people have attended those sessions.</td></tr>);
             return rows;
         }
 
-        for (var i = 0; i < attendance.length; i++) {
-            const a = attendance[i];
+        attendance.forEach((a, i) => {
             const filteredGroups = (a.serviceTime === undefined) ? [] : getGroups(a.serviceTime.id);
-            if (filteredGroups.length > 0) filteredGroups.forEach(g => { rows.push(getRow(a.campus, a.service, a.serviceTime, g, g.id.toString())); });
+            const sortedGroups = filteredGroups.sort(compare);
+            if (sortedGroups.length > 0) sortedGroups.forEach(g => { rows.push(getRow(a.campus, a.service, a.serviceTime, g, g.id.toString())); });
             else rows.push(getRow(a.campus, a.service, a.serviceTime, undefined, "index" + i.toString()));
-        }
+        })
         getUnassignedGroups().forEach(g => { rows.push(getRow({ name: "Unassigned" }, undefined, undefined, g, g.id.toString())); });
         return rows;
     }
