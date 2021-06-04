@@ -39,7 +39,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:only": "eslint src/donations/FundPage.tsx --ext ts,tsx",
+    "lint:only": "eslint src --ext ts,tsx",
     "lint:fix": "npm run lint:only -- --fix",
     "predeploy-staging": "export REACT_APP_STAGE=staging&& npm run build",
     "exec-deploy-staging": "aws s3 sync build/ s3://staging-chums-app",
@@ -73,7 +73,6 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "google-charts": "^2.0.0",
-    "prettier": "^2.3.0"
+    "google-charts": "^2.0.0"
   }
 }
