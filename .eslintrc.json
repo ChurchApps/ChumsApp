@@ -52,7 +52,8 @@
         ],
         "react/jsx-indent-props": [2, 2],
         "operator-linebreak": ["error", "before"],
-        "multiline-ternary": ["error", "always-multiline"]
+        "multiline-ternary": ["error", "always-multiline"],
+        "react/jsx-one-expression-per-line": "off"
     },
     "settings": {
         "import/resolver": {
