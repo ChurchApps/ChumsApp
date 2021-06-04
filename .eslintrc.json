@@ -1,0 +1,62 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "react-hooks"
+    ],
+    "rules": {
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["error", { "variables": false }],
+        "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            { "ts": "never", "tsx": "never" }
+        ],
+        "no-shadow": "off",
+        "max-len": ["warn", { "code": 240 }],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "import/prefer-default-export": "off",
+        "react/prop-types": "off",
+        "quotes": ["error", "double"],
+        "no-plusplus": "off",
+        "default-case": "off",
+        "react/jsx-closing-tag-location": "off",
+        "no-trailing-spaces": "off",
+        "react/jsx-first-prop-new-line": "off",
+        "react/jsx-max-props-per-line": [
+            2,
+            { "maximum": 10, "when": "multiline" }
+        ],
+        "react/jsx-indent-props": [2, 2],
+        "operator-linebreak": ["error", "before"],
+        "multiline-ternary": ["error", "always-multiline"]
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    }
+}

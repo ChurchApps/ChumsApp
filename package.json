@@ -39,8 +39,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src --ext ts,tsx",
-    "format": "prettier --write \"./src\"",
+    "lint:only": "eslint src/donations/FundPage.tsx --ext ts,tsx",
+    "lint:fix": "npm run lint:only -- --fix",
     "predeploy-staging": "export REACT_APP_STAGE=staging&& npm run build",
     "exec-deploy-staging": "aws s3 sync build/ s3://staging-chums-app",
     "postdeploy-staging": "aws cloudfront create-invalidation --distribution-id E2SBDXIK2UVHM9 --paths \"/*\"",
@@ -49,9 +49,6 @@
     "exec-deploy-prod": "aws s3 sync build/ s3://chums-app",
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3FB2K4FSP7ZUB --paths \"/*\"",
     "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -67,6 +64,15 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "google-charts": "^2.0.0",
     "prettier": "^2.3.0"
   }
