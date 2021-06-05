@@ -39,7 +39,7 @@ export const NavItems: React.FC<Props> = (props) => {
   const getTabs = () => {
     var tabs = [];
     tabs.push(getTab("People", "/people", "fas fa-user", "People"));
-    if (UserHelper.checkAccess(Permissions.membershipApi.groups.view)) tabs.push(getTab("Groups", "/groups", "fas fa-list-ul", "Groups"));
+    tabs.push(getTab("Groups", "/groups", "fas fa-list-ul", "Groups"));
     if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) tabs.push(getTab("Attendance", "/attendance", "far fa-calendar-alt", "Attendance"));
     if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) tabs.push(getTab("Donations", "/donations", "fas fa-hand-holding-usd", "Donations"));
     if (UserHelper.checkAccess(Permissions.membershipApi.forms.view)) tabs.push(getTab("Forms", "/forms", "fas fa-align-left", "Forms"));

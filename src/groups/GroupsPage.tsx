@@ -64,8 +64,8 @@ export const GroupsPage = () => {
             <i className="far fa-folder"></i> {g.categoryName}
           </>
         ) : (
-            <></>
-          );
+          <></>
+        );
       var memberCount =
         g.memberCount === 1 ? "1 person" : g.memberCount.toString() + " people";
       rows.push(
@@ -96,32 +96,31 @@ export const GroupsPage = () => {
   var addBox = showAdd ? (
     <GroupAdd updatedFunction={handleAddUpdated} />
   ) : (
-      <></>
-    );
+    <></>
+  );
 
-  if (!UserHelper.checkAccess(Permissions.membershipApi.groups.view)) return <></>;
-  else
-    return (
-      <>
-        <h1>
-          <i className="fas fa-list"></i> Groups
+
+  return (
+    <>
+      <h1>
+        <i className="fas fa-list"></i> Groups
         </h1>
-        <Row>
-          <Col lg={8}>
-            <DisplayBox
-              id="groupsBox"
-              headerIcon="fas fa-list"
-              headerText="Groups"
-              editContent={getEditContent()}
-            >
-              <Table>
-                <thead>{getTableHeader()}</thead>
-                <tbody>{getRows()}</tbody>
-              </Table>
-            </DisplayBox>
-          </Col>
-          <Col lg={4}>{addBox}</Col>
-        </Row>
-      </>
-    );
+      <Row>
+        <Col lg={8}>
+          <DisplayBox
+            id="groupsBox"
+            headerIcon="fas fa-list"
+            headerText="Groups"
+            editContent={getEditContent()}
+          >
+            <Table>
+              <thead>{getTableHeader()}</thead>
+              <tbody>{getRows()}</tbody>
+            </Table>
+          </DisplayBox>
+        </Col>
+        <Col lg={4}>{addBox}</Col>
+      </Row>
+    </>
+  );
 };

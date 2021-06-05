@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, UserHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, Permissions, PersonHelper } from "./components";
+import { ApiHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, PersonHelper } from "./components";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
@@ -47,8 +47,7 @@ export const GroupPage = ({ match }: RouteComponentProps<TParams>) => {
     }
 
 
-    if (!UserHelper.checkAccess(Permissions.membershipApi.groups.view)) return (<></>);
-    else return (
+    return (
         <>
             <h1><i className="fas fa-list"></i> {group.name}</h1>
             <Row>
