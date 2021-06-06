@@ -11,91 +11,87 @@ interface Props {
 }
 
 export const AssociatedForms: React.FC<Props> = (props) => {
-    const [mode, setMode] = useState("display");
-    const [editFormSubmissionId, setEditFormSubmissionId] = useState("");
-    const [allForms, setAllForms] = useState(null);
-    const [unsubmittedForms, setUnsubmittedForms] = useState([]);
-    const [selectedFormId, setSelectedFormId] = useState<string>("");
+  const [mode, setMode] = useState("display");
+  const [editFormSubmissionId, setEditFormSubmissionId] = useState("");
+  const [allForms, setAllForms] = useState(null);
+  const [unsubmittedForms, setUnsubmittedForms] = useState([]);
+  const [selectedFormId, setSelectedFormId] = useState<string>("");
 
-    const handleEdit = (formSubmissionId: string) => { setMode("edit"); setEditFormSubmissionId(formSubmissionId); }
-    
-    const handleUpdate = () => { 
-        setMode("display");
-        setSelectedFormId("");
-        setEditFormSubmissionId("");
-        props.updatedFunction();
-    }
+  const handleEdit = (formSubmissionId: string) => { setMode("edit"); setEditFormSubmissionId(formSubmissionId); }
 
-    const handleAdd = (formId: string) => {
-        setMode("edit");
-        setSelectedFormId(formId);
-    }
+  const handleUpdate = () => {
+    setMode("display");
+    setSelectedFormId("");
+    setEditFormSubmissionId("");
+    props.updatedFunction();
+  }
 
-    const getCards = () => {
-        var cards: any[] = [];
-        const submittedCards = getSubmittedCards() || []; // when there are no submitted cards, function will return undefined
-        const unsubmittedCards = getUnsubmittedCards();
-        cards.push(...submittedCards,...unsubmittedCards);
-        return cards;
-    }
+  const handleAdd = (formId: string) => {
+    setMode("edit");
+    setSelectedFormId(formId);
+  }
 
-    const getSubmittedCards = () => {
-        return props.formSubmissions?.map(fs => (
-            <div key={fs.id} className="card">
-                <div className="card-header" id={"heading" + fs.id}>
-                    <div>
-                        <Button variant="link" data-toggle="collapse" data-target={"#collapse" + fs.id} aria-controls={"collapse" + fs.id}>{fs.form.name}</Button>
-                    </div>
-                </div>
-                <div id={"collapse" + fs.id} className="collapse" aria-labelledby={"heading" + fs.id} data-parent="#formSubmissionsAccordion">
-                    <div className="card-body"><FormSubmission formSubmissionId={fs.id} editFunction={handleEdit} /> </div>
-                </div>
-            </div>
-        ));
-    }
+  const getCards = () => {
+    let cards: any[] = [];
+    const submittedCards = getSubmittedCards() || []; // when there are no submitted cards, function will return undefined
+    const unsubmittedCards = getUnsubmittedCards();
+    cards.push(...submittedCards,...unsubmittedCards);
+    return cards;
+  }
 
-    const getUnsubmittedCards = () => {
-        return unsubmittedForms.map(uf => (
-            <div key={uf.id} className="card">
-                <div className="card-header" id={"heading" + uf.id}>
-                    <div className="addableForm">
-                        <button className="float-right text-success no-default-style" onClick={() => handleAdd(uf.id)}>
-                            <i className="fas fa-plus" />
-                        </button>
-                        <span>{uf.name}</span>
-                    </div>
-                </div>
-            </div>
-        ));
-    }
+  const getSubmittedCards = () => props.formSubmissions?.map(fs => (
+    <div key={fs.id} className="card">
+      <div className="card-header" id={"heading" + fs.id}>
+        <div>
+          <Button variant="link" data-toggle="collapse" data-target={"#collapse" + fs.id} aria-controls={"collapse" + fs.id}>{fs.form.name}</Button>
+        </div>
+      </div>
+      <div id={"collapse" + fs.id} className="collapse" aria-labelledby={"heading" + fs.id} data-parent="#formSubmissionsAccordion">
+        <div className="card-body"><FormSubmission formSubmissionId={fs.id} editFunction={handleEdit} /> </div>
+      </div>
+    </div>
+  ))
+
+  const getUnsubmittedCards = () => unsubmittedForms.map(uf => (
+    <div key={uf.id} className="card">
+      <div className="card-header" id={"heading" + uf.id}>
+        <div className="addableForm">
+          <button className="float-right text-success no-default-style" onClick={() => handleAdd(uf.id)}>
+            <i className="fas fa-plus" />
+          </button>
+          <span>{uf.name}</span>
+        </div>
+      </div>
+    </div>
+  ))
 
 
 
 
-    const determineUnsubmitted = () => {
-        var unsubmitted = [];
-        if (allForms !== undefined && allForms !== null && props !== null) {
-            var sf = props.formSubmissions;
-            if (sf !== undefined && sf !== null) {
-                for (var i = 0; i < allForms.length; i++) {
-                    var exists = false;
-                    for (var j = 0; j < sf.length; j++) if (sf[j].formId === allForms[i].id) exists = true;
-                    if (!exists) unsubmitted.push(allForms[i]);
-                }
-            } else unsubmitted = allForms;
+  const determineUnsubmitted = () => {
+    let unsubmitted = [];
+    if (allForms !== undefined && allForms !== null && props !== null) {
+      let sf = props.formSubmissions;
+      if (sf !== undefined && sf !== null) {
+        for (let i = 0; i < allForms.length; i++) {
+          let exists = false;
+          for (let j = 0; j < sf.length; j++) if (sf[j].formId === allForms[i].id) exists = true;
+          if (!exists) unsubmitted.push(allForms[i]);
         }
-
-        setUnsubmittedForms(unsubmitted);
+      } else unsubmitted = allForms;
     }
 
-    useEffect(() => { 
-        ApiHelper.get("/forms?contentType=person", "MembershipApi").then(data => setAllForms(data)); 
-    }, []);
-    
-    useEffect(determineUnsubmitted, [allForms, props]);
-    
+    setUnsubmittedForms(unsubmitted);
+  }
 
-    if (!UserHelper.checkAccess(Permissions.membershipApi.forms.view)) return <></>
-    if (mode === "edit") return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={selectedFormId} contentType={props.contentType} contentId={props.contentId} />; 
-    else return <div className="accordion" id="formSubmissionsAccordion">{getCards()}</div>;
+  useEffect(() => {
+    ApiHelper.get("/forms?contentType=person", "MembershipApi").then(data => setAllForms(data));
+  }, []);
+
+  useEffect(determineUnsubmitted, [allForms, props]);
+
+
+  if (!UserHelper.checkAccess(Permissions.membershipApi.forms.view)) return <></>
+  if (mode === "edit") return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={selectedFormId} contentType={props.contentType} contentId={props.contentId} />;
+  else return <div className="accordion" id="formSubmissionsAccordion">{getCards()}</div>;
 }

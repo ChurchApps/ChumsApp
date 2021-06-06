@@ -16,12 +16,12 @@ export const Notes: React.FC<Props> = (props) => {
   const loadNotes = () => {
     if (!UniqueIdHelper.isMissing(props.contentId))
       ApiHelper.get(
-        "/notes/" + props.contentType + "/" + props.contentId, "MembershipApi"
+        "/notes/" + props.contentType + "/" + props.contentId, "MembershipApi",
       ).then((data) => setNotes(data));
   };
   const handleSave = () => {
     const errors: string[] = [];
-    if (!noteText.trim()) errors.push('Enter some text for note.')
+    if (!noteText.trim()) errors.push("Enter some text for note.")
 
     if (errors.length > 0) {
       setErrors(errors);
@@ -30,7 +30,7 @@ export const Notes: React.FC<Props> = (props) => {
     }
 
     setErrors([]);
-    var n = {
+    let n = {
       contentId: props.contentId,
       contentType: props.contentType,
       contents: noteText,
@@ -48,13 +48,13 @@ export const Notes: React.FC<Props> = (props) => {
     setNotes(notes.filter((note) => note.id !== noteId));
   };
 
-  var noteArray: React.ReactNode[] = [];
-  for (var i = 0; i < notes.length; i++)
+  let noteArray: React.ReactNode[] = [];
+  for (let i = 0; i < notes.length; i++)
     noteArray.push(
-      <Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} updateFunction={loadNotes} />
+      <Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} updateFunction={loadNotes} />,
     );
 
-  var canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
+  let canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
   if (!canEdit)
     return (
       <DisplayBox headerIcon="far fa-sticky-note" headerText="Notes">
