@@ -63,7 +63,8 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
 
         for (let i = 0; i < fundDonations.length; i++) {
             var fd = fundDonations[i];
-            var personCol = (UniqueIdHelper.isMissing(fd.donation?.personId)) ? (<td>Anonymous</td>)
+            var personCol = (UniqueIdHelper.isMissing(fd.donation?.personId)) 
+                ? (<td>Anonymous</td>)
                 : (<td><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || "Anonymous"}</Link></td>);
             result.push(<tr key={i}>
                 <td>{Helper.formatHtml5Date(fd.donation.donationDate)}</td>
