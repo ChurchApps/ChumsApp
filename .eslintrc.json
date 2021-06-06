@@ -1,0 +1,35 @@
+{
+  "extends": "react-app",
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "comma-dangle": ["error", "always-multiline"],
+    "eol-last": [
+      "error",
+      "always"
+    ],
+    "quote-props": [
+      "error",
+      "as-needed"
+    ],
+    "quotes": [
+      "error",
+      "double",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
+    "no-trailing-spaces": "error",
+    "no-var": "error",
+    "operator-linebreak": ["error", "before"],
+    "multiline-ternary": ["error", "always-multiline"],
+    "indent": [
+      "error",
+      2
+    ],
+    "arrow-body-style": ["error", "as-needed"],
+    "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always", "beforeClosing": "never" }]
+  }
+}
