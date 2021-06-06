@@ -1,11 +1,11 @@
-export * from '../../components'
-export { GroupAdd } from './GroupAdd'
-export { GroupDetails } from './GroupDetails'
-export { GroupDetailsEdit } from './GroupDetailsEdit'
-export { GroupMembers } from './GroupMembers'
-export { GroupSessions } from './GroupSessions'
-export { MembersAdd } from './MembersAdd'
-export { ServiceTimes } from './ServiceTimes'
-export { ServiceTimesEdit } from './ServiceTimesEdit'
-export { SessionAdd } from './SessionAdd'
-export { Tabs } from './Tabs'
+export * from "../../components"
+export { GroupAdd } from "./GroupAdd"
+export { GroupDetails } from "./GroupDetails"
+export { GroupDetailsEdit } from "./GroupDetailsEdit"
+export { GroupMembers } from "./GroupMembers"
+export { GroupSessions } from "./GroupSessions"
+export { MembersAdd } from "./MembersAdd"
+export { ServiceTimes } from "./ServiceTimes"
+export { ServiceTimesEdit } from "./ServiceTimesEdit"
+export { SessionAdd } from "./SessionAdd"
+export { Tabs } from "./Tabs"

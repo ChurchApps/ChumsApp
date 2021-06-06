@@ -6,7 +6,7 @@ import {
   GroupAdd,
   UserHelper,
   ExportLink,
-  Permissions
+  Permissions,
 } from "./components";
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
@@ -48,26 +48,26 @@ export const GroupsPage = () => {
   React.useEffect(loadData, []);
 
   const getRows = () => {
-    var rows: JSX.Element[] = [];
+    let rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
       rows.push(<tr key="0">No groups found. Please create a group.</tr>);
       return rows;
     }
 
-    var lastCat = "";
-    for (var i = 0; i < groups.length; i++) {
-      var g = groups[i];
-      var cat =
-        g.categoryName !== lastCat ? (
+    let lastCat = "";
+    for (let i = 0; i < groups.length; i++) {
+      let g = groups[i];
+      let cat
+        = g.categoryName !== lastCat ? (
           <>
             <i className="far fa-folder"></i> {g.categoryName}
           </>
         ) : (
           <></>
         );
-      var memberCount =
-        g.memberCount === 1 ? "1 person" : g.memberCount.toString() + " people";
+      let memberCount
+        = g.memberCount === 1 ? "1 person" : g.memberCount.toString() + " people";
       rows.push(
         <tr key={g.id}>
           <td>{cat}</td>
@@ -76,7 +76,7 @@ export const GroupsPage = () => {
             <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
           </td>
           <td>{memberCount}</td>
-        </tr>
+        </tr>,
       );
       lastCat = g.categoryName;
     }
@@ -93,7 +93,7 @@ export const GroupsPage = () => {
     return rows;
   }
 
-  var addBox = showAdd ? (
+  let addBox = showAdd ? (
     <GroupAdd updatedFunction={handleAddUpdated} />
   ) : (
     <></>
@@ -104,7 +104,7 @@ export const GroupsPage = () => {
     <>
       <h1>
         <i className="fas fa-list"></i> Groups
-        </h1>
+      </h1>
       <Row>
         <Col lg={8}>
           <DisplayBox

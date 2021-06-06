@@ -39,7 +39,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:only": "eslint src --ext ts,tsx",
+    "lint:only": "eslint --ext ts,tsx",
     "lint:fix": "npm run lint:only -- --fix",
     "predeploy-staging": "export REACT_APP_STAGE=staging&& npm run build",
     "exec-deploy-staging": "aws s3 sync build/ s3://staging-chums-app",
@@ -50,6 +50,11 @@
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3FB2K4FSP7ZUB --paths \"/*\"",
     "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "npm run lint:fix"
+    ]
   },
   "browserslist": {
     "production": [
@@ -66,6 +71,7 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.1",
     "google-charts": "^2.0.0",
-    "husky": "^6.0.0"
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0"
   }
 }

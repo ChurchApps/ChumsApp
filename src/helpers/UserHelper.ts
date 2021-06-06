@@ -6,12 +6,12 @@ export class UserHelper extends BaseUserHelper {
     static churchApps: ChurchAppInterface[];
 
     static getChurchApps = async () => {
-        if (UserHelper.churchApps) {
-            return UserHelper.churchApps;
-        }
+      if (UserHelper.churchApps) {
+        return UserHelper.churchApps;
+      }
 
-        const apps = await ApiHelper.get('/churchApps/', "AccessApi");
-        UserHelper.churchApps = apps;
-        return apps
+      const apps = await ApiHelper.get("/churchApps/", "AccessApi");
+      UserHelper.churchApps = apps;
+      return apps
     }
 }

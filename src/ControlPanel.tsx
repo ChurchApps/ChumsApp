@@ -23,7 +23,7 @@ export const ControlPanel = () => {
   React.useEffect(() => { if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.pageview(location.pathname + location.search); }, [location]);
 
 
-  var user = React.useContext(UserContext).userName; //to force rerender on login
+  let user = React.useContext(UserContext).userName; //to force rerender on login
   if (user === null) return null;
   return (
     <Switch>
@@ -39,15 +39,11 @@ export const ControlPanel = () => {
   );
 };
 
-const PrivateRoute: React.FC<Props> = ({ path }) => {
-  return (
-    <Route
-      path={path}
-      render={({ location }) => {
-        return (ApiHelper.isAuthenticated)
-          ? (<Authenticated location={location.pathname}></Authenticated>)
-          : (<Redirect to={{ pathname: "/login", state: { from: location, }, }} ></Redirect>);
-      }}
-    ></Route>
-  );
-};
+const PrivateRoute: React.FC<Props> = ({ path }) => (
+  <Route
+    path={path}
+    render={({ location }) => (ApiHelper.isAuthenticated)
+      ? (<Authenticated location={location.pathname}></Authenticated>)
+      : (<Redirect to={{ pathname: "/login", state: { from: location } }}></Redirect>)}
+  ></Route>
+);

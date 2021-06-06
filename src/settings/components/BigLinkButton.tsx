@@ -9,21 +9,19 @@ interface Props {
   outsideLink?: boolean;
 }
 
-export const BigLinkButton: React.FC<Props> = (props) => {
-  return (
-    <Col md={{ span: 3 }}>
-      <LinkType href={props.href} outsideLink={props.outsideLink}>
-        <Card>
-          <Card.Body className="text-center">
-            <i className={props.icon} style={{ fontSize: 40 }}></i>
-            <br />
-            {props.text}
-          </Card.Body>
-        </Card>
-      </LinkType>
-    </Col>
-  );
-};
+export const BigLinkButton: React.FC<Props> = (props) => (
+  <Col md={{ span: 3 }}>
+    <LinkType href={props.href} outsideLink={props.outsideLink}>
+      <Card>
+        <Card.Body className="text-center">
+          <i className={props.icon} style={{ fontSize: 40 }}></i>
+          <br />
+          {props.text}
+        </Card.Body>
+      </Card>
+    </LinkType>
+  </Col>
+);
 
 interface LinkTypeProps {
   outsideLink?: boolean;

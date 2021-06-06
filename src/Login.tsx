@@ -11,20 +11,20 @@ export const Login: React.FC = (props: any) => {
   let { from } = (useLocation().state as any) || { from: { pathname: "/" } };
 
   const successCallback = () => {
-      ApiHelper.get("/people/userid/" + UserHelper.user.id, "MembershipApi").then((person: PersonInterface) => {
-        UserHelper.person = person;
-        context.setUserName(UserHelper.currentChurch.id.toString());
-      }).catch(err => {
-        context.setUserName(UserHelper.currentChurch.id.toString());
-        console.log(err)
-      });    
+    ApiHelper.get("/people/userid/" + UserHelper.user.id, "MembershipApi").then((person: PersonInterface) => {
+      UserHelper.person = person;
+      context.setUserName(UserHelper.currentChurch.id.toString());
+    }).catch(err => {
+      context.setUserName(UserHelper.currentChurch.id.toString());
+      console.log(err)
+    });
   }
 
   const context = React.useContext(UserContext);
 
   if (context.userName === "" || !ApiHelper.isAuthenticated) {
     let search = new URLSearchParams(props.location.search);
-    var jwt = search.get("jwt") || cookies.jwt;
+    let jwt = search.get("jwt") || cookies.jwt;
     let auth = search.get("auth");
     if (!jwt) jwt = "";
     if (!auth) auth = "";

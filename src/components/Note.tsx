@@ -18,7 +18,7 @@ export const Note: React.FC<Props> = (props) => {
 
   if (note === null) return null;
   const photoUrl = PersonHelper.getPhotoUrl(note.person);
-  var datePosted = new Date(note.dateAdded);
+  let datePosted = new Date(note.dateAdded);
   const displayDuration = Helper.getDisplayDuration(datePosted);
 
   const handleSave = () => {
@@ -55,21 +55,21 @@ export const Note: React.FC<Props> = (props) => {
           </div>
         </InputBox>
       ) : (
-          <React.Fragment>
-            <div className="postedBy">
-              <div>
-                <img src={photoUrl} alt="avatar" />
-                {note.person.name.display} - {displayDuration} ago
+        <React.Fragment>
+          <div className="postedBy">
+            <div>
+              <img src={photoUrl} alt="avatar" />
+              {note.person.name.display} - {displayDuration} ago
             </div>
-              <i
-                className="fas fa-pencil-alt"
-                onClick={() => setShowEdit(true)}
-                style={{ color: "#03a9f4" }}
-              ></i>
-            </div>
-            <p>{note.contents.replace("\n", "<br/>")}</p>
-          </React.Fragment>
-        )}
+            <i
+              className="fas fa-pencil-alt"
+              onClick={() => setShowEdit(true)}
+              style={{ color: "#03a9f4" }}
+            ></i>
+          </div>
+          <p>{note.contents.replace("\n", "<br/>")}</p>
+        </React.Fragment>
+      )}
     </div>
   );
 };
