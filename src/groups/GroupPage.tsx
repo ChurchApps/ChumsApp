@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, PersonHelper } from ''./components';
+import { ApiHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, PersonHelper } from './components';
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
