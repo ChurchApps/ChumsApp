@@ -30,6 +30,7 @@
       2
     ],
     "arrow-body-style": ["error", "as-needed"],
-    "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always", "beforeClosing": "never" }]
+    "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always", "beforeClosing": "never" }],
+    "no-multiple-empty-lines": ["error", { "max": 1 }]
   }
 }
