@@ -119,7 +119,6 @@ export const PersonEdit: React.FC<Props> = (props) => {
     } else return;
   }
 
-
   const personChanged = useCallback(() => {
     const personDeepCopy: PersonInterface = {
       ...props.person,
@@ -277,8 +276,6 @@ export const PersonEdit: React.FC<Props> = (props) => {
               </FormGroup>
             </Col>
           </Row>
-
-
 
           <Row>
             <Col md={9}>

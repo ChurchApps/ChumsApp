@@ -1,7 +1,6 @@
 import React from "react";
 import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, FundDonations, Helper, PersonInterface, UniqueIdHelper, PersonHelper } from ".";
 
-
 interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
 
 export const DonationEdit: React.FC<Props> = (props) => {
@@ -56,7 +55,6 @@ export const DonationEdit: React.FC<Props> = (props) => {
       ApiHelper.get("/funddonations?donationId=" + props.donationId, "GivingApi").then(data => setFundDonations(data));
     }
   }
-
 
   const populatePerson = async (data: DonationInterface) => {
     if (!UniqueIdHelper.isMissing(data.personId)) data.person = await ApiHelper.get("/people/" + data.personId.toString(), "MembershipApi");

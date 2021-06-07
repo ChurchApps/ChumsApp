@@ -106,7 +106,6 @@ export class UploadHelper {
     return UploadHelper.readCsvString(cleanedText)
   }
 
-
   static readZippedImage(files: AdmZip.IZipEntry[], photoUrl: string) {
     return new Promise<string>((resolve, reject) => {
       let file = this.getZippedFile(files, photoUrl);

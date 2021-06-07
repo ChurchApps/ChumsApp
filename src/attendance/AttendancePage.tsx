@@ -9,12 +9,10 @@ export const AttendancePage = () => {
   const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
   const [groups, setGroups] = React.useState<GroupInterface[]>([]);
 
-
   const [selectedCampus, setSelectedCampus] = React.useState<CampusInterface>(null);
   const [selectedService, setSelectedService] = React.useState<ServiceInterface>(null);
   const [selectedServiceTime, setSelectedServiceTime] = React.useState<ServiceTimeInterface>(null);
   //const [filter, setFilter] = React.useState<AttendanceFilterInterface>(AttendanceHelper.createFilter());
-
 
   const handleUpdated = () => { removeEditors(); loadData(); }
   const selectCampus = (campus: CampusInterface) => { removeEditors(); if (campus.name !== "Undefined") setSelectedCampus(campus); }
@@ -32,7 +30,6 @@ export const AttendancePage = () => {
   let lastService = "";
   let lastServiceTime = "";
   let lastCategory = "";
-
 
   React.useEffect(() => { loadData(); }, []);
 
@@ -120,7 +117,6 @@ export const AttendancePage = () => {
         setFilter({ ...f });
     }*/
 
-
   return (
     <form method="post">
       <h1><i className="far fa-calendar-alt"></i> Attendance</h1>
@@ -140,7 +136,6 @@ export const AttendancePage = () => {
         </Col>
       </Row>
       <Tabs />
-
 
     </form>
   );

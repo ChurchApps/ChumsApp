@@ -36,7 +36,6 @@ export const Tabs: React.FC<Props> = (props) => {
     return currentTab
   }
 
-
   const getTabs = () => {
     if (props.group === null || props.group.id === undefined) return null;
     let tabs = [];
@@ -52,9 +51,6 @@ export const Tabs: React.FC<Props> = (props) => {
     setVisibilityState()
 
   }, [selectedTab, setVisibilityState]);
-
-
-
 
   return (<><ul className="nav nav-tabs" id="groupTabs" data-cy="group-tabs">{getTabs()}</ul>{getCurrentTab()}</>);
 }

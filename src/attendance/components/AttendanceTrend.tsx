@@ -5,7 +5,6 @@ import { ReportWithFilter } from "../../appBase/components/reporting/ReportWithF
 import { ArrayHelper, DateHelper } from "../../appBase/helpers";
 import { GroupInterface, ServiceInterface, ServiceTimeInterface } from "../../helpers";
 
-
 export const AttendanceTrend = () => {
   const [campuses, setCampuses] = React.useState<CampusInterface[]>(null);
   const [services, setServices] = React.useState<ServiceInterface[]>(null);
@@ -25,7 +24,6 @@ export const AttendanceTrend = () => {
     return result;
   }
 
-
   const getFilterOptions = (data: any[]) => {
     let result: ReportFilterOptionInterface[] = [];
         data?.forEach(d => { result.push({ keyName: d.id.toString(), value: d.id.toString(), label: d.name }) });
@@ -41,7 +39,6 @@ export const AttendanceTrend = () => {
     if (groups !== null) ArrayHelper.getUniqueValues(groups, "categoryName").forEach(cat => { if (cat !== "") result.push({ keyName: cat, value: cat, label: cat }) });
     return result;
   };
-
 
   const loadReport = async (filter: ReportFilterInterface) => {
     if (filter === null) return;
@@ -69,8 +66,6 @@ export const AttendanceTrend = () => {
     });
   }
 
-
-
   const initFilter = async () => {
     const promises: Promise<any>[] = [];
     promises.push(ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => { data.unshift({ id: "", name: "Any" }); setCampuses(data); }));
@@ -97,7 +92,6 @@ export const AttendanceTrend = () => {
       setUpdateFilter(false);
     }
   }
-
 
   React.useEffect(() => { initFilter() }, []);
   React.useEffect(populateFilter, [populateFilter]);

@@ -57,7 +57,6 @@ export const GroupSessions: React.FC<Props> = (props) => {
     return result;
   }
 
-
   const selectSession = (e: React.ChangeEvent<HTMLSelectElement>) => {
     for (let i = 0; i < sessions.length; i++) if (sessions[i].id === e.currentTarget.value) setSession(sessions[i]);
   }
@@ -90,7 +89,6 @@ export const GroupSessions: React.FC<Props> = (props) => {
     ApiHelper.post("/visitsessions/log", v, "AttendanceApi").then(() => { loadAttendance(); });
     props.addedCallback();
   }, [props, loadAttendance, session]);
-
 
   React.useEffect(() => { if (props.group.id !== undefined) { loadSessions() }; props.addedCallback(); }, [props.group, props.addedSession, loadSessions, props]);
 

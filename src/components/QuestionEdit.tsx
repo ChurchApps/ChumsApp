@@ -41,7 +41,5 @@ export const QuestionEdit: React.FC<Props> = (props) => {
     return <div className="form-group"><label>{q.title}{desc}</label>{input}</div>;
   }
 
-
 }
-
 

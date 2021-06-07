@@ -3,7 +3,6 @@ import { UserHelper, Permissions } from "./";
 import { AttendanceTrend } from "./AttendanceTrend";
 import { GroupAttendance } from "./GroupAttendance";
 
-
 //interface Props { filter: AttendanceFilterInterface }
 
 //unused

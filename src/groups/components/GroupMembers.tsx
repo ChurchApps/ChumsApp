@@ -3,7 +3,6 @@ import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
-
 interface Props {
     group: GroupInterface,
     addedPerson?: PersonInterface,

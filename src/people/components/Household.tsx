@@ -3,7 +3,6 @@ import { DisplayBox, PersonHelper, ApiHelper, HouseholdEdit, UserHelper, PersonI
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
-
 interface Props { person: PersonInterface, reload: any }
 
 export const Household: React.FC<Props> = (props) => {

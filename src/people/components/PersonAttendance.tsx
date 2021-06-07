@@ -66,7 +66,6 @@ export const PersonAttendance: React.FC<Props> = (props) => {
 
   React.useEffect(loadData, [props.personId]);
 
-
   return (
     <DisplayBox headerIcon="far fa-calendar-alt" headerText="Attendance">
       <Table><tbody>{getRows()}</tbody></Table>

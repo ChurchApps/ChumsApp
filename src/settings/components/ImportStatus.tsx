@@ -248,7 +248,6 @@ export const ImportStatus: React.FC<Props> = (props) => {
     }
   }
 
-
   const setProgress = (name: string, status: string) => {
     progress[name] = status;
     setStatus({ ...progress });
@@ -283,7 +282,6 @@ export const ImportStatus: React.FC<Props> = (props) => {
                 Please carefully review the preview data and if it looks good, click the Import button to start the import process.
     </InputBox>
   );
-
 
 }
 

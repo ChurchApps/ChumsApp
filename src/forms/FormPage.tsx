@@ -45,7 +45,6 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
     ApiHelper.get("/questions/sort/" + question.id + "/down", "MembershipApi");
   }
 
-
   const getRows = () => {
     const rows: JSX.Element[] = [];
     if (questions.length === 0) {
@@ -82,7 +81,6 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
   }
 
   React.useEffect(loadData, []);
-
 
   if (!UserHelper.checkAccess(Permissions.membershipApi.forms.edit)) return (<></>);
   else return (

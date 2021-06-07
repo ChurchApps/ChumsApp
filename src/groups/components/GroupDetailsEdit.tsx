@@ -49,8 +49,6 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
 
   React.useEffect(() => { setGroup(props.group) }, [props.group]);
 
-
-
   if (redirect !== "") return <Redirect to={redirect} />
   else return (
     <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="fas fa-list" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>

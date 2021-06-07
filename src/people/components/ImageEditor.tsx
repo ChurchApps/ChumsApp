@@ -4,7 +4,6 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { Button } from "react-bootstrap";
 
-
 interface Props {
     person: PersonInterface,
     updatedFunction: (dataUrl: string) => void,

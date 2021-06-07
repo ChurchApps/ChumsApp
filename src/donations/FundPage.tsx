@@ -88,7 +88,6 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
     return rows;
   }
 
-
   React.useEffect(loadData, [match.params.id]);
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return (<></>);

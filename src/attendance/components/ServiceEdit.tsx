@@ -62,7 +62,6 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     loadData();
   }, [props.service, loadData]);
 
-
   if (service === null || service.id === undefined) return null;
 
   return (

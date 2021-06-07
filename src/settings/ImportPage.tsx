@@ -151,7 +151,6 @@ export const ImportPage = () => {
     setVisitSessions(visitSessions);
   }
 
-
   const loadServiceTimes = (data: any) => {
     let campuses: ImportCampusInterface[] = [];
     let services: ImportServiceInterface[] = [];
@@ -217,7 +216,6 @@ export const ImportPage = () => {
     if (households.length === 0 || households[households.length - 1].name !== householdName) households.push({ name: householdName, importKey: (households.length + 1).toString() } as ImportHouseholdInterface);
     person.householdKey = households[households.length - 1].importKey;
   }
-
 
   const getAction = () => {
     if (people.length === 0) return (

@@ -2,7 +2,6 @@ import React from "react";
 import { Row, Col, FormGroup } from "react-bootstrap"
 import { InputBox, ApiHelper, ErrorMessages } from "./components"
 
-
 export const ProfilePage = () => {
   const [password, setPassword] = React.useState<string>("");
   const [errors, setErrors] = React.useState([]);
