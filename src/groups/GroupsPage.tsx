@@ -99,7 +99,6 @@ export const GroupsPage = () => {
     <></>
   );
 
-
   return (
     <>
       <h1>

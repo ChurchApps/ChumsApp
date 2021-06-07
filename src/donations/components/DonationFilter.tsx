@@ -35,6 +35,5 @@ export const DonationFilter: React.FC<Props> = (props) => {
     </div>
   </InputBox>);
 
-
 }
 

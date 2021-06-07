@@ -3,7 +3,6 @@ import { Helper } from ".";
 
 export class ReportHelper {
 
-
   static setDefaultValues(r: ReportInterface): void {
     r.values = [];
     r.parameters.split(",").forEach(p => {
@@ -50,18 +49,15 @@ export class ReportHelper {
     return result;
   }
 
-
   static getFilteredRecords(records: any[], col: ReportColumnInterface, val: any) {
     let result: any[] = [];
     for (let i = 0; i < records.length; i++) if (records[i][col.field] === val) result.push(records[i]);
     return result;
   }
 
-
   static getSingleRecord(records: any[], col: ReportColumnInterface, val: any) {
     for (let i = 0; i < records.length; i++) if (records[i][col.field] === val) return records[i];
     return null;
   }
-
 
 }

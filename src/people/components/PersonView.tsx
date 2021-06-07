@@ -19,7 +19,6 @@ export const PersonView: React.FC<Props> = (props) => {
     } else return;
   }
 
-
   let leftAttributes = [];
   let contactMethods = [];
   if (props.person) {

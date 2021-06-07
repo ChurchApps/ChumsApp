@@ -53,7 +53,6 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
     return options;
   }
 
-
   React.useEffect(() => {
     setServiceTime(props.serviceTime);
     loadData();

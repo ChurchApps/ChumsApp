@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { FormSubmission, FormSubmissionEdit, FormSubmissionInterface, UserHelper, ApiHelper, Permissions } from "./";
 import { Button } from "react-bootstrap";
 
-
 interface Props {
     contentType: string,
     contentId: string,
@@ -65,9 +64,6 @@ export const AssociatedForms: React.FC<Props> = (props) => {
     </div>
   ))
 
-
-
-
   const determineUnsubmitted = () => {
     let unsubmitted = [];
     if (allForms !== undefined && allForms !== null && props !== null) {
@@ -89,7 +85,6 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   }, []);
 
   useEffect(determineUnsubmitted, [allForms, props]);
-
 
   if (!UserHelper.checkAccess(Permissions.membershipApi.forms.view)) return <></>
   if (mode === "edit") return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={selectedFormId} contentType={props.contentType} contentId={props.contentId} />;

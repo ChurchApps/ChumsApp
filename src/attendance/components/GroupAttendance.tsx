@@ -5,7 +5,6 @@ import { ReportWithFilter } from "../../appBase/components/reporting/ReportWithF
 import { ArrayHelper, DateHelper } from "../../appBase/helpers";
 import { GroupInterface, PersonInterface, ServiceInterface } from "../../helpers";
 
-
 export const GroupAttendance = () => {
   const [services, setServices] = React.useState<ServiceInterface[]>(null);
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
@@ -61,8 +60,6 @@ export const GroupAttendance = () => {
     });
   }
 
-
-
   const initFilter = async () => {
     const promises: Promise<any>[] = [];
     promises.push(ApiHelper.get("/services", "AttendanceApi").then((data: ServiceInterface[]) => { data.unshift({ id: "", name: "Any" }); setServices(data); }));
@@ -84,7 +81,6 @@ export const GroupAttendance = () => {
       setUpdateFilter(false);
     }
   }
-
 
   React.useEffect(() => { initFilter() }, []);
   React.useEffect(populateFilter, [populateFilter]);

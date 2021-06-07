@@ -65,10 +65,7 @@ export const DonationsPage = () => {
     ApiHelper.get("/donationbatches", "GivingApi").then(data => { setBatches(data); });
   }
 
-
-
   const getEditContent = () => (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><a href="about:blank" data-cy="add-batch" onClick={showAddBatch}><i className="fas fa-plus"></i></a></>) : null
-
 
   const getSidebarModules = () => {
     let result = [];

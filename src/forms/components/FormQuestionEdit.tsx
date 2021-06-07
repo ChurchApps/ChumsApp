@@ -7,7 +7,6 @@ interface Props {
     updatedFunction: () => void
 }
 
-
 export const FormQuestionEdit: React.FC<Props> = (props) => {
   const [question, setQuestion] = useState<QuestionInterface>({} as QuestionInterface);
   const [errors, setErrors] = useState<string[]>([]);
@@ -57,9 +56,7 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
     </div>);
   }
 
-
   React.useEffect(loadData, [props.questionId || props.formId]);
-
 
   return (
     <InputBox id="questionBox" headerIcon="fas fa-question" headerText="Edit Question" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(!UniqueIdHelper.isMissing(props.questionId)) ? handleDelete : undefined}>

@@ -47,7 +47,6 @@ export interface ImportDataInterface {
     answers: ImportAnswerInterface[]
 }
 
-
 export class ImportHelper {
   //get one
   static getPerson(people: ImportPersonInterface[], importKey: string) { return ArrayHelper.getOne(people, "importKey", importKey) as ImportPersonInterface; }

@@ -22,7 +22,6 @@ export const FormSubmissionEdit: React.FC<Props> = (props) => {
     }
   }
 
-
   const getAnswer = (questionId: string) => {
     let answers = formSubmission.answers;
     for (let i = 0; i < answers.length; i++) if (answers[i].questionId === questionId) return answers[i];
@@ -87,5 +86,4 @@ export const FormSubmissionEdit: React.FC<Props> = (props) => {
 
   return <InputBox id="formSubmissionBox" headerText={formSubmission?.form?.name || "Edit Form"} headerIcon="fas fa-user" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={getDeleteFunction()}>{questionList}</InputBox>;
 }
-
 

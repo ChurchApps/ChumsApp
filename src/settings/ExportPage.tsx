@@ -4,7 +4,6 @@ import { Row, Col } from "react-bootstrap";
 import { ImportCampusInterface, ImportServiceInterface, ImportServiceTimeInterface, ImportHelper, ImportPersonInterface, ImportGroupInterface, ImportGroupServiceTimeInterface, ImportGroupMemberInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportFundDonationInterface, ImportSessionInterface, ImportVisitInterface, ImportVisitSessionInterface, ImportFormsInterface, ImportQuestionsInterface, ImportFormSubmissions, ImportAnswerInterface } from "../helpers/ImportHelper";
 import Papa from "papaparse";
 
-
 export const ExportPage = () => {
   const [exporting, setExporting] = React.useState(false);
   const [status, setStatus] = React.useState<any>({});
@@ -269,8 +268,6 @@ export const ExportPage = () => {
     setProgress("Attendance", "complete");
     return Papa.unparse(data);
   }
-
-
 
   const getPhotos = (files: { name: string, contents: string | Buffer }[]) => {
     setProgress("Photos", "running");

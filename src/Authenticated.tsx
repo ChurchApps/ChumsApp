@@ -15,7 +15,6 @@ import { ProfilePage } from "./profile/ProfilePage";
 import { FormPage } from "./forms/FormPage";
 // import UserContext from "./UserContext";
 
-
 interface Props {
   location: any;
 }
@@ -24,7 +23,6 @@ export const Authenticated: React.FC<Props> = (props) => {
   //to force rerender on login
   // var user = React.useContext(UserContext)?.userName;
   // var church = React.useContext(UserContext)?.churchName;
-
 
   if (UserHelper.churchChanged) {
     UserHelper.churchChanged = false;

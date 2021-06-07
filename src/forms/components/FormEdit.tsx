@@ -44,7 +44,6 @@ export const FormEdit: React.FC<Props> = (props) => {
 
   React.useEffect(loadData, [props.formId]);
 
-
   return (
     <InputBox id="formBox" headerIcon="fas fa-align-left" headerText="Edit Form" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(!UniqueIdHelper.isMissing(props.formId)) ? handleDelete : undefined}>
       <ErrorMessages errors={errors} />
