@@ -30,7 +30,6 @@ export const Authenticated: React.FC<Props> = (props) => {
   }
   else return (
     <>
-      <link rel="stylesheet" href="/css/cp.css" />
       <Header></Header>
       <div className="container">
         <Switch>
@@ -49,7 +48,6 @@ export const Authenticated: React.FC<Props> = (props) => {
           <Route path="/profile"><ProfilePage /></Route>
         </Switch>
       </div>
-      <script src="/js/cp.js"></script>
     </>
   );
 };
