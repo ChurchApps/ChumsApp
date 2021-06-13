@@ -34,19 +34,12 @@ export const AttendanceTrend = () => {
   const getServiceOptions = () => getFilterOptions(services);
   const getServiceTimeOptions = () => getFilterOptions(serviceTimes);
   const getGroupOptions = () => getFilterOptions(groups);
-  const getCategoryOptions = () => {
-    let result: ReportFilterOptionInterface[] = [{ keyName: "Any", value: "", label: "Any" }];
-    if (groups !== null) ArrayHelper.getUniqueValues(groups, "categoryName").forEach(cat => { if (cat !== "") result.push({ keyName: cat, value: cat, label: cat }) });
-    return result;
-  };
 
   const loadReport = async (filter: ReportFilterInterface) => {
     if (filter === null) return;
-
     const campusId = ArrayHelper.getOne(filter.fields, "keyName", "campusId").value;
     const serviceId = ArrayHelper.getOne(filter.fields, "keyName", "serviceId").value;
     const serviceTimeId = ArrayHelper.getOne(filter.fields, "keyName", "serviceTimeId").value;
-    //const categoryName = ArrayHelper.getOne(filter.fields, "keyName", "categoryName").value;
     const groupId = ArrayHelper.getOne(filter.fields, "keyName", "groupId").value;
 
     let url = `/attendancerecords/trend?campusId=${campusId}&serviceId=${serviceId}&serviceTimeId=${serviceTimeId}&groupId=${groupId}`;
@@ -68,10 +61,10 @@ export const AttendanceTrend = () => {
 
   const initFilter = async () => {
     const promises: Promise<any>[] = [];
-    promises.push(ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => { data.unshift({ id: "", name: "Any" }); setCampuses(data); }));
-    promises.push(ApiHelper.get("/services", "AttendanceApi").then((data: ServiceInterface[]) => { data.unshift({ id: "", name: "Any" }); setServices(data); }));
-    promises.push(ApiHelper.get("/servicetimes", "AttendanceApi").then((data: ServiceTimeInterface[]) => { data.unshift({ id: "", name: "Any" }); setServiceTimes(data); }));
-    promises.push(ApiHelper.get("/groups", "MembershipApi").then((data: GroupInterface[]) => { data.unshift({ id: "", name: "Any" }); setGroups(data); }));
+    promises.push(ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => { data.unshift({ id: "0", name: "Any" }); setCampuses(data); }));
+    promises.push(ApiHelper.get("/services", "AttendanceApi").then((data: ServiceInterface[]) => { data.unshift({ id: "0", name: "Any" }); setServices(data); }));
+    promises.push(ApiHelper.get("/servicetimes", "AttendanceApi").then((data: ServiceTimeInterface[]) => { data.unshift({ id: "0", name: "Any" }); setServiceTimes(data); }));
+    promises.push(ApiHelper.get("/groups", "MembershipApi").then((data: GroupInterface[]) => { data.unshift({ id: "0", name: "Any" }); setGroups(data); }));
     await Promise.all(promises).then(() => {
       setUpdateFilter(true);
     });
@@ -85,7 +78,6 @@ export const AttendanceTrend = () => {
           { keyName: "campusId", displayName: "Campus", dataType: "list", value: 0, options: getCampusOptions },
           { keyName: "serviceId", displayName: "Service", dataType: "list", value: 0, options: getServiceOptions },
           { keyName: "serviceTimeId", displayName: "Service Time", dataType: "list", value: 0, options: getServiceTimeOptions },
-          { keyName: "categoryName", displayName: "Category", dataType: "list", value: 0, options: getCategoryOptions },
           { keyName: "groupId", displayName: "Group", dataType: "list", value: 0, options: getGroupOptions },
         ],
       });
