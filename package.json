@@ -32,6 +32,7 @@
     "react-google-charts": "^3.0.15",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
+    "react-to-print": "^2.12.6",
     "typescript": "^3.9.5"
   },
   "scripts": {
