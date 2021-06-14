@@ -43,7 +43,8 @@ jobs:
           working-directory: ~/ChumsTests
           start: npm start
           wait-on: 'http://localhost:3101'
-          spec: cypress/integration/*.spec.js
+          spec: |
+            cypress/integration/!(Donations).spec.js
           record: true
         env:
           CYPRESS_ACCESS_API: 'https://accessapi.staging.churchapps.org'
