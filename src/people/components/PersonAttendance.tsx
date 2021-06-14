@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox, ApiHelper, AttendanceRecordInterface, Helper, GroupInterface, UniqueIdHelper } from ".";
+import { DisplayBox, ApiHelper, AttendanceRecordInterface, Helper, GroupInterface, UniqueIdHelper, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
@@ -7,8 +7,8 @@ import { ArrayHelper } from "../../helpers";
 interface Props { personId: string }
 
 export const PersonAttendance: React.FC<Props> = (props) => {
-  const [records, setRecords] = React.useState<AttendanceRecordInterface[]>([]);
-  const [groups, setGroups] = React.useState<GroupInterface[]>([]);
+  const [records, setRecords] = React.useState<AttendanceRecordInterface[]>(null);
+  const [groups, setGroups] = React.useState<GroupInterface[]>(null);
 
   const loadData = () => {
     if (!UniqueIdHelper.isMissing(props.personId)) {
@@ -66,9 +66,14 @@ export const PersonAttendance: React.FC<Props> = (props) => {
 
   React.useEffect(loadData, [props.personId]);
 
+  const getTable = () => {
+    if (!records || !groups) return <Loading />;
+    else return (<Table><tbody>{getRows()}</tbody></Table>);
+  }
+
   return (
     <DisplayBox headerIcon="far fa-calendar-alt" headerText="Attendance">
-      <Table><tbody>{getRows()}</tbody></Table>
+      {getTable()}
     </DisplayBox>
   );
 }

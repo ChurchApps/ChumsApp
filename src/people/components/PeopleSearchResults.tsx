@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { PersonHelper, ErrorMessages, ApiHelper, PersonInterface, HouseholdInterface, UserHelper, Permissions } from ".";
+import { PersonHelper, ErrorMessages, ApiHelper, PersonInterface, HouseholdInterface, UserHelper, Permissions, Loading } from ".";
 import { Row, Col, FormControl, Button, Table } from "react-bootstrap";
 
 interface Props {
-    people: PersonInterface[]
+  people: PersonInterface[]
 }
 
 export const PeopleSearchResults: React.FC<Props> = (props) => {
@@ -66,20 +66,20 @@ export const PeopleSearchResults: React.FC<Props> = (props) => {
       </>);
   }
 
-  if (props.people === undefined || props.people === null) return (<div className="alert alert-info">Use the search box above to search for a member or add a new one.</div>)
+  if (!props.people) return <Loading /> //return (<div className="alert alert-info">Use the search box above to search for a member or add a new one.</div>)
   else if (props.people.length === 0) return (<>
     <p>No results found.  Please search for a different name or add a new person</p>
     {getAddPerson()}
   </>);
   else {
     let result
-            = <>
-              <Table id="peopleTable">
-                <thead><tr><th></th><th>Name</th></tr></thead>
-                <tbody>{getRows()}</tbody>
-              </Table>
-              {getAddPerson()}
-            </>;
+      = <>
+        <Table id="peopleTable">
+          <thead><tr><th></th><th>Name</th></tr></thead>
+          <tbody>{getRows()}</tbody>
+        </Table>
+        {getAddPerson()}
+      </>;
     return result;
   }
 }

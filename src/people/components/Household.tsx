@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox, PersonHelper, ApiHelper, HouseholdEdit, UserHelper, PersonInterface, Permissions, UniqueIdHelper } from ".";
+import { DisplayBox, PersonHelper, ApiHelper, HouseholdEdit, UserHelper, PersonInterface, Permissions, UniqueIdHelper, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
@@ -21,8 +21,8 @@ export const Household: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.person]);
   React.useEffect(loadMembers, [household?.id, props.reload]);
 
-  let rows = [];
-  if (mode === "display") {
+  const getRows = () => {
+    let rows = [];
     if (members !== null) {
       for (let i = 0; i < members.length; i++) {
         let m = members[i];
@@ -34,9 +34,18 @@ export const Household: React.FC<Props> = (props) => {
         );
       }
     }
+    return rows;
+  }
+
+  const getTable = () => {
+    if (!members) return <Loading size="sm" />
+    else return (<Table size="sm" id="household"><tbody>{getRows()}</tbody></Table>);
+  }
+
+  if (mode === "display") {
     return (
       <DisplayBox id="householdBox" data-cy="household-box" headerIcon="fas fa-users" headerText={(household?.name || "") + " Household"} editFunction={getEditFunction()}>
-        <Table size="sm" id="household"><tbody>{rows}</tbody></Table>
+        {getTable()}
       </DisplayBox>
     );
   }

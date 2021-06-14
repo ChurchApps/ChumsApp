@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox, ApiHelper, UniqueIdHelper } from "."
+import { DisplayBox, ApiHelper, UniqueIdHelper, Loading } from "."
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
@@ -12,15 +12,18 @@ export const Groups: React.FC<Props> = (props) => {
     if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/groupmembers?personId=" + props.personId, "MembershipApi").then(data => setGroupMembers(data))
   }, [props.personId]);
 
-  const items = [];
-  if (groupMembers !== null && groupMembers.length !== 0) {
-    for (let i = 0; i < groupMembers.length; i++) {
-      let gm = groupMembers[i];
-      items.push(<tr key={gm.id}><td><i className="fas fa-list"></i> <Link to={"/groups/" + gm.groupId}>{gm.group.name}</Link></td></tr>);
+  const getRecords = () => {
+    if (!groupMembers) return <Loading size="sm" />
+    else if (groupMembers.length === 0) return (<p>Not part of any group yet.</p>)
+    else {
+      const items = [];
+      for (let i = 0; i < groupMembers.length; i++) {
+        let gm = groupMembers[i];
+        items.push(<tr key={gm.id}><td><i className="fas fa-list"></i> <Link to={"/groups/" + gm.groupId}>{gm.group.name}</Link></td></tr>);
+      }
+      return (<Table size="sm"><tbody>{items}</tbody></Table>)
     }
-  } else {
-    items.push(<tr key="0">Not part of any group yet.</tr>);
   }
 
-  return <DisplayBox headerIcon="fas fa-list" headerText="Groups"><Table size="sm"><tbody>{items}</tbody></Table></DisplayBox>
+  return <DisplayBox headerIcon="fas fa-list" headerText="Groups">{getRecords()}</DisplayBox>
 }

@@ -2,12 +2,12 @@ import React from "react";
 import { PersonView, PersonEdit, PersonInterface, UserHelper, Permissions } from "."
 
 interface Props {
-    id?: string
-    person: PersonInterface,
-    photoUrl: string,
-    togglePhotoEditor: (show: boolean) => void,
-    updatedFunction: () => void,
-    showMergeSearch: () => void
+  id?: string
+  person: PersonInterface,
+  photoUrl: string,
+  togglePhotoEditor: (show: boolean) => void,
+  updatedFunction: () => void,
+  showMergeSearch: () => void
 }
 
 export const Person: React.FC<Props> = (props) => {

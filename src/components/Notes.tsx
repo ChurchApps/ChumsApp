@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { ApiHelper, Note, DisplayBox, InputBox, UserHelper, Permissions, UniqueIdHelper, ErrorMessages } from "./";
+import { NoteInterface } from "../helpers";
+import { ApiHelper, Note, DisplayBox, InputBox, UserHelper, Permissions, UniqueIdHelper, ErrorMessages, Loading } from "./";
 
 interface Props {
   contentId: string;
@@ -7,7 +8,7 @@ interface Props {
 }
 
 export const Notes: React.FC<Props> = (props) => {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(null);
   const [noteText, setNoteText] = useState("");
   const [errors, setErrors] = useState([]);
 
@@ -45,45 +46,34 @@ export const Notes: React.FC<Props> = (props) => {
 
   const handleDelete = (noteId: string) => () => {
     ApiHelper.delete(`/notes/${noteId}`, "MembershipApi");
-    setNotes(notes.filter((note) => note.id !== noteId));
+    setNotes(notes.filter((note: NoteInterface) => note.id !== noteId));
   };
 
-  let noteArray: React.ReactNode[] = [];
-  for (let i = 0; i < notes.length; i++)
-    noteArray.push(
-      <Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} updateFunction={loadNotes} />,
-    );
+  const getNotes = () => {
+    if (!notes) return <Loading />
+    else {
+      let noteArray: React.ReactNode[] = [];
+      for (let i = 0; i < notes.length; i++) noteArray.push(<Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} updateFunction={loadNotes} />);
+      return noteArray;
+    }
+  }
 
   let canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
   if (!canEdit)
     return (
       <DisplayBox headerIcon="far fa-sticky-note" headerText="Notes">
-        {noteArray}
+        {getNotes()}
       </DisplayBox>
     );
   else
     return (
-      <InputBox
-        id="notesBox"
-        data-cy="notes-box"
-        headerIcon="far fa-sticky-note"
-        headerText="Notes"
-        saveFunction={handleSave}
-        saveText="Add Note"
-      >
-        {noteArray}
+      <InputBox id="notesBox" data-cy="notes-box" headerIcon="far fa-sticky-note" headerText="Notes" saveFunction={handleSave} saveText="Add Note">
+        {getNotes()}
         <br />
         <ErrorMessages errors={errors} />
         <div className="form-group">
           <label>Add a Note</label>
-          <textarea
-            id="noteText"
-            data-cy="enter-note"
-            className="form-control"
-            name="contents"
-            onChange={handleChange}
-            value={noteText}
-          />
+          <textarea id="noteText" data-cy="enter-note" className="form-control" name="contents" onChange={handleChange} value={noteText} />
         </div>
       </InputBox>
     );

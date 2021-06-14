@@ -1,15 +1,15 @@
 import React, { useCallback, useState } from "react";
-import { PersonHelper, Helper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, ErrorMessages, ValidateHelper } from "."
+import { PersonHelper, Helper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, ErrorMessages, ValidateHelper, Loading } from "."
 import { Redirect } from "react-router-dom";
 import { Row, Col, FormControl, FormGroup, FormLabel, Button } from "react-bootstrap";
 
 interface Props {
-    id?: string,
-    updatedFunction: () => void,
-    togglePhotoEditor: (show: boolean) => void,
-    person: PersonInterface,
-    photoUrl: string,
-    showMergeSearch: () => void
+  id?: string,
+  updatedFunction: () => void,
+  togglePhotoEditor: (show: boolean) => void,
+  person: PersonInterface,
+  photoUrl: string,
+  showMergeSearch: () => void
 }
 
 export const PersonEdit: React.FC<Props> = (props) => {
@@ -57,10 +57,10 @@ export const PersonEdit: React.FC<Props> = (props) => {
     value = value.replace(/[^0-9-]/g, "");
     value = value.replaceAll("-", "");
 
-    if(value.length > 3 && value.length <= 6)
-      value = value.slice(0,3) + "-" + value.slice(3);
-    else if(value.length > 6)
-      value = value.slice(0,3) + "-" + value.slice(3,6) + "-" + value.slice(6);
+    if (value.length > 3 && value.length <= 6)
+      value = value.slice(0, 3) + "-" + value.slice(3);
+    else if (value.length > 6)
+      value = value.slice(0, 3) + "-" + value.slice(3, 6) + "-" + value.slice(6);
 
     return value;
   }
@@ -178,7 +178,153 @@ export const PersonEdit: React.FC<Props> = (props) => {
 
   React.useEffect(personChanged, [props.person]);
   React.useEffect(photoUrlChanged, [props.photoUrl]);
-  React.useEffect(fetchMembers, [props.person])
+  React.useEffect(fetchMembers, [props.person]);
+
+  const getFields = () => {
+    if (!person) return <Loading />
+    else return (<>
+      <Row>
+        <Col sm={3} className="my-auto">{getPhoto()}</Col>
+        <Col sm={9}>
+          <Row>
+            <Col lg={6}>
+              <FormGroup>
+                <FormLabel>First Name</FormLabel>
+                <FormControl name="firstName" data-cy="firstname" value={person?.name?.first || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              </FormGroup>
+            </Col>
+            <Col lg={6}>
+              <FormGroup>
+                <FormLabel>Last Name</FormLabel>
+                <FormControl name="lastName" data-cy="lastname" value={person?.name?.last || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={6}>
+              <FormGroup>
+                <FormLabel>Middle Name</FormLabel>
+                <FormControl name="middleName" data-cy="middle-name" value={person?.name?.middle || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              </FormGroup>
+            </Col>
+            <Col lg={6}>
+              <FormGroup>
+                <FormLabel>Email</FormLabel>
+                <FormControl type="text" name="email" data-cy="email" value={person?.contactInfo?.email || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              </FormGroup>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col lg={4} md={4}>
+          <FormGroup>
+            <FormLabel>Nickname</FormLabel>
+            <FormControl name="nickName" data-cy="nickname" value={person?.name?.nick || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          </FormGroup>
+        </Col>
+        <Col lg={4} md={4}>
+          <FormGroup>
+            <FormLabel>Membership Status</FormLabel>
+            <FormControl as="select" name="membershipStatus" data-cy="member-ship-status" value={person?.membershipStatus || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+              <option value="Visitor">Visitor</option>
+              <option value="Member">Member</option>
+              <option value="Staff">Staff</option>
+            </FormControl>
+          </FormGroup>
+        </Col>
+        <Col lg={4} md={4}>
+          <FormGroup>
+            <FormLabel>Birthdate</FormLabel>
+            <FormControl type="date" name="birthDate" data-cy="birthdate" value={Helper.formatHtml5Date(person?.birthDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+          </FormGroup>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col lg={4} md={4}>
+          <FormGroup>
+            <FormLabel>Gender</FormLabel>
+            <FormControl as="select" name="gender" data-cy="gender" value={person?.gender || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+              <option value="Unspecified">Unspecified</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </FormControl>
+          </FormGroup>
+        </Col>
+        <Col lg={4} md={4}>
+          <FormGroup>
+            <FormLabel>Marital Status</FormLabel>
+            <FormControl as="select" name="maritalStatus" data-cy="marital-status" value={person?.maritalStatus || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+              <option value="Unknown">Unknown</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+              <option value="Divorced">Divorced</option>
+              <option value="Widowed">Widowed</option>
+            </FormControl>
+          </FormGroup>
+        </Col>
+        <Col lg={4} md={4}>
+          <FormGroup>
+            <FormLabel>Anniversary</FormLabel>
+            <FormControl type="date" name="anniversary" data-cy="anniversary" value={Helper.formatHtml5Date(person?.anniversary)} onChange={handleChange} onKeyDown={handleKeyDown} />
+          </FormGroup>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col md={9}>
+          <div className="section">Address</div>
+          <FormGroup>
+            <FormLabel>Line 1</FormLabel>
+            <FormControl name="address1" data-cy="address1" value={person?.contactInfo?.address1 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          </FormGroup>
+          <FormGroup>
+            <FormLabel>Line 2</FormLabel>
+            <FormControl name="address2" data-cy="address2" value={person?.contactInfo?.address2 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          </FormGroup>
+          <Row>
+            <Col xs={6}>
+              <FormGroup>
+                <FormLabel>City</FormLabel>
+                <FormControl type="text" name="city" data-cy="city" value={person?.contactInfo?.city || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              </FormGroup>
+            </Col>
+            <Col xs={3}>
+              <FormGroup>
+                <FormLabel>State</FormLabel>
+                <FormControl as="select" name="state" data-cy="state" value={person?.contactInfo?.state || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+                  <StateOptions />
+                </FormControl>
+              </FormGroup>
+            </Col>
+            <Col xs={3}>
+              <FormGroup>
+                <FormLabel>Zip</FormLabel>
+                <FormControl type="text" name="zip" data-cy="zip" value={person?.contactInfo?.zip || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              </FormGroup>
+            </Col>
+          </Row>
+        </Col>
+        <Col md={3}>
+          <div className="section">Phone</div>
+          <FormGroup>
+            <FormLabel>Home</FormLabel>
+            <FormControl type="text" name="homePhone" maxLength={12} data-cy="homePhone" value={person?.contactInfo?.homePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          </FormGroup>
+          <FormGroup>
+            <FormLabel>Work</FormLabel>
+            <FormControl type="text" name="workPhone" maxLength={12} data-cy="workPhone" value={person?.contactInfo?.workPhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          </FormGroup>
+          <FormGroup>
+            <FormLabel>Mobile</FormLabel>
+            <FormControl type="text" name="mobilePhone" maxLength={12} data-cy="mobilePhone" value={person?.contactInfo?.mobilePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          </FormGroup>
+        </Col>
+      </Row>
+    </>);
+  }
 
   if (redirect !== "") return <Redirect to={redirect} />
   else {
@@ -187,146 +333,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
         <UpdateHouseHold show={showUpdateAddressModal} text={text} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} />
         <InputBox id={props.id} data-cy="person-details-box" headerIcon="fas fa-user" headerText="Personal Details" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave} headerActionContent={<Button id="mergeButton" data-cy="merge-button" variant="primary" size="sm" onClick={handleMerge}>Merge</Button>}>
           <ErrorMessages errors={errors} />
-          <Row>
-            <Col sm={3} className="my-auto">{getPhoto()}</Col>
-            <Col sm={9}>
-              <Row>
-                <Col lg={6}>
-                  <FormGroup>
-                    <FormLabel>First Name</FormLabel>
-                    <FormControl name="firstName" data-cy="firstname" value={person?.name?.first || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-                  </FormGroup>
-                </Col>
-                <Col lg={6}>
-                  <FormGroup>
-                    <FormLabel>Last Name</FormLabel>
-                    <FormControl name="lastName" data-cy="lastname" value={person?.name?.last || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col lg={6}>
-                  <FormGroup>
-                    <FormLabel>Middle Name</FormLabel>
-                    <FormControl name="middleName" data-cy="middle-name" value={person?.name?.middle || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-                  </FormGroup>
-                </Col>
-                <Col lg={6}>
-                  <FormGroup>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl type="text" name="email" data-cy="email" value={person?.contactInfo?.email || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-                  </FormGroup>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col lg={4} md={4}>
-              <FormGroup>
-                <FormLabel>Nickname</FormLabel>
-                <FormControl name="nickName" data-cy="nickname" value={person?.name?.nick || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-              </FormGroup>
-            </Col>
-            <Col lg={4} md={4}>
-              <FormGroup>
-                <FormLabel>Membership Status</FormLabel>
-                <FormControl as="select" name="membershipStatus" data-cy="member-ship-status" value={person?.membershipStatus || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
-                  <option value="Visitor">Visitor</option>
-                  <option value="Member">Member</option>
-                  <option value="Staff">Staff</option>
-                </FormControl>
-              </FormGroup>
-            </Col>
-            <Col lg={4} md={4}>
-              <FormGroup>
-                <FormLabel>Birthdate</FormLabel>
-                <FormControl type="date" name="birthDate" data-cy="birthdate" value={Helper.formatHtml5Date(person?.birthDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
-              </FormGroup>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col lg={4} md={4}>
-              <FormGroup>
-                <FormLabel>Gender</FormLabel>
-                <FormControl as="select" name="gender" data-cy="gender" value={person?.gender || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
-                  <option value="Unspecified">Unspecified</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </FormControl>
-              </FormGroup>
-            </Col>
-            <Col lg={4} md={4}>
-              <FormGroup>
-                <FormLabel>Marital Status</FormLabel>
-                <FormControl as="select" name="maritalStatus" data-cy="marital-status" value={person?.maritalStatus || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
-                  <option value="Unknown">Unknown</option>
-                  <option value="Single">Single</option>
-                  <option value="Married">Married</option>
-                  <option value="Divorced">Divorced</option>
-                  <option value="Widowed">Widowed</option>
-                </FormControl>
-              </FormGroup>
-            </Col>
-            <Col lg={4} md={4}>
-              <FormGroup>
-                <FormLabel>Anniversary</FormLabel>
-                <FormControl type="date" name="anniversary" data-cy="anniversary" value={Helper.formatHtml5Date(person?.anniversary)} onChange={handleChange} onKeyDown={handleKeyDown} />
-              </FormGroup>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md={9}>
-              <div className="section">Address</div>
-              <FormGroup>
-                <FormLabel>Line 1</FormLabel>
-                <FormControl name="address1" data-cy="address1" value={person?.contactInfo?.address1 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel>Line 2</FormLabel>
-                <FormControl name="address2" data-cy="address2" value={person?.contactInfo?.address2 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-              </FormGroup>
-              <Row>
-                <Col xs={6}>
-                  <FormGroup>
-                    <FormLabel>City</FormLabel>
-                    <FormControl type="text" name="city" data-cy="city" value={person?.contactInfo?.city || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-                  </FormGroup>
-                </Col>
-                <Col xs={3}>
-                  <FormGroup>
-                    <FormLabel>State</FormLabel>
-                    <FormControl as="select" name="state" data-cy="state" value={person?.contactInfo?.state || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
-                      <StateOptions />
-                    </FormControl>
-                  </FormGroup>
-                </Col>
-                <Col xs={3}>
-                  <FormGroup>
-                    <FormLabel>Zip</FormLabel>
-                    <FormControl type="text" name="zip" data-cy="zip" value={person?.contactInfo?.zip || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-                  </FormGroup>
-                </Col>
-              </Row>
-            </Col>
-            <Col md={3}>
-              <div className="section">Phone</div>
-              <FormGroup>
-                <FormLabel>Home</FormLabel>
-                <FormControl type="text" name="homePhone" maxLength={12} data-cy="homePhone" value={person?.contactInfo?.homePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel>Work</FormLabel>
-                <FormControl type="text" name="workPhone" maxLength={12} data-cy="workPhone" value={person?.contactInfo?.workPhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel>Mobile</FormLabel>
-                <FormControl type="text" name="mobilePhone" maxLength={12} data-cy="mobilePhone" value={person?.contactInfo?.mobilePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-              </FormGroup>
-            </Col>
-          </Row>
+          {getFields()}
         </InputBox>
       </>
     )
