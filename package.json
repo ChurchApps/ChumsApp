@@ -58,7 +58,12 @@
       "npm run lint:fix"
     ]
   },
-  "browserslist": [">0.3%", "not ie 11", "not dead", "not op_mini all"],
+  "browserslist": [
+    ">0.3%",
+    "not ie 11",
+    "not dead",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "@types/file-saver": "^2.0.1",
     "google-charts": "^2.0.0",

@@ -1,5 +1,5 @@
 import React from "react";
-import { GroupInterface, DisplayBox, GroupDetailsEdit, ServiceTimes, UserHelper, Permissions } from ".";
+import { GroupInterface, DisplayBox, GroupDetailsEdit, ServiceTimes, UserHelper, Permissions, Loading } from ".";
 import { Row, Col } from "react-bootstrap";
 
 interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }
@@ -11,9 +11,9 @@ export const GroupDetails: React.FC<Props> = (props) => {
 
   const handleUpdated = (g: GroupInterface) => { setMode("display"); props.updatedFunction(g); }
 
-  if (mode === "edit") return <GroupDetailsEdit group={props.group} updatedFunction={handleUpdated} />
-  else return (
-    <DisplayBox id="groupDetailsBox" data-cy="group-details-box" headerText="Group Details" headerIcon="fas fa-list" editFunction={getEditFunction()}>
+  const getRows = () => {
+    if (!props.group) return <Loading />
+    else return (<>
       <Row>
         <Col><label>Category:</label> {props.group.categoryName}</Col>
         <Col><label>Name:</label> {props.group.name}</Col>
@@ -23,6 +23,14 @@ export const GroupDetails: React.FC<Props> = (props) => {
         <Col><label>Parent Pickup:</label> {(props.group.parentPickup?.toString().replace("false", "No").replace("true", "Yes") || "")}</Col>
       </Row>
       <ServiceTimes group={props.group} />
+    </>);
+
+  }
+
+  if (mode === "edit") return <GroupDetailsEdit group={props.group} updatedFunction={handleUpdated} />
+  else return (
+    <DisplayBox id="groupDetailsBox" data-cy="group-details-box" headerText="Group Details" headerIcon="fas fa-list" editFunction={getEditFunction()}>
+      {getRows()}
     </DisplayBox>
   );
 }

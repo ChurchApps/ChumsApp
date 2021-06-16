@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
-import { ApiHelper, DisplayBox, FormInterface, FormEdit, UserHelper, Permissions } from "./components"
+import { ApiHelper, DisplayBox, FormInterface, FormEdit, UserHelper, Permissions, Loading } from "./components"
 import { Link } from "react-router-dom"
 import { Row, Col, Table } from "react-bootstrap";
 
 export const FormsPage = () => {
-  const [forms, setForms] = React.useState<FormInterface[]>([]);
+  const [forms, setForms] = React.useState<FormInterface[]>(null);
   const [selectedFormId, setSelectedFormId] = React.useState("notset");
   const isSubscribed = useRef(true)
 
@@ -51,21 +51,27 @@ export const FormsPage = () => {
   React.useEffect(() => { loadData(); return () => { isSubscribed.current = false } }, []);
 
   if (!UserHelper.checkAccess(Permissions.membershipApi.forms.view)) return (<></>);
-  else return (
-    <>
-      <h1><i className="fas fa-align-left"></i> Forms</h1>
-      <Row>
-        <Col lg={8}>
-          <DisplayBox id="formsBox" headerText="Forms" headerIcon="fas fa-align-left" editContent={getEditContent()}>
-            <Table>
-              <thead>{getTableHeader()}</thead>
-              <tbody>{getRows()}</tbody>
-            </Table>
-          </DisplayBox>
-        </Col>
-        <Col lg={4}>{getSidebar()}</Col>
-      </Row>
-    </>
-  );
+  else {
+    let contents = <Loading />
+    if (forms) {
+      contents = (<Table>
+        <thead>{getTableHeader()}</thead>
+        <tbody>{getRows()}</tbody>
+      </Table>);
+    }
+    return (
+      <>
+        <h1><i className="fas fa-align-left"></i> Forms</h1>
+        <Row>
+          <Col lg={8}>
+            <DisplayBox id="formsBox" headerText="Forms" headerIcon="fas fa-align-left" editContent={getEditContent()}>
+              {contents}
+            </DisplayBox>
+          </Col>
+          <Col lg={4}>{getSidebar()}</Col>
+        </Row>
+      </>
+    );
+  }
 }
 

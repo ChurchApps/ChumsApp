@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ApiHelper, GroupInterface, DisplayBox, GroupMemberInterface, PersonHelper, PersonInterface } from ".";
+import { ApiHelper, GroupInterface, DisplayBox, GroupMemberInterface, PersonHelper, PersonInterface, Loading } from ".";
 import { Table } from "react-bootstrap";
 
 interface Props { group: GroupInterface, addFunction: (person: PersonInterface) => void }
@@ -43,22 +43,24 @@ export const MembersAdd: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-
-    if (groupMembers.length === 0) {
-      return rows;
-    }
+    if (groupMembers.length === 0) return rows;
     rows.push(<tr><th></th><th>Name</th><th>Action</th></tr>);
     return rows;
   }
 
   React.useEffect(() => { if (props.group !== null) loadData(); return () => { isSubscribed.current = false } }, [props.group, loadData]);
 
+  let content = <Loading />
+  if (groupMembers) {
+    content = (<Table className="personSideTable">
+      <thead>{getTableHeader()}</thead>
+      <tbody>{getRows()}</tbody>
+    </Table>);
+  }
+
   return (
     <DisplayBox headerIcon="fas fa-user" headerText="Available Group Members" data-cy="available-group-members">
-      <Table className="personSideTable">
-        <thead>{getTableHeader()}</thead>
-        <tbody>{getRows()}</tbody>
-      </Table>
+      {content}
     </DisplayBox>
   );
 }

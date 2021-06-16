@@ -1,12 +1,12 @@
 import React from "react";
-import { ApiHelper, UserHelper, DonationInterface, Helper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface } from ".";
+import { ApiHelper, UserHelper, DonationInterface, Helper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading } from ".";
 import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
 
 interface Props { batch: DonationBatchInterface, funds: FundInterface[], addFunction: () => void, editFunction: (id: string) => void }
 
 export const Donations: React.FC<Props> = (props) => {
-  const [donations, setDonations] = React.useState<DonationInterface[]>([]);
+  const [donations, setDonations] = React.useState<DonationInterface[]>(null);
 
   const loadData = React.useCallback(() => { ApiHelper.get("/donations?batchId=" + props.batch?.id, "GivingApi").then(data => populatePeople(data)); }, [props.batch]);
   const showAddDonation = (e: React.MouseEvent) => { e.preventDefault(); props.addFunction() }
@@ -57,15 +57,19 @@ export const Donations: React.FC<Props> = (props) => {
   }
 
   React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.batch?.id)) loadData() }, [props.batch, loadData]);
-  //React.useEffect(populatePeople, [donations]);
+
+  let content = <Loading />
+  if (donations) {
+    content = (<Table>
+      <tbody>
+        {getRows()}
+      </tbody>
+    </Table>);
+  }
 
   return (
     <DisplayBox id="donationsBox" headerIcon="fas fa-hand-holding-usd" headerText="Donations" editContent={getEditContent()}>
-      <Table>
-        <tbody>
-          {getRows()}
-        </tbody>
-      </Table>
+      {content}
     </DisplayBox>
   );
 }

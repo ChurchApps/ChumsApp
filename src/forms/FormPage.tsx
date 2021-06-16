@@ -1,12 +1,12 @@
 import React from "react";
-import { ApiHelper, DisplayBox, UserHelper, FormInterface, QuestionInterface, FormQuestionEdit, Permissions } from "./components";
+import { ApiHelper, DisplayBox, UserHelper, FormInterface, QuestionInterface, FormQuestionEdit, Permissions, Loading } from "./components";
 import { RouteComponentProps } from "react-router-dom"
 import { Row, Col, Table } from "react-bootstrap";
 
 type TParams = { id?: string };
 export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
   const [form, setForm] = React.useState<FormInterface>({} as FormInterface);
-  const [questions, setQuestions] = React.useState<QuestionInterface[]>([]);
+  const [questions, setQuestions] = React.useState<QuestionInterface[]>(null);
   const [editQuestionId, setEditQuestionId] = React.useState("notset");
 
   const questionUpdated = () => { loadQuestions(); setEditQuestionId("notset"); }
@@ -83,20 +83,26 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
   React.useEffect(loadData, []);
 
   if (!UserHelper.checkAccess(Permissions.membershipApi.forms.edit)) return (<></>);
-  else return (
-    <>
-      <h1><i className="fas fa-align-left"></i> {form.name}</h1>
-      <Row>
-        <Col lg={8}>
-          <DisplayBox id="questionsBox" headerText="Questions" headerIcon="fas fa-question" editContent={getEditContent()}>
-            <Table>
-              <thead>{getTableHeader()}</thead>
-              <tbody>{getRows()}</tbody>
-            </Table>
-          </DisplayBox>
-        </Col>
-        <Col lg={4}>{getSidebarModules()}</Col>
-      </Row>
-    </>
-  );
+  else {
+    let contents = <Loading />
+    if (questions) {
+      contents = (<Table>
+        <thead>{getTableHeader()}</thead>
+        <tbody>{getRows()}</tbody>
+      </Table>);
+    }
+    return (
+      <>
+        <h1><i className="fas fa-align-left"></i> {form.name}</h1>
+        <Row>
+          <Col lg={8}>
+            <DisplayBox id="questionsBox" headerText="Questions" headerIcon="fas fa-question" editContent={getEditContent()}>
+              {contents}
+            </DisplayBox>
+          </Col>
+          <Col lg={4}>{getSidebarModules()}</Col>
+        </Row>
+      </>
+    );
+  }
 }

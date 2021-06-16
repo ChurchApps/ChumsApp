@@ -1,22 +1,23 @@
 import React, { useRef } from "react";
-import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions } from ".";
+import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
 interface Props {
-    group: GroupInterface,
-    addedPerson?: PersonInterface,
-    addedCallback?: () => void
+  group: GroupInterface,
+  addedPerson?: PersonInterface,
+  addedCallback?: () => void
 }
 
 export const GroupMembers: React.FC<Props> = (props) => {
 
-  const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([]);
-  const isSubscribed = useRef(true)
+  const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>(null);
+  const isSubscribed = useRef(true);
 
   const loadData = React.useCallback(() => {
     ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => { if (isSubscribed.current) { setGroupMembers(data) } });
-  }, [props.group.id])
+  }, [props.group.id]);
+
   const handleRemove = (e: React.MouseEvent) => {
     e.preventDefault();
     let anchor = e.currentTarget as HTMLAnchorElement;
@@ -84,16 +85,22 @@ export const GroupMembers: React.FC<Props> = (props) => {
       isSubscribed.current = false
     }
   }, [props.group, loadData]);
+
   React.useEffect(() => {
     if (props.addedPerson?.id !== undefined) { handleAdd() };
   }, [props.addedPerson, handleAdd]);
 
+  const getTable = () => {
+    if (!groupMembers) return <Loading />
+    else return (<Table id="groupMemberTable">
+      <thead>{getTableHeader()}</thead>
+      <tbody>{getRows()}</tbody>
+    </Table>);
+  }
+
   return (
     <DisplayBox id="groupMembersBox" data-cy="group-members-tab" headerText="Group Members" headerIcon="fas fa-users" editContent={getEditContent()}>
-      <Table id="groupMemberTable">
-        <thead>{getTableHeader()}</thead>
-        <tbody>{getRows()}</tbody>
-      </Table>
+      {getTable()}
     </DisplayBox>
   );
 }

@@ -1,14 +1,14 @@
 import React from "react";
-import { ApiHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions } from ".";
+import { ApiHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading } from ".";
 import { Table, Button, InputGroup, FormControl } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
 
 interface Props {
-    group: GroupInterface,
-    sidebarVisibilityFunction: (name: string, visible: boolean) => void,
-    addedSession: SessionInterface,
-    addedPerson: PersonInterface,
-    addedCallback?: () => void
+  group: GroupInterface,
+  sidebarVisibilityFunction: (name: string, visible: boolean) => void,
+  addedSession: SessionInterface,
+  addedPerson: PersonInterface,
+  addedCallback?: () => void
 }
 
 export const GroupSessions: React.FC<Props> = (props) => {
@@ -24,6 +24,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
       ApiHelper.get("/people/ids?ids=" + escape(peopleIds.join(",")), "MembershipApi").then(data => setPeople(data));
     });
   }, [session]);
+
   const loadSessions = React.useCallback(() => {
     ApiHelper.get("/sessions?groupId=" + props.group.id, "AttendanceApi").then(data => {
       setSessions(data);
@@ -37,6 +38,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
     let personId = anchor.getAttribute("data-personid");
     ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + personId, "AttendanceApi").then(loadAttendance);
   }
+
   const handleAdd = (e: React.MouseEvent) => { e.preventDefault(); props.sidebarVisibilityFunction("addSession", true); }
 
   const getRows = () => {
@@ -96,16 +98,18 @@ export const GroupSessions: React.FC<Props> = (props) => {
 
   React.useEffect(() => { handleSessionSelected(); }, [session, handleSessionSelected]);
 
-  let content = <></>;
-  if (sessions.length === 0) content = <div className="alert alert-warning" role="alert" data-cy="no-session-msg"><b>There are no sessions.</b>  Please add a new session to continue.</div>
-  else content = (<>
-    <span className="float-right"><ExportLink data={visitSessions} spaceAfter={true} filename="visits.csv" /></span>
-    <b data-cy="session-present-msg">Attendance for {props.group.name}</b>
-    <Table id="groupMemberTable">
-      <thead><tr><th></th><th>Name</th><th></th></tr></thead>
-      <tbody>{getRows()}</tbody>
-    </Table>
-  </>);
+  let content = <Loading />;
+  if (sessions) {
+    if (sessions.length === 0) content = <div className="alert alert-warning" role="alert" data-cy="no-session-msg"><b>There are no sessions.</b>  Please add a new session to continue.</div>
+    else content = (<>
+      <span className="float-right"><ExportLink data={visitSessions} spaceAfter={true} filename="visits.csv" /></span>
+      <b data-cy="session-present-msg">Attendance for {props.group.name}</b>
+      <Table id="groupMemberTable">
+        <thead><tr><th></th><th>Name</th><th></th></tr></thead>
+        <tbody>{getRows()}</tbody>
+      </Table>
+    </>);
+  }
 
   return (<DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText="Sessions" headerIcon="far fa-calendar-alt" editContent={getHeaderSection()}>{content}</DisplayBox>);
 }

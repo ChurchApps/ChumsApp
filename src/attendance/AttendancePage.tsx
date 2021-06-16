@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit, ServiceEdit, ServiceInterface, ServiceTimeEdit, ServiceTimeInterface, Tabs, GroupServiceTimeInterface, GroupInterface, ArrayHelper } from "./components";
+import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit, ServiceEdit, ServiceInterface, ServiceTimeEdit, ServiceTimeInterface, Tabs, GroupServiceTimeInterface, GroupInterface, ArrayHelper, Loading } from "./components";
 
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
@@ -103,19 +103,18 @@ export const AttendancePage = () => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-
-    if (attendance.length === 0) {
-      return rows;
-    }
-
+    if (attendance.length === 0) return rows;
     rows.push(<tr key="header"><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></tr>);
     return rows;
   }
 
-  /*
-    const handleFilterUpdated = (f: AttendanceFilterInterface) => {
-        setFilter({ ...f });
-    }*/
+  const getTable = () => {
+    if (!attendance) return <Loading />
+    else return (<Table size="sm">
+      <thead>{getTableHeader()}</thead>
+      <tbody>{getRows()}</tbody>
+    </Table>);
+  }
 
   return (
     <form method="post">
@@ -123,10 +122,7 @@ export const AttendancePage = () => {
       <Row>
         <Col lg={8}>
           <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="fas fa-list" headerText="Groups" editContent={getEditLinks()}>
-            <Table size="sm">
-              <thead>{getTableHeader()}</thead>
-              <tbody>{getRows()}</tbody>
-            </Table>
+            {getTable()}
           </DisplayBox>
         </Col>
         <Col lg={4}>

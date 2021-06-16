@@ -1,10 +1,10 @@
 import React from "react";
-import { ApiHelper, FundInterface, FundEdit, DisplayBox, UserHelper, Permissions } from ".";
+import { ApiHelper, FundInterface, FundEdit, DisplayBox, UserHelper, Permissions, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
 export const Funds: React.FC = () => {
-  const [funds, setFunds] = React.useState<FundInterface[]>([]);
+  const [funds, setFunds] = React.useState<FundInterface[]>(null);
   const [editFund, setEditFund] = React.useState<FundInterface>(null);
 
   const loadData = () => {
@@ -49,11 +49,15 @@ export const Funds: React.FC = () => {
 
   React.useEffect(loadData, []);
 
-  if (editFund === null) return (
-    <DisplayBox id="fundsBox" headerIcon="fas fa-hand-holding-usd" data-cy="funds-box" headerText="Funds" editContent={getEditSection()}>
-      <Table size="sm">{getRows()}</Table>
-    </DisplayBox>
-  );
+  if (editFund === null) {
+    let contents = <Loading />
+    if (funds) contents = <Table size="sm">{getRows()}</Table>
+    return (
+      <DisplayBox id="fundsBox" headerIcon="fas fa-hand-holding-usd" data-cy="funds-box" headerText="Funds" editContent={getEditSection()}>
+        {contents}
+      </DisplayBox>
+    );
+  }
   else return (<FundEdit fund={editFund} updatedFunction={handleFundUpdated} />);
 
 }
