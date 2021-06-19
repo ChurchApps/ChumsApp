@@ -31,7 +31,7 @@ jobs:
     
       - name: Install Dependencies
         working-directory: ~/ChumsApp
-        run: npm install
+        run: npm ci
 
       - name: ChumsApp - Copy .env
         working-directory: ~/ChumsApp
