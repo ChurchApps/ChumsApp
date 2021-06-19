@@ -4,33 +4,22 @@
     "react"
   ],
   "rules": {
-    "comma-dangle": ["error", "always-multiline"],
-    "eol-last": [
-      "error",
-      "always"
-    ],
-    "quote-props": [
-      "error",
-      "as-needed"
-    ],
-    "quotes": [
-      "error",
-      "double",
-      {
+    "comma-dangle": ["warn", "never"],
+    "eol-last": ["warn", "always"],
+    "quote-props": ["error", "as-needed"],
+    "quotes": ["warn", "double", {
         "avoidEscape": true,
         "allowTemplateLiterals": true
       }
     ],
-    "no-trailing-spaces": "error",
+    "no-trailing-spaces": "warn",
     "no-var": "error",
-    "operator-linebreak": ["error", "before"],
-    "multiline-ternary": ["error", "always-multiline"],
-    "indent": [
-      "error",
-      2
-    ],
-    "arrow-body-style": ["error", "as-needed"],
-    "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always", "beforeClosing": "never" }],
-    "no-multiple-empty-lines": ["error", { "max": 1 }]
+    "operator-linebreak": ["warn", "before"],
+    "multiline-ternary": ["warn", "always-multiline"],
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
+    "arrow-body-style": ["warn", "as-needed"],
+    "react/jsx-tag-spacing": ["warn", { "beforeSelfClosing": "always", "beforeClosing": "never" }],
+    "no-multiple-empty-lines": ["warn", { "max": 1 }],
+    "jsx-quotes": ["warn", "prefer-double"]
   }
 }
