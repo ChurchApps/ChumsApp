@@ -10,8 +10,8 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     switch (e.target.name) {
-    case "choiceValue": setChoiceValue(e.target.value); break;
-    case "choiceText": setChoiceText(e.target.value); break;
+      case "choiceValue": setChoiceValue(e.target.value); break;
+      case "choiceText": setChoiceText(e.target.value); break;
     }
   }
 

@@ -49,7 +49,7 @@ export const GroupsPage = () => {
             <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
           </td>
           <td>{memberCount}</td>
-        </tr>,
+        </tr>
       );
       lastCat = g.categoryName;
     }

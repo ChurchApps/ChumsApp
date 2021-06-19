@@ -30,7 +30,7 @@ export const Household: React.FC<Props> = (props) => {
           <tr key={m.id}>
             <td><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></td>
             <td><Link to={"/people/" + m.id}>{m.name.display}</Link><div>{m.householdRole}</div></td>
-          </tr>,
+          </tr>
         );
       }
     }

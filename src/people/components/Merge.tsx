@@ -9,7 +9,7 @@ import {
   NoteInterface,
   VisitInterface,
   DonationInterface,
-  FormSubmissionInterface,
+  FormSubmissionInterface
 } from "."
 import { useHistory } from "react-router-dom"
 

@@ -20,11 +20,11 @@ export const BatchEdit: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let b = { ...batch } as DonationBatchInterface;
     switch (e.currentTarget.name) {
-    case "name": b.name = e.currentTarget.value; break;
-    case "date":
-      b.batchDate = new Date(e.currentTarget.value);
-      if (isNaN(b.batchDate.getTime())) b.batchDate = null;
-      break;
+      case "name": b.name = e.currentTarget.value; break;
+      case "date":
+        b.batchDate = new Date(e.currentTarget.value);
+        if (isNaN(b.batchDate.getTime())) b.batchDate = null;
+        break;
     }
     setBatch(b);
   }

@@ -23,15 +23,15 @@ export const Tabs: React.FC<Props> = (props) => {
       props.sidebarVisibilityFunction("addPerson", true);
       props.sidebarVisibilityFunction("addMember", true);
     }
-  }, [props, selectedTab],
+  }, [props, selectedTab]
   )
   const getCurrentTab = () => {
 
     let currentTab = null;
     switch (selectedTab) {
-    case "members": currentTab = <GroupMembers group={props.group} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />; break;
-    case "sessions": currentTab = <GroupSessions group={props.group} sidebarVisibilityFunction={props.sidebarVisibilityFunction} addedSession={props.addedSession} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />; break;
-    default: currentTab = <div>Not implemented</div>; break;
+      case "members": currentTab = <GroupMembers group={props.group} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />; break;
+      case "sessions": currentTab = <GroupSessions group={props.group} sidebarVisibilityFunction={props.sidebarVisibilityFunction} addedSession={props.addedSession} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />; break;
+      default: currentTab = <div>Not implemented</div>; break;
     }
     return currentTab
   }

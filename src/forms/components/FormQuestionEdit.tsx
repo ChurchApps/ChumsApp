@@ -19,10 +19,10 @@ export const FormQuestionEdit: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     let q = { ...question };
     switch (e.target.name) {
-    case "title": q.title = e.currentTarget.value; break;
-    case "description": q.description = e.currentTarget.value; break;
-    case "placeholder": q.placeholder = e.currentTarget.value; break;
-    case "fieldType": q.fieldType = e.target.value; break;
+      case "title": q.title = e.currentTarget.value; break;
+      case "description": q.description = e.currentTarget.value; break;
+      case "placeholder": q.placeholder = e.currentTarget.value; break;
+      case "fieldType": q.fieldType = e.target.value; break;
     }
     setQuestion(q);
   }

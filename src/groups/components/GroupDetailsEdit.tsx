@@ -16,10 +16,10 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     e.preventDefault();
     let g = { ...group };
     switch (e.currentTarget.name) {
-    case "categoryName": g.categoryName = e.currentTarget.value; break;
-    case "name": g.name = e.currentTarget.value; break;
-    case "trackAttendance": g.trackAttendance = (e.currentTarget.value === "true"); break;
-    case "parentPickup": g.parentPickup = (e.currentTarget.value === "true"); break;
+      case "categoryName": g.categoryName = e.currentTarget.value; break;
+      case "name": g.name = e.currentTarget.value; break;
+      case "trackAttendance": g.trackAttendance = (e.currentTarget.value === "true"); break;
+      case "parentPickup": g.parentPickup = (e.currentTarget.value === "true"); break;
     }
     setGroup(g);
   }

@@ -12,15 +12,15 @@ export const Question: React.FC<Props> = (props) => {
   else {
     let displayValue = "";
     switch (q.fieldType) {
-    case "Date":
-      displayValue = (a.value === null || a.value === "") ? "" : Helper.getShortDate(new Date(a.value));
-      break;
-    case "Yes/No":
-      displayValue = (a.value === null || a.value === "") ? "" : a.value.replace("False", "No").replace("True", "Yes");
-      break;
-    default:
-      displayValue = a.value;
-      break;
+      case "Date":
+        displayValue = (a.value === null || a.value === "") ? "" : Helper.getShortDate(new Date(a.value));
+        break;
+      case "Yes/No":
+        displayValue = (a.value === null || a.value === "") ? "" : a.value.replace("False", "No").replace("True", "Yes");
+        break;
+      default:
+        displayValue = a.value;
+        break;
     }
     return <div><label>{q.title}:</label> {displayValue}</div>
   }

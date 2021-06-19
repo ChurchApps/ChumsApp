@@ -62,7 +62,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
           <td><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></td>
           <td><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></td>
           <td>{editLink}</td>
-        </tr>,
+        </tr>
       );
     }
     return rows;

@@ -17,7 +17,7 @@ export const Notes: React.FC<Props> = (props) => {
   const loadNotes = () => {
     if (!UniqueIdHelper.isMissing(props.contentId))
       ApiHelper.get(
-        "/notes/" + props.contentType + "/" + props.contentId, "MembershipApi",
+        "/notes/" + props.contentType + "/" + props.contentId, "MembershipApi"
       ).then((data) => setNotes(data));
   };
   const handleSave = () => {
@@ -34,7 +34,7 @@ export const Notes: React.FC<Props> = (props) => {
     let n = {
       contentId: props.contentId,
       contentType: props.contentType,
-      contents: noteText,
+      contents: noteText
     };
     ApiHelper.post("/notes", [n], "MembershipApi").then(() => {
       loadNotes();

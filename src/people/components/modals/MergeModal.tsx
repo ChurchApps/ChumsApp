@@ -27,7 +27,7 @@ enum SpecialKeys {
 
 export const MergeModal: React.FC<Props> = (props) => {
   const [aggregatePerson, setAggregatePerson] = React.useState<PersonInterface>(
-    null,
+    null
   );
   const [conflicts, setConflicts] = React.useState<IConflicts[]>([]);
   const [error, setError] = React.useState<string>(null);
@@ -48,7 +48,7 @@ export const MergeModal: React.FC<Props> = (props) => {
       key: string,
       value1: any,
       value2: any,
-      subKey?: string,
+      subKey?: string
     ) => {
       if (basedOn) {
         if (subKey) {
@@ -62,7 +62,7 @@ export const MergeModal: React.FC<Props> = (props) => {
       newConflicts.push({
         value: subKey || key,
         options: [value1, value2],
-        selected: "",
+        selected: ""
       });
     };
 
@@ -71,40 +71,40 @@ export const MergeModal: React.FC<Props> = (props) => {
       const value2 = person2[key];
       // TODO:: CONTACT_INFO & NAME are having almost identical code, lets have a function instead.
       switch (key) {
-      case SpecialKeys.CONTACT_INFO:
-        const contactKeys = Object.keys(person1.contactInfo) as Array<
+        case SpecialKeys.CONTACT_INFO:
+          const contactKeys = Object.keys(person1.contactInfo) as Array<
             keyof ContactInfoInterface
           >;
-        aggregate[SpecialKeys.CONTACT_INFO] = {};
-        contactKeys.forEach((contactKey) => {
-          const cv1 = person1.contactInfo[contactKey];
-          const cv2 = person2.contactInfo[contactKey];
-          const check = primitiveCompare(cv1, cv2);
-          determine(check, key, cv1, cv2, contactKey);
-        });
-        break;
-      case SpecialKeys.NAME:
-        const nameKeys = Object.keys(person1.name) as Array<
+          aggregate[SpecialKeys.CONTACT_INFO] = {};
+          contactKeys.forEach((contactKey) => {
+            const cv1 = person1.contactInfo[contactKey];
+            const cv2 = person2.contactInfo[contactKey];
+            const check = primitiveCompare(cv1, cv2);
+            determine(check, key, cv1, cv2, contactKey);
+          });
+          break;
+        case SpecialKeys.NAME:
+          const nameKeys = Object.keys(person1.name) as Array<
             keyof NameInterface
           >;
-        aggregate[SpecialKeys.NAME] = {};
-        nameKeys.forEach((nameKey) => {
-          const cv1 = person1.name[nameKey];
-          const cv2 = person2.name[nameKey];
-          const check = primitiveCompare(cv1, cv2);
-          determine(check, key, cv1, cv2, nameKey);
-        });
-        break;
-      case SpecialKeys.HOUSEHOLD_ID:
-        aggregate.householdId = value1;
-        break;
-      case SpecialKeys.ID:
-        aggregate.id = value1;
-        break;
-      default:
-        const check = primitiveCompare(value1, value2);
-        determine(check, key, value1, value2);
-        break;
+          aggregate[SpecialKeys.NAME] = {};
+          nameKeys.forEach((nameKey) => {
+            const cv1 = person1.name[nameKey];
+            const cv2 = person2.name[nameKey];
+            const check = primitiveCompare(cv1, cv2);
+            determine(check, key, cv1, cv2, nameKey);
+          });
+          break;
+        case SpecialKeys.HOUSEHOLD_ID:
+          aggregate.householdId = value1;
+          break;
+        case SpecialKeys.ID:
+          aggregate.id = value1;
+          break;
+        default:
+          const check = primitiveCompare(value1, value2);
+          determine(check, key, value1, value2);
+          break;
       }
     });
     setAggregatePerson(aggregate);
@@ -120,7 +120,7 @@ export const MergeModal: React.FC<Props> = (props) => {
 
   const handleSelect = (
     propertyName: string,
-    e: React.FormEvent<HTMLInputElement>,
+    e: React.FormEvent<HTMLInputElement>
   ) => {
     const value = e.currentTarget.value;
     const conflictsCopy = conflicts.map((e) => {
@@ -149,20 +149,20 @@ export const MergeModal: React.FC<Props> = (props) => {
       if (contactkeys.some((c) => c === e.value)) {
         person.contactInfo = {
           ...person.contactInfo,
-          [e.value]: e.selected,
+          [e.value]: e.selected
         };
         return;
       }
       if (nameKeys.some((n) => n === e.value)) {
         person.name = {
           ...person.name,
-          [e.value]: e.selected,
+          [e.value]: e.selected
         };
         return;
       }
       person = {
         ...person,
-        [e.value]: e.selected,
+        [e.value]: e.selected
       };
     });
     setAggregatePerson(person);

@@ -7,7 +7,7 @@ import {
   , ImportVisitInterface, ImportSessionInterface, ImportVisitSessionInterface
   , ImportDonationBatchInterface, ImportFundInterface, ImportDonationInterface
   , ImportFundDonationInterface, ImportDataInterface, ImportFormsInterface
-  , ImportQuestionsInterface, ImportFormSubmissions, ImportAnswerInterface,
+  , ImportQuestionsInterface, ImportFormSubmissions, ImportAnswerInterface
 } from "../helpers/ImportHelper";
 import { Row, Col } from "react-bootstrap";
 import AdmZip from "adm-zip";
@@ -233,7 +233,7 @@ export const ImportPage = () => {
     groupServiceTimes: groupServiceTimes, groups: groups, groupMembers: groupMembers,
     visits: visits, sessions: sessions, visitSessions: visitSessions,
     batches: batches, donations: donations, funds: funds, fundDonations: fundDonations,
-    forms: forms, questions: questions, formSubmissions: formSubmissions, answers: answers,
+    forms: forms, questions: questions, formSubmissions: formSubmissions, answers: answers
   } as ImportDataInterface)
 
   if (!UserHelper.checkAccess(Permissions.accessApi.settings.edit)) return (<></>);

@@ -27,7 +27,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
     if (confirmed) {
       ApiHelper.delete("/paymentmethods/" + editPaymentMethod.id + "/" + customerId, "GivingApi");
       setPaymentMethods(
-        paymentMethods.filter(method => method.id !== editPaymentMethod.id),
+        paymentMethods.filter(method => method.id !== editPaymentMethod.id)
       );
       setMode("display");
     }
@@ -82,7 +82,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
           <td className="capitalize">{method.name + " ****" + method.last4}</td>
           <td>{method?.status === "new" && <a href="about:blank"  onClick={handleEdit(method, true)}>Verify Account</a> }</td>
           <td className="text-right">{getEditOptions(method)}</td>
-        </tr>,
+        </tr>
       );
     });
     return rows;

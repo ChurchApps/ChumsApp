@@ -53,7 +53,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
           <td><img className="personPhoto" src={PersonHelper.getPhotoUrl(person)} alt="avatar" /></td>
           <td><a className="personName" href={"/people/person.aspx?id=" + vs.visit.personId}>{person?.name?.display}</a></td>
           <td>{editLink}</td>
-        </tr>,
+        </tr>
       );
     }
     return result;

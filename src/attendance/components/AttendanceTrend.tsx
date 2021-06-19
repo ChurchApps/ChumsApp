@@ -18,7 +18,7 @@ export const AttendanceTrend = () => {
     data.forEach(d => {
       result.push({
         week: DateHelper.prettyDate(new Date(d.week)),
-        visits: d.visits,
+        visits: d.visits
       });
     });
     return result;
@@ -47,13 +47,13 @@ export const AttendanceTrend = () => {
       const r: ReportInterface = {
         headings: [
           { name: "Week", field: "week" },
-          { name: "Visits", field: "visits" },
+          { name: "Visits", field: "visits" }
         ],
         groupings: ["week"],
         data: convertTrendToReportData(trend),
         title: "Attendance Trend",
         keyName: "attendanceTrend",
-        reportType: "Bar Chart",
+        reportType: "Bar Chart"
       };
       return r;
     });
@@ -78,8 +78,8 @@ export const AttendanceTrend = () => {
           { keyName: "campusId", displayName: "Campus", dataType: "list", value: 0, options: getCampusOptions },
           { keyName: "serviceId", displayName: "Service", dataType: "list", value: 0, options: getServiceOptions },
           { keyName: "serviceTimeId", displayName: "Service Time", dataType: "list", value: 0, options: getServiceTimeOptions },
-          { keyName: "groupId", displayName: "Group", dataType: "list", value: 0, options: getGroupOptions },
-        ],
+          { keyName: "groupId", displayName: "Group", dataType: "list", value: 0, options: getGroupOptions }
+        ]
       });
       setUpdateFilter(false);
     }

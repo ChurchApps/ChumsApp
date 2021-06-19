@@ -33,7 +33,7 @@ export const CardForm: React.FC<Props> = (props) => {
     const cardData = elements.getElement(CardElement);
     const stripePM = await stripe.createPaymentMethod({
       type: "card",
-      card: cardData,
+      card: cardData
     });
     let pm = { ...paymentMethod };
     pm.id = stripePM.paymentMethod.id;

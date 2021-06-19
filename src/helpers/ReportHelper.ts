@@ -22,14 +22,14 @@ export class ReportHelper {
   static getPrettyName(parameterName: string): string {
     let result = parameterName;
     switch (parameterName) {
-    case "week": result = "Week"; break;
-    case "startDate": result = "Start Date"; break;
-    case "endDate": result = "End Date"; break;
-    case "campusId": result = "Campus"; break;
-    case "serviceId": result = "Service"; break;
-    case "serviceTimeId": result = "Service Time"; break;
-    case "groupCategory": result = "Category"; break;
-    case "groupId": result = "Group"; break;
+      case "week": result = "Week"; break;
+      case "startDate": result = "Start Date"; break;
+      case "endDate": result = "End Date"; break;
+      case "campusId": result = "Campus"; break;
+      case "serviceId": result = "Service"; break;
+      case "serviceTimeId": result = "Service Time"; break;
+      case "groupCategory": result = "Category"; break;
+      case "groupId": result = "Group"; break;
     }
     return result;
   }
@@ -37,14 +37,14 @@ export class ReportHelper {
   static getPrettyValue(col: ReportColumnInterface, value: any): string {
     let result = value && value.toString();
     switch (col.formatType) {
-    case "date":
-      try {
-        console.log(new Date(value));
-        result = Helper.prettyDate(new Date(value));
-      } catch {
+      case "date":
+        try {
+          console.log(new Date(value));
+          result = Helper.prettyDate(new Date(value));
+        } catch {
         //keep the original value
-      }
-      break;
+        }
+        break;
     }
     return result;
   }
