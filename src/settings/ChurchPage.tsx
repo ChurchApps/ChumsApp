@@ -6,7 +6,7 @@ import {
   UserHelper,
   DisplayBox,
   SettingInterface,
-  Permissions,
+  Permissions
 } from "./components";
 import { Row, Col } from "react-bootstrap";
 
@@ -58,7 +58,7 @@ export const ChurchPage: React.FC = () => {
     const setting: SettingInterface = {
       id,
       keyName: SettingType.ALLOW_GUEST_CHECKIN,
-      value: JSON.stringify(e.currentTarget.checked),
+      value: JSON.stringify(e.currentTarget.checked)
     };
     try {
       ApiHelper.post("/settings", [setting], "AttendanceApi").then(() => {

@@ -30,7 +30,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
           <td>{d.method}</td>
           <td>{d.fund.name}</td>
           <td>{Helper.formatCurrency(d.amount)}</td>
-        </tr>,
+        </tr>
       );
     }
     return rows;

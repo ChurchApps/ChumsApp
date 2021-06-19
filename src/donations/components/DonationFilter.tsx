@@ -14,8 +14,8 @@ export const DonationFilter: React.FC<Props> = (props) => {
     let date = new Date(e.currentTarget.value);
     if (isNaN(date.getTime())) date = null;
     switch (e.currentTarget.name) {
-    case "startDate": setStartDate(date); break;
-    case "endDate": setEndDate(date); break;
+      case "startDate": setStartDate(date); break;
+      case "endDate": setEndDate(date); break;
     }
   }
 

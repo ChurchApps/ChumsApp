@@ -75,7 +75,7 @@ export const ExportPage = () => {
         importKey: st.id,
         campus: campus.name,
         service: service.name,
-        time: st.name,
+        time: st.name
       }
       data.push(row);
     });
@@ -95,7 +95,7 @@ export const ExportPage = () => {
         birthDate: p.birthDate, gender: p.gender, maritalStatus: p.maritalStatus, membershipStatus: p.membershipStatus,
         homePhone: p.contactInfo.homePhone, mobilePhone: p.contactInfo.mobilePhone, workPhone: p.contactInfo.workPhone, email: p.contactInfo.email,
         address1: p.contactInfo.address1, address2: p.contactInfo.address2, city: p.contactInfo.city, state: p.contactInfo.state, zip: p.contactInfo.zip,
-        photo: (p.photoUpdated === undefined) ? "" : p.id.toString() + ".png",
+        photo: (p.photoUpdated === undefined) ? "" : p.id.toString() + ".png"
       }
       data.push(row);
     });
@@ -121,7 +121,7 @@ export const ExportPage = () => {
           serviceTimeKey: serviceTimeId,
           categoryName: g.categoryName,
           name: g.name,
-          trackAttendance: g.trackAttendance ? "TRUE" : "FALSE",
+          trackAttendance: g.trackAttendance ? "TRUE" : "FALSE"
         }
         data.push(row);
       });
@@ -139,7 +139,7 @@ export const ExportPage = () => {
       let row = {
         importKey: f.id,
         name: f.name,
-        contentType: f.contentType,
+        contentType: f.contentType
       }
       data.push(row);
     })
@@ -157,7 +157,7 @@ export const ExportPage = () => {
         questionKey: q.id,
         formKey: q.formId,
         fieldType: q.fieldType,
-        title: q.title,
+        title: q.title
       }
       data.push(row);
     })
@@ -176,7 +176,7 @@ export const ExportPage = () => {
       let row = {
         formKey: fs.formId,
         personKey: fs.contentId,
-        contentType: fs.contentType,
+        contentType: fs.contentType
       }
       data.push(row);
     })
@@ -196,7 +196,7 @@ export const ExportPage = () => {
       let row = {
         questionKey: a.questionId,
         formSubmissionKey: a.formSubmissionId,
-        value: a.value,
+        value: a.value
       }
       data.push(row);
     })
@@ -238,7 +238,7 @@ export const ExportPage = () => {
         methodDetails: donation.methodDetails,
         amount: donation.amount,
         fund: fund.name,
-        notes: donation.notes,
+        notes: donation.notes
       }
       data.push(row);
     });
@@ -261,7 +261,7 @@ export const ExportPage = () => {
         date: visit.visitDate,
         serviceTimeKey: session.serviceTimeId,
         groupKey: session.groupId,
-        personKey: visit.personId,
+        personKey: visit.personId
       }
       data.push(row);
     });

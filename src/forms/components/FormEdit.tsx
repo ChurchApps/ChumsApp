@@ -15,8 +15,8 @@ export const FormEdit: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     let f = { ...form };
     switch (e.currentTarget.name) {
-    case "formName": f.name = e.currentTarget.value; break;
-    case "contentType": f.contentType = e.currentTarget.value; break;
+      case "formName": f.name = e.currentTarget.value; break;
+      case "contentType": f.contentType = e.currentTarget.value; break;
     }
 
     setForm(f);

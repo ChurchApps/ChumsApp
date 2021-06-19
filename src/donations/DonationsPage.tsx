@@ -14,8 +14,8 @@ export const DonationsPage = () => {
     keyName: "donationSummaryFilter",
     fields: [
       { keyName: "startDate", displayName: "Start Date", dataType: "date", value: DateHelper.addDays(new Date(), -365) },
-      { keyName: "endDate", displayName: "End Date", dataType: "date", value: new Date() },
-    ],
+      { keyName: "endDate", displayName: "End Date", dataType: "date", value: new Date() }
+    ]
   });
 
   const loadReport = async (filter: ReportFilterInterface) => {
@@ -28,13 +28,13 @@ export const DonationsPage = () => {
         headings: [
           { name: "Week", field: "week" },
           { name: "Fund", field: "fundName" },
-          { name: "Amount", field: "totalAmount" },
+          { name: "Amount", field: "totalAmount" }
         ],
         groupings: ["week", "fundName"],
         data: convertSummaryToReportData(summary),
         title: "Donation Summary",
         keyName: "donationSummary",
-        reportType: "Bar Chart",
+        reportType: "Bar Chart"
       };
       return r;
     })
@@ -47,7 +47,7 @@ export const DonationsPage = () => {
         result.push({
           week: Helper.prettyDate(new Date(s.week)),
           fundName: (d.fund === undefined) ? "none" : d.fund.name,
-          totalAmount: d.totalAmount,
+          totalAmount: d.totalAmount
         });
       });
     });

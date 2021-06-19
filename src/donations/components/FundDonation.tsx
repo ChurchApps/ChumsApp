@@ -20,12 +20,12 @@ export const FundDonation: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     let fd = { ...props.fundDonation }
     switch (e.target.name) {
-    case "amount":
-      fd.amount = parseFloat(e.target.value.replace("$", "").replace(",", ""));
-      break;
-    case "fund":
-      fd.fundId = e.target.value;
-      break;
+      case "amount":
+        fd.amount = parseFloat(e.target.value.replace("$", "").replace(",", ""));
+        break;
+      case "fund":
+        fd.fundId = e.target.value;
+        break;
     }
     props.updatedFunction(fd, props.index);
   }

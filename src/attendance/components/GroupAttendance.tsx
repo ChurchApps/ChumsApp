@@ -20,7 +20,7 @@ export const GroupAttendance = () => {
         serviceName: d.serviceName,
         serviceTimeName: d.serviceTimeName,
         groupName: group?.name || "",
-        personName: person?.name?.display || "",
+        personName: person?.name?.display || ""
       });
     });
     return result;
@@ -48,13 +48,13 @@ export const GroupAttendance = () => {
         headings: [
           { name: "Service Time", field: "serviceTimeName" },
           { name: "Group", field: "groupName" },
-          { name: "Person", field: "personName" },
+          { name: "Person", field: "personName" }
         ],
         groupings: ["serviceTimeName", "groupName"],
         data: convertToReportData(data, people),
         title: "Group Attendance",
         keyName: "groupAttendance",
-        reportType: "Grouped",
+        reportType: "Grouped"
       };
       return r;
     });
@@ -75,8 +75,8 @@ export const GroupAttendance = () => {
         keyName: "groupAttendanceFilter",
         fields: [
           { keyName: "serviceId", displayName: "Service", dataType: "list", value: 0, options: getServiceOptions },
-          { keyName: "week", displayName: "Week", dataType: "date", value: new Date() },
-        ],
+          { keyName: "week", displayName: "Week", dataType: "date", value: new Date() }
+        ]
       });
       setUpdateFilter(false);
     }

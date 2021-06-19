@@ -97,7 +97,7 @@ export const HouseholdEdit: React.FC<Props> = (props) => {
             </select>
           </td>
           <td><a href="about:blank" onClick={handleRemove} className="text-danger"><i className="fas fa-user-times"></i> Remove</a></td>
-        </tr>,
+        </tr>
       );
     }
   }

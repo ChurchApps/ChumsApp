@@ -44,12 +44,12 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
-    case "startDate":
-      setStartDate(new Date(e.target.value));
-      break;
-    case "endDate":
-      setEndDate(new Date(e.target.value));
-      break;
+      case "startDate":
+        setStartDate(new Date(e.target.value));
+        break;
+      case "endDate":
+        setEndDate(new Date(e.target.value));
+        break;
     }
   }
 

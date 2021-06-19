@@ -24,10 +24,10 @@ export const Tabs: React.FC = () => {
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
-  case "attendance": currentTab = <AttendanceTrend />; break;
-  case "groups": currentTab = <GroupAttendance />; break;
+    case "attendance": currentTab = <AttendanceTrend />; break;
+    case "groups": currentTab = <GroupAttendance />; break;
     //case "individuals": currentTab = <Individuals filter={props.filter} />; break;
-  default: currentTab = <div>Not implemented</div>; break;
+    default: currentTab = <div>Not implemented</div>; break;
   }
 
   return (<>

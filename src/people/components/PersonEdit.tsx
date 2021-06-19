@@ -27,28 +27,28 @@ export const PersonEdit: React.FC<Props> = (props) => {
     const key = e.currentTarget.name;
     const val = e.currentTarget.value;
     switch (key) {
-    case "firstName": p.name.first = val; break;
-    case "middleName": p.name.middle = val; break;
-    case "lastName": p.name.last = val; break;
-    case "nickName": p.name.nick = val; break;
-    case "membershipStatus": p.membershipStatus = val; break;
-    case "gender": p.gender = val; break;
-    case "birthDate":
-      if (val === "") p.birthDate = null; else p.birthDate = new Date(val);
-      break;
-    case "maritalStatus": p.maritalStatus = val; break;
-    case "anniversary":
-      if (val === "") p.anniversary = null; else p.anniversary = new Date(val);
-      break;
-    case "address1": p.contactInfo.address1 = val; break;
-    case "address2": p.contactInfo.address2 = val; break;
-    case "city": p.contactInfo.city = val; break;
-    case "state": p.contactInfo.state = val; break;
-    case "zip": p.contactInfo.zip = val; break;
-    case "homePhone": p.contactInfo.homePhone = formattedPhoneNumber(val); break;
-    case "workPhone": p.contactInfo.workPhone = formattedPhoneNumber(val); break;
-    case "mobilePhone": p.contactInfo.mobilePhone = formattedPhoneNumber(val); break;
-    case "email": p.contactInfo.email = val; break;
+      case "firstName": p.name.first = val; break;
+      case "middleName": p.name.middle = val; break;
+      case "lastName": p.name.last = val; break;
+      case "nickName": p.name.nick = val; break;
+      case "membershipStatus": p.membershipStatus = val; break;
+      case "gender": p.gender = val; break;
+      case "birthDate":
+        if (val === "") p.birthDate = null; else p.birthDate = new Date(val);
+        break;
+      case "maritalStatus": p.maritalStatus = val; break;
+      case "anniversary":
+        if (val === "") p.anniversary = null; else p.anniversary = new Date(val);
+        break;
+      case "address1": p.contactInfo.address1 = val; break;
+      case "address2": p.contactInfo.address2 = val; break;
+      case "city": p.contactInfo.city = val; break;
+      case "state": p.contactInfo.state = val; break;
+      case "zip": p.contactInfo.zip = val; break;
+      case "homePhone": p.contactInfo.homePhone = formattedPhoneNumber(val); break;
+      case "workPhone": p.contactInfo.workPhone = formattedPhoneNumber(val); break;
+      case "mobilePhone": p.contactInfo.mobilePhone = formattedPhoneNumber(val); break;
+      case "email": p.contactInfo.email = val; break;
     }
     setPerson(p);
   }
@@ -123,11 +123,11 @@ export const PersonEdit: React.FC<Props> = (props) => {
     const personDeepCopy: PersonInterface = {
       ...props.person,
       contactInfo: {
-        ...props.person.contactInfo,
+        ...props.person.contactInfo
       },
       name: {
-        ...props.person.name,
-      },
+        ...props.person.name
+      }
     }
     setPerson(personDeepCopy)
   }, [props.person]);
@@ -149,7 +149,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
         } catch (err) {
           console.log(`error in updating ${person.name.display}"s address`);
         }
-      }),
+      })
 
     )
     props.updatedFunction()

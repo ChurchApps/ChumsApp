@@ -59,7 +59,7 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
           <td><a href="about:blank" onClick={handleClick}>{questions[i].title}</a></td>
           <td>{questions[i].fieldType}</td>
           <td style={{ textAlign: "left" }}>{upArrow}{downArrow}</td>
-        </tr>,
+        </tr>
       );
     }
     return rows;

@@ -15,10 +15,10 @@ export const DonationEdit: React.FC<Props> = (props) => {
     let d = { ...donation } as DonationInterface;
     let value = e.target.value;
     switch (e.currentTarget.name) {
-    case "notes": d.notes = value; break;
-    case "date": d.donationDate = new Date(value); break;
-    case "method": d.method = value; break;
-    case "methodDetails": d.methodDetails = value; break;
+      case "notes": d.notes = value; break;
+      case "date": d.donationDate = new Date(value); break;
+      case "method": d.method = value; break;
+      case "methodDetails": d.methodDetails = value; break;
     }
     setDonation(d);
   }

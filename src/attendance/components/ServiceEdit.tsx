@@ -45,8 +45,8 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     e.preventDefault();
     let s = { ...service };
     switch (e.currentTarget.name) {
-    case "serviceName": s.name = e.currentTarget.value; break;
-    case "campus": s.campusId = e.currentTarget.value; break;
+      case "serviceName": s.name = e.currentTarget.value; break;
+      case "campus": s.campusId = e.currentTarget.value; break;
     }
     setService(s);
   }

@@ -24,10 +24,10 @@ export const Tabs: React.FC<Props> = (props) => {
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
-  case "notes": currentTab = <Notes contentType="person" contentId={personId} />; break;
-  case "attendance": currentTab = <PersonAttendance personId={personId} />; break;
-  case "donations": currentTab = <PersonDonations personId={personId} />; break;
-  default: currentTab = <div>Not implemented</div>; break;
+    case "notes": currentTab = <Notes contentType="person" contentId={personId} />; break;
+    case "attendance": currentTab = <PersonAttendance personId={personId} />; break;
+    case "donations": currentTab = <PersonDonations personId={personId} />; break;
+    default: currentTab = <div>Not implemented</div>; break;
   }
 
   return (<><ul className="nav nav-tabs">{tabs}</ul>{currentTab}</>);
