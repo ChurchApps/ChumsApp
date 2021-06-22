@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
 
 export const GroupsPage = () => {
-  const [groups, setGroups] = React.useState<GroupInterface[]>(null);
-  const [showAdd, setShowAdd] = React.useState(false);
+  const [groups, setGroups] = useState<GroupInterface[]>([]);
+  const [showAdd, setShowAdd] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getEditContent = () => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) return null;
@@ -23,7 +24,8 @@ export const GroupsPage = () => {
   const handleAddUpdated = () => { setShowAdd(false); loadData(); };
 
   const loadData = () => {
-    ApiHelper.get("/groups", "MembershipApi").then((data) => { setGroups(data); });
+    setIsLoading(true)
+    ApiHelper.get("/groups", "MembershipApi").then((data) => { setGroups(data); }).finally(() => setIsLoading(false));
   };
 
   React.useEffect(loadData, []);
@@ -32,7 +34,7 @@ export const GroupsPage = () => {
     let rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
-      rows.push(<tr key="0">No groups found. Please create a group.</tr>);
+      rows.push(<tr key="0"><td>No groups found. Please create a group.</td></tr>);
       return rows;
     }
 
@@ -66,7 +68,7 @@ export const GroupsPage = () => {
   let addBox = (showAdd) ? <GroupAdd updatedFunction={handleAddUpdated} /> : <></>
 
   const getTable = () => {
-    if (!groups) return <Loading />
+    if (isLoading) return <Loading />
     else return (<Table>
       <thead>{getTableHeader()}</thead>
       <tbody>{getRows()}</tbody>
