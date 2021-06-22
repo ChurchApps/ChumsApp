@@ -40,7 +40,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
     if (cropper.current !== null) {
       let url = cropper.current.getCroppedCanvas({ width: 400, height: 300 }).toDataURL();
       setDataUrl(url);
-      props.updatedFunction(url);
+      // props.updatedFunction(url);
     }
   }
 
@@ -53,30 +53,24 @@ export const ImageEditor: React.FC<Props> = (props) => {
   }
 
   const handleSave = () => {
-    /*
-        var photos = [{ id: props.person.id, url: dataUrl }];
-
-        ApiHelper.post("/people/photos", photos).then((d) => {
-            props.updatedFunction("https://app.chums.org" + d[0]);
-            props.doneFunction();
-        });*/
     props.updatedFunction(dataUrl);
     props.doneFunction();
   }
   const handleCancel = () => { props.updatedFunction(originalUrl); props.doneFunction(); }
   const handleDelete = () => {
-    //ApiHelper.delete("/people/photos/" + props.person.id).then(() => props.doneFunction());
-    props.updatedFunction("/images/sample-profile.png");
+    props.updatedFunction("");
     props.doneFunction();
   }
   const init = useCallback(() => {
     let startingUrl = PersonHelper.getPhotoUrl(props.person)
+    console.log("starting", startingUrl);
     setOriginalUrl(startingUrl);
     setCurrentUrl(startingUrl);
   }, [props.person]);
 
   React.useEffect(init, [props.person]);
-
+  console.log(props.person)
+  // console.log('currentUrl: ', currentUrl);
   return (
     <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} saveText={"Update"} cancelFunction={handleCancel} deleteFunction={handleDelete} headerActionContent={getHeaderButton()}>
       <Cropper

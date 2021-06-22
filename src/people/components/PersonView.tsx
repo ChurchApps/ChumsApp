@@ -14,7 +14,7 @@ export const PersonView: React.FC<Props> = (props) => {
 
   const getPhoto = () => {
     if (props.person) {
-      let url = (props.photoUrl === null) ? PersonHelper.getPhotoUrl(props.person) : props.photoUrl;
+      let url = props.photoUrl || PersonHelper.getPhotoUrl(props.person);
       return <img src={url} className="img-fluid profilePic" id="imgPreview" alt="avatar" />
     } else return;
   }

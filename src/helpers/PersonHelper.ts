@@ -3,6 +3,9 @@ import { PersonInterface, EnvironmentHelper } from ".";
 
 export class PersonHelper extends BasePersonHelper {
   static getPhotoUrl(person: PersonInterface) {
-    return person?.photo ? EnvironmentHelper.ContentRoot + person?.photo : "/images/sample-profile.png";
+    if (!person.photo) {
+      return "/images/sample-profile.png"
+    }
+    return person.photo.startsWith("data:image/png;base64,") ? person.photo : EnvironmentHelper.ContentRoot + person.photo;
   }
 }

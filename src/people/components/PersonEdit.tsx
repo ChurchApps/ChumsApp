@@ -112,7 +112,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
 
   const getPhoto = () => {
     if (props.person) {
-      let url = (props.photoUrl === null) ? PersonHelper.getPhotoUrl(props.person) : props.photoUrl;
+      let url = props.photoUrl || PersonHelper.getPhotoUrl(props.person);
       return (<a href="about:blank" className="d-block" onClick={(e: React.MouseEvent) => { e.preventDefault(); props.togglePhotoEditor(true) }}>
         <img src={url} className="img-fluid profilePic d-block mx-auto" id="imgPreview" alt="avatar" />
       </a>);
@@ -129,15 +129,20 @@ export const PersonEdit: React.FC<Props> = (props) => {
         ...props.person.name
       }
     }
+    console.log("called", personDeepCopy);
+
     setPerson(personDeepCopy)
   }, [props.person]);
-  const photoUrlChanged = useCallback(() => {
-    if (props.photoUrl !== null) {
-      let p: PersonInterface = { ...person };
-      p.photo = props.photoUrl;
-      setPerson(p);
-    }
-  }, [props.photoUrl, person]);
+
+  // const photoUrlChanged = useCallback(() => {
+  //   if (props.photoUrl) {
+  //     console.log('whats person?', person);
+  //     let p: PersonInterface = { ...person };
+  //     p.photo = props.photoUrl;
+  //     setPerson(p);
+  //     console.log('photo function: ', p);
+  //   }
+  // }, [props.photoUrl, person]);
 
   const handleYes = async () => {
     setShowUpdateAddressModal(false)
@@ -175,9 +180,9 @@ export const PersonEdit: React.FC<Props> = (props) => {
   const handleMerge = () => {
     props.showMergeSearch();
   }
-
+  console.log("person: ", props.person);
   React.useEffect(personChanged, [props.person]);
-  React.useEffect(photoUrlChanged, [props.photoUrl]);
+  // React.useEffect(photoUrlChanged, [props.photoUrl]);
   React.useEffect(fetchMembers, [props.person]);
 
   const getFields = () => {
