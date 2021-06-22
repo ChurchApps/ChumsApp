@@ -8,7 +8,6 @@ interface Props {
   updatedFunction: () => void,
   togglePhotoEditor: (show: boolean) => void,
   person: PersonInterface,
-  photoUrl: string,
   showMergeSearch: () => void
 }
 
@@ -110,15 +109,6 @@ export const PersonEdit: React.FC<Props> = (props) => {
       });
   }
 
-  const getPhoto = () => {
-    if (props.person) {
-      let url = props.photoUrl || PersonHelper.getPhotoUrl(props.person);
-      return (<a href="about:blank" className="d-block" onClick={(e: React.MouseEvent) => { e.preventDefault(); props.togglePhotoEditor(true) }}>
-        <img src={url} className="img-fluid profilePic d-block mx-auto" id="imgPreview" alt="avatar" />
-      </a>);
-    } else return;
-  }
-
   const personChanged = useCallback(() => {
     const personDeepCopy: PersonInterface = {
       ...props.person,
@@ -129,20 +119,8 @@ export const PersonEdit: React.FC<Props> = (props) => {
         ...props.person.name
       }
     }
-    console.log("called", personDeepCopy);
-
     setPerson(personDeepCopy)
   }, [props.person]);
-
-  // const photoUrlChanged = useCallback(() => {
-  //   if (props.photoUrl) {
-  //     console.log('whats person?', person);
-  //     let p: PersonInterface = { ...person };
-  //     p.photo = props.photoUrl;
-  //     setPerson(p);
-  //     console.log('photo function: ', p);
-  //   }
-  // }, [props.photoUrl, person]);
 
   const handleYes = async () => {
     setShowUpdateAddressModal(false)
@@ -180,16 +158,24 @@ export const PersonEdit: React.FC<Props> = (props) => {
   const handleMerge = () => {
     props.showMergeSearch();
   }
-  console.log("person: ", props.person);
+
+  const handlePhotoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    props.togglePhotoEditor(true);
+  }
+
   React.useEffect(personChanged, [props.person]);
-  // React.useEffect(photoUrlChanged, [props.photoUrl]);
   React.useEffect(fetchMembers, [props.person]);
 
   const getFields = () => {
     if (!person) return <Loading />
     else return (<>
       <Row>
-        <Col sm={3} className="my-auto">{getPhoto()}</Col>
+        <Col sm={3} className="my-auto">
+          <a href="about:blank" className="d-block" onClick={handlePhotoClick}>
+            <img src={PersonHelper.getPhotoUrl(props.person)} className="img-fluid profilePic d-block mx-auto" id="imgPreview" alt="avatar" />
+          </a>
+        </Col>
         <Col sm={9}>
           <Row>
             <Col lg={6}>

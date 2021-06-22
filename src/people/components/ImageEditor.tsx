@@ -7,10 +7,9 @@ import { Button } from "react-bootstrap";
 interface Props {
     person: PersonInterface,
     updatedFunction: (dataUrl: string) => void,
-    doneFunction: () => void
 }
 
-export const ImageEditor: React.FC<Props> = (props) => {
+export const ImageEditor = ({ person, updatedFunction }: Props) => {
   const [originalUrl, setOriginalUrl] = React.useState("about:blank");
   const [currentUrl, setCurrentUrl] = React.useState("about:blank");
   const [dataUrl, setDataUrl] = React.useState(null);
@@ -40,7 +39,6 @@ export const ImageEditor: React.FC<Props> = (props) => {
     if (cropper.current !== null) {
       let url = cropper.current.getCroppedCanvas({ width: 400, height: 300 }).toDataURL();
       setDataUrl(url);
-      // props.updatedFunction(url);
     }
   }
 
@@ -52,25 +50,18 @@ export const ImageEditor: React.FC<Props> = (props) => {
     timeout = window.setTimeout(cropCallback, 200);
   }
 
-  const handleSave = () => {
-    props.updatedFunction(dataUrl);
-    props.doneFunction();
-  }
-  const handleCancel = () => { props.updatedFunction(originalUrl); props.doneFunction(); }
-  const handleDelete = () => {
-    props.updatedFunction("");
-    props.doneFunction();
-  }
+  const handleSave = () => updatedFunction(dataUrl);
+  const handleCancel = () => updatedFunction(originalUrl);
+  const handleDelete = () => updatedFunction("");
+
   const init = useCallback(() => {
-    let startingUrl = PersonHelper.getPhotoUrl(props.person)
-    console.log("starting", startingUrl);
+    let startingUrl = PersonHelper.getPhotoUrl(person)
     setOriginalUrl(startingUrl);
     setCurrentUrl(startingUrl);
-  }, [props.person]);
+  }, [person]);
 
-  React.useEffect(init, [props.person]);
-  console.log(props.person)
-  // console.log('currentUrl: ', currentUrl);
+  React.useEffect(init, [person]);
+
   return (
     <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} saveText={"Update"} cancelFunction={handleCancel} deleteFunction={handleDelete} headerActionContent={getHeaderButton()}>
       <Cropper

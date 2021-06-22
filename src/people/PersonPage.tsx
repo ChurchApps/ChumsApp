@@ -1,5 +1,5 @@
 import React from "react";
-import { Person, Groups, Tabs, Household, ImageEditor, PersonHelper, UserHelper, ApiHelper, PersonInterface, Merge, Permissions } from "./components"
+import { Person, Groups, Tabs, Household, ImageEditor, UserHelper, ApiHelper, PersonInterface, Merge, Permissions } from "./components"
 import { Row, Col } from "react-bootstrap";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -8,24 +8,23 @@ type TParams = { id?: string };
 export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
 
   const [person, setPerson] = React.useState<PersonInterface>(null);
-  const [photoUrl, setPhotoUrl] = React.useState<string>("");
-  const [editPhotoUrl, setEditPhotoUrl] = React.useState<string>(null);
+  const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
   const [showMergeSearch, setShowMergeSearch] = React.useState<boolean>(false)
 
   const loadData = () => { ApiHelper.get("/people/" + match.params.id, "MembershipApi").then(data => setPerson(data)); }
+
   const handlePhotoUpdated = (dataUrl: string) => {
-    console.log("person page called")
     const updatedPerson = {...person};
     updatedPerson.photo = dataUrl;
     if (!dataUrl) {
       updatedPerson.photoUpdated = null;
     }
     setPerson(updatedPerson);
-    // setPhotoUrl(dataUrl);
+    setInPhotoEditMode(false);
   }
-  const handlePhotoDone = () => setEditPhotoUrl(null);
-  const getImageEditor = () => (editPhotoUrl === null) ? null : <ImageEditor updatedFunction={handlePhotoUpdated} doneFunction={handlePhotoDone} person={person} />
-  const togglePhotoEditor = (show: boolean) => { setEditPhotoUrl((show) ? PersonHelper.getPhotoUrl(person) : null); }
+
+  const imageEditor = inPhotoEditMode && <ImageEditor updatedFunction={handlePhotoUpdated} person={person} />;
+  const togglePhotoEditor = (show: boolean) => { setInPhotoEditMode(show); }
   const getGroups = () => (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) ? <Groups personId={person?.id} /> : null
 
   const handleShowSearch = () => {
@@ -42,12 +41,12 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
   return (
     <Row>
       <Col lg={8}>
-        <Person id="personDetailsBox" person={person} photoUrl={photoUrl} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
+        <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
         <Tabs personId={person?.id} />
       </Col>
       <Col lg={4}>
         {addMergeSearch}
-        {getImageEditor()}
+        {imageEditor}
         <Household person={person} reload={person?.photoUpdated} />
         {getGroups()}
       </Col>

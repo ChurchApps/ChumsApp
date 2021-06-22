@@ -6,27 +6,18 @@ interface Props {
   id?: string,
   person: PersonInterface
   editFunction: (e: React.MouseEvent) => void,
-  photoUrl: string
   updatedFunction: () => void
 }
 
-export const PersonView: React.FC<Props> = (props) => {
-
-  const getPhoto = () => {
-    if (props.person) {
-      let url = props.photoUrl || PersonHelper.getPhotoUrl(props.person);
-      return <img src={url} className="img-fluid profilePic" id="imgPreview" alt="avatar" />
-    } else return;
-  }
-
+export const PersonView = ({ id, person, editFunction, updatedFunction }: Props) => {
   const getFields = () => {
-    if (!props.person) return <Loading />
+    if (!person) return <Loading />
     else {
 
       let leftAttributes = [];
       let contactMethods = [];
-      if (props.person) {
-        const p = { ...props.person };
+      if (person) {
+        const p = { ...person };
         if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>Gender:</label> {p.gender}</div>);
         if (p.birthDate) leftAttributes.push(<div key="age"><label>Age:</label> {PersonHelper.getAge(p.birthDate)}</div>);
         if (p.maritalStatus && p.maritalStatus !== "Single") {
@@ -58,9 +49,11 @@ export const PersonView: React.FC<Props> = (props) => {
       }
 
       return (<Row>
-        <Col xs={3}>{getPhoto()}</Col>
+        <Col xs={3}>
+          <img src={PersonHelper.getPhotoUrl(person)} className="img-fluid profilePic" id="imgPreview" alt="avatar" />
+        </Col>
         <Col xs={9}>
-          <h2>{props.person?.name.display}</h2>
+          <h2>{person?.name.display}</h2>
           <Row>
             <Col lg={6}>{leftAttributes}</Col>
             <Col lg={6}><table className="contactTable"><tbody>{contactMethods}</tbody></table></Col>
@@ -71,17 +64,17 @@ export const PersonView: React.FC<Props> = (props) => {
   }
 
   return (
-    <div id={props.id} className="inputBox" data-cy="person-details-box">
+    <div id={id} className="inputBox" data-cy="person-details-box">
       <div className="header">
         <Row>
           <Col xs={8}><i className="fas fa-user"></i> Personal Details</Col>
-          <Col xs={4} style={{ textAlign: "right" }}><a className="fa-pull-right" data-cy="edit-person-button" onClick={props.editFunction} href="about:blank"><i className="fas fa-pencil-alt"></i></a></Col>
+          <Col xs={4} style={{ textAlign: "right" }}><a className="fa-pull-right" data-cy="edit-person-button" onClick={editFunction} href="about:blank"><i className="fas fa-pencil-alt"></i></a></Col>
         </Row>
       </div>
       <div className="content">
         {getFields()}
       </div>
-      <AssociatedForms contentType="person" contentId={props.person?.id} formSubmissions={props.person?.formSubmissions} updatedFunction={props.updatedFunction} />
+      <AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />
     </div>
   )
 }
