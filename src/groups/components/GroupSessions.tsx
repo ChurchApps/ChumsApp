@@ -48,13 +48,15 @@ export const GroupSessions: React.FC<Props> = (props) => {
       let vs = visitSessions[i];
       let editLink = (canEdit) ? (<a href="about:blank" onClick={handleRemove} className="text-danger" data-personid={vs.visit.personId}><i className="fas fa-user-times"></i> Remove</a>) : null;
       let person = ArrayHelper.getOne(people, "id", vs.visit.personId);
-      result.push(
-        <tr>
-          <td><img className="personPhoto" src={PersonHelper.getPhotoUrl(person)} alt="avatar" /></td>
-          <td><a className="personName" href={"/people/person.aspx?id=" + vs.visit.personId}>{person?.name?.display}</a></td>
-          <td>{editLink}</td>
-        </tr>
-      );
+      if (person) {
+        result.push(
+          <tr key={vs.id}>
+            <td><img className="personPhoto" src={PersonHelper.getPhotoUrl(person)} alt="avatar" /></td>
+            <td><a className="personName" href={"/people/person.aspx?id=" + vs.visit.personId}>{person?.name?.display}</a></td>
+            <td>{editLink}</td>
+          </tr>
+        );
+      }
     }
     return result;
   }
@@ -65,7 +67,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
 
   const getSessionOptions = () => {
     let result: JSX.Element[] = [];
-    for (let i = 0; i < sessions.length; i++) result.push(<option value={sessions[i].id}>{sessions[i].displayName}</option>);
+    for (let i = 0; i < sessions.length; i++) result.push(<option value={sessions[i].id} key={sessions[i].id}>{sessions[i].displayName}</option>);
     return result;
   }
 

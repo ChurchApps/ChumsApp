@@ -4,19 +4,18 @@ import { PersonView, PersonEdit, PersonInterface, UserHelper, Permissions } from
 interface Props {
   id?: string
   person: PersonInterface,
-  photoUrl: string,
   togglePhotoEditor: (show: boolean) => void,
   updatedFunction: () => void,
   showMergeSearch: () => void
 }
 
-export const Person: React.FC<Props> = (props) => {
+export const Person: React.FC<Props> = ({ id, person, togglePhotoEditor, updatedFunction, showMergeSearch }) => {
   const [mode, setMode] = React.useState("display");
 
   const handleEdit = (e: React.MouseEvent) => { e.preventDefault(); setMode("edit"); }
-  const handleUpdated = () => { setMode("display"); props.updatedFunction(); }
+  const handleUpdated = () => { setMode("display"); updatedFunction(); }
   const getEditFunction = () => (UserHelper.checkAccess(Permissions.membershipApi.people.edit)) ? handleEdit : null
 
-  if (mode === "display") return <PersonView id={props.id} person={props.person} editFunction={getEditFunction()} updatedFunction={props.updatedFunction} photoUrl={props.photoUrl} />
-  else return <PersonEdit id={props.id} person={props.person} updatedFunction={handleUpdated} photoUrl={props.photoUrl} togglePhotoEditor={props.togglePhotoEditor} showMergeSearch={props.showMergeSearch} />
+  if (mode === "display") return <PersonView id={id} person={person} editFunction={getEditFunction()} updatedFunction={updatedFunction} />
+  else return <PersonEdit id={id} person={person} updatedFunction={handleUpdated} togglePhotoEditor={togglePhotoEditor} showMergeSearch={showMergeSearch} />
 }

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
 import { InputBox, PersonHelper, PersonInterface } from ".";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -7,11 +7,10 @@ import { Button } from "react-bootstrap";
 interface Props {
     person: PersonInterface,
     updatedFunction: (dataUrl: string) => void,
-    doneFunction: () => void
+    onCancel: () => void
 }
 
-export const ImageEditor: React.FC<Props> = (props) => {
-  const [originalUrl, setOriginalUrl] = React.useState("about:blank");
+export const ImageEditor = ({ person, updatedFunction, onCancel }: Props) => {
   const [currentUrl, setCurrentUrl] = React.useState("about:blank");
   const [dataUrl, setDataUrl] = React.useState(null);
   let timeout: any = null;
@@ -40,7 +39,6 @@ export const ImageEditor: React.FC<Props> = (props) => {
     if (cropper.current !== null) {
       let url = cropper.current.getCroppedCanvas({ width: 400, height: 300 }).toDataURL();
       setDataUrl(url);
-      props.updatedFunction(url);
     }
   }
 
@@ -52,33 +50,15 @@ export const ImageEditor: React.FC<Props> = (props) => {
     timeout = window.setTimeout(cropCallback, 200);
   }
 
-  const handleSave = () => {
-    /*
-        var photos = [{ id: props.person.id, url: dataUrl }];
+  const handleSave = () => updatedFunction(dataUrl);
+  const handleDelete = () => updatedFunction("");
 
-        ApiHelper.post("/people/photos", photos).then((d) => {
-            props.updatedFunction("https://app.chums.org" + d[0]);
-            props.doneFunction();
-        });*/
-    props.updatedFunction(dataUrl);
-    props.doneFunction();
-  }
-  const handleCancel = () => { props.updatedFunction(originalUrl); props.doneFunction(); }
-  const handleDelete = () => {
-    //ApiHelper.delete("/people/photos/" + props.person.id).then(() => props.doneFunction());
-    props.updatedFunction("/images/sample-profile.png");
-    props.doneFunction();
-  }
-  const init = useCallback(() => {
-    let startingUrl = PersonHelper.getPhotoUrl(props.person)
-    setOriginalUrl(startingUrl);
-    setCurrentUrl(startingUrl);
-  }, [props.person]);
-
-  React.useEffect(init, [props.person]);
+  useEffect(() => {
+    setCurrentUrl(PersonHelper.getPhotoUrl(person))
+  }, [person]);
 
   return (
-    <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} saveText={"Update"} cancelFunction={handleCancel} deleteFunction={handleDelete} headerActionContent={getHeaderButton()}>
+    <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} saveText={"Update"} cancelFunction={onCancel} deleteFunction={handleDelete} headerActionContent={getHeaderButton()}>
       <Cropper
         ref={cropper}
         src={currentUrl}

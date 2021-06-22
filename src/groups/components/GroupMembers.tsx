@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
@@ -10,12 +10,17 @@ interface Props {
 }
 
 export const GroupMembers: React.FC<Props> = (props) => {
-
-  const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>(null);
+  const [groupMembers, setGroupMembers] = useState<GroupMemberInterface[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const isSubscribed = useRef(true);
 
   const loadData = React.useCallback(() => {
-    ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => { if (isSubscribed.current) { setGroupMembers(data) } });
+    setIsLoading(true);
+    ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => {
+      if (isSubscribed.current) {
+        setGroupMembers(data)
+      }
+    }).finally(() => { setIsLoading(false) });
   }, [props.group.id]);
 
   const handleRemove = (e: React.MouseEvent) => {
@@ -50,7 +55,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
 
     if (groupMembers.length === 0) {
-      rows.push(<tr key="0">No group members found.</tr>)
+      rows.push(<tr key="0"><td>No group members found.</td></tr>)
       return rows;
     }
 
@@ -91,7 +96,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
   }, [props.addedPerson, handleAdd]);
 
   const getTable = () => {
-    if (!groupMembers) return <Loading />
+    if (isLoading) return <Loading />
     else return (<Table id="groupMemberTable">
       <thead>{getTableHeader()}</thead>
       <tbody>{getRows()}</tbody>
