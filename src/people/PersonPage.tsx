@@ -6,7 +6,6 @@ import { RouteComponentProps } from "react-router-dom";
 type TParams = { id?: string };
 
 export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
-
   const [person, setPerson] = React.useState<PersonInterface>(null);
   const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
   const [showMergeSearch, setShowMergeSearch] = React.useState<boolean>(false)
@@ -23,8 +22,11 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
     setInPhotoEditMode(false);
   }
 
-  const imageEditor = inPhotoEditMode && <ImageEditor updatedFunction={handlePhotoUpdated} person={person} />;
   const togglePhotoEditor = (show: boolean) => { setInPhotoEditMode(show); }
+
+  const imageEditor = inPhotoEditMode && (
+    <ImageEditor updatedFunction={handlePhotoUpdated} person={person} onCancel={() => togglePhotoEditor(false)} />
+  );
   const getGroups = () => (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) ? <Groups personId={person?.id} /> : null
 
   const handleShowSearch = () => {

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
 import { InputBox, PersonHelper, PersonInterface } from ".";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -7,10 +7,10 @@ import { Button } from "react-bootstrap";
 interface Props {
     person: PersonInterface,
     updatedFunction: (dataUrl: string) => void,
+    onCancel: () => void
 }
 
-export const ImageEditor = ({ person, updatedFunction }: Props) => {
-  const [originalUrl, setOriginalUrl] = React.useState("about:blank");
+export const ImageEditor = ({ person, updatedFunction, onCancel }: Props) => {
   const [currentUrl, setCurrentUrl] = React.useState("about:blank");
   const [dataUrl, setDataUrl] = React.useState(null);
   let timeout: any = null;
@@ -51,19 +51,14 @@ export const ImageEditor = ({ person, updatedFunction }: Props) => {
   }
 
   const handleSave = () => updatedFunction(dataUrl);
-  const handleCancel = () => updatedFunction(originalUrl);
   const handleDelete = () => updatedFunction("");
 
-  const init = useCallback(() => {
-    let startingUrl = PersonHelper.getPhotoUrl(person)
-    setOriginalUrl(startingUrl);
-    setCurrentUrl(startingUrl);
+  useEffect(() => {
+    setCurrentUrl(PersonHelper.getPhotoUrl(person))
   }, [person]);
 
-  React.useEffect(init, [person]);
-
   return (
-    <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} saveText={"Update"} cancelFunction={handleCancel} deleteFunction={handleDelete} headerActionContent={getHeaderButton()}>
+    <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} saveText={"Update"} cancelFunction={onCancel} deleteFunction={handleDelete} headerActionContent={getHeaderButton()}>
       <Cropper
         ref={cropper}
         src={currentUrl}
