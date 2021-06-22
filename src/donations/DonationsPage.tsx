@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, Helper, Funds, UserHelper, ExportLink, DonationSummaryInterface, Permissions, Loading, DonationEvents } from "./components";
+import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, Helper, Funds, UserHelper, ExportLink, DonationSummaryInterface, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
 import { ReportFilterInterface, ReportInterface } from "../appBase/interfaces/ReportInterfaces";
@@ -134,7 +134,6 @@ export const DonationsPage = () => {
           <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="fas fa-hand-holding-usd" headerText="Batches" editContent={getEditContent()}>
             {getTable()}
           </DisplayBox>
-          <DonationEvents></DonationEvents>
         </Col>
         <Col lg={4}>{getSidebarModules()}</Col>
       </Row>
