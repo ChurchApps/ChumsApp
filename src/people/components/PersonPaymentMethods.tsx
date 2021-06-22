@@ -1,18 +1,15 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { loadStripe, Stripe } from "@stripe/stripe-js";
+import { Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { DisplayBox, ApiHelper, UniqueIdHelper, UserHelper, Permissions, StripePaymentMethod, PersonInterface, CardForm, BankForm } from ".";
+import { DisplayBox, ApiHelper, UserHelper, Permissions, StripePaymentMethod, PersonInterface, CardForm, BankForm, Loading } from ".";
 
-interface Props { personId: string }
+interface Props { person: PersonInterface, customerId: string, paymentMethods: StripePaymentMethod[], stripePromise: Promise<Stripe> }
 
 export const PersonPaymentMethods: React.FC<Props> = (props) => {
   const [editPaymentMethod, setEditPaymentMethod] = React.useState<StripePaymentMethod>(new StripePaymentMethod());
-  const [paymentMethods, setPaymentMethods] = React.useState<StripePaymentMethod[]>(null);
-  const [customerId, setCustomerId] = React.useState(null);
+  const [paymentMethods, setPaymentMethods] = React.useState<StripePaymentMethod[]>(props.paymentMethods);
   const [mode, setMode] = React.useState("display");
-  const [person, setPerson] = React.useState<PersonInterface>(null);
-  const [stripePromise, setStripe] = React.useState<Promise<Stripe>>(null);
   const [verify, setVerify] = React.useState<boolean>(false);
 
   const handleEdit = (pm?: StripePaymentMethod, verifyAccount?: boolean) => (e: React.MouseEvent) => {
@@ -25,33 +22,11 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
   const handleDelete = async () => {
     let confirmed = window.confirm("Are you sure you want to delete this payment method?");
     if (confirmed) {
-      ApiHelper.delete("/paymentmethods/" + editPaymentMethod.id + "/" + customerId, "GivingApi");
+      ApiHelper.delete("/paymentmethods/" + editPaymentMethod.id + "/" + props.customerId, "GivingApi");
       setPaymentMethods(
         paymentMethods.filter(method => method.id !== editPaymentMethod.id)
       );
       setMode("display");
-    }
-  }
-
-  const loadData = () => {
-    if (!UniqueIdHelper.isMissing(props.personId)) {
-      ApiHelper.get("/gateways", "GivingApi").then(data => {
-        if (data.length && data[0]?.publicKey) {
-          setStripe(loadStripe(data[0].publicKey));
-          ApiHelper.get("/paymentmethods/personid/" + props.personId, "GivingApi").then(results => {
-            if (results.length) {
-              let cards = results[0].cards.data.map((card: any) => new StripePaymentMethod(card));
-              let banks = results[0].banks.data.map((bank: any) => new StripePaymentMethod(bank));
-              let methods = cards.concat(banks);
-              setPaymentMethods(methods);
-              setCustomerId(results[0].customer.id);
-            } else {
-              setPaymentMethods(results);
-            }
-          });
-          ApiHelper.get("/people/" + props.personId, "MembershipApi").then(data => { setPerson(data) });
-        }
-      });
     }
   }
 
@@ -89,7 +64,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
   }
 
   const PaymentMethodsTable = () => {
-    if (!paymentMethods) return <div>Loading payment methods...</div>
+    if (!paymentMethods) return <Loading></Loading>
     if (paymentMethods.length) {
       return (
         <Table>
@@ -103,9 +78,9 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
   }
 
   const EditForm = () => (
-    <Elements stripe={stripePromise}>
-      { editPaymentMethod.type === "card" && <CardForm card={editPaymentMethod} customerId={customerId} person={person} setMode={setMode} deletePayment={handleDelete} updateList={loadData} /> }
-      { editPaymentMethod.type === "bank" && <BankForm bank={editPaymentMethod} showVerifyForm={verify} customerId={customerId} person={person} setMode={setMode} deletePayment={handleDelete} updateList={loadData} /> }
+    <Elements stripe={props.stripePromise}>
+      { editPaymentMethod.type === "card" && <CardForm card={editPaymentMethod} customerId={props.customerId} person={props.person} setMode={setMode} deletePayment={handleDelete} updateList={() => {}} /> }
+      { editPaymentMethod.type === "bank" && <BankForm bank={editPaymentMethod} showVerifyForm={verify} customerId={props.customerId} person={props.person} setMode={setMode} deletePayment={handleDelete} updateList={() => {}} /> }
     </Elements>
   )
 
@@ -120,8 +95,6 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
     else return <EditForm></EditForm>;
   }
 
-  React.useEffect(loadData, [props.personId]);
-
-  return stripePromise ? <PaymentMethods></PaymentMethods> : null;
+  return props.stripePromise ? <PaymentMethods></PaymentMethods> : null;
 
 }

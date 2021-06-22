@@ -1,5 +1,6 @@
 import React from "react";
-import { DisplayBox, ApiHelper, Helper, DonationInterface, UniqueIdHelper, Loading } from ".";
+import { loadStripe, Stripe } from "@stripe/stripe-js";
+import { DisplayBox, ApiHelper, Helper, DonationInterface, UniqueIdHelper, Loading, PersonDonationForm, StripePaymentMethod, PersonInterface } from ".";
 import { Link } from "react-router-dom"
 import { Table } from "react-bootstrap";
 import { PersonPaymentMethods } from "./PersonPaymentMethods";
@@ -8,9 +9,32 @@ interface Props { personId: string }
 
 export const PersonDonations: React.FC<Props> = (props) => {
   const [donations, setDonations] = React.useState<DonationInterface[]>(null);
+  const [stripePromise, setStripe] = React.useState<Promise<Stripe>>(null);
+  const [paymentMethods, setPaymentMethods] = React.useState<StripePaymentMethod[]>(null);
+  const [customerId, setCustomerId] = React.useState(null);
+  const [person, setPerson] = React.useState<PersonInterface>(null);
 
   const loadData = () => {
-    if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/donations?personId=" + props.personId, "GivingApi").then(data => setDonations(data));
+    if (!UniqueIdHelper.isMissing(props.personId)) {
+      ApiHelper.get("/donations?personId=" + props.personId, "GivingApi").then(data => setDonations(data));
+      ApiHelper.get("/gateways", "GivingApi").then(data => {
+        if (data.length && data[0]?.publicKey) {
+          setStripe(loadStripe(data[0].publicKey));
+          ApiHelper.get("/paymentmethods/personid/" + props.personId, "GivingApi").then(results => {
+            if (results.length) {
+              let cards = results[0].cards.data.map((card: any) => new StripePaymentMethod(card));
+              let banks = results[0].banks.data.map((bank: any) => new StripePaymentMethod(bank));
+              let methods = cards.concat(banks);
+              setCustomerId(results[0].customer.id);
+              setPaymentMethods(methods);
+            } else {
+              setPaymentMethods(results);
+            }
+          });
+          ApiHelper.get("/people/" + props.personId, "MembershipApi").then(data => { setPerson(data) });
+        }
+      });
+    }
   }
 
   const getRows = () => {
@@ -24,7 +48,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
     for (let i = 0; i < donations.length; i++) {
       let d = donations[i];
       rows.push(
-        <tr>
+        <tr key={i}>
           <td><Link to={"/donations/" + d.batchId}>{d.batchId}</Link></td>
           <td>{Helper.formatHtml5Date(d.donationDate)}</td>
           <td>{d.method}</td>
@@ -58,7 +82,8 @@ export const PersonDonations: React.FC<Props> = (props) => {
 
   return (
     <>
-      <PersonPaymentMethods personId={props.personId} />
+      { paymentMethods && <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
+      { paymentMethods && <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
       <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations">
         {getTable()}
       </DisplayBox>
