@@ -17,6 +17,9 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
     console.log("person page called")
     const updatedPerson = {...person};
     updatedPerson.photo = dataUrl;
+    if (!dataUrl) {
+      updatedPerson.photoUpdated = null;
+    }
     setPerson(updatedPerson);
     // setPhotoUrl(dataUrl);
   }
