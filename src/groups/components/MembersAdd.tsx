@@ -25,7 +25,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const getRows = () => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) {
-      rows.push(<tr>No group members available.</tr>);
+      rows.push(<tr key="0"><td>No group members available.</td></tr>);
       return rows;
     }
     for (let i = 0; i < groupMembers.length; i++) {
@@ -44,7 +44,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) return rows;
-    rows.push(<tr><th></th><th>Name</th><th>Action</th></tr>);
+    rows.push(<tr key="0"><th></th><th>Name</th><th>Action</th></tr>);
     return rows;
   }
 
