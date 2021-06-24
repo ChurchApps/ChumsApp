@@ -550,3 +550,11 @@ label .description {
   border: none;
   background: none;
 }
+
+.danger-text {
+  color: #e80909;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
