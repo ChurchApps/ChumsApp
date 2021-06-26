@@ -10,14 +10,15 @@ export const Login: React.FC = (props: any) => {
   const [cookies] = useCookies();
   let { from } = (useLocation().state as any) || { from: { pathname: "/" } };
 
-  const successCallback = () => {
-    ApiHelper.get("/people/userid/" + UserHelper.user.id, "MembershipApi").then((person: PersonInterface) => {
+  const successCallback = async () => {
+    try {
+      const person: PersonInterface = await ApiHelper.get(`/people/${UserHelper.currentChurch.personId}`, "MembershipApi");
       UserHelper.person = person;
       context.setUserName(UserHelper.currentChurch.id.toString());
-    }).catch(err => {
+    } catch (err) {
       context.setUserName(UserHelper.currentChurch.id.toString());
       console.log(err)
-    });
+    }
   }
 
   const context = React.useContext(UserContext);
