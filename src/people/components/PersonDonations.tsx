@@ -1,6 +1,6 @@
 import React from "react";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
-import { DisplayBox, ApiHelper, Helper, DonationInterface, UniqueIdHelper, Loading, PersonDonationForm, StripePaymentMethod, PersonInterface } from ".";
+import { DisplayBox, ApiHelper, Helper, DonationInterface, UniqueIdHelper, Loading, PersonDonationForm, StripePaymentMethod, PersonInterface, PersonRecurringDonations } from ".";
 import { Link } from "react-router-dom"
 import { Table } from "react-bootstrap";
 import { PersonPaymentMethods } from "./PersonPaymentMethods";
@@ -83,6 +83,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
   return (
     <>
       { paymentMethods && <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
+      <PersonRecurringDonations customerId={customerId} paymentMethods={paymentMethods}></PersonRecurringDonations>
       { paymentMethods && <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
       <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations">
         {getTable()}
