@@ -18,7 +18,7 @@ export const Note: React.FC<Props> = (props) => {
 
   if (note === null) return null;
   const photoUrl = PersonHelper.getPhotoUrl(note.person);
-  let datePosted = new Date(note.updatedAt || note.createdAt);
+  let datePosted = new Date(note.updatedAt);
   const displayDuration = Helper.getDisplayDuration(datePosted);
 
   const handleSave = () => {
@@ -31,6 +31,8 @@ export const Note: React.FC<Props> = (props) => {
   const handleCancel = () => {
     setShowEdit(false);
   };
+
+  const isEdited = note.updatedAt !== note.createdAt && <>(edited)</>;
 
   return (
     <div className="note">
@@ -59,7 +61,7 @@ export const Note: React.FC<Props> = (props) => {
           <div className="postedBy">
             <div>
               <img src={photoUrl} alt="avatar" />
-              {note.person.name.display} - {displayDuration} ago {note.updatedAt && <>(edited)</>}
+              {note.person.name.display} - {displayDuration} ago {isEdited}
             </div>
             <i
               className="fas fa-pencil-alt"
