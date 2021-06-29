@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const Note: React.FC<Props> = (props) => {
-  const [note, setNote] = React.useState(null);
+  const [note, setNote] = React.useState<NoteInterface>(null);
   const [showEdit, setShowEdit] = React.useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -18,7 +18,7 @@ export const Note: React.FC<Props> = (props) => {
 
   if (note === null) return null;
   const photoUrl = PersonHelper.getPhotoUrl(note.person);
-  let datePosted = new Date(note.dateAdded);
+  let datePosted = new Date(note.updatedAt || note.createdAt);
   const displayDuration = Helper.getDisplayDuration(datePosted);
 
   const handleSave = () => {
@@ -59,7 +59,7 @@ export const Note: React.FC<Props> = (props) => {
           <div className="postedBy">
             <div>
               <img src={photoUrl} alt="avatar" />
-              {note.person.name.display} - {displayDuration} ago
+              {note.person.name.display} - {displayDuration} ago {note.updatedAt && <>(edited)</>}
             </div>
             <i
               className="fas fa-pencil-alt"
