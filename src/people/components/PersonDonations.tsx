@@ -75,7 +75,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
     return rows;
   }
 
-  React.useEffect(loadData, [props.personId]);
+  React.useEffect(loadData, []);
 
   const getTable = () => {
     if (!donations) return <Loading />;
@@ -87,13 +87,14 @@ export const PersonDonations: React.FC<Props> = (props) => {
 
   const getPaymentMethodComponents = () => {
     if (!paymentMethods) return <Loading />;
-    else return (
+    if (paymentMethods.length) return (
       <>
         <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} />
         <PersonRecurringDonations customerId={customerId} paymentMethods={paymentMethods}></PersonRecurringDonations>
         <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} donationSuccess={handleDonation} />
       </>
     );
+    return <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} />;
   }
 
   return (
