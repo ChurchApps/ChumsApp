@@ -4,7 +4,7 @@ import { ApiHelper, Helper, InputBox, PersonInterface, StripePaymentMethod, Stri
 import { Alert, Button, Col, FormControl, FormGroup, FormLabel, Row } from "react-bootstrap";
 import { ErrorMessages, FundDonationInterface, FundDonations, FundInterface } from "../../donations/components";
 
-interface Props { person: PersonInterface, customerId: string, paymentMethods: StripePaymentMethod[], stripePromise: Promise<Stripe> }
+interface Props { person: PersonInterface, customerId: string, paymentMethods: StripePaymentMethod[], stripePromise: Promise<Stripe>, donationSuccess: () => void }
 
 export const PersonDonationForm: React.FC<Props> = (props) => {
   const [errorMessage, setErrorMessage] = React.useState<string>();
@@ -76,6 +76,7 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
       setSuccessMessage('Donation successful!');
       setShowDonationPreviewModal(false);
       setDonationType(null);
+      props.donationSuccess();
     }
     if (results?.raw?.message) {
       setShowDonationPreviewModal(false);

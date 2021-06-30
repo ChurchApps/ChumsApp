@@ -1,6 +1,6 @@
 import React from "react";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
-import { DisplayBox, ApiHelper, Helper, DonationInterface, UniqueIdHelper, Loading, PersonDonationForm, StripePaymentMethod, PersonInterface } from ".";
+import { DisplayBox, ApiHelper, Helper, DonationInterface, UniqueIdHelper, Loading, PersonDonationForm, StripePaymentMethod, PersonInterface, PersonRecurringDonations } from ".";
 import { Link } from "react-router-dom"
 import { Table } from "react-bootstrap";
 import { PersonPaymentMethods } from "./PersonPaymentMethods";
@@ -35,6 +35,11 @@ export const PersonDonations: React.FC<Props> = (props) => {
         }
       });
     }
+  }
+
+  const handleDonation = () => {
+    setPaymentMethods(null);
+    loadData();
   }
 
   const getRows = () => {
@@ -80,10 +85,20 @@ export const PersonDonations: React.FC<Props> = (props) => {
     </Table>);
   }
 
+  const getPaymentMethodComponents = () => {
+    if (!paymentMethods) return <Loading />;
+    else return (
+      <>
+        <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} />
+        <PersonRecurringDonations customerId={customerId} paymentMethods={paymentMethods}></PersonRecurringDonations>
+        <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} donationSuccess={handleDonation} />
+      </>
+    );
+  }
+
   return (
     <>
-      { paymentMethods && <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
-      { paymentMethods && <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
+      {getPaymentMethodComponents()}
       <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations">
         {getTable()}
       </DisplayBox>
