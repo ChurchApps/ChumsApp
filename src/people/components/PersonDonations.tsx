@@ -37,6 +37,11 @@ export const PersonDonations: React.FC<Props> = (props) => {
     }
   }
 
+  const handleDonation = () => {
+    setPaymentMethods(null);
+    loadData();
+  }
+
   const getRows = () => {
     let rows: JSX.Element[] = [];
 
@@ -86,7 +91,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
       <>
         <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} />
         <PersonRecurringDonations customerId={customerId} paymentMethods={paymentMethods}></PersonRecurringDonations>
-        <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} />
+        <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} donationSuccess={handleDonation} />
       </>
     );
   }

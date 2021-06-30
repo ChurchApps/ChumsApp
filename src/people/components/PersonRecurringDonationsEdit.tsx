@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import { Col, FormControl, FormGroup, FormLabel, Row } from "react-bootstrap";
 import { ApiHelper, StripePaymentMethod, InputBox, SubscriptionInterface } from ".";
 
 interface Props { subscriptionUpdated: () => void, customerId: string, paymentMethods: StripePaymentMethod[], editSubscription: SubscriptionInterface };
@@ -38,23 +38,37 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
 
   const getFields = () => {
     return(
-      <FormGroup>
-        <FormLabel>Method</FormLabel>
-        <FormControl as="select" name="method" value={editSubscription.default_payment_method || editSubscription.default_source} className="capitalize" onChange={handleChange}>
-          {props.paymentMethods.map((paymentMethod: any, i: number) => <option key={i} value={paymentMethod.id}>{paymentMethod.name} ****{paymentMethod.last4}</option>)}
-        </FormControl>
-
-        <FormLabel>Interval Number</FormLabel>
-        <FormControl name="interval-number" type="number" value={editSubscription.plan.interval_count} data-cy="interval-number" min="1" step="1" onChange={handleChange} />
-
-        <FormLabel>Interval Type</FormLabel>
-        <FormControl as="select" name="interval-type" value={editSubscription.plan.interval} onChange={handleChange}>
-          <option value="day">Day(s)</option>
-          <option value="week">Week(s)</option>
-          <option value="month">Month(s)</option>
-          <option value="year">Year(s)</option>
-        </FormControl>
-      </FormGroup>
+      <>
+      <Row>
+        <Col>
+          <FormGroup>
+            <FormLabel>Method</FormLabel>
+            <FormControl as="select" name="method" value={editSubscription.default_payment_method || editSubscription.default_source} className="capitalize" onChange={handleChange}>
+              {props.paymentMethods.map((paymentMethod: any, i: number) => <option key={i} value={paymentMethod.id}>{paymentMethod.name} ****{paymentMethod.last4}</option>)}
+            </FormControl>
+          </FormGroup>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <FormGroup>
+            <FormLabel>Interval Number</FormLabel>
+            <FormControl name="interval-number" type="number" value={editSubscription.plan.interval_count} data-cy="interval-number" min="1" step="1" onChange={handleChange} />
+          </FormGroup>
+        </Col>
+        <Col>
+          <FormGroup>
+            <FormLabel>Interval Type</FormLabel>
+            <FormControl as="select" name="interval-type" value={editSubscription.plan.interval} onChange={handleChange}>
+              <option value="day">Day(s)</option>
+              <option value="week">Week(s)</option>
+              <option value="month">Month(s)</option>
+              <option value="year">Year(s)</option>
+            </FormControl>
+          </FormGroup>
+        </Col>
+      </Row>
+      </>
     );
   }
 

@@ -15,6 +15,12 @@ interface Props {
 
 export const DonationPreviewModal: React.FC<Props> = (props) => {
   const donationType: any = {once: 'One-time Donation', recurring: 'Recurring Donation'};
+  const [isLoading, setLoading] = React.useState<boolean>(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    props.handleDonate();
+  }
 
   const formatInterval = () => {
     const count = props.donation.interval.interval_count;
@@ -57,7 +63,7 @@ export const DonationPreviewModal: React.FC<Props> = (props) => {
       </Modal.Body>
       <Modal.Footer bsPrefix="modal-footer justify-content-center">
         <Button onClick={props.onHide} variant="secondary" data-cy="cancel-button">Cancel</Button>
-        <Button onClick={props.handleDonate} variant="primary" data-cy="donate-button">Donate</Button>
+        <Button onClick={handleClick} variant="primary" data-cy="donate-button" disabled={isLoading}>Donate</Button>
       </Modal.Footer>
     </Modal>
   );
