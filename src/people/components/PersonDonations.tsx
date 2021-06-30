@@ -21,18 +21,18 @@ export const PersonDonations: React.FC<Props> = (props) => {
         if (data.length && data[0]?.publicKey) {
           setStripe(loadStripe(data[0].publicKey));
           ApiHelper.get("/paymentmethods/personid/" + props.personId, "GivingApi").then(results => {
-            if (results.length) {
+            if (!results.length) setPaymentMethods([]);
+            else {
               let cards = results[0].cards.data.map((card: any) => new StripePaymentMethod(card));
               let banks = results[0].banks.data.map((bank: any) => new StripePaymentMethod(bank));
               let methods = cards.concat(banks);
               setCustomerId(results[0].customer.id);
               setPaymentMethods(methods);
-            } else {
-              setPaymentMethods(results);
             }
           });
           ApiHelper.get("/people/" + props.personId, "MembershipApi").then(data => { setPerson(data) });
         }
+        else setPaymentMethods([]);
       });
     }
   }
