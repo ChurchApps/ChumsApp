@@ -36,7 +36,7 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
   const loadData = () => {
     ApiHelper.get("/funds", "GivingApi").then(data => {
       setFunds(data);
-      setFundDonations([{fundId: data[0].id}]);
+      if (data.length) setFundDonations([{fundId: data[0].id}]);
     });
   }
 
@@ -103,7 +103,8 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
 
   React.useEffect(loadData, [props.person?.id]);
 
-  return (
+  if (!funds.length) return null;
+  else return (
     <>
       <DonationPreviewModal show={showDonationPreviewModal} onHide={() => setShowDonationPreviewModal(false)} handleDonate={makeDonation} donation={donation} donationType={donationType} paymentMethodName={paymentMethodName} funds={funds}/>
       <InputBox id="donationBox" data-cy="donation-box" headerIcon="fas fa-hand-holding-usd" headerText="Donate" cancelFunction={donationType ? handleCancel : undefined} saveFunction={donationType ? handleSave : undefined} saveText="Preview Donation">

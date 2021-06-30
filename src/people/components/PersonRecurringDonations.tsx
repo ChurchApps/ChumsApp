@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { DisplayBox, ApiHelper, UserHelper, Permissions, Helper, UniqueIdHelper, SubscriptionInterface } from ".";
+import { DisplayBox, ApiHelper, UserHelper, Permissions, Helper, SubscriptionInterface } from ".";
 import { PersonRecurringDonationsEdit } from "./PersonRecurringDonationsEdit";
 
 interface Props { customerId: string, paymentMethods: any };
@@ -32,6 +32,7 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
     setEditSubscription(sub);
     setMode("edit");
   }
+
   const getPaymentMethod = (sub: SubscriptionInterface) => {
     const pm = props.paymentMethods.find((pm: any) => pm.id === (sub.default_payment_method || sub.default_source));
     return `${pm.name} ****${pm.last4}`;
@@ -97,7 +98,7 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
     );
   }
 
-  React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.customerId)) loadData() }, [props.customerId]);
+  React.useEffect(loadData, []);
 
   if (!subscriptions.length) return null;
   if (mode === "display") {
