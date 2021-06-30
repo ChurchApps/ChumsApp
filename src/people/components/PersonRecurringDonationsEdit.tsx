@@ -30,6 +30,8 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
         sub.default_payment_method = pm.type === 'card' ? value : null;
         sub.default_source = pm.type === 'bank' ? value : null;
         break;
+      case "interval-number": sub.plan.interval_count = Number(value); break;
+      case "interval-type": sub.plan.interval = value; break;
     }
     setEditSubscription(sub);
   }
@@ -40,6 +42,17 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
         <FormLabel>Method</FormLabel>
         <FormControl as="select" name="method" value={editSubscription.default_payment_method || editSubscription.default_source} className="capitalize" onChange={handleChange}>
           {props.paymentMethods.map((paymentMethod: any, i: number) => <option key={i} value={paymentMethod.id}>{paymentMethod.name} ****{paymentMethod.last4}</option>)}
+        </FormControl>
+
+        <FormLabel>Interval Number</FormLabel>
+        <FormControl name="interval-number" type="number" value={editSubscription.plan.interval_count} data-cy="interval-number" min="1" step="1" onChange={handleChange} />
+
+        <FormLabel>Interval Type</FormLabel>
+        <FormControl as="select" name="interval-type" value={editSubscription.plan.interval} onChange={handleChange}>
+          <option value="day">Day(s)</option>
+          <option value="week">Week(s)</option>
+          <option value="month">Month(s)</option>
+          <option value="year">Year(s)</option>
         </FormControl>
       </FormGroup>
     );

@@ -80,11 +80,20 @@ export const PersonDonations: React.FC<Props> = (props) => {
     </Table>);
   }
 
+  const getPaymentMethodComponents = () => {
+    if (!paymentMethods) return <Loading />;
+    else return (
+      <>
+        <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} />
+        <PersonRecurringDonations customerId={customerId} paymentMethods={paymentMethods}></PersonRecurringDonations>
+        <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} />
+      </>
+    );
+  }
+
   return (
     <>
-      { paymentMethods && <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
-      <PersonRecurringDonations customerId={customerId} paymentMethods={paymentMethods}></PersonRecurringDonations>
-      { paymentMethods && <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
+      {getPaymentMethodComponents()}
       <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations">
         {getTable()}
       </DisplayBox>
