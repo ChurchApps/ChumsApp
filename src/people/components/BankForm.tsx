@@ -8,7 +8,7 @@ interface Props { bank: StripePaymentMethod, showVerifyForm: boolean, customerId
 export const BankForm: React.FC<Props> = (props) => {
   const stripe = useStripe();
   const [bankAccount, setBankAccount] = React.useState<StripeBankAccountInterface>({ account_holder_name: props.bank.account_holder_name, account_holder_type: props.bank.account_holder_type, country: "US", currency: "usd" } as StripeBankAccountInterface);
-  const [paymentMethod] = React.useState<PaymentMethodInterface>({ customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email });
+  const [paymentMethod] = React.useState<PaymentMethodInterface>({ customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email, name: props.person.name.display });
   const [updateBankData] = React.useState<StripeBankAccountUpdateInterface>({ paymentMethodId: props.bank.id, customerId: props.customerId, bankData: { account_holder_name: props.bank.account_holder_name, account_holder_type: props.bank.account_holder_type} } as StripeBankAccountUpdateInterface);
   const [verifyBankData, setVerifyBankData] = React.useState<StripeBankAccountVerifyInterface>({ paymentMethodId: props.bank.id, customerId: props.customerId, amountData: { amounts: [] } });
   const [showSave, setShowSave] = React.useState<boolean>(true);
