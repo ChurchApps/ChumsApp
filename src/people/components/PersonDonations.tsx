@@ -37,7 +37,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
     }
   }
 
-  const handleDonation = () => {
+  const handleDataUpdate = () => {
     setPaymentMethods(null);
     loadData();
   }
@@ -89,12 +89,12 @@ export const PersonDonations: React.FC<Props> = (props) => {
     if (!paymentMethods) return <Loading />;
     if (paymentMethods.length) return (
       <>
-        <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} />
+        <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} dataUpdate={handleDataUpdate} />
         <PersonRecurringDonations customerId={customerId} paymentMethods={paymentMethods}></PersonRecurringDonations>
-        <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} donationSuccess={handleDonation} />
+        <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} donationSuccess={handleDataUpdate} />
       </>
     );
-    return <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} />;
+    return <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} dataUpdate={handleDataUpdate} />;
   }
 
   return (

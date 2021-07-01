@@ -4,7 +4,7 @@ import { Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { DisplayBox, ApiHelper, UserHelper, Permissions, StripePaymentMethod, PersonInterface, CardForm, BankForm, Loading } from ".";
 
-interface Props { person: PersonInterface, customerId: string, paymentMethods: StripePaymentMethod[], stripePromise: Promise<Stripe> }
+interface Props { person: PersonInterface, customerId: string, paymentMethods: StripePaymentMethod[], stripePromise: Promise<Stripe>, dataUpdate: () => void }
 
 export const PersonPaymentMethods: React.FC<Props> = (props) => {
   const [editPaymentMethod, setEditPaymentMethod] = React.useState<StripePaymentMethod>(new StripePaymentMethod());
@@ -79,8 +79,8 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
 
   const EditForm = () => (
     <Elements stripe={props.stripePromise}>
-      { editPaymentMethod.type === "card" && <CardForm card={editPaymentMethod} customerId={props.customerId} person={props.person} setMode={setMode} deletePayment={handleDelete} updateList={() => {}} /> }
-      { editPaymentMethod.type === "bank" && <BankForm bank={editPaymentMethod} showVerifyForm={verify} customerId={props.customerId} person={props.person} setMode={setMode} deletePayment={handleDelete} updateList={() => {}} /> }
+      { editPaymentMethod.type === "card" && <CardForm card={editPaymentMethod} customerId={props.customerId} person={props.person} setMode={setMode} deletePayment={handleDelete} updateList={props.dataUpdate} /> }
+      { editPaymentMethod.type === "bank" && <BankForm bank={editPaymentMethod} showVerifyForm={verify} customerId={props.customerId} person={props.person} setMode={setMode} deletePayment={handleDelete} updateList={props.dataUpdate} /> }
     </Elements>
   )
 
