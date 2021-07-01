@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { InputBox, ApiHelper, StripePaymentMethod, PersonInterface, PaymentMethodInterface, StripeCardUpdateInterface } from ".";
 
-interface Props { card: StripePaymentMethod, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: any }
+interface Props { card: StripePaymentMethod, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: () => void }
 
 export const CardForm: React.FC<Props> = (props) => {
   const stripe = useStripe();
