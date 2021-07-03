@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Tabs, Tab, Alert } from "react-bootstrap";
-import { DisplayBox, ImportHelper, Helper } from ".";
+import { DisplayBox, ImportHelper, DateHelper, CurrencyHelper } from ".";
 import { ImportGroupInterface, ImportPersonInterface, ImportDonationBatchInterface, ImportDonationInterface, ImportFundInterface, ImportDataInterface } from "../../helpers/ImportHelper";
 
 interface Props { importData: ImportDataInterface, triggerRender: number }
@@ -92,7 +92,7 @@ export const ImportPreview: React.FC<Props> = (props) => {
         let session = props.importData.sessions[i];
         let group: ImportGroupInterface = ImportHelper.getByImportKey(props.importData.groups, session.groupKey);
         let vs = ImportHelper.getVisitSessions(props.importData.visitSessions, session.importKey);
-        rows.push(<tr key={f}><td>{Helper.prettyDate(session.sessionDate)}</td><td>{group?.name}</td><td>{vs.length}</td></tr>);
+        rows.push(<tr key={f}><td>{DateHelper.prettyDate(session.sessionDate)}</td><td>{group?.name}</td><td>{vs.length}</td></tr>);
       }
       return (<Table>
         <thead><tr><th>Date</th><th>Group</th><th>Visits</th></tr></thead>
@@ -113,7 +113,7 @@ export const ImportPreview: React.FC<Props> = (props) => {
         let fund: ImportFundInterface = ImportHelper.getByImportKey(props.importData.funds, fd.fundKey);
         let person: ImportPersonInterface = ImportHelper.getByImportKey(props.importData.people, donation.personKey);
         let personName = (person === null) ? "" : person.name.first + " " + person.name.last;
-        rows.push(<tr key={n}><td>{Helper.prettyDate(donation.donationDate)}</td><td>{batch.name}</td><td>{personName}</td><td>{fund.name}</td><td>{Helper.formatCurrency(fd.amount)}</td></tr>);
+        rows.push(<tr key={n}><td>{DateHelper.prettyDate(donation.donationDate)}</td><td>{batch.name}</td><td>{personName}</td><td>{fund.name}</td><td>{CurrencyHelper.formatCurrency(fd.amount)}</td></tr>);
       }
       return (<Table>
         <thead><tr><th>Date</th><th>Batch</th><th>Person</th><th>Fund</th><th>Amount</th></tr></thead>

@@ -1,10 +1,9 @@
 import React from "react";
-import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, Helper, Funds, UserHelper, ExportLink, DonationSummaryInterface, Permissions, Loading, DonationEvents } from "./components";
+import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, DonationSummaryInterface, Permissions, Loading, DonationEvents, ArrayHelper, CurrencyHelper } from "./components";
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
 import { ReportFilterInterface, ReportInterface } from "../appBase/interfaces/ReportInterfaces";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
-import { ArrayHelper, DateHelper } from "../appBase/helpers";
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
@@ -45,7 +44,7 @@ export const DonationsPage = () => {
     summary.forEach(s => {
       s.donations.forEach((d: any) => {
         result.push({
-          week: Helper.prettyDate(new Date(s.week)),
+          week: DateHelper.prettyDate(new Date(s.week)),
           fundName: (d.fund === undefined) ? "none" : d.fund.name,
           totalAmount: d.totalAmount
         });
@@ -94,9 +93,9 @@ export const DonationsPage = () => {
       result.push(<tr key={i}>
         <td>{batchLink}</td>
         <td>{b.name}</td>
-        <td>{Helper.prettyDate(b.batchDate)}</td>
+        <td>{DateHelper.prettyDate(b.batchDate)}</td>
         <td>{b.donationCount}</td>
-        <td>{Helper.formatCurrency(b.totalAmount)}</td>
+        <td>{CurrencyHelper.formatCurrency(b.totalAmount)}</td>
         <td>{editLink}</td>
       </tr>);
     }

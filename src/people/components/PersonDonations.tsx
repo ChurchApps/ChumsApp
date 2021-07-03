@@ -1,6 +1,6 @@
 import React from "react";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
-import { DisplayBox, ApiHelper, Helper, DonationInterface, UniqueIdHelper, Loading, PersonDonationForm, StripePaymentMethod, PersonInterface } from ".";
+import { DisplayBox, ApiHelper, DateHelper, DonationInterface, UniqueIdHelper, Loading, PersonDonationForm, StripePaymentMethod, PersonInterface, CurrencyHelper } from ".";
 import { Link } from "react-router-dom"
 import { Table } from "react-bootstrap";
 import { PersonPaymentMethods } from "./PersonPaymentMethods";
@@ -50,10 +50,10 @@ export const PersonDonations: React.FC<Props> = (props) => {
       rows.push(
         <tr key={i}>
           <td><Link to={"/donations/" + d.batchId}>{d.batchId}</Link></td>
-          <td>{Helper.formatHtml5Date(d.donationDate)}</td>
+          <td>{DateHelper.formatHtml5Date(d.donationDate)}</td>
           <td>{d.method}</td>
           <td>{d.fund.name}</td>
-          <td>{Helper.formatCurrency(d.amount)}</td>
+          <td>{CurrencyHelper.formatCurrency(d.amount)}</td>
         </tr>
       );
     }

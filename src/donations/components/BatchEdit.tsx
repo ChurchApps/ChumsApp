@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, InputBox, Helper, DonationBatchInterface, UniqueIdHelper } from ".";
+import { ApiHelper, InputBox, DateHelper, DonationBatchInterface, UniqueIdHelper } from ".";
 
 interface Props { batchId: string, updatedFunction: () => void }
 
@@ -44,7 +44,7 @@ export const BatchEdit: React.FC<Props> = (props) => {
       </div>
       <div className="form-group">
         <label>Date</label>
-        <input type="date" data-cy="batch-date" className="form-control" name="date" value={Helper.formatHtml5Date(batch.batchDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+        <input type="date" data-cy="batch-date" className="form-control" name="date" value={DateHelper.formatHtml5Date(batch.batchDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
       </div>
     </InputBox>
   );

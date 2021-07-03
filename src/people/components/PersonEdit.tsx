@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { PersonHelper, Helper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, ErrorMessages, ValidateHelper, Loading } from "."
+import { PersonHelper, DateHelper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, ErrorMessages, ValidateHelper, Loading } from "."
 import { Redirect } from "react-router-dom";
 import { Row, Col, FormControl, FormGroup, FormLabel, Button } from "react-bootstrap";
 
@@ -228,7 +228,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
         <Col lg={4} md={4}>
           <FormGroup>
             <FormLabel>Birthdate</FormLabel>
-            <FormControl type="date" name="birthDate" data-cy="birthdate" value={Helper.formatHtml5Date(person?.birthDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormControl type="date" name="birthDate" data-cy="birthdate" value={DateHelper.formatHtml5Date(person?.birthDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
         </Col>
       </Row>
@@ -259,7 +259,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
         <Col lg={4} md={4}>
           <FormGroup>
             <FormLabel>Anniversary</FormLabel>
-            <FormControl type="date" name="anniversary" data-cy="anniversary" value={Helper.formatHtml5Date(person?.anniversary)} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormControl type="date" name="anniversary" data-cy="anniversary" value={DateHelper.formatHtml5Date(person?.anniversary)} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
         </Col>
       </Row>

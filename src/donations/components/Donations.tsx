@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, UserHelper, DonationInterface, Helper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading } from ".";
+import { ApiHelper, UserHelper, DonationInterface, DateHelper, CurrencyHelper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading } from ".";
 import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
 
@@ -49,8 +49,8 @@ export const Donations: React.FC<Props> = (props) => {
       rows.push(<tr key={i}>
         <td>{editLink}</td>
         <td>{d.person?.name.display || "Anonymous"}</td>
-        <td>{Helper.formatHtml5Date(d.donationDate)}</td>
-        <td>{Helper.formatCurrency(d.amount)}</td>
+        <td>{DateHelper.formatHtml5Date(d.donationDate)}</td>
+        <td>{CurrencyHelper.formatCurrency(d.amount)}</td>
       </tr>);
     }
     return rows;

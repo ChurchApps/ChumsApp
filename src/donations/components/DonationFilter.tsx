@@ -1,5 +1,5 @@
 import React from "react";
-import { InputBox, Helper } from ".";
+import { InputBox, DateHelper } from ".";
 
 interface Props { startDate: Date, endDate: Date, updateFunction: (startDate: Date, endDate: Date) => void }
 
@@ -27,11 +27,11 @@ export const DonationFilter: React.FC<Props> = (props) => {
   return (<InputBox id="donationFilterBox" headerIcon="fas fa-filter" headerText="Filter Donation Chart" saveFunction={handleFilter} saveText="Filter">
     <div className="form-group">
       <label>Start Date</label>
-      <input type="date" className="form-control" name="startDate" value={Helper.formatHtml5Date(startDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <input type="date" className="form-control" name="startDate" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
     </div>
     <div className="form-group">
       <label>End Date</label>
-      <input type="date" className="form-control" name="endDate" value={Helper.formatHtml5Date(endDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <input type="date" className="form-control" name="endDate" value={DateHelper.formatHtml5Date(endDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
     </div>
   </InputBox>);
 
