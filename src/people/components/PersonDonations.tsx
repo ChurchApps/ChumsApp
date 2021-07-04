@@ -1,6 +1,6 @@
 import React from "react";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
-import { DisplayBox, ApiHelper, DateHelper, DonationInterface, UniqueIdHelper, Loading, PersonDonationForm, StripePaymentMethod, PersonInterface, CurrencyHelper } from ".";
+import { DisplayBox, ApiHelper, DateHelper, DonationInterface, UniqueIdHelper, Loading, PersonDonationForm, StripePaymentMethod, PersonInterface, CurrencyHelper, PersonRecurringDonations } from ".";
 import { Link } from "react-router-dom"
 import { Table } from "react-bootstrap";
 import { PersonPaymentMethods } from "./PersonPaymentMethods";
@@ -21,20 +21,25 @@ export const PersonDonations: React.FC<Props> = (props) => {
         if (data.length && data[0]?.publicKey) {
           setStripe(loadStripe(data[0].publicKey));
           ApiHelper.get("/paymentmethods/personid/" + props.personId, "GivingApi").then(results => {
-            if (results.length) {
+            if (!results.length) setPaymentMethods([]);
+            else {
               let cards = results[0].cards.data.map((card: any) => new StripePaymentMethod(card));
               let banks = results[0].banks.data.map((bank: any) => new StripePaymentMethod(bank));
               let methods = cards.concat(banks);
               setCustomerId(results[0].customer.id);
               setPaymentMethods(methods);
-            } else {
-              setPaymentMethods(results);
             }
           });
           ApiHelper.get("/people/" + props.personId, "MembershipApi").then(data => { setPerson(data) });
         }
+        else setPaymentMethods([]);
       });
     }
+  }
+
+  const handleDataUpdate = () => {
+    setPaymentMethods(null);
+    loadData();
   }
 
   const getRows = () => {
@@ -70,7 +75,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
     return rows;
   }
 
-  React.useEffect(loadData, [props.personId]);
+  React.useEffect(loadData, []);
 
   const getTable = () => {
     if (!donations) return <Loading />;
@@ -80,10 +85,21 @@ export const PersonDonations: React.FC<Props> = (props) => {
     </Table>);
   }
 
+  const getPaymentMethodComponents = () => {
+    if (!paymentMethods) return <Loading />;
+    if (paymentMethods.length) return (
+      <>
+        <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} dataUpdate={handleDataUpdate} />
+        <PersonRecurringDonations customerId={customerId} paymentMethods={paymentMethods}></PersonRecurringDonations>
+        <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} donationSuccess={handleDataUpdate} />
+      </>
+    );
+    return <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} dataUpdate={handleDataUpdate} />;
+  }
+
   return (
     <>
-      { paymentMethods && <PersonPaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
-      { paymentMethods && <PersonDonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} /> }
+      {getPaymentMethodComponents()}
       <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations">
         {getTable()}
       </DisplayBox>

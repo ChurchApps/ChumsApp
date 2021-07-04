@@ -1,17 +1,18 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { InputBox, ApiHelper, StripePaymentMethod, PersonInterface, PaymentMethodInterface, StripeCardUpdateInterface } from ".";
+import { InputBox, ApiHelper, StripePaymentMethod, PersonInterface, PaymentMethodInterface, StripeCardUpdateInterface, ErrorMessages } from ".";
 
-interface Props { card: StripePaymentMethod, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: any }
+interface Props { card: StripePaymentMethod, customerId: string, person: PersonInterface, setMode: any, deletePayment: any, updateList: () => void }
 
 export const CardForm: React.FC<Props> = (props) => {
   const stripe = useStripe();
   const elements = useElements();
   const formStyling = { style: { base: { fontSize: "18px" } } };
   const [showSave, setShowSave] = React.useState(true);
-  const [paymentMethod] = React.useState<PaymentMethodInterface>({ id: props.card.id, customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email });
+  const [paymentMethod] = React.useState<PaymentMethodInterface>({ id: props.card.id, customerId: props.customerId, personId: props.person.id, email: props.person.contactInfo.email, name: props.person.name.display });
   const [cardUpdate, setCardUpdate] = React.useState<StripeCardUpdateInterface>({ paymentMethodId: props.card.id, cardData: { card: {}} } as StripeCardUpdateInterface);
+  const [errorMessage, setErrorMessage] = React.useState<string>(null);
   const handleCancel = () => { props.setMode("display"); }
   const handleSave = () => { setShowSave(false); props.card.id ? updateCard() : createCard(); }
   const saveDisabled = () => {}
@@ -35,12 +36,23 @@ export const CardForm: React.FC<Props> = (props) => {
       type: "card",
       card: cardData
     });
-    let pm = { ...paymentMethod };
-    pm.id = stripePM.paymentMethod.id;
-    await ApiHelper.post("/paymentmethods/addcard", pm, "GivingApi").then(result => {
-      props.updateList(new StripePaymentMethod(result));
-      props.setMode("display");
-    });
+    if (stripePM.error) {
+      setErrorMessage(stripePM.error.message);
+      setShowSave(true);
+    } else {
+      let pm = { ...paymentMethod };
+      pm.id = stripePM.paymentMethod.id;
+      await ApiHelper.post("/paymentmethods/addcard", pm, "GivingApi").then(result => {
+        if (result?.raw?.message) {
+          setErrorMessage(result.raw.message);
+          setShowSave(true);
+        }
+        else {
+          props.updateList();
+          props.setMode("display");
+        }
+      });
+    }
   }
 
   const updateCard = async () => {
@@ -54,6 +66,7 @@ export const CardForm: React.FC<Props> = (props) => {
 
   return (
     <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.card.id ? handleDelete : undefined}>
+      { errorMessage && <ErrorMessages errors={[errorMessage]}></ErrorMessages> }
       <form style={{margin: "10px"}}>
         { !props.card.id
           ? <CardElement options={formStyling} />
