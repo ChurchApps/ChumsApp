@@ -1,5 +1,5 @@
 import React from "react";
-import { PersonHelper, ApiHelper, Helper, NoteInterface, InputBox } from "./";
+import { PersonHelper, ApiHelper, DateHelper, NoteInterface, InputBox } from "./";
 
 interface Props {
   note: NoteInterface;
@@ -19,7 +19,7 @@ export const Note: React.FC<Props> = (props) => {
   if (note === null) return null;
   const photoUrl = PersonHelper.getPhotoUrl(note.person);
   let datePosted = new Date(note.updatedAt);
-  const displayDuration = Helper.getDisplayDuration(datePosted);
+  const displayDuration = DateHelper.getDisplayDuration(datePosted);
 
   const handleSave = () => {
     ApiHelper.post("/notes", [note], "MembershipApi").then(() => {
@@ -61,7 +61,7 @@ export const Note: React.FC<Props> = (props) => {
           <div className="postedBy">
             <div>
               <img src={photoUrl} alt="avatar" />
-              {note.person.name.display} - {displayDuration} ago {isEdited}
+              {note.person.name.display} · {displayDuration}{isEdited}
             </div>
             <i
               className="fas fa-pencil-alt"

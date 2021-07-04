@@ -13,7 +13,7 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
   }
 
   const handleDelete = () => {
-    const conf = window.confirm('Are you sure you want to delete this recurring donation?');
+    const conf = window.confirm("Are you sure you want to delete this recurring donation?");
     if (!conf) return;
     let promises = [];
     promises.push(ApiHelper.delete("/subscriptions/" + props.editSubscription.id, "GivingApi"));
@@ -27,8 +27,8 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
     switch (e.currentTarget.name) {
       case "method":
         let pm = props.paymentMethods.find((pm: StripePaymentMethod) => pm.id === value);
-        sub.default_payment_method = pm.type === 'card' ? value : null;
-        sub.default_source = pm.type === 'bank' ? value : null;
+        sub.default_payment_method = pm.type === "card" ? value : null;
+        sub.default_source = pm.type === "bank" ? value : null;
         break;
       case "interval-number": sub.plan.interval_count = Number(value); break;
       case "interval-type": sub.plan.interval = value; break;
@@ -36,9 +36,8 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
     setEditSubscription(sub);
   }
 
-  const getFields = () => {
-    return(
-      <>
+  const getFields = () => (
+    <>
       <Row>
         <Col>
           <FormGroup>
@@ -68,9 +67,8 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
           </FormGroup>
         </Col>
       </Row>
-      </>
-    );
-  }
+    </>
+  )
 
   return (
     <InputBox data-cy="person-details-box" headerIcon="fas fa-user" headerText="Edit Recurring Donation" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave}>

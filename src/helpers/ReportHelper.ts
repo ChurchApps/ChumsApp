@@ -1,5 +1,5 @@
 import { ReportInterface, ReportColumnInterface } from "./Interfaces";
-import { Helper } from ".";
+import { DateHelper } from ".";
 
 export class ReportHelper {
 
@@ -13,7 +13,7 @@ export class ReportHelper {
       if (p === "groupCategory") r.values.push({ key: "groupCategory", value: "" });
       if (p === "groupId") r.values.push({ key: "groupId", value: 0 });
       if (p === "fundId") r.values.push({ key: "fundId", value: 0 });
-      if (p === "week") r.values.push({ key: "week", value: Helper.getLastSunday() });
+      if (p === "week") r.values.push({ key: "week", value: DateHelper.getLastSunday() });
       if (p === "startDate") r.values.push({ key: "startDate", value: new Date(new Date().getFullYear(), 0, 1) });
       if (p === "endDate") r.values.push({ key: "endDate", value: new Date() });
     });
@@ -40,7 +40,7 @@ export class ReportHelper {
       case "date":
         try {
           console.log(new Date(value));
-          result = Helper.prettyDate(new Date(value));
+          result = DateHelper.prettyDate(new Date(value));
         } catch {
         //keep the original value
         }

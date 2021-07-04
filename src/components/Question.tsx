@@ -1,5 +1,5 @@
 import React from "react";
-import { Helper, QuestionInterface, AnswerInterface } from "./";
+import { DateHelper, QuestionInterface, AnswerInterface } from "./";
 
 interface Props { question: QuestionInterface, answer: AnswerInterface }
 
@@ -13,7 +13,7 @@ export const Question: React.FC<Props> = (props) => {
     let displayValue = "";
     switch (q.fieldType) {
       case "Date":
-        displayValue = (a.value === null || a.value === "") ? "" : Helper.getShortDate(new Date(a.value));
+        displayValue = (a.value === null || a.value === "") ? "" : DateHelper.getShortDate(new Date(a.value));
         break;
       case "Yes/No":
         displayValue = (a.value === null || a.value === "") ? "" : a.value.replace("False", "No").replace("True", "Yes");

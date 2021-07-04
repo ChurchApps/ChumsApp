@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button, Table } from "react-bootstrap";
-import { Helper } from "..";
+import { DateHelper, CurrencyHelper } from "..";
 import { StripeDonationInterface } from "../../../helpers";
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const DonationPreviewModal: React.FC<Props> = (props) => {
-  const donationType: any = {once: 'One-time Donation', recurring: 'Recurring Donation'};
+  const donationType: any = {once: "One-time Donation", recurring: "Recurring Donation"};
   const [isLoading, setLoading] = React.useState<boolean>(false);
 
   const handleClick = () => {
@@ -26,7 +26,7 @@ export const DonationPreviewModal: React.FC<Props> = (props) => {
     const count = props.donation.interval.interval_count;
     const interval = props.donation.interval.interval;
     let result = `${count} ${interval}`;
-    return count > 1 ? result + 's' : result;
+    return count > 1 ? result + "s" : result;
   }
 
   return (
@@ -46,18 +46,18 @@ export const DonationPreviewModal: React.FC<Props> = (props) => {
             <tr><td>Name:</td><td>{props.donation.person.name}</td></tr>
             <tr><td>Payment Method:</td><td className="capitalize">{props.paymentMethodName}</td></tr>
             <tr><td>Type:</td><td>{donationType[props.donationType]}</td></tr>
-            {props.donationType === 'once' &&
-              <tr><td>Donation Date:</td><td>{Helper.formatHtml5Date(new Date(props.donation.billing_cycle_anchor))}</td></tr>
+            {props.donationType === "once"
+              && <tr><td>Donation Date:</td><td>{DateHelper.formatHtml5Date(new Date(props.donation.billing_cycle_anchor))}</td></tr>
             }
             <tr><td>Notes:</td><td>{props.donation.notes}</td></tr>
-            { props.donationType === 'recurring' &&
-              <>
-                <tr><td>Starting On:</td><td>{Helper.formatHtml5Date(new Date(props.donation.billing_cycle_anchor))}</td></tr>
+            { props.donationType === "recurring"
+              && <>
+                <tr><td>Starting On:</td><td>{DateHelper.formatHtml5Date(new Date(props.donation.billing_cycle_anchor))}</td></tr>
                 <tr><td>Recurring Every:</td><td className="capitalize">{formatInterval()}</td></tr>
               </>
             }
-            <tr><td>Funds:</td><td>{props.donation.funds.map((fund: any, i: number) => <p key={i}>{Helper.formatCurrency(fund.amount)} - {fund.name}</p>)}</td></tr>
-            <tr><td>Total:</td><td><h4>{Helper.formatCurrency(props.donation.amount)}</h4></td></tr>
+            <tr><td>Funds:</td><td>{props.donation.funds.map((fund: any, i: number) => <p key={i}>{CurrencyHelper.formatCurrency(fund.amount)} - {fund.name}</p>)}</td></tr>
+            <tr><td>Total:</td><td><h4>{CurrencyHelper.formatCurrency(props.donation.amount)}</h4></td></tr>
           </tbody>
         </Table>
       </Modal.Body>

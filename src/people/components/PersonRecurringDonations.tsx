@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { DisplayBox, ApiHelper, UserHelper, Permissions, Helper, SubscriptionInterface } from ".";
+import { DisplayBox, ApiHelper, UserHelper, Permissions, CurrencyHelper, SubscriptionInterface, DateHelper } from ".";
 import { PersonRecurringDonationsEdit } from "./PersonRecurringDonationsEdit";
 
 interface Props { customerId: string, paymentMethods: any };
@@ -13,12 +13,10 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
   const loadData = () => {
     ApiHelper.get("/customers/" + props.customerId + "/subscriptions", "GivingApi").then(subResult => {
       const subs: SubscriptionInterface[] = [];
-      const requests = subResult.data.map((s: any) => {
-        return ApiHelper.get("/subscriptionfunds?subscriptionId=" + s.id, "GivingApi").then(subFunds => {
-          s.funds = subFunds;
-          subs.push(s);
-        });
-      });
+      const requests = subResult.data.map((s: any) => ApiHelper.get("/subscriptionfunds?subscriptionId=" + s.id, "GivingApi").then(subFunds => {
+        s.funds = subFunds;
+        subs.push(s);
+      }));
       return Promise.all(requests).then(() => {
         setSubscriptions(subs);
       });
@@ -39,8 +37,8 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
   }
 
   const getInterval = (subscription: SubscriptionInterface) => {
-    let interval = subscription.plan.interval_count + ' ' + subscription.plan.interval;
-    return subscription.plan.interval_count > 1 ? interval + 's' : interval;
+    let interval = subscription.plan.interval_count + " " + subscription.plan.interval;
+    return subscription.plan.interval_count > 1 ? interval + "s" : interval;
   }
 
   const getFunds = (subscription: SubscriptionInterface) => {
@@ -48,14 +46,14 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
     subscription.funds.forEach((fund: any) => {
       result.push(
         <div key={subscription.id + fund.id}>
-          {fund.name} <span style={{float: "right"}}>{Helper.formatCurrency(fund.amount)}</span>
+          {fund.name} <span style={{float: "right"}}>{CurrencyHelper.formatCurrency(fund.amount)}</span>
         </div>
       );
     });
     const total = (subscription.plan.amount / 100);
     result.push(
       <div key={subscription.id + "-total"} style={{borderTop: "solid #dee2e6 1px"}}>
-        Total <span style={{float: "right"}}>{Helper.formatCurrency(total)}</span>
+        Total <span style={{float: "right"}}>{CurrencyHelper.formatCurrency(total)}</span>
       </div>
     );
     return result;
@@ -78,7 +76,7 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
     subscriptions.forEach((sub: any) => {
       rows.push(
         <tr key={sub.id}>
-          <td>{Helper.prettyDate(new Date(sub.billing_cycle_anchor * 1000))}</td>
+          <td>{DateHelper.prettyDate(new Date(sub.billing_cycle_anchor * 1000))}</td>
           <td>{getFunds(sub)}</td>
           <td>Every {getInterval(sub)}</td>
           <td className="capitalize">{getPaymentMethod(sub)}</td>
@@ -89,14 +87,12 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
     return rows;
   }
 
-  const getSubscriptionsTable = () => {
-    return (
-      <Table>
-        <thead>{getTableHeader()}</thead>
-        <tbody>{getTableRows()}</tbody>
-      </Table>
-    );
-  }
+  const getSubscriptionsTable = () => (
+    <Table>
+      <thead>{getTableHeader()}</thead>
+      <tbody>{getTableRows()}</tbody>
+    </Table>
+  )
 
   React.useEffect(loadData, []);
 

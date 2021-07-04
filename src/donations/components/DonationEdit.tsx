@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, FundDonations, Helper, PersonInterface, UniqueIdHelper, PersonHelper } from ".";
+import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, FundDonations, DateHelper, PersonInterface, UniqueIdHelper, PersonHelper } from ".";
 
 interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
 
@@ -119,7 +119,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
       </div>
       <div className="form-group">
         <label>Date</label>
-        <input type="date" className="form-control" name="date" value={Helper.formatHtml5Date(donation.donationDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+        <input type="date" className="form-control" name="date" value={DateHelper.formatHtml5Date(donation.donationDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
       </div>
       <div className="form-group">
         <label>Method</label>

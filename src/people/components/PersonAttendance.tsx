@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox, ApiHelper, AttendanceRecordInterface, Helper, GroupInterface, UniqueIdHelper, Loading } from ".";
+import { DisplayBox, ApiHelper, AttendanceRecordInterface, DateHelper, GroupInterface, UniqueIdHelper, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
@@ -39,7 +39,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
       let showRest = false;
       if (r.visitDate === lastVisitDate && !showRest) cols.push(<td></td>);
       else {
-        cols.push(<td><i className="far fa-calendar-alt"></i> {Helper.formatHtml5Date(r.visitDate)}</td>);
+        cols.push(<td><i className="far fa-calendar-alt"></i> {DateHelper.formatHtml5Date(r.visitDate)}</td>);
         lastVisitDate = r.visitDate;
         showRest = true;
       }

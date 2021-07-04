@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, GroupInterface, GroupServiceTimeInterface, InputBox, ErrorMessages, SessionInterface, Helper, UniqueIdHelper } from ".";
+import { ApiHelper, GroupInterface, GroupServiceTimeInterface, InputBox, ErrorMessages, SessionInterface, DateHelper, UniqueIdHelper } from ".";
 
 interface Props { group: GroupInterface, updatedFunction: (session: SessionInterface) => void }
 
@@ -62,7 +62,7 @@ export const SessionAdd: React.FC<Props> = (props) => {
 
       <div className="form-group">
         <label>Session Date</label>
-        <input type="date" className="form-control" value={Helper.formatHtml5Date(sessionDate)} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSessionDate(new Date(e.currentTarget.value))} onKeyDown={handleKeyDown} />
+        <input type="date" className="form-control" value={DateHelper.formatHtml5Date(sessionDate)} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSessionDate(new Date(e.currentTarget.value))} onKeyDown={handleKeyDown} />
       </div>
     </InputBox>
 
