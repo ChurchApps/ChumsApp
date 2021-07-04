@@ -57,20 +57,26 @@ export const Note: React.FC<Props> = (props) => {
           </div>
         </InputBox>
       ) : (
-        <React.Fragment>
+        <>
           <div className="postedBy">
-            <div>
-              <img src={photoUrl} alt="avatar" />
-              {note.person.name.display} · {displayDuration}{isEdited}
-            </div>
-            <i
-              className="fas fa-pencil-alt"
-              onClick={() => setShowEdit(true)}
-              style={{ color: "#03a9f4" }}
-            ></i>
+            <img src={photoUrl} alt="avatar" />
           </div>
-          <p>{note.contents.replace("\n", "<br/>")}</p>
-        </React.Fragment>
+          <div className="w-100">
+            <div className="d-flex justify-content-between">
+              <div>
+                <b>{note.person.name.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
+              </div>
+              <div>
+                <i
+                  className="fas fa-pencil-alt"
+                  onClick={() => setShowEdit(true)}
+                  style={{ color: "#03a9f4" }}
+                ></i>
+              </div>
+            </div>
+            <p>{note.contents.replace("\n", "<br/>")}</p>
+          </div>
+        </>
       )}
     </div>
   );
