@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NoteInterface, PersonInterface } from "../helpers";
-import { ApiHelper, Note, DisplayBox, InputBox, UserHelper, Permissions, UniqueIdHelper, ErrorMessages, Loading } from "./";
-import { Row, Col, Button } from "react-bootstrap";
+import { ApiHelper, Note, DisplayBox, UserHelper, Permissions, UniqueIdHelper, Loading } from "./";
 
 interface Props {
   person: PersonInterface;
@@ -11,40 +10,15 @@ interface Props {
 
 export const Notes: React.FC<Props> = (props) => {
   const [notes, setNotes] = useState(null);
-  const [noteText, setNoteText] = useState("");
-  const [errors, setErrors] = useState([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setNoteText(e.currentTarget.value);
   const loadNotes = () => {
     if (!UniqueIdHelper.isMissing(props.person?.id))
       ApiHelper.get(
         "/notes/" + props.contentType + "/" + props.person?.id, "MembershipApi"
       ).then((data) => setNotes(data));
   };
-  const handleSave = () => {
-    const errors: string[] = [];
-    if (!noteText.trim()) errors.push("Enter some text for note.")
 
-    if (errors.length > 0) {
-      setErrors(errors);
-      setNoteText("");
-      return;
-    }
-
-    setErrors([]);
-    let n = {
-      contentId: props.person?.id,
-      contentType: props.contentType,
-      contents: noteText
-    };
-    ApiHelper.post("/notes", [n], "MembershipApi").then(() => {
-      loadNotes();
-      setNoteText("");
-    });
-  };
-
-  React.useEffect(loadNotes, [props]);
+  useEffect(loadNotes, [props]);
 
   const handleDelete = (noteId: string) => () => {
     ApiHelper.delete(`/notes/${noteId}`, "MembershipApi");

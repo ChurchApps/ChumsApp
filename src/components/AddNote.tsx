@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ApiHelper, NoteInterface, InputBox } from ".";
+import { ApiHelper, NoteInterface, InputBox, ErrorMessages } from ".";
 
 type Props = {
   close: () => void;
@@ -13,6 +13,7 @@ export function AddNote({
   noteId
 }: Props) {
   const [note, setNote] = useState<NoteInterface>();
+  const [errors, setErrors] = useState<string[]>([]);
   const headerText = noteId ? "Edit note" : "Add a note"
 
   useEffect(() => {
@@ -28,6 +29,11 @@ export function AddNote({
   }, [noteId])
 
   function handleSave() {
+    setErrors([]);
+    if (!note.contents) {
+      setErrors(["Enter some text for note."])
+      return
+    }
     const payload: NoteInterface = {
       contentId: contentId,
       contentType: "person",
@@ -45,6 +51,7 @@ export function AddNote({
       saveFunction={handleSave}
       cancelFunction={close}
     >
+      <ErrorMessages errors={errors} />
       <div className="form-group">
         <textarea
           id="noteText"
