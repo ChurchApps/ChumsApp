@@ -10,6 +10,7 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
   const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
   const [showMergeSearch, setShowMergeSearch] = React.useState<boolean>(false);
   const [showNoteBox, setShowNoteBox] = React.useState<boolean>(false);
+  const [noteId, setNoteId] = React.useState<string>("");
 
   const loadData = () => { ApiHelper.get("/people/" + match.params.id, "MembershipApi").then(data => setPerson(data)); }
 
@@ -38,6 +39,11 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
     setShowMergeSearch(false)
   }
 
+  const handleNotesClick = (noteId?: string) => {
+    setNoteId(noteId);
+    setShowNoteBox(true);
+  }
+
   const addMergeSearch = (showMergeSearch) ? <Merge hideMergeBox={hideMergeBox} person={person} /> : <></>;
   React.useEffect(loadData, [match.params.id]);
 
@@ -45,14 +51,14 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
     <Row>
       <Col lg={8}>
         <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
-        <Tabs person={person} showNoteBox={() => setShowNoteBox(!showNoteBox)} />
+        <Tabs person={person} showNoteBox={handleNotesClick} />
       </Col>
       <Col lg={4}>
         {addMergeSearch}
         {imageEditor}
         <Household person={person} reload={person?.photoUpdated} />
         {getGroups()}
-        {showNoteBox && <AddNote contentId={person.id} close={() => setShowNoteBox(false)} />}
+        {showNoteBox && <AddNote contentId={person.id} noteId={noteId} close={() => setShowNoteBox(false)} />}
       </Col>
     </Row>
   )

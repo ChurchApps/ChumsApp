@@ -5,7 +5,7 @@ interface Props {
   note: NoteInterface;
   handleDelete: Function;
   updateFunction: () => void;
-  showNoteBox: () => void
+  showNoteBox: (noteId?: string) => void
 }
 
 export const Note: React.FC<Props> = (props) => {
@@ -71,7 +71,7 @@ export const Note: React.FC<Props> = (props) => {
               <div>
                 <i
                   className="fas fa-pencil-alt"
-                  onClick={props.showNoteBox}
+                  onClick={() => props.showNoteBox(note.id)}
                   style={{ color: "#03a9f4" }}
                 ></i>
               </div>

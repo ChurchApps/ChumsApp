@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ApiHelper, NoteInterface, InputBox } from ".";
 
 type Props = {
   close: () => void;
-  contentId: string
+  contentId: string,
+  noteId?: string
 };
 
 export function AddNote({
   close,
-  contentId
+  contentId,
+  noteId
 }: Props) {
   const [note, setNote] = useState<NoteInterface>();
+  const headerText = noteId ? "Edit note" : "Add a note"
+
+  useEffect(() => {
+    if (!noteId) {
+      setNote({})
+      return;
+    }
+
+    (async () => {
+      const note = await ApiHelper.get(`/notes/${noteId}`, "MembershipApi");
+      setNote(note);
+    })()
+  }, [noteId])
 
   function handleSave() {
     const payload: NoteInterface = {
@@ -25,7 +40,7 @@ export function AddNote({
 
   return (
     <InputBox
-      headerText="Add a Note"
+      headerText={headerText}
       headerIcon="far fa-sticky-note"
       saveFunction={handleSave}
       cancelFunction={close}

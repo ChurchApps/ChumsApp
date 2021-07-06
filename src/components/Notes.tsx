@@ -6,7 +6,7 @@ import { Row, Col, Button } from "react-bootstrap";
 interface Props {
   person: PersonInterface;
   contentType: string;
-  showNoteBox: () => void
+  showNoteBox: (noteId?: string) => void
 }
 
 export const Notes: React.FC<Props> = (props) => {
