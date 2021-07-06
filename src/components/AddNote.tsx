@@ -44,12 +44,20 @@ export function AddNote({
     });
   };
 
+  async function deleteNote() {
+    await ApiHelper.delete(`/notes/${noteId}`, "MembershipApi")
+    close();
+  }
+
+  const deleteFunction = noteId ? deleteNote : null;
+
   return (
     <InputBox
       headerText={headerText}
       headerIcon="far fa-sticky-note"
       saveFunction={handleSave}
       cancelFunction={close}
+      deleteFunction={deleteFunction}
     >
       <ErrorMessages errors={errors} />
       <div className="form-group">

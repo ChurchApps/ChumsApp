@@ -27,6 +27,7 @@ export const Notes: React.FC<Props> = (props) => {
 
   const getNotes = () => {
     if (!notes) return <Loading />
+    if (notes.length === 0) return <p>Create a Note and they'll start appearing here.</p>
     else {
       let noteArray: React.ReactNode[] = [];
       for (let i = 0; i < notes.length; i++) noteArray.push(<Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} updateFunction={loadNotes} showNoteBox={props.showNoteBox} />);
