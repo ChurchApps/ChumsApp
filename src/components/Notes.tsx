@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { NoteInterface } from "../helpers";
+import { NoteInterface, PersonInterface } from "../helpers";
 import { ApiHelper, Note, DisplayBox, InputBox, UserHelper, Permissions, UniqueIdHelper, ErrorMessages, Loading } from "./";
+import { Row, Col, Button } from "react-bootstrap";
 
 interface Props {
-  contentId: string;
+  person: PersonInterface;
   contentType: string;
+  showNoteBox: () => void
 }
 
 export const Notes: React.FC<Props> = (props) => {
@@ -15,9 +17,9 @@ export const Notes: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setNoteText(e.currentTarget.value);
   const loadNotes = () => {
-    if (!UniqueIdHelper.isMissing(props.contentId))
+    if (!UniqueIdHelper.isMissing(props.person?.id))
       ApiHelper.get(
-        "/notes/" + props.contentType + "/" + props.contentId, "MembershipApi"
+        "/notes/" + props.contentType + "/" + props.person?.id, "MembershipApi"
       ).then((data) => setNotes(data));
   };
   const handleSave = () => {
@@ -32,7 +34,7 @@ export const Notes: React.FC<Props> = (props) => {
 
     setErrors([]);
     let n = {
-      contentId: props.contentId,
+      contentId: props.person?.id,
       contentType: props.contentType,
       contents: noteText
     };
@@ -42,7 +44,7 @@ export const Notes: React.FC<Props> = (props) => {
     });
   };
 
-  React.useEffect(loadNotes, [props.contentId]);
+  React.useEffect(loadNotes, [props]);
 
   const handleDelete = (noteId: string) => () => {
     ApiHelper.delete(`/notes/${noteId}`, "MembershipApi");
@@ -53,28 +55,21 @@ export const Notes: React.FC<Props> = (props) => {
     if (!notes) return <Loading />
     else {
       let noteArray: React.ReactNode[] = [];
-      for (let i = 0; i < notes.length; i++) noteArray.push(<Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} updateFunction={loadNotes} />);
+      for (let i = 0; i < notes.length; i++) noteArray.push(<Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} updateFunction={loadNotes} showNoteBox={props.showNoteBox} />);
       return noteArray;
     }
   }
 
-  let canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
-  if (!canEdit)
-    return (
-      <DisplayBox headerIcon="far fa-sticky-note" headerText="Notes">
-        {getNotes()}
-      </DisplayBox>
-    );
-  else
-    return (
-      <InputBox id="notesBox" data-cy="notes-box" headerIcon="far fa-sticky-note" headerText="Notes" saveFunction={handleSave} saveText="Add Note">
-        {getNotes()}
-        <br />
-        <ErrorMessages errors={errors} />
-        <div className="form-group">
-          <label>Add a Note</label>
-          <textarea id="noteText" data-cy="enter-note" className="form-control" name="contents" onChange={handleChange} value={noteText} />
-        </div>
-      </InputBox>
-    );
+  const canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
+  const editContent = canEdit && (
+    <a href="about:blank" data-cy="add-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); props.showNoteBox() }}>
+      <i className="fas fa-plus"></i>
+    </a>
+  )
+
+  return (
+    <DisplayBox id="notesBox" data-cy="notes-box" headerIcon="far fa-sticky-note" headerText="Notes" editContent={editContent}>
+      {getNotes()}
+    </DisplayBox>
+  );
 };

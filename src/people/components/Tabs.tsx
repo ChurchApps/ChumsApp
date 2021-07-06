@@ -1,10 +1,10 @@
 import React from "react";
-import { UserHelper, Notes, PersonAttendance, PersonDonations, Permissions } from ".";
+import { UserHelper, Notes, PersonAttendance, PersonDonations, Permissions, PersonInterface } from ".";
 
-interface Props { personId: string }
+interface Props { person: PersonInterface, showNoteBox: () => void }
 
 export const Tabs: React.FC<Props> = (props) => {
-  const [personId, setPersonId] = React.useState(props.personId);
+  const [personId, setPersonId] = React.useState(props.person?.id);
   const [selectedTab, setSelectedTab] = React.useState("");
 
   const getTab = (keyName: string, icon: string, text: string) => {
@@ -12,9 +12,9 @@ export const Tabs: React.FC<Props> = (props) => {
     return <li className="nav-item" key={keyName}><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab(keyName) }} className={className}><i className={icon}></i> {text}</a></li>
   }
 
-  React.useEffect(() => setPersonId(props.personId), [props.personId]);
+  React.useEffect(() => setPersonId(props.person?.id), [props.person]);
 
-  if (props.personId === undefined || props.personId === null) return null;
+  if (props.person === undefined || props.person === null) return null;
   let tabs = [];
   let defaultTab = ""
   let currentTab = null;
@@ -24,7 +24,7 @@ export const Tabs: React.FC<Props> = (props) => {
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
-    case "notes": currentTab = <Notes contentType="person" contentId={personId} />; break;
+    case "notes": currentTab = <Notes contentType="person" person={props.person} showNoteBox={props.showNoteBox} />; break;
     case "attendance": currentTab = <PersonAttendance personId={personId} />; break;
     case "donations": currentTab = <PersonDonations personId={personId} />; break;
     default: currentTab = <div>Not implemented</div>; break;

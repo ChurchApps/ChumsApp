@@ -154,7 +154,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
   return (
     <>
       <MergeModal show={showMergeModal} onHide={() => setShowMergeModal(false)} person1={person1} person2={personToMerge} merge={merge} mergeInProgress={mergeInProgress} />
-      <InputBox id="mergeBox" headerIcon="fas fa-user-plus" headerText="Merge Records" saveFunction={handleSave}>
+      <InputBox id="mergeBox" headerIcon="fas fa-user-plus" headerText="Merge Records" saveFunction={handleSave} cancelFunction={props.hideMergeBox}>
         <Search handleSearch={search} searchResults={searchResults} buttonText="merge" handleClickAction={handleMerge} />
       </InputBox>
     </>

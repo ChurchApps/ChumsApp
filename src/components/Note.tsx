@@ -5,6 +5,7 @@ interface Props {
   note: NoteInterface;
   handleDelete: Function;
   updateFunction: () => void;
+  showNoteBox: () => void
 }
 
 export const Note: React.FC<Props> = (props) => {
@@ -45,6 +46,7 @@ export const Note: React.FC<Props> = (props) => {
           deleteFunction={props.handleDelete(note.id)}
           cancelFunction={handleCancel}
           saveText="Save"
+          className="w-100"
         >
           <div className="form-group">
             <textarea
@@ -69,7 +71,7 @@ export const Note: React.FC<Props> = (props) => {
               <div>
                 <i
                   className="fas fa-pencil-alt"
-                  onClick={() => setShowEdit(true)}
+                  onClick={props.showNoteBox}
                   style={{ color: "#03a9f4" }}
                 ></i>
               </div>
