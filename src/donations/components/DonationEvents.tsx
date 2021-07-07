@@ -9,7 +9,7 @@ export const DonationEvents: React.FC = () => {
   const [errorLogs, setErrorLogs] = React.useState<any>([]);
   const [people, setPeople] = React.useState([]);
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     ApiHelper.get("/eventLog/type/failed", "GivingApi").then(logs => {
       setErrorLogs(logs);
       if (logs?.length > 0) {
@@ -21,7 +21,7 @@ export const DonationEvents: React.FC = () => {
       logs.map((log: any) => personIds += log.personId + ",");
       if (personIds) ApiHelper.get("/people/ids?ids=" + personIds, "MembershipApi").then(people => setPeople(people));
     });
-  }
+  })
 
   const handleClick = (id: string, resolved: boolean) => {
     resolved = !resolved;
