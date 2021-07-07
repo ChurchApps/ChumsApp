@@ -35,6 +35,7 @@ export const Note: React.FC<Props> = (props) => {
               className="fas fa-pencil-alt"
               onClick={() => props.showNoteBox(note.id)}
               style={{ color: "#03a9f4" }}
+              data-cy="edit-note"
             ></i>
           </div>
         </div>
