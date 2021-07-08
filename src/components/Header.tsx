@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { Col, Container } from "react-bootstrap";
 
 export const Header: React.FC = () => {
-  const [userName] = React.useState(UserHelper.person?.name?.display || UserHelper.user.displayName);
+  const { firstName, lastName } = UserHelper.user;
+  const [userName] = React.useState(UserHelper.person?.name?.display || `${firstName} ${lastName}`);
 
   const context = React.useContext(UserContext);
 
