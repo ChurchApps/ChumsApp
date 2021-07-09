@@ -1,5 +1,5 @@
-import React from "react";
-import { UserHelper, Permissions } from "./";
+import React, { useEffect } from "react";
+import { UserHelper, Permissions, ApiHelper } from "./";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -9,6 +9,7 @@ interface Props {
 
 export const NavItems: React.FC<Props> = (props) => {
   const location = useLocation();
+  const [donationError, setDonationError] = React.useState<boolean>(false);
   const getSelected = (): string => {
     let url = location.pathname;
     let result = "People";
@@ -36,15 +37,24 @@ export const NavItems: React.FC<Props> = (props) => {
 
   const getTabs = () => {
     let tabs = [];
+    const donationIcon = donationError ? "fas fa-exclamation-circle danger-text" : "fas fa-hand-holding-usd";
     tabs.push(getTab("People", "/people", "fas fa-user", "People"));
     tabs.push(getTab("Groups", "/groups", "fas fa-list-ul", "Groups"));
     if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) tabs.push(getTab("Attendance", "/attendance", "far fa-calendar-alt", "Attendance"));
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) tabs.push(getTab("Donations", "/donations", "fas fa-hand-holding-usd", "Donations"));
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) tabs.push(getTab("Donations", "/donations", donationIcon, "Donations"));
     if (UserHelper.checkAccess(Permissions.membershipApi.forms.view)) tabs.push(getTab("Forms", "/forms", "fas fa-align-left", "Forms"));
     if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) tabs.push(getTab("Settings", "/settings", "fas fa-cog", "Settings"));
     tabs.push(getTab("Profile", "/profile", "fas fa-user", "Profile"));
     return tabs;
   };
+
+  useEffect(() => {
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) {
+      ApiHelper.get("/eventLog/type/failed/", "GivingApi").then(data => {
+        if (data?.length > 0 && data.find((error: any) => !error.resolved)) setDonationError(true);
+      });
+    }
+  }, []);
 
   return <>{getTabs()}</>;
 };
