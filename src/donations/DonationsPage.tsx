@@ -133,7 +133,7 @@ export const DonationsPage = () => {
           <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="fas fa-hand-holding-usd" headerText="Batches" editContent={getEditContent()}>
             {getTable()}
           </DisplayBox>
-          <DonationEvents></DonationEvents>
+          <DonationEvents />
         </Col>
         <Col lg={4}>{getSidebarModules()}</Col>
       </Row>
