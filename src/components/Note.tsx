@@ -19,13 +19,13 @@ export const Note: React.FC<Props> = (props) => {
   const displayDuration = DateHelper.getDisplayDuration(datePosted);
 
   const isEdited = note.updatedAt !== note.createdAt && <>(edited)</>;
-
+  const contents = note.contents?.split("\n");
   return (
     <div className="note">
       <div className="postedBy">
         <img src={photoUrl} alt="avatar" />
       </div>
-      <div className="w-100">
+      <div className="w-100 note-contents">
         <div className="d-flex justify-content-between">
           <div>
             <b>{note.person.name.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
@@ -39,7 +39,7 @@ export const Note: React.FC<Props> = (props) => {
             ></i>
           </div>
         </div>
-        <p>{note.contents?.replace("\n", "<br/>")}</p>
+        {contents.map(c => c ? <p>{c}</p> : <br />)}
       </div>
     </div>
   );

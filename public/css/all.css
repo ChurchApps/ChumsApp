@@ -63,6 +63,10 @@ h1 {
   border-radius: 5px;
 }
 
+.note-contents p {
+  margin-bottom: 0;
+}
+
 .text-grey {
   color: #A9A9A9
 }
