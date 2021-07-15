@@ -11,7 +11,6 @@ import { DonationBatchPage } from "./donations/DonationBatchPage";
 import { FundPage } from "./donations/FundPage";
 import { FormsPage } from "./forms/FormsPage";
 import { Settings } from "./settings/Settings";
-import { ProfilePage } from "./profile/ProfilePage";
 import { FormPage } from "./forms/FormPage";
 // import UserContext from "./UserContext";
 
@@ -45,7 +44,6 @@ export const Authenticated: React.FC<Props> = (props) => {
           <Route path="/forms/:id" component={FormPage}></Route>
           <Route path="/forms"><FormsPage /></Route>
           <Route path="/settings"><Settings /></Route>
-          <Route path="/profile"><ProfilePage /></Route>
         </Switch>
       </div>
     </>
