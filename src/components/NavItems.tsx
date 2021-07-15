@@ -7,6 +7,14 @@ interface Props {
   prefix?: String;
 }
 
+interface Tab {
+  key: string;
+  url: string;
+  icon: string;
+  label: string;
+  outsideLink?: boolean;
+}
+
 export const NavItems: React.FC<Props> = (props) => {
   const location = useLocation();
   const [donationError, setDonationError] = React.useState<boolean>(false);
@@ -27,24 +35,32 @@ export const NavItems: React.FC<Props> = (props) => {
     else return "nav-link";
   };
 
-  const getTab = (key: string, url: string, icon: string, label: string) => (
+  const getTab = ({ key, url, icon, label, outsideLink = false }: Tab) => (
     <li key={key} className="nav-item" data-toggle={props.prefix === "main" ? null : "collapse"} data-target={props.prefix === "main" ? null : "#userMenu"} id={(props.prefix || "") + key + "Tab"}>
-      <Link className={getClass(key)} to={url}>
-        <i className={icon}></i> {label}
-      </Link>
+      {outsideLink ? (
+        <a className={getClass(key)} href={url} target="_blank" rel="noopener noreferrer">
+          <i className={icon}></i> {label}
+        </a>
+      ) : (
+        <Link className={getClass(key)} to={url}>
+          <i className={icon}></i> {label}
+        </Link>
+      )}
     </li>
   );
 
   const getTabs = () => {
     let tabs = [];
     const donationIcon = donationError ? "fas fa-exclamation-circle danger-text" : "fas fa-hand-holding-usd";
-    tabs.push(getTab("People", "/people", "fas fa-user", "People"));
-    tabs.push(getTab("Groups", "/groups", "fas fa-list-ul", "Groups"));
-    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) tabs.push(getTab("Attendance", "/attendance", "far fa-calendar-alt", "Attendance"));
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) tabs.push(getTab("Donations", "/donations", donationIcon, "Donations"));
-    if (UserHelper.checkAccess(Permissions.membershipApi.forms.view)) tabs.push(getTab("Forms", "/forms", "fas fa-align-left", "Forms"));
-    if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) tabs.push(getTab("Settings", "/settings", "fas fa-cog", "Settings"));
-    tabs.push(getTab("Profile", "/profile", "fas fa-user", "Profile"));
+    const profileLink = UserHelper.goToAccountsApp("/profile");
+
+    tabs.push(getTab({ key: "People", url: "/people", icon: "fas fa-user", label: "People" }));
+    tabs.push(getTab({ key: "Groups", url: "/groups", icon: "fas fa-list-ul", label: "Groups" }));
+    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) tabs.push(getTab({ key: "Attendance", url: "/attendance", icon: "far fa-calendar-alt", label: "Attendance" }));
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) tabs.push(getTab({ key: "Donations", url: "/donations", icon: donationIcon, label: "Donations" }));
+    if (UserHelper.checkAccess(Permissions.membershipApi.forms.view)) tabs.push(getTab({ key: "Forms", url: "/forms", icon: "fas fa-align-left", label: "Forms" }));
+    if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) tabs.push(getTab({ key: "Settings", url: "/settings", icon: "fas fa-cog", label: "Settings" }));
+    tabs.push(getTab({ key: "Profile", url: profileLink, icon: "fas fa-user", label: "Profile", outsideLink: true }));
     return tabs;
   };
 
