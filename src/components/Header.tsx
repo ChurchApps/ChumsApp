@@ -72,14 +72,14 @@ export const Header: React.FC = () => {
             </div>
           </div>
         </Container>
-      </div>
-      <div className="container collapse" id="userMenu">
-        <div>
-          <ul id="nav-menu" className="nav d-flex flex-column">
-            <NavItems />
-            {getChurchLinks()}
-            <Link to="/logout" data-cy="logout-button"><i className="fas fa-lock"></i> Logout</Link>
-          </ul>
+        <div className="container collapse" id="userMenu">
+          <div>
+            <ul id="nav-menu" className="nav d-flex flex-column">
+              <NavItems />
+              {getChurchLinks()}
+              <Link to="/logout" data-cy="logout-button"><i className="fas fa-lock"></i> Logout</Link>
+            </ul>
+          </div>
         </div>
       </div>
 

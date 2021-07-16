@@ -15,7 +15,7 @@ interface Tab {
   outsideLink?: boolean;
 }
 
-export const NavItems: React.FC<Props> = (props) => {
+export function NavItems({ prefix }: Props) {
   const location = useLocation();
   const [donationError, setDonationError] = React.useState<boolean>(false);
   const getSelected = (): string => {
@@ -31,12 +31,12 @@ export const NavItems: React.FC<Props> = (props) => {
   };
 
   const getClass = (sectionName: string): string => {
-    if (sectionName === getSelected()) return "nav-link active";
-    else return "nav-link";
+    if (sectionName === getSelected()) return prefix === "main" ? "nav-link active" : "active";
+    else return prefix === "main" ? "nav-link" : "";
   };
 
   const getTab = ({ key, url, icon, label, outsideLink = false }: Tab) => (
-    <li key={key} className="nav-item" data-toggle={props.prefix === "main" ? null : "collapse"} data-target={props.prefix === "main" ? null : "#userMenu"} id={(props.prefix || "") + key + "Tab"}>
+    <li key={key} className="nav-item" data-toggle={prefix === "main" ? null : "collapse"} data-target={prefix === "main" ? null : "#userMenu"} id={(prefix || "") + key + "Tab"}>
       {outsideLink ? (
         <a className={getClass(key)} href={url} target="_blank" rel="noopener noreferrer">
           <i className={icon}></i> {label}
