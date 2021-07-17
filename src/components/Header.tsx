@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
       let result: JSX.Element[] = [];
       UserHelper.churches.forEach(c => {
         const churchName = (c.id === UserHelper.currentChurch.id) ? (<b>{c.name}</b>) : (c.name);
-        result.push(<li className="nav-tem" key={c.id}><a href="about:blank" data-id={c.id} onClick={switchChurch} className="nav-link"><i className="fas fa-external-link-alt"></i> {churchName}</a></li>);
+        result.push(<li className="nav-tem" key={c.id}><a href="about:blank" data-id={c.id} onClick={switchChurch}><i className="fas fa-external-link-alt"></i> {churchName}</a></li>);
       });
       return result;
     }
