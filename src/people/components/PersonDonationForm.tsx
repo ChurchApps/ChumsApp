@@ -123,7 +123,7 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
           && <>
             <FormGroup>
               <FormLabel>Method</FormLabel>
-              <FormControl as="select" name="method" value={donation.id} className="capitalize" onChange={handleChange}>
+              <FormControl as="select" name="method" data-cy="method" value={donation.id} className="capitalize" onChange={handleChange}>
                 {props.paymentMethods.map((paymentMethod: any, i: number) => <option key={i} value={paymentMethod.id}>{paymentMethod.name} ****{paymentMethod.last4}</option>)}
               </FormControl>
             </FormGroup>

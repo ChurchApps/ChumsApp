@@ -101,11 +101,11 @@ export const BankForm: React.FC<Props> = (props) => {
           ?   <Row>
             <Col>
               <label>First Deposit</label>
-              <input type="text" name="amount1" placeholder="00" className="form-control" maxLength={2} onChange={handleVerify} onKeyPress={handleKeyPress} />
+              <input type="text" name="amount1" data-cy="amount1" placeholder="00" className="form-control" maxLength={2} onChange={handleVerify} onKeyPress={handleKeyPress} />
             </Col>
             <Col>
               <label>Second Deposit</label>
-              <input type="text" name="amount2" placeholder="00" className="form-control" maxLength={2} onChange={handleVerify} onKeyPress={handleKeyPress} />
+              <input type="text" name="amount2" data-cy="amount2" placeholder="00" className="form-control" maxLength={2} onChange={handleVerify} onKeyPress={handleKeyPress} />
             </Col>
           </Row>
           : <>
@@ -126,11 +126,11 @@ export const BankForm: React.FC<Props> = (props) => {
                             && <Row>
                               <Col>
                                 <label>Routing Number</label>
-                                <input type="number" name="routing_number" placeholder="Routing Number" className="form-control" onChange={handleChange} />
+                                <input type="number" name="routing_number" data-cy="routing-number" placeholder="Routing Number" className="form-control" onChange={handleChange} />
                               </Col>
                               <Col>
                                 <label>Account Number</label>
-                                <input type="number" name="account_number" placeholder="Account Number" className="form-control" onChange={handleChange} />
+                                <input type="number" name="account_number" data-cy="account-number" placeholder="Account Number" className="form-control" onChange={handleChange} />
                               </Col>
                             </Row>
             }

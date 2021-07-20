@@ -41,7 +41,7 @@ export const FundDonation: React.FC<Props> = (props) => {
       <Col>
         <FormGroup>
           <FormLabel>Fund</FormLabel>
-          <FormControl as="select" name="fund" value={props.fundDonation.fundId} onChange={handleChange}>{getOptions()}</FormControl>
+          <FormControl as="select" name="fund" data-cy="fund" value={props.fundDonation.fundId} onChange={handleChange}>{getOptions()}</FormControl>
         </FormGroup>
       </Col>
     </Row>
