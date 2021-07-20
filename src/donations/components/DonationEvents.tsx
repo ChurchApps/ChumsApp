@@ -56,7 +56,7 @@ export const DonationEvents: React.FC = () => {
                   <li className="capitalize">Event: <a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
                   <li>Message: {log.message}</li>
                   <li style={{float: "right"}}>
-                    <Button variant={log.resolved ? "secondary" : "primary"} onClick={() => handleClick(log.id, log.resolved)}>
+                    <Button data-cy="resolve-button" variant={log.resolved ? "secondary" : "primary"} onClick={() => handleClick(log.id, log.resolved)}>
                       Mark as { log.resolved ? "Unresolved" : "Resolved" }
                     </Button>
                   </li>

@@ -111,10 +111,10 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
         <FormGroup>
           <Row>
             <Col>
-              <Button name="type" value="once" size="lg" variant={donationType === "once" ? "primary" : "light"}  onClick={(e: React.MouseEvent) => { e.preventDefault(); setDonationType("once"); }} block>Make a Donation</Button>
+              <Button name="type" data-cy="single-donation" value="once" size="lg" variant={donationType === "once" ? "primary" : "light"}  onClick={(e: React.MouseEvent) => { e.preventDefault(); setDonationType("once"); }} block>Make a Donation</Button>
             </Col>
             <Col>
-              <Button name="type" value="recurring" size="lg" variant={donationType === "recurring" ? "primary" : "light"} onClick={(e: React.MouseEvent) => { e.preventDefault(); setDonationType("recurring"); }} block>Make a Recurring Donation</Button>
+              <Button name="type" data-cy="recurring-donation" value="recurring" size="lg" variant={donationType === "recurring" ? "primary" : "light"} onClick={(e: React.MouseEvent) => { e.preventDefault(); setDonationType("recurring"); }} block>Make a Recurring Donation</Button>
             </Col>
           </Row>
         </FormGroup>
@@ -129,7 +129,7 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
             </FormGroup>
             <FormGroup>
               <FormLabel>{donationType === "once" ? "Donation Date" : "Recurring Donation Start Date"}</FormLabel>
-              <FormControl name="date" type="date" data-cy="amount" min={DateHelper.formatHtml5Date(new Date())} value={DateHelper.formatHtml5Date(new Date(donation.billing_cycle_anchor))} onChange={handleChange} onKeyDown={handleKeyDown} />
+              <FormControl name="date" type="date" data-cy="date" min={DateHelper.formatHtml5Date(new Date())} value={DateHelper.formatHtml5Date(new Date(donation.billing_cycle_anchor))} onChange={handleChange} onKeyDown={handleKeyDown} />
             </FormGroup>
             {donationType === "recurring"
             && <Row>
@@ -142,7 +142,7 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
               <Col>
                 <FormGroup>
                   <FormLabel>Interval Type</FormLabel>
-                  <FormControl as="select" name="interval-type" value={donation.interval.interval} onChange={handleChange}>
+                  <FormControl as="select" name="interval-type" data-cy="interval-type" value={donation.interval.interval} onChange={handleChange}>
                     <option value="day">Day(s)</option>
                     <option value="week">Week(s)</option>
                     <option value="month">Month(s)</option>

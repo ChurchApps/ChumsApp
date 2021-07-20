@@ -96,7 +96,7 @@ export const BankForm: React.FC<Props> = (props) => {
   return (
     <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.bank.id && !props.showVerifyForm ? handleDelete : undefined}>
       { errorMessage && <ErrorMessages errors={[errorMessage]}></ErrorMessages> }
-      <form style={{margin: "10px"}}>
+      <form data-cy="bank-form" style={{margin: "10px"}}>
         { props.showVerifyForm
           ?   <Row>
             <Col>
@@ -112,7 +112,7 @@ export const BankForm: React.FC<Props> = (props) => {
             <Row>
               <Col>
                 <label>Account Holder Name</label>
-                <input type="text" name="account_holder_name" placeholder="Account Holder Name" value={bankAccount.account_holder_name} className="form-control" onChange={handleChange} />
+                <input type="text" name="account_holder_name" data-cy="account-holder-name" placeholder="Account Holder Name" value={bankAccount.account_holder_name} className="form-control" onChange={handleChange} />
               </Col>
               <Col>
                 <label>Account Holder Type</label>

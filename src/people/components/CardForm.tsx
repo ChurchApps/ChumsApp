@@ -73,11 +73,11 @@ export const CardForm: React.FC<Props> = (props) => {
           : <Row>
             <Col>
               <label>Card Expiration Month:</label>
-              <input type="text" name="exp_month" onKeyPress={handleKeyPress} onChange={handleChange} placeholder="MM" className="form-control" maxLength={2} />
+              <input type="text" name="exp_month" data-cy="card-exp-month" onKeyPress={handleKeyPress} onChange={handleChange} placeholder="MM" className="form-control" maxLength={2} />
             </Col>
             <Col>
               <label>Card Expiration Year:</label>
-              <input type="text" name="exp_year" onKeyPress={handleKeyPress} onChange={handleChange} placeholder="YY" className="form-control" maxLength={2} />
+              <input type="text" name="exp_year" data-cy="card-exp-year" onKeyPress={handleKeyPress} onChange={handleChange} placeholder="YY" className="form-control" maxLength={2} />
             </Col>
           </Row>
         }
