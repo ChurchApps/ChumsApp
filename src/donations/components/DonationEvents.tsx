@@ -43,7 +43,7 @@ export const DonationEvents: React.FC = () => {
       if (!log.resolved) className += " danger-text";
       logs.push(
         <Accordion key={i}>
-          <Card>
+          <Card data-cy="card">
             <Accordion.Toggle as={Card.Header} eventKey={i} style={{padding: "10px"}} className="pointer">
               <i style={{marginRight: "5px"}} className={className}></i>
               <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
@@ -75,7 +75,7 @@ export const DonationEvents: React.FC = () => {
   if(!errorLogs.length) return null;
 
   return (
-    <DisplayBox id="eventLogs" headerIcon={headerIcon} headerText={"Failed Donations - " + unresolvedErrorCount + " unresolved"}>
+    <DisplayBox data-cy="eventLogs" headerIcon={headerIcon} headerText={"Failed Donations - " + unresolvedErrorCount + " unresolved"}>
       {getErrorLogs()}
     </DisplayBox>
   );

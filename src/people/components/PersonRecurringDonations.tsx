@@ -99,7 +99,7 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
   if (!subscriptions.length) return null;
   if (mode === "display") {
     return (
-      <DisplayBox id="recurring-donations" headerIcon="fas fa-credit-card" headerText="Recurring Donations">
+      <DisplayBox data-cy="recurring-donations" headerIcon="fas fa-credit-card" headerText="Recurring Donations">
         {getSubscriptionsTable()}
       </DisplayBox>
     );
