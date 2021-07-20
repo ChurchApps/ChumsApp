@@ -55,7 +55,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
       rows.push(
         <tr key={method.id}>
           <td className="capitalize">{method.name + " ****" + method.last4}</td>
-          <td>{method?.status === "new" && <a href="about:blank"  onClick={handleEdit(method, true)}>Verify Account</a> }</td>
+          <td>{method?.status === "new" && <a href="about:blank" data-cy="verify-account" onClick={handleEdit(method, true)}>Verify Account</a> }</td>
           <td className="text-right">{getEditOptions(method)}</td>
         </tr>
       );
@@ -87,7 +87,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
   const PaymentMethods = () => {
     if (mode === "display")  {
       return (
-        <DisplayBox headerIcon="fas fa-credit-card" headerText="Payment Methods" editContent={getNewContent()}>
+        <DisplayBox data-cy="payment-methods-box" headerIcon="fas fa-credit-card" headerText="Payment Methods" editContent={getNewContent()}>
           <PaymentMethodsTable></PaymentMethodsTable>
         </DisplayBox>
       );
