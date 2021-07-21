@@ -58,7 +58,7 @@ export const PersonDonations: React.FC<Props> = (props) => {
           <td>{DateHelper.formatHtml5Date(d.donationDate)}</td>
           <td>{d.method}</td>
           <td>{d.fund.name}</td>
-          <td>{CurrencyHelper.formatCurrency(d.amount)}</td>
+          <td>{CurrencyHelper.formatCurrency(d.fund.amount)}</td>
         </tr>
       );
     }
