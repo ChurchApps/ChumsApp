@@ -44,7 +44,7 @@ jobs:
           start: npm start
           wait-on: 'http://localhost:3101'
           spec: |
-            cypress/integration/!(Donations).spec.js
+            cypress/integration/!(Donations).spec.(js|ts)
           record: true
         env:
           CYPRESS_ACCESS_API: 'https://accessapi.staging.churchapps.org'
