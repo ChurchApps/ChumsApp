@@ -65,7 +65,7 @@ export const Header: React.FC = () => {
             </Col>
 
             <div className="d-flex align-items-center" id="navRight">
-              <a href="about:blank" data-cy="settings-dropdown" id="userMenuLink" data-toggle="collapse" data-target="#userMenu" aria-controls="navbarToggleMenu" aria-expanded="false" aria-label="Toggle navigation">
+              <a href="about:blank" id="userMenuLink" data-toggle="collapse" data-target="#userMenu" aria-controls="navbarToggleMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <img src={PersonHelper.getPhotoUrl(UserHelper.person)} alt="user" />
                 {userName} <i className="fas fa-caret-down"></i>
               </a>
@@ -77,7 +77,7 @@ export const Header: React.FC = () => {
             <ul id="nav-menu" className="nav d-flex flex-column">
               <NavItems />
               {getChurchLinks()}
-              <Link to="/logout" data-cy="logout-button"><i className="fas fa-lock"></i> Logout</Link>
+              <Link to="/logout"><i className="fas fa-lock"></i> Logout</Link>
             </ul>
           </div>
         </div>
