@@ -43,7 +43,7 @@ export const DonationEvents: React.FC = () => {
       if (!log.resolved) className += " danger-text";
       logs.push(
         <Accordion key={i}>
-          <Card data-cy="card">
+          <Card aria-label="card">
             <Accordion.Toggle as={Card.Header} eventKey={i} style={{padding: "10px"}} className="pointer">
               <i style={{marginRight: "5px"}} className={className}></i>
               <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
@@ -56,7 +56,7 @@ export const DonationEvents: React.FC = () => {
                   <li className="capitalize">Event: <a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
                   <li>Message: {log.message}</li>
                   <li style={{float: "right"}}>
-                    <Button data-cy="resolve-button" variant={log.resolved ? "secondary" : "primary"} onClick={() => handleClick(log.id, log.resolved)}>
+                    <Button aria-label="resolve-button" variant={log.resolved ? "secondary" : "primary"} onClick={() => handleClick(log.id, log.resolved)}>
                       Mark as { log.resolved ? "Unresolved" : "Resolved" }
                     </Button>
                   </li>
@@ -75,7 +75,7 @@ export const DonationEvents: React.FC = () => {
   if(!errorLogs.length) return null;
 
   return (
-    <DisplayBox data-cy="eventLogs" headerIcon={headerIcon} headerText={"Failed Donations - " + unresolvedErrorCount + " unresolved"}>
+    <DisplayBox aria-label="eventLogs" headerIcon={headerIcon} headerText={"Failed Donations - " + unresolvedErrorCount + " unresolved"}>
       {getErrorLogs()}
     </DisplayBox>
   );

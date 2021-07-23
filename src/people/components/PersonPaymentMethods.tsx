@@ -34,10 +34,10 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
     if (!UserHelper.checkAccess(Permissions.givingApi.settings.edit)) return null;
     return (
       <>
-        <a id="addBtnGroup" data-cy="add-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="about:blank"><i className="fas fa-plus"></i></a>
+        <a id="addBtnGroup" aria-label="add-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="about:blank"><i className="fas fa-plus"></i></a>
         <div className="dropdown-menu" aria-labelledby="addBtnGroup">
-          <a className="dropdown-item" data-cy="add-card" href="about:blank" onClick={handleEdit(new StripePaymentMethod({type: "card"}))}><i className="fas fa-credit-card"></i> Add Card</a>
-          <a className="dropdown-item" data-cy="add-bank" href="about:blank" onClick={handleEdit(new StripePaymentMethod({type: "bank"}))}><i className="fas fa-university"></i> Add Bank</a>
+          <a className="dropdown-item" aria-label="add-card" href="about:blank" onClick={handleEdit(new StripePaymentMethod({type: "card"}))}><i className="fas fa-credit-card"></i> Add Card</a>
+          <a className="dropdown-item" aria-label="add-bank" href="about:blank" onClick={handleEdit(new StripePaymentMethod({type: "bank"}))}><i className="fas fa-university"></i> Add Bank</a>
         </div>
       </>
     );
@@ -45,7 +45,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
 
   const getEditOptions = (pm: StripePaymentMethod) => {
     if (!UserHelper.checkAccess(Permissions.givingApi.settings.edit)) return null;
-    return <a data-cy="edit-button" onClick={handleEdit(pm)} href="about:blank"><i className="fas fa-pencil-alt"></i></a>;
+    return <a aria-label="edit-button" onClick={handleEdit(pm)} href="about:blank"><i className="fas fa-pencil-alt"></i></a>;
   }
 
   const getPaymentRows = () => {
@@ -55,7 +55,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
       rows.push(
         <tr key={method.id}>
           <td className="capitalize">{method.name + " ****" + method.last4}</td>
-          <td>{method?.status === "new" && <a href="about:blank" data-cy="verify-account" onClick={handleEdit(method, true)}>Verify Account</a> }</td>
+          <td>{method?.status === "new" && <a href="about:blank" aria-label="verify-account" onClick={handleEdit(method, true)}>Verify Account</a> }</td>
           <td className="text-right">{getEditOptions(method)}</td>
         </tr>
       );
@@ -87,7 +87,7 @@ export const PersonPaymentMethods: React.FC<Props> = (props) => {
   const PaymentMethods = () => {
     if (mode === "display")  {
       return (
-        <DisplayBox data-cy="payment-methods-box" headerIcon="fas fa-credit-card" headerText="Payment Methods" editContent={getNewContent()}>
+        <DisplayBox aria-label="payment-methods-box" headerIcon="fas fa-credit-card" headerText="Payment Methods" editContent={getNewContent()}>
           <PaymentMethodsTable></PaymentMethodsTable>
         </DisplayBox>
       );

@@ -96,27 +96,27 @@ export const BankForm: React.FC<Props> = (props) => {
   return (
     <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.bank.id && !props.showVerifyForm ? handleDelete : undefined}>
       { errorMessage && <ErrorMessages errors={[errorMessage]}></ErrorMessages> }
-      <form data-cy="bank-form" style={{margin: "10px"}}>
+      <form style={{margin: "10px"}}>
         { props.showVerifyForm
           ?   <Row>
             <Col>
               <label>First Deposit</label>
-              <input type="text" name="amount1" data-cy="amount1" placeholder="00" className="form-control" maxLength={2} onChange={handleVerify} onKeyPress={handleKeyPress} />
+              <input type="text" name="amount1" aria-label="amount1" placeholder="00" className="form-control" maxLength={2} onChange={handleVerify} onKeyPress={handleKeyPress} />
             </Col>
             <Col>
               <label>Second Deposit</label>
-              <input type="text" name="amount2" data-cy="amount2" placeholder="00" className="form-control" maxLength={2} onChange={handleVerify} onKeyPress={handleKeyPress} />
+              <input type="text" name="amount2" aria-label="amount2" placeholder="00" className="form-control" maxLength={2} onChange={handleVerify} onKeyPress={handleKeyPress} />
             </Col>
           </Row>
           : <>
             <Row>
               <Col>
                 <label>Account Holder Name</label>
-                <input type="text" name="account_holder_name" data-cy="account-holder-name" placeholder="Account Holder Name" value={bankAccount.account_holder_name} className="form-control" onChange={handleChange} />
+                <input type="text" name="account_holder_name" aria-label="account-holder-name" placeholder="Account Holder Name" value={bankAccount.account_holder_name} className="form-control" onChange={handleChange} />
               </Col>
               <Col>
                 <label>Account Holder Type</label>
-                <FormControl as="select" name="account_holder_type" data-cy="account-holder-type" value={bankAccount.account_holder_type} onChange={handleChange}>
+                <FormControl as="select" name="account_holder_type" aria-label="account-holder-type" value={bankAccount.account_holder_type} onChange={handleChange}>
                   <option value="individual">Individual</option>
                   <option value="company">Company</option>
                 </FormControl>
@@ -126,11 +126,11 @@ export const BankForm: React.FC<Props> = (props) => {
                             && <Row>
                               <Col>
                                 <label>Routing Number</label>
-                                <input type="number" name="routing_number" data-cy="routing-number" placeholder="Routing Number" className="form-control" onChange={handleChange} />
+                                <input type="number" name="routing_number" aria-label="routing-number" placeholder="Routing Number" className="form-control" onChange={handleChange} />
                               </Col>
                               <Col>
                                 <label>Account Number</label>
-                                <input type="number" name="account_number" data-cy="account-number" placeholder="Account Number" className="form-control" onChange={handleChange} />
+                                <input type="number" name="account_number" aria-label="account-number" placeholder="Account Number" className="form-control" onChange={handleChange} />
                               </Col>
                             </Row>
             }

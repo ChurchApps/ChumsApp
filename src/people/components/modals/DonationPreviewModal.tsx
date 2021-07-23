@@ -62,8 +62,8 @@ export const DonationPreviewModal: React.FC<Props> = (props) => {
         </Table>
       </Modal.Body>
       <Modal.Footer bsPrefix="modal-footer justify-content-center">
-        <Button onClick={props.onHide} variant="secondary" data-cy="cancel-button">Cancel</Button>
-        <Button onClick={handleClick} variant="primary" data-cy="donate-button" disabled={isLoading}>Donate</Button>
+        <Button onClick={props.onHide} variant="secondary" aria-label="cancel-button">Cancel</Button>
+        <Button onClick={handleClick} variant="primary" aria-label="donate-button" disabled={isLoading}>Donate</Button>
       </Modal.Footer>
     </Modal>
   );

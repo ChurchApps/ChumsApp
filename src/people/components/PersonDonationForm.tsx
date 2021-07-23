@@ -107,14 +107,14 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
   else return (
     <>
       <DonationPreviewModal show={showDonationPreviewModal} onHide={() => setShowDonationPreviewModal(false)} handleDonate={makeDonation} donation={donation} donationType={donationType} paymentMethodName={paymentMethodName} funds={funds} />
-      <InputBox id="donationBox" data-cy="donation-box" headerIcon="fas fa-hand-holding-usd" headerText="Donate" cancelFunction={donationType ? handleCancel : undefined} saveFunction={donationType ? handleSave : undefined} saveText="Preview Donation">
+      <InputBox id="donationBox" aria-label="donation-box" headerIcon="fas fa-hand-holding-usd" headerText="Donate" cancelFunction={donationType ? handleCancel : undefined} saveFunction={donationType ? handleSave : undefined} saveText="Preview Donation">
         <FormGroup>
           <Row>
             <Col>
-              <Button name="type" data-cy="single-donation" value="once" size="lg" variant={donationType === "once" ? "primary" : "light"}  onClick={(e: React.MouseEvent) => { e.preventDefault(); setDonationType("once"); }} block>Make a Donation</Button>
+              <Button name="type" aria-label="single-donation" value="once" size="lg" variant={donationType === "once" ? "primary" : "light"}  onClick={(e: React.MouseEvent) => { e.preventDefault(); setDonationType("once"); }} block>Make a Donation</Button>
             </Col>
             <Col>
-              <Button name="type" data-cy="recurring-donation" value="recurring" size="lg" variant={donationType === "recurring" ? "primary" : "light"} onClick={(e: React.MouseEvent) => { e.preventDefault(); setDonationType("recurring"); }} block>Make a Recurring Donation</Button>
+              <Button name="type" aria-label="recurring-donation" value="recurring" size="lg" variant={donationType === "recurring" ? "primary" : "light"} onClick={(e: React.MouseEvent) => { e.preventDefault(); setDonationType("recurring"); }} block>Make a Recurring Donation</Button>
             </Col>
           </Row>
         </FormGroup>
@@ -123,26 +123,26 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
           && <>
             <FormGroup>
               <FormLabel>Method</FormLabel>
-              <FormControl as="select" name="method" data-cy="method" value={donation.id} className="capitalize" onChange={handleChange}>
+              <FormControl as="select" name="method" aria-label="method" value={donation.id} className="capitalize" onChange={handleChange}>
                 {props.paymentMethods.map((paymentMethod: any, i: number) => <option key={i} value={paymentMethod.id}>{paymentMethod.name} ****{paymentMethod.last4}</option>)}
               </FormControl>
             </FormGroup>
             <FormGroup>
               <FormLabel>{donationType === "once" ? "Donation Date" : "Recurring Donation Start Date"}</FormLabel>
-              <FormControl name="date" type="date" data-cy="date" min={DateHelper.formatHtml5Date(new Date())} value={DateHelper.formatHtml5Date(new Date(donation.billing_cycle_anchor))} onChange={handleChange} onKeyDown={handleKeyDown} />
+              <FormControl name="date" type="date" aria-label="date" min={DateHelper.formatHtml5Date(new Date())} value={DateHelper.formatHtml5Date(new Date(donation.billing_cycle_anchor))} onChange={handleChange} onKeyDown={handleKeyDown} />
             </FormGroup>
             {donationType === "recurring"
             && <Row>
               <Col>
                 <FormGroup>
                   <FormLabel>Interval Number</FormLabel>
-                  <FormControl name="interval-number" type="number" value={donation.interval.interval_count} data-cy="interval-number" min="1" step="1" onChange={handleChange} />
+                  <FormControl name="interval-number" type="number" value={donation.interval.interval_count} aria-label="interval-number" min="1" step="1" onChange={handleChange} />
                 </FormGroup>
               </Col>
               <Col>
                 <FormGroup>
                   <FormLabel>Interval Type</FormLabel>
-                  <FormControl as="select" name="interval-type" data-cy="interval-type" value={donation.interval.interval} onChange={handleChange}>
+                  <FormControl as="select" name="interval-type" aria-label="interval-type" value={donation.interval.interval} onChange={handleChange}>
                     <option value="day">Day(s)</option>
                     <option value="week">Week(s)</option>
                     <option value="month">Month(s)</option>
@@ -161,7 +161,7 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
             }
             <div className="form-group">
               <label>Notes</label>
-              <textarea className="form-control" data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown}></textarea>
+              <textarea className="form-control" aria-label="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown}></textarea>
             </div>
             {errorMessage && <ErrorMessages errors={[errorMessage]}></ErrorMessages>}
           </>

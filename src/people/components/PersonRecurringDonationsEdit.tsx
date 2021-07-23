@@ -42,7 +42,7 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
         <Col>
           <FormGroup>
             <FormLabel>Method</FormLabel>
-            <FormControl as="select" name="method" data-cy="method" value={editSubscription.default_payment_method || editSubscription.default_source} className="capitalize" onChange={handleChange}>
+            <FormControl as="select" name="method" aria-label="method" value={editSubscription.default_payment_method || editSubscription.default_source} className="capitalize" onChange={handleChange}>
               {props.paymentMethods.map((paymentMethod: any, i: number) => <option key={i} value={paymentMethod.id}>{paymentMethod.name} ****{paymentMethod.last4}</option>)}
             </FormControl>
           </FormGroup>
@@ -52,13 +52,13 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
         <Col>
           <FormGroup>
             <FormLabel>Interval Number</FormLabel>
-            <FormControl name="interval-number" data-cy="interval-number" type="number" value={editSubscription.plan.interval_count} min="1" step="1" onChange={handleChange} />
+            <FormControl name="interval-number" aria-label="interval-number" type="number" value={editSubscription.plan.interval_count} min="1" step="1" onChange={handleChange} />
           </FormGroup>
         </Col>
         <Col>
           <FormGroup>
             <FormLabel>Interval Type</FormLabel>
-            <FormControl as="select" name="interval-type" data-cy="interval-type" value={editSubscription.plan.interval} onChange={handleChange}>
+            <FormControl as="select" name="interval-type" aria-label="interval-type" value={editSubscription.plan.interval} onChange={handleChange}>
               <option value="day">Day(s)</option>
               <option value="week">Week(s)</option>
               <option value="month">Month(s)</option>
@@ -71,7 +71,7 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
   )
 
   return (
-    <InputBox data-cy="person-details-box" headerIcon="fas fa-user" headerText="Edit Recurring Donation" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave}>
+    <InputBox aria-label="person-details-box" headerIcon="fas fa-user" headerText="Edit Recurring Donation" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave}>
       {getFields()}
     </InputBox>
   );

@@ -61,7 +61,7 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
 
   const getEditOptions = (sub: SubscriptionInterface) => {
     if (!UserHelper.checkAccess(Permissions.givingApi.settings.edit)) return null;
-    return <a data-cy="edit-button" onClick={handleEdit(sub)} href="about:blank"><i className="fas fa-pencil-alt"></i></a>;
+    return <a aria-label="edit-button" onClick={handleEdit(sub)} href="about:blank"><i className="fas fa-pencil-alt"></i></a>;
   }
 
   const getTableHeader = () => {
@@ -99,7 +99,7 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
   if (!subscriptions.length) return null;
   if (mode === "display") {
     return (
-      <DisplayBox data-cy="recurring-donations" headerIcon="fas fa-credit-card" headerText="Recurring Donations">
+      <DisplayBox aria-label="recurring-donations" headerIcon="fas fa-credit-card" headerText="Recurring Donations">
         {getSubscriptionsTable()}
       </DisplayBox>
     );
