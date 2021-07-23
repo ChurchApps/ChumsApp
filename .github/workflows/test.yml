@@ -51,5 +51,6 @@ jobs:
           CYPRESS_ATTENDANCE_API: 'https://attendanceapi.staging.churchapps.org'
           CYPRESS_GIVING_API: 'https://givingapi.staging.churchapps.org'
           CYPRESS_MEMBERSHIP_API: 'https://membershipapi.staging.churchapps.org'
+          CYPRESS_CHURCH_WEB_APPS_URL: 'https://staging.churchapps.org'
           CYPRESS_RECORD_KEY: 'c08234a0-1251-49a5-ab69-a85f8cda73e0'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
