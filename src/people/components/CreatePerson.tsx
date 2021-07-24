@@ -51,6 +51,7 @@ export function CreatePerson() {
               <Col className="pr-0">
                 <Form.Group>
                   <Form.Control
+                    type="text"
                     aria-label="firstName"
                     placeholder="First Name"
                     name="first"
@@ -67,6 +68,7 @@ export function CreatePerson() {
               <Col className="pr-0">
                 <Form.Group>
                   <Form.Control
+                    type="text"
                     aria-label="lastName"
                     placeholder="Last Name"
                     name="last"
