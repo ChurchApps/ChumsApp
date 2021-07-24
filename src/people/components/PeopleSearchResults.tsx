@@ -59,13 +59,13 @@ export const PeopleSearchResults: React.FC<Props> = (props) => {
         <ErrorMessages errors={errors} />
         <b>Add a New Person</b>
         <Row>
-          <Col><FormControl id="firstName" data-cy="firstname" placeholder="First Name" name="firstName" value={firstName} onChange={e => setFirstName(e.currentTarget.value)} onKeyDown={handleKeyDown} /></Col>
-          <Col><FormControl id="lastName" data-cy="lastname" placeholder="Last Name" name="lastName" value={lastName} onChange={e => setLastName(e.currentTarget.value)} onKeyDown={handleKeyDown} /></Col>
-          <Col><Button id="addPersonBtn" data-cy="add-person" variant="primary" onClick={handleAdd}>Add</Button></Col>
+          <Col><FormControl id="firstName" aria-label="firstName" placeholder="First Name" name="firstName" value={firstName} onChange={e => setFirstName(e.currentTarget.value)} onKeyDown={handleKeyDown} /></Col>
+          <Col><FormControl id="lastName" aria-label="lastName" placeholder="Last Name" name="lastName" value={lastName} onChange={e => setLastName(e.currentTarget.value)} onKeyDown={handleKeyDown} /></Col>
+          <Col><Button id="addPersonBtn" variant="primary" onClick={handleAdd}>Add</Button></Col>
         </Row>
       </>);
   }
-
+  // todo - please change how error is shown and test according to that way. also update errors for sign in and forgot password page
   if (!props.people) return <Loading /> //return (<div className="alert alert-info">Use the search box above to search for a member or add a new one.</div>)
   else if (props.people.length === 0) return (<>
     <p>No results found.  Please search for a different name or add a new person</p>
