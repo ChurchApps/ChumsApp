@@ -20,6 +20,7 @@
     "adm-zip": "^0.4.16",
     "date-fns": "^2.14.0",
     "file-saver": "^2.0.2",
+    "formik": "^2.2.9",
     "original-fs": "^1.1.0",
     "papaparse": "^5.2.0",
     "react": "^16.13.1",
@@ -34,7 +35,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
     "react-to-print": "^2.12.6",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",
