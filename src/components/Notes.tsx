@@ -37,9 +37,9 @@ export const Notes: React.FC<Props> = (props) => {
 
   const canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
   const editContent = canEdit && (
-    <a href="about:blank" data-cy="add-note-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); props.showNoteBox() }}>
+    <button aria-label="addNote" className="no-default-style" onClick={() => { props.showNoteBox() }}>
       <i className="fas fa-plus"></i>
-    </a>
+    </button>
   )
 
   return (
