@@ -68,7 +68,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
       <div className="header">
         <Row>
           <Col xs={8}><i className="fas fa-user"></i> Personal Details</Col>
-          <Col xs={4} style={{ textAlign: "right" }}><a className="fa-pull-right" data-cy="edit-person-button" onClick={editFunction} href="about:blank"><i className="fas fa-pencil-alt"></i></a></Col>
+          <Col xs={4} style={{ textAlign: "right" }}><button className="fa-pull-right no-default-style" aria-label="editPerson" onClick={editFunction}><i className="fas fa-pencil-alt" /></button></Col>
         </Row>
       </div>
       <div className="content">

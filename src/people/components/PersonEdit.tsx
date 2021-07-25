@@ -113,10 +113,10 @@ export const PersonEdit: React.FC<Props> = (props) => {
     const personDeepCopy: PersonInterface = {
       ...props.person,
       contactInfo: {
-        ...props.person.contactInfo
+        ...props.person?.contactInfo
       },
       name: {
-        ...props.person.name
+        ...props.person?.name
       }
     }
     setPerson(personDeepCopy)
