@@ -27,6 +27,7 @@ interface Props {
 }
 
 export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, showMergeSearch }: Props) {
+  const [updatedPerson, setUpdatedPerson] = useState<PersonInterface>({ name: {}, contactInfo: {} })
   const [redirect, setRedirect] = useState("");
   const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
   const [text, setText] = useState("");
@@ -57,7 +58,6 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
     maritalStatus: "",
     ...person
   }
-  let updatedPerson: PersonInterface = { name: {}, contactInfo: {} }
 
   function handleDelete() {
     if (window.confirm("Are you sure you wish to permanently delete this person record?"))
@@ -69,7 +69,7 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
     if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {
       setText(`You updated the address to ${PersonHelper.addressToString(data.contactInfo)} for ${data.name.display}.  Would you like to apply that to the entire ${data.name.last} family?`)
       setShowUpdateAddressModal(true)
-      updatedPerson = {...data}
+      setUpdatedPerson({...data})
       return;
     }
     await updatePerson(data)
@@ -83,7 +83,7 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
       });
   }
 
-  const handleYes = async () => {
+  async function handleYes() {
     setShowUpdateAddressModal(false)
     await Promise.all(
       members.map(async member => {
@@ -99,12 +99,12 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
     updatedFunction()
   }
 
-  const handleNo = () => {
+  function handleNo() {
     setShowUpdateAddressModal(false)
     updatePerson(updatedPerson)
   }
 
-  const fetchMembers = () => {
+  function fetchMembers() {
     try {
       if (person.householdId != null) {
         ApiHelper.get("/people/household/" + person.householdId, "MembershipApi").then(data => {
@@ -116,11 +116,11 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
     }
   }
 
-  const handleMerge = () => {
+  function handleMerge() {
     showMergeSearch();
   }
 
-  const handlePhotoClick = (e: React.MouseEvent) => {
+  function handlePhotoClick(e: React.MouseEvent) {
     e.preventDefault();
     togglePhotoEditor(true);
   }
