@@ -180,28 +180,28 @@ export const PersonEdit: React.FC<Props> = (props) => {
           <Row>
             <Col lg={6}>
               <FormGroup>
-                <FormLabel>First Name</FormLabel>
-                <FormControl name="firstName" data-cy="firstname" value={person?.name?.first || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <FormLabel htmlFor="firstName">First Name</FormLabel>
+                <FormControl name="firstName" id="firstName" value={person?.name?.first || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
               </FormGroup>
             </Col>
             <Col lg={6}>
               <FormGroup>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl name="lastName" data-cy="lastname" value={person?.name?.last || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <FormLabel htmlFor="lastName">Last Name</FormLabel>
+                <FormControl name="lastName" id="lastName" value={person?.name?.last || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
               </FormGroup>
             </Col>
           </Row>
           <Row>
             <Col lg={6}>
               <FormGroup>
-                <FormLabel>Middle Name</FormLabel>
-                <FormControl name="middleName" data-cy="middle-name" value={person?.name?.middle || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <FormLabel htmlFor="middleName">Middle Name</FormLabel>
+                <FormControl name="middleName" id="middleName" value={person?.name?.middle || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
               </FormGroup>
             </Col>
             <Col lg={6}>
               <FormGroup>
-                <FormLabel>Email</FormLabel>
-                <FormControl type="text" name="email" data-cy="email" value={person?.contactInfo?.email || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <FormControl type="text" name="email" id="email" value={person?.contactInfo?.email || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
               </FormGroup>
             </Col>
           </Row>
@@ -211,14 +211,14 @@ export const PersonEdit: React.FC<Props> = (props) => {
       <Row>
         <Col lg={4} md={4}>
           <FormGroup>
-            <FormLabel>Nickname</FormLabel>
-            <FormControl name="nickName" data-cy="nickname" value={person?.name?.nick || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormLabel htmlFor="nickName">Nickname</FormLabel>
+            <FormControl name="nickName" id="nickName" value={person?.name?.nick || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
         </Col>
         <Col lg={4} md={4}>
           <FormGroup>
-            <FormLabel>Membership Status</FormLabel>
-            <FormControl as="select" name="membershipStatus" data-cy="member-ship-status" value={person?.membershipStatus || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+            <FormLabel htmlFor="membershipStatus">Membership Status</FormLabel>
+            <FormControl as="select" name="membershipStatus" id="membershipStatus" value={person?.membershipStatus || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
               <option value="Visitor">Visitor</option>
               <option value="Member">Member</option>
               <option value="Staff">Staff</option>
@@ -227,8 +227,8 @@ export const PersonEdit: React.FC<Props> = (props) => {
         </Col>
         <Col lg={4} md={4}>
           <FormGroup>
-            <FormLabel>Birthdate</FormLabel>
-            <FormControl type="date" name="birthDate" data-cy="birthdate" value={DateHelper.formatHtml5Date(person?.birthDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormLabel htmlFor="birthDate">Birthdate</FormLabel>
+            <FormControl type="date" name="birthDate" id="birthDate" value={DateHelper.formatHtml5Date(person?.birthDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
         </Col>
       </Row>
@@ -236,8 +236,8 @@ export const PersonEdit: React.FC<Props> = (props) => {
       <Row>
         <Col lg={4} md={4}>
           <FormGroup>
-            <FormLabel>Gender</FormLabel>
-            <FormControl as="select" name="gender" data-cy="gender" value={person?.gender || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+            <FormLabel htmlFor="gender">Gender</FormLabel>
+            <FormControl as="select" name="gender" id="gender" value={person?.gender || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
               <option value="Unspecified">Unspecified</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -246,8 +246,8 @@ export const PersonEdit: React.FC<Props> = (props) => {
         </Col>
         <Col lg={4} md={4}>
           <FormGroup>
-            <FormLabel>Marital Status</FormLabel>
-            <FormControl as="select" name="maritalStatus" data-cy="marital-status" value={person?.maritalStatus || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+            <FormLabel htmlFor="maritalStatus">Marital Status</FormLabel>
+            <FormControl as="select" name="maritalStatus" id="maritalStatus" value={person?.maritalStatus || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
               <option value="Unknown">Unknown</option>
               <option value="Single">Single</option>
               <option value="Married">Married</option>
@@ -258,8 +258,8 @@ export const PersonEdit: React.FC<Props> = (props) => {
         </Col>
         <Col lg={4} md={4}>
           <FormGroup>
-            <FormLabel>Anniversary</FormLabel>
-            <FormControl type="date" name="anniversary" data-cy="anniversary" value={DateHelper.formatHtml5Date(person?.anniversary)} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormLabel htmlFor="anniversary">Anniversary</FormLabel>
+            <FormControl type="date" name="anniversary" id="anniversary" value={DateHelper.formatHtml5Date(person?.anniversary)} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
         </Col>
       </Row>
@@ -268,32 +268,32 @@ export const PersonEdit: React.FC<Props> = (props) => {
         <Col md={9}>
           <div className="section">Address</div>
           <FormGroup>
-            <FormLabel>Line 1</FormLabel>
-            <FormControl name="address1" data-cy="address1" value={person?.contactInfo?.address1 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormLabel htmlFor="address1">Line 1</FormLabel>
+            <FormControl name="address1" id="address1" value={person?.contactInfo?.address1 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
           <FormGroup>
-            <FormLabel>Line 2</FormLabel>
-            <FormControl name="address2" data-cy="address2" value={person?.contactInfo?.address2 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormLabel htmlFor="address2">Line 2</FormLabel>
+            <FormControl name="address2" id="address2" value={person?.contactInfo?.address2 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
           <Row>
             <Col xs={6}>
               <FormGroup>
-                <FormLabel>City</FormLabel>
-                <FormControl type="text" name="city" data-cy="city" value={person?.contactInfo?.city || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <FormLabel htmlFor="city">City</FormLabel>
+                <FormControl type="text" name="city" id="city" value={person?.contactInfo?.city || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
               </FormGroup>
             </Col>
             <Col xs={3}>
               <FormGroup>
-                <FormLabel>State</FormLabel>
-                <FormControl as="select" name="state" data-cy="state" value={person?.contactInfo?.state || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+                <FormLabel htmlFor="state">State</FormLabel>
+                <FormControl as="select" name="state" id="state" value={person?.contactInfo?.state || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
                   <StateOptions />
                 </FormControl>
               </FormGroup>
             </Col>
             <Col xs={3}>
               <FormGroup>
-                <FormLabel>Zip</FormLabel>
-                <FormControl type="text" name="zip" data-cy="zip" value={person?.contactInfo?.zip || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <FormLabel htmlFor="zip">Zip</FormLabel>
+                <FormControl type="text" name="zip" id="zip" value={person?.contactInfo?.zip || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
               </FormGroup>
             </Col>
           </Row>
@@ -301,16 +301,16 @@ export const PersonEdit: React.FC<Props> = (props) => {
         <Col md={3}>
           <div className="section">Phone</div>
           <FormGroup>
-            <FormLabel>Home</FormLabel>
-            <FormControl type="text" name="homePhone" maxLength={12} data-cy="homePhone" value={person?.contactInfo?.homePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormLabel htmlFor="homePhone">Home</FormLabel>
+            <FormControl type="text" name="homePhone" maxLength={12} id="homePhone" value={person?.contactInfo?.homePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
           <FormGroup>
-            <FormLabel>Work</FormLabel>
-            <FormControl type="text" name="workPhone" maxLength={12} data-cy="workPhone" value={person?.contactInfo?.workPhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormLabel htmlFor="workPhone">Work</FormLabel>
+            <FormControl type="text" name="workPhone" maxLength={12} id="workPhone" value={person?.contactInfo?.workPhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
           <FormGroup>
-            <FormLabel>Mobile</FormLabel>
-            <FormControl type="text" name="mobilePhone" maxLength={12} data-cy="mobilePhone" value={person?.contactInfo?.mobilePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+            <FormLabel htmlFor="mobilePhone">Mobile</FormLabel>
+            <FormControl type="text" name="mobilePhone" maxLength={12} id="mobilePhone" value={person?.contactInfo?.mobilePhone || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
         </Col>
       </Row>
@@ -322,7 +322,7 @@ export const PersonEdit: React.FC<Props> = (props) => {
     return (
       <>
         <UpdateHouseHold show={showUpdateAddressModal} text={text} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} />
-        <InputBox id={props.id} data-cy="person-details-box" headerIcon="fas fa-user" headerText="Personal Details" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave} headerActionContent={<Button id="mergeButton" data-cy="merge-button" variant="primary" size="sm" onClick={handleMerge}>Merge</Button>}>
+        <InputBox id={props.id} headerIcon="fas fa-user" headerText="Personal Details" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave} headerActionContent={<Button id="mergeButton" variant="primary" size="sm" onClick={handleMerge}>Merge</Button>}>
           <ErrorMessages errors={errors} />
           {getFields()}
         </InputBox>
