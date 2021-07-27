@@ -116,10 +116,6 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
     }
   }
 
-  function handleMerge() {
-    showMergeSearch();
-  }
-
   function handlePhotoClick(e: React.MouseEvent) {
     e.preventDefault();
     togglePhotoEditor(true);
@@ -146,7 +142,7 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
             isSubmitting
           }) => (
             <Form noValidate>
-              <InputBox headerIcon="fas fa-user" headerText="Personal Details" cancelFunction={updatedFunction} deleteFunction={handleDelete} saveFunction={handleSubmit} isSubmitting={isSubmitting} headerActionContent={<Button id="mergeButton" variant="primary" size="sm" onClick={handleMerge}>Merge</Button>}>
+              <InputBox headerIcon="fas fa-user" headerText="Personal Details" cancelFunction={updatedFunction} deleteFunction={handleDelete} saveFunction={handleSubmit} isSubmitting={isSubmitting} headerActionContent={<Button id="mergeButton" variant="primary" size="sm" onClick={showMergeSearch}>Merge</Button>}>
                 <Row>
                   <Col sm={3} className="my-auto">
                     <a href="about:blank" className="d-block" onClick={handlePhotoClick}>
