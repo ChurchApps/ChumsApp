@@ -93,7 +93,7 @@ export const DonationsPage = () => {
       result.push(<tr key={i}>
         <td>{batchLink}</td>
         <td>{b.name}</td>
-        <td>{DateHelper.prettyDate(b.batchDate)}</td>
+        <td>{DateHelper.prettyDate(new Date(b.batchDate))}</td>
         <td>{b.donationCount}</td>
         <td>{CurrencyHelper.formatCurrency(b.totalAmount)}</td>
         <td>{editLink}</td>
