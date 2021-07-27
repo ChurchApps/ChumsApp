@@ -44,7 +44,7 @@ export const Household: React.FC<Props> = (props) => {
 
   if (mode === "display") {
     return (
-      <DisplayBox id="householdBox" data-cy="household-box" headerIcon="fas fa-users" headerText={(household?.name || "") + " Household"} editFunction={getEditFunction()}>
+      <DisplayBox id="householdBox" headerIcon="fas fa-users" headerText={(household?.name || "") + " Household"} editFunction={getEditFunction()} ariaLabel="editHousehold">
         {getTable()}
       </DisplayBox>
     );

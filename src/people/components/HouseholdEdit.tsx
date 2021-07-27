@@ -77,7 +77,7 @@ export function HouseholdEdit({ updatedFunction, household, members: currentMemb
       <td><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></td>
       <td>
         {m.name.display}
-        <select value={m.householdRole || ""} onChange={(e) => handleChangeRole(e, index)} className="form-control form-control-sm">
+        <select value={m.householdRole || ""} aria-label="role" onChange={(e) => handleChangeRole(e, index)} className="form-control form-control-sm">
           <option value="Head">Head</option>
           <option value="Spouse">Spouse</option>
           <option value="Child">Child</option>
@@ -126,7 +126,7 @@ export function HouseholdEdit({ updatedFunction, household, members: currentMemb
             <Table size="sm" id="householdMemberTable">
               <tbody>
                 {rows}
-                <tr><td></td><td></td><td><button className="text-success no-default-style" onClick={() => setShowAdd(true)}> <i className="fas fa-user"></i> Add</button></td></tr>
+                <tr><td></td><td></td><td><button className="text-success no-default-style" aria-label="addMember" onClick={() => setShowAdd(true)}> <i className="fas fa-user"></i> Add</button></td></tr>
               </tbody>
             </Table>
             {personAdd}
