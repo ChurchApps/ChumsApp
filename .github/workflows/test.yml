@@ -21,6 +21,7 @@ jobs:
         with:
           repository: LiveChurchSolutions/ChumsTests
           path: ~/ChumsTests
+          submodules: 'true'
 
       - uses: actions/cache@v2
         with:
