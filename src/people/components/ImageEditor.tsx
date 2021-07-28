@@ -58,7 +58,7 @@ export const ImageEditor = ({ person, updatedFunction, onCancel }: Props) => {
   }, [person]);
 
   return (
-    <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} saveText={"Update"} cancelFunction={onCancel} deleteFunction={handleDelete} headerActionContent={getHeaderButton()}>
+    <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} ariaLabelDelete="deletePhoto" saveText={"Update"} cancelFunction={onCancel} deleteFunction={handleDelete} headerActionContent={getHeaderButton()}>
       <Cropper
         ref={cropper}
         src={currentUrl}

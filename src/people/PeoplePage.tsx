@@ -34,8 +34,8 @@ export const PeoplePage = () => {
         <Col lg={8}>
           <DisplayBox id="peopleBox" headerIcon="fas fa-user" headerText="Search" editContent={getEditContent()}>
             <InputGroup>
-              <FormControl id="searchText" data-cy="search-input" name="searchText" type="text" placeholder="Name" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} />
-              <InputGroup.Append><Button id="searchButton" data-cy="search-button" variant="primary" onClick={handleSubmit}>Search</Button></InputGroup.Append>
+              <FormControl id="searchText" aria-label="searchBox" name="searchText" type="text" placeholder="Name" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} />
+              <InputGroup.Append><Button id="searchButton" variant="primary" onClick={handleSubmit}>Search</Button></InputGroup.Append>
             </InputGroup>
             <br />
             <PeopleSearchResults people={searchResults} />

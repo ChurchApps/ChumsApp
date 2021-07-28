@@ -1,45 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { NoteInterface, PersonInterface } from "../helpers";
-import { ApiHelper, Note, DisplayBox, UserHelper, Permissions, UniqueIdHelper, Loading } from "./";
+import React from "react";
+import { Note, DisplayBox, UserHelper, Permissions, Loading, NoteInterface } from "./";
 
 interface Props {
-  person: PersonInterface;
-  contentType: string;
-  showNoteBox: (noteId?: string) => void
+  showNoteBox: (noteId?: string) => void;
+  notes: NoteInterface[];
 }
 
-export const Notes: React.FC<Props> = (props) => {
-  const [notes, setNotes] = useState(null);
-
-  const loadNotes = () => {
-    if (!UniqueIdHelper.isMissing(props.person?.id))
-      ApiHelper.get(
-        "/notes/" + props.contentType + "/" + props.person?.id, "MembershipApi"
-      ).then((data) => setNotes(data));
-  };
-
-  useEffect(loadNotes, [props]);
-
-  const handleDelete = (noteId: string) => () => {
-    ApiHelper.delete(`/notes/${noteId}`, "MembershipApi");
-    setNotes(notes.filter((note: NoteInterface) => note.id !== noteId));
-  };
-
+export function Notes({ showNoteBox, notes }: Props) {
   const getNotes = () => {
     if (!notes) return <Loading />
     if (notes.length === 0) return <p>Create a Note and they'll start appearing here.</p>
     else {
       let noteArray: React.ReactNode[] = [];
-      for (let i = 0; i < notes.length; i++) noteArray.push(<Note note={notes[i]} key={notes[i].id} handleDelete={handleDelete} updateFunction={loadNotes} showNoteBox={props.showNoteBox} />);
+      for (let i = 0; i < notes.length; i++) noteArray.push(<Note note={notes[i]} key={notes[i].id} showNoteBox={showNoteBox} />);
       return noteArray;
     }
   }
 
   const canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
   const editContent = canEdit && (
-    <a href="about:blank" data-cy="add-note-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); props.showNoteBox() }}>
+    <button aria-label="addNote" className="no-default-style" onClick={() => { showNoteBox() }}>
       <i className="fas fa-plus"></i>
-    </a>
+    </button>
   )
 
   return (

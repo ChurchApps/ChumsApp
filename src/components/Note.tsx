@@ -3,8 +3,6 @@ import { PersonHelper, DateHelper, NoteInterface } from "./";
 
 interface Props {
   note: NoteInterface;
-  handleDelete: Function;
-  updateFunction: () => void;
   showNoteBox: (noteId?: string) => void
 }
 
@@ -31,15 +29,15 @@ export const Note: React.FC<Props> = (props) => {
             <b>{note.person.name.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
           </div>
           <div>
-            <i
-              className="fas fa-pencil-alt"
-              onClick={() => props.showNoteBox(note.id)}
-              style={{ color: "#03a9f4" }}
-              data-cy="edit-note"
-            ></i>
+            <button aria-label="editNote" className="no-default-style" onClick={() => props.showNoteBox(note.id)}>
+              <i
+                className="fas fa-pencil-alt"
+                style={{ color: "#03a9f4" }}
+              ></i>
+            </button>
           </div>
         </div>
-        {contents.map(c => c ? <p>{c}</p> : <br />)}
+        {contents.map((c, i) => c ? <p key={i}>{c}</p> : <br />)}
       </div>
     </div>
   );

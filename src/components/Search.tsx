@@ -32,12 +32,11 @@ export const Search: React.FC<Props> = (props) => {
         </td>
         <td>{person.name.display}</td>
         <td>
-          <a className="text-success" href="about:blank" data-index={index} onClick={(e) => {
-            e.preventDefault();
+          <button className="text-success no-default-style" onClick={() => {
             props.handleClickAction(person.id);
           }}>
             <i className="fas fa-user"></i> {props.buttonText}
-          </a>
+          </button>
         </td>
       </tr>
     ));
@@ -52,7 +51,7 @@ export const Search: React.FC<Props> = (props) => {
       <InputGroup>
         <FormControl
           id="searchInput"
-          data-cy="search-input"
+          aria-label="searchPerson"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />

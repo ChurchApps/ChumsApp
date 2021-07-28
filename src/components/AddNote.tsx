@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { ApiHelper, NoteInterface, InputBox, ErrorMessages } from ".";
+import React, { useState, useEffect } from "react"
+import { Form } from "react-bootstrap"
+import * as yup from "yup"
+import { Formik, FormikHelpers } from "formik"
+import { ApiHelper, NoteInterface, InputBox } from "."
+
+const schema = yup.object().shape({
+  noteText: yup.string().required("Please enter a note.")
+})
 
 type Props = {
   close: () => void;
-  contentId: string,
-  noteId?: string
+  contentId: string;
+  noteId?: string;
+  updatedFunction: () => void;
 };
 
 export function AddNote({
   close,
   contentId,
-  noteId
+  noteId,
+  updatedFunction
 }: Props) {
-  const [note, setNote] = useState<NoteInterface>();
-  const [errors, setErrors] = useState<string[]>([]);
+  const [note, setNote] = useState<NoteInterface>()
   const headerText = noteId ? "Edit note" : "Add a note"
 
   useEffect(() => {
@@ -28,49 +36,72 @@ export function AddNote({
     })()
   }, [noteId])
 
-  function handleSave() {
-    setErrors([]);
-    if (!note.contents) {
-      setErrors(["Enter some text for note."])
-      return
-    }
+  async function handleSave({ noteText }: { noteText: string }, { setSubmitting }: FormikHelpers<any>) {
     const payload: NoteInterface = {
       contentId: contentId,
       contentType: "person",
-      ...note
+      ...note,
+      contents: noteText
     }
     ApiHelper.post("/notes", [payload], "MembershipApi").then(() => {
       close();
+      updatedFunction()
+    }).finally(() => {
+      setSubmitting(false)
     });
   };
 
   async function deleteNote() {
     await ApiHelper.delete(`/notes/${noteId}`, "MembershipApi")
+    updatedFunction()
     close();
   }
 
   const deleteFunction = noteId ? deleteNote : null;
 
   return (
-    <InputBox
-      headerText={headerText}
-      headerIcon="far fa-sticky-note"
-      saveFunction={handleSave}
-      cancelFunction={close}
-      deleteFunction={deleteFunction}
+    <Formik
+      validationSchema={schema}
+      onSubmit={handleSave}
+      initialValues={{ noteText: note?.contents || "" }}
+      enableReinitialize={true}
     >
-      <ErrorMessages errors={errors} />
-      <div className="form-group">
-        <textarea
-          id="noteText"
-          data-cy="enter-note"
-          className="form-control"
-          name="contents"
-          style={{height: "100px"}}
-          onChange={(e) => setNote({...note, contents: e.target.value})}
-          value={note?.contents || ""}
-        />
-      </div>
-    </InputBox>
+      {({
+        handleSubmit,
+        handleChange,
+        values,
+        touched,
+        errors,
+        isSubmitting
+      }) => (
+        <Form noValidate>
+          <InputBox
+            headerText={headerText}
+            headerIcon="far fa-sticky-note"
+            saveFunction={handleSubmit}
+            cancelFunction={close}
+            deleteFunction={deleteFunction}
+            isSubmitting={isSubmitting}
+          >
+            <Form.Group>
+              <Form.Control
+                type="text"
+                as="textarea"
+                name="noteText"
+                aria-label={headerText}
+                style={{height: "100px"}}
+                onChange={handleChange}
+                value={values.noteText}
+                placeholder="Some note..."
+                isInvalid={touched.noteText && !!errors.noteText}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.noteText}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </InputBox>
+        </Form>
+      )}
+    </Formik>
   );
 }

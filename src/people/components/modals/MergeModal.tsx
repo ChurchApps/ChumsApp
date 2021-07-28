@@ -184,6 +184,7 @@ export const MergeModal: React.FC<Props> = (props) => {
             <Form.Check
               key={index}
               type="radio"
+              id={name}
               label={label}
               name={outer.value}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>

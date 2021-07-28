@@ -1,7 +1,7 @@
 import React from "react";
-import { UserHelper, Notes, PersonAttendance, PersonDonations, Permissions, PersonInterface } from ".";
+import { UserHelper, Notes, PersonAttendance, PersonDonations, Permissions, PersonInterface, NoteInterface } from ".";
 
-interface Props { person: PersonInterface, showNoteBox: (noteId?: string) => void }
+interface Props { person: PersonInterface, showNoteBox: (noteId?: string) => void, notes: NoteInterface[] }
 
 export const Tabs: React.FC<Props> = (props) => {
   const [personId, setPersonId] = React.useState(props.person?.id);
@@ -24,7 +24,7 @@ export const Tabs: React.FC<Props> = (props) => {
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
-    case "notes": currentTab = <Notes contentType="person" person={props.person} showNoteBox={props.showNoteBox} />; break;
+    case "notes": currentTab = <Notes showNoteBox={props.showNoteBox} notes={props.notes} />; break;
     case "attendance": currentTab = <PersonAttendance personId={personId} />; break;
     case "donations": currentTab = <PersonDonations personId={personId} />; break;
     default: currentTab = <div>Not implemented</div>; break;

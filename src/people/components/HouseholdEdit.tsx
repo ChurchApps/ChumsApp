@@ -1,51 +1,46 @@
-import React, { ChangeEvent } from "react";
-import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, UpdateHouseHold } from ".";
-import { Table } from "react-bootstrap";
+import React, { ChangeEvent } from "react"
+import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, UpdateHouseHold } from "."
+import { Table, Form } from "react-bootstrap"
+import * as yup from "yup"
+import { Formik, FormikHelpers } from "formik"
+
+const schema = yup.object().shape({
+  name: yup.string().required("Household name is required")
+})
 
 interface Props { updatedFunction: () => void, household: HouseholdInterface, members: PersonInterface[], person: PersonInterface }
 
-export const HouseholdEdit: React.FC<Props> = (props) => {
-  const [household, setHousehold] = React.useState<HouseholdInterface>({} as HouseholdInterface);
-  const [members, setMembers] = React.useState<PersonInterface[]>([]);
+export function HouseholdEdit({ updatedFunction, household, members: currentMembers, person: currentPerson }: Props) {
+  const [members, setMembers] = React.useState<PersonInterface[]>([...currentMembers]);
   const [showAdd, setShowAdd] = React.useState(false);
   const [showUpdateAddressModal, setShowUpdateAddressModal] = React.useState<boolean>(false)
   const [text, setText] = React.useState("");
   const [selectedPerson, setSelectedPerson] = React.useState<PersonInterface>(null)
+  const initialValues: HouseholdInterface = { name: "", ...household }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => { let h = { ...household }; h.name = e.currentTarget.value; setHousehold(h); }
-  const handleCancel = () => { props.updatedFunction(); }
-  const handleAdd = (e: React.MouseEvent) => { e.preventDefault(); setShowAdd(true); }
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-
-  const handleRemove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    let target = e.currentTarget as HTMLElement;
-    let row = target.parentNode.parentNode as HTMLElement;
-    let idx = parseInt(row.getAttribute("data-index"));
+  function handleRemove(index: number) {
     let m = [...members];
-    m.splice(idx, 1);
+    m.splice(index, 1);
     setMembers(m);
   }
 
-  const handleChangeRole = (e: ChangeEvent<HTMLSelectElement>) => {
-    let row = e.currentTarget.parentNode.parentNode as HTMLElement;
-    let idx = parseInt(row.getAttribute("data-index"));
+  function handleChangeRole(e: ChangeEvent<HTMLSelectElement>, index: number) {
     let m = [...members];
-    m[idx].householdRole = e.currentTarget.value;
+    m[index].householdRole = e.currentTarget.value;
     setMembers(m);
   }
 
-  const handlePersonAdd = (person: PersonInterface) => {
+  function handlePersonAdd(person: PersonInterface) {
     setSelectedPerson(person);
-    if (!PersonHelper.checkAddressAvailabilty(props.person)) {
+    if (!PersonHelper.checkAddressAvailabilty(person)) {
       addPerson(person);
       return;
     }
-    setText(`Would you like to update ${person.name.first}"s address to match ${props.person.name.first}"s (${PersonHelper.addressToString(props.person.contactInfo)})?`);
+    setText(`Would you like to update ${person.name.first}"s address to match ${currentPerson.name.first}"s (${PersonHelper.addressToString(currentPerson.contactInfo)})?`);
     setShowUpdateAddressModal(true);
   }
 
-  const addPerson = (person?: PersonInterface) => {
+  function addPerson(person?: PersonInterface) {
     const addPerson: PersonInterface = person || selectedPerson;
     addPerson.householdId = household.id;
     addPerson.householdRole = "Other";
@@ -54,21 +49,21 @@ export const HouseholdEdit: React.FC<Props> = (props) => {
     setMembers(m);
   }
 
-  const handleSave = () => {
+  function handleSave(values: HouseholdInterface, { setSubmitting }: FormikHelpers<HouseholdInterface>) {
     let promises = [];
-    promises.push(ApiHelper.post("/households", [household], "MembershipApi"));
-    promises.push(ApiHelper.post("/people/household/" + household.id, members, "MembershipApi"));
-    Promise.all(promises).then(() => props.updatedFunction());
+    promises.push(ApiHelper.post("/households", [values], "MembershipApi"));
+    promises.push(ApiHelper.post("/people/household/" + values.id, members, "MembershipApi"));
+    Promise.all(promises).then(() => updatedFunction()).finally(() => setSubmitting(false));
   }
 
-  const handleNo = () => {
+  function handleNo() {
     setShowUpdateAddressModal(false);
     addPerson();
   }
 
-  const handleYes = async () => {
+  async function handleYes() {
     setShowUpdateAddressModal(false);
-    selectedPerson.contactInfo = PersonHelper.changeOnlyAddress(selectedPerson.contactInfo, props.person.contactInfo);
+    selectedPerson.contactInfo = PersonHelper.changeOnlyAddress(selectedPerson.contactInfo, currentPerson.contactInfo);
     try {
       await ApiHelper.post("/people", [selectedPerson], "MembershipApi");
     } catch (err) {
@@ -77,48 +72,67 @@ export const HouseholdEdit: React.FC<Props> = (props) => {
     addPerson();
   }
 
-  React.useEffect(() => setMembers(props.members), [props.members]);
-  React.useEffect(() => setHousehold(props.household), [props.household]);
+  const rows = members.map((m, index) => (
+    <tr key={m.id}>
+      <td><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></td>
+      <td>
+        {m.name.display}
+        <select value={m.householdRole || ""} aria-label="role" onChange={(e) => handleChangeRole(e, index)} className="form-control form-control-sm">
+          <option value="Head">Head</option>
+          <option value="Spouse">Spouse</option>
+          <option value="Child">Child</option>
+          <option value="Other">Other</option>
+        </select>
+      </td>
+      <td><button onClick={() => handleRemove(index)} className="text-danger no-default-style"><i className="fas fa-user-times"></i> Remove</button></td>
+    </tr>
+  ))
 
-  let rows = [];
-  if (members !== null) {
-    for (let i = 0; i < members.length; i++) {
-      let m = members[i];
-      rows.push(
-        <tr key={m.id} data-index={i}>
-          <td><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></td>
-          <td>
-            {m.name.display}
-            <select value={m.householdRole} onChange={handleChangeRole} className="form-control form-control-sm" onKeyDown={handleKeyDown}>
-              <option value="Head">Head</option>
-              <option value="Spouse">Spouse</option>
-              <option value="Child">Child</option>
-              <option value="Other">Other</option>
-            </select>
-          </td>
-          <td><a href="about:blank" onClick={handleRemove} className="text-danger"><i className="fas fa-user-times"></i> Remove</a></td>
-        </tr>
-      );
-    }
-  }
-
-  let personAdd = (showAdd) ? <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={props.person} /> : null;
+  let personAdd = (showAdd) ? <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={currentPerson} /> : null;
   return (
     <>
       <UpdateHouseHold show={showUpdateAddressModal} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} text={text} />
-      <InputBox id="householdBox" data-cy="household-box" headerIcon="fas fa-users" headerText={household.name + " Household"} saveFunction={handleSave} cancelFunction={handleCancel}>
-        <div className="form-group">
-          <label>Household Name</label>
-          <input name="householdName" data-cy="household-name" type="text" className="form-control" value={household.name} onChange={handleChange} onKeyDown={handleKeyDown} />
-        </div>
-        <Table size="sm" id="householdMemberTable">
-          <tbody>
-            {rows}
-            <tr><td></td><td></td><td><a href="about:blank" className="text-success" data-cy="add-button" onClick={handleAdd}> <i className="fas fa-user"></i> Add</a></td></tr>
-          </tbody>
-        </Table>
-        {personAdd}
-      </InputBox>
+      <Formik
+        validationSchema={schema}
+        onSubmit={handleSave}
+        initialValues={initialValues}
+        enableReinitialize={true}
+      >
+        {({
+          handleSubmit,
+          handleChange,
+          values,
+          touched,
+          errors,
+          isSubmitting
+        }) => (
+          <InputBox id="householdBox" headerIcon="fas fa-users" headerText={values.name + " Household"} isSubmitting={isSubmitting} saveFunction={handleSubmit} cancelFunction={updatedFunction}>
+            <Form noValidate>
+              <Form.Group>
+                <Form.Label htmlFor="name">Household Name</Form.Label>
+                <Form.Control
+                  name="name"
+                  id="name"
+                  type="text"
+                  value={values.name}
+                  onChange={handleChange}
+                  isInvalid={touched.name && !!errors.name}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.name}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Form>
+            <Table size="sm" id="householdMemberTable">
+              <tbody>
+                {rows}
+                <tr><td></td><td></td><td><button className="text-success no-default-style" aria-label="addMember" onClick={() => setShowAdd(true)}> <i className="fas fa-user"></i> Add</button></td></tr>
+              </tbody>
+            </Table>
+            {personAdd}
+          </InputBox>
+        )}
+      </Formik>
     </>
   );
 }
