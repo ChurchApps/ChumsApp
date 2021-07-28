@@ -61,7 +61,7 @@ export const PersonRecurringDonations: React.FC<Props> = (props) => {
 
   const getEditOptions = (sub: SubscriptionInterface) => {
     if (!UserHelper.checkAccess(Permissions.givingApi.settings.edit)) return null;
-    return <a data-cy="edit-button" onClick={handleEdit(sub)} href="about:blank"><i className="fas fa-pencil-alt"></i></a>;
+    return <a aria-label="edit-button" onClick={handleEdit(sub)} href="about:blank"><i className="fas fa-pencil-alt"></i></a>;
   }
 
   const getTableHeader = () => {

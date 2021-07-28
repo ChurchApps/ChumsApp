@@ -65,7 +65,7 @@ export const CardForm: React.FC<Props> = (props) => {
     : "Add New Card"
 
   return (
-    <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.card.id ? handleDelete : undefined}>
+    <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} ariaLabelSave="save-button" ariaLabelDelete="delete-button" cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.card.id ? handleDelete : undefined}>
       { errorMessage && <ErrorMessages errors={[errorMessage]}></ErrorMessages> }
       <form style={{margin: "10px"}}>
         { !props.card.id
@@ -73,11 +73,11 @@ export const CardForm: React.FC<Props> = (props) => {
           : <Row>
             <Col>
               <label>Card Expiration Month:</label>
-              <input type="text" name="exp_month" data-cy="card-exp-month" onKeyPress={handleKeyPress} onChange={handleChange} placeholder="MM" className="form-control" maxLength={2} />
+              <input type="text" name="exp_month" aria-label="card-exp-month" onKeyPress={handleKeyPress} onChange={handleChange} placeholder="MM" className="form-control" maxLength={2} />
             </Col>
             <Col>
               <label>Card Expiration Year:</label>
-              <input type="text" name="exp_year" data-cy="card-exp-year" onKeyPress={handleKeyPress} onChange={handleChange} placeholder="YY" className="form-control" maxLength={2} />
+              <input type="text" name="exp_year" aria-label="card-exp-year" onKeyPress={handleKeyPress} onChange={handleChange} placeholder="YY" className="form-control" maxLength={2} />
             </Col>
           </Row>
         }
