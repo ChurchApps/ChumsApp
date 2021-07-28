@@ -10,14 +10,16 @@ const schema = yup.object().shape({
 
 type Props = {
   close: () => void;
-  contentId: string,
-  noteId?: string
+  contentId: string;
+  noteId?: string;
+  updatedFunction: () => void;
 };
 
 export function AddNote({
   close,
   contentId,
-  noteId
+  noteId,
+  updatedFunction
 }: Props) {
   const [note, setNote] = useState<NoteInterface>()
   const headerText = noteId ? "Edit note" : "Add a note"
@@ -34,7 +36,7 @@ export function AddNote({
     })()
   }, [noteId])
 
-  function handleSave({ noteText }: { noteText: string }, { setSubmitting }: FormikHelpers<any>) {
+  async function handleSave({ noteText }: { noteText: string }, { setSubmitting }: FormikHelpers<any>) {
     const payload: NoteInterface = {
       contentId: contentId,
       contentType: "person",
@@ -43,6 +45,7 @@ export function AddNote({
     }
     ApiHelper.post("/notes", [payload], "MembershipApi").then(() => {
       close();
+      updatedFunction()
     }).finally(() => {
       setSubmitting(false)
     });
@@ -50,6 +53,7 @@ export function AddNote({
 
   async function deleteNote() {
     await ApiHelper.delete(`/notes/${noteId}`, "MembershipApi")
+    updatedFunction()
     close();
   }
 

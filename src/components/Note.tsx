@@ -3,8 +3,6 @@ import { PersonHelper, DateHelper, NoteInterface } from "./";
 
 interface Props {
   note: NoteInterface;
-  handleDelete: Function;
-  updateFunction: () => void;
   showNoteBox: (noteId?: string) => void
 }
 
