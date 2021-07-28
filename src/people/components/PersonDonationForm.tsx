@@ -107,7 +107,7 @@ export const PersonDonationForm: React.FC<Props> = (props) => {
   else return (
     <>
       <DonationPreviewModal show={showDonationPreviewModal} onHide={() => setShowDonationPreviewModal(false)} handleDonate={makeDonation} donation={donation} donationType={donationType} paymentMethodName={paymentMethodName} funds={funds} />
-      <InputBox id="donationBox" aria-label="donation-box" headerIcon="fas fa-hand-holding-usd" headerText="Donate" cancelFunction={donationType ? handleCancel : undefined} saveFunction={donationType ? handleSave : undefined} saveText="Preview Donation">
+      <InputBox id="donationBox" aria-label="donation-box" headerIcon="fas fa-hand-holding-usd" headerText="Donate" ariaLabelSave="save-button" cancelFunction={donationType ? handleCancel : undefined} saveFunction={donationType ? handleSave : undefined} saveText="Preview Donation">
         <FormGroup>
           <Row>
             <Col>

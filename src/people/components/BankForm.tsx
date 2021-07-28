@@ -94,7 +94,7 @@ export const BankForm: React.FC<Props> = (props) => {
   }
 
   return (
-    <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.bank.id && !props.showVerifyForm ? handleDelete : undefined}>
+    <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} ariaLabelSave="save-button" ariaLabelDelete="delete-button" cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.bank.id && !props.showVerifyForm ? handleDelete : undefined}>
       { errorMessage && <ErrorMessages errors={[errorMessage]}></ErrorMessages> }
       <form style={{margin: "10px"}}>
         { props.showVerifyForm

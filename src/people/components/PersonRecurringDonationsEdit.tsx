@@ -71,7 +71,7 @@ export const PersonRecurringDonationsEdit: React.FC<Props> = (props) => {
   )
 
   return (
-    <InputBox aria-label="person-details-box" headerIcon="fas fa-user" headerText="Edit Recurring Donation" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave}>
+    <InputBox aria-label="person-details-box" headerIcon="fas fa-user" headerText="Edit Recurring Donation" ariaLabelSave="save-button" ariaLabelDelete="delete-button" cancelFunction={handleCancel} deleteFunction={handleDelete} saveFunction={handleSave}>
       {getFields()}
     </InputBox>
   );

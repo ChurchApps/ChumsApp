@@ -65,7 +65,7 @@ export const CardForm: React.FC<Props> = (props) => {
     : "Add New Card"
 
   return (
-    <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.card.id ? handleDelete : undefined}>
+    <InputBox headerIcon="fas fa-hand-holding-usd" headerText={getHeaderText()} ariaLabelSave="save-button" ariaLabelDelete="delete-button" cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.card.id ? handleDelete : undefined}>
       { errorMessage && <ErrorMessages errors={[errorMessage]}></ErrorMessages> }
       <form style={{margin: "10px"}}>
         { !props.card.id

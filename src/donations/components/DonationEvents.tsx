@@ -75,7 +75,7 @@ export const DonationEvents: React.FC = () => {
   if(!errorLogs.length) return null;
 
   return (
-    <DisplayBox aria-label="eventLogs" headerIcon={headerIcon} headerText={"Failed Donations - " + unresolvedErrorCount + " unresolved"}>
+    <DisplayBox data-cy="eventLogs" headerIcon={headerIcon} headerText={"Failed Donations - " + unresolvedErrorCount + " unresolved"}>
       {getErrorLogs()}
     </DisplayBox>
   );
