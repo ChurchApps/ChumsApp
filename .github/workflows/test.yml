@@ -46,7 +46,6 @@ jobs:
           wait-on: 'http://localhost:3101'
           spec: |
             cypress/integration/!(Donations).spec.ts
-          video: false
         env:
           CYPRESS_ACCESS_API: 'https://accessapi.staging.churchapps.org'
           CYPRESS_ATTENDANCE_API: 'https://attendanceapi.staging.churchapps.org'
