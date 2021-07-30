@@ -37,7 +37,7 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
   const getRows = () => {
     let result = [];
     if (props.question.choices !== undefined) {
-      for (let i = 0; i < props.question.choices.length; i++) {
+      for (let i = 0; i < props.question.choices?.length; i++) {
         let c = props.question.choices[i];
         result.push(<tr key={i}>
           <td>{c.value}</td>

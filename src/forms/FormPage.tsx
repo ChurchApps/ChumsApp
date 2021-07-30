@@ -12,7 +12,7 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
   const questionUpdated = () => { loadQuestions(); setEditQuestionId("notset"); }
   const loadData = () => { ApiHelper.get("/forms/" + match.params.id, "MembershipApi").then(data => setForm(data)); loadQuestions(); }
   const loadQuestions = () => ApiHelper.get("/questions?formId=" + match.params.id, "MembershipApi").then(data => setQuestions(data));
-  const getEditContent = () => (<a href="about:blank" data-cy="edit-question-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditQuestionId(""); }}><i className="fas fa-plus"></i></a>)
+  const getEditContent = () => (<button className="no-default-style" aria-label="addQuestion" onClick={() => { setEditQuestionId(""); }}><i className="fas fa-plus"></i></button>)
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     let anchor = e.currentTarget as HTMLAnchorElement;

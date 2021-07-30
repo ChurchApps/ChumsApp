@@ -54,8 +54,9 @@ export function FormEdit({ formId, updatedFunction }: Props) {
         <Form noValidate>
           <InputBox id="formBox" headerIcon="fas fa-align-left" headerText="Edit Form" saveFunction={handleSubmit} isSubmitting={isSubmitting} cancelFunction={updatedFunction} deleteFunction={(formId) ? handleDelete : undefined}>
             <Form.Group>
-              <Form.Label>Form Name</Form.Label>
+              <Form.Label htmlFor="name">Form Name</Form.Label>
               <Form.Control
+                id="name"
                 name="name"
                 type="text"
                 value={values.name}
