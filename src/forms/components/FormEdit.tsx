@@ -12,6 +12,7 @@ interface Props { formId: string, updatedFunction: () => void }
 
 export function FormEdit({ formId, updatedFunction }: Props) {
   const [form, setForm] = useState<FormInterface>({} as FormInterface);
+  const [showRestrictedOption, setShowRestrictedOption] = useState<boolean>(false);
   const initialValues: FormInterface = { name: "", contentType: "person", ...form }
 
   function loadData() {
@@ -60,7 +61,10 @@ export function FormEdit({ formId, updatedFunction }: Props) {
                 name="name"
                 type="text"
                 value={values.name}
-                onChange={handleChange}
+                onChange={e => {
+                  handleChange(e);
+                  if (e.currentTarget.value === "form") setShowRestrictedOption(true);
+                }}
                 isInvalid={touched.name && !!errors.name}
               />
               <Form.Control.Feedback type="invalid">
@@ -76,8 +80,23 @@ export function FormEdit({ formId, updatedFunction }: Props) {
                 onChange={handleChange}
               >
                 <option value="person">People</option>
+                <option value="form">Stand Alone</option>
               </Form.Control>
             </Form.Group>
+            { showRestrictedOption &&
+              <Form.Group>
+                <Form.Label>Form Access</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="restricted"
+                  value={values.restricted?.toString() || "false"}
+                  onChange={handleChange}
+                >
+                  <option value="false">Public</option>
+                  <option value="true">Restrict</option>
+                </Form.Control>
+              </Form.Group>
+            }
           </InputBox>
         </Form>
       )}
