@@ -8,11 +8,20 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
   const [form, setForm] = React.useState<FormInterface>({} as FormInterface);
   const [questions, setQuestions] = React.useState<QuestionInterface[]>(null);
   const [editQuestionId, setEditQuestionId] = React.useState("notset");
+  const [formMembers, setFormMembers] = React.useState<any[]>([]);
+  const [editFormMembers, setEditFomrMembers] = React.useState<boolean>(false);
 
   const questionUpdated = () => { loadQuestions(); setEditQuestionId("notset"); }
-  const loadData = () => { ApiHelper.get("/forms/" + match.params.id, "MembershipApi").then(data => setForm(data)); loadQuestions(); }
+  const loadData = () => {
+    ApiHelper.get("/forms/" + match.params.id, "MembershipApi").then(data => {
+      setForm(data);
+      ApiHelper.get("/memberpermissions/form/" + data.id, "MembershipApi").then(results => setFormMembers(results));
+      loadQuestions();
+    });
+  }
   const loadQuestions = () => ApiHelper.get("/questions?formId=" + match.params.id, "MembershipApi").then(data => setQuestions(data));
   const getEditContent = () => (<button className="no-default-style" aria-label="addQuestion" onClick={() => { setEditQuestionId(""); }}><i className="fas fa-plus"></i></button>)
+  const getEditMembersContent = () => (<a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditFomrMembers(true); }}><i className="fas fa-plus"></i></a>)
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     let anchor = e.currentTarget as HTMLAnchorElement;
@@ -77,7 +86,16 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
   const getSidebarModules = () => {
     let result = [];
     if (editQuestionId !== "notset") result.push(<FormQuestionEdit key="form-questions" questionId={editQuestionId} updatedFunction={questionUpdated} formId={form.id} />)
+    if (editFormMembers) result.push(<FormQuestionEdit key="form-questions" questionId={editQuestionId} updatedFunction={questionUpdated} formId={form.id} />)
     return result;
+  }
+
+  const getMemberRows = () => {
+    const rows: JSX.Element[] = [];
+    formMembers.forEach(member => {
+      rows.push(<tr key={member.id}><td>{member.personName}</td><td className="capitalize">{member.action}</td></tr>);
+    });
+    return rows;
   }
 
   React.useEffect(loadData, []);
@@ -101,6 +119,16 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
             </DisplayBox>
           </Col>
           <Col lg={4}>{getSidebarModules()}</Col>
+        </Row>
+        <Row>
+          <Col lg={8}>
+            <DisplayBox id="memberBox" headerText="Form Members" headerIcon="fas fa-user" editContent={getEditMembersContent()}>
+              <Table>
+                <thead><tr><th>Member</th><th>Access</th></tr></thead>
+                <tbody>{getMemberRows()}</tbody>
+              </Table>
+            </DisplayBox>
+          </Col>
         </Row>
       </>
     );

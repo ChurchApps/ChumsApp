@@ -1,14 +1,15 @@
-import zhCN from "date-fns/esm/locale/zh-CN/index";
 import React, { useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { DisplayBox, FormInterface, PersonInterface } from ".";
-import { MemberPermissionInterface } from "../../helpers";
+import { DisplayBox, FormInterface, PersonAdd, PersonInterface } from ".";
+import { MemberPermissionInterface, PersonHelper } from "../../helpers";
 
 interface Props {
   form: FormInterface,
   formMembers: MemberPermissionInterface[],
-  setAdmin: (personId: string) => void
+  setAdmin: (personId: string) => void,
+  removeMember: (personId: string) => void,
+  setFormMembers: (newFormMembers: any) => void
 }
 
 export const FormMembersList: React.FC<Props> = (props) => {
@@ -19,6 +20,19 @@ export const FormMembersList: React.FC<Props> = (props) => {
     props.setAdmin(formMember.id);
   }
 
+  const addPerson = (p: PersonInterface) => {
+    const newMember = {
+      memberId: p.id,
+      contentType: "form",
+      contentId: props.form.id,
+      action: "view",
+      personName: p.name.display
+    };
+    let fm = [...formMembers];
+    fm.push(newMember);
+    setFormMembers(fm);
+  }
+
   const getRows = () => {
     // let canEdit = UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit);
     let canEdit = props.form.id || true;
@@ -26,11 +40,10 @@ export const FormMembersList: React.FC<Props> = (props) => {
     formMembers.forEach(fm => {
       let makeAdminLink = (canEdit && fm.action === "view") ? <a href="about:blank" onClick={(e) => { e.preventDefault(); handleSetAdmin(fm); }} data-index={fm.id}>Make Admin</a> : <></>
       rows.push(
-        <tr key={fm.id}>
-          <td><Link to={"/people/" + fm.id}>{fm.personName}</Link></td>
-          {/* <td>{fm.action}</td> */}
+        <tr key={fm.memberId}>
+          <td><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></td>
           <td>{makeAdminLink}</td>
-          <td>{<a href="" className="text-danger"><i className="fas fa-user-times"></i> Remove</a>}</td>
+          <td>{<a href="about:blank" onClick={(e) => { e.preventDefault(); props.removeMember(fm.memberId); }} className="text-danger"><i className="fas fa-user-times"></i></a>}</td>
         </tr>
       );
     });
@@ -53,8 +66,11 @@ export const FormMembersList: React.FC<Props> = (props) => {
   React.useEffect(() => { setFormMembers(props.formMembers) }, [props.formMembers]);
 
   return (
-    <DisplayBox headerText="Form Members" headerIcon="fas fa-users">
-      {getTable()}
-    </DisplayBox>
+    <>
+      <DisplayBox headerText="Form Members" headerIcon="fas fa-users">
+        {getTable()}
+      </DisplayBox>
+      <label>Add Members</label> <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} />
+    </>
   );
 }
