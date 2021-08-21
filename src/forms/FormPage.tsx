@@ -12,7 +12,7 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
   const questionUpdated = () => { loadQuestions(); setEditQuestionId("notset"); }
   const loadData = () => { ApiHelper.get("/forms/" + match.params.id, "MembershipApi").then(data => setForm(data)); loadQuestions(); }
   const loadQuestions = () => ApiHelper.get("/questions?formId=" + match.params.id, "MembershipApi").then(data => setQuestions(data));
-  const getEditContent = () => (<a href="about:blank" data-cy="edit-question-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditQuestionId(""); }}><i className="fas fa-plus"></i></a>)
+  const getEditContent = () => (<button className="no-default-style" aria-label="addQuestion" onClick={() => { setEditQuestionId(""); }}><i className="fas fa-plus"></i></button>)
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     let anchor = e.currentTarget as HTMLAnchorElement;
@@ -48,12 +48,12 @@ export const FormPage = ({ match }: RouteComponentProps<TParams>) => {
   const getRows = () => {
     const rows: JSX.Element[] = [];
     if (questions.length === 0) {
-      rows.push(<tr key="0">No custom questions have been created yet.  Questions will be listed here.</tr>);
+      rows.push(<tr key="0"><td>No custom questions have been created yet.  Questions will be listed here.</td></tr>);
       return rows;
     }
     for (let i = 0; i < questions.length; i++) {
-      let upArrow = (i === 0) ? <span style={{ display: "inline-block", width: 20 }} /> : <><a href="about:blank" onClick={moveUp}><i className="fas fa-arrow-up" /></a> </>
-      let downArrow = (i === questions.length - 1) ? <></> : <> &nbsp; <a href="about:blank" onClick={moveDown}><i className="fas fa-arrow-down" /></a></>
+      let upArrow = (i === 0) ? <span style={{ display: "inline-block", width: 20 }} /> : <button className="no-default-style" aria-label="moveUp" onClick={moveUp}><i className="fas fa-arrow-up" /></button>
+      let downArrow = (i === questions.length - 1) ? <></> : <> &nbsp; <button className="no-default-style" aria-label="moveDown" onClick={moveDown}><i className="fas fa-arrow-down" /></button></>
       rows.push(
         <tr key={i} data-index={i}>
           <td><a href="about:blank" onClick={handleClick}>{questions[i].title}</a></td>

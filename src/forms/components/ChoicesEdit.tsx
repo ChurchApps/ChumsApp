@@ -27,7 +27,7 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     let q = { ...props.question };
-    if (q.choices === undefined) q.choices = [{ value: choiceValue, text: choiceText }];
+    if (!q.choices) q.choices = [{ value: choiceValue, text: choiceText }];
     else q.choices.push({ value: choiceValue, text: choiceText });
     props.updatedFunction(q);
     setChoiceText("");
@@ -36,8 +36,8 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
 
   const getRows = () => {
     let result = [];
-    if (props.question.choices !== undefined) {
-      for (let i = 0; i < props.question.choices.length; i++) {
+    if (props.question.choices) {
+      for (let i = 0; i < props.question.choices?.length; i++) {
         let c = props.question.choices[i];
         result.push(<tr key={i}>
           <td>{c.value}</td>

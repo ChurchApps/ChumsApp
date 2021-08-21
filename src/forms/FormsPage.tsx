@@ -13,12 +13,12 @@ export const FormsPage = () => {
   const getRows = () => {
     const result: JSX.Element[] = [];
     if (forms.length === 0) {
-      result.push(<tr key="0">No custom forms have been created yet.  They will appearing here when added.</tr>);
+      result.push(<tr key="0"><td>No custom forms have been created yet. They will appearing here when added.</td></tr>);
       return result;
     }
     const canEdit = UserHelper.checkAccess(Permissions.membershipApi.forms.edit)
     for (let i = 0; i < forms.length; i++) {
-      const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${forms[i].name}`} onClick={(e: React.MouseEvent) => { e.preventDefault(); setSelectedFormId(forms[i].id); }}><i className="fas fa-pencil-alt"></i></a>) : null;
+      const editLink = (canEdit) ? (<button aria-label="editForm" className="no-default-style" onClick={() => { setSelectedFormId(forms[i].id); }}><i className="fas fa-pencil-alt"></i></button>) : null;
       result.push(<tr key={i}>
         <td><i className="fas fa-align-left" /> <Link to={"/forms/" + forms[i].id}>{forms[i].name}</Link></td>
         <td>{editLink}</td>
@@ -45,7 +45,7 @@ export const FormsPage = () => {
 
   const getEditContent = () => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.forms.edit)) return null;
-    else return (<a href="about:blank" data-cy="add-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); setSelectedFormId(""); }}><i className="fas fa-plus"></i></a>);
+    else return (<button aria-label="addForm" className="no-default-style" onClick={() => { setSelectedFormId(""); }}><i className="fas fa-plus"></i></button>);
   }
 
   React.useEffect(() => { loadData(); return () => { isSubscribed.current = false } }, []);

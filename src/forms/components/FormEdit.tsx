@@ -1,62 +1,86 @@
 import React, { useState } from "react";
-import { ApiHelper, InputBox, FormInterface, UniqueIdHelper, ErrorMessages } from ".";
+import { ApiHelper, InputBox, FormInterface } from ".";
+import * as yup from "yup"
+import { Formik } from "formik"
+import { Form } from "react-bootstrap"
+
+const schema = yup.object().shape({
+  name: yup.string().required("Form name is required")
+})
 
 interface Props { formId: string, updatedFunction: () => void }
 
-export const FormEdit: React.FC<Props> = (props) => {
+export function FormEdit({ formId, updatedFunction }: Props) {
   const [form, setForm] = useState<FormInterface>({} as FormInterface);
-  const [errors, setErrors] = useState<string[]>([]);
+  const initialValues: FormInterface = { name: "", contentType: "person", ...form }
 
-  const loadData = () => {
-    if (!UniqueIdHelper.isMissing(props.formId)) ApiHelper.get("/forms/" + props.formId, "MembershipApi").then((data: FormInterface) => setForm(data));
-    else setForm({ contentType: "person" } as FormInterface);
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    let f = { ...form };
-    switch (e.currentTarget.name) {
-      case "formName": f.name = e.currentTarget.value; break;
-      case "contentType": f.contentType = e.currentTarget.value; break;
+  function loadData() {
+    if (formId) {
+      ApiHelper.get("/forms/" + formId, "MembershipApi").then((data: FormInterface) => setForm(data));
     }
-
-    setForm(f);
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-  const handleSave = () => {
-    let errors: string[] = []
-    if (!form.name?.trim()) errors.push("Enter form name");
-    if (errors.length > 0) {
-      setErrors(errors);
-      setForm({ ...form, name: "" });
-      return;
-    }
-
-    setForm({ ...form, name: form.name.trim() });
-    ApiHelper.post("/forms", [form], "MembershipApi").then(() => props.updatedFunction());
+  function handleSave(data: FormInterface) {
+    ApiHelper.post("/forms", [data], "MembershipApi")
+      .then(() => {
+        updatedFunction()
+      })
   }
-  const handleCancel = () => props.updatedFunction();
-  const handleDelete = () => {
+
+  function handleDelete() {
     if (window.confirm("Are you sure you wish to permanently delete this form?")) {
-      ApiHelper.delete("/forms/" + form.id, "MembershipApi").then(() => props.updatedFunction());
+      ApiHelper.delete("/forms/" + form.id, "MembershipApi")
+        .then(() => updatedFunction());
     }
   }
 
-  React.useEffect(loadData, [props.formId]);
+  React.useEffect(loadData, [formId]);
 
   return (
-    <InputBox id="formBox" headerIcon="fas fa-align-left" headerText="Edit Form" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(!UniqueIdHelper.isMissing(props.formId)) ? handleDelete : undefined}>
-      <ErrorMessages errors={errors} />
-      <div className="form-group">
-        <label>Form Name</label>
-        <input name="formName" data-cy="form-name" type="text" className="form-control" value={form.name} onChange={handleChange} onKeyDown={handleKeyDown} />
-      </div>
-      <div className="form-group">
-        <label>Associate With</label>
-        <select name="contentType" className="form-control" value={form.contentType} onChange={handleChange} onKeyDown={handleKeyDown}>
-          <option value="person">People</option>
-        </select>
-      </div>
-    </InputBox>
+    <Formik
+      validationSchema={schema}
+      onSubmit={handleSave}
+      initialValues={initialValues}
+      enableReinitialize={true}
+    >
+      {({
+        handleSubmit,
+        handleChange,
+        values,
+        touched,
+        errors,
+        isSubmitting
+      }) => (
+        <Form noValidate>
+          <InputBox id="formBox" headerIcon="fas fa-align-left" headerText="Edit Form" saveFunction={handleSubmit} isSubmitting={isSubmitting} cancelFunction={updatedFunction} deleteFunction={(formId) ? handleDelete : undefined}>
+            <Form.Group>
+              <Form.Label htmlFor="name">Form Name</Form.Label>
+              <Form.Control
+                id="name"
+                name="name"
+                type="text"
+                value={values.name}
+                onChange={handleChange}
+                isInvalid={touched.name && !!errors.name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Associate With</Form.Label>
+              <Form.Control
+                as="select"
+                name="contentType"
+                value={values.contentType}
+                onChange={handleChange}
+              >
+                <option value="person">People</option>
+              </Form.Control>
+            </Form.Group>
+          </InputBox>
+        </Form>
+      )}
+    </Formik>
   );
 }
