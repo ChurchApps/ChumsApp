@@ -1,5 +1,6 @@
 import React from "react";
-import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, FundDonations, DateHelper, PersonInterface, UniqueIdHelper, PersonHelper } from ".";
+import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, DateHelper, PersonInterface, UniqueIdHelper, PersonHelper } from ".";
+import { FundDonations } from "../../appBase/donationComponents/components/FundDonations";
 
 interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
 
