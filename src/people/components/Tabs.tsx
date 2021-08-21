@@ -1,6 +1,6 @@
 import React from "react";
-import { UserHelper, Notes, PersonAttendance, PersonDonations, Permissions, PersonInterface, NoteInterface } from ".";
-
+import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, NoteInterface } from ".";
+import { DonationPage } from "../../appBase/donationComponents/DonationPage";
 interface Props { person: PersonInterface, showNoteBox: (noteId?: string) => void, notes: NoteInterface[] }
 
 export const Tabs: React.FC<Props> = (props) => {
@@ -26,7 +26,7 @@ export const Tabs: React.FC<Props> = (props) => {
   switch (selectedTab) {
     case "notes": currentTab = <Notes showNoteBox={props.showNoteBox} notes={props.notes} />; break;
     case "attendance": currentTab = <PersonAttendance personId={personId} />; break;
-    case "donations": currentTab = <PersonDonations personId={personId} />; break;
+    case "donations": currentTab = <DonationPage personId={personId} />; break;
     default: currentTab = <div>Not implemented</div>; break;
   }
 
