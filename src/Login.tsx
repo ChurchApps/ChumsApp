@@ -5,6 +5,7 @@ import { ApiHelper, UserHelper, PersonInterface } from "./components";
 import { Authenticated } from "./Authenticated";
 import UserContext from "./UserContext";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
+import { ChurchInterface } from "./helpers";
 
 export const Login: React.FC = (props: any) => {
   const [cookies] = useCookies();
@@ -21,6 +22,10 @@ export const Login: React.FC = (props: any) => {
     }
   }
 
+  const postChurchRegister = async (church: ChurchInterface) => {
+    await ApiHelper.post("/churchApps/register", { appName: "CHUMS" }, "AccessApi");
+  }
+
   const context = React.useContext(UserContext);
 
   if (context.userName === "" || !ApiHelper.isAuthenticated) {
@@ -30,7 +35,7 @@ export const Login: React.FC = (props: any) => {
     if (!jwt) jwt = "";
     if (!auth) auth = "";
 
-    return (<LoginPage auth={auth} context={context} jwt={jwt} successCallback={successCallback} appName="CHUMS" />);
+    return (<LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} successCallback={successCallback} churchRegisteredCallback={postChurchRegister} />);
   } else {
     let path = from.pathname === "/" ? "/people" : from.pathname;
     return <Authenticated location={path}></Authenticated>;

@@ -3,7 +3,6 @@ import UserContext from "./UserContext";
 
 import { ApiHelper } from "./components";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
-import { Forgot } from "./Forgot";
 import { Login } from "./Login";
 
 import { Authenticated } from "./Authenticated";
@@ -30,9 +29,6 @@ export const ControlPanel = () => {
         <Logout />
       </Route>
       <Route path="/login" component={Login}></Route>
-      <Route path="/forgot">
-        <Forgot />
-      </Route>
       <PrivateRoute path="/"></PrivateRoute>
     </Switch>
   );
