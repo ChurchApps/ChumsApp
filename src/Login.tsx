@@ -5,7 +5,9 @@ import { ApiHelper, UserHelper, PersonInterface } from "./components";
 import { Authenticated } from "./Authenticated";
 import UserContext from "./UserContext";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
-import { ChurchInterface } from "./helpers";
+import { ChurchInterface, UserInterface } from "./helpers";
+import ReactGA from "react-ga";
+import { EnvironmentHelper } from "./helpers";
 
 export const Login: React.FC = (props: any) => {
   const [cookies] = useCookies();
@@ -24,6 +26,11 @@ export const Login: React.FC = (props: any) => {
 
   const postChurchRegister = async (church: ChurchInterface) => {
     await ApiHelper.post("/churchApps/register", { appName: "CHUMS" }, "AccessApi");
+    if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.event({ category: "Church", action: "Register" });
+  }
+
+  const trackUserRegister = async (user: UserInterface) => {
+    if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.event({ category: "User", action: "Register" });
   }
 
   const context = React.useContext(UserContext);
@@ -35,7 +42,7 @@ export const Login: React.FC = (props: any) => {
     if (!jwt) jwt = "";
     if (!auth) auth = "";
 
-    return (<LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} successCallback={successCallback} churchRegisteredCallback={postChurchRegister} />);
+    return (<LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} loginSuccessOverride={successCallback} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} />);
   } else {
     let path = from.pathname === "/" ? "/people" : from.pathname;
     return <Authenticated location={path}></Authenticated>;
