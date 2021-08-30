@@ -19,8 +19,10 @@ export const FormsPage = () => {
     const canEdit = UserHelper.checkAccess(Permissions.membershipApi.forms.edit)
     for (let i = 0; i < forms.length; i++) {
       const editLink = (canEdit) ? (<button aria-label="editForm" className="no-default-style" onClick={() => { setSelectedFormId(forms[i].id); }}><i className="fas fa-pencil-alt"></i></button>) : null;
+      const formLink = (forms[i].contentType === "form") ? <a href={"http://test.localhost:3301/form/" + forms[i].id}>{"http://test.localhost:3301/form/" + forms[i].id}</a> : null;
       result.push(<tr key={i}>
         <td><i className="fas fa-align-left" /> <Link to={"/forms/" + forms[i].id}>{forms[i].name}</Link></td>
+        <td>{formLink}</td>
         <td>{editLink}</td>
       </tr>);
     }
@@ -32,7 +34,7 @@ export const FormsPage = () => {
     if (forms.length === 0) {
       return rows;
     }
-    rows.push(<tr key="header"><th colSpan={2}>Name</th></tr>);
+    rows.push(<tr key="header"><th colSpan={3}>Name</th></tr>);
     return rows;
   }
 

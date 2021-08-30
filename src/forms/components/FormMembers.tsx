@@ -27,21 +27,23 @@ export const FormMembers: React.FC<Props> = (props) => {
       action: "view",
       personName: p.name.display
     };
-    let fm = [...formMembers];
-    fm.push(newMember);
-    setFormMembers(fm);
-    ApiHelper.post("/memberpermissions", fm, "MembershipApi");
+    ApiHelper.post("/memberpermissions", [newMember], "MembershipApi").then(result => {
+      let fm = [...formMembers];
+      fm.push(result[0]);
+      setFormMembers(fm);
+    })
     updateFilterList(p.id, "add");
   }
 
-  const handleActionChange = (personId: string) => {
+  const handleActionChange = (personId: string, action: string) => {
     // let member = formMembers.find(member => member.memberId === personId);
     // member.action = "admin";
     let member;
     let fm = [...formMembers];
     fm.map((p: MemberPermissionInterface) => {
       if (p.memberId === personId) {
-        p.action = "admin";
+        console.log(p);
+        p.action = action;
         member = p;
       }
     });
@@ -69,8 +71,8 @@ export const FormMembers: React.FC<Props> = (props) => {
           <td><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></td>
           <td>
             <ButtonGroup size="sm">
-              <Button variant={fm.action === "admin" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId) }}>Admin</Button>
-              <Button variant={fm.action === "view" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId) }}>View Only</Button>
+              <Button variant={fm.action === "admin" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId, "admin") }}>Admin</Button>
+              <Button variant={fm.action === "view" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId, "view") }}>View Only</Button>
             </ButtonGroup>
           </td>
           <td>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} className="text-danger"><i className="fas fa-user-times"></i> Remove</a>}</td>
