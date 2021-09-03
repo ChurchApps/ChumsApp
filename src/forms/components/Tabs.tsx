@@ -18,8 +18,11 @@ export const Tabs: React.FC<Props> = (props) => {
   let tabs = [];
   let defaultTab = "questions"
   let currentTab = null;
-  if (UserHelper.checkAccess(Permissions.membershipApi.forms.view)) { tabs.push(getTab("questions", "far fa-sticky-note", "Questions")); }
-  if (UserHelper.checkAccess(Permissions.membershipApi.forms.view)) { tabs.push(getTab("members", "far fa-calendar-alt", "Form Members")); }
+  const formViewAccess = UserHelper.checkAccess(Permissions.membershipApi.forms.view);
+  // const formResultsAccess = UserHelper.checkAccess(Permissions.membershipApi.forms.view);
+  if (formViewAccess) { tabs.push(getTab("questions", "far fa-sticky-note", "Questions")); }
+  if (formViewAccess) { tabs.push(getTab("members", "far fa-calendar-alt", "Form Members")); }
+  if (formViewAccess) { tabs.push(getTab("members", "far fa-calendar-alt", "Form Members")); }
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
