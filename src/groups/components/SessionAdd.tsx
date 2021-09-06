@@ -47,8 +47,8 @@ export const SessionAdd: React.FC<Props> = (props) => {
 
       return (
         <div className="form-group">
-          <label>Service Time</label>
-          <select className="form-control" value={serviceTimeId} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setServiceTimeId(e.currentTarget.value) }} onKeyDown={handleKeyDown}>{options}</select>
+          <label htmlFor="serviceTime">Service Time</label>
+          <select id="serviceTime" className="form-control" value={serviceTimeId} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setServiceTimeId(e.currentTarget.value) }} onKeyDown={handleKeyDown}>{options}</select>
         </div>);
     }
   }

@@ -14,9 +14,9 @@ export const GroupsPage = () => {
       return (
         <>
           <ExportLink data={groups} spaceAfter={true} filename="groups.csv" />{" "}
-          <a href="about:blank" data-cy="add-button" onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowAdd(true); }}>
+          <button className="no-default-style" aria-label="addGroup" onClick={() => { setShowAdd(true); }}>
             <i className="fas fa-plus"></i>
-          </a>
+          </button>
         </>
       );
   };
