@@ -92,10 +92,10 @@ export const AttendancePage = () => {
 
   const getEditLinks = () => (
     <>
-      <a id="addBtnGroup" data-cy="add-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="about:blank"><i className="fas fa-plus"></i></a>
+      <a id="addBtnGroup" aria-label="addButton" data-cy="add-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="about:blank"><i className="fas fa-plus"></i></a>
       <div className="dropdown-menu" aria-labelledby="addBtnGroup">
         <a className="dropdown-item" data-cy="add-campus" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectCampus({ id: "", name: "New Campus" }); }}><i className="fas fa-church"></i> Add Campus</a>
-        <a className="dropdown-item" data-cy="add-service" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectService({ id: "", campusId: "", name: "New Service" }); }}><i className="fas fa-calendar-alt"></i> Add Service</a>
+        <a className="dropdown-item" aria-label="addService" data-cy="add-service" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectService({ id: "", campusId: "", name: "New Service" }); }}><i className="fas fa-calendar-alt"></i> Add Service</a>
         <a className="dropdown-item" data-cy="add-service-time" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectServiceTime({ id: "", serviceId: "", name: "New Service Time" }); }}><i className="far fa-clock"></i> Add Service Time</a>
       </div>
     </>

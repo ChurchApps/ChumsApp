@@ -1,5 +1,13 @@
-import React, { ChangeEvent } from "react";
-import { ServiceInterface, InputBox, ErrorMessages, ApiHelper, CampusInterface, UniqueIdHelper } from "./";
+import React from "react";
+import { Form } from "react-bootstrap"
+import * as yup from "yup"
+import { Formik, FormikHelpers } from "formik"
+import { ServiceInterface, InputBox, ApiHelper, CampusInterface, UniqueIdHelper } from "./";
+
+const schema = yup.object().shape({
+  name: yup.string().required("Service name is required"),
+  campusId: yup.string().required("Please select a campus")
+})
 
 interface Props {
     service: ServiceInterface,
@@ -9,17 +17,17 @@ interface Props {
 export const ServiceEdit: React.FC<Props> = (props) => {
   const [service, setService] = React.useState({} as ServiceInterface);
   const [campuses, setCampuses] = React.useState([] as CampusInterface[]);
-  const [errors, setErrors] = React.useState([]);
 
-  const handleSave = () => {
-    if (validate()) {
-      let s = { ...service };
-      if (UniqueIdHelper.isMissing(s.campusId)) s.campusId = campuses[0].id;
-      ApiHelper.post("/services", [s], "AttendanceApi").then(props.updatedFunction);
-    }
+  const handleSave = (data: ServiceInterface, { setSubmitting }: FormikHelpers<ServiceInterface>) => {
+    let s = { ...data };
+    if (UniqueIdHelper.isMissing(s.campusId)) s.campusId = campuses[0].id;
+    ApiHelper.post("/services", [s], "AttendanceApi").then(() => {
+      setSubmitting(false)
+      props.updatedFunction()
+    });
   }
   const handleDelete = () => { if (window.confirm("Are you sure you wish to permanently delete this service?")) ApiHelper.delete("/services/" + service.id, "AttendanceApi").then(props.updatedFunction); }
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
+
   const loadData = React.useCallback(() => {
     ApiHelper.get("/campuses", "AttendanceApi").then(data => {
       setCampuses(data);
@@ -34,23 +42,6 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.service]);
 
-  const validate = () => {
-    let errors = [];
-    if (service.name === "") errors.push("Service name cannot be blank.");
-    setErrors(errors);
-    return errors.length === 0;
-  }
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    e.preventDefault();
-    let s = { ...service };
-    switch (e.currentTarget.name) {
-      case "serviceName": s.name = e.currentTarget.value; break;
-      case "campus": s.campusId = e.currentTarget.value; break;
-    }
-    setService(s);
-  }
-
   const getCampusOptions = () => {
     let options = [];
     for (let i = 0; i < campuses.length; i++) options.push(<option value={campuses[i].id}>{campuses[i].name}</option>);
@@ -63,18 +54,65 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   }, [props.service, loadData]);
 
   if (service === null || service.id === undefined) return null;
+  const serviceCopy = {...service}
+  delete serviceCopy.campusId
+  const initialValues: ServiceInterface = { name: "", campusId: service?.campusId || campuses[0]?.id, ...serviceCopy }
 
   return (
-    <InputBox id="serviceBox" data-cy="service-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={handleDelete} headerText={service.name} headerIcon="far fa-calendar-alt">
-      <ErrorMessages errors={errors} />
-      <div className="form-group">
-        <label>Campus</label>
-        <select name="campus" data-cy="select-campus" className="form-control" value={service?.campusId || 0} onChange={handleChange} onKeyDown={handleKeyDown}>{getCampusOptions()}</select>
-      </div>
-      <div className="form-group">
-        <label>Service Name</label>
-        <input name="serviceName" data-cy="service-name" type="text" className="form-control" value={service?.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-      </div>
-    </InputBox>
+    <Formik
+      validationSchema={schema}
+      onSubmit={handleSave}
+      initialValues={initialValues}
+      enableReinitialize={true}
+    >
+      {({
+        handleSubmit,
+        handleChange,
+        values,
+        touched,
+        errors,
+        isSubmitting
+      }) => (
+        <Form noValidate>
+          <InputBox id="serviceBox" data-cy="service-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={handleDelete} headerText={service.name} headerIcon="far fa-calendar-alt" isSubmitting={isSubmitting}>
+            <Form.Group>
+              <Form.Label htmlFor="campus">
+                Campus
+              </Form.Label>
+              <Form.Control
+                id="campus"
+                name="campusId"
+                as="select"
+                value={values.campusId}
+                onChange={handleChange}
+                isInvalid={touched.campusId && !!errors.campusId}
+              >
+                {getCampusOptions()}
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {errors.campusId}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label htmlFor="name">
+                Service Name
+              </Form.Label>
+              <Form.Control
+                id="name"
+                name="name"
+                type="text"
+                value={values.name}
+                onChange={handleChange}
+                isInvalid={touched.name && !!errors.name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </InputBox>
+        </Form>
+      )}
+    </Formik>
+
   );
 }
