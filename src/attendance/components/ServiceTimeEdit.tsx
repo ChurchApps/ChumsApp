@@ -1,5 +1,13 @@
-import React, { ChangeEvent } from "react";
-import { ServiceTimeInterface, ServiceInterface, InputBox, ErrorMessages, ApiHelper } from "./";
+import React from "react";
+import { Form } from "react-bootstrap"
+import * as yup from "yup"
+import { Formik, FormikHelpers } from "formik"
+import { ServiceTimeInterface, ServiceInterface, InputBox, ApiHelper } from "./";
+
+const schema = yup.object().shape({
+  name: yup.string().required("Service time is required"),
+  serviceId: yup.string().required("Please select a service")
+})
 
 interface Props {
     serviceTime: ServiceTimeInterface,
@@ -9,15 +17,14 @@ interface Props {
 export const ServiceTimeEdit: React.FC<Props> = (props) => {
   const [serviceTime, setServiceTime] = React.useState({} as ServiceTimeInterface);
   const [services, setServices] = React.useState([] as ServiceInterface[]);
-  const [errors, setErrors] = React.useState([]);
 
-  const handleSave = () => {
-    if (validate()) {
-      ApiHelper.post("/servicetimes", [serviceTime], "AttendanceApi").then(props.updatedFunction);
-    }
+  const handleSave = (data: ServiceTimeInterface, { setSubmitting }: FormikHelpers<ServiceTimeInterface>) => {
+    ApiHelper.post("/servicetimes", [data], "AttendanceApi").then(() => {
+      setSubmitting(false)
+      props.updatedFunction()
+    });
   }
   const handleDelete = () => { if (window.confirm("Are you sure you wish to permanently delete this service time?")) ApiHelper.delete("/servicetimes/" + serviceTime.id, "AttendanceApi").then(props.updatedFunction); }
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
 
   const loadData = React.useCallback(() => {
     ApiHelper.get("/services", "AttendanceApi").then(data => {
@@ -30,23 +37,6 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
     });
   }, [props.serviceTime]);
 
-  const validate = () => {
-    let errors = [];
-    if (serviceTime.name === "") errors.push("Service time name cannot be blank.");
-    setErrors(errors);
-    return errors.length === 0;
-  }
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    e.preventDefault();
-    let st = { ...serviceTime };
-    switch (e.currentTarget.name) {
-      case "serviceTimeName": st.name = e.currentTarget.value; break;
-      case "service": st.serviceId = e.currentTarget.value; break;
-    }
-    setServiceTime(st);
-  }
-
   const getServiceOptions = () => {
     let options = [];
     for (let i = 0; i < services.length; i++) options.push(<option value={services[i].id}>{services[i].name}</option>);
@@ -58,19 +48,61 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
     loadData();
   }, [props.serviceTime, loadData]);
 
-  if (serviceTime === null || serviceTime.id === undefined) return null;
+  const serviceTimeCopy = {...serviceTime}
+  delete serviceTimeCopy.serviceId
+  const initialValues: ServiceTimeInterface = { name: "", serviceId: serviceTime?.serviceId || services[0]?.id, ...serviceTimeCopy }
 
+  if (serviceTime === null || serviceTime.id === undefined) return null;
   return (
-    <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={handleDelete} headerText={serviceTime.name} headerIcon="far fa-clock">
-      <ErrorMessages errors={errors} />
-      <div className="form-group">
-        <label>Service</label>
-        <select name="service" className="form-control" value={serviceTime?.serviceId || 0} onChange={handleChange} onKeyDown={handleKeyDown}>{getServiceOptions()}</select>
-      </div>
-      <div className="form-group">
-        <label>Service Time Name</label>
-        <input name="serviceTimeName" data-cy="service-time" type="text" className="form-control" value={serviceTime?.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-      </div>
-    </InputBox>
+    <Formik
+      validationSchema={schema}
+      onSubmit={handleSave}
+      initialValues={initialValues}
+      enableReinitialize={true}
+    >
+      {({
+        handleSubmit,
+        handleChange,
+        values,
+        touched,
+        errors,
+        isSubmitting
+      }) => (
+        <Form noValidate>
+          <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={handleDelete} headerText={serviceTime.name} isSubmitting={isSubmitting} headerIcon="far fa-clock">
+            <Form.Group>
+              <Form.Label htmlFor="service">Service</Form.Label>
+              <Form.Control
+                id="service"
+                name="serviceId"
+                as="select"
+                value={values.serviceId}
+                onChange={handleChange}
+                isInvalid={touched.serviceId && !!errors.serviceId}
+              >
+                {getServiceOptions()}
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {errors.serviceId}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label htmlFor="name">Service Time Name</Form.Label>
+              <Form.Control
+                id="name"
+                name="name"
+                type="text"
+                value={values.name}
+                onChange={handleChange}
+                isInvalid={touched.name && !!errors.name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </InputBox>
+        </Form>
+      )}
+    </Formik>
   );
 }
