@@ -69,7 +69,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
         isSubmitting
       }) => (
         <Form noValidate>
-          <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={handleDelete} headerText={serviceTime.name} isSubmitting={isSubmitting} headerIcon="far fa-clock">
+          <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={props.serviceTime?.id ? handleDelete : null} headerText={serviceTime.name} isSubmitting={isSubmitting} headerIcon="far fa-clock">
             <Form.Group>
               <Form.Label htmlFor="service">Service</Form.Label>
               <Form.Control
