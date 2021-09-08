@@ -74,7 +74,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         isSubmitting
       }) => (
         <Form noValidate>
-          <InputBox id="serviceBox" data-cy="service-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={handleDelete} headerText={service.name} headerIcon="far fa-calendar-alt" isSubmitting={isSubmitting}>
+          <InputBox id="serviceBox" data-cy="service-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={props.service?.id ? handleDelete : null} headerText={service.name} headerIcon="far fa-calendar-alt" isSubmitting={isSubmitting}>
             <Form.Group>
               <Form.Label htmlFor="campus">
                 Campus
