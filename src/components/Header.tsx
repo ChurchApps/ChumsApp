@@ -21,7 +21,8 @@ export const Header: React.FC = () => {
     if (UserHelper.churches.length < 2) return null;
     else {
       let result: JSX.Element[] = [];
-      UserHelper.churches.forEach(c => {
+      const churches = UserHelper.churches.filter(c => c.apis.length > 0)
+      churches.forEach(c => {
         const churchName = (c.id === UserHelper.currentChurch.id) ? (<b>{c.name}</b>) : (c.name);
         result.push(<li className="nav-tem" key={c.id}><a href="about:blank" data-id={c.id} onClick={switchChurch}><i className="fas fa-external-link-alt"></i> {churchName}</a></li>);
       });
