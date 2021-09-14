@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useLocation } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ApiHelper, UserHelper, PersonInterface } from "./components";
@@ -10,11 +10,16 @@ import ReactGA from "react-ga";
 import { EnvironmentHelper } from "./helpers";
 
 export const Login: React.FC = (props: any) => {
+  const [errors, setErrors] = React.useState<string[]>([])
   const [cookies] = useCookies();
   let { from } = (useLocation().state as any) || { from: { pathname: "/" } };
 
   const successCallback = async () => {
     try {
+      if (UserHelper.currentChurch?.apis?.length === 0) {
+        setErrors([`You don't have access of ${UserHelper.currentChurch.name}.`])
+        return
+      }
       const person: PersonInterface = await ApiHelper.get(`/people/${UserHelper.currentChurch.personId}`, "MembershipApi");
       UserHelper.person = person;
       context.setUserName(UserHelper.currentChurch.id.toString());
@@ -42,7 +47,7 @@ export const Login: React.FC = (props: any) => {
     if (!jwt) jwt = "";
     if (!auth) auth = "";
 
-    return (<LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} loginSuccessOverride={successCallback} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} />);
+    return (<LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} loginSuccessOverride={successCallback} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} callbackErrors={errors} />);
   } else {
     let path = from.pathname === "/" ? "/people" : from.pathname;
     return <Authenticated location={path}></Authenticated>;
