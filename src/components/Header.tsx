@@ -3,10 +3,12 @@ import { UserHelper, PersonHelper, NavItems } from "./";
 import UserContext from "../UserContext";
 import { Link } from "react-router-dom";
 import { Col, Container } from "react-bootstrap";
+import { useCookies } from "react-cookie"
 
 export const Header: React.FC = () => {
   const { firstName, lastName } = UserHelper.user;
   const [userName] = React.useState(UserHelper.person?.name?.display || `${firstName} ${lastName}`);
+  const [, setCookie] = useCookies(["jwt"])
 
   const context = React.useContext(UserContext);
 
@@ -15,6 +17,9 @@ export const Header: React.FC = () => {
     const id = e.currentTarget.getAttribute("data-id");
     UserHelper.selectChurch(context, id);
     UserHelper.churchChanged = true;
+    UserHelper.currentChurch.apis.forEach(api => {
+      if (api.keyName === "AccessApi") setCookie("jwt", api.jwt, { path: "/" });
+    })
   }
 
   const getChurchLinks = () => {
