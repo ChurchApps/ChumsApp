@@ -30,7 +30,6 @@ export const Login: React.FC = (props: any) => {
   }
 
   const postChurchRegister = async (church: ChurchInterface) => {
-    await ApiHelper.post("/churchApps/register", { appName: "CHUMS" }, "AccessApi");
     if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.event({ category: "Church", action: "Register" });
   }
 
