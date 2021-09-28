@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { UserHelper, Permissions, ApiHelper } from "./";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { EnvironmentHelper } from "../helpers";
 
 interface Props {
   prefix?: String;
@@ -52,7 +53,7 @@ export function NavItems({ prefix }: Props) {
   const getTabs = () => {
     let tabs = [];
     const donationIcon = donationError ? "fas fa-exclamation-circle danger-text" : "fas fa-hand-holding-usd";
-    const profileLink = UserHelper.goToAccountsApp("/profile");
+    const profileLink = UserHelper.createAppUrl(EnvironmentHelper.AccountsAppUrl, "/profile");
 
     tabs.push(getTab({ key: "People", url: "/people", icon: "fas fa-user", label: "People" }));
     tabs.push(getTab({ key: "Groups", url: "/groups", icon: "fas fa-list-ul", label: "Groups" }));
