@@ -121,6 +121,18 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
     togglePhotoEditor(true);
   }
 
+  function formattedPhoneNumber(value: string) {
+    value = value.replace(/[^0-9-]/g, "");
+    value = value.replaceAll("-", "");
+
+    if (value.length > 3 && value.length <= 6)
+      value = value.slice(0, 3) + "-" + value.slice(3);
+    else if (value.length > 6)
+      value = value.slice(0, 3) + "-" + value.slice(3, 6) + "-" + value.slice(6);
+
+    return value;
+  }
+
   React.useEffect(fetchMembers, [person]);
 
   const editForm = (
@@ -318,7 +330,10 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
                         name="contactInfo.homePhone"
                         maxLength={12} id="homePhone"
                         value={values.contactInfo?.homePhone || ""}
-                        onChange={handleChange}
+                        onChange={e => {
+                          e.target.value = formattedPhoneNumber(e.target.value)
+                          handleChange(e)
+                        }}
                         isInvalid={touched.contactInfo?.homePhone && !!errors.contactInfo?.homePhone}
                       />
                       <Form.Control.Feedback type="invalid">
@@ -333,7 +348,10 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
                         maxLength={12}
                         id="workPhone"
                         value={values.contactInfo?.workPhone || ""}
-                        onChange={handleChange}
+                        onChange={e => {
+                          e.target.value = formattedPhoneNumber(e.target.value)
+                          handleChange(e)
+                        }}
                         isInvalid={touched.contactInfo?.workPhone && !!errors.contactInfo?.workPhone}
                       />
                       <Form.Control.Feedback type="invalid">
@@ -347,7 +365,10 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
                         name="contactInfo.mobilePhone"
                         maxLength={12} id="mobilePhone"
                         value={values.contactInfo?.mobilePhone || ""}
-                        onChange={handleChange}
+                        onChange={e => {
+                          e.target.value = formattedPhoneNumber(e.target.value)
+                          handleChange(e)
+                        }}
                         isInvalid={touched.contactInfo?.mobilePhone && !!errors.contactInfo?.mobilePhone}
                       />
                       <Form.Control.Feedback type="invalid">
