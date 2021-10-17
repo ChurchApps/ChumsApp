@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { PersonHelper, DateHelper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading } from "."
 import { Redirect } from "react-router-dom";
 import { Row, Col, FormControl, FormGroup, FormLabel, Button, Form } from "react-bootstrap";
@@ -21,7 +21,7 @@ const schema = yup.object().shape({
 interface Props {
   id?: string,
   updatedFunction: () => void,
-  togglePhotoEditor: (show: boolean) => void,
+  togglePhotoEditor: (show: boolean, inProgressEditPerson: PersonInterface) => void,
   person: PersonInterface,
   showMergeSearch: () => void
 }
@@ -32,6 +32,7 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
   const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
   const [text, setText] = useState("");
   const [members, setMembers] = useState<PersonInterface[]>(null);
+  const formRef = useRef(null)
 
   const initialValues: PersonInterface = {
     name: {
@@ -118,7 +119,8 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
 
   function handlePhotoClick(e: React.MouseEvent) {
     e.preventDefault();
-    togglePhotoEditor(true);
+    const values = formRef.current.values
+    togglePhotoEditor(true, values);
   }
 
   function formattedPhoneNumber(value: string) {
@@ -144,6 +146,7 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
           onSubmit={handleSave}
           initialValues={initialValues}
           enableReinitialize={true}
+          innerRef={formRef}
         >
           {({
             handleSubmit,

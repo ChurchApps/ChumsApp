@@ -4,7 +4,7 @@ import { PersonView, PersonEdit, PersonInterface, UserHelper, Permissions } from
 interface Props {
   id?: string
   person: PersonInterface,
-  togglePhotoEditor: (show: boolean) => void,
+  togglePhotoEditor: (show: boolean, inProgressEditPerson: PersonInterface) => void,
   updatedFunction: () => void,
   showMergeSearch: () => void
 }

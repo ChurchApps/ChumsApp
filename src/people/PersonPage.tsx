@@ -25,7 +25,12 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
     setInPhotoEditMode(false);
   }
 
-  const togglePhotoEditor = (show: boolean) => { setInPhotoEditMode(show); }
+  const togglePhotoEditor = (show: boolean, updatedPerson?: PersonInterface) => {
+    setInPhotoEditMode(show);
+    if (updatedPerson) {
+      setPerson(updatedPerson)
+    }
+  }
 
   const imageEditor = inPhotoEditMode && (
     <ImageEditor updatedFunction={handlePhotoUpdated} person={person} onCancel={() => togglePhotoEditor(false)} />
