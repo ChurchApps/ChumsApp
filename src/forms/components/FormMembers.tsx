@@ -27,7 +27,7 @@ export const FormMembers: React.FC<Props> = (props) => {
       action: "view",
       personName: p.name.display
     };
-    ApiHelper.post("/memberpermissions", [newMember], "MembershipApi").then(result => {
+    ApiHelper.post("/memberpermissions?formId=" + props.formId, [newMember], "MembershipApi").then(result => {
       let fm = [...formMembers];
       fm.push(result[0]);
       setFormMembers(fm);
@@ -36,18 +36,16 @@ export const FormMembers: React.FC<Props> = (props) => {
   }
 
   const handleActionChange = (personId: string, action: string) => {
-    // let member = formMembers.find(member => member.memberId === personId);
-    // member.action = "admin";
     let member;
     let fm = [...formMembers];
     fm.map((p: MemberPermissionInterface) => {
       if (p.memberId === personId) {
-        console.log(p);
         p.action = action;
         member = p;
       }
+      return p;
     });
-    ApiHelper.post("/memberpermissions", [member], "MembershipApi");
+    ApiHelper.post("/memberpermissions?formId=" + props.formId, [member], "MembershipApi");
     setFormMembers(fm);
   }
 
@@ -56,16 +54,12 @@ export const FormMembers: React.FC<Props> = (props) => {
     let fm = [...formMembers];
     fm = fm.filter((p: MemberPermissionInterface) => p.memberId !== personId);
     setFormMembers(fm);
-    ApiHelper.delete("/memberpermissions/member/" + personId, "MembershipApi");
+    ApiHelper.delete("/memberpermissions/member/" + personId + "?formId=" + props.formId, "MembershipApi");
   }
 
   const getRows = () => {
-    // let canEdit = UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit);
-    let canEdit = props.formId || true;
     let rows: JSX.Element[] = [];
     formMembers.forEach(fm => {
-      // let makeAdminLink = (canEdit && fm.action === "view") ? <a href="about:blank" onClick={(e) => { e.preventDefault(); handleSetAdmin(fm.memberId); }} data-index={fm.id}>Make Admin</a> : <></>
-      // );
       rows.push(
         <tr key={fm.memberId}>
           <td><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></td>
@@ -105,19 +99,17 @@ export const FormMembers: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.formId]);
 
   return (
-    <>
-      <Row>
-        <Col lg={8}>
-          <DisplayBox headerText="Form Members" headerIcon="fas fa-users">
-            {getTable()}
-          </DisplayBox>
-        </Col>
-        <Col lg={4}>
-          <DisplayBox headerText="Add Person" headerIcon="fas fa-users">
-            <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} filterList={filterList} />
-          </DisplayBox>
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col lg={8}>
+        <DisplayBox headerText="Form Members" headerIcon="fas fa-users">
+          {getTable()}
+        </DisplayBox>
+      </Col>
+      <Col lg={4}>
+        <DisplayBox headerText="Add Person" headerIcon="fas fa-users">
+          <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} filterList={filterList} />
+        </DisplayBox>
+      </Col>
+    </Row>
   );
 }

@@ -5,7 +5,6 @@ import { Row, Col } from "react-bootstrap";
 interface Props {
     formSubmissionId: string,
     editFunction: (formSubmissionId: string) => void
-
 }
 
 export const FormSubmission: React.FC<Props> = (props) => {
@@ -13,7 +12,7 @@ export const FormSubmission: React.FC<Props> = (props) => {
 
   const handleEdit = (e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); props.editFunction(props.formSubmissionId); }
   const getEditLink = () => {
-    if (!UserHelper.checkAccess(Permissions.membershipApi.forms.edit)) return null;
+    if (!UserHelper.checkAccess(Permissions.membershipApi.forms.access)) return null;
     else return (<a href="about:blank" className="fa-pull-right" onClick={handleEdit}><i className="fas fa-pencil-alt"></i></a>);
   }
   const loadData = () => {

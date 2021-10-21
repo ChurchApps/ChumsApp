@@ -8,6 +8,7 @@ interface Props {
 }
 
 export function PeopleSearchResults({ people }: Props) {
+  console.log(people);
   const rows = people?.map(p => (
     <tr key={p.id}>
       <td><img src={PersonHelper.getPhotoUrl(p)} alt="avatar" /></td>

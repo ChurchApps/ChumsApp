@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, UserHelper, FormInterface, QuestionInterface, FormQuestionEdit, Permissions, Loading } from ".";
+import { ApiHelper, DisplayBox, FormInterface, QuestionInterface, FormQuestionEdit, Permissions, Loading, UserHelper } from ".";
 import { Row, Col, Table } from "react-bootstrap";
 
 interface Props { id: string }
@@ -44,7 +44,7 @@ export const Form: React.FC<Props> = (props) => {
   const getRows = () => {
     const rows: JSX.Element[] = [];
     if (questions.length === 0) {
-      rows.push(<tr key="0"><td>No custom questions have been created yet.  Questions will be listed here.</td></tr>);
+      rows.push(<tr key="0"><td>No custom questions have been created yet. Questions will be listed here.</td></tr>);
       return rows;
     }
     for (let i = 0; i < questions.length; i++) {
@@ -55,6 +55,7 @@ export const Form: React.FC<Props> = (props) => {
           <td><a href="about:blank" onClick={handleClick}>{questions[i].title}</a></td>
           <td>{questions[i].fieldType}</td>
           <td style={{ textAlign: "left" }}>{upArrow}{downArrow}</td>
+          <td>{questions[i].required ? "Yes" : "No"}</td>
         </tr>
       );
     }
@@ -65,7 +66,7 @@ export const Form: React.FC<Props> = (props) => {
     if (questions.length === 0) {
       return rows;
     }
-    rows.push(<tr key="header"><th>Question</th><th>Type</th><th>Action</th></tr>);
+    rows.push(<tr key="header"><th>Question</th><th>Type</th><th>Action</th><th>Required</th></tr>);
     return rows;
   }
   const getSidebarModules = () => {
@@ -73,8 +74,10 @@ export const Form: React.FC<Props> = (props) => {
     if (editQuestionId !== "notset") result.push(<FormQuestionEdit key="form-questions" questionId={editQuestionId} updatedFunction={questionUpdated} formId={form.id} />)
     return result;
   }
+
   React.useEffect(loadData, []);
-  if (!UserHelper.checkAccess(Permissions.membershipApi.forms.edit)) return (<></>);
+
+  if (!UserHelper.checkAccess(Permissions.membershipApi.forms.access)) return (<></>);
   else {
     let contents = <Loading />
     if (questions) {

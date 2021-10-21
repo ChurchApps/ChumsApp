@@ -85,8 +85,8 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   }, []);
 
   useEffect(determineUnsubmitted, [allForms, props]);
-
-  if (!UserHelper.checkAccess(Permissions.membershipApi.forms.view)) return <></>
+  //add unRestrictedFormId=""
+  if (!UserHelper.checkAccess(Permissions.membershipApi.forms.access)) return <></>
   if (mode === "edit") return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={selectedFormId} contentType={props.contentType} contentId={props.contentId} />;
   else return <div className="accordion" id="formSubmissionsAccordion">{getCards()}</div>;
 }
