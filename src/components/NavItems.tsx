@@ -39,7 +39,7 @@ export function NavItems({ prefix }: Props) {
         if (data?.length > 0 && data.find((error: any) => !error.resolved)) setDonationError(true);
       });
     }
-    if (!UserHelper.checkAccess(Permissions.membershipApi.forms.access)) {
+    if (!UserHelper.checkAccess(Permissions.membershipApi.forms.access) && UserHelper?.person?.id) {
       ApiHelper.get("/memberpermissions/member/" + UserHelper.person.id, "MembershipApi").then(data => setIsFormMember(data.length));
     }
   }, []);
