@@ -12,14 +12,14 @@ export const FormsPage = () => {
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const loadData = () => {
-    ApiHelper.get("/forms", "MembershipApi").then(data => setForms(data));
+    ApiHelper.get("/forms", "MembershipApi").then(data => {if (isSubscribed.current) { setForms(data) }});
     ApiHelper.get("/forms/archived", "MembershipApi").then(data => {if (isSubscribed.current) { setArchivedForms(data) }});
   }
 
   const getRows = () => {
     let result: JSX.Element[] = [];
     if (!forms.length) {
-      result.push(<tr key="0"><td>No custom forms have been created yet. They will appear here when added. --- USER: {UserHelper?.person?.name?.display} == {UserHelper?.user?.id} == ADMIN: { "" + UserHelper.checkAccess(Permissions.membershipApi.forms.admin) } EDIT: { "" + UserHelper.checkAccess(Permissions.membershipApi.forms.edit) }</td></tr>);
+      result.push(<tr key="0"><td>No custom forms have been created yet. They will appear here when added.</td></tr>);
       return result;
     }
 
