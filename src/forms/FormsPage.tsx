@@ -19,7 +19,7 @@ export const FormsPage = () => {
   const getRows = () => {
     let result: JSX.Element[] = [];
     if (!forms.length) {
-      result.push(<tr key="0"><td>No custom forms have been created yet. They will appear here when added. --- USER: {UserHelper.person.name.display} == {UserHelper.user.id} == ADMIN: {UserHelper.checkAccess(Permissions.membershipApi.forms.admin) } EDIT: { UserHelper.checkAccess(Permissions.membershipApi.forms.edit) }</td></tr>);
+      result.push(<tr key="0"><td>No custom forms have been created yet. They will appear here when added. --- USER: {UserHelper?.person?.name?.display} == {UserHelper?.user?.id} == ADMIN: {UserHelper.checkAccess(Permissions.membershipApi.forms.admin) } EDIT: { UserHelper.checkAccess(Permissions.membershipApi.forms.edit) }</td></tr>);
       return result;
     }
 
