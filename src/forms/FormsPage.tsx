@@ -12,7 +12,7 @@ export const FormsPage = () => {
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const loadData = () => {
-    ApiHelper.get("/forms", "MembershipApi").then(data => {if (isSubscribed.current) { setForms(data) }});
+    ApiHelper.get("/forms", "MembershipApi").then(data => setForms(data));
     ApiHelper.get("/forms/archived", "MembershipApi").then(data => {if (isSubscribed.current) { setArchivedForms(data) }});
   }
 
