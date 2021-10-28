@@ -15,6 +15,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   const [allForms, setAllForms] = useState(null);
   const [unsubmittedForms, setUnsubmittedForms] = useState([]);
   const [selectedFormId, setSelectedFormId] = useState<string>("");
+  const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const handleEdit = (formSubmissionId: string) => { setMode("edit"); setEditFormSubmissionId(formSubmissionId); }
 
@@ -86,7 +87,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
 
   useEffect(determineUnsubmitted, [allForms, props]);
   //add unRestrictedFormId=""
-  if (!UserHelper.checkAccess(Permissions.membershipApi.forms.access)) return <></>
+  if (!formPermission) return <></>
   if (mode === "edit") return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={selectedFormId} contentType={props.contentType} contentId={props.contentId} />;
   else return <div className="accordion" id="formSubmissionsAccordion">{getCards()}</div>;
 }

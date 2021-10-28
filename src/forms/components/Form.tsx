@@ -8,6 +8,7 @@ export const Form: React.FC<Props> = (props) => {
   const [form, setForm] = React.useState<FormInterface>({} as FormInterface);
   const [questions, setQuestions] = React.useState<QuestionInterface[]>(null);
   const [editQuestionId, setEditQuestionId] = React.useState("notset");
+  const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
   const questionUpdated = () => { loadQuestions(); setEditQuestionId("notset"); }
   const loadData = () => { ApiHelper.get("/forms/" + props.id, "MembershipApi").then(data => setForm(data)); loadQuestions(); }
   const loadQuestions = () => ApiHelper.get("/questions?formId=" + props.id, "MembershipApi").then(data => setQuestions(data));
@@ -77,7 +78,7 @@ export const Form: React.FC<Props> = (props) => {
 
   React.useEffect(loadData, []);
 
-  if (!UserHelper.checkAccess(Permissions.membershipApi.forms.access)) return (<></>);
+  if (!formPermission) return (<></>);
   else {
     let contents = <Loading />
     if (questions) {

@@ -8,7 +8,8 @@ export const FormsPage = () => {
   const [archivedForms, setArchivedForms] = React.useState<FormInterface[]>(null);
   const [selectedFormId, setSelectedFormId] = React.useState("notset");
   const [selectedTab, setSelectedTab] = React.useState("forms");
-  const isSubscribed = useRef(true)
+  const isSubscribed = useRef(true);
+  const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const loadData = () => {
     ApiHelper.get("/forms", "MembershipApi").then(data => {if (isSubscribed.current) { setForms(data) }});
@@ -24,7 +25,11 @@ export const FormsPage = () => {
 
     const formData = (selectedTab === "forms") ? forms : archivedForms;
     formData.forEach((form: FormInterface) => {
-      const canEdit = UserHelper.checkAccess(Permissions.membershipApi.forms.access) || form?.action === "admin";
+      const canEdit = (
+        UserHelper.checkAccess(Permissions.membershipApi.forms.admin)
+        || (UserHelper.checkAccess(Permissions.membershipApi.forms.edit) && form.contentType !== "form")
+        || form?.action === "admin"
+      );
       const editLink = (canEdit && selectedTab === "forms") ? (<button aria-label="editForm" className="no-default-style" onClick={() => { setSelectedFormId(form.id); }}><i className="fas fa-pencil-alt"></i></button>) : null;
       const formUrl = EnvironmentHelper.B1Url.replace("{key}", UserHelper.currentChurch.subDomain) + "/forms/" + form.id;
       const formLink = (form.contentType === "form") ? <a href={formUrl}>{formUrl}</a> : null;
@@ -73,7 +78,7 @@ export const FormsPage = () => {
   }
 
   const getEditContent = () => {
-    if (!UserHelper.checkAccess(Permissions.membershipApi.forms.access) || selectedTab === "archived") return null;
+    if (!formPermission || selectedTab === "archived") return null;
     else return (<button aria-label="addForm" className="no-default-style" onClick={() => { setSelectedFormId(""); }}><i className="fas fa-plus"></i></button>);
   }
 

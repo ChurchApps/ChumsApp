@@ -9,10 +9,11 @@ interface Props {
 
 export const FormSubmission: React.FC<Props> = (props) => {
   const [formSubmission, setFormSubmission] = React.useState(null);
+  const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const handleEdit = (e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); props.editFunction(props.formSubmissionId); }
   const getEditLink = () => {
-    if (!UserHelper.checkAccess(Permissions.membershipApi.forms.access)) return null;
+    if (!formPermission) return null;
     else return (<a href="about:blank" className="fa-pull-right" onClick={handleEdit}><i className="fas fa-pencil-alt"></i></a>);
   }
   const loadData = () => {

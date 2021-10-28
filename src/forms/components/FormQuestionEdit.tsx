@@ -25,7 +25,7 @@ export function FormQuestionEdit({ questionId, formId, updatedFunction }: Props)
   }
 
   function handleSave(data: QuestionInterface) {
-    ApiHelper.post("/questions?formId=" + formId, [data], "MembershipApi").then(() => updatedFunction());
+    ApiHelper.post("/questions/", [data], "MembershipApi").then(() => updatedFunction());
   }
 
   function handleDelete() {

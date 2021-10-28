@@ -18,7 +18,7 @@ export const Tabs: React.FC<Props> = (props) => {
   const formType = props.form.contentType;
   const formMemberAction = props.memberPermission.action;
   const formAdmin = UserHelper.checkAccess(Permissions.membershipApi.forms.admin);
-  const formEdit = UserHelper.checkAccess(Permissions.membershipApi.forms.create) && formType !== undefined && formType !== "form";
+  const formEdit = UserHelper.checkAccess(Permissions.membershipApi.forms.edit) && formType !== undefined && formType !== "form";
   const formMemberAdmin = formMemberAction === "admin" && formType !== undefined && formType === "form";
   const formMemberView = formMemberAction === "view" && formType !== undefined && formType === "form";
 
