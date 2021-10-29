@@ -574,3 +574,17 @@ label .description {
 .form-control.is-invalid {
   background-image: none;
 }
+
+.table-scroll-x {
+  display: block;
+  max-width: fit-content;
+  margin: 0 auto;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+@media print {
+  .form-submission-summary {
+    margin: 20px;
+  }
+}

@@ -17,20 +17,20 @@ interface Props {
 
 export function FormQuestionEdit({ questionId, formId, updatedFunction }: Props) {
   const [question, setQuestion] = useState<QuestionInterface>({} as QuestionInterface);
-  const initialValues: QuestionInterface = { title: "", fieldType: "Textbox", placeholder: "", description: "", choices: null, ...question }
+  const initialValues: QuestionInterface = { title: "", fieldType: "Textbox", placeholder: "", required: false, description: "", choices: null, ...question }
 
   function loadData() {
-    if (questionId) ApiHelper.get("/questions/" + questionId, "MembershipApi").then((data: QuestionInterface) => setQuestion(data));
+    if (questionId) ApiHelper.get("/questions/" + questionId + "?formId=" + formId, "MembershipApi").then((data: QuestionInterface) => setQuestion(data));
     else setQuestion({ formId: formId, fieldType: "Textbox" } as QuestionInterface);
   }
 
   function handleSave(data: QuestionInterface) {
-    ApiHelper.post("/questions", [data], "MembershipApi").then(() => updatedFunction());
+    ApiHelper.post("/questions/", [data], "MembershipApi").then(() => updatedFunction());
   }
 
   function handleDelete() {
     if (window.confirm("Are you sure you wish to permanently delete this question?")) {
-      ApiHelper.delete("/questions/" + question.id, "MembershipApi").then(updatedFunction);
+      ApiHelper.delete("/questions/" + question.id + "/?formId=" + formId, "MembershipApi").then(updatedFunction);
     }
   }
 
@@ -46,6 +46,7 @@ export function FormQuestionEdit({ questionId, formId, updatedFunction }: Props)
       {({
         handleSubmit,
         handleChange,
+        setFieldValue,
         values,
         touched,
         errors,
@@ -111,6 +112,15 @@ export function FormQuestionEdit({ questionId, formId, updatedFunction }: Props)
                   </Form.Group>
                 )
             }
+            <Form.Group controlId="formBasicCheckbox">
+              <Form.Check
+                type="checkbox"
+                checked={values.required}
+                name="required"
+                label="Require an answer for this question"
+                onChange={(e: React.FormEvent<HTMLInputElement>) => setFieldValue("required", e.currentTarget.checked)}
+              />
+            </Form.Group>
           </InputBox>
         </Form>
       )}

@@ -201,6 +201,7 @@ export const ImportStatus: React.FC<Props> = (props) => {
       tmpQuestions.forEach(q => {
         q.formId = ImportHelper.getByImportKey(tmpForms, q.formKey).id;
       })
+      // Update with formId qs
       await ApiHelper.post("/questions", tmpQuestions, "MembershipApi").then(result => {
         for (let i = 0; i < result.length; i++) tmpQuestions[i].id = result[i].id;
       })
