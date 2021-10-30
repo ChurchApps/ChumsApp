@@ -412,6 +412,10 @@ h1 {
   color: #999;
 }
 
+.inputBox .content .dark label {
+  color: #495057;
+}
+
 .inputBox .section {
   font-weight: 600;
   font-size: 16px;
