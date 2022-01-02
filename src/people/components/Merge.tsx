@@ -11,11 +11,11 @@ import {
   DonationInterface,
   FormSubmissionInterface
 } from "."
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
-    hideMergeBox: () => void,
-    person: PersonInterface,
+  hideMergeBox: () => void,
+  person: PersonInterface,
 }
 
 export const Merge: React.FunctionComponent<Props> = (props) => {
@@ -23,7 +23,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
   const [showMergeModal, setShowMergeModal] = React.useState<boolean>(false);
   const [personToMerge, setPersonToMerge] = React.useState<PersonInterface>(null);
   const [mergeInProgress, setMergeInProgress] = React.useState<boolean>(false);
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const handleSave = () => {
     props.hideMergeBox();
@@ -141,7 +141,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
       promises.push(ApiHelper.delete(`/people/${id}`, "MembershipApi"));
       Promise.all(promises).then(() => {
         setShowMergeModal(false);
-        history.push("/people");
+        navigate("/people");
         setMergeInProgress(false);
       })
     } catch (err) {

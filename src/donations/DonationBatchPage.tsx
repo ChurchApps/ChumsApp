@@ -1,11 +1,10 @@
 import React from "react";
 import { ApiHelper, DonationEdit, DonationBatchInterface, UserHelper, Donations, FundInterface, Permissions } from "./components";
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
-type TParams = { id?: string };
-
-export const DonationBatchPage = ({ match }: RouteComponentProps<TParams>) => {
+export const DonationBatchPage = () => {
+  const params = useParams();
   const [editDonationId, setEditDonationId] = React.useState("notset");
   const [batch, setBatch] = React.useState<DonationBatchInterface>({});
   const [funds, setFunds] = React.useState<FundInterface[]>([]);
@@ -15,7 +14,7 @@ export const DonationBatchPage = ({ match }: RouteComponentProps<TParams>) => {
   const donationUpdated = () => { setEditDonationId("notset"); loadData(); }
 
   const loadData = () => {
-    ApiHelper.get("/donationbatches/" + match.params.id, "GivingApi").then(data => setBatch(data));
+    ApiHelper.get("/donationbatches/" + params.id, "GivingApi").then(data => setBatch(data));
     ApiHelper.get("/funds", "GivingApi").then(data => setFunds(data));
   }
 
@@ -25,7 +24,7 @@ export const DonationBatchPage = ({ match }: RouteComponentProps<TParams>) => {
     return result;
   }
 
-  React.useEffect(loadData, [match.params.id]);
+  React.useEffect(loadData, [params.id]);
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return (<></>);
   return (

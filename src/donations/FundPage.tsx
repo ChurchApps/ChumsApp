@@ -1,11 +1,10 @@
 import React from "react";
 import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper } from "./components";
-import { RouteComponentProps, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Row, Col, FormGroup, FormControl, FormLabel, Table } from "react-bootstrap";
 
-type TParams = { id?: string };
-
-export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
+export const FundPage = () => {
+  const params = useParams();
   let initialDate = new Date();
   initialDate.setDate(initialDate.getDate() - 7);
 
@@ -18,12 +17,12 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
   const getEditContent = () => (<ExportLink data={fundDonations} spaceAfter={true} filename="funddonations.csv" />)
 
   const loadData = () => {
-    ApiHelper.get("/funds/" + match.params.id, "GivingApi").then(data => { setFund(data) });
+    ApiHelper.get("/funds/" + params.id, "GivingApi").then(data => { setFund(data) });
     loadDonations();
   }
 
   const loadDonations = () => {
-    ApiHelper.get("/funddonations?fundId=" + match.params.id + "&startDate=" + DateHelper.formatHtml5Date(startDate) + "&endDate=" + DateHelper.formatHtml5Date(endDate), "GivingApi")
+    ApiHelper.get("/funddonations?fundId=" + params.id + "&startDate=" + DateHelper.formatHtml5Date(startDate) + "&endDate=" + DateHelper.formatHtml5Date(endDate), "GivingApi")
       .then((d: FundDonationInterface[]) => {
         // fetch people who have made donations if any
         const peopleIds = ArrayHelper.getUniqueValues(d, "donation.personId").filter(f => f !== null);
@@ -88,7 +87,7 @@ export const FundPage = ({ match }: RouteComponentProps<TParams>) => {
     return rows;
   }
 
-  React.useEffect(loadData, [match.params.id]);
+  React.useEffect(loadData, [params.id]);
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return (<></>);
   else {

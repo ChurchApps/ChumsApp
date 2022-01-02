@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { PersonHelper, DateHelper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading } from "."
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Row, Col, FormControl, FormGroup, FormLabel, Button, Form } from "react-bootstrap";
 import * as yup from "yup"
 import { Formik, FormikHelpers } from "formik"
@@ -70,7 +70,7 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
     if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {
       setText(`You updated the address to ${PersonHelper.addressToString(data.contactInfo)} for ${data.name.display}.  Would you like to apply that to the entire ${data.name.last} family?`)
       setShowUpdateAddressModal(true)
-      setUpdatedPerson({...data})
+      setUpdatedPerson({ ...data })
       return;
     }
     await updatePerson(data)
@@ -387,7 +387,7 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
       )
   )
 
-  if (redirect !== "") return <Redirect to={redirect} />
+  if (redirect !== "") return <Navigate to={redirect} />
   else {
     return (
       <>

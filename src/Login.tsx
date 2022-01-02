@@ -49,6 +49,6 @@ export const Login: React.FC = (props: any) => {
     return (<LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} loginSuccessOverride={successCallback} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} callbackErrors={errors} />);
   } else {
     let path = from.pathname === "/" ? "/people" : from.pathname;
-    return <Authenticated location={path}></Authenticated>;
+    return <Authenticated />;
   }
 };

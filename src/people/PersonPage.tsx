@@ -1,11 +1,12 @@
 import React from "react";
 import { Person, Groups, Tabs, Household, ImageEditor, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, AddNote, NoteInterface } from "./components"
 import { Row, Col } from "react-bootstrap";
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 type TParams = { id?: string };
 
-export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
+export const PersonPage = () => {
+  const params = useParams();
   const [person, setPerson] = React.useState<PersonInterface>(null);
   const [notes, setNotes] = React.useState<NoteInterface[]>(null)
   const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
@@ -13,10 +14,10 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
   const [showNoteBox, setShowNoteBox] = React.useState<boolean>(false);
   const [noteId, setNoteId] = React.useState<string>("");
 
-  const loadData = () => { ApiHelper.get("/people/" + match.params.id, "MembershipApi").then(data => setPerson(data)); }
+  const loadData = () => { ApiHelper.get("/people/" + params.id, "MembershipApi").then(data => setPerson(data)); }
 
   const handlePhotoUpdated = (dataUrl: string) => {
-    const updatedPerson = {...person};
+    const updatedPerson = { ...person };
     updatedPerson.photo = dataUrl;
     if (!dataUrl) {
       updatedPerson.photoUpdated = null;
@@ -57,7 +58,7 @@ export const PersonPage = ({ match }: RouteComponentProps<TParams>) => {
   };
 
   const addMergeSearch = (showMergeSearch) ? <Merge hideMergeBox={hideMergeBox} person={person} /> : <></>;
-  React.useEffect(loadData, [match.params.id]);
+  React.useEffect(loadData, [params.id]);
   React.useEffect(loadNotes, [person?.id]);
 
   return (

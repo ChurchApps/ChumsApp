@@ -2,7 +2,7 @@ import React from "react";
 import UserContext from "./UserContext";
 
 import { ApiHelper } from "./components";
-import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Login } from "./Login";
 
 import { Authenticated } from "./Authenticated";
@@ -24,21 +24,18 @@ export const ControlPanel = () => {
   let user = React.useContext(UserContext).userName; //to force rerender on login
   if (user === null) return null;
   return (
-    <Switch>
+    <Routes>
       <Route path="/logout">
         <Logout />
       </Route>
-      <Route path="/login" component={Login}></Route>
-      <PrivateRoute path="/"></PrivateRoute>
-    </Switch>
+      <Route path="/login" element={<Login />} />
+      {getAuth()}
+    </Routes>
   );
 };
 
-const PrivateRoute: React.FC<Props> = ({ path }) => (
-  <Route
-    path={path}
-    render={({ location }) => (ApiHelper.isAuthenticated)
-      ? (<Authenticated location={location.pathname}></Authenticated>)
-      : (<Redirect to={{ pathname: "/login", state: { from: location } }}></Redirect>)}
-  ></Route>
-);
+const getAuth = () => {
+  if (ApiHelper.isAuthenticated) return <Route path="/*" element={<Authenticated />}></Route>
+  else return <Route path="/" element={<Navigate replace to="/login" />}></Route>
+}
+

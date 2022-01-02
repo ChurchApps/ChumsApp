@@ -1,6 +1,6 @@
 import React from "react";
 import { ApiHelper, GroupInterface, InputBox, ErrorMessages, ServiceTimesEdit } from ".";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Row, Col, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
 interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }
@@ -49,7 +49,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
 
   React.useEffect(() => { setGroup(props.group) }, [props.group]);
 
-  if (redirect !== "") return <Redirect to={redirect} />
+  if (redirect !== "") return <Navigate to={redirect} />
   else return (
     <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="fas fa-list" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
       <ErrorMessages errors={errors} />
