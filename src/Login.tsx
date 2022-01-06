@@ -40,7 +40,7 @@ export const Login: React.FC = (props: any) => {
   const context = React.useContext(UserContext);
 
   if (context.userName === "" || !ApiHelper.isAuthenticated) {
-    let search = new URLSearchParams(props.location.search);
+    let search = new URLSearchParams(window.location.search);
     let jwt = search.get("jwt") || cookies.jwt;
     let auth = search.get("auth");
     if (!jwt) jwt = "";

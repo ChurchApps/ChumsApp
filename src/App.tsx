@@ -9,11 +9,10 @@ const App: React.FC = () => (
     <CookiesProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<ControlPanel />}></Route>
+          <Route path="/*" element={<ControlPanel />} />
         </Routes>
       </Router>
     </CookiesProvider>
   </UserProvider>
-)
+);
 export default App;
-

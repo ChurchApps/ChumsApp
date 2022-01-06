@@ -25,9 +25,7 @@ export const ControlPanel = () => {
   if (user === null) return null;
   return (
     <Routes>
-      <Route path="/logout">
-        <Logout />
-      </Route>
+      <Route path="/logout" element={<Logout />} />
       <Route path="/login" element={<Login />} />
       {getAuth()}
     </Routes>
