@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { Header, UserHelper } from "./components";
 import { PeoplePage } from "./people/PeoplePage";
 import { PersonPage } from "./people/PersonPage";
@@ -15,20 +15,20 @@ import { FormPage } from "./forms/FormPage";
 // import UserContext from "./UserContext";
 
 export const Authenticated: React.FC = () => {
+  const navigate = useNavigate()
   //to force rerender on login
   // var user = React.useContext(UserContext)?.userName;
   // var church = React.useContext(UserContext)?.churchName;
 
   if (UserHelper.churchChanged) {
     UserHelper.churchChanged = false;
-    return <Navigate to="/people" />
+    navigate("/people")
   }
   else return (
     <>
       <Header></Header>
       <div className="container">
         <Routes>
-          <Route path="/login" element={<Navigate to={window.location.pathname} />} />
           <Route path="/people/:id" element={<PersonPage />} />
           <Route path="/people" element={<PeoplePage />} />
           <Route path="/groups/:id" element={<GroupPage />} />

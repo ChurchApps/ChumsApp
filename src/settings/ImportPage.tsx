@@ -48,10 +48,10 @@ export const ImportPage = () => {
   }
 
   const readZip = async (file: File) => {
-    let buffer = new Buffer(await file.arrayBuffer());
-    let zip = new AdmZip(buffer)
-    let entries = zip.getEntries();
-    runImports(entries)
+    // let buffer = new Buffer(await file.arrayBuffer());
+    // let zip = new AdmZip(buffer)
+    // let entries = zip.getEntries();
+    // runImports(entries)
   }
 
   const runImports = async (files: AdmZip.IZipEntry[]) => {

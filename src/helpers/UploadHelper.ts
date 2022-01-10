@@ -5,14 +5,14 @@ import FileSaver from "file-saver";
 export class UploadHelper {
 
   static zipFiles(files: { name: string, contents: string | Buffer }[], zipFileName: string) {
-    let zip = new AdmZip();
-    files.forEach((f) => {
-      if (typeof f.contents === "string") zip.addFile(f.name, Buffer.alloc(f.contents.length, f.contents));
-      else zip.addFile(f.name, f.contents as Buffer);
-    });
-    let buffer = zip.toBuffer();
-    let blob = new Blob([buffer], { type: "applicatoin/zip" });
-    FileSaver.saveAs(blob, zipFileName);
+    // let zip = new AdmZip();
+    // files.forEach((f) => {
+    //   if (typeof f.contents === "string") zip.addFile(f.name, Buffer.alloc(f.contents.length, f.contents));
+    //   else zip.addFile(f.name, f.contents as Buffer);
+    // });
+    // let buffer = zip.toBuffer();
+    // let blob = new Blob([buffer], { type: "applicatoin/zip" });
+    // FileSaver.saveAs(blob, zipFileName);
   }
 
   static downloadImageBytes(files: { name: string, contents: string | Buffer }[], name: string, url: string) {

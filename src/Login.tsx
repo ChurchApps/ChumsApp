@@ -1,8 +1,7 @@
 import * as React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ApiHelper, UserHelper, PersonInterface } from "./components";
-import { Authenticated } from "./Authenticated";
 import UserContext from "./UserContext";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { ChurchInterface, UserInterface } from "./helpers";
@@ -12,7 +11,7 @@ import { EnvironmentHelper } from "./helpers";
 export const Login: React.FC = (props: any) => {
   const [errors, setErrors] = React.useState<string[]>([])
   const [cookies] = useCookies();
-  let { from } = (useLocation().state as any) || { from: { pathname: "/" } };
+  const location = useLocation();
 
   const successCallback = async () => {
     try {
@@ -48,7 +47,8 @@ export const Login: React.FC = (props: any) => {
 
     return (<LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} loginSuccessOverride={successCallback} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} callbackErrors={errors} />);
   } else {
-    let path = from.pathname === "/" ? "/people" : from.pathname;
-    return <Authenticated />;
+    // @ts-ignore
+    let from = location.state?.from?.pathname || "/people";
+    return <Navigate to={from} replace />;
   }
 };

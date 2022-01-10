@@ -21,6 +21,7 @@
     "date-fns": "^2.28.0",
     "file-saver": "^2.0.5",
     "formik": "^2.2.9",
+    "jszip": "^3.7.1",
     "jwt-decode": "^3.1.2",
     "original-fs": "^1.1.0",
     "papaparse": "^5.3.1",
