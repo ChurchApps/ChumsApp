@@ -39,7 +39,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/donations" element={<DonationsPage />} />
           <Route path="/forms/:id" element={<FormPage />} />
           <Route path="/forms" element={<FormsPage />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/*" element={<Settings />} />
         </Routes>
       </div>
     </>
