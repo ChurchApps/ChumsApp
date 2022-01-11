@@ -52,7 +52,7 @@ export const ExportPage = () => {
 
       return (
         <DisplayBox headerText="Export" headerIcon="fas fa-download">
-                    Exporting content:
+          Exporting content:
           <ul className="statusList">{stepsHtml}</ul>
           <p>This process may take some time.  It is important that you do not close your browser until it has finished.</p>
         </DisplayBox>
@@ -257,13 +257,15 @@ export const ExportPage = () => {
     visitSessions.forEach((vs) => {
       let visit: ImportVisitInterface = ImportHelper.getById(visits, vs.visitId);
       let session: ImportSessionInterface = ImportHelper.getById(sessions, vs.sessionId);
-      let row = {
-        date: visit.visitDate,
-        serviceTimeKey: session.serviceTimeId,
-        groupKey: session.groupId,
-        personKey: visit.personId
+      if (visit && session) {
+        let row = {
+          date: visit.visitDate,
+          serviceTimeKey: session.serviceTimeId,
+          groupKey: session.groupId,
+          personKey: visit.personId
+        }
+        data.push(row);
       }
-      data.push(row);
     });
     setProgress("Attendance", "complete");
     return Papa.unparse(data);
