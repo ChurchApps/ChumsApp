@@ -10,7 +10,7 @@ import {
   , ImportQuestionsInterface, ImportFormSubmissions, ImportAnswerInterface
 } from "../helpers/ImportHelper";
 import { Row, Col } from "react-bootstrap";
-import AdmZip from "adm-zip";
+import JSZip from "jszip";
 
 export const ImportPage = () => {
   const [people, setPeople] = React.useState<ImportPersonInterface[]>([]);
@@ -48,23 +48,18 @@ export const ImportPage = () => {
   }
 
   const readZip = async (file: File) => {
-    let buffer = new Buffer(await file.arrayBuffer());
-    let zip = new AdmZip(buffer)
-    let entries = zip.getEntries();
-    runImports(entries)
-  }
+    const zip = await JSZip.loadAsync(file);
 
-  const runImports = async (files: AdmZip.IZipEntry[]) => {
-    loadPeople(UploadHelper.readZippedCsv(files, "people.csv"), files);
-    let tmpServiceTimes = loadServiceTimes(UploadHelper.readZippedCsv(files, "services.csv"));
-    loadGroups(UploadHelper.readZippedCsv(files, "groups.csv"));
-    loadGroupMembers(UploadHelper.readZippedCsv(files, "groupmembers.csv"));
-    loadAttendance(UploadHelper.readZippedCsv(files, "attendance.csv"), tmpServiceTimes);
-    loadDonations(UploadHelper.readZippedCsv(files, "donations.csv"));
-    loadForms(UploadHelper.readZippedCsv(files, "forms.csv"));
-    loadQuestions(UploadHelper.readZippedCsv(files, "questions.csv"));
-    loadFormSubmissions(UploadHelper.readZippedCsv(files, "formSubmissions.csv"));
-    loadAnswers(UploadHelper.readZippedCsv(files, "answers.csv"));
+    zip.files["people.csv"] && loadPeople(UploadHelper.readCsvString(await zip.file("people.csv").async("string")), zip);
+    let tmpServiceTimes = zip.files["services.csv"] && loadServiceTimes(UploadHelper.readCsvString(await zip.file("services.csv").async("string")));
+    zip.files["groups.csv"] && loadGroups(UploadHelper.readCsvString(await zip.file("groups.csv").async("string")));
+    zip.files["groupmembers.csv"] && loadGroupMembers(UploadHelper.readCsvString(await zip.file("groupmembers.csv").async("string")));
+    zip.files["attendance.csv"] && loadAttendance(UploadHelper.readCsvString(await zip.file("attendance.csv").async("string")), tmpServiceTimes);
+    zip.files["donations.csv"] && loadDonations(UploadHelper.readCsvString(await zip.file("donations.csv").async("string")));
+    zip.files["forms.csv"] && loadForms(UploadHelper.readCsvString(await zip.file("forms.csv").async("string")));
+    zip.files["questions.csv"] && loadQuestions(UploadHelper.readCsvString(await zip.file("questions.csv").async("string")));
+    zip.files["formSubmissions.csv"] && loadFormSubmissions(UploadHelper.readCsvString(await zip.file("formSubmissions.csv").async("string")));
+    zip.files["answers.csv"] && loadAnswers(UploadHelper.readCsvString(await zip.file("answers.csv").async("string")));
   }
 
   const loadAnswers = (data: any) => {
@@ -80,7 +75,7 @@ export const ImportPage = () => {
   const loadFormSubmissions = (data: any) => {
     let formSubmissions: ImportFormSubmissions[] = [];
 
-    for(let i = 0; i < data.length; i++) if (data[i].personKey !== undefined) {
+    for (let i = 0; i < data.length; i++) if (data[i].personKey !== undefined) {
       formSubmissions.push(data[i]);
     }
 
@@ -189,7 +184,7 @@ export const ImportPage = () => {
     setGroupMembers(members);
   }
 
-  const loadPeople = (data: any, allFiles: AdmZip.IZipEntry[]) => {
+  const loadPeople = (data: any, zip: any) => {
     let people: ImportPersonInterface[] = [];
     let households: ImportHouseholdInterface[] = [];
 
@@ -200,9 +195,14 @@ export const ImportPage = () => {
         p.contactInfo = { address1: data[i].address1, address2: data[i].address2, city: data[i].city, state: data[i].state, zip: data[i].zip, homePhone: data[i].homePhone, workPhone: data[i].workPhone, email: data[i].email }
 
         assignHousehold(households, data[i]);
-        if (p.photo !== undefined) UploadHelper.readZippedImage(allFiles, p.photo).then((url: string) => {
-          p.photo = url; setTriggerRender(Math.random());
-        });
+        if (p.photo !== undefined) {
+          zip?.file(p.photo)?.async("base64").then((data: any) => {
+            if (data) {
+              p.photo = "data:image/png;base64," + data;
+              setTriggerRender(Math.random());
+            }
+          });
+        }
         people.push(p);
       }
     }
@@ -220,7 +220,7 @@ export const ImportPage = () => {
   const getAction = () => {
     if (people.length === 0) return (
       <InputBox headerText="Import" headerIcon="fas fa-upload" saveText="Upload and Preview" saveFunction={() => { document.getElementById("fileUpload").click(); }}>
-                Select a files to Upload.  You can download sample files <a href="/sampleimport.zip">here</a>.
+        Select a files to Upload.  You can download sample files <a href="/sampleimport.zip">here</a>.
         <input type="file" onChange={handleUpload} id="fileUpload" accept=".zip" style={{ display: "none" }} />
       </InputBox>
     );

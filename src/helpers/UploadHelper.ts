@@ -1,18 +1,19 @@
 import Papa from "papaparse";
-import AdmZip from "adm-zip";
 import FileSaver from "file-saver";
+import { Buffer } from "buffer"
+import JSZip from "jszip";
 
 export class UploadHelper {
 
   static zipFiles(files: { name: string, contents: string | Buffer }[], zipFileName: string) {
-    let zip = new AdmZip();
+    let zip = new JSZip();
     files.forEach((f) => {
-      if (typeof f.contents === "string") zip.addFile(f.name, Buffer.alloc(f.contents.length, f.contents));
-      else zip.addFile(f.name, f.contents as Buffer);
+      if (typeof f.contents === "string") zip.file(f.name, Buffer.alloc(f.contents.length, f.contents));
+      else zip.file(f.name, f.contents as Buffer);
     });
-    let buffer = zip.toBuffer();
-    let blob = new Blob([buffer], { type: "applicatoin/zip" });
-    FileSaver.saveAs(blob, zipFileName);
+    zip.generateAsync({ type: "blob" }).then(content => {
+      FileSaver.saveAs(content, zipFileName);
+    })
   }
 
   static downloadImageBytes(files: { name: string, contents: string | Buffer }[], name: string, url: string) {
@@ -35,7 +36,7 @@ export class UploadHelper {
   }
 
   static toBuffer(ab: ArrayBuffer) {
-    let buffer = new Buffer(ab.byteLength);
+    let buffer = Buffer.alloc(ab.byteLength);
     let view = new Uint8Array(ab);
     for (let i = 0; i < buffer.length; ++i) buffer[i] = view[i];
     return buffer;
@@ -90,30 +91,6 @@ export class UploadHelper {
       reader.onload = () => { resolve(reader.result.toString()); };
       reader.onerror = () => { reject(new DOMException("Error reading image")) }
       reader.readAsArrayBuffer(file);
-    });
-  }
-
-  static getZippedFile(files: AdmZip.IZipEntry[], name: string) {
-    for (let i = 0; i < files.length; i++) if (files[i].entryName === name) return files[i];
-    return null;
-  }
-
-  static readZippedCsv(files: AdmZip.IZipEntry[], name: string) {
-    let f = this.getZippedFile(files, name);
-    if (f === null) return [];
-    let txt = f.getData().toString();
-    let cleanedText = txt.trim(); // .substr(1, txt.length - 2); //sof and eof chars
-    return UploadHelper.readCsvString(cleanedText)
-  }
-
-  static readZippedImage(files: AdmZip.IZipEntry[], photoUrl: string) {
-    return new Promise<string>((resolve, reject) => {
-      let file = this.getZippedFile(files, photoUrl);
-      if (file === null) reject(new DOMException("Did not find image"));
-      else {
-        let buffer = file.getData();
-        resolve("data:image/png;base64," + buffer.toString("base64"));
-      }
     });
   }
 

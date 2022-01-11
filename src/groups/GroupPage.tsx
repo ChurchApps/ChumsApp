@@ -1,11 +1,12 @@
 import React from "react";
 import { ApiHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, PersonHelper } from "./components";
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
 type TParams = { id?: string };
 
-export const GroupPage = ({ match }: RouteComponentProps<TParams>) => {
+export const GroupPage = () => {
+  const params = useParams();
 
   const [group, setGroup] = React.useState({} as GroupInterface);
   const [addedPerson, setAddedPerson] = React.useState({} as PersonInterface);
@@ -15,7 +16,7 @@ export const GroupPage = ({ match }: RouteComponentProps<TParams>) => {
   const [addMemberVisible, setAddMemberVisible] = React.useState(false);
 
   const addPerson = (p: PersonInterface) => setAddedPerson(p);
-  const loadData = () => { ApiHelper.get("/groups/" + match.params.id, "MembershipApi").then(data => setGroup(data)); }
+  const loadData = () => { ApiHelper.get("/groups/" + params.id, "MembershipApi").then(data => setGroup(data)); }
   const handleSessionAdd = (session: SessionInterface) => { setAddedSession(session); setAddSessionVisible(false); }
 
   React.useEffect(loadData, []);

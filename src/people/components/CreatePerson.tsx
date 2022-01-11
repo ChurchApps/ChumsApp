@@ -2,7 +2,7 @@ import React from "react"
 import * as yup from "yup"
 import { Formik, FormikHelpers } from "formik"
 import { Form, Row, Col, Button } from "react-bootstrap"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { UserHelper, Permissions, NameInterface, PersonInterface, HouseholdInterface, ApiHelper } from "."
 
 const schema = yup.object().shape({
@@ -12,7 +12,7 @@ const schema = yup.object().shape({
 
 export function CreatePerson() {
   const initialValues: NameInterface = { first: "", last: "" }
-  const history = useHistory()
+  const navigate = useNavigate()
 
   function handleSubmit(name: NameInterface, helpers: FormikHelpers<NameInterface>) {
     let person = { name } as PersonInterface;
@@ -22,7 +22,7 @@ export function CreatePerson() {
       person.householdId = household.id;
       ApiHelper.post("/people", [person], "MembershipApi").then(data => {
         person.id = data[0].id
-        history.push("/people/" + person.id);
+        navigate("/people/" + person.id);
       }).finally(() => {
         helpers?.setSubmitting(false)
       });

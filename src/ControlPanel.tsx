@@ -2,7 +2,7 @@ import React from "react";
 import UserContext from "./UserContext";
 
 import { ApiHelper } from "./components";
-import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Login } from "./Login";
 
 import { Authenticated } from "./Authenticated";
@@ -13,7 +13,6 @@ import { EnvironmentHelper } from "./helpers";
 interface Props { path?: string; }
 
 export const ControlPanel = () => {
-
   const location = useLocation();
   if (EnvironmentHelper.GoogleAnalyticsTag !== "") {
     ReactGA.initialize(EnvironmentHelper.GoogleAnalyticsTag);
@@ -24,21 +23,27 @@ export const ControlPanel = () => {
   let user = React.useContext(UserContext).userName; //to force rerender on login
   if (user === null) return null;
   return (
-    <Switch>
-      <Route path="/logout">
-        <Logout />
-      </Route>
-      <Route path="/login" component={Login}></Route>
-      <PrivateRoute path="/"></PrivateRoute>
-    </Switch>
+    <Routes>
+      <Route path="/logout" element={<Logout />} />
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="/*"
+        element={
+          <RequireAuth>
+            <Authenticated />
+          </RequireAuth>
+        }
+      />
+    </Routes>
   );
 };
 
-const PrivateRoute: React.FC<Props> = ({ path }) => (
-  <Route
-    path={path}
-    render={({ location }) => (ApiHelper.isAuthenticated)
-      ? (<Authenticated location={location.pathname}></Authenticated>)
-      : (<Redirect to={{ pathname: "/login", state: { from: location } }}></Redirect>)}
-  ></Route>
-);
+const RequireAuth = ({ children }: { children: JSX.Element }) => {
+  const location = useLocation()
+  if (!ApiHelper.isAuthenticated) {
+    return <Navigate to="/login" state={{ from : location }} replace />
+  }
+
+  return children
+}
+
