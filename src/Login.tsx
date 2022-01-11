@@ -49,6 +49,6 @@ export const Login: React.FC = (props: any) => {
   } else {
     // @ts-ignore
     let from = location.state?.from?.pathname || "/people";
-    return <Navigate to={from} replace />;
+    return <Navigate to={from !== "/" ? from : "/people"} replace />;
   }
 };
