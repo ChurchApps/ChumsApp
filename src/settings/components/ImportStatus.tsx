@@ -116,8 +116,8 @@ export const ImportStatus: React.FC<Props> = (props) => {
 
     await runImport("Group Members", async () => {
       tmpMembers.forEach((gm) => {
-        gm.groupId = ImportHelper.getByImportKey(tmpGroups, gm.groupKey).id
-        gm.personId = ImportHelper.getByImportKey(tmpPeople, gm.personKey).id
+        gm.groupId = ImportHelper.getByImportKey(tmpGroups, gm.groupKey)?.id
+        gm.personId = ImportHelper.getByImportKey(tmpPeople, gm.personKey)?.id
       });
       await ApiHelper.post("/groupmembers", tmpMembers, "MembershipApi").then(result => {
         for (let i = 0; i < result.length; i++) tmpMembers[i].id = result[i].id;
@@ -193,7 +193,11 @@ export const ImportStatus: React.FC<Props> = (props) => {
 
     await runImport("Forms", async () => {
       await ApiHelper.post("/forms", tmpForms, "MembershipApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpForms[i].id = result[i].id;
+        for (let i = 0; i < result.length; i++) {
+          if (tmpForms[i]) {
+            tmpForms[i].id = result[i]?.id;
+          }
+        }
       })
     })
 
