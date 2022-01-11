@@ -1,10 +1,12 @@
 import Papa from "papaparse";
 import AdmZip from "adm-zip";
 import FileSaver from "file-saver";
+import { Buffer } from "buffer"
 
 export class UploadHelper {
 
   static zipFiles(files: { name: string, contents: string | Buffer }[], zipFileName: string) {
+    console.log("got here")
     // let zip = new AdmZip();
     // files.forEach((f) => {
     //   if (typeof f.contents === "string") zip.addFile(f.name, Buffer.alloc(f.contents.length, f.contents));
@@ -35,7 +37,7 @@ export class UploadHelper {
   }
 
   static toBuffer(ab: ArrayBuffer) {
-    let buffer = new Buffer(ab.byteLength);
+    let buffer = Buffer.alloc(ab.byteLength);
     let view = new Uint8Array(ab);
     for (let i = 0; i < buffer.length; ++i) buffer[i] = view[i];
     return buffer;
