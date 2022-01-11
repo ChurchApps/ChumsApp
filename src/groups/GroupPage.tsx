@@ -3,8 +3,6 @@ import { ApiHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, Person
 import { useParams } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
-type TParams = { id?: string };
-
 export const GroupPage = () => {
   const params = useParams();
 
@@ -19,7 +17,7 @@ export const GroupPage = () => {
   const loadData = () => { ApiHelper.get("/groups/" + params.id, "MembershipApi").then(data => setGroup(data)); }
   const handleSessionAdd = (session: SessionInterface) => { setAddedSession(session); setAddSessionVisible(false); }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, []); //eslint-disable-line
 
   const handleSidebarVisibility = (name: string, visible: boolean) => {
     if (name === "addPerson") setAddPersonVisible(visible);

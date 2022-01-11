@@ -20,19 +20,11 @@ export function NavItems({ prefix }: Props) {
   const [isFormMember, setIsFormMember] = React.useState<boolean>(false);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
-  const getTab = ({ key, url, icon, label, outsideLink = false }: Tab) => (
-    <li key={key} className="nav-item" data-toggle={prefix === "main" ? null : "collapse"} data-target={prefix === "main" ? null : "#userMenu"} id={(prefix || "") + key + "Tab"}>
-      {outsideLink ? (
-        <a className={prefix === "main" ? "nav-link" : ""} href={url} target="_blank" rel="noopener noreferrer">
-          <i className={icon}></i> {label}
-        </a>
-      ) : (
-        <NavLink className={prefix === "main" ? "nav-link" : ""} to={url}>
-          <i className={icon}></i> {label}
-        </NavLink>
-      )}
-    </li>
-  );
+  const getTab = ({ key, url, icon, label, outsideLink = false }: Tab) => {
+    let link = <NavLink className={prefix === "main" ? "nav-link" : ""} to={url}><i className={icon}></i> {label}</NavLink>
+    if (outsideLink) link = <a className={prefix === "main" ? "nav-link" : ""} href={url} target="_blank" rel="noopener noreferrer"><i className={icon}></i> {label}</a>
+    return <li key={key} className="nav-item" data-toggle={prefix === "main" ? null : "collapse"} data-target={prefix === "main" ? null : "#userMenu"} id={(prefix || "") + key + "Tab"}>{link}</li>
+  }
 
   useEffect(() => {
     if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) {

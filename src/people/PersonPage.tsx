@@ -3,8 +3,6 @@ import { Person, Groups, Tabs, Household, ImageEditor, UserHelper, ApiHelper, Pe
 import { Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
-type TParams = { id?: string };
-
 export const PersonPage = () => {
   const params = useParams();
   const [person, setPerson] = React.useState<PersonInterface>(null);

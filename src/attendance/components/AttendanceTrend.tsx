@@ -26,8 +26,8 @@ export const AttendanceTrend = () => {
 
   const getFilterOptions = (data: any[]) => {
     let result: ReportFilterOptionInterface[] = [];
-        data?.forEach(d => { result.push({ keyName: d.id.toString(), value: d.id.toString(), label: d.name }) });
-        return result;
+    data?.forEach(d => { result.push({ keyName: d.id.toString(), value: d.id.toString(), label: d.name }) });
+    return result;
   }
 
   const getCampusOptions = () => getFilterOptions(campuses);

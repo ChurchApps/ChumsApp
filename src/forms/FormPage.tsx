@@ -13,7 +13,7 @@ export const FormPage = () => {
     });
   }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, []); //eslint-disable-line
 
   return form?.id ? <Tabs form={form} memberPermission={memberPermission} /> : <></>;
 }

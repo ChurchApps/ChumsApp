@@ -16,19 +16,18 @@ export function PeopleSearchResults({ people }: Props) {
     </tr>
   ))
 
+  const getResults = () => {
+    if (people.length === 0) return <p>No results found.  Please search for a different name or add a new person</p>
+    else return (<Table id="peopleTable">
+      <thead><tr><th></th><th>Name</th></tr></thead>
+      <tbody>{rows}</tbody>
+    </Table>);
+  }
+
   if (!people) return <Loading />;
   return (
     <div>
-      {
-        people.length === 0 ? (
-          <p>No results found.  Please search for a different name or add a new person</p>
-        ) : (
-          <Table id="peopleTable">
-            <thead><tr><th></th><th>Name</th></tr></thead>
-            <tbody>{rows}</tbody>
-          </Table>
-        )
-      }
+      {getResults()}
       <hr />
       <CreatePerson />
     </div>

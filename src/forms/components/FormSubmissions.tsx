@@ -10,7 +10,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   const [summary, setSummary] = useState<any>([]);
   const [summaryCsv, setSummaryCsv] = useState<any>([]);
   const yesNoMap: any = { True: "Yes", False: "No" };
-  const yesNoDefault = [{value: "Yes", text: "Yes"}, { value: "No", text: "No"}];
+  const yesNoDefault = [{ value: "Yes", text: "Yes" }, { value: "No", text: "No" }];
   const contentRef: any = useRef<HTMLDivElement>(null);
   const handleSummaryPrint = useReactToPrint({
     content: () => contentRef.current
@@ -29,7 +29,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
             const answerValue = answer?.value || "";
             if (question.fieldType === "Yes/No" && answer?.value) answer.value = yesNoMap[answer.value];
             csvData[question.title] = answerValue;
-            formSubmission.csvData.push({[question.title]: answerValue});
+            formSubmission.csvData.push({ [question.title]: answerValue });
             if (question.fieldType === "Multiple Choice" || question.fieldType === "Yes/No") {
               if (!summaryData.length) summaryData.push(setSummaryResultDefault(question, answer));
               else setSummaryResultData(summaryData, question, answer);
@@ -57,29 +57,29 @@ export const FormSubmissions: React.FC<Props> = (props) => {
 
   const setFormSubmissionData = (people: PersonInterface[], formSubmission: any) => {
     const submittedBy = people.find((person: PersonInterface) => person.id === formSubmission.submittedBy);
-    formSubmission.person = {name: submittedBy?.name?.display || "Anonymous", id: submittedBy?.id || null};
+    formSubmission.person = { name: submittedBy?.name?.display || "Anonymous", id: submittedBy?.id || null };
     formSubmission.mappedQA = [];
     formSubmission.csvData = [];
-    formSubmission.questions = formSubmission.questions.sort((a: QuestionInterface, b: QuestionInterface)=> (a.title > b.title ? 1 : -1));
+    formSubmission.questions = formSubmission.questions.sort((a: QuestionInterface, b: QuestionInterface) => (a.title > b.title ? 1 : -1));
     return formSubmission;
   }
 
   const setSummaryResultDefault = (question: QuestionInterface, answer: AnswerInterface) => {
     const choices: any = [];
     const questionChoices = question.choices || yesNoDefault;
-    questionChoices.forEach((choice : any) => {
-      let choiceCount = {[choice.value]: 0, text: choice.text};
+    questionChoices.forEach((choice: any) => {
+      let choiceCount = { [choice.value]: 0, text: choice.text };
       if (answer && answer?.value && choice.value === answer.value) choiceCount[choice.value] = 1;
       choices.push(choiceCount);
     });
-    return { title: question.title, values: choices};
+    return { title: question.title, values: choices };
   }
 
   const getResultCount = (summaryValues: any[]) => {
     let results: JSX.Element[] = [];
     summaryValues.forEach((sv: any, i: number) => {
       const key: string = Object.keys(sv)[0];
-      results.push(<ListGroup.Item key={sv.text+"-"+i}>{`${sv.text}: ${sv[key]}`}</ListGroup.Item>);
+      results.push(<ListGroup.Item key={sv.text + "-" + i}>{`${sv.text}: ${sv[key]}`}</ListGroup.Item>);
     });
     return results;
   }
@@ -88,8 +88,8 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     let results: JSX.Element[] = [];
     summary.forEach((s: any, i: number) => {
       results.push(
-        <Col xs={12} md={6} key={s.id+"-"+i}>
-          <Card style={{marginBottom: "10px"}}>
+        <Col xs={12} md={6} key={s.id + "-" + i}>
+          <Card style={{ marginBottom: "10px" }}>
             <Card.Header>{s.title}</Card.Header>
             <ListGroup variant="flush">
               {getResultCount(s.values)}
@@ -144,12 +144,12 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     return (
       <>
         <ExportLink data={summaryCsv} spaceAfter={true} filename={formName} />
-        <a aria-label="print-summary" href="about:blank"  onClick={(e) => {e.preventDefault(); handleSummaryPrint();}}><i className="fas fa-print"></i></a>
+        <a aria-label="print-summary" href="about:blank" onClick={(e) => { e.preventDefault(); handleSummaryPrint(); }}><i className="fas fa-print"></i></a>
       </>
     );
   }
 
-  React.useEffect(loadData, [props.formId]);
+  React.useEffect(loadData, [props.formId]); //eslint-disable-line
 
   return (
     <Row>

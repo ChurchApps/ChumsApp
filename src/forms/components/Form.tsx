@@ -76,7 +76,7 @@ export const Form: React.FC<Props> = (props) => {
     return result;
   }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, []); //eslint-disable-line
 
   if (!formPermission) return (<></>);
   else {

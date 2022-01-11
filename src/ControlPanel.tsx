@@ -2,15 +2,13 @@ import React from "react";
 import UserContext from "./UserContext";
 
 import { ApiHelper } from "./components";
-import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Login } from "./Login";
 
 import { Authenticated } from "./Authenticated";
 import { Logout } from "./Logout";
 import ReactGA from "react-ga";
 import { EnvironmentHelper } from "./helpers";
-
-interface Props { path?: string; }
 
 export const ControlPanel = () => {
   const location = useLocation();
@@ -41,7 +39,7 @@ export const ControlPanel = () => {
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const location = useLocation()
   if (!ApiHelper.isAuthenticated) {
-    return <Navigate to="/login" state={{ from : location }} replace />
+    return <Navigate to="/login" state={{ from: location }} replace />
   }
 
   return children

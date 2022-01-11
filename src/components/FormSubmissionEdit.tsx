@@ -3,11 +3,11 @@ import { InputBox, QuestionEdit, ApiHelper, FormSubmissionInterface, UniqueIdHel
 import { AnswerInterface, QuestionInterface } from "../helpers";
 
 interface Props {
-    addFormId: string,
-    contentType: string,
-    contentId: string,
-    formSubmissionId: string,
-    updatedFunction: () => void
+  addFormId: string,
+  contentType: string,
+  contentId: string,
+  formSubmissionId: string,
+  updatedFunction: () => void
 }
 
 export const FormSubmissionEdit: React.FC<Props> = (props) => {
@@ -76,7 +76,7 @@ export const FormSubmissionEdit: React.FC<Props> = (props) => {
     setFormSubmission(fs);
   }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, []); //eslint-disable-line
 
   let questionList = [];
   if (formSubmission != null) {

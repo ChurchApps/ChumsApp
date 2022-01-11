@@ -25,7 +25,7 @@ export const DonationEvents: React.FC = () => {
 
   const handleClick = (id: string, resolved: boolean) => {
     resolved = !resolved;
-    ApiHelper.post("/eventLog", [{id, resolved}], "GivingApi").then(data => loadData());
+    ApiHelper.post("/eventLog", [{ id, resolved }], "GivingApi").then(data => loadData());
   }
 
   const getPersonName = (personId: string) => {
@@ -44,10 +44,10 @@ export const DonationEvents: React.FC = () => {
       logs.push(
         <Accordion key={i}>
           <Card aria-label="card">
-            <Accordion.Toggle as={Card.Header} eventKey={i} style={{padding: "10px"}} className="pointer">
-              <i style={{marginRight: "5px"}} className={className}></i>
+            <Accordion.Toggle as={Card.Header} eventKey={i} style={{ padding: "10px" }} className="pointer">
+              <i style={{ marginRight: "5px" }} className={className}></i>
               <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
-              <i style={{float: "right"}} className="fa fa-chevron-down"></i>
+              <i style={{ float: "right" }} className="fa fa-chevron-down"></i>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={i}>
               <Card.Body>
@@ -55,9 +55,9 @@ export const DonationEvents: React.FC = () => {
                   <li>Person: <Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link></li>
                   <li className="capitalize">Event: <a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
                   <li>Message: {log.message}</li>
-                  <li style={{float: "right"}}>
+                  <li style={{ float: "right" }}>
                     <Button aria-label="resolve-button" variant={log.resolved ? "secondary" : "primary"} onClick={() => handleClick(log.id, log.resolved)}>
-                      Mark as { log.resolved ? "Unresolved" : "Resolved" }
+                      Mark as {log.resolved ? "Unresolved" : "Resolved"}
                     </Button>
                   </li>
                 </ul>
@@ -70,9 +70,9 @@ export const DonationEvents: React.FC = () => {
     return logs;
   }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, []); //eslint-disable-line
 
-  if(!errorLogs.length) return null;
+  if (!errorLogs.length) return null;
 
   return (
     <DisplayBox data-cy="eventLogs" headerIcon={headerIcon} headerText={"Failed Donations - " + unresolvedErrorCount + " unresolved"}>

@@ -28,11 +28,7 @@ interface LinkTypeProps {
   href: string;
 }
 
-const LinkType: React.FC<LinkTypeProps> = (props) =>
-  props.outsideLink ? (
-    <a href={props.href} target="_blank" rel="noopener noreferrer">
-      {props.children}
-    </a>
-  ) : (
-    <Link to={props.href}>{props.children}</Link>
-  );
+const LinkType: React.FC<LinkTypeProps> = (props) => {
+  if (props.outsideLink) return <a href={props.href} target="_blank" rel="noopener noreferrer">{props.children}</a>
+  else return <Link to={props.href}>{props.children}</Link>
+}

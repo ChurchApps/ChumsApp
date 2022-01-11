@@ -10,9 +10,9 @@ const schema = yup.object().shape({
 })
 
 interface Props {
-    questionId: string,
-    formId: string,
-    updatedFunction: () => void
+  questionId: string,
+  formId: string,
+  updatedFunction: () => void
 }
 
 export function FormQuestionEdit({ questionId, formId, updatedFunction }: Props) {
@@ -34,7 +34,7 @@ export function FormQuestionEdit({ questionId, formId, updatedFunction }: Props)
     }
   }
 
-  React.useEffect(loadData, [questionId || formId]);
+  React.useEffect(loadData, [questionId || formId]); //eslint-disable-line
 
   return (
     <Formik
