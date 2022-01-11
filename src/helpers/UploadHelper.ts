@@ -2,19 +2,20 @@ import Papa from "papaparse";
 import AdmZip from "adm-zip";
 import FileSaver from "file-saver";
 import { Buffer } from "buffer"
+import JSZip from "jszip";
 
 export class UploadHelper {
 
   static zipFiles(files: { name: string, contents: string | Buffer }[], zipFileName: string) {
-    console.log("got here")
-    // let zip = new AdmZip();
-    // files.forEach((f) => {
-    //   if (typeof f.contents === "string") zip.addFile(f.name, Buffer.alloc(f.contents.length, f.contents));
-    //   else zip.addFile(f.name, f.contents as Buffer);
-    // });
-    // let buffer = zip.toBuffer();
-    // let blob = new Blob([buffer], { type: "applicatoin/zip" });
-    // FileSaver.saveAs(blob, zipFileName);
+    let zip = new JSZip();
+    files.forEach((f) => {
+      if (typeof f.contents === "string") zip.file(f.name, Buffer.alloc(f.contents.length, f.contents));
+      else zip.file(f.name, f.contents as Buffer);
+    });
+    zip.generateAsync({ type: "blob" }).then(content => {
+      console.log("Then", content)
+      FileSaver.saveAs(content, zipFileName);
+    })
   }
 
   static downloadImageBytes(files: { name: string, contents: string | Buffer }[], name: string, url: string) {
