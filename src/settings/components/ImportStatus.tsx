@@ -27,30 +27,36 @@ export const ImportStatus: React.FC<Props> = (props) => {
     });
 
     await runImport("Donation Batches", async () => {
-      await ApiHelper.post("/donationbatches", tmpBatches, "GivingApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpBatches[i].id = result[i].id;
-      });;
+      if(tmpBatches.length > 0){
+        await ApiHelper.post("/donationbatches", tmpBatches, "GivingApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpBatches[i].id = result[i].id;
+        });
+      }
     });
 
     await runImport("Donations", async () => {
-      tmpDonations.forEach((d) => {
-        d.batchId = ImportHelper.getByImportKey(tmpBatches, d.batchKey).id;
-        d.personId = ImportHelper.getByImportKey(tmpPeople, d.personKey)?.id;
-      });
-      await ApiHelper.post("/donations", tmpDonations, "GivingApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpDonations[i].id = result[i].id;
-      });;
+      if(tmpDonations.length > 0){
+        tmpDonations.forEach((d) => {
+          d.batchId = ImportHelper.getByImportKey(tmpBatches, d.batchKey).id;
+          d.personId = ImportHelper.getByImportKey(tmpPeople, d.personKey)?.id;
+        });
+        await ApiHelper.post("/donations", tmpDonations, "GivingApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpDonations[i].id = result[i].id;
+        });
+      }
     });
 
     await runImport("Donation Funds", async () => {
       let tmpFundDonations: ImportFundDonationInterface[] = [...props.importData.fundDonations];
-      tmpFundDonations.forEach((fd) => {
-        fd.donationId = ImportHelper.getByImportKey(tmpDonations, fd.donationKey).id;
-        fd.fundId = ImportHelper.getByImportKey(tmpFunds, fd.fundKey).id;
-      });
-      await ApiHelper.post("/funddonations", tmpFundDonations, "GivingApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpFundDonations[i].id = result[i].id;
-      });;
+      if(tmpFundDonations.length > 0) {
+        tmpFundDonations.forEach((fd) => {
+          fd.donationId = ImportHelper.getByImportKey(tmpDonations, fd.donationKey).id;
+          fd.fundId = ImportHelper.getByImportKey(tmpFunds, fd.fundKey).id;
+        });
+        await ApiHelper.post("/funddonations", tmpFundDonations, "GivingApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpFundDonations[i].id = result[i].id;
+        });
+      }
     });
   }
 
@@ -58,38 +64,45 @@ export const ImportStatus: React.FC<Props> = (props) => {
     let tmpSessions: ImportSessionInterface[] = [...props.importData.sessions];
     let tmpVisits: ImportVisitInterface[] = [...props.importData.visits];
     await runImport("Group Sessions", async () => {
-      tmpSessions.forEach((s) => {
-        s.groupId = ImportHelper.getByImportKey(tmpGroups, s.groupKey).id;
-        s.serviceTimeId = ImportHelper.getByImportKey(tmpServiceTimes, s.serviceTimeKey).id;
-      });
-      await ApiHelper.post("/sessions", tmpSessions, "AttendanceApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpSessions[i].id = result[i].id;
-      });;
+      if(tmpSessions.length > 0) {
+        tmpSessions.forEach((s) => {
+          s.groupId = ImportHelper.getByImportKey(tmpGroups, s.groupKey).id;
+          s.serviceTimeId = ImportHelper.getByImportKey(tmpServiceTimes, s.serviceTimeKey).id;
+        });
+        await ApiHelper.post("/sessions", tmpSessions, "AttendanceApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpSessions[i].id = result[i].id;
+        });
+      }
     });
 
     await runImport("Visits", async () => {
-      tmpVisits.forEach((v) => {
-        v.personId = ImportHelper.getByImportKey(tmpPeople, v.personKey).id;
-        try {
-          v.serviceId = ImportHelper.getByImportKey(tmpServices, v.serviceKey).id;
-        } catch {
-          v.groupId = ImportHelper.getByImportKey(tmpGroups, v.groupKey).id;
-        }
-      });
-      await ApiHelper.post("/visits", tmpVisits, "AttendanceApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpVisits[i].id = result[i].id;
-      });;
+      if(tmpVisits.length > 0){
+        tmpVisits.forEach((v) => {
+          v.personId = ImportHelper.getByImportKey(tmpPeople, v.personKey).id;
+          try {
+            v.serviceId = ImportHelper.getByImportKey(tmpServices, v.serviceKey).id;
+          } catch {
+            v.groupId = ImportHelper.getByImportKey(tmpGroups, v.groupKey).id;
+          }
+        });
+        await ApiHelper.post("/visits", tmpVisits, "AttendanceApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpVisits[i].id = result[i].id;
+        });
+      }
+
     });
 
     await runImport("Group Attendance", async () => {
       let tmpVisitSessions: ImportVisitSessionInterface[] = [...props.importData.visitSessions];
-      tmpVisitSessions.forEach((vs) => {
-        vs.visitId = ImportHelper.getByImportKey(tmpVisits, vs.visitKey).id;
-        vs.sessionId = ImportHelper.getByImportKey(tmpSessions, vs.sessionKey).id;
-      });
-      await ApiHelper.post("/visitsessions", tmpVisitSessions, "AttendanceApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpVisitSessions[i].id = result[i].id;
-      });;
+      if(tmpVisitSessions.length > 0){
+        tmpVisitSessions.forEach((vs) => {
+          vs.visitId = ImportHelper.getByImportKey(tmpVisits, vs.visitKey).id;
+          vs.sessionId = ImportHelper.getByImportKey(tmpSessions, vs.sessionKey).id;
+        });
+        await ApiHelper.post("/visitsessions", tmpVisitSessions, "AttendanceApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpVisitSessions[i].id = result[i].id;
+        });
+      }
     });
   }
 
@@ -99,29 +112,35 @@ export const ImportStatus: React.FC<Props> = (props) => {
     let tmpMembers: ImportGroupMemberInterface[] = [...props.importData.groupMembers];
 
     await runImport("Groups", async () => {
-      await ApiHelper.post("/groups", tmpGroups, "MembershipApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpGroups[i].id = result[i].id;
-      });;
+      if(tmpGroups.length > 0) {
+        await ApiHelper.post("/groups", tmpGroups, "MembershipApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpGroups[i].id = result[i].id;
+        });
+      }
     });
 
     await runImport("Group Service Times", async () => {
-      tmpTimes.forEach((gst) => {
-        gst.groupId = ImportHelper.getByImportKey(tmpGroups, gst.groupKey).id
-        gst.serviceTimeId = ImportHelper.getByImportKey(tmpServiceTimes, gst.serviceTimeKey).id
-      });
-      await ApiHelper.post("/groupservicetimes", tmpTimes, "AttendanceApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpTimes[i].id = result[i].id;
-      });;
+      if(tmpTimes.length > 0) {
+        tmpTimes.forEach((gst) => {
+          gst.groupId = ImportHelper.getByImportKey(tmpGroups, gst.groupKey).id
+          gst.serviceTimeId = ImportHelper.getByImportKey(tmpServiceTimes, gst.serviceTimeKey).id
+        });
+        await ApiHelper.post("/groupservicetimes", tmpTimes, "AttendanceApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpTimes[i].id = result[i].id;
+        });
+      }
     });
 
     await runImport("Group Members", async () => {
-      tmpMembers.forEach((gm) => {
-        gm.groupId = ImportHelper.getByImportKey(tmpGroups, gm.groupKey)?.id
-        gm.personId = ImportHelper.getByImportKey(tmpPeople, gm.personKey)?.id
-      });
-      await ApiHelper.post("/groupmembers", tmpMembers, "MembershipApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpMembers[i].id = result[i].id;
-      });;
+      if(tmpMembers.length > 0) {
+        tmpMembers.forEach((gm) => {
+          gm.groupId = ImportHelper.getByImportKey(tmpGroups, gm.groupKey)?.id
+          gm.personId = ImportHelper.getByImportKey(tmpPeople, gm.personKey)?.id
+        });
+        await ApiHelper.post("/groupmembers", tmpMembers, "MembershipApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpMembers[i].id = result[i].id;
+        });
+      }
     });
 
     return tmpGroups;
@@ -133,23 +152,29 @@ export const ImportStatus: React.FC<Props> = (props) => {
     let tmpServiceTimes: ImportServiceTimeInterface[] = [...props.importData.serviceTimes];
 
     await runImport("Campuses", async () => {
-      await ApiHelper.post("/campuses", tmpCampuses, "AttendanceApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpCampuses[i].id = result[i].id;
-      });
+      if(tmpCampuses.length > 0) {
+        await ApiHelper.post("/campuses", tmpCampuses, "AttendanceApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpCampuses[i].id = result[i].id;
+        });
+      }
     });
 
     await runImport("Services", async () => {
-      tmpServices.forEach((s) => { s.campusId = ImportHelper.getByImportKey(tmpCampuses, s.campusKey).id });
-      await ApiHelper.post("/services", tmpServices, "AttendanceApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpServices[i].id = result[i].id;
-      });;
+      if(tmpServices.length > 0) {
+        tmpServices.forEach((s) => { s.campusId = ImportHelper.getByImportKey(tmpCampuses, s.campusKey).id });
+        await ApiHelper.post("/services", tmpServices, "AttendanceApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpServices[i].id = result[i].id;
+        });
+      }
     });
 
     await runImport("Service Times", async () => {
-      tmpServiceTimes.forEach((st) => { st.serviceId = ImportHelper.getByImportKey(tmpServices, st.serviceKey).id });
-      await ApiHelper.post("/servicetimes", tmpServiceTimes, "AttendanceApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpServiceTimes[i].id = result[i].id;
-      });;
+      if(tmpServiceTimes.length > 0) {
+        tmpServiceTimes.forEach((st) => { st.serviceId = ImportHelper.getByImportKey(tmpServices, st.serviceKey).id });
+        await ApiHelper.post("/servicetimes", tmpServiceTimes, "AttendanceApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpServiceTimes[i].id = result[i].id;
+        });
+      }
     });
     return { campuses: tmpCampuses, services: tmpServices, serviceTimes: tmpServiceTimes };
   }
@@ -163,23 +188,26 @@ export const ImportStatus: React.FC<Props> = (props) => {
     });
 
     await runImport("Households", async () => {
-      await ApiHelper.post("/households", tmpHouseholds, "MembershipApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpHouseholds[i].id = result[i].id;
-      });
+      if(tmpHouseholds.length > 0) {
+        await ApiHelper.post("/households", tmpHouseholds, "MembershipApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpHouseholds[i].id = result[i].id;
+        });
+      }
     });
 
     await runImport("People", async () => {
+      if(tmpPeople.length > 0) {
+        tmpPeople.forEach((p) => {
+          try {
+            p.householdId = ImportHelper.getByImportKey(tmpHouseholds, p.householdKey).id;
+            p.householdRole = "Other";
+          } catch { }
+        });
 
-      tmpPeople.forEach((p) => {
-        try {
-          p.householdId = ImportHelper.getByImportKey(tmpHouseholds, p.householdKey).id;
-          p.householdRole = "Other";
-        } catch { }
-      });
-
-      await ApiHelper.post("/people", tmpPeople, "MembershipApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpPeople[i].id = result[i].id;
-      });;
+        await ApiHelper.post("/people", tmpPeople, "MembershipApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpPeople[i].id = result[i].id;
+        });
+      }
     });
 
     return tmpPeople;
@@ -192,53 +220,58 @@ export const ImportStatus: React.FC<Props> = (props) => {
     let tmpAnswers: ImportAnswerInterface[] = [...props.importData.answers];
 
     await runImport("Forms", async () => {
-      await ApiHelper.post("/forms", tmpForms, "MembershipApi").then(result => {
-        for (let i = 0; i < result.length; i++) {
-          if (tmpForms[i]) {
-            tmpForms[i].id = result[i]?.id;
+      if(tmpForms.length > 0){
+        await ApiHelper.post("/forms", tmpForms, "MembershipApi").then(result => {
+          for (let i = 0; i < result.length; i++) {
+            if (tmpForms[i]) {
+              tmpForms[i].id = result[i]?.id;
+            }
           }
-        }
-      })
+        })
+      }
     })
 
     await runImport("Questions", async () => {
-      tmpQuestions.forEach(q => {
-        q.formId = ImportHelper.getByImportKey(tmpForms, q.formKey).id;
-      })
-      // Update with formId qs
-      await ApiHelper.post("/questions", tmpQuestions, "MembershipApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpQuestions[i].id = result[i].id;
-      })
+      if(tmpQuestions.length > 0) {
+        tmpQuestions.forEach(q => {
+          q.formId = ImportHelper.getByImportKey(tmpForms, q.formKey).id;
+        })
+        // Update with formId qs
+        await ApiHelper.post("/questions", tmpQuestions, "MembershipApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpQuestions[i].id = result[i].id;
+        })
+      }
     })
 
     await runImport("Form Submissions", async () => {
-      tmpFormSubmissions.forEach(fs => {
-        let formId = ImportHelper.getByImportKey(tmpForms, fs.formKey).id;;
-        fs.formId = formId;
-        fs.contentId = ImportHelper.getByImportKey(tmpPeople, fs.personKey).id;
+      if(tmpFormSubmissions.length > 0){
+        tmpFormSubmissions.forEach(fs => {
+          let formId = ImportHelper.getByImportKey(tmpForms, fs.formKey).id;;
+          fs.formId = formId;
+          fs.contentId = ImportHelper.getByImportKey(tmpPeople, fs.personKey).id;
 
-        let questions: any[] = [];
-        let answers: any[] = [];
-        tmpQuestions.forEach(q => {
-          if (q.formId === formId) {
-            questions.push(q);
+          let questions: any[] = [];
+          let answers: any[] = [];
+          tmpQuestions.forEach(q => {
+            if (q.formId === formId) {
+              questions.push(q);
 
-            tmpAnswers.forEach(a => {
-              if (a.questionKey === q.questionKey) {
-                answers.push({questionId: q.id, value: a.value});
-              }
-            })
+              tmpAnswers.forEach(a => {
+                if (a.questionKey === q.questionKey) {
+                  answers.push({questionId: q.id, value: a.value});
+                }
+              })
 
-          }
+            }
+          })
+          fs.questions = questions;
+          fs.answers = answers;
         })
-        fs.questions = questions;
-        fs.answers = answers;
-      })
-      await ApiHelper.post("/formsubmissions", tmpFormSubmissions, "MembershipApi").then(result => {
-        for (let i = 0; i < result.length; i++) tmpFormSubmissions[i].id = result[i].id;
-      })
+        await ApiHelper.post("/formsubmissions", tmpFormSubmissions, "MembershipApi").then(result => {
+          for (let i = 0; i < result.length; i++) tmpFormSubmissions[i].id = result[i].id;
+        })
+      }
     })
-
   }
 
   const handleImport = async () => {

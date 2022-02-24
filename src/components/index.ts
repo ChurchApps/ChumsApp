@@ -1,5 +1,6 @@
 export { ErrorMessages, ExportLink, DisplayBox, InputBox, PersonAdd, Loading } from "../appBase/components"
 export * from "../helpers"
+export * from "../appBase/interfaces"
 export { Header } from "./Header"
 export { Footer } from "./Footer"
 export { AssociatedForms } from "./AssociatedForms"
