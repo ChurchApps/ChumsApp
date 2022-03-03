@@ -46,6 +46,9 @@ export function NavItems({ prefix }: Props) {
   if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) tabs.push(getTab({ key: "Attendance", url: "/attendance", icon: "far fa-calendar-alt", label: "Attendance" }));
   if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) tabs.push(getTab({ key: "Donations", url: "/donations", icon: donationIcon, label: "Donations" }));
   if (formPermission || isFormMember) tabs.push(getTab({ key: "Forms", url: "/forms", icon: "fas fa-align-left", label: "Forms" }));
+
+  tabs.push(getTab({ key: "Reports", url: "/reports", icon: "fas fa-table", label: "Reports" }));
+
   if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) tabs.push(getTab({ key: "Settings", url: "/settings", icon: "fas fa-cog", label: "Settings" }));
   tabs.push(getTab({ key: "Profile", url: profileLink, icon: "fas fa-user", label: "Profile", outsideLink: true }));
 
