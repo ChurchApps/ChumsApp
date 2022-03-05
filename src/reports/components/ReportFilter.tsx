@@ -1,15 +1,16 @@
 import React from "react";
-import { ArrayHelper, ReportInterface, ParameterInterface, InputBox } from "../../components";
-import { FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import { ArrayHelper, ReportInterface, ParameterInterface, InputBox, ServiceInterface } from "../../components";
+import { FormGroup, FormLabel } from "react-bootstrap";
+import { ReportFilterField } from ".";
 
 interface Props { report: ReportInterface, onChange: (report: ReportInterface) => void, onRun: () => void }
 
 export const ReportFilter = (props: Props) => {
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (parameter: ParameterInterface) => {
     const r = { ...props.report };
-    const p: ParameterInterface = ArrayHelper.getOne(r.parameters, "keyName", e.currentTarget.name);
-    p.value = e.currentTarget.value;
+    const p: ParameterInterface = ArrayHelper.getOne(r.parameters, "keyName", parameter.keyName);
+    p.value = parameter.value;
     props.onChange(r);
   }
 
@@ -19,19 +20,9 @@ export const ReportFilter = (props: Props) => {
       if (p.source === "dropdown") {
         result.push(<FormGroup>
           <FormLabel>{p.displayName}</FormLabel>
-          <FormControl as="select" value={p.value} onChange={handleChange} name={p.keyName} >
-            {getSelectOptions(p)}
-          </FormControl>
+          <ReportFilterField parameter={p} report={props.report} onChange={handleChange} />
         </FormGroup>)
       }
-    });
-    return result;
-  }
-
-  const getSelectOptions = (p: ParameterInterface) => {
-    const result: JSX.Element[] = [];
-    p.options.forEach(o => {
-      result.push(<option value={o.value}>{o.text}</option>)
     });
     return result;
   }
