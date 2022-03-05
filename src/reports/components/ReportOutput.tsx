@@ -1,10 +1,17 @@
-import React from "react";
-import { ApiHelper, ArrayHelper, DisplayBox, Loading, ReportInterface, ReportResultInterface } from "../../components";
+import React, { useRef } from "react";
+import { ApiHelper, ArrayHelper, DisplayBox, ExportLink, Loading, ReportInterface, ReportResultInterface } from "../../components";
+import { useReactToPrint } from "react-to-print";
 
 interface Props { report: ReportInterface }
 
 export const ReportOutput = (props: Props) => {
   const [reportResult, setReportResult] = React.useState<ReportResultInterface>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => contentRef.current
+  })
+
 
   const runReport = () => {
     if (props.report) {
@@ -47,11 +54,22 @@ export const ReportOutput = (props: Props) => {
     return result;
   }
 
+
+  const getEditContent = () => {
+    const result: JSX.Element[] = [];
+
+    if (reportResult) {
+      result.push(<button type="button" className="no-default-style" key={result.length - 2} onClick={handlePrint} title="print"><i className="fas fa-print"></i></button>);
+      //result.push(<ExportLink key={result.length - 1} data={reportResult.tables[0].data} filename={props.report.displayName.replace(" ", "_") + ".csv"} />);
+    }
+    return result;
+  }
+
   const getResults = () => {
     if (!props.report) return <p>Use the filter to run the report.</p>
     else if (!reportResult) return <Loading />
     else {
-      return (<DisplayBox id="reportsBox" headerIcon="fas fa-table" headerText="Reports">
+      return (<DisplayBox ref={contentRef} id="reportsBox" headerIcon="fas fa-table" headerText={props.report.displayName} editContent={getEditContent()}>
         <table className="table">
           <thead>
             <tr>
