@@ -12,6 +12,8 @@ import { FundPage } from "./donations/FundPage";
 import { FormsPage } from "./forms/FormsPage";
 import { Settings } from "./settings/Settings";
 import { FormPage } from "./forms/FormPage";
+import { ReportsPage } from "./reports/ReportsPage";
+import { ReportPage } from "./reports/ReportPage";
 // import UserContext from "./UserContext";
 
 export const Authenticated: React.FC = () => {
@@ -39,6 +41,8 @@ export const Authenticated: React.FC = () => {
           <Route path="/donations" element={<DonationsPage />} />
           <Route path="/forms/:id" element={<FormPage />} />
           <Route path="/forms" element={<FormsPage />} />
+          <Route path="/reports/:keyName" element={<ReportPage />} />
+          <Route path="/reports" element={<ReportsPage />} />
           <Route path="/settings/*" element={<Settings />} />
         </Routes>
       </div>
