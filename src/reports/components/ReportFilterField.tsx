@@ -2,13 +2,11 @@ import React from "react";
 import { ReportInterface, ParameterInterface, ApiHelper } from "../../components";
 import { FormControl } from "react-bootstrap";
 
-
 interface Props { parameter: ParameterInterface, report: ReportInterface, onChange: (parameter: ParameterInterface) => void }
 
 export const ReportFilterField = (props: Props) => {
 
   const [rawData, setRawData] = React.useState<any[]>(null);
-
 
   const init = async () => {
     switch (props.parameter.sourceKey) {
@@ -17,6 +15,7 @@ export const ReportFilterField = (props: Props) => {
         break;
       case "campus":
         ApiHelper.get("/campuses", "AttendanceApi").then(data => { data.unshift({ id: "", name: "Any" }); setRawData(data); })
+        break;
       case "service":
         ApiHelper.get("/services", "AttendanceApi").then(data => { data.unshift({ id: "", name: "Any" }); setRawData(data); })
         break;
@@ -25,9 +24,6 @@ export const ReportFilterField = (props: Props) => {
         break;
       case "group":
         ApiHelper.get("/groups", "MembershipApi").then(data => { data.unshift({ id: "", name: "Any" }); setRawData(data); })
-        break;
-      case "service":
-        ApiHelper.get("/services", "AttendanceApi").then(data => { data.unshift({ id: "", name: "Any" }); setRawData(data); })
         break;
     }
   }
@@ -38,7 +34,6 @@ export const ReportFilterField = (props: Props) => {
     for (let i = 0; i < list.length; i++) result.push({ value: (i + 1).toString(), text: list[i] });
     return result;
   }
-
 
   const getIdName = () => {
     const result: { value: string, text: string }[] = [];
@@ -67,17 +62,16 @@ export const ReportFilterField = (props: Props) => {
     return result;
   }
 
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const p = { ...props.parameter };
     p.value = e.currentTarget.value;
     props.onChange(p);
   }
 
-  React.useEffect(() => { init() }, [props.parameter.keyName]);
+  React.useEffect(() => { init() }, [props.parameter.keyName]); //eslint-disable-line
 
   return (
-    <FormControl as="select" value={props.parameter.value} onChange={handleChange} name={props.parameter.keyName} >
+    <FormControl as="select" value={props.parameter.value} onChange={handleChange} name={props.parameter.keyName}>
       {getOptions()}
     </FormControl>
   );
