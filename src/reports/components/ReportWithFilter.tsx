@@ -1,6 +1,6 @@
 import React from "react";
 import { ApiHelper, Loading, ReportInterface } from "../../components";
-import { Row, Col, } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { ReportOutput, ReportFilter } from "./";
 
 interface Props { keyName: string }

@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrayHelper, ReportInterface, ParameterInterface, InputBox, ServiceInterface } from "../../components";
+import { ArrayHelper, ReportInterface, ParameterInterface, InputBox } from "../../components";
 import { FormGroup, FormLabel } from "react-bootstrap";
 import { ReportFilterField } from ".";
 

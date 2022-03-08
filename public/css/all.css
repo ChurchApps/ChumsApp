@@ -587,6 +587,9 @@ label .description {
   white-space: nowrap;
 }
 
+#fieldsDropdown .dropdown-menu i { color:#DDD; }
+#fieldsDropdown .dropdown-menu .checked i { color:#007bff; }
+
 @media print {
   .form-submission-summary {
     margin: 20px;

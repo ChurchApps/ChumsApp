@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { ApiHelper, ArrayHelper, DisplayBox, ExportLink, Loading, ReportInterface, ReportResultInterface } from "../../components";
+import { ApiHelper, ArrayHelper, DisplayBox, Loading, ReportInterface, ReportResultInterface } from "../../components";
 import { useReactToPrint } from "react-to-print";
 
 interface Props { report: ReportInterface }
@@ -11,7 +11,6 @@ export const ReportOutput = (props: Props) => {
   const handlePrint = useReactToPrint({
     content: () => contentRef.current
   })
-
 
   const runReport = () => {
     if (props.report) {
@@ -53,7 +52,6 @@ export const ReportOutput = (props: Props) => {
     });
     return result;
   }
-
 
   const getEditContent = () => {
     const result: JSX.Element[] = [];

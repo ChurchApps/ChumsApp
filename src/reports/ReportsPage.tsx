@@ -4,6 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export const ReportsPage = () => {
+  console.log("report page")
   return (
     <>
       <h1><i className="fas fa-table"></i> Reports</h1>

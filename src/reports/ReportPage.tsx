@@ -3,10 +3,8 @@ import { ApiHelper, ReportInterface } from "../components";
 import { useParams } from "react-router-dom";
 import { ReportWithFilter } from "./components";
 
-
 export const ReportPage = () => {
   const params = useParams();
-
   const [report, setReport] = React.useState<ReportInterface>(null);
   const loadData = () => { ApiHelper.get("/reports/" + params.keyName, "ReportingApi").then(data => setReport(data)); }
 
