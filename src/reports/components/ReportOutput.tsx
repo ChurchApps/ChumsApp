@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
-import { ApiHelper, ArrayHelper, ColumnInterface, DateHelper, DisplayBox, Loading, ReportColumnInterface, ReportInterface, ReportResultInterface } from "../../components";
+import { ApiHelper, DisplayBox, Loading, ReportInterface, ReportResultInterface } from "../../components";
 import { useReactToPrint } from "react-to-print";
+import { TableReport } from "./TableReport";
+import { ChartReport } from "./ChartReport";
 
 interface Props { report: ReportInterface }
 
@@ -27,41 +29,6 @@ export const ReportOutput = (props: Props) => {
 
   React.useEffect(runReport, [props.report]);
 
-  const getHeaders = () => {
-    const result: JSX.Element[] = []
-    reportResult.columns.forEach(c => {
-      result.push(<th>{c.header}</th>);
-    })
-    return result;
-  }
-
-  const getRows = () => {
-    const result: JSX.Element[] = []
-    const mainTable: { keyName: string, data: any[] } = ArrayHelper.getOne(reportResult.tables, "keyName", "main");
-    mainTable.data.forEach(d => {
-      const row: JSX.Element[] = [];
-      reportResult.columns.forEach(c => {
-        row.push(<td>{getField(c, d)}</td>);
-      })
-      result.push(<tr>{row}</tr>);
-    });
-    return result;
-  }
-
-  const getField = (column: ColumnInterface, dataRow: any) => {
-    const parts = column.value.split(".");
-    const field = parts[1];
-    let result = dataRow[field].toString() || "";
-
-    switch (column.formatter) {
-      case "date":
-        let dt = new Date(result);
-        result = DateHelper.prettyDate(dt);
-        break;
-    }
-    return result;
-  }
-
   const getEditContent = () => {
     const result: JSX.Element[] = [];
 
@@ -72,21 +39,23 @@ export const ReportOutput = (props: Props) => {
     return result;
   }
 
+  const getOutputs = () => {
+    const result: JSX.Element[] = [];
+    reportResult.outputs.forEach(o => {
+      if (o.outputType === "table") result.push(<TableReport reportResult={reportResult} output={o} />)
+      else if (o.outputType === "barChart") result.push(<ChartReport reportResult={reportResult} output={o} />)
+    })
+
+
+    return result;
+  }
+
   const getResults = () => {
     if (!props.report) return <p>Use the filter to run the report.</p>
     else if (!reportResult) return <Loading />
     else {
       return (<DisplayBox ref={contentRef} id="reportsBox" headerIcon="fas fa-table" headerText={props.report.displayName} editContent={getEditContent()}>
-        <table className="table">
-          <thead>
-            <tr>
-              {getHeaders()}
-            </tr>
-          </thead>
-          <tbody>
-            {getRows()}
-          </tbody>
-        </table>
+        {getOutputs()}
       </DisplayBox>);
     }
   }
