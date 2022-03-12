@@ -7,11 +7,35 @@ interface Props { report: ReportInterface, onChange: (report: ReportInterface) =
 
 export const ReportFilter = (props: Props) => {
 
-  const handleChange = (parameter: ParameterInterface) => {
+  const handleChange = (parameter: ParameterInterface, permittedChildIds: string[]) => {
     const r = { ...props.report };
     const p: ParameterInterface = ArrayHelper.getOne(r.parameters, "keyName", parameter.keyName);
     p.value = parameter.value;
+    updateChildIds(r, p, permittedChildIds)
     props.onChange(r);
+  }
+
+  const updateChildIds = (report: ReportInterface, parameter: ParameterInterface, permittedChildIds: string[]) => {
+    switch (parameter.sourceKey) {
+      case "campus":
+        setRequiredParentIds(report, "service", permittedChildIds);
+        break;
+      case "service":
+        setRequiredParentIds(report, "serviceTime", permittedChildIds);
+        break;
+      case "serviceTime":
+        setRequiredParentIds(report, "group", permittedChildIds);
+        break;
+    }
+
+  }
+
+  const setRequiredParentIds = (report: ReportInterface, childSourceKey: string, requiredParentIds: string[]) => {
+    console.log("SET REQUIRED")
+    console.log(childSourceKey)
+    console.log(requiredParentIds)
+    const child: ParameterInterface = ArrayHelper.getOne(report.parameters, "sourceKey", childSourceKey);
+    if (child) child.requiredParentIds = requiredParentIds;
   }
 
   const getInputs = () => {

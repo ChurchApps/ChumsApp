@@ -1,12 +1,17 @@
 import React from "react";
-import { ReportInterface, ParameterInterface, ApiHelper } from "../../components";
+import { ReportInterface, ParameterInterface, ApiHelper, ArrayHelper } from "../../components";
 import { FormControl } from "react-bootstrap";
 
-interface Props { parameter: ParameterInterface, report: ReportInterface, onChange: (parameter: ParameterInterface) => void }
+interface Props {
+  parameter: ParameterInterface,
+  report: ReportInterface,
+  onChange: (parameter: ParameterInterface, permittedChildIds: string[]) => void
+}
 
 export const ReportFilterField = (props: Props) => {
 
   const [rawData, setRawData] = React.useState<any[]>(null);
+  const [secondaryData, setSecondaryData] = React.useState<any[]>(null);
 
   const init = async () => {
     switch (props.parameter.sourceKey) {
@@ -24,6 +29,7 @@ export const ReportFilterField = (props: Props) => {
         break;
       case "group":
         ApiHelper.get("/groups", "MembershipApi").then(data => { data.unshift({ id: "", name: "Any" }); setRawData(data); })
+        ApiHelper.get("/groupServiceTimes", "AttendanceApi").then(data => { setSecondaryData(data); })
         break;
     }
   }
@@ -37,15 +43,39 @@ export const ReportFilterField = (props: Props) => {
 
   const getIdName = () => {
     const result: { value: string, text: string }[] = [];
-    rawData.forEach(d => { result.push({ value: d.id, text: d.name }); });
+    filterOptions().forEach(d => { result.push({ value: d.id, text: d.name }); });
     return result;
+  }
 
+  const filterOptions = () => {
+    let result = rawData;
+    if (props.parameter.requiredParentIds?.length > 0) {
+      switch (props.parameter.sourceKey) {
+        case "service":
+          result = ArrayHelper.getAllArray(rawData, "campusId", props.parameter.requiredParentIds);
+          result.unshift({ id: "", name: "Any" });
+          break;
+        case "serviceTime":
+          result = ArrayHelper.getAllArray(rawData, "serviceId", props.parameter.requiredParentIds);
+          result.unshift({ id: "", name: "Any" });
+          break;
+        case "group":
+          const times = ArrayHelper.getAllArray(secondaryData, "serviceTimeId", props.parameter.requiredParentIds)
+          result = ArrayHelper.getAllArray(rawData, "id", ArrayHelper.getUniqueValues(times, "groupId"));
+          result.unshift({ id: "", name: "Any" });
+          break;
+      }
+    }
+    return result;
   }
 
   const getOptions = () => {
     let options: { value: string, text: string }[] = []
     if (rawData) {
       switch (props.parameter.sourceKey) {
+        case "campus":
+        case "service":
+        case "serviceTime":
         case "group":
           options = getIdName();
           break;
@@ -65,7 +95,9 @@ export const ReportFilterField = (props: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const p = { ...props.parameter };
     p.value = e.currentTarget.value;
-    props.onChange(p);
+    let parentIds = [];
+    if (p.value) parentIds.push(p.value);
+    props.onChange(p, parentIds);
   }
 
   React.useEffect(() => { init() }, [props.parameter.keyName]); //eslint-disable-line
