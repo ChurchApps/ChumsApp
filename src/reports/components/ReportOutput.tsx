@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { ApiHelper, ArrayHelper, DisplayBox, Loading, ReportInterface, ReportResultInterface } from "../../components";
+import { ApiHelper, ArrayHelper, ColumnInterface, DateHelper, DisplayBox, Loading, ReportColumnInterface, ReportInterface, ReportResultInterface } from "../../components";
 import { useReactToPrint } from "react-to-print";
 
 interface Props { report: ReportInterface }
@@ -37,19 +37,28 @@ export const ReportOutput = (props: Props) => {
 
   const getRows = () => {
     const result: JSX.Element[] = []
-
     const mainTable: { keyName: string, data: any[] } = ArrayHelper.getOne(reportResult.tables, "keyName", "main");
-
-    console.log(mainTable);
     mainTable.data.forEach(d => {
       const row: JSX.Element[] = [];
       reportResult.columns.forEach(c => {
-        const parts = c.value.split(".");
-        const field = parts[1];
-        row.push(<td>{d[field]}</td>);
+        row.push(<td>{getField(c, d)}</td>);
       })
       result.push(<tr>{row}</tr>);
     });
+    return result;
+  }
+
+  const getField = (column: ColumnInterface, dataRow: any) => {
+    const parts = column.value.split(".");
+    const field = parts[1];
+    let result = dataRow[field].toString() || "";
+
+    switch (column.formatter) {
+      case "date":
+        let dt = new Date(result);
+        result = DateHelper.prettyDate(dt);
+        break;
+    }
     return result;
   }
 
