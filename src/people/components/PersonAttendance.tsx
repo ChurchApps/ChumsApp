@@ -31,8 +31,6 @@ export const PersonAttendance: React.FC<Props> = (props) => {
 
     for (let i = 0; i < records.length; i++) {
       let r = records[i];
-      console.log(groups);
-      console.log(r);
       let group = ArrayHelper.getOne(groups, "id", r.groupId);
 
       let cols: JSX.Element[] = [];
