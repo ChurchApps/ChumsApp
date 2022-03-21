@@ -19,4 +19,21 @@ export class PersonHelper extends BasePersonHelper {
     return person.photo.startsWith("data:image/png;base64,") ? person.photo : EnvironmentHelper.ContentRoot + person.photo;
   }
 
+  static getExpandedPersonObject(person: PersonInterface) {
+    return {
+      ...person,
+      address: person?.contactInfo?.address1,
+      city: person?.contactInfo?.city,
+      state: person?.contactInfo?.state,
+      zip: person?.contactInfo?.zip,
+      email: person?.contactInfo?.email,
+      phone: person?.contactInfo?.homePhone,
+      lastName: person?.name?.last,
+      firstName: person?.name?.first,
+      middleName: person?.name?.middle,
+      age: person.birthDate === null ? "" : this.getAge(person.birthDate).split(" ")[0],
+      displayName: person?.name?.display
+    }
+  }
+
 }
