@@ -88,11 +88,11 @@ h1 {
 }
 
 #peopleTable th {
-
+  white-space: nowrap;
 }
 
 #peopleTable th span{
-  padding-right: 20px;
+  padding-right: 5px;
 }
 
 #peopleTable th:hover {

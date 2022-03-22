@@ -32,8 +32,10 @@ export class PersonHelper extends BasePersonHelper {
       firstName: person?.name?.first,
       middleName: person?.name?.middle,
       age: person.birthDate === null ? "" : this.getAge(person.birthDate).split(" ")[0],
-      displayName: person?.name?.display
-    }
+      displayName: person?.name?.display,
+      birthDate: person?.birthDate ? new Date(person?.birthDate) : null,
+      anniversary: person?.anniversary ? new Date(person?.anniversary) : null,
+    } as PersonInterface
   }
 
 }

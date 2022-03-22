@@ -19,7 +19,7 @@ export function PeopleSearchResults(props: Props) {
     const result: JSX.Element[] = [];
     columns.forEach(c => {
       if (selectedColumns.indexOf(c.key) > -1) {
-        result.push(<td>{getColumn(p, c.key)}</td>);
+        result.push(<td key={c.key}>{getColumn(p, c.key)}</td>);
       }
     })
     return result;
@@ -57,8 +57,17 @@ export function PeopleSearchResults(props: Props) {
     setCurrentSortedCol(key)
     setSortDirection(!asc) //set sort direction for next time
     people = people.sort(function(a: any, b: any) {
-      const valA = a[key].toString().toUpperCase();
-      const valB = b[key].toString().toUpperCase();
+      if(a[key] === null) return Infinity; // if value is null push to the end of array
+     
+      if(typeof a[key].getMonth === 'function'){
+        return asc ? (a[key].getTime() - b[key].getTime()) : (b[key].getTime() - a[key].getTime());
+      }
+
+      const parsedNum = parseInt(a[key]);
+      if (!isNaN(parsedNum)) { return asc ? (a[key] - b[key]) : (b[key] - a[key]);}
+
+      const valA = a[key].toUpperCase();
+      const valB = b[key].toUpperCase();
       if (valA < valB) {
         return asc ? 1 : -1;
       }
@@ -83,7 +92,16 @@ export function PeopleSearchResults(props: Props) {
     const result: JSX.Element[] = [];
     columns.forEach(c => {
       if (selectedColumns.indexOf(c.key) > -1) {
-        result.push(<th onClick={() => sortTableByKey(c.key, sortDirection)}><span>{c.shortName}</span><div className={`${sortDirection && currentSortedCol === c.key ? "sortAscActive" : "sortAsc"}`}></div><div className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div></th>)
+        result.push(
+          <th key={c.key} onClick={() => sortTableByKey(c.key, sortDirection)}>
+            <span>{c.shortName}</span>
+            {c.key !== 'photo' &&
+              <>
+                <div className={`${sortDirection && currentSortedCol === c.key ? "sortAscActive" : "sortAsc"}`}></div>
+                <div className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div>
+              </>
+            }
+          </th>)
       }
     })
 
