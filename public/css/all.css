@@ -87,6 +87,64 @@ h1 {
   vertical-align: middle;
 }
 
+#peopleTable th {
+  white-space: nowrap;
+}
+
+#peopleTable th span{
+  padding-right: 5px;
+}
+
+#peopleTable th:hover {
+  cursor: pointer;
+  color:#7ed4fc;
+}
+
+#peopleTable th:active {
+  cursor: pointer;
+  color:gray
+}
+
+.sortAsc {
+position: absolute;
+width: 0; 
+height: 0; 
+border-left: 5px solid transparent;
+border-right: 5px solid transparent;
+border-bottom: 5px solid gray;
+display: inline-block;
+}
+
+.sortDesc {
+width: 0; 
+height: 0; 
+border-left: 5px solid transparent;
+border-right: 5px solid transparent;
+border-top: 5px solid gray;
+display: inline-block;
+}
+
+.sortAscActive{
+  position: absolute;
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+  display: inline-block;
+  }
+  
+  .sortDescActive{
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+  display: inline-block;
+  }
+
+
+
 #household img {
   width: 60px;
   height: 45px;
