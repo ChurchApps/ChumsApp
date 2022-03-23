@@ -58,8 +58,8 @@ export function PeopleSearchResults(props: Props) {
     setSortDirection(!asc) //set sort direction for next time
     people = people.sort(function(a: any, b: any) {
       if(a[key] === null) return Infinity; // if value is null push to the end of array
-     
-      if(typeof a[key].getMonth === 'function'){
+
+      if(typeof a[key].getMonth === "function"){
         return asc ? (a[key].getTime() - b[key].getTime()) : (b[key].getTime() - a[key].getTime());
       }
 
@@ -95,8 +95,8 @@ export function PeopleSearchResults(props: Props) {
         result.push(
           <th key={c.key} onClick={() => sortTableByKey(c.key, sortDirection)}>
             <span>{c.shortName}</span>
-            {c.key !== 'photo' &&
-              <>
+            {c.key !== "photo"
+              && <>
                 <div className={`${sortDirection && currentSortedCol === c.key ? "sortAscActive" : "sortAsc"}`}></div>
                 <div className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div>
               </>
