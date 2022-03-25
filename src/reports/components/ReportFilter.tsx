@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrayHelper, ReportInterface, ParameterInterface, InputBox } from "../../components";
 import { FormGroup, FormLabel } from "react-bootstrap";
-import { ReportFilterField } from ".";
+import { ReportFilterField } from "./ReportFilterField";
 
 interface Props { report: ReportInterface, onChange: (report: ReportInterface) => void, onRun: () => void }
 

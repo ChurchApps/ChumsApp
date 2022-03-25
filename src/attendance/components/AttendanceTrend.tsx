@@ -1,11 +1,12 @@
 import React from "react";
 import { ApiHelper, CampusInterface } from "./";
 import { ReportFilterInterface, ReportInterface, ReportFilterOptionInterface } from "../../appBase/interfaces/ReportInterfaces";
-import { ReportWithFilter } from "../../appBase/components/reporting/ReportWithFilter";
+import { ReportWithFilter } from "../../reports/components/ReportWithFilter"
 import { ArrayHelper, DateHelper } from "../../appBase/helpers";
 import { GroupInterface, ServiceInterface, ServiceTimeInterface } from "../../helpers";
 
 export const AttendanceTrend = () => {
+  /*
   const [campuses, setCampuses] = React.useState<CampusInterface[]>(null);
   const [services, setServices] = React.useState<ServiceInterface[]>(null);
   const [serviceTimes, setServiceTimes] = React.useState<ServiceTimeInterface[]>(null);
@@ -88,5 +89,7 @@ export const AttendanceTrend = () => {
   React.useEffect(() => { initFilter() }, []);
   React.useEffect(populateFilter, [populateFilter]);
 
-  return <ReportWithFilter fetchReport={loadReport} filter={initialFilter} />
+  return <ReportWithFilter fetchReport={loadReport} filter={initialFilter} />*/
+  //return <ReportWithFilter keyName="attendanceTrend" autoRun={true} />
+  return <></>
 }

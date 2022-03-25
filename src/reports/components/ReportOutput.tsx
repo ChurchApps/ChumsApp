@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { ApiHelper, DisplayBox, Loading, ReportInterface, ReportResultInterface } from "../../components";
+import { ApiHelper, DisplayBox, ExportLink, Loading, ReportInterface, ReportResultInterface } from "../../components";
 import { useReactToPrint } from "react-to-print";
 import { TableReport } from "./TableReport";
 import { ChartReport } from "./ChartReport";
@@ -34,7 +34,7 @@ export const ReportOutput = (props: Props) => {
 
     if (reportResult) {
       result.push(<button type="button" className="no-default-style" key={result.length - 2} onClick={handlePrint} title="print"><i className="fas fa-print"></i></button>);
-      //result.push(<ExportLink key={result.length - 1} data={reportResult.tables[0].data} filename={props.report.displayName.replace(" ", "_") + ".csv"} />);
+      result.push(<ExportLink key={result.length - 1} data={reportResult.tables[0].data} filename={props.report.displayName.replace(" ", "_") + ".csv"} />);
     }
     return result;
   }
@@ -45,7 +45,6 @@ export const ReportOutput = (props: Props) => {
       if (o.outputType === "table") result.push(<TableReport reportResult={reportResult} output={o} />)
       else if (o.outputType === "barChart") result.push(<ChartReport reportResult={reportResult} output={o} />)
     })
-
 
     return result;
   }

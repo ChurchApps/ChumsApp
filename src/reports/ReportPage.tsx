@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, ReportInterface } from "../components";
 import { useParams } from "react-router-dom";
-import { ReportWithFilter } from "./components";
+import { ReportWithFilter } from "./components/ReportWithFilter";
 
 export const ReportPage = () => {
   const params = useParams();
@@ -10,10 +10,12 @@ export const ReportPage = () => {
 
   React.useEffect(loadData, [params.keyName]);
 
+
+  /*<ReportWithFilter keyName={params.keyName} autoRun={false} />*/
   return (
     <>
       <h1>{report?.displayName || "Report"}</h1>
-      <ReportWithFilter keyName={params.keyName} />
+      <ReportWithFilter keyName={params.keyName} autoRun={false} />
     </>
   );
 }
