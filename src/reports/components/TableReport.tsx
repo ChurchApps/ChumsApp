@@ -15,8 +15,7 @@ export const TableReport = (props: Props) => {
 
   const getRows = () => {
     const result: JSX.Element[] = []
-    const mainTable: { keyName: string, data: any[] } = ArrayHelper.getOne(props.reportResult.tables, "keyName", "main");
-    mainTable.data.forEach(d => {
+    props.reportResult.table.forEach(d => {
       const row: JSX.Element[] = [];
       props.output.columns.forEach(c => {
         row.push(<td>{getField(c, d)}</td>);

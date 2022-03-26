@@ -35,7 +35,7 @@ export const ReportOutput = (props: Props) => {
 
     if (reportResult) {
       result.push(<button type="button" className="no-default-style" key={result.length - 2} onClick={handlePrint} title="print"><i className="fas fa-print"></i></button>);
-      result.push(<ExportLink key={result.length - 1} data={reportResult.tables[0].data} filename={props.report.displayName.replace(" ", "_") + ".csv"} />);
+      result.push(<ExportLink key={result.length - 1} data={reportResult.table} filename={props.report.displayName.replace(" ", "_") + ".csv"} />);
     }
     return result;
   }

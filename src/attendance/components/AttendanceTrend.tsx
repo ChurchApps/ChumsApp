@@ -90,6 +90,6 @@ export const AttendanceTrend = () => {
   React.useEffect(populateFilter, [populateFilter]);
 
   return <ReportWithFilter fetchReport={loadReport} filter={initialFilter} />*/
-  //return <ReportWithFilter keyName="attendanceTrend" autoRun={true} />
-  return <></>
+  return <ReportWithFilter keyName="attendanceTrend" autoRun={true} />
+  //return <></>
 }

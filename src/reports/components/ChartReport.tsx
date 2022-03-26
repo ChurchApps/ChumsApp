@@ -9,11 +9,10 @@ export const ChartReport = (props: Props) => {
   let rows: any = [];
 
   const getChartData = () => {
-    const mainTable: { keyName: string, data: any[] } = ArrayHelper.getOne(props.reportResult.tables, "keyName", "main");
     rows = [];
     rows.push([props.output.columns[0].header, props.output.columns[0].header]);
 
-    mainTable.data.forEach(d => {
+    props.reportResult.table.forEach(d => {
       console.log(d);
       rows.push([getField(props.output.columns[0], d), parseFloat(getField(props.output.columns[1], d))])
     });
