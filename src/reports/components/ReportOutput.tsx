@@ -3,6 +3,7 @@ import { ApiHelper, DisplayBox, ExportLink, Loading, ReportInterface, ReportResu
 import { useReactToPrint } from "react-to-print";
 import { TableReport } from "./TableReport";
 import { ChartReport } from "./ChartReport";
+import { TreeReport } from "./TreeReport";
 
 interface Props { report: ReportInterface }
 
@@ -44,6 +45,7 @@ export const ReportOutput = (props: Props) => {
     const result: JSX.Element[] = [];
     reportResult.outputs.forEach(o => {
       if (o.outputType === "table") result.push(<TableReport reportResult={reportResult} output={o} />)
+      if (o.outputType === "tree") result.push(<TreeReport reportResult={reportResult} output={o} />)
       else if (o.outputType === "barChart") result.push(<ChartReport reportResult={reportResult} output={o} />)
     })
 
