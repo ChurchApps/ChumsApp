@@ -102,10 +102,16 @@ export const ReportFilterField = (props: Props) => {
 
   React.useEffect(() => { init() }, [props.parameter.keyName]); //eslint-disable-line
 
-  return (
-    <FormControl as="select" value={props.parameter.value} onChange={handleChange} name={props.parameter.keyName}>
-      {getOptions()}
-    </FormControl>
-  );
+  let result = <></>
+  switch (props.parameter.source) {
+    case "dropdown":
+      result = (<FormControl as="select" value={props.parameter.value} onChange={handleChange} name={props.parameter.keyName}>{getOptions()}</FormControl>);
+      break;
+    case "date":
+      result = (<FormControl type="date" value={props.parameter.value} onChange={handleChange} name={props.parameter.keyName} />);
+      break;
+  }
+  return result;
+
 
 }

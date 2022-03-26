@@ -41,7 +41,7 @@ export const ReportFilter = (props: Props) => {
   const getInputs = () => {
     const result: JSX.Element[] = [];
     props.report.parameters.forEach(p => {
-      if (p.source === "dropdown") {
+      if (p.source === "dropdown" || p.source === "date") {
         result.push(<FormGroup>
           <FormLabel>{p.displayName}</FormLabel>
           <ReportFilterField parameter={p} report={props.report} onChange={handleChange} />
