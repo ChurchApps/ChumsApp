@@ -26,9 +26,7 @@ export const TableReport = (props: Props) => {
   }
 
   const getField = (column: ColumnInterface, dataRow: any) => {
-    const parts = column.value.split(".");
-    const field = parts[1];
-    let result = dataRow[field].toString() || "";
+    let result = dataRow[column.value].toString() || "";
 
     switch (column.formatter) {
       case "date":
