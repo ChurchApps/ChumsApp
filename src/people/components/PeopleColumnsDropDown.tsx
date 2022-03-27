@@ -7,7 +7,7 @@ interface Props {
   toggleColumn: (key: string) => void
 }
 
-export function PeopleColumns({columns, selectedColumns, toggleColumn}: Props) {
+export function PeopleColumnsDropDown({columns, selectedColumns, toggleColumn}: Props) {
 
   const [show, setShow] = useState(false)
 
@@ -26,7 +26,7 @@ export function PeopleColumns({columns, selectedColumns, toggleColumn}: Props) {
   }
 
   return (
-    <Dropdown alignRight={true} id="fieldsDropdown" style={{ float: "right" }} onSelect={() => false} show={show} onToggle={handleToggle}>
+    <Dropdown alignRight={true} id="fieldsDropdown" onSelect={() => false} show={show} onToggle={handleToggle}>
       <Dropdown.Toggle id="dropdown-custom-components" className="btn-sm">
         <i className="fa fa-columns" style={{ color: "#FFF" }}></i>
         Fields
