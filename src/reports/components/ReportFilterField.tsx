@@ -1,5 +1,5 @@
 import React from "react";
-import { ReportInterface, ParameterInterface, ApiHelper, ArrayHelper } from "../../components";
+import { ReportInterface, ParameterInterface, ApiHelper, ArrayHelper, DateHelper } from "../../components";
 import { FormControl } from "react-bootstrap";
 
 interface Props {
@@ -32,7 +32,25 @@ export const ReportFilterField = (props: Props) => {
         ApiHelper.get("/groupServiceTimes", "AttendanceApi").then(data => { setSecondaryData(data); })
         break;
     }
+    setDefaultValue();
   }
+
+  const setDefaultValue = () => {
+    switch (props.parameter.source) {
+      case "date":
+        if (props.parameter.defaultValue) {
+          let dt = new Date();
+          if (props.parameter.defaultValue === "yesterday") dt.setDate(dt.getDate() - 1);
+          if (props.parameter.defaultValue === "lastYear") dt.setFullYear(dt.getFullYear() - 1);
+          if (props.parameter.defaultValue === "lastSunday") dt = DateHelper.getLastSunday();
+          const p = { ...props.parameter };
+          p.value = DateHelper.formatHtml5Date(dt);
+          props.onChange(p, []);
+        }
+        break;
+    }
+  }
+
 
   const getMonths = () => {
     const list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "Novermber", "December"]
