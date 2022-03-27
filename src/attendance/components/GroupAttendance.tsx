@@ -1,11 +1,12 @@
 import React from "react";
 import { ApiHelper } from "./";
 import { ReportFilterInterface, ReportInterface, ReportFilterOptionInterface } from "../../appBase/interfaces/ReportInterfaces";
-import { ReportWithFilter } from "../../appBase/components/reporting/ReportWithFilter";
+import { ReportWithFilter } from "../../reports/components/ReportWithFilter";
 import { ArrayHelper, DateHelper } from "../../appBase/helpers";
 import { GroupInterface, PersonInterface, ServiceInterface } from "../../helpers";
 
 export const GroupAttendance = () => {
+  /*
   const [services, setServices] = React.useState<ServiceInterface[]>(null);
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
   const [updateFilter, setUpdateFilter] = React.useState(false);
@@ -86,4 +87,6 @@ export const GroupAttendance = () => {
   React.useEffect(populateFilter, [populateFilter]);
 
   return <ReportWithFilter fetchReport={loadReport} filter={initialFilter} />
+  */
+  return <ReportWithFilter keyName="groupAttendance" autoRun={false} />
 }

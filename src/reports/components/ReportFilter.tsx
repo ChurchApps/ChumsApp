@@ -53,7 +53,7 @@ export const ReportFilter = (props: Props) => {
 
   const inputs = getInputs();
   if (inputs.length > 0) {
-    return <InputBox id="formSubmissionBox" headerText="Form Fields" headerIcon="fas fa-report" saveFunction={props.onRun} saveText="Run Report">
+    return <InputBox id="formSubmissionBox" headerText="Filter Report" headerIcon="fas fa-report" saveFunction={props.onRun} saveText="Run Report">
       {inputs}
     </InputBox>
   } else return <></>
