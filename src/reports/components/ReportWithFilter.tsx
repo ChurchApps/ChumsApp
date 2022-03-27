@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, Loading, ReportInterface } from "../../components";
+import { ApiHelper, Loading, ReportInterface, ReportPermissionInterface, UserHelper } from "../../components";
 import { Row, Col } from "react-bootstrap";
 import { ReportOutput } from "./ReportOutput"
 import { ReportFilter } from "./ReportFilter"
@@ -23,7 +23,27 @@ export const ReportWithFilter = (props: Props) => {
 
   const handleChange = (r: ReportInterface) => setReport(r);
 
+  const checkAccess = () => {
+    let result = true;
+    report.permissions.forEach(rpg => {
+      let groupResult = checkGroup(rpg.requireOne);
+      if (!groupResult) result = false;  //between groups use AND
+    })
+    return result;
+  }
+
+  //Within groups use OR
+  const checkGroup = (pa: ReportPermissionInterface[]) => {
+    let result = false;
+    pa.forEach(p => {
+      if (UserHelper.checkAccess(p)) result = true;
+    });
+    return result;
+  }
+
+
   if (!report) return <Loading />
+  if (!checkAccess()) return <></>
   else {
     return (<Row>
       <Col lg={8}>
