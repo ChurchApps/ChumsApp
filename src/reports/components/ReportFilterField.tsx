@@ -51,7 +51,6 @@ export const ReportFilterField = (props: Props) => {
     }
   }
 
-
   const getMonths = () => {
     const list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "Novermber", "December"]
     const result = [];
@@ -100,7 +99,6 @@ export const ReportFilterField = (props: Props) => {
         case "month":
           options = rawData;
           break;
-        //case "manual": options = p.options; break;
       }
     }
 
@@ -130,6 +128,5 @@ export const ReportFilterField = (props: Props) => {
       break;
   }
   return result;
-
 
 }

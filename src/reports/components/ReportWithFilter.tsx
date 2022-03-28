@@ -41,7 +41,6 @@ export const ReportWithFilter = (props: Props) => {
     return result;
   }
 
-
   if (!report) return <Loading />
   if (!checkAccess()) return <></>
   else {

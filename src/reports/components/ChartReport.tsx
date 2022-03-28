@@ -1,7 +1,6 @@
 import React from "react";
 import { Chart } from "react-google-charts";
-import { ArrayHelper, ColumnInterface, DateHelper, ReportOutputInterface, ReportResultInterface } from "../../helpers";
-
+import { ColumnInterface, DateHelper, ReportOutputInterface, ReportResultInterface } from "../../helpers";
 
 interface Props { reportResult: ReportResultInterface, output: ReportOutputInterface }
 
@@ -27,7 +26,6 @@ export const ChartReport = (props: Props) => {
 
     return result;
   }
-
 
   const getHeaderIndex = (headers: string[], header: string) => {
     let result = -1;

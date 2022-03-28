@@ -1,10 +1,9 @@
 import React from "react";
-import { ArrayHelper, ColumnInterface, DateHelper, ReportOutputInterface, ReportResultInterface } from "../../components";
+import { ColumnInterface, DateHelper, ReportOutputInterface, ReportResultInterface } from "../../components";
 
 interface Props { reportResult: ReportResultInterface, output: ReportOutputInterface }
 
 export const TreeReport = (props: Props) => {
-
 
   const getPreviousGroupingCount = (depth: number) => {
     let result = 0;
@@ -78,8 +77,6 @@ export const TreeReport = (props: Props) => {
     let firstGroupModified = props.output.groupings.length;
     for (let i = props.output.groupings.length - 1; i >= 0; i--) {
       let totalColumns = getPreviousGroupingCount(i);
-      //let totalColumns = 0;
-      //for (let j = 0; j <= i; j++) totalColumns += props.output.groupings[j];
       if (totalColumns >= firstColumnModified) firstGroupModified = i;
     }
 
@@ -96,7 +93,6 @@ export const TreeReport = (props: Props) => {
     }
     return result;
   }
-
 
   return (
     <table className="table table-sm report">

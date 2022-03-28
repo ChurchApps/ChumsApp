@@ -10,8 +10,6 @@ export const ReportPage = () => {
 
   React.useEffect(loadData, [params.keyName]);
 
-
-  /*<ReportWithFilter keyName={params.keyName} autoRun={false} />*/
   return (
     <>
       <h1>{report?.displayName || "Report"}</h1>

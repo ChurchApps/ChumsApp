@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrayHelper, ColumnInterface, DateHelper, ReportOutputInterface, ReportResultInterface } from "../../components";
+import { ColumnInterface, DateHelper, ReportOutputInterface, ReportResultInterface } from "../../components";
 
 interface Props { reportResult: ReportResultInterface, output: ReportOutputInterface }
 
@@ -36,7 +36,6 @@ export const TableReport = (props: Props) => {
     }
     return result;
   }
-
 
   return (
     <table className="table">

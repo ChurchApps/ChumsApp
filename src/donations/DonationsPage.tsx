@@ -1,8 +1,7 @@
 import React from "react";
-import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, DonationSummaryInterface, Permissions, Loading, DonationEvents, ArrayHelper, CurrencyHelper } from "./components";
+import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, Permissions, Loading, DonationEvents, CurrencyHelper } from "./components";
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
-import { ReportFilterInterface, ReportInterface } from "../appBase/interfaces/ReportInterfaces";
 import { ReportWithFilter } from "../reports/components/ReportWithFilter";
 
 export const DonationsPage = () => {
@@ -136,9 +135,9 @@ export const DonationsPage = () => {
             {getTable()}
           </DisplayBox>
           <DonationEvents />
-        </Col >
+        </Col>
         <Col lg={4}>{getSidebarModules()}</Col>
-      </Row >
+      </Row>
     </>
   );
 }
