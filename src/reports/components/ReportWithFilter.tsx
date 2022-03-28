@@ -10,10 +10,17 @@ export const ReportWithFilter = (props: Props) => {
   const [report, setReport] = React.useState<ReportInterface>(null);
   const [reportToRun, setReportToRun] = React.useState<ReportInterface>(null);
 
-  const loadData = () => { ApiHelper.get("/reports/" + props.keyName, "ReportingApi").then(data => setReport(data)); }
+  const loadData = () => {
+    setReportToRun(null);
+    setReport(null);
+    ApiHelper.get("/reports/" + props.keyName, "ReportingApi").then(data => setReport(data));
+  }
 
   const handleAutoRun = () => {
-    if (props.autoRun && report) setReportToRun(report);
+    if (props.autoRun && report) {
+      console.log(report.displayName)
+      setReportToRun(report);
+    }
   }
 
   React.useEffect(loadData, [props.keyName]);

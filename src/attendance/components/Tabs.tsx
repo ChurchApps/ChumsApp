@@ -19,7 +19,7 @@ export const Tabs: React.FC = () => {
 
   switch (selectedTab) {
     case "attendance": currentTab = <ReportWithFilter keyName="attendanceTrend" autoRun={true} />; break;
-    case "groups": currentTab = <ReportWithFilter keyName="groupAttendance" autoRun={false} />; break;
+    case "groups": currentTab = <ReportWithFilter keyName="groupAttendance" autoRun={true} />; break;
     default: currentTab = <div>Not implemented</div>; break;
   }
 

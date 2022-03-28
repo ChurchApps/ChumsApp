@@ -89,7 +89,8 @@ export const ChartReport = (props: Props) => {
     return result;
   }
 
-  let result = (<Chart chartType="ColumnChart" data={getChartData()} width="100%" height="400px" options={{ height: 400, legend: { position: "top", maxLines: 3 }, bar: { groupWidth: "75%" }, isStacked: true }} />);
+  let result = <p>There is no data to display</p>
+  if (props.reportResult.table?.length > 0) result = (<Chart chartType="ColumnChart" data={getChartData()} width="100%" height="400px" options={{ height: 400, legend: { position: "top", maxLines: 3 }, bar: { groupWidth: "75%" }, isStacked: true }} />);
 
   return result;
 
