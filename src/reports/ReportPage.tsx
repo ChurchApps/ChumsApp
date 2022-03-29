@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, ReportInterface } from "../components";
 import { useParams } from "react-router-dom";
-import { ReportWithFilter } from "./components/ReportWithFilter";
+import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
 
 export const ReportPage = () => {
   const params = useParams();

@@ -1,5 +1,5 @@
 import React from "react";
-import { ReportWithFilter } from "../../reports/components";
+import { ReportWithFilter } from "../../appBase/components/reporting/ReportWithFilter";
 import { UserHelper, Permissions } from "./";
 
 export const Tabs: React.FC = () => {

@@ -2,7 +2,7 @@ import React from "react";
 import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, Permissions, Loading, DonationEvents, CurrencyHelper } from "./components";
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
-import { ReportWithFilter } from "../reports/components/ReportWithFilter";
+import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
