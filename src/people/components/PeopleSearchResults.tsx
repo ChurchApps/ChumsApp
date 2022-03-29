@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { PersonHelper, PersonInterface, Loading, CreatePerson } from ".";
 import { Table } from "react-bootstrap";
@@ -10,12 +10,16 @@ interface Props {
 }
 
 export function PeopleSearchResults(props: Props) {
+  let {people, columns, selectedColumns} = props;
+
+  const [sortDirection, setSortDirection] = useState<boolean | null>(null)
+  const [currentSortedCol, setCurrentSortedCol] = useState<string>("")
 
   const getColumns = (p: PersonInterface) => {
     const result: JSX.Element[] = [];
-    props.columns.forEach(c => {
-      if (props.selectedColumns.indexOf(c.key) > -1) {
-        result.push(<td>{getColumn(p, c.key)}</td>);
+    columns.forEach(c => {
+      if (selectedColumns.indexOf(c.key) > -1) {
+        result.push(<td key={c.key}>{getColumn(p, c.key)}</td>);
       }
     })
     return result;
@@ -48,8 +52,35 @@ export function PeopleSearchResults(props: Props) {
     return result;
   }
 
+  const sortTableByKey = (key: string, asc: boolean | null) => {
+    if(asc === null) asc = false;
+    setCurrentSortedCol(key)
+    setSortDirection(!asc) //set sort direction for next time
+    people = people.sort(function(a: any, b: any) {
+      if(a[key] === null) return Infinity; // if value is null push to the end of array
+
+      if(typeof a[key].getMonth === "function"){
+        return asc ? (a[key].getTime() - b[key].getTime()) : (b[key].getTime() - a[key].getTime());
+      }
+
+      const parsedNum = parseInt(a[key]);
+      if (!isNaN(parsedNum)) { return asc ? (a[key] - b[key]) : (b[key] - a[key]);}
+
+      const valA = a[key].toUpperCase();
+      const valB = b[key].toUpperCase();
+      if (valA < valB) {
+        return asc ? 1 : -1;
+      }
+      if (valA > valB) {
+        return asc ? -1 : 1;
+      }
+      // equal
+      return 0;
+    });
+  }
+
   const getRows = () => {
-    const result: JSX.Element[] = props.people?.map(p => (
+    const result: JSX.Element[] = people?.map(p => (
       <tr key={p.id}>
         {getColumns(p)}
       </tr>
@@ -59,22 +90,33 @@ export function PeopleSearchResults(props: Props) {
 
   const getHeaders = () => {
     const result: JSX.Element[] = [];
-    props.columns.forEach(c => {
-      if (props.selectedColumns.indexOf(c.key) > -1) result.push(<th>{c.shortName}</th>)
+    columns.forEach(c => {
+      if (selectedColumns.indexOf(c.key) > -1) {
+        result.push(
+          <th key={c.key} onClick={() => sortTableByKey(c.key, sortDirection)}>
+            <span>{c.shortName}</span>
+            {c.key !== "photo"
+              && <>
+                <div className={`${sortDirection && currentSortedCol === c.key ? "sortAscActive" : "sortAsc"}`}></div>
+                <div className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div>
+              </>
+            }
+          </th>)
+      }
     })
 
     return <thead><tr>{result}</tr></thead>;
   }
 
   const getResults = () => {
-    if (props.people.length === 0) return <p>No results found.  Please search for a different name or add a new person</p>
+    if (people.length === 0) return <p>No results found.  Please search for a different name or add a new person</p>
     else return (<Table id="peopleTable">
       {getHeaders()}
       <tbody>{getRows()}</tbody>
     </Table>);
   }
 
-  if (!props.people) return <Loading />;
+  if (!people) return <Loading />;
   return (
     <div>
       {getResults()}

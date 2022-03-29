@@ -1,6 +1,8 @@
 import React from "react";
+import { PersonInterface } from "../appBase/interfaces";
 import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns } from "./components";
 import { Row, Col, InputGroup, FormControl, Button } from "react-bootstrap";
+import { PersonHelper } from "../helpers";
 
 export const PeoplePage = () => {
   const [searchText, setSearchText] = React.useState("");
@@ -31,11 +33,15 @@ export const PeoplePage = () => {
   const handleSubmit = (e: React.MouseEvent) => {
     if (e !== null) e.preventDefault();
     let term = escape(searchText.trim());
-    ApiHelper.get("/people/search?term=" + term, "MembershipApi").then(data => setSearchResults(data));
+    ApiHelper.get("/people/search?term=" + term, "MembershipApi").then(data => {
+      setSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
+    });
   }
 
   const loadData = () => {
-    ApiHelper.get("/people/recent", "MembershipApi").then(data => { setSearchResults(data) });
+    ApiHelper.get("/people/recent", "MembershipApi").then(data => {
+      setSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
+    });
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.currentTarget.value);

@@ -16,7 +16,7 @@ export function PeopleColumns(props: Props) {
     props.columns.forEach(o => {
       const option = o;
       const selectedClass = (props.selectedColumns.indexOf(o.key) > -1) ? "checked" : ""
-      result.push(<Dropdown.Item className={selectedClass} onClick={(e) => { props.toggleColumn(option.key) }}><i className="fa fa-check-square"></i> {o.label}</Dropdown.Item>);
+      result.push(<Dropdown.Item key={option.key} className={selectedClass} onClick={(e) => { props.toggleColumn(option.key) }}><i className="fa fa-check-square"></i> {o.label}</Dropdown.Item>);
     });
     return result;
   }
