@@ -1,14 +1,14 @@
 import React from "react";
-import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, DonationSummaryInterface, Permissions, Loading, DonationEvents, ArrayHelper, CurrencyHelper } from "./components";
+import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, Permissions, Loading, DonationEvents, CurrencyHelper } from "./components";
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
-import { ReportFilterInterface, ReportInterface } from "../appBase/interfaces/ReportInterfaces";
-import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
+import { ReportWithFilter } from "../reports/components/ReportWithFilter";
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
   const [batches, setBatches] = React.useState<DonationBatchInterface[]>(null);
 
+  /*
   const getFilter = (): ReportFilterInterface => ({
     keyName: "donationSummaryFilter",
     fields: [
@@ -52,6 +52,7 @@ export const DonationsPage = () => {
     });
     return result;
   }
+  */
 
   const showAddBatch = (e: React.MouseEvent) => { e.preventDefault(); setEditBatchId(""); }
   const batchUpdated = () => { setEditBatchId("notset"); loadData(); }
@@ -127,7 +128,7 @@ export const DonationsPage = () => {
   else return (
     <>
       <h1><i className="fas fa-hand-holding-usd"></i> Donations</h1>
-      <ReportWithFilter fetchReport={loadReport} filter={getFilter()} />
+      <ReportWithFilter keyName="donationSummary" autoRun={true} />
       <Row>
         <Col lg={8}>
           <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="fas fa-hand-holding-usd" headerText="Batches" editContent={getEditContent()}>
