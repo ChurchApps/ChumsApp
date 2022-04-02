@@ -1,9 +1,11 @@
-import React, { SyntheticEvent, useState } from "react";
+import React from "react";
 import { Dropdown } from "react-bootstrap";
 
 interface Props {
-  toggleColumn: (key: string) => void;
-  filterParam: any;
+  toggleColumn: (key: string, index?: number) => void;
+  paramType: string | undefined;
+  selectedOperator: string;
+  index?: number;
 }
 
 type Operations = {
@@ -64,35 +66,32 @@ const operationExample: Operations = {
   ENDS: "Example: son"
 }
 
-export function FilterDropDown({ toggleColumn, filterParam }: Props) {
-
-  const [show, setShow] = useState(false)
-
+export function FilterDropDown({ toggleColumn, paramType, selectedOperator, index }: Props) {
   const getStringOperations = () => {
     const result: JSX.Element[] = []
     Object.keys(stringOperations).map((op) => {
-      result.push(<Dropdown.Item key={op} onClick={(e) => { toggleColumn(op) }}><i className="fa fa-check-square"></i>{stringOperations[op]}</Dropdown.Item>)
+      result.push(<Dropdown.Item key={op} onClick={(e) => { toggleColumn(op, index) }}>{stringOperations[op]}</Dropdown.Item>)
     })
     return result;
   }
   const getNumberOperations = () => {
     const result: JSX.Element[] = []
     Object.keys(numberOperations).map((op) => {
-      result.push(<Dropdown.Item key={op} onClick={(e) => { toggleColumn(op) }}><i className="fa fa-check-square"></i>{numberOperations[op]}</Dropdown.Item>)
+      result.push(<Dropdown.Item key={op} onClick={(e) => { toggleColumn(op, index) }}>{numberOperations[op]}</Dropdown.Item>)
     })
     return result;
   }
   const getBooleanOperations = () => {
     const result: JSX.Element[] = []
     Object.keys(boolOperations).map((op) => {
-      result.push(<Dropdown.Item key={op} onClick={(e) => { toggleColumn(op) }}><i className="fa fa-check-square"></i>{boolOperations[op]}</Dropdown.Item>)
+      result.push(<Dropdown.Item key={op} onClick={(e) => { toggleColumn(op, index) }}>{boolOperations[op]}</Dropdown.Item>)
     })
     return result;
   }
   const getDateOperations = () => {
     const result: JSX.Element[] = []
     Object.keys(dateOperations).map((op) => {
-      result.push(<Dropdown.Item key={op} onClick={(e) => { toggleColumn(op) }}><i className="fa fa-check-square"></i>{dateOperations[op]}</Dropdown.Item>)
+      result.push(<Dropdown.Item key={op} onClick={(e) => { toggleColumn(op, index) }}>{dateOperations[op]}</Dropdown.Item>)
     })
     return result;
   }
@@ -100,25 +99,25 @@ export function FilterDropDown({ toggleColumn, filterParam }: Props) {
   return (
     <Dropdown id="fieldsDropdown">
       <Dropdown.Toggle id="dropdown-custom-components" className="btn-sm">
-        <i className="fa fa-greater-than-equal" style={{ color: "#FFF" }}></i>
-        Operations
+        {selectedOperator === "" ? "Operations": selectedOperator}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        {typeof filterParam === "number"
+        {paramType === "number"
           && getNumberOperations()
         }
-        {typeof filterParam === "string"
+        {paramType === "string"
           && getStringOperations()
         }
-        {typeof filterParam === "boolean"
+        {paramType === "boolean"
           && getBooleanOperations()
         }
-        {/* {typeof filterParam?.getDate() === "function"
-          && Object.keys(dateOperations).map((op: string) => {
-            <Dropdown.Item key={op} onClick={(e) => { toggleColumn(op) }}><i className="fa fa-check-square"></i>{dateOperations[op]}</Dropdown.Item>
-          })
-        } */}
+        {paramType === undefined
+          && getStringOperations()
+        }
+        {paramType === "date"
+          && getDateOperations()
+        }
       </Dropdown.Menu>
     </Dropdown>
   )
