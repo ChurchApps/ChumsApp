@@ -13,57 +13,57 @@ type Operations = {
 }
 
 const stringOperations: Operations = {
-  EQUAL: "is equal to",
-  NOT_EQUAL: "is not equal to",
-  NULL: "is null",
-  NOT_NULL: "is not null",
-  CONTAINS: "contains",
-  NOT_CONTAINS: "does not contain",
-  BEGINS: "begins with",
-  ENDS: "ends with"
+  eq: "is equal to",
+  nteq: "is not equal to",
+  null: "is null",
+  ntnull: "is not null",
+  ctns: "contains",
+  ntctns: "does not contain",
+  bg: "begins with",
+  end: "ends with"
 }
 
 const boolOperations: Operations = {
-  TRUE: "TRUE",
-  FALSE: "FALSE"
+  true: "TRUE",
+  false: "FALSE"
 }
 
 const dateOperations: Operations = {
-  EQUAL: "is equal to",
-  NOT_EQUAL: "is not equal to",
-  NULL: "is null",
-  NOT_NULL: "is not null",
-  BEFORE: "before",
-  AFTER: "after",
-  BETWEEN: "between"
+  eq: "is equal to",
+  nteq: "is not equal to",
+  null: "is null",
+  ntnull: "is not null",
+  bf: "before",
+  af: "after",
+  btwn: "between"
 }
 
 const numberOperations: Operations = {
-  EQUAL: "is equal to",
-  NOT_EQUAL: "is not equal to",
-  LESS_THAN: "is less than",
-  GREATER_THAN: "is greater than",
-  BETWEEN: "is between",
-  NULL: "is null",
-  NOT_NULL: "is not null",
-  CONTAINS: "contains",
-  NOT_CONTAINS: "does not contain",
-  BEGINS: "begins with",
-  ENDS: "ends with"
+  eq: "is equal to",
+  nteq: "is not equal to",
+  lt: "is less than",
+  gt: "is greater than",
+  btwn: "is between",
+  null: "is null",
+  ntnull: "is not null",
+  ctns: "contains",
+  ntctns: "does not contain",
+  bg: "begins with",
+  end: "ends with"
 }
 
 const operationExample: Operations = {
-  EQUAL: "Example: John",
-  NOT_EQUAL: "Example: John",
-  LESS_THAN: "Example: 89",
-  GREATER_THAN: "Example: 89",
-  BETWEEN: "Example: 33-89",
-  NULL: "",
-  NOT_NULL: "",
-  CONTAINS: "Example: Jo",
-  NOT_CONTAINS: "Example: Jo",
-  BEGINS: "Example: Jo",
-  ENDS: "Example: son"
+  eq: "Example: John",
+  nteq: "Example: John",
+  lt: "Example: 89",
+  gt: "Example: 89",
+  btwn: "Example: 33-89",
+  null: "",
+  ntnull: "",
+  ctns: "Example: Jo",
+  ntctns: "Example: Jo",
+  bg: "Example: Jo",
+  end: "Example: son"
 }
 
 export function FilterDropDown({ toggleColumn, paramType, selectedOperator, index }: Props) {
@@ -95,11 +95,26 @@ export function FilterDropDown({ toggleColumn, paramType, selectedOperator, inde
     })
     return result;
   }
+  const getOperatorName = () => {
+    if(!selectedOperator) return "Operations"
+    switch(paramType){
+      case "number":
+        return numberOperations[selectedOperator]
+      case "string":
+        return stringOperations[selectedOperator]
+      case "boolean":
+        return boolOperations[selectedOperator]
+      case "date":
+        return dateOperations[selectedOperator]
+      default:
+        return "Operations"
+    }
+  }
 
   return (
     <Dropdown id="fieldsDropdown">
       <Dropdown.Toggle id="dropdown-custom-components" className="btn-sm">
-        {selectedOperator === "" ? "Operations": selectedOperator}
+        {getOperatorName()}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>

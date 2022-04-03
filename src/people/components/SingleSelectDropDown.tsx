@@ -7,7 +7,6 @@ interface Props {
   toggleColumn: (key: string, index?: number) => void,
   index?: number
 }
-
 export function SingleSelectDropDown({items, selectedItem, toggleColumn, index}: Props) {
 
   const getItems = () => {
