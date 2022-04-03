@@ -73,11 +73,13 @@ export const FilterBox = ({ columns, handleResetButton }: Props) => {
   const buildQueryString = () => {
     let query = "?"
     filterArray.forEach((filter, i) => {
-      if(i > 0)query += "&"
-      if(filter.operator === "NULL" || filter.operator === "NOT_NULL"){
-        query += filter.field + `[${filter.operator}]`;
-      }else{
-        query += filter.field + `[${filter.operator}]=` +  filter.criteria;
+      if(filter.field !== "" && filter.operator !== ""){
+        if(i > 0)query += "&"
+        if(filter.operator === "null" || filter.operator === "ntnull"){
+          query += filter.field + `[${filter.operator}]`;
+        }else{
+          query += filter.field + `[${filter.operator}]=` +  filter.criteria;
+        }
       }
     })
     return query;
