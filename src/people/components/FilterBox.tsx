@@ -8,7 +8,8 @@ interface Props {
     label: string;
     shortName: string;
     type: string;
-}[]
+}[],
+handleResetButton: () => void;
 }
 
 type FilterCriteria = {
@@ -23,7 +24,7 @@ const emptyFilter = {
   criteria: ""
 }
 
-export const FilterBox = ({ columns }: Props) => {
+export const FilterBox = ({ columns, handleResetButton }: Props) => {
   const [filterArray, setFilterArray] = useState<FilterCriteria[]>([emptyFilter]);
 
   const updateFilterArrayField = (field: string, index: number) => {
@@ -57,6 +58,10 @@ export const FilterBox = ({ columns }: Props) => {
   const handleAddFilter = () => {
     setFilterArray([...filterArray, emptyFilter])
   }
+  const handleClearFilters = () => {
+    handleResetButton();
+    setFilterArray([emptyFilter])
+  }
 
   const handleSubmitFilters = () => {
     const query = buildQueryString();
@@ -88,14 +93,14 @@ export const FilterBox = ({ columns }: Props) => {
           <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop:10, marginBottom:10}}>
             <SingleSelectDropDown toggleColumn={updateFilterArrayField} items={columns} selectedItem={filterArray[i].field} index={i} />
             <FilterDropDown toggleColumn={updateFilterArrayOperator} paramType={columns.find(col => col.key === filterArray[i].field)?.type} selectedOperator={filterArray[i].operator} index={i} />
-            {(filterArray[i].operator !== "NULL" && filterArray[i].operator !== "NOT_NULL") ? <FormControl id="searchText" aria-label="searchBox" name="searchText" type="text" placeholder="Filter criteria" value={filterArray[i].criteria} onChange={(e) => updateFilterArrayCriteria(e.currentTarget.value, i)} onKeyDown={handleKeyDown} style={{maxWidth: 100}} /> : <span style={{width: 100}}></span>}
+            {(filterArray[i].operator !== "null" && filterArray[i].operator !== "ntnull") ? <FormControl id="searchText" aria-label="searchBox" name="searchText" type="text" placeholder="Filter criteria" value={filterArray[i].criteria} onChange={(e) => updateFilterArrayCriteria(e.currentTarget.value, i)} onKeyDown={handleKeyDown} style={{maxWidth: 100}} /> : <span style={{width: 100}}></span>}
           </div>
         </>
       ))}
       <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 50}}>
-        <Button id="searchButton" variant="primary" onClick={handleAddFilter}>Add Filter</Button>
-        <Button id="searchButton" variant="warning" onClick={handleAddFilter}>Clear All</Button>
-        <Button id="applyButton" variant="success" onClick={handleSubmitFilters}>Apply</Button>
+        <Button id="addFilterButton" variant="primary" onClick={handleAddFilter}>Add Filter</Button>
+        <Button id="resetFilterButton" variant="warning" onClick={handleClearFilters}>Clear All</Button>
+        <Button id="applyFilterButton" variant="success" onClick={handleSubmitFilters}>Apply</Button>
       </div>
     </DisplayBox>
   )

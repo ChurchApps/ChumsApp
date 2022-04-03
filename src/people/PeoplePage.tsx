@@ -82,7 +82,7 @@ export const PeoplePage = () => {
               <InputGroup.Append><Button id="searchButton" variant="primary" onClick={handleSubmit}>Search</Button></InputGroup.Append>
             </InputGroup>
           </DisplayBox>
-          <FilterBox columns={columns} />
+          <FilterBox columns={columns} handleResetButton={loadData} />
         </Col>
       </Row>
     </>
