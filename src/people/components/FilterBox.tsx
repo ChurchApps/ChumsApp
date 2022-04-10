@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns, FilterDropDown, PeopleColumnsDropDown, SingleSelectDropDown } from "./";
 import { FormControl, Button } from "react-bootstrap";
+import { PersonHelper } from "../../helpers";
 
 interface Props {
   columns: {
@@ -75,10 +76,28 @@ export const FilterBox = ({ columns, handleResetButton }: Props) => {
     filterArray.forEach((filter, i) => {
       if(filter.field !== "" && filter.operator !== ""){
         if(i > 0)query += "&"
-        if(filter.operator === "null" || filter.operator === "ntnull"){
-          query += filter.field + `[${filter.operator}]`;
+        if(filter.field.toLocaleLowerCase() === "age"){
+          if(filter.operator === "btwn"){
+            if(filter.criteria.includes("-")){
+              const val1 = filter.criteria.split("-")[0];
+              const val2 = filter.criteria.split("-")[1];
+              const val1Date = PersonHelper.convertAgeToDate(Number(val1));
+              const val2Date = PersonHelper.convertAgeToDate(Number(val2));
+              query += "birthDate" + `[${filter.operator}]=` + `${val2Date}-${val1Date}`
+            }
+          }else{
+            if(filter.operator === "null" || filter.operator === "ntnull"){
+              query += "birthDate" + `[${filter.operator}]`;
+            }else{
+              query += "birthDate" + `[${filter.operator}]=` + PersonHelper.convertAgeToDate(Number(filter.criteria))
+            }
+          }
         }else{
-          query += filter.field + `[${filter.operator}]=` +  filter.criteria;
+          if(filter.operator === "null" || filter.operator === "ntnull"){
+            query += filter.field + `[${filter.operator}]`;
+          }else{
+            query += filter.field + `[${filter.operator}]=` +  filter.criteria;
+          }
         }
       }
     })
