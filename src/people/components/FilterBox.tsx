@@ -4,6 +4,7 @@ import { FormControl, Button } from "react-bootstrap";
 import { PersonHelper } from "../../helpers";
 
 interface Props {
+  updatePeople: (people: any) => void;
   columns: {
     key: string;
     label: string;
@@ -25,7 +26,7 @@ const emptyFilter = {
   criteria: ""
 }
 
-export const FilterBox = ({ columns, handleResetButton }: Props) => {
+export const FilterBox = ({ columns, handleResetButton, updatePeople }: Props) => {
   const [filterArray, setFilterArray] = useState<FilterCriteria[]>([emptyFilter]);
 
   const updateFilterArrayField = (field: string, index: number) => {
@@ -68,7 +69,7 @@ export const FilterBox = ({ columns, handleResetButton }: Props) => {
     const query = buildQueryString();
     console.log(query)
     ApiHelper.get("/people" + query, "MembershipApi").then(data => {
-      console.log(data)
+      updatePeople(data)
     });
   }
   const buildQueryString = () => {
