@@ -2,10 +2,12 @@ import React from "react";
 import { DisplayBox, PersonHelper, ApiHelper, HouseholdEdit, UserHelper, PersonInterface, Permissions, UniqueIdHelper, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
+import UserContext from "../../UserContext";
 
 interface Props { person: PersonInterface, reload: any }
 
 export const Household: React.FC<Props> = (props) => {
+  const context = React.useContext(UserContext);
   const [household, setHousehold] = React.useState(null);
   const [members, setMembers] = React.useState<PersonInterface[]>(null);
   const [mode, setMode] = React.useState("display");
@@ -28,7 +30,7 @@ export const Household: React.FC<Props> = (props) => {
         let m = members[i];
         rows.push(
           <tr key={m.id}>
-            <td><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></td>
+            <td><img src={context.profilePicture} alt="avatar" /></td>
             <td><Link to={"/people/" + m.id}>{m.name.display}</Link><div>{m.householdRole}</div></td>
           </tr>
         );

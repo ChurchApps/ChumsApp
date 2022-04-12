@@ -72,7 +72,7 @@ export const Header: React.FC = () => {
 
             <div className="d-flex align-items-center" id="navRight">
               <a href="about:blank" id="userMenuLink" data-toggle="collapse" data-target="#userMenu" aria-controls="navbarToggleMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <img src={PersonHelper.getPhotoUrl(UserHelper.person)} alt="user" />
+                <img src={context.profilePicture} alt="user" />
                 {userName} <i className="fas fa-caret-down"></i>
               </a>
             </div>

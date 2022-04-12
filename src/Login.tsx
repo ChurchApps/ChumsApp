@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { ApiHelper, UserHelper, PersonInterface } from "./components";
+import {ApiHelper, UserHelper, PersonInterface, PersonHelper} from "./components";
 import UserContext from "./UserContext";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { ChurchInterface, UserInterface } from "./helpers";
@@ -21,8 +21,10 @@ export const Login: React.FC = (props: any) => {
       }
       const person: PersonInterface = await ApiHelper.get(`/people/${UserHelper.currentChurch.personId}`, "MembershipApi");
       UserHelper.person = person;
+      context.setProfilePicture(PersonHelper.getPhotoUrl(UserHelper.person))
       context.setUserName(UserHelper.currentChurch.id.toString());
     } catch (err) {
+      context.setProfilePicture(PersonHelper.getPhotoUrl(UserHelper.person))
       context.setUserName(UserHelper.currentChurch.id.toString());
       console.log(err)
     }
