@@ -1,9 +1,21 @@
 import React, { useState, useRef } from "react";
-import { PersonHelper, DateHelper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading } from "."
+import {
+  PersonHelper,
+  DateHelper,
+  StateOptions,
+  InputBox,
+  ApiHelper,
+  PersonInterface,
+  UpdateHouseHold,
+  Loading,
+  UserHelper
+} from "."
 import { Navigate } from "react-router-dom";
 import { Row, Col, FormControl, FormGroup, FormLabel, Button, Form } from "react-bootstrap";
 import * as yup from "yup"
 import { Formik, FormikHelpers } from "formik"
+import UserContext from "../../UserContext";
+
 
 const schema = yup.object().shape({
   name: yup.object().shape({
@@ -27,6 +39,7 @@ interface Props {
 }
 
 export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, showMergeSearch }: Props) {
+  const context = React.useContext(UserContext);
   const [updatedPerson, setUpdatedPerson] = useState<PersonInterface>({ name: {}, contactInfo: {} })
   const [redirect, setRedirect] = useState("");
   const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
@@ -67,6 +80,7 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
 
   async function handleSave(data: PersonInterface, { setSubmitting }: FormikHelpers<PersonInterface>) {
     const { contactInfo: contactFromProps } = person
+    context.setProfilePicture(person.photo || PersonHelper.getPhotoUrl(person))
     if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {
       setText(`You updated the address to ${PersonHelper.addressToString(data.contactInfo)} for ${data.name.display}.  Would you like to apply that to the entire ${data.name.last} family?`)
       setShowUpdateAddressModal(true)
