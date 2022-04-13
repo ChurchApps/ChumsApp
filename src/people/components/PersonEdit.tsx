@@ -69,7 +69,11 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
 
   async function handleSave(data: PersonInterface, { setSubmitting }: FormikHelpers<PersonInterface>) {
     const { contactInfo: contactFromProps } = person
-    context.setProfilePicture(person.photo || PersonHelper.getPhotoUrl(person))
+
+    if(PersonHelper.getExpandedPersonObject(person).id === context.person.id){
+      context.setProfilePicture(person.photo || PersonHelper.getPhotoUrl(person))
+    }
+
     if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {
       setText(`You updated the address to ${PersonHelper.addressToString(data.contactInfo)} for ${data.name.display}.  Would you like to apply that to the entire ${data.name.last} family?`)
       setShowUpdateAddressModal(true)
