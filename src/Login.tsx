@@ -22,8 +22,10 @@ export const Login: React.FC = (props: any) => {
       const person: PersonInterface = await ApiHelper.get(`/people/${UserHelper.currentChurch.personId}`, "MembershipApi");
       UserHelper.person = person;
       context.setProfilePicture(PersonHelper.getPhotoUrl(UserHelper.person))
+      context.setPerson(PersonHelper.getExpandedPersonObject(UserHelper.person))
       context.setUserName(UserHelper.currentChurch.id.toString());
     } catch (err) {
+      context.setPerson(PersonHelper.getExpandedPersonObject(UserHelper.person))
       context.setProfilePicture(PersonHelper.getPhotoUrl(UserHelper.person))
       context.setUserName(UserHelper.currentChurch.id.toString());
       console.log(err)
