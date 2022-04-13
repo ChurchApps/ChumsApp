@@ -1,6 +1,5 @@
 import React from "react"
-import {PersonInterface} from "./appBase/interfaces";
-import {PersonHelper} from "./helpers";
+import { PersonHelper } from "./helpers";
 
 export interface UserContextInterface {
   userName: string,

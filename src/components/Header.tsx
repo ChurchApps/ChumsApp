@@ -1,5 +1,5 @@
 import React from "react";
-import { UserHelper, PersonHelper, NavItems } from "./";
+import { UserHelper, NavItems } from "./";
 import UserContext from "../UserContext";
 import { Link } from "react-router-dom";
 import { Col, Container } from "react-bootstrap";
