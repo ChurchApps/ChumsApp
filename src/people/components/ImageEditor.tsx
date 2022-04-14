@@ -5,9 +5,9 @@ import "cropperjs/dist/cropper.css";
 import { Button } from "react-bootstrap";
 
 interface Props {
-    person: PersonInterface,
-    updatedFunction: (dataUrl: string) => void,
-    onCancel: () => void
+  person: PersonInterface,
+  updatedFunction: (dataUrl: string) => void,
+  onCancel: () => void
 }
 
 export const ImageEditor = ({ person, updatedFunction, onCancel }: Props) => {
@@ -33,11 +33,13 @@ export const ImageEditor = ({ person, updatedFunction, onCancel }: Props) => {
     <Button size="sm" variant="info" onClick={(e: React.MouseEvent) => { e.preventDefault(); document.getElementById("fileUpload").click(); }}>Upload</Button>
   </div>)
 
-  const cropper = React.useRef(null);
+  const cropperRef = React.useRef<HTMLImageElement>(null);
 
   const cropCallback = () => {
-    if (cropper.current !== null) {
-      let url = cropper.current.getCroppedCanvas({ width: 400, height: 300 }).toDataURL();
+    if (cropperRef.current !== null) {
+      const imageElement: any = cropperRef?.current;
+      const cropper: any = imageElement?.cropper;
+      let url = cropper.getCroppedCanvas({ width: 400, height: 300 }).toDataURL();
       setDataUrl(url);
     }
   }
@@ -60,7 +62,7 @@ export const ImageEditor = ({ person, updatedFunction, onCancel }: Props) => {
   return (
     <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} ariaLabelDelete="deletePhoto" saveText={"Update"} cancelFunction={onCancel} deleteFunction={handleDelete} headerActionContent={getHeaderButton()}>
       <Cropper
-        ref={cropper}
+        ref={cropperRef}
         src={currentUrl}
         style={{ height: 240, width: "100%" }}
         aspectRatio={4 / 3}
