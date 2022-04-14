@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
-import { PersonHelper, DateHelper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading } from "."
-import { Navigate } from "react-router-dom";
-import { Row, Col, FormControl, FormGroup, FormLabel, Button, Form } from "react-bootstrap";
+import React, {useState, useRef} from "react";
+import {PersonHelper, DateHelper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading} from "."
+import {Navigate} from "react-router-dom";
+import {Row, Col, FormControl, FormGroup, FormLabel, Button, Form} from "react-bootstrap";
 import * as yup from "yup"
-import { Formik, FormikHelpers } from "formik"
+import {Formik, FormikHelpers} from "formik"
 import UserContext from "../../UserContext";
 
 const schema = yup.object().shape({
@@ -27,9 +27,9 @@ interface Props {
   showMergeSearch: () => void
 }
 
-export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, showMergeSearch }: Props) {
+export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, showMergeSearch}: Props) {
   const context = React.useContext(UserContext);
-  const [updatedPerson, setUpdatedPerson] = useState<PersonInterface>({ name: {}, contactInfo: {} })
+  const [updatedPerson, setUpdatedPerson] = useState<PersonInterface>({name: {}, contactInfo: {}})
   const [redirect, setRedirect] = useState("");
   const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
   const [text, setText] = useState("");
@@ -67,17 +67,17 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
       ApiHelper.delete("/people/" + initialValues.id.toString(), "MembershipApi").then(() => setRedirect("/people"));
   }
 
-  async function handleSave(data: PersonInterface, { setSubmitting }: FormikHelpers<PersonInterface>) {
-    const { contactInfo: contactFromProps } = person
+  async function handleSave(data: PersonInterface, {setSubmitting}: FormikHelpers<PersonInterface>) {
+    const {contactInfo: contactFromProps} = person
 
-    if(PersonHelper.getExpandedPersonObject(person).id === context.person.id){
+    if (PersonHelper.getExpandedPersonObject(person).id === context.person.id) {
       context.setProfilePicture(person.photo || PersonHelper.getPhotoUrl(person))
     }
 
     if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {
       setText(`You updated the address to ${PersonHelper.addressToString(data.contactInfo)} for ${data.name.display}.  Would you like to apply that to the entire ${data.name.last} family?`)
       setShowUpdateAddressModal(true)
-      setUpdatedPerson({ ...data })
+      setUpdatedPerson({...data})
       return;
     }
     await updatePerson(data)
@@ -102,7 +102,6 @@ export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, sho
           console.log(`error in updating ${updatedPerson.name.display}"s address`);
         }
       })
-
     )
     updatedFunction()
   }
