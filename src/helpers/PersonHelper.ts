@@ -4,7 +4,7 @@ import { PersonInterface, EnvironmentHelper } from ".";
 export class PersonHelper extends BasePersonHelper {
 
   static getBirthDay(person: PersonInterface) {
-    if (person.birthDate === null) return "";
+    if (person?.birthDate === null) return "";
     else {
       const parts = new Date(person.birthDate).toDateString().split(" ");
 

@@ -37,9 +37,8 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
 
   const search = async (searchText: string) => {
     try {
-      const results: PersonInterface[] = await ApiHelper.get(`/people/search?term=${escape(searchText)}`, "MembershipApi");
+      const results: PersonInterface[] = await ApiHelper.post("/people/search", { term: searchText }, "MembershipApi");
       const filteredList = results.filter(person => person.id !== props.person.id);
-
       setSearchResults(filteredList);
     } catch (err) {
       console.log("Error occured in fetching search results: ", err);

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import {ApiHelper, UserHelper, PersonInterface, PersonHelper} from "./components";
+import { ApiHelper, UserHelper, PersonInterface, PersonHelper } from "./components";
 import UserContext from "./UserContext";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { ChurchInterface, UserInterface } from "./helpers";
@@ -25,10 +25,11 @@ export const Login: React.FC = (props: any) => {
       context.setPerson(PersonHelper.getExpandedPersonObject(UserHelper.person))
       context.setUserName(UserHelper.currentChurch.id.toString());
     } catch (err) {
+      console.log(err)
       context.setPerson(PersonHelper.getExpandedPersonObject(UserHelper.person))
       context.setProfilePicture(PersonHelper.getPhotoUrl(UserHelper.person))
       context.setUserName(UserHelper.currentChurch.id.toString());
-      console.log(err)
+
     }
   }
 

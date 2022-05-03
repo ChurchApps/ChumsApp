@@ -32,8 +32,8 @@ export const PeoplePage = () => {
 
   const handleSubmit = (e: React.MouseEvent) => {
     if (e !== null) e.preventDefault();
-    let term = escape(searchText.trim());
-    ApiHelper.get("/people/search?term=" + term, "MembershipApi").then(data => {
+    let term = searchText.trim();
+    ApiHelper.post("/people/search", { term: term }, "MembershipApi").then(data => {
       setSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
     });
   }
