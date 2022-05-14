@@ -22,7 +22,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "sourceMap": true
   },
   "include": [
     "src"
