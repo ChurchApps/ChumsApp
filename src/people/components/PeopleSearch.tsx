@@ -23,9 +23,17 @@ export function PeopleSearch(props: Props) {
   const handleSubmit = (e: React.MouseEvent) => {
     if (e !== null) e.preventDefault();
     let term = searchText.trim();
-    ApiHelper.post("/people/search", { term: term }, "MembershipApi").then(data => {
+    const condition: SearchCondition = { field: "displayName", operator: "contains", value: term }
+    ApiHelper.post("/people/search2", [condition], "MembershipApi").then(data => {
       props.updateSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
     });
+  }
+
+  const handleAdvancedSearch = () => {
+    ApiHelper.post("/people/search2", conditions, "MembershipApi").then(data => {
+      props.updateSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
+    });
+
   }
 
   const getSimpleSearch = () => (<DisplayBox headerIcon="fas fa-user" headerText="Simple Search" editContent={<a href="about:blank" onClick={toggleAdvanced}>Advanced</a>}>
@@ -35,9 +43,7 @@ export function PeopleSearch(props: Props) {
     </InputGroup>
   </DisplayBox>)
 
-  const handleAdvanced = () => {
 
-  }
 
   const getAddCondition = () => {
     if (showAddCondition) return <EditCondition conditionAdded={(condition) => { const c = [...conditions]; c.push(condition); setConditions(c); setShowAddCondition(false) }} />
@@ -54,7 +60,7 @@ export function PeopleSearch(props: Props) {
     return result;
   }
 
-  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="fas fa-user" headerText="Advanced Search" headerActionContent={<a href="about:blank" onClick={toggleAdvanced}>Simple</a>} saveFunction={handleAdvanced} saveText="Search">
+  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="fas fa-user" headerText="Advanced Search" headerActionContent={<a href="about:blank" onClick={toggleAdvanced}>Simple</a>} saveFunction={handleAdvancedSearch} saveText="Search">
     <p>All people where:</p>
     {getDisplayConditions()}
     {getAddCondition()}

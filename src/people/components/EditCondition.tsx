@@ -8,7 +8,7 @@ interface Props {
 
 export function EditCondition(props: Props) {
 
-  const [condition, setCondition] = React.useState<SearchCondition>({ field: "displayName", operator: "contains", value: "" });
+  const [condition, setCondition] = React.useState<SearchCondition>({ field: "displayName", operator: "equals", value: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     let c = { ...condition }
@@ -24,6 +24,39 @@ export function EditCondition(props: Props) {
         break;
     }
     setCondition(c);
+  }
+
+  const getValueField = () => {
+    let options: JSX.Element = <></>;
+    let result: JSX.Element = null;
+    switch (condition.field) {
+      case "gender":
+        options = <><option value="Unspecified">Unspecified</option><option value="Male">Male</option><option value="Female">Female</option></>
+        result = getValueSelect(options);
+        break;
+      case "maritalStatus":
+        options = <><option value="Unknown">Unknown</option><option value="Single">Single</option><option value="Married">Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></>
+        result = getValueSelect(options);
+        break;
+      case "membershipStatus":
+        options = <><option value="Visitor">Visitor</option><option value="Member">Member</option><option value="Staff">Staff</option></>
+        result = getValueSelect(options);
+        break;
+      case "birthDate":
+      case "anniversary":
+        result = <FormControl type="date" style={{ marginBottom: 5 }} id="value" placeholder="Value" value={condition.value} onChange={handleChange} />
+        break;
+      default:
+        result = <FormControl style={{ marginBottom: 5 }} id="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} />
+        break;
+    }
+    return result;
+  }
+
+  const getValueSelect = (options: JSX.Element) => {
+    return (<FormControl as="select" style={{ marginBottom: 5 }} id="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} >
+      {options}
+    </FormControl>)
   }
 
   return <>
@@ -48,17 +81,17 @@ export function EditCondition(props: Props) {
       <option value="zip">Zip/Postal</option>
     </FormControl>
     <FormControl as="select" style={{ marginBottom: 5 }} id="operator" type="text" placeholder="Value" value={condition.operator} onChange={handleChange}>
+      <option value="equals">=</option>
       <option value="contains">contains</option>
       <option value="startsWith">starts with</option>
       <option value="endsWith">ends with</option>
-      <option value="equals">=</option>
       <option value="greaterThan">&gt;</option>
       <option value="greaterThanEqual">&gt;=</option>
       <option value="lessThan">&lt;</option>
       <option value="lessThanEqual">&lt;=</option>
       <option value="notEquals">!=</option>
     </FormControl>
-    <FormControl style={{ marginBottom: 5 }} id="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} />
+    {getValueField()}
     <Button variant="success" className="btn-block" onClick={() => { props.conditionAdded(condition) }}>Save Condition</Button>
   </>
 }
