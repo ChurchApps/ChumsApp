@@ -1,5 +1,5 @@
 import React from "react";
-import { Person, Groups, Tabs, Household, ImageEditor, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, AddNote, NoteInterface } from "./components"
+import { Person, Groups, Tabs, Household, ImageEditor, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, AddNote, NoteInterface, ArrayHelper } from "./components"
 import { Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
@@ -49,15 +49,21 @@ export const PersonPage = () => {
     setShowNoteBox(true);
   }
 
-  function loadNotes() {
-    ApiHelper.get(
-      "/notes/person/" + person?.id, "MembershipApi"
-    ).then((data) => setNotes(data));
+  const loadNotes = async () => {
+    const noteData: NoteInterface[] = await ApiHelper.get("/notes/person/" + person?.id, "MembershipApi");
+    if (noteData.length > 0) {
+      const peopleIds = ArrayHelper.getIds(noteData, "addedBy");
+      const people = await ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi");
+      noteData.forEach(n => {
+        n.person = ArrayHelper.getOne(people, "id", n.addedBy);
+      })
+    }
+    setNotes(noteData)
   };
 
   const addMergeSearch = (showMergeSearch) ? <Merge hideMergeBox={hideMergeBox} person={person} /> : <></>;
   React.useEffect(loadData, [params.id]);
-  React.useEffect(loadNotes, [person?.id]);
+  React.useEffect(() => { loadNotes() }, [person?.id]); //eslint-disable-line
 
   return (
     <Row>
