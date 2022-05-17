@@ -1,11 +1,12 @@
 import React from "react";
 import { PersonInterface } from "../appBase/interfaces";
 import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns } from "./components";
-import { Row, Col, InputGroup, FormControl, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { PersonHelper } from "../helpers";
+import { PeopleSearch } from "./components/PeopleSearch";
 
 export const PeoplePage = () => {
-  const [searchText, setSearchText] = React.useState("");
+
   const [searchResults, setSearchResults] = React.useState(null);
   const [selectedColumns, setSelectedColumns] = React.useState<string[]>(["photo", "displayName"]);
 
@@ -28,23 +29,13 @@ export const PeoplePage = () => {
     { key: "membershipStatus", label: "Membership Status", shortName: "Membership" },
     { key: "maritalStatus", label: "Marital Status", shortName: "Married" },
     { key: "anniversary", label: "Anniversary", shortName: "Anniversary" }
-  ]
-
-  const handleSubmit = (e: React.MouseEvent) => {
-    if (e !== null) e.preventDefault();
-    let term = searchText.trim();
-    ApiHelper.post("/people/search", { term: term }, "MembershipApi").then(data => {
-      setSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
-    });
-  }
+  ];
 
   const loadData = () => {
     ApiHelper.get("/people/recent", "MembershipApi").then(data => {
       setSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
     });
   }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.currentTarget.value);
 
   const handleToggleColumn = (key: string) => {
     let sc = [...selectedColumns];
@@ -63,8 +54,6 @@ export const PeoplePage = () => {
     </>);
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSubmit(null); } }
-
   React.useEffect(loadData, []);
 
   return (
@@ -77,12 +66,7 @@ export const PeoplePage = () => {
           </DisplayBox>
         </Col>
         <Col lg={4}>
-          <DisplayBox headerIcon="fas fa-user" headerText="Search">
-            <InputGroup>
-              <FormControl id="searchText" aria-label="searchBox" name="searchText" type="text" placeholder="Name" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} />
-              <InputGroup.Append><Button id="searchButton" variant="primary" onClick={handleSubmit}>Search</Button></InputGroup.Append>
-            </InputGroup>
-          </DisplayBox>
+          <PeopleSearch updateSearchResults={(people) => setSearchResults(people)} />
         </Col>
       </Row>
     </>

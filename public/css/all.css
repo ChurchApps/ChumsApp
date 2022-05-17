@@ -91,57 +91,57 @@ h1 {
   white-space: nowrap;
 }
 
-#peopleTable th span{
+#peopleTable th span {
   padding-right: 5px;
 }
 
 #peopleTable th:hover {
   cursor: pointer;
-  color:#7ed4fc;
+  color: #7ed4fc;
 }
 
 #peopleTable th:active {
   cursor: pointer;
-  color:gray
+  color: gray
 }
 
 .sortAsc {
-position: absolute;
-width: 0; 
-height: 0; 
-border-left: 5px solid transparent;
-border-right: 5px solid transparent;
-border-bottom: 5px solid gray;
-display: inline-block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid gray;
+  display: inline-block;
 }
 
 .sortDesc {
-width: 0; 
-height: 0; 
-border-left: 5px solid transparent;
-border-right: 5px solid transparent;
-border-top: 5px solid gray;
-display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid gray;
+  display: inline-block;
 }
 
-.sortAscActive{
+.sortAscActive {
   position: absolute;
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-bottom: 5px solid black;
   display: inline-block;
-  }
-  
-  .sortDescActive{
-  width: 0; 
-  height: 0; 
+}
+
+.sortDescActive {
+  width: 0;
+  height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid black;
   display: inline-block;
-  }
+}
 
 
 
@@ -612,6 +612,22 @@ label .description {
   border-radius: 5px;
 }
 
+#addCondition .form-control-sm {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+
+#advancedSearch .footer .btn-success {
+  background-color: #03a9f4;
+  border-color: #03a9f4;
+}
+
+#advancedSearch .footer .btn-success:hover {
+  background-color: #0099e4;
+  border-color: #0099e4;
+}
+
 .form-check-input {
   position: unset;
   margin-right: 0.5rem;
@@ -633,6 +649,7 @@ label .description {
 .pointer:hover {
   cursor: pointer;
 }
+
 .form-control.is-invalid {
   background-image: none;
 }
@@ -645,8 +662,13 @@ label .description {
   white-space: nowrap;
 }
 
-#fieldsDropdown .dropdown-menu i { color:#DDD; }
-#fieldsDropdown .dropdown-menu .checked i { color:#007bff; }
+#fieldsDropdown .dropdown-menu i {
+  color: #DDD;
+}
+
+#fieldsDropdown .dropdown-menu .checked i {
+  color: #007bff;
+}
 
 @media print {
   .form-submission-summary {
