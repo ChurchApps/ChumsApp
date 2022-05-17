@@ -74,11 +74,9 @@ export function EditCondition(props: Props) {
     return result;
   }
 
-  const getValueSelect = (options: JSX.Element) => {
-    return (<FormControl as="select" style={{ marginBottom: 5 }} id="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} >
-      {options}
-    </FormControl>)
-  }
+  const getValueSelect = (options: JSX.Element) => (<FormControl as="select" style={{ marginBottom: 5 }} id="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange}>
+    {options}
+  </FormControl>)
 
   return <>
     <FormControl as="select" style={{ marginBottom: 5 }} id="field" type="text" placeholder="Value" value={condition.field} onChange={handleChange}>

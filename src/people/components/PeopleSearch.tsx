@@ -43,8 +43,6 @@ export function PeopleSearch(props: Props) {
     </InputGroup>
   </DisplayBox>)
 
-
-
   const getAddCondition = () => {
     if (showAddCondition) return <EditCondition conditionAdded={(condition) => { const c = [...conditions]; c.push(condition); setConditions(c); setShowAddCondition(false) }} />
     else return <a href="about:blank" className="float-right text-success" onClick={(e) => { e.preventDefault(); setShowAddCondition(true); }}><i className="fas fa-plus"></i> Add Condition</a>
@@ -60,7 +58,7 @@ export function PeopleSearch(props: Props) {
     const result: JSX.Element[] = [];
     let idx = 0;
     for (let c of conditions) {
-      const displayField = c.field.split(/(?=[A-Z])/).map(word => { return word.charAt(0).toUpperCase() + word.slice(1) }).join(" ");
+      const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
       const displayOperator = c.operator.replace("equals", "=").replace("lessThan", "<").replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("greaterThanEqual", ">=");
       const index = idx;
       result.push(<div>
