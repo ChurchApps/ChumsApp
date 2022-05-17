@@ -12,7 +12,7 @@ export function PeopleSearch(props: Props) {
   const [searchText, setSearchText] = React.useState("");
   const [advanced, setAdvanced] = React.useState(false);
   const [conditions, setConditions] = React.useState<SearchCondition[]>([])
-  const [showAddCondition, setShowAddCondition] = React.useState(false);
+  const [showAddCondition, setShowAddCondition] = React.useState(true);
 
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSubmit(null); } }
 
@@ -24,13 +24,13 @@ export function PeopleSearch(props: Props) {
     if (e !== null) e.preventDefault();
     let term = searchText.trim();
     const condition: SearchCondition = { field: "displayName", operator: "contains", value: term }
-    ApiHelper.post("/people/search2", [condition], "MembershipApi").then(data => {
+    ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi").then(data => {
       props.updateSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
     });
   }
 
   const handleAdvancedSearch = () => {
-    ApiHelper.post("/people/search2", conditions, "MembershipApi").then(data => {
+    ApiHelper.post("/people/advancedSearch", conditions, "MembershipApi").then(data => {
       props.updateSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
     });
 
@@ -50,13 +50,25 @@ export function PeopleSearch(props: Props) {
     else return <a href="about:blank" className="float-right text-success" onClick={(e) => { e.preventDefault(); setShowAddCondition(true); }}><i className="fas fa-plus"></i> Add Condition</a>
   }
 
+  const removeCondition = (index: number) => {
+    const c = [...conditions];
+    c.splice(index, 1);
+    setConditions(c);
+  }
+
   const getDisplayConditions = () => {
     const result: JSX.Element[] = [];
-    conditions.forEach(c => {
+    let idx = 0;
+    for (let c of conditions) {
+      const displayField = c.field.split(/(?=[A-Z])/).map(word => { return word.charAt(0).toUpperCase() + word.slice(1) }).join(" ");
+      const displayOperator = c.operator.replace("equals", "=").replace("lessThan", "<").replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("greaterThanEqual", ">=");
+      const index = idx;
       result.push(<div>
-        <b>{c.field}</b> <i>{c.operator}</i> "{c.value}"
-      </div>)
-    })
+        <a href="about:blank" onClick={(e) => { e.preventDefault(); removeCondition(index) }}><i className="fas fa-trash text-danger" style={{ marginRight: 10 }}></i></a>
+        <b>{displayField}</b> {displayOperator} <i>{c.value}</i>
+      </div>);
+      idx++;
+    }
     return result;
   }
 
