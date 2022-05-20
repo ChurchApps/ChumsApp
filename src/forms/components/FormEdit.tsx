@@ -19,7 +19,10 @@ export function FormEdit({ formId, updatedFunction }: Props) {
   function loadData() {
     if (formId) {
       ApiHelper.get("/forms/" + formId, "MembershipApi").then((data: FormInterface) => {
-        if (data.restricted !== undefined && data.contentType === "form") setStandAloneForm(true);
+        if (data.restricted !== undefined && data.contentType === "form")
+          setStandAloneForm(true);
+        else
+          setStandAloneForm(false);
         setForm(data);
         setShowDates(!!data.accessEndTime);
       });
