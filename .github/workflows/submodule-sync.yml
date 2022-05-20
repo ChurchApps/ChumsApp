@@ -34,5 +34,12 @@ jobs:
         git config --global user.email 'bot@noreply.github.com'
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
         git commit -am "Auto updated submodule references" && git push || echo "No changes to commit"
-        
-    - uses: ./.github/workflows/deploy-staging
+    
+    - name: Trigger Deploy
+      env:
+        CI_TOKEN: ${{ secrets.CI_TOKEN }}
+        PARENT_REPO: LiveChurchSolutions/ChumsApp
+        PARENT_BRANCH: main
+        WORKFLOW_ID: 5436870
+      run: |
+        curl -fL --retry 3 -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ env.CI_TOKEN }}" https://api.github.com/repos/${{ env.PARENT_REPO }}/actions/workflows/${{ env.WORKFLOW_ID }}/dispatches -d '{"ref":"${{ env.PARENT_BRANCH }}"}'
