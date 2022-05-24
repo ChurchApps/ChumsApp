@@ -54,7 +54,7 @@ export const Household: React.FC<Props> = (props) => {
         let m = members[i];
         rows.push(
           <tr key={m.id}>
-            <td><img src={photo} alt="avatar" /></td>
+            <td><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></td>
             <td><Link to={"/people/" + m.id}>{m.name.display}</Link>
               <div>{m.householdRole}</div>
             </td>
