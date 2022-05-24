@@ -4,8 +4,10 @@ import UserContext from "../UserContext";
 import {Link} from "react-router-dom";
 import {Col, Container} from "react-bootstrap";
 import {useCookies} from "react-cookie"
+import { AppearanceHelper } from "../appBase/helpers/AppearanceHelper";
 
 export const Header: React.FC = () => {
+  const [churchLogo, setChurchLogo] = React.useState<string>();
   const {firstName, lastName} = UserHelper.user;
   const [userName] = React.useState(UserHelper.person?.name?.display || `${firstName} ${lastName}`);
   const [, setCookie] = useCookies(["jwt"])
@@ -51,7 +53,13 @@ export const Header: React.FC = () => {
     });
   };
 
+  const getChurchLogo = async () => {
+    const logos = await AppearanceHelper.load(UserHelper.currentChurch.id);
+    setChurchLogo(logos.logoLight || "/images/logo.png");
+  }
+
   React.useEffect(() => {
+    getChurchLogo();
     toggleMenuItems();
   });
 
@@ -62,7 +70,7 @@ export const Header: React.FC = () => {
           <div className="d-flex justify-content-between">
             <div>
               <a className="navbar-brand" href="/">
-                <img src="/images/logo.png" alt="logo" />
+                { churchLogo && <img src={churchLogo} alt="logo" /> }
               </a>
             </div>
 
