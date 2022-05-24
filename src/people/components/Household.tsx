@@ -21,7 +21,7 @@ export const Household: React.FC<Props> = (props) => {
   const [household, setHousehold] = React.useState(null);
   const [members, setMembers] = React.useState<PersonInterface[]>(null);
   const [mode, setMode] = React.useState("display");
-  const [photo, setPhoto] = React.useState("");
+  const [, setPhoto] = React.useState("");
 
   const handleEdit = () => setMode("edit");
   const handleUpdate = () => {
