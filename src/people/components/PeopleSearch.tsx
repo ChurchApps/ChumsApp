@@ -1,7 +1,7 @@
 import React from "react";
 import { PersonHelper, PersonInterface, DisplayBox, ApiHelper } from ".";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { InputBox, SearchCondition } from "../../components";
+import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition } from "../../components";
 import { EditCondition } from "./EditCondition";
 
 interface Props {
@@ -29,8 +29,28 @@ export function PeopleSearch(props: Props) {
     });
   }
 
-  const handleAdvancedSearch = () => {
-    ApiHelper.post("/people/advancedSearch", conditions, "MembershipApi").then(data => {
+  const convertConditions = async () => {
+    console.log(conditions)
+    const result: SearchCondition[] = [];
+    for (const c of conditions) {
+      switch (c.field) {
+        case "groupMember":
+          const val = JSON.parse(c.value);
+          const members: GroupMemberInterface[] = await ApiHelper.get("/groupmembers?groupId=" + val.value, "MembershipApi");
+          const peopleIds = ArrayHelper.getIds(members, "personId");
+          result.push({ field: "id", operator: c.operator, value: peopleIds.join(",") });
+          break;
+        default:
+          result.push(c);
+          break;
+      }
+    }
+    return result;
+  }
+
+  const handleAdvancedSearch = async () => {
+    const postConditions = await convertConditions();
+    ApiHelper.post("/people/advancedSearch", postConditions, "MembershipApi").then(data => {
       props.updateSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
     });
 
@@ -59,11 +79,12 @@ export function PeopleSearch(props: Props) {
     let idx = 0;
     for (let c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("equals", "=").replace("lessThan", "<").replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("greaterThanEqual", ">=");
+      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in");
       const index = idx;
+      let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
       result.push(<div>
         <a href="about:blank" onClick={(e) => { e.preventDefault(); removeCondition(index) }}><i className="fas fa-trash text-danger" style={{ marginRight: 10 }}></i></a>
-        <b>{displayField}</b> {displayOperator} <i>{c.value}</i>
+        <b>{displayField}</b> {displayOperator} <i>{displayValue}</i>
       </div>);
       idx++;
     }
