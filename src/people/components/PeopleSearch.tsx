@@ -1,7 +1,7 @@
 import React from "react";
 import { PersonHelper, PersonInterface, DisplayBox, ApiHelper } from ".";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { InputBox, SearchCondition } from "../../components";
+import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition } from "../../components";
 import { EditCondition } from "./EditCondition";
 
 interface Props {
@@ -29,8 +29,30 @@ export function PeopleSearch(props: Props) {
     });
   }
 
-  const handleAdvancedSearch = () => {
-    ApiHelper.post("/people/advancedSearch", conditions, "MembershipApi").then(data => {
+  const convertConditions = async () => {
+    console.log(conditions)
+    const result:SearchCondition[] = [];
+    for (const c of conditions) {
+      switch (c.field)
+      {
+        case "groupMembers":
+          const val = JSON.parse(c.value);
+          const members:GroupMemberInterface[] = await ApiHelper.get("/groupmembers?groupId=" + val.value, "MembershipApi");
+          const peopleIds = ArrayHelper.getIds(members, "personId");
+          result.push({ field:"id", operator:c.operator, value:peopleIds.join(",") });
+          break;
+        default:
+          result.push(c);
+          break;
+      }
+    }
+    console.log(result);
+    return result;
+  }
+
+  const handleAdvancedSearch = async () => {
+    const postConditions = await convertConditions();
+    ApiHelper.post("/people/advancedSearch", postConditions, "MembershipApi").then(data => {
       props.updateSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
     });
 
