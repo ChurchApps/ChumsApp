@@ -59,11 +59,12 @@ export function PeopleSearch(props: Props) {
     let idx = 0;
     for (let c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("equals", "=").replace("lessThan", "<").replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("greaterThanEqual", ">=");
+      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in");
       const index = idx;
+      let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
       result.push(<div>
         <a href="about:blank" onClick={(e) => { e.preventDefault(); removeCondition(index) }}><i className="fas fa-trash text-danger" style={{ marginRight: 10 }}></i></a>
-        <b>{displayField}</b> {displayOperator} <i>{c.value}</i>
+        <b>{displayField}</b> {displayOperator} <i>{displayValue}</i>
       </div>);
       idx++;
     }

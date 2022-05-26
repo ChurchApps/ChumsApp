@@ -1,7 +1,8 @@
 import React from "react";
-import { SearchCondition } from ".";
+import { ApiHelper, SearchCondition } from ".";
 import { Button, FormControl } from "react-bootstrap";
-
+import { Permissions } from "."
+import { GroupInterface } from "../../helpers";
 interface Props {
   conditionAdded: (condition: any) => void
 }
@@ -9,6 +10,8 @@ interface Props {
 export function EditCondition(props: Props) {
 
   const [condition, setCondition] = React.useState<SearchCondition>({ field: "displayName", operator: "equals", value: "" });
+  const [loadedOptions, setLoadedOptions] = React.useState<any[]>([]);
+  const [loadedOptionsField, setLoadedOptionsField] = React.useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     let c = { ...condition }
@@ -27,7 +30,7 @@ export function EditCondition(props: Props) {
   }
 
   const setDefaultValue = (val: string) => {
-    if (!condition.value) {
+    if (!condition.value && val !== "") {
       let c = { ...condition }
       c.value = val;
       setCondition(c);
@@ -53,6 +56,13 @@ export function EditCondition(props: Props) {
         setDefaultValue("Visitor");
         result = getValueSelect(options);
         break;
+      case "groupMember":
+        let optionItems: JSX.Element[] = [];
+        loadedOptions.forEach(o => { optionItems.push(<option value={JSON.stringify(o)}>{o.text}</option>); });
+        options = <>{optionItems}</>
+        setDefaultValue((loadedOptions?.length > 0) ? JSON.stringify(loadedOptions[0]) : "");
+        result = getValueSelect(options);
+        break;
       case "birthMonth":
       case "anniversaryMonth":
         options = <><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></>
@@ -74,36 +84,25 @@ export function EditCondition(props: Props) {
     return result;
   }
 
+  React.useEffect(() => {
+    if (condition.field !== loadedOptionsField) {
+      setLoadedOptionsField(condition.field);
+      if (condition.field === "groupMember") {
+        ApiHelper.get("/groups", "MembershipApi").then((groups: GroupInterface[]) => {
+          const options: any[] = [];
+          groups.forEach(g => { options.push({ value: g.id, text: g.name }); });
+          setLoadedOptions(options);
+        });
+      }
+    }
+  }, [condition?.field.toString()]);
+
   const getValueSelect = (options: JSX.Element) => (<FormControl as="select" style={{ marginBottom: 5 }} id="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange}>
     {options}
   </FormControl>)
 
-  return <>
-    <FormControl as="select" style={{ marginBottom: 5 }} id="field" type="text" placeholder="Value" value={condition.field} onChange={handleChange}>
-      <option value="displayName">Display Name</option>
-      <option value="firstName">First Name</option>
-      <option value="lastName">Last Name</option>
-      <option value="middleName">Middle Name</option>
-      <option value="nickName">Nick Name</option>
-      <option value="prefix">Prefix</option>
-      <option value="suffix">Suffix</option>
-      <option value="birthDate">Birth Date</option>
-      <option value="birthMonth">Birth Month</option>
-      <option value="age">Age</option>
-      <option value="gender">Gender</option>
-      <option value="maritalStatus">Marital Status</option>
-      <option value="anniversary">Anniversary</option>
-      <option value="anniversaryMonth">Anniversary Month</option>
-      <option value="yearsMarried">Years Married</option>
-      <option value="membershipStatus">Membership Status</option>
-      <option value="phone">Phone</option>
-      <option value="email">Email</option>
-      <option value="address">Address</option>
-      <option value="city">City</option>
-      <option value="state">State/Province</option>
-      <option value="zip">Zip/Postal</option>
-    </FormControl>
-    <FormControl as="select" style={{ marginBottom: 5 }} id="operator" type="text" placeholder="Value" value={condition.operator} onChange={handleChange}>
+  const getOperatorOptions = () => {
+    let result = <>
       <option value="equals">=</option>
       <option value="contains">contains</option>
       <option value="startsWith">starts with</option>
@@ -113,6 +112,61 @@ export function EditCondition(props: Props) {
       <option value="lessThan">&lt;</option>
       <option value="lessThanEqual">&lt;=</option>
       <option value="notEquals">!=</option>
+    </>
+    switch (condition?.field) {
+      case "gender":
+        result = <>
+          <option value="equals">=</option>
+          <option value="notEquals">!=</option>
+        </>
+        break;
+      case "groupMember":
+        if (condition.operator !== "in" && condition.operator !== "notIn") {
+          const c = { ...condition }
+          c.operator = "in";
+          setCondition(c);
+        }
+        result = <>
+          <option value="in">is member of</option>
+          <option value="notIn">is not member of</option>
+        </>
+        break;
+    }
+    return result;
+  }
+
+  return <>
+    <FormControl as="select" style={{ marginBottom: 5 }} id="field" type="text" placeholder="Value" value={condition.field} onChange={handleChange}>
+      <optgroup label="Person">
+        <option value="displayName">Display Name</option>
+        <option value="firstName">First Name</option>
+        <option value="lastName">Last Name</option>
+        <option value="middleName">Middle Name</option>
+        <option value="nickName">Nick Name</option>
+        <option value="prefix">Prefix</option>
+        <option value="suffix">Suffix</option>
+        <option value="birthDate">Birth Date</option>
+        <option value="birthMonth">Birth Month</option>
+        <option value="age">Age</option>
+        <option value="gender">Gender</option>
+        <option value="maritalStatus">Marital Status</option>
+        <option value="anniversary">Anniversary</option>
+        <option value="anniversaryMonth">Anniversary Month</option>
+        <option value="yearsMarried">Years Married</option>
+        <option value="phone">Phone</option>
+        <option value="email">Email</option>
+        <option value="address">Address</option>
+        <option value="city">City</option>
+        <option value="state">State/Province</option>
+        <option value="zip">Zip/Postal</option>
+      </optgroup>
+      <optgroup label="Membership">
+        <option value="membershipStatus">Membership Status</option>
+        {(Permissions.membershipApi.groupMembers) && <option value="groupMember">Group Member</option>}
+      </optgroup>
+    </FormControl>
+    <FormControl as="select" style={{ marginBottom: 5 }} id="operator" type="text" placeholder="Value" value={condition.operator} onChange={handleChange}>
+      {getOperatorOptions()}
     </FormControl>
     {getValueField()}
     <Button variant="success" className="btn-block" onClick={() => { props.conditionAdded(condition) }}>Save Condition</Button>
