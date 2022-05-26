@@ -95,7 +95,7 @@ export function EditCondition(props: Props) {
         });
       }
     }
-  }, [condition?.field.toString()]);
+  }, [condition?.field.toString()]); //eslint-disable-line
 
   const getValueSelect = (options: JSX.Element) => (<FormControl as="select" style={{ marginBottom: 5 }} id="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange}>
     {options}
