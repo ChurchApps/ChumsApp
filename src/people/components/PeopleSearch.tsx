@@ -31,22 +31,20 @@ export function PeopleSearch(props: Props) {
 
   const convertConditions = async () => {
     console.log(conditions)
-    const result:SearchCondition[] = [];
+    const result: SearchCondition[] = [];
     for (const c of conditions) {
-      switch (c.field)
-      {
-        case "groupMembers":
+      switch (c.field) {
+        case "groupMember":
           const val = JSON.parse(c.value);
-          const members:GroupMemberInterface[] = await ApiHelper.get("/groupmembers?groupId=" + val.value, "MembershipApi");
+          const members: GroupMemberInterface[] = await ApiHelper.get("/groupmembers?groupId=" + val.value, "MembershipApi");
           const peopleIds = ArrayHelper.getIds(members, "personId");
-          result.push({ field:"id", operator:c.operator, value:peopleIds.join(",") });
+          result.push({ field: "id", operator: c.operator, value: peopleIds.join(",") });
           break;
         default:
           result.push(c);
           break;
       }
     }
-    console.log(result);
     return result;
   }
 
