@@ -4,6 +4,7 @@ import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns }
 import { Row, Col } from "react-bootstrap";
 import { PersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
+import { Wrapper } from "../components/Wrapper";
 
 export const PeoplePage = () => {
 
@@ -57,8 +58,7 @@ export const PeoplePage = () => {
   React.useEffect(loadData, []);
 
   return (
-    <>
-      <h1><i className="fas fa-user"></i> People</h1>
+    <Wrapper pageTitle="Search People">
       <Row>
         <Col lg={8}>
           <DisplayBox id="peopleBox" headerIcon="fas fa-user" headerText="People" editContent={getEditContent()}>
@@ -69,6 +69,6 @@ export const PeoplePage = () => {
           <PeopleSearch updateSearchResults={(people) => setSearchResults(people)} />
         </Col>
       </Row>
-    </>
+    </Wrapper>
   );
 }

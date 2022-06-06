@@ -3,56 +3,11 @@ import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, F
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
+import { Wrapper } from "../components/Wrapper";
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
   const [batches, setBatches] = React.useState<DonationBatchInterface[]>(null);
-
-  /*
-  const getFilter = (): ReportFilterInterface => ({
-    keyName: "donationSummaryFilter",
-    fields: [
-      { keyName: "startDate", displayName: "Start Date", dataType: "date", value: DateHelper.addDays(new Date(), -365) },
-      { keyName: "endDate", displayName: "End Date", dataType: "date", value: new Date() }
-    ]
-  });
-
-  const loadReport = async (filter: ReportFilterInterface) => {
-    if (filter === null) return;
-    const startDate = ArrayHelper.getOne(filter.fields, "keyName", "startDate").value;
-    const endDate = ArrayHelper.getOne(filter.fields, "keyName", "endDate").value;
-
-    return ApiHelper.get("/donations/summary?startDate=" + DateHelper.formatHtml5Date(startDate) + "&endDate=" + DateHelper.formatHtml5Date(endDate), "GivingApi").then((summary) => {
-      const r: ReportInterface = {
-        headings: [
-          { name: "Week", field: "week" },
-          { name: "Fund", field: "fundName" },
-          { name: "Amount", field: "totalAmount" }
-        ],
-        groupings: ["week", "fundName"],
-        data: convertSummaryToReportData(summary),
-        title: "Donation Summary",
-        keyName: "donationSummary",
-        reportType: "Bar Chart"
-      };
-      return r;
-    })
-  }
-
-  const convertSummaryToReportData = (summary: DonationSummaryInterface[]) => {
-    const result: any[] = [];
-    summary.forEach(s => {
-      s.donations.forEach((d: any) => {
-        result.push({
-          week: DateHelper.prettyDate(new Date(s.week)),
-          fundName: (d.fund === undefined) ? "none" : d.fund.name,
-          totalAmount: d.totalAmount
-        });
-      });
-    });
-    return result;
-  }
-  */
 
   const showAddBatch = (e: React.MouseEvent) => { e.preventDefault(); setEditBatchId(""); }
   const batchUpdated = () => { setEditBatchId("notset"); loadData(); }
@@ -126,8 +81,7 @@ export const DonationsPage = () => {
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
   else return (
-    <>
-      <h1><i className="fas fa-hand-holding-usd"></i> Donations</h1>
+    <Wrapper pageTitle="Donations">
       <ReportWithFilter keyName="donationSummary" autoRun={true} />
       <Row>
         <Col lg={8}>
@@ -138,6 +92,6 @@ export const DonationsPage = () => {
         </Col>
         <Col lg={4}>{getSidebarModules()}</Col>
       </Row>
-    </>
+    </Wrapper>
   );
 }

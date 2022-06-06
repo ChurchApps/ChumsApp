@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper } from "./components";
 import { useParams, Link } from "react-router-dom";
 import { Row, Col, FormGroup, FormControl, FormLabel, Table } from "react-bootstrap";
+import { Wrapper } from "../components/Wrapper";
 
 export const FundPage = () => {
   const params = useParams();
@@ -100,8 +101,7 @@ export const FundPage = () => {
     }
 
     return (
-      <>
-        <h1><i className="fas fa-hand-holding-usd"></i> {fund.name} Donations</h1>
+      <Wrapper pageTitle={fund.name + " Donations"}>
         <Row>
           <Col lg={8}>
             <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations" editContent={getEditContent()}>
@@ -121,8 +121,7 @@ export const FundPage = () => {
             </InputBox>
           </Col>
         </Row>
-
-      </>
+      </Wrapper>
     );
   }
 

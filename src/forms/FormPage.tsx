@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs, ApiHelper, FormInterface, MemberPermissionInterface, UserHelper } from "./components";
 import { useParams } from "react-router-dom"
+import { Wrapper } from "../components/Wrapper";
 
 export const FormPage = () => {
   const params = useParams();
@@ -15,5 +16,7 @@ export const FormPage = () => {
 
   React.useEffect(loadData, []); //eslint-disable-line
 
-  return form?.id ? <Tabs form={form} memberPermission={memberPermission} /> : <></>;
+  return form?.id ?
+    <Wrapper pageTitle={form?.name}><Tabs form={form} memberPermission={memberPermission} /> </Wrapper>
+    : <></>;
 }

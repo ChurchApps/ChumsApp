@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, PersonHelper } from "./components";
 import { useParams } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
+import { Wrapper } from "../components/Wrapper";
 
 export const GroupPage = () => {
   const params = useParams();
@@ -45,8 +46,7 @@ export const GroupPage = () => {
   }
 
   return (
-    <>
-      <h1><i className="fas fa-list"></i> {group.name}</h1>
+    <Wrapper pageTitle={group?.name}>
       <Row>
         <Col lg={8}>
           <GroupDetails group={group} updatedFunction={handleGroupUpdated} />
@@ -54,6 +54,6 @@ export const GroupPage = () => {
         </Col>
         <Col lg={4}>{getSidebarModules()}</Col>
       </Row>
-    </>
+    </Wrapper>
   );
 }

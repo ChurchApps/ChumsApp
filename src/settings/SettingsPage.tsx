@@ -1,5 +1,5 @@
 import React from "react";
-import { UserHelper, BigLinkButton, Permissions, EnvironmentHelper } from "./components";
+import { UserHelper, BigLinkButton, Permissions, EnvironmentHelper, Wrapper } from "./components";
 import { Row } from "react-bootstrap";
 
 export const SettingsPage = () => {
@@ -15,12 +15,12 @@ export const SettingsPage = () => {
   }
 
   return (
-    <>
+    <Wrapper pageTitle="Settings">
       <h1><i className="fas fa-cog"></i> Settings</h1>
       <Row className="justify-content-md-center" id="settingsBoxes">
         {getLinks()}
       </Row>
-    </>
+    </Wrapper>
   );
 }
 

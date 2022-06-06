@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { ApiHelper, DisplayBox, FormInterface, FormEdit, UserHelper, Permissions, Loading, EnvironmentHelper } from "./components"
 import { Link } from "react-router-dom"
 import { Row, Col, Table } from "react-bootstrap";
+import { Wrapper } from "../components/Wrapper";
 
 export const FormsPage = () => {
   const [forms, setForms] = React.useState<FormInterface[]>(null);
@@ -12,8 +13,8 @@ export const FormsPage = () => {
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const loadData = () => {
-    ApiHelper.get("/forms", "MembershipApi").then(data => {if (isSubscribed.current) { setForms(data) }});
-    ApiHelper.get("/forms/archived", "MembershipApi").then(data => {if (isSubscribed.current) { setArchivedForms(data) }});
+    ApiHelper.get("/forms", "MembershipApi").then(data => { if (isSubscribed.current) { setForms(data) } });
+    ApiHelper.get("/forms/archived", "MembershipApi").then(data => { if (isSubscribed.current) { setArchivedForms(data) } });
   }
 
   const getRows = () => {
@@ -92,15 +93,14 @@ export const FormsPage = () => {
     if (forms && archivedForms) {
       contents = (<Table>
         <thead>{getTableHeader()}</thead>
-        <tbody>{selectedTab === "forms" ? getRows() : getArchivedRows() }</tbody>
+        <tbody>{selectedTab === "forms" ? getRows() : getArchivedRows()}</tbody>
       </Table>);
     }
     return (
-      <>
-        <h1><i className={icon}></i> {title}</h1>
+      <Wrapper pageTitle={title}>
         <ul className="nav nav-tabs">
           <li className="nav-item" key="forms"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("forms"); }} className={(selectedTab === "forms") ? "nav-link active" : "nav-link"}><i className="fas fa-align-left"></i> Forms</a></li>
-          { archivedForms?.length > 0 && <li className="nav-item" key="archived"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("archived"); }} className={(selectedTab === "archived") ? "nav-link active" : "nav-link"}><i className="fa fa-archive"></i> Archived forms</a></li> }
+          {archivedForms?.length > 0 && <li className="nav-item" key="archived"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("archived"); }} className={(selectedTab === "archived") ? "nav-link active" : "nav-link"}><i className="fa fa-archive"></i> Archived forms</a></li>}
         </ul>
         <Row>
           <Col lg={8}>
@@ -110,7 +110,7 @@ export const FormsPage = () => {
           </Col>
           <Col lg={4}>{getSidebar()}</Col>
         </Row>
-      </>
+      </Wrapper>
     );
   }
 }

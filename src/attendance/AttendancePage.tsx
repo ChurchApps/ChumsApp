@@ -3,6 +3,7 @@ import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit
 
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
+import { Wrapper } from "../components/Wrapper";
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
@@ -117,8 +118,7 @@ export const AttendancePage = () => {
   }
 
   return (
-    <form method="post">
-      <h1><i className="far fa-calendar-alt"></i> Attendance</h1>
+    <Wrapper pageTitle="Attendance">
       <Row>
         <Col lg={8}>
           <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="fas fa-list" headerText="Groups" editContent={getEditLinks()}>
@@ -132,8 +132,7 @@ export const AttendancePage = () => {
         </Col>
       </Row>
       <Tabs />
-
-    </form>
+    </Wrapper>
   );
 }
 

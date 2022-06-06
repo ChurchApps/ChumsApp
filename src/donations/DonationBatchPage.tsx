@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, DonationEdit, DonationBatchInterface, UserHelper, Donations, FundInterface, Permissions } from "./components";
 import { useParams } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
+import { Wrapper } from "../components/Wrapper";
 
 export const DonationBatchPage = () => {
   const params = useParams();
@@ -28,13 +29,12 @@ export const DonationBatchPage = () => {
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return (<></>);
   return (
-    <>
-      <h1 data-cy="batch-heading"><i className="fas fa-hand-holding-usd"></i> Batch #{batch.id}</h1>
+    <Wrapper pageTitle={"Batch #" + batch.id}>
       <Row>
         <Col lg={8}><Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} funds={funds} /></Col>
         <Col lg={4}>{getSidebarModules()}</Col>
       </Row>
-    </>
+    </Wrapper>
   );
 }
 

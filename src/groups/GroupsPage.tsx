@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
 import { Row, Col, Table } from "react-bootstrap";
+import { Wrapper } from "../components/Wrapper";
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
@@ -76,8 +77,7 @@ export const GroupsPage = () => {
   }
 
   return (
-    <>
-      <h1><i className="fas fa-list"></i> Groups</h1>
+    <Wrapper pageTitle="Groups">
       <Row>
         <Col lg={8}>
           <DisplayBox id="groupsBox" headerIcon="fas fa-list" headerText="Groups" editContent={getEditContent()}>
@@ -86,6 +86,6 @@ export const GroupsPage = () => {
         </Col>
         <Col lg={4}>{addBox}</Col>
       </Row>
-    </>
+    </Wrapper>
   );
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, ReportInterface } from "../components";
 import { useParams } from "react-router-dom";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
+import { Wrapper } from "../components/Wrapper";
 
 export const ReportPage = () => {
   const params = useParams();
@@ -11,9 +12,8 @@ export const ReportPage = () => {
   React.useEffect(loadData, [params.keyName]);
 
   return (
-    <>
-      <h1>{report?.displayName || "Report"}</h1>
+    <Wrapper pageTitle={report?.displayName || "Report"}>
       <ReportWithFilter keyName={params.keyName} autoRun={false} />
-    </>
+    </Wrapper>
   );
 }

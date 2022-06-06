@@ -6,7 +6,8 @@ import {
   UserHelper,
   DisplayBox,
   SettingInterface,
-  Permissions
+  Permissions,
+  Wrapper
 } from "./components";
 import { Row, Col } from "react-bootstrap";
 
@@ -75,10 +76,7 @@ export const ChurchPage: React.FC = () => {
     return <></>;
   }
   return (
-    <>
-      <h1>
-        <i className="fas fa-church"></i> Church Settings
-      </h1>
+    <Wrapper pageTitle="Church Settings">
       <Row>
         <Col lg={8}>
           <DisplayBox headerText="Edit Church Settings" headerIcon="fas fa-cog">
@@ -98,6 +96,6 @@ export const ChurchPage: React.FC = () => {
           </DisplayBox>
         </Col>
       </Row>
-    </>
+    </Wrapper>
   );
 };

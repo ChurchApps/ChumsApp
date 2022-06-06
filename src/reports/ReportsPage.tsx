@@ -2,11 +2,12 @@ import React from "react";
 import { DisplayBox } from "../components";
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Wrapper } from "../components/Wrapper";
 
 export const ReportsPage = () => {
   console.log("report page")
   return (
-    <>
+    <Wrapper pageTitle="Reports">
       <h1><i className="fas fa-table"></i> Reports</h1>
       <Row>
         <Col lg={8}>
@@ -22,6 +23,6 @@ export const ReportsPage = () => {
           </DisplayBox>
         </Col>
       </Row>
-    </>
+    </Wrapper>
   );
 }

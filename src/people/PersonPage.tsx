@@ -2,6 +2,7 @@ import React from "react";
 import { Person, Groups, Tabs, Household, ImageEditor, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, AddNote, NoteInterface, ArrayHelper } from "./components"
 import { Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { Wrapper } from "../components/Wrapper";
 
 export const PersonPage = () => {
   const params = useParams();
@@ -66,19 +67,21 @@ export const PersonPage = () => {
   React.useEffect(() => { loadNotes() }, [person?.id]); //eslint-disable-line
 
   return (
-    <Row>
-      <Col lg={8}>
-        <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
-        <Tabs person={person} showNoteBox={handleNotesClick} notes={notes} />
-      </Col>
-      <Col lg={4}>
-        {addMergeSearch}
-        {imageEditor}
-        <Household person={person} reload={person?.photoUpdated} />
-        {getGroups()}
-        {showNoteBox && <AddNote contentId={person.id} noteId={noteId} close={() => setShowNoteBox(false)} updatedFunction={loadNotes} />}
-      </Col>
-    </Row>
+    <Wrapper pageTitle={person?.name?.display || ""}>
+      <Row>
+        <Col lg={8}>
+          <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
+          <Tabs person={person} showNoteBox={handleNotesClick} notes={notes} />
+        </Col>
+        <Col lg={4}>
+          {addMergeSearch}
+          {imageEditor}
+          <Household person={person} reload={person?.photoUpdated} />
+          {getGroups()}
+          {showNoteBox && <AddNote contentId={person.id} noteId={noteId} close={() => setShowNoteBox(false)} updatedFunction={loadNotes} />}
+        </Col>
+      </Row>
+    </Wrapper>
   )
 
 }

@@ -14,6 +14,7 @@ import { Settings } from "./settings/Settings";
 import { FormPage } from "./forms/FormPage";
 import { ReportsPage } from "./reports/ReportsPage";
 import { ReportPage } from "./reports/ReportPage";
+import { Box } from "@mui/material";
 // import UserContext from "./UserContext";
 
 export const Authenticated: React.FC = () => {
@@ -27,25 +28,23 @@ export const Authenticated: React.FC = () => {
     navigate("/people")
   }
   else return (
-    <>
-      <Header></Header>
-      <div className="container">
-        <Routes>
-          <Route path="/people/:id" element={<PersonPage />} />
-          <Route path="/people" element={<PeoplePage />} />
-          <Route path="/groups/:id" element={<GroupPage />} />
-          <Route path="/groups" element={<GroupsPage />} />
-          <Route path="/attendance" element={<AttendancePage />} />
-          <Route path="/donations/funds/:id" element={<FundPage />} />
-          <Route path="/donations/:id" element={<DonationBatchPage />} />
-          <Route path="/donations" element={<DonationsPage />} />
-          <Route path="/forms/:id" element={<FormPage />} />
-          <Route path="/forms" element={<FormsPage />} />
-          <Route path="/reports/:keyName" element={<ReportPage />} />
-          <Route path="/reports" element={<ReportsPage />} />
-          <Route path="/settings/*" element={<Settings />} />
-        </Routes>
-      </div>
-    </>
+    <Box sx={{ display: "flex", backgroundColor: "#EEE" }}>
+      <Routes>
+        <Route path="/people/:id" element={<PersonPage />} />
+        <Route path="/people" element={<PeoplePage />} />
+        <Route path="/groups/:id" element={<GroupPage />} />
+        <Route path="/groups" element={<GroupsPage />} />
+        <Route path="/attendance" element={<AttendancePage />} />
+        <Route path="/donations/funds/:id" element={<FundPage />} />
+        <Route path="/donations/:id" element={<DonationBatchPage />} />
+        <Route path="/donations" element={<DonationsPage />} />
+        <Route path="/forms/:id" element={<FormPage />} />
+        <Route path="/forms" element={<FormsPage />} />
+        <Route path="/reports/:keyName" element={<ReportPage />} />
+        <Route path="/reports" element={<ReportsPage />} />
+        <Route path="/settings/*" element={<Settings />} />
+      </Routes>
+    </Box>
+
   );
 };
