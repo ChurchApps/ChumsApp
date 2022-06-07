@@ -1,9 +1,9 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { UserHelper } from "./";
 import { useNavigate } from "react-router-dom";
-import { Avatar, IconButton, ListSubheader, Menu, MenuItem, Typography, Icon, Button } from "@mui/material";
+import { Avatar, IconButton, ListSubheader, Menu, MenuItem, Typography, Icon, Button, Divider } from "@mui/material";
 import UserContext from "../UserContext";
-import { NavItem } from "../appBase/components";
+import { ChurchDropdown, NavItem, SwitchAppMenu } from "../appBase/components";
 
 export const UserMenu: React.FC = () => {
   const userName = `${UserHelper.user.firstName} ${UserHelper.user.lastName}`;
@@ -16,27 +16,51 @@ export const UserMenu: React.FC = () => {
     e.preventDefault();
     setAnchorEl(e.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const navigate = useNavigate();
 
-  const getChurchLinks = () => {
+  const getMainLinks = () => {
     if (UserHelper.churches.length < 2) return null;
     else {
       let result: JSX.Element[] = [];
       result.push(<NavItem url="/profile" label="Profile" icon="person" />);
       result.push(<NavItem url="/logout" label="Logout" icon="logout" />);
+      result.push(<Divider></Divider>)
+      result.push(<SwitchAppMenu />);
+      if (UserHelper.churches.length > 1) result.push(<ChurchDropdown currentChurch={UserHelper.currentChurch} churches={UserHelper.churches} />);
       return result;
     }
   }
+
 
   const getProfilePic = () => {
 
     if (context.profilePicture) return <img src={context.profilePicture} alt="user" style={{ maxHeight: 32 }} />
     else return <Icon>person</Icon>
   }
+
+
+  const paperProps = {
+    elevation: 0,
+    sx: {
+      overflow: "visible",
+      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+      mt: 1.5,
+      "& .MuiAvatar-root": { width: 32, height: 32, ml: -0.5, mr: 1 },
+      "&:before": { content: "\"\"", display: "block", position: "absolute", top: 0, right: 14, width: 10, height: 10, bgcolor: "background.paper", transform: "translateY(-50%) rotate(45deg)", zIndex: 0 }
+    }
+  };
+
+  const handleItemClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log(e);
+
+  }
+
+
 
   return (
     <>
@@ -45,26 +69,8 @@ export const UserMenu: React.FC = () => {
         <Typography color="inherit" noWrap>{userName}</Typography>
       </Button>
 
-      <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1.5,
-            "& .MuiAvatar-root": { width: 32, height: 32, ml: -0.5, mr: 1 },
-            "&:before": { content: "\"\"", display: "block", position: "absolute", top: 0, right: 14, width: 10, height: 10, bgcolor: "background.paper", transform: "translateY(-50%) rotate(45deg)", zIndex: 0 }
-          }
-        }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
-        {getChurchLinks()}
+      <Menu anchorEl={anchorEl} id="account-menu" open={open} onClose={handleClose} onClick={(e) => { handleItemClick(e) }} PaperProps={paperProps} transformOrigin={{ horizontal: "right", vertical: "top" }} anchorOrigin={{ horizontal: "right", vertical: "bottom" }}  >
+        {getMainLinks()}
       </Menu>
     </>
   );

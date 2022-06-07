@@ -32,8 +32,6 @@ export const Wrapper: React.FC<Props> = props => {
 
   const churchId = UserHelper.currentChurch.id
   const tabs = []
-  //tabs.push(<ListSubheader component="div">{UserHelper.currentChurch?.name || "Church"}</ListSubheader>);
-  if (UserHelper.currentChurch) tabs.push(<ChurchDropdown currentChurch={UserHelper.currentChurch} churches={UserHelper.churches} />)
 
 
   const donationIcon = donationError ? "error" : "volunteer_activism";
@@ -60,16 +58,7 @@ export const Wrapper: React.FC<Props> = props => {
 
 
 
-  const navContent = <>
-    <List component="nav">{tabs}</List>
-    <div style={{ position: "fixed", bottom: 0, textAlign: "center", paddingBottom: 10, marginLeft: 15 }}>
-      <Button endIcon={<Icon>expand_less</Icon>}>
-        <img src="/images/logo.png" className="img-fluid" style={{ width: 170 }} />
-      </Button>
-
-
-    </div>
-  </>
+  const navContent = <><List component="nav">{tabs}</List></>
   const userMenu = <UserMenu />
 
   return <>
