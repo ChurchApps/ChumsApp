@@ -14,11 +14,13 @@ export class EnvironmentHelper {
   static GoogleAnalyticsTag = "";
 
   static init = () => {
+    EnvironmentHelper.initProd();
+    /*
     switch (process.env.REACT_APP_STAGE) {
       case "staging": EnvironmentHelper.initStaging(); break;
       case "prod": EnvironmentHelper.initProd(); break;
       default: EnvironmentHelper.initDev(); break;
-    }
+    }*/
     ApiHelper.apiConfigs = [
       { keyName: "AccessApi", url: EnvironmentHelper.AccessApi, jwt: "", permisssions: [] },
       { keyName: "AttendanceApi", url: EnvironmentHelper.AttendanceApi, jwt: "", permisssions: [] },

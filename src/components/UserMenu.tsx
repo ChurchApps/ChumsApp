@@ -1,15 +1,20 @@
 import React from "react";
 import { UserHelper } from "./";
 import { useNavigate } from "react-router-dom";
-import { Avatar, IconButton, ListSubheader, Menu, MenuItem, Typography, Icon } from "@mui/material";
+import { Avatar, IconButton, ListSubheader, Menu, MenuItem, Typography, Icon, Button } from "@mui/material";
+import UserContext from "../UserContext";
+import { NavItem } from "../appBase/components";
 
 export const UserMenu: React.FC = () => {
   const userName = `${UserHelper.user.firstName} ${UserHelper.user.lastName}`;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const context = React.useContext(UserContext);
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -21,25 +26,24 @@ export const UserMenu: React.FC = () => {
     if (UserHelper.churches.length < 2) return null;
     else {
       let result: JSX.Element[] = [];
-      result.push(<ListSubheader component="div">Switch Church</ListSubheader>);
-      const churches = UserHelper.churches.filter(c => c.apis.length > 0)
-      churches.forEach(c => {
-        const church = c;
-        const churchName = (c.id === UserHelper.currentChurch.id) ? (<b>{c.name}</b>) : (c.name);
-        result.push(<MenuItem data-id={c.id} onClick={(e) => { e.preventDefault(); navigate("/" + church.id) }}>
-          {churchName}
-        </MenuItem>);
-      });
+      result.push(<NavItem url="/profile" label="Profile" icon="person" />);
+      result.push(<NavItem url="/logout" label="Logout" icon="logout" />);
       return result;
     }
   }
 
+  const getProfilePic = () => {
+
+    if (context.profilePicture) return <img src={context.profilePicture} alt="user" style={{ maxHeight: 32 }} />
+    else return <Icon>person</Icon>
+  }
+
   return (
     <>
-      <IconButton onClick={handleClick} color="inherit" aria-controls={open ? "account-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} style={{ outline: "0px !important" }}>
-        <Avatar sx={{ width: 32, height: 32, marginRight: 1 }}><Icon>person</Icon></Avatar>
+      <Button onClick={handleClick} color="inherit" aria-controls={open ? "account-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} style={{ textTransform: "none" }} endIcon={<Icon>expand_more</Icon>} >
+        <Avatar sx={{ width: 32, height: 32, marginRight: 1 }}>{getProfilePic()}</Avatar>
         <Typography color="inherit" noWrap>{userName}</Typography>
-      </IconButton>
+      </Button>
 
       <Menu
         anchorEl={anchorEl}
@@ -54,7 +58,7 @@ export const UserMenu: React.FC = () => {
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 1.5,
             "& .MuiAvatar-root": { width: 32, height: 32, ml: -0.5, mr: 1 },
-            "&:before": { content: "", display: "block", position: "absolute", top: 0, right: 14, width: 10, height: 10, bgcolor: "background.paper", transform: "translateY(-50%) rotate(45deg)", zIndex: 0 }
+            "&:before": { content: "\"\"", display: "block", position: "absolute", top: 0, right: 14, width: 10, height: 10, bgcolor: "background.paper", transform: "translateY(-50%) rotate(45deg)", zIndex: 0 }
           }
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
