@@ -1,11 +1,11 @@
 import React from "react";
-import { PersonHelper, AssociatedForms, PersonInterface, Loading } from "."
+import { PersonHelper, AssociatedForms, PersonInterface, Loading, DisplayBox } from "."
 import { Grid } from "@mui/material";
 
 interface Props {
   id?: string,
   person: PersonInterface
-  editFunction: (e: React.MouseEvent) => void,
+  editFunction: () => void,
   updatedFunction: () => void
 }
 
@@ -64,17 +64,10 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
   }
 
   return (
-    <div id={id} className="inputBox" data-cy="person-details-box">
-      <div className="header">
-        <Grid container spacing={3}>
-          <Grid item xs={8}><i className="fas fa-user"></i> Personal Details</Grid>
-          <Grid item xs={4} style={{ textAlign: "right" }}><button className="fa-pull-right no-default-style" aria-label="editPerson" onClick={editFunction}><i className="fas fa-pencil-alt" /></button></Grid>
-        </Grid>
-      </div>
-      <div className="content">
+    <>
+      <DisplayBox headerText="Person Details" editFunction={editFunction} footerContent={<AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />}  >
         {getFields()}
-      </div>
-      <AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />
-    </div>
+      </DisplayBox>
+    </>
   )
 }
