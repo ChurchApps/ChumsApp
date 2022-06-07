@@ -1,6 +1,6 @@
 import React from "react";
 import { GroupInterface, DisplayBox, GroupDetailsEdit, ServiceTimes, UserHelper, Permissions, Loading } from ".";
-import { Row, Col } from "react-bootstrap";
+import { Grid } from "@mui/material"
 
 interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }
 
@@ -14,14 +14,14 @@ export const GroupDetails: React.FC<Props> = (props) => {
   const getRows = () => {
     if (!props.group) return <Loading />
     else return (<>
-      <Row>
-        <Col><label>Category:</label> {props.group.categoryName}</Col>
-        <Col><label>Name:</label> {props.group.name}</Col>
-      </Row>
-      <Row>
-        <Col><label>Track Attendance:</label> {(props.group.trackAttendance?.toString().replace("false", "No").replace("true", "Yes") || "")}</Col>
-        <Col><label>Parent Pickup:</label> {(props.group.parentPickup?.toString().replace("false", "No").replace("true", "Yes") || "")}</Col>
-      </Row>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={12}><label>Category:</label> {props.group.categoryName}</Grid>
+        <Grid item md={6} xs={12}><label>Name:</label> {props.group.name}</Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={12}><label>Track Attendance:</label> {(props.group.trackAttendance?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
+        <Grid item md={6} xs={12}><label>Parent Pickup:</label> {(props.group.parentPickup?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
+      </Grid>
       <ServiceTimes group={props.group} />
     </>);
 

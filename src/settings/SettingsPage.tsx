@@ -1,6 +1,6 @@
 import React from "react";
 import { UserHelper, BigLinkButton, Permissions, EnvironmentHelper, Wrapper } from "./components";
-import { Row } from "react-bootstrap";
+import { Grid } from "@mui/material";
 
 export const SettingsPage = () => {
 
@@ -17,9 +17,9 @@ export const SettingsPage = () => {
   return (
     <Wrapper pageTitle="Settings">
       <h1><i className="fas fa-cog"></i> Settings</h1>
-      <Row className="justify-content-md-center" id="settingsBoxes">
+      <Grid container className="justify-content-md-center" id="settingsBoxes">
         {getLinks()}
-      </Row>
+      </Grid>
     </Wrapper>
   );
 }

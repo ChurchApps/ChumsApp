@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup, Col, Row, Table } from "react-bootstrap";
+import { Button, ButtonGroup, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { DisplayBox, PersonAdd, PersonInterface } from ".";
 import { ApiHelper, MemberPermissionInterface, PersonHelper } from "../../helpers";
+import { Grid } from "@mui/material"
 
 interface Props { formId: string }
 
@@ -99,17 +100,17 @@ export const FormMembers: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.formId]);
 
   return (
-    <Row>
-      <Col lg={8}>
+    <Grid container spacing={3}>
+      <Grid item md={8} xs={12}>
         <DisplayBox headerText="Form Members" headerIcon="fas fa-users">
           {getTable()}
         </DisplayBox>
-      </Col>
-      <Col lg={4}>
+      </Grid>
+      <Grid item md={4} xs={12}>
         <DisplayBox headerText="Add Person" headerIcon="fas fa-users">
           <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} filterList={filterList} />
         </DisplayBox>
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
 }

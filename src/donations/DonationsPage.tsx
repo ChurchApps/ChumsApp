@@ -1,9 +1,10 @@
 import React from "react";
 import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, Permissions, Loading, DonationEvents, CurrencyHelper } from "./components";
 import { Link } from "react-router-dom";
-import { Row, Col, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
 import { Wrapper } from "../components/Wrapper";
+import { Grid } from "@mui/material"
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
@@ -83,15 +84,15 @@ export const DonationsPage = () => {
   else return (
     <Wrapper pageTitle="Donations">
       <ReportWithFilter keyName="donationSummary" autoRun={true} />
-      <Row>
-        <Col lg={8}>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="fas fa-hand-holding-usd" headerText="Batches" editContent={getEditContent()}>
             {getTable()}
           </DisplayBox>
           <DonationEvents />
-        </Col>
-        <Col lg={4}>{getSidebarModules()}</Col>
-      </Row>
+        </Grid>
+        <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
+      </Grid>
     </Wrapper>
   );
 }

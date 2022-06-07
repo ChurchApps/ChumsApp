@@ -2,8 +2,9 @@ import React from "react";
 import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit, ServiceEdit, ServiceInterface, ServiceTimeEdit, ServiceTimeInterface, Tabs, GroupServiceTimeInterface, GroupInterface, ArrayHelper, Loading } from "./components";
 
 import { Link } from "react-router-dom";
-import { Row, Col, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
+import { Grid } from "@mui/material"
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
@@ -119,18 +120,18 @@ export const AttendancePage = () => {
 
   return (
     <Wrapper pageTitle="Attendance">
-      <Row>
-        <Col lg={8}>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="fas fa-list" headerText="Groups" editContent={getEditLinks()}>
             {getTable()}
           </DisplayBox>
-        </Col>
-        <Col lg={4}>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <CampusEdit campus={selectedCampus} updatedFunction={handleUpdated} />
           <ServiceEdit service={selectedService} updatedFunction={handleUpdated} />
           <ServiceTimeEdit serviceTime={selectedServiceTime} updatedFunction={handleUpdated} />
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
       <Tabs />
     </Wrapper>
   );

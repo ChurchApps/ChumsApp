@@ -1,15 +1,8 @@
 //NOTE - Temporarily broken.
 
 import React from "react";
-import {
-  ApiHelper,
-  UserHelper,
-  DisplayBox,
-  SettingInterface,
-  Permissions,
-  Wrapper
-} from "./components";
-import { Row, Col } from "react-bootstrap";
+import { ApiHelper, UserHelper, DisplayBox, SettingInterface, Permissions, Wrapper } from "./components";
+import { Grid } from "@mui/material"
 
 enum SettingType {
   ALLOW_GUEST_CHECKIN = "Allow guest checkin"
@@ -77,11 +70,11 @@ export const ChurchPage: React.FC = () => {
   }
   return (
     <Wrapper pageTitle="Church Settings">
-      <Row>
-        <Col lg={8}>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <DisplayBox headerText="Edit Church Settings" headerIcon="fas fa-cog">
-            <Row>
-              <Col>
+            <Grid container spacing={3}>
+              <Grid item md={6} xs={12}>
                 <div className="form-check">
                   <input
                     type="checkbox"
@@ -91,11 +84,11 @@ export const ChurchPage: React.FC = () => {
                   />
                   <label className="form-check-label">Allow self checkin of guests</label>
                 </div>
-              </Col>
-            </Row>
+              </Grid>
+            </Grid>
           </DisplayBox>
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
     </Wrapper>
   );
 };

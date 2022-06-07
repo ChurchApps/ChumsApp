@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import { ApiHelper, DisplayBox, FormInterface, FormEdit, UserHelper, Permissions, Loading, EnvironmentHelper } from "./components"
 import { Link } from "react-router-dom"
-import { Row, Col, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
+import { Grid } from "@mui/material"
 
 export const FormsPage = () => {
   const [forms, setForms] = React.useState<FormInterface[]>(null);
@@ -102,14 +103,14 @@ export const FormsPage = () => {
           <li className="nav-item" key="forms"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("forms"); }} className={(selectedTab === "forms") ? "nav-link active" : "nav-link"}><i className="fas fa-align-left"></i> Forms</a></li>
           {archivedForms?.length > 0 && <li className="nav-item" key="archived"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("archived"); }} className={(selectedTab === "archived") ? "nav-link active" : "nav-link"}><i className="fa fa-archive"></i> Archived forms</a></li>}
         </ul>
-        <Row>
-          <Col lg={8}>
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
             <DisplayBox id="formsBox" headerText={title} headerIcon={icon} editContent={getEditContent()}>
               {contents}
             </DisplayBox>
-          </Col>
-          <Col lg={4}>{getSidebar()}</Col>
-        </Row>
+          </Grid>
+          <Grid item md={4} xs={12}>{getSidebar()}</Grid>
+        </Grid>
       </Wrapper>
     );
   }

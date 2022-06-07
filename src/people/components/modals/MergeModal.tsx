@@ -1,7 +1,8 @@
 import React from "react";
 import { PersonInterface, ContactInfoInterface, NameInterface } from "..";
-import { Modal, Button, Container, Row, Col, Form } from "react-bootstrap";
+import { Modal, Button, Container, Form } from "react-bootstrap";
 import { EnvironmentHelper } from "../../../helpers"
+import { Grid } from "@mui/material"
 
 interface Props {
   show: boolean;
@@ -172,11 +173,11 @@ export const MergeModal: React.FC<Props> = (props) => {
   React.useEffect(merge, [person1, person2]);
 
   const createConflictRows = () => conflicts.map((outer, i) => (
-    <Form.Group as={Row} key={i}>
+    <Form.Group key={i}>
       <Form.Label as="legend" column sm={2}>
         {outer.value}
       </Form.Label>
-      <Col sm={10}>
+      <Grid item md={10}>
         {outer.options.map((name, index) => {
           const photoUrl = EnvironmentHelper.ContentRoot + name;
           const label = outer.value === "photo" ? (<img src={photoUrl} alt="profile" height="200px" width="200px" />) : name;
@@ -194,7 +195,7 @@ export const MergeModal: React.FC<Props> = (props) => {
             />
           );
         })}
-      </Col>
+      </Grid>
     </Form.Group>
   ));
 

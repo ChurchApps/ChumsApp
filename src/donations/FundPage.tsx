@@ -1,8 +1,9 @@
 import React from "react";
 import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper } from "./components";
 import { useParams, Link } from "react-router-dom";
-import { Row, Col, FormGroup, FormControl, FormLabel, Table } from "react-bootstrap";
+import { FormGroup, FormControl, FormLabel, Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
+import { Grid } from "@mui/material"
 
 export const FundPage = () => {
   const params = useParams();
@@ -102,13 +103,13 @@ export const FundPage = () => {
 
     return (
       <Wrapper pageTitle={fund.name + " Donations"}>
-        <Row>
-          <Col lg={8}>
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
             <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations" editContent={getEditContent()}>
               {contents}
             </DisplayBox>
-          </Col>
-          <Col lg={4}>
+          </Grid>
+          <Grid item md={4} xs={12}>
             <InputBox headerIcon="fas fa-filter" headerText="Donation Filter" saveFunction={loadDonations} saveText="Filter">
               <FormGroup>
                 <FormLabel>Start Date</FormLabel>
@@ -119,8 +120,8 @@ export const FundPage = () => {
                 <FormControl name="endDate" type="date" data-cy="end-date" value={DateHelper.formatHtml5Date(endDate)} onChange={handleChange} />
               </FormGroup>
             </InputBox>
-          </Col>
-        </Row>
+          </Grid>
+        </Grid>
       </Wrapper>
     );
   }

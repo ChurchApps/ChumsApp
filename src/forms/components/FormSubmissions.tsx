@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import { AnswerInterface, ApiHelper, DateHelper, DisplayBox, ExportLink, FormSubmissionInterface, MemberPermissionInterface, PersonInterface, QuestionInterface } from ".";
-import { Table, Row, Col, Card, ListGroup } from "react-bootstrap";
+import { Table, Card, ListGroup } from "react-bootstrap";
 import { useReactToPrint } from "react-to-print";
+import { Grid } from "@mui/material";
 
 interface Props { formId: string, memberPermissions: MemberPermissionInterface };
 
@@ -88,14 +89,14 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     let results: JSX.Element[] = [];
     summary.forEach((s: any, i: number) => {
       results.push(
-        <Col xs={12} md={6} key={s.id + "-" + i}>
+        <Grid item xs={12} md={6} key={s.id + "-" + i}>
           <Card style={{ marginBottom: "10px" }}>
             <Card.Header>{s.title}</Card.Header>
             <ListGroup variant="flush">
               {getResultCount(s.values)}
             </ListGroup>
           </Card>
-        </Col>
+        </Grid>
       );
     });
     return results;
@@ -152,17 +153,17 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.formId]); //eslint-disable-line
 
   return (
-    <Row>
-      <Col lg={8} className="form-submission-summary">
+    <Grid container spacing={3}>
+      <Grid item md={8} xs={12} className="form-submission-summary">
         <div ref={contentRef} className="form-submission-summary">
           <DisplayBox headerText="Form Submission Summary" headerIcon="fas fa-users" editContent={getEditLinks()}>
-            <Row>{getSummary()}</Row>
+            <Grid container spacing={3}>{getSummary()}</Grid>
           </DisplayBox>
           <DisplayBox headerText="Form Submission Results" headerIcon="fas fa-users">
             {getFormSubmissions()}
           </DisplayBox>
         </div>
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
 }

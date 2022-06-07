@@ -1,10 +1,11 @@
-import React, {useState, useRef} from "react";
-import {PersonHelper, DateHelper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading} from "."
-import {Navigate} from "react-router-dom";
-import {Row, Col, FormControl, FormGroup, FormLabel, Button, Form} from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import { PersonHelper, DateHelper, StateOptions, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading } from "."
+import { Navigate } from "react-router-dom";
+import { FormControl, FormGroup, FormLabel, Button, Form } from "react-bootstrap";
 import * as yup from "yup"
-import {Formik, FormikHelpers} from "formik"
+import { Formik, FormikHelpers } from "formik"
 import UserContext from "../../UserContext";
+import { Grid } from "@mui/material"
 
 const schema = yup.object().shape({
   name: yup.object().shape({
@@ -27,9 +28,9 @@ interface Props {
   showMergeSearch: () => void
 }
 
-export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, showMergeSearch}: Props) {
+export function PersonEdit({ id, updatedFunction, togglePhotoEditor, person, showMergeSearch }: Props) {
   const context = React.useContext(UserContext);
-  const [updatedPerson, setUpdatedPerson] = useState<PersonInterface>({name: {}, contactInfo: {}})
+  const [updatedPerson, setUpdatedPerson] = useState<PersonInterface>({ name: {}, contactInfo: {} })
   const [redirect, setRedirect] = useState("");
   const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
   const [text, setText] = useState("");
@@ -67,8 +68,8 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
       ApiHelper.delete("/people/" + initialValues.id.toString(), "MembershipApi").then(() => setRedirect("/people"));
   }
 
-  async function handleSave(data: PersonInterface, {setSubmitting}: FormikHelpers<PersonInterface>) {
-    const {contactInfo: contactFromProps} = person
+  async function handleSave(data: PersonInterface, { setSubmitting }: FormikHelpers<PersonInterface>) {
+    const { contactInfo: contactFromProps } = person
 
     if (PersonHelper.getExpandedPersonObject(person).id === context.person.id) {
       context.setProfilePicture(person.photo || PersonHelper.getPhotoUrl(person))
@@ -77,7 +78,7 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
     if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {
       setText(`You updated the address to ${PersonHelper.addressToString(data.contactInfo)} for ${data.name.display}.  Would you like to apply that to the entire ${data.name.last} family?`)
       setShowUpdateAddressModal(true)
-      setUpdatedPerson({...data})
+      setUpdatedPerson({ ...data })
       return;
     }
     await updatePerson(data)
@@ -164,15 +165,15 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
           }) => (
             <Form noValidate>
               <InputBox headerIcon="fas fa-user" headerText="Personal Details" cancelFunction={updatedFunction} deleteFunction={handleDelete} saveFunction={handleSubmit} isSubmitting={isSubmitting} headerActionContent={<Button id="mergeButton" variant="primary" size="sm" onClick={showMergeSearch}>Merge</Button>}>
-                <Row>
-                  <Col sm={3} className="my-auto">
+                <Grid container spacing={3}>
+                  <Grid item sm={3} className="my-auto">
                     <a href="about:blank" className="d-block" onClick={handlePhotoClick}>
                       <img src={PersonHelper.getPhotoUrl(person)} className="img-fluid profilePic d-block mx-auto" id="imgPreview" alt="avatar" />
                     </a>
-                  </Col>
-                  <Col sm={9}>
-                    <Row>
-                      <Col lg={6}>
+                  </Grid>
+                  <Grid item sm={9}>
+                    <Grid container spacing={3}>
+                      <Grid item md={6} xs={12}>
                         <FormGroup>
                           <FormLabel htmlFor="first">First Name</FormLabel>
                           <FormControl
@@ -186,8 +187,8 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                             {errors.name?.first}
                           </Form.Control.Feedback>
                         </FormGroup>
-                      </Col>
-                      <Col lg={6}>
+                      </Grid>
+                      <Grid item md={6} xs={12}>
                         <FormGroup>
                           <FormLabel htmlFor="last">Last Name</FormLabel>
                           <FormControl
@@ -201,10 +202,10 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                             {errors.name?.last}
                           </Form.Control.Feedback>
                         </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg={6}>
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={3}>
+                      <Grid item md={6} xs={12}>
                         <FormGroup>
                           <FormLabel htmlFor="middle">Middle Name</FormLabel>
                           <FormControl
@@ -214,8 +215,8 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                             onChange={handleChange}
                           />
                         </FormGroup>
-                      </Col>
-                      <Col lg={6}>
+                      </Grid>
+                      <Grid item md={6} xs={12}>
                         <FormGroup>
                           <FormLabel htmlFor="email">Email</FormLabel>
                           <FormControl
@@ -230,13 +231,13 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                             {errors.contactInfo?.email}
                           </Form.Control.Feedback>
                         </FormGroup>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
 
-                <Row>
-                  <Col lg={4} md={4}>
+                <Grid container spacing={3}>
+                  <Grid item md={4} xs={12}>
                     <FormGroup>
                       <FormLabel htmlFor="nick">Nickname</FormLabel>
                       <FormControl
@@ -246,8 +247,8 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                         onChange={handleChange}
                       />
                     </FormGroup>
-                  </Col>
-                  <Col lg={4} md={4}>
+                  </Grid>
+                  <Grid item md={4} xs={12}>
                     <FormGroup>
                       <FormLabel htmlFor="membershipStatus">Membership Status</FormLabel>
                       <FormControl as="select" name="membershipStatus" id="membershipStatus" value={values.membershipStatus || ""} onChange={handleChange}>
@@ -256,17 +257,17 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                         <option value="Staff">Staff</option>
                       </FormControl>
                     </FormGroup>
-                  </Col>
-                  <Col lg={4} md={4}>
+                  </Grid>
+                  <Grid item md={4} xs={12}>
                     <FormGroup>
                       <FormLabel htmlFor="birthDate">Birthdate</FormLabel>
                       <FormControl type="date" name="birthDate" id="birthDate" value={DateHelper.formatHtml5Date(values?.birthDate)} onChange={handleChange} />
                     </FormGroup>
-                  </Col>
-                </Row>
+                  </Grid>
+                </Grid>
 
-                <Row>
-                  <Col lg={4} md={4}>
+                <Grid container spacing={3}>
+                  <Grid item md={4} xs={12}>
                     <FormGroup>
                       <FormLabel htmlFor="gender">Gender</FormLabel>
                       <FormControl as="select" name="gender" id="gender" value={values?.gender || ""} onChange={handleChange}>
@@ -275,8 +276,8 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                         <option value="Female">Female</option>
                       </FormControl>
                     </FormGroup>
-                  </Col>
-                  <Col lg={4} md={4}>
+                  </Grid>
+                  <Grid item md={4} xs={12}>
                     <FormGroup>
                       <FormLabel htmlFor="maritalStatus">Marital Status</FormLabel>
                       <FormControl as="select" name="maritalStatus" id="maritalStatus" value={values?.maritalStatus || ""} onChange={handleChange}>
@@ -287,17 +288,17 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                         <option value="Widowed">Widowed</option>
                       </FormControl>
                     </FormGroup>
-                  </Col>
-                  <Col lg={4} md={4}>
+                  </Grid>
+                  <Grid item md={4} xs={12}>
                     <FormGroup>
                       <FormLabel htmlFor="anniversary">Anniversary</FormLabel>
                       <FormControl type="date" name="anniversary" id="anniversary" value={DateHelper.formatHtml5Date(values?.anniversary)} onChange={handleChange} />
                     </FormGroup>
-                  </Col>
-                </Row>
+                  </Grid>
+                </Grid>
 
-                <Row>
-                  <Col md={9}>
+                <Grid container spacing={3}>
+                  <Grid item md={9}>
                     <div className="section">Address</div>
                     <FormGroup>
                       <FormLabel htmlFor="address1">Line 1</FormLabel>
@@ -307,30 +308,30 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                       <FormLabel htmlFor="address2">Line 2</FormLabel>
                       <FormControl name="contactInfo.address2" id="address2" value={values.contactInfo?.address2 || ""} onChange={handleChange} />
                     </FormGroup>
-                    <Row>
-                      <Col xs={6}>
+                    <Grid container spacing={3}>
+                      <Grid item xs={6}>
                         <FormGroup>
                           <FormLabel htmlFor="city">City</FormLabel>
                           <FormControl type="text" name="contactInfo.city" id="city" value={values.contactInfo?.city || ""} onChange={handleChange} />
                         </FormGroup>
-                      </Col>
-                      <Col xs={3}>
+                      </Grid>
+                      <Grid item xs={3}>
                         <FormGroup>
                           <FormLabel htmlFor="state">State</FormLabel>
                           <FormControl as="select" name="contactInfo.state" id="state" value={values.contactInfo?.state || ""} onChange={handleChange}>
                             <StateOptions />
                           </FormControl>
                         </FormGroup>
-                      </Col>
-                      <Col xs={3}>
+                      </Grid>
+                      <Grid item xs={3}>
                         <FormGroup>
                           <FormLabel htmlFor="zip">Zip</FormLabel>
                           <FormControl type="text" name="contactInfo.zip" id="zip" value={values.contactInfo?.zip || ""} onChange={handleChange} />
                         </FormGroup>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col md={3}>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item md={3}>
                     <div className="section">Phone</div>
                     <FormGroup>
                       <FormLabel htmlFor="homePhone">Home</FormLabel>
@@ -384,11 +385,12 @@ export function PersonEdit({id, updatedFunction, togglePhotoEditor, person, show
                         {errors.contactInfo?.mobilePhone}
                       </Form.Control.Feedback>
                     </FormGroup>
-                  </Col>
-                </Row>
+                  </Grid>
+                </Grid>
               </InputBox>
             </Form>
-          )}
+          )
+          }
         </Formik>
       )
   )

@@ -1,9 +1,10 @@
 import React from "react"
 import * as yup from "yup"
 import { Formik, FormikHelpers } from "formik"
-import { Form, Row, Col, Button } from "react-bootstrap"
+import { Form, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { UserHelper, Permissions, NameInterface, PersonInterface, HouseholdInterface, ApiHelper } from "."
+import { Grid } from "@mui/material"
 
 const schema = yup.object().shape({
   first: yup.string().required("Please enter a first name."),
@@ -47,8 +48,8 @@ export function CreatePerson() {
           isSubmitting
         }) => (
           <Form noValidate onSubmit={handleSubmit}>
-            <Row>
-              <Col className="pr-0">
+            <Grid container spacing={3}>
+              <Grid item md={3} xs={12}>
                 <Form.Group>
                   <Form.Control
                     type="text"
@@ -64,8 +65,8 @@ export function CreatePerson() {
                     {errors.first}
                   </Form.Control.Feedback>
                 </Form.Group>
-              </Col>
-              <Col className="pr-0">
+              </Grid>
+              <Grid item md={3} xs={12}>
                 <Form.Group>
                   <Form.Control
                     type="text"
@@ -81,11 +82,11 @@ export function CreatePerson() {
                     {errors.last}
                   </Form.Control.Feedback>
                 </Form.Group>
-              </Col>
-              <Col>
+              </Grid>
+              <Grid item md={6} xs={12}>
                 <Button type="submit" variant="primary" disabled={isSubmitting}>Add</Button>
-              </Col>
-            </Row>
+              </Grid>
+            </Grid>
           </Form>
         )}
       </Formik>

@@ -1,7 +1,7 @@
 import React from "react";
 import { PersonInterface } from "../appBase/interfaces";
 import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns } from "./components";
-import { Row, Col } from "react-bootstrap";
+import { Grid } from "@mui/material"
 import { PersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
 import { Wrapper } from "../components/Wrapper";
@@ -59,16 +59,16 @@ export const PeoplePage = () => {
 
   return (
     <Wrapper pageTitle="Search People">
-      <Row>
-        <Col lg={8}>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <DisplayBox id="peopleBox" headerIcon="fas fa-user" headerText="People" editContent={getEditContent()}>
             <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} />
           </DisplayBox>
-        </Col>
-        <Col lg={4}>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <PeopleSearch updateSearchResults={(people) => setSearchResults(people)} />
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
     </Wrapper>
   );
 }

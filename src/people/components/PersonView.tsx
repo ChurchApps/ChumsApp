@@ -1,6 +1,6 @@
 import React from "react";
 import { PersonHelper, AssociatedForms, PersonInterface, Loading } from "."
-import { Row, Col } from "react-bootstrap";
+import { Grid } from "@mui/material";
 
 interface Props {
   id?: string,
@@ -48,28 +48,28 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
         if (p.contactInfo.workPhone) contactMethods.push(<tr key="workPhone"><td><label>Work</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.workPhone}</td></tr>);
       }
 
-      return (<Row>
-        <Col xs={3}>
+      return (<Grid container spacing={3}>
+        <Grid item xs={3}>
           <img src={PersonHelper.getPhotoUrl(person)} className="img-fluid profilePic" aria-label="personImage" id="imgPreview" alt="avatar" />
-        </Col>
-        <Col xs={9}>
+        </Grid>
+        <Grid item xs={9}>
           <h2>{person?.name.display}</h2>
-          <Row>
-            <Col lg={6}>{leftAttributes}</Col>
-            <Col lg={6}><table className="contactTable"><tbody>{contactMethods}</tbody></table></Col>
-          </Row>
-        </Col>
-      </Row>);
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>{leftAttributes}</Grid>
+            <Grid item md={6} xs={12}><table className="contactTable"><tbody>{contactMethods}</tbody></table></Grid>
+          </Grid>
+        </Grid>
+      </Grid>);
     }
   }
 
   return (
     <div id={id} className="inputBox" data-cy="person-details-box">
       <div className="header">
-        <Row>
-          <Col xs={8}><i className="fas fa-user"></i> Personal Details</Col>
-          <Col xs={4} style={{ textAlign: "right" }}><button className="fa-pull-right no-default-style" aria-label="editPerson" onClick={editFunction}><i className="fas fa-pencil-alt" /></button></Col>
-        </Row>
+        <Grid container spacing={3}>
+          <Grid item xs={8}><i className="fas fa-user"></i> Personal Details</Grid>
+          <Grid item xs={4} style={{ textAlign: "right" }}><button className="fa-pull-right no-default-style" aria-label="editPerson" onClick={editFunction}><i className="fas fa-pencil-alt" /></button></Grid>
+        </Grid>
       </div>
       <div className="content">
         {getFields()}

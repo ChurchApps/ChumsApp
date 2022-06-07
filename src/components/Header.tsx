@@ -1,14 +1,15 @@
 import React from "react";
-import {UserHelper, NavItems} from "./";
+import { UserHelper, NavItems } from "./";
 import UserContext from "../UserContext";
-import {Link} from "react-router-dom";
-import {Col, Container} from "react-bootstrap";
-import {useCookies} from "react-cookie"
+import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { useCookies } from "react-cookie"
 import { AppearanceHelper } from "../appBase/helpers/AppearanceHelper";
+import { Grid } from "@mui/material"
 
 export const Header: React.FC = () => {
   const [churchLogo, setChurchLogo] = React.useState<string>();
-  const {firstName, lastName} = UserHelper.user;
+  const { firstName, lastName } = UserHelper.user;
   const [userName] = React.useState(UserHelper.person?.name?.display || `${firstName} ${lastName}`);
   const [, setCookie] = useCookies(["jwt"])
 
@@ -20,7 +21,7 @@ export const Header: React.FC = () => {
     UserHelper.selectChurch(context, id);
     UserHelper.churchChanged = true;
     UserHelper.currentChurch.apis.forEach(api => {
-      if (api.keyName === "AccessApi") setCookie("jwt", api.jwt, {path: "/"});
+      if (api.keyName === "AccessApi") setCookie("jwt", api.jwt, { path: "/" });
     })
   }
 
@@ -70,15 +71,15 @@ export const Header: React.FC = () => {
           <div className="d-flex justify-content-between">
             <div>
               <a className="navbar-brand" href="/">
-                { churchLogo && <img src={churchLogo} alt="logo" /> }
+                {churchLogo && <img src={churchLogo} alt="logo" />}
               </a>
             </div>
 
-            <Col className="d-none d-md-block" style={{borderLeft: "2px solid #EEE", borderRight: "2px solid #EEE", maxWidth: "703px", margin: "0 15px"}}>
-              <ul id="nav-main" className="nav nav-fill d-flex overflow-hidden" style={{height: "55px"}}>
+            <Grid item style={{ borderLeft: "2px solid #EEE", borderRight: "2px solid #EEE", maxWidth: "703px", margin: "0 15px" }}>
+              <ul id="nav-main" className="nav nav-fill d-flex overflow-hidden" style={{ height: "55px" }}>
                 <NavItems prefix="main" />
               </ul>
-            </Col>
+            </Grid>
 
             <div className="d-flex align-items-center" id="navRight">
               <a href="about:blank" id="userMenuLink" data-toggle="collapse" data-target="#userMenu" aria-controls="navbarToggleMenu" aria-expanded="false" aria-label="Toggle navigation">

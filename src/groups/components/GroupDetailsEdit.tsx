@@ -1,7 +1,8 @@
 import React from "react";
 import { ApiHelper, GroupInterface, InputBox, ErrorMessages, ServiceTimesEdit } from ".";
 import { Navigate } from "react-router-dom";
-import { Row, Col, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Grid } from "@mui/material"
 
 interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }
 
@@ -53,22 +54,22 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   else return (
     <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="fas fa-list" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
       <ErrorMessages errors={errors} />
-      <Row>
-        <Col>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={12}>
           <FormGroup>
             <FormLabel>Category Name</FormLabel>
             <FormControl type="text" name="categoryName" value={group.categoryName} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
-        </Col>
-        <Col>
+        </Grid>
+        <Grid item md={6} xs={12}>
           <FormGroup>
             <FormLabel>Group Name</FormLabel>
             <FormControl type="text" name="name" value={group.name} onChange={handleChange} onKeyDown={handleKeyDown} />
           </FormGroup>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={12}>
           <FormGroup>
             <FormLabel htmlFor="trackAttendance">Track Attendance</FormLabel>
             <FormControl as="select" id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
@@ -76,8 +77,8 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
               <option value="true">Yes</option>
             </FormControl>
           </FormGroup>
-        </Col>
-        <Col>
+        </Grid>
+        <Grid item md={6} xs={12}>
           <FormGroup>
             <FormLabel>Parent Pickup</FormLabel>
             <FormControl as="select" name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
@@ -85,8 +86,8 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
               <option value="true">Yes</option>
             </FormControl>
           </FormGroup>
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
       <ServiceTimesEdit group={group} />
 
     </InputBox>

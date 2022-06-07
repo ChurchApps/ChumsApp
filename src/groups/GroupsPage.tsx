@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
-import { Row, Col, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
+import { Grid } from "@mui/material"
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
@@ -78,14 +79,14 @@ export const GroupsPage = () => {
 
   return (
     <Wrapper pageTitle="Groups">
-      <Row>
-        <Col lg={8}>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <DisplayBox id="groupsBox" headerIcon="fas fa-list" headerText="Groups" editContent={getEditContent()}>
             {getTable()}
           </DisplayBox>
-        </Col>
-        <Col lg={4}>{addBox}</Col>
-      </Row>
+        </Grid>
+        <Grid item md={4} xs={12}>{addBox}</Grid>
+      </Grid>
     </Wrapper>
   );
 };

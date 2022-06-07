@@ -1,6 +1,6 @@
 import React from "react";
 import { Person, Groups, Tabs, Household, ImageEditor, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, AddNote, NoteInterface, ArrayHelper } from "./components"
-import { Row, Col } from "react-bootstrap";
+import { Grid } from "@mui/material"
 import { useParams } from "react-router-dom";
 import { Wrapper } from "../components/Wrapper";
 
@@ -68,19 +68,19 @@ export const PersonPage = () => {
 
   return (
     <Wrapper pageTitle={person?.name?.display || ""}>
-      <Row>
-        <Col lg={8}>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
           <Tabs person={person} showNoteBox={handleNotesClick} notes={notes} />
-        </Col>
-        <Col lg={4}>
+        </Grid>
+        <Grid item md={4} xs={12}>
           {addMergeSearch}
           {imageEditor}
           <Household person={person} reload={person?.photoUpdated} />
           {getGroups()}
           {showNoteBox && <AddNote contentId={person.id} noteId={noteId} close={() => setShowNoteBox(false)} updatedFunction={loadNotes} />}
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
     </Wrapper>
   )
 

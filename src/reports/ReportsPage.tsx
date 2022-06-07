@@ -1,6 +1,6 @@
 import React from "react";
 import { DisplayBox } from "../components";
-import { Row, Col } from "react-bootstrap";
+import { Grid } from "@mui/material"
 import { Link } from "react-router-dom";
 import { Wrapper } from "../components/Wrapper";
 
@@ -9,8 +9,8 @@ export const ReportsPage = () => {
   return (
     <Wrapper pageTitle="Reports">
       <h1><i className="fas fa-table"></i> Reports</h1>
-      <Row>
-        <Col lg={8}>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <DisplayBox id="reportsBox" headerIcon="fas fa-table" headerText="Reports">
             <ul>
               <li><Link to="/reports/birthdays">Birthdays</Link></li>
@@ -21,8 +21,8 @@ export const ReportsPage = () => {
             </ul>
 
           </DisplayBox>
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
     </Wrapper>
   );
 }

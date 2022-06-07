@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, PersonHelper } from "./components";
 import { useParams } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
+import { Grid } from "@mui/material"
 import { Wrapper } from "../components/Wrapper";
 
 export const GroupPage = () => {
@@ -47,13 +47,13 @@ export const GroupPage = () => {
 
   return (
     <Wrapper pageTitle={group?.name}>
-      <Row>
-        <Col lg={8}>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <GroupDetails group={group} updatedFunction={handleGroupUpdated} />
           <Tabs group={group} addedPerson={addedPerson} addedSession={addedSession} addedCallback={handleAddedCallback} sidebarVisibilityFunction={handleSidebarVisibility} />
-        </Col>
-        <Col lg={4}>{getSidebarModules()}</Col>
-      </Row>
+        </Grid>
+        <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
+      </Grid>
     </Wrapper>
   );
 }

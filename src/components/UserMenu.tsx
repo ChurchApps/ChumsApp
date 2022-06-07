@@ -1,7 +1,6 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import { UserHelper } from "./";
-import { useNavigate } from "react-router-dom";
-import { Avatar, IconButton, ListSubheader, Menu, MenuItem, Typography, Icon, Button, Divider } from "@mui/material";
+import { Avatar, Menu, Typography, Icon, Button, Divider } from "@mui/material";
 import UserContext from "../UserContext";
 import { ChurchDropdown, NavItem, SwitchAppMenu } from "../appBase/components";
 
@@ -21,8 +20,6 @@ export const UserMenu: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const navigate = useNavigate();
-
   const getMainLinks = () => {
     if (UserHelper.churches.length < 2) return null;
     else {
@@ -36,13 +33,11 @@ export const UserMenu: React.FC = () => {
     }
   }
 
-
   const getProfilePic = () => {
 
     if (context.profilePicture) return <img src={context.profilePicture} alt="user" style={{ maxHeight: 32 }} />
     else return <Icon>person</Icon>
   }
-
 
   const paperProps = {
     elevation: 0,
@@ -60,16 +55,14 @@ export const UserMenu: React.FC = () => {
 
   }
 
-
-
   return (
     <>
-      <Button onClick={handleClick} color="inherit" aria-controls={open ? "account-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} style={{ textTransform: "none" }} endIcon={<Icon>expand_more</Icon>} >
+      <Button onClick={handleClick} color="inherit" aria-controls={open ? "account-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} style={{ textTransform: "none" }} endIcon={<Icon>expand_more</Icon>}>
         <Avatar sx={{ width: 32, height: 32, marginRight: 1 }}>{getProfilePic()}</Avatar>
         <Typography color="inherit" noWrap>{userName}</Typography>
       </Button>
 
-      <Menu anchorEl={anchorEl} id="account-menu" open={open} onClose={handleClose} onClick={(e) => { handleItemClick(e) }} PaperProps={paperProps} transformOrigin={{ horizontal: "right", vertical: "top" }} anchorOrigin={{ horizontal: "right", vertical: "bottom" }}  >
+      <Menu anchorEl={anchorEl} id="account-menu" open={open} onClose={handleClose} onClick={(e) => { handleItemClick(e) }} PaperProps={paperProps} transformOrigin={{ horizontal: "right", vertical: "top" }} anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
         {getMainLinks()}
       </Menu>
     </>

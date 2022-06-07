@@ -1,6 +1,7 @@
 import React from "react";
 import { ApiHelper, DisplayBox, FormInterface, QuestionInterface, FormQuestionEdit, Permissions, Loading, UserHelper } from ".";
-import { Row, Col, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
+import { Grid } from "@mui/material"
 
 interface Props { id: string }
 
@@ -89,14 +90,14 @@ export const Form: React.FC<Props> = (props) => {
     }
     return (
       <>
-        <Row>
-          <Col lg={8}>
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
             <DisplayBox id="questionsBox" headerText="Questions" headerIcon="fas fa-question" editContent={getEditContent()}>
               {contents}
             </DisplayBox>
-          </Col>
-          <Col lg={4}>{getSidebarModules()}</Col>
-        </Row>
+          </Grid>
+          <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
+        </Grid>
       </>
     );
   }

@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { ApiHelper, UserHelper } from ".";
-import { autocompleteClasses, Box, Button, Container, Divider, Icon, List, ListSubheader, MenuItem, Select, Stack } from "@mui/material";
+import { Box, Container, List } from "@mui/material";
 import { Permissions } from "./"
-import { SiteWrapper, NavItem, ChurchDropdown } from "../appBase/components";
+import { SiteWrapper, NavItem } from "../appBase/components";
 import { UserMenu } from "./UserMenu";
 import { AppearanceHelper } from "../appBase/helpers";
-import { tab } from "@testing-library/user-event/dist/tab";
 
 interface Props {
   pageTitle: string,
@@ -13,7 +12,6 @@ interface Props {
 }
 
 export const Wrapper: React.FC<Props> = props => {
-
   const [donationError, setDonationError] = React.useState<boolean>(false);
   const [isFormMember, setIsFormMember] = React.useState<boolean>(false);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
@@ -30,9 +28,7 @@ export const Wrapper: React.FC<Props> = props => {
     }
   }, [formPermission]);
 
-  const churchId = UserHelper.currentChurch.id
   const tabs = []
-
 
   const donationIcon = donationError ? "error" : "volunteer_activism";
 
@@ -45,8 +41,6 @@ export const Wrapper: React.FC<Props> = props => {
 
   if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) tabs.push(<NavItem url="/settings" label="Settings" icon="settings" />);
 
-
-
   const getChurchLogo = async () => {
     const logos = await AppearanceHelper.load(UserHelper.currentChurch.id);
     setChurchLogo(logos.logoLight || "/images/logo.png");
@@ -55,8 +49,6 @@ export const Wrapper: React.FC<Props> = props => {
   React.useEffect(() => {
     getChurchLogo();
   });
-
-
 
   const navContent = <><List component="nav">{tabs}</List></>
   const userMenu = <UserMenu />
@@ -70,9 +62,5 @@ export const Wrapper: React.FC<Props> = props => {
         {props.children}
       </Container>
     </Box>
-
-
-
   </>
-
 };
