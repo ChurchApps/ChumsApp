@@ -8,7 +8,7 @@ import { AppearanceHelper } from "../appBase/helpers";
 import UserContext from "../UserContext";
 
 interface Props {
-  pageTitle: string,
+  pageTitle?: string,
   children: React.ReactNode,
 }
 
@@ -57,7 +57,7 @@ export const Wrapper: React.FC<Props> = props => {
   const userMenu = <UserMenu profilePicture={context.profilePicture} userName={`${UserHelper.user.firstName} ${UserHelper.user.lastName}`} churches={UserHelper.churches} currentChurch={UserHelper.currentChurch} />
 
   return <>
-    <SiteWrapper logoUrl={churchLogo || "/images/logo.png"} navContent={navContent} pageTitle={props.pageTitle} userMenu={userMenu}>
+    <SiteWrapper logoUrl={churchLogo || "/images/logo.png"} navContent={navContent} userMenu={userMenu}>
 
     </SiteWrapper>
     <Box component="main" sx={{ flexGrow: 1, overflow: "auto", marginTop: 8, minHeight: "90vh" }}>
