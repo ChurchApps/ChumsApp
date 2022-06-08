@@ -1,6 +1,7 @@
 import React from "react";
 import { PersonInterface, PersonHelper } from "./";
 import { InputGroup, FormControl, Button, Table } from "react-bootstrap";
+import { Icon } from "@mui/material";
 
 interface Props {
   handleSearch: (text: string) => void,
@@ -35,7 +36,7 @@ export const Search: React.FC<Props> = (props) => {
           <button className="text-success no-default-style" onClick={() => {
             props.handleClickAction(person.id);
           }}>
-            <i className="fas fa-user"></i> {props.buttonText}
+            <Icon>person</Icon> {props.buttonText}
           </button>
         </td>
       </tr>
@@ -62,7 +63,7 @@ export const Search: React.FC<Props> = (props) => {
             variant="primary"
             onClick={() => props.handleSearch(searchText)}
           >
-            <i className="fas fa-search"></i> Search
+            <Icon>search</Icon> Search
           </Button>
         </div>
       </InputGroup>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { FormSubmission, FormSubmissionEdit, FormSubmissionInterface, UserHelper, ApiHelper, Permissions } from "./";
 import { Button } from "react-bootstrap";
+import { Icon } from "@mui/material";
 
 interface Props {
-    contentType: string,
-    contentId: string,
-    formSubmissions: FormSubmissionInterface[],
-    updatedFunction: () => void
+  contentType: string,
+  contentId: string,
+  formSubmissions: FormSubmissionInterface[],
+  updatedFunction: () => void
 }
 
 export const AssociatedForms: React.FC<Props> = (props) => {
@@ -35,7 +36,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
     let cards: any[] = [];
     const submittedCards = getSubmittedCards() || []; // when there are no submitted cards, function will return undefined
     const unsubmittedCards = getUnsubmittedCards();
-    cards.push(...submittedCards,...unsubmittedCards);
+    cards.push(...submittedCards, ...unsubmittedCards);
     return cards;
   }
 
@@ -57,7 +58,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
       <div className="card-header" id={"heading" + uf.id}>
         <div className="addableForm">
           <button className="float-right text-success no-default-style" onClick={() => handleAdd(uf.id)}>
-            <i className="fas fa-plus" />
+            <Icon>add</Icon>
           </button>
           <span>{uf.name}</span>
         </div>

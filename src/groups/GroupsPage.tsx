@@ -3,7 +3,7 @@ import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
-import { Grid } from "@mui/material"
+import { Grid, Icon } from "@mui/material"
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
@@ -17,7 +17,7 @@ export const GroupsPage = () => {
         <>
           <ExportLink data={groups} spaceAfter={true} filename="groups.csv" />{" "}
           <button className="no-default-style" aria-label="addGroup" onClick={() => { setShowAdd(true); }}>
-            <i className="fas fa-plus"></i>
+            <Icon>add</Icon>
           </button>
         </>
       );
@@ -49,7 +49,7 @@ export const GroupsPage = () => {
         <tr key={g.id}>
           <td>{cat}</td>
           <td>
-            <i className="fas fa-list"></i>{" "}
+            <Icon>group</Icon>{" "}
             <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
           </td>
           <td>{memberCount}</td>

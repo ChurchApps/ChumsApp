@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, UserHelper, DonationInterface, DateHelper, CurrencyHelper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading } from ".";
 import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
+import { Icon } from "@mui/material";
 
 interface Props { batch: DonationBatchInterface, funds: FundInterface[], addFunction: () => void, editFunction: (id: string) => void }
 
@@ -12,7 +13,7 @@ export const Donations: React.FC<Props> = (props) => {
   const showAddDonation = (e: React.MouseEvent) => { e.preventDefault(); props.addFunction() }
   const getEditContent = () => {
     if (props.funds.length === 0) return null;
-    return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={donations} spaceAfter={true} filename="donations.csv" /><a href="about:blank" data-cy="make-donation" onClick={showAddDonation}><i className="fas fa-plus"></i></a></>) : null;
+    return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={donations} spaceAfter={true} filename="donations.csv" /><a href="about:blank" data-cy="make-donation" onClick={showAddDonation}><Icon>add</Icon></a></>) : null;
   }
 
   const populatePeople = async (data: DonationInterface[]) => {

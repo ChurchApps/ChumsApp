@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { AnswerInterface, ApiHelper, DateHelper, DisplayBox, ExportLink, FormSubmissionInterface, MemberPermissionInterface, PersonInterface, QuestionInterface } from ".";
 import { Table, Card, ListGroup } from "react-bootstrap";
 import { useReactToPrint } from "react-to-print";
-import { Grid } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
 
 interface Props { formId: string, memberPermissions: MemberPermissionInterface };
 
@@ -145,7 +145,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     return (
       <>
         <ExportLink data={summaryCsv} spaceAfter={true} filename={formName} />
-        <a aria-label="print-summary" href="about:blank" onClick={(e) => { e.preventDefault(); handleSummaryPrint(); }}><i className="fas fa-print"></i></a>
+        <a aria-label="print-summary" href="about:blank" onClick={(e) => { e.preventDefault(); handleSummaryPrint(); }}><Icon>print</Icon></a>
       </>
     );
   }

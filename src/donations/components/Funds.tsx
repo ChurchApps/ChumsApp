@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, FundInterface, FundEdit, DisplayBox, UserHelper, Permissions, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
+import { Icon } from "@mui/material";
 
 export const Funds: React.FC = () => {
   const [funds, setFunds] = React.useState<FundInterface[]>(null);
@@ -12,7 +13,7 @@ export const Funds: React.FC = () => {
   }
   const handleFundUpdated = () => { loadData(); setEditFund(null); }
   const getEditSection = () => {
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<a href="about:blank" data-cy="add-fund" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditFund({ id: "", name: "" }) }}><i className="fas fa-plus"></i></a>);
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<a href="about:blank" data-cy="add-fund" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditFund({ id: "", name: "" }) }}><Icon>add</Icon></a>);
     else return null;
   }
 
@@ -35,7 +36,7 @@ export const Funds: React.FC = () => {
     let canViewIndividual = UserHelper.checkAccess(Permissions.givingApi.donations.view);
     for (let i = 0; i < funds.length; i++) {
       let f = funds[i];
-      const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} onClick={handleEdit} data-index={i}><i className="fas fa-pencil-alt"></i></a>) : null;
+      const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} onClick={handleEdit} data-index={i}><Icon>edit</Icon></a>) : null;
       const viewLink = (canViewIndividual) ? (<Link to={"/donations/funds/" + f.id}>{f.name}</Link>) : (<>{f.name}</>);
       result.push(<tbody key={result.length - 1}>
         <tr>

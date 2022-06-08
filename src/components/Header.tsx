@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { useCookies } from "react-cookie"
 import { AppearanceHelper } from "../appBase/helpers/AppearanceHelper";
-import { Grid } from "@mui/material"
+import { Grid, Icon } from "@mui/material"
 
 export const Header: React.FC = () => {
   const [churchLogo, setChurchLogo] = React.useState<string>();
@@ -32,7 +32,7 @@ export const Header: React.FC = () => {
       const churches = UserHelper.churches.filter(c => c.apis.length > 0)
       churches.forEach(c => {
         const churchName = (c.id === UserHelper.currentChurch.id) ? (<b>{c.name}</b>) : (c.name);
-        result.push(<li className="nav-tem" key={c.id}><a href="about:blank" data-id={c.id} onClick={switchChurch}><i className="fas fa-external-link-alt"></i> {churchName}</a></li>);
+        result.push(<li className="nav-tem" key={c.id}><a href="about:blank" data-id={c.id} onClick={switchChurch}><Icon>link</Icon> {churchName}</a></li>);
       });
       return result;
     }
@@ -84,7 +84,7 @@ export const Header: React.FC = () => {
             <div className="d-flex align-items-center" id="navRight">
               <a href="about:blank" id="userMenuLink" data-toggle="collapse" data-target="#userMenu" aria-controls="navbarToggleMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <img src={context.profilePicture} alt="user" />
-                {userName} <i className="fas fa-caret-down"></i>
+                {userName} <Icon>expand_more</Icon>
               </a>
             </div>
           </div>
@@ -94,7 +94,7 @@ export const Header: React.FC = () => {
             <ul id="nav-menu" className="nav d-flex flex-column">
               <NavItems />
               {getChurchLinks()}
-              <Link to="/logout"><i className="fas fa-lock"></i> Logout</Link>
+              <Link to="/logout"><Icon>logout</Icon> Logout</Link>
             </ul>
           </div>
         </div>

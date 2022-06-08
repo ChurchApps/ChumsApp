@@ -4,7 +4,7 @@ import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
-import { Grid } from "@mui/material"
+import { Grid, Icon } from "@mui/material"
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
@@ -56,11 +56,11 @@ export const AttendancePage = () => {
   }
 
   const getRow = (campus: CampusInterface, service: ServiceInterface, serviceTime: ServiceTimeInterface, group: GroupInterface, key: string) => {
-    let campusHtml = (campus === undefined || campus?.name === lastCampus) ? <></> : <><i className="fas fa-church"></i><a href="about:blank" onClick={(e) => { e.preventDefault(); selectCampus(campus); }}>{campus.name}</a></>
+    let campusHtml = (campus === undefined || campus?.name === lastCampus) ? <></> : <><Icon>church</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectCampus(campus); }}>{campus.name}</a></>
     let serviceHtml = (service === undefined || service?.name === lastService) ? <></> : <><i className="far fa-calendar-alt"></i><a href="about:blank" onClick={(e) => { e.preventDefault(); selectService(service); }}>{service.name}</a></>
     let serviceTimeHtml = (serviceTime === undefined || serviceTime?.name === lastServiceTime) ? <></> : <><i className="far fa-clock"></i><a href="about:blank" onClick={(e) => { e.preventDefault(); selectServiceTime(serviceTime); }}>{serviceTime.name}</a></>
     let categoryHtml = (group === undefined || group?.categoryName === lastCategory) ? <></> : <><i className="far fa-folder"></i>{group.categoryName}</>
-    let groupHtml = (group === undefined) ? <></> : <><i className="fas fa-list"></i><Link to={"/groups/" + group.id}>{group.name}</Link></>
+    let groupHtml = (group === undefined) ? <></> : <><Icon>list</Icon><Link to={"/groups/" + group.id}>{group.name}</Link></>
 
     const result = (<tr key={key}><td>{campusHtml}</td><td>{serviceHtml}</td><td>{serviceTimeHtml}</td><td>{categoryHtml}</td><td>{groupHtml}</td></tr>)
 
@@ -94,10 +94,10 @@ export const AttendancePage = () => {
 
   const getEditLinks = () => (
     <>
-      <a id="addBtnGroup" aria-label="addButton" data-cy="add-button" type="button" data-toggle="dropdown" aria-expanded="false" href="about:blank"><i className="fas fa-plus"></i></a>
+      <a id="addBtnGroup" aria-label="addButton" data-cy="add-button" type="button" data-toggle="dropdown" aria-expanded="false" href="about:blank"><Icon>add</Icon></a>
       <div className="dropdown-menu" aria-labelledby="addBtnGroup">
-        <a className="dropdown-item" data-cy="add-campus" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectCampus({ id: "", name: "New Campus" }); }}><i className="fas fa-church"></i> Add Campus</a>
-        <a className="dropdown-item" aria-label="addService" data-cy="add-service" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectService({ id: "", campusId: "", name: "New Service" }); }}><i className="fas fa-calendar-alt"></i> Add Service</a>
+        <a className="dropdown-item" data-cy="add-campus" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectCampus({ id: "", name: "New Campus" }); }}><Icon>church</Icon> Add Campus</a>
+        <a className="dropdown-item" aria-label="addService" data-cy="add-service" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectService({ id: "", campusId: "", name: "New Service" }); }}><Icon>calendar_month</Icon> Add Service</a>
         <a className="dropdown-item" data-cy="add-service-time" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectServiceTime({ id: "", serviceId: "", name: "New Service Time" }); }}><i className="far fa-clock"></i> Add Service Time</a>
       </div>
     </>

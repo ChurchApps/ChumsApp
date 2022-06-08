@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
 import { Wrapper } from "../components/Wrapper";
-import { Grid } from "@mui/material"
+import { Grid, Icon } from "@mui/material"
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
@@ -24,7 +24,7 @@ export const DonationsPage = () => {
     ApiHelper.get("/donationbatches", "GivingApi").then(data => { setBatches(data); });
   }
 
-  const getEditContent = () => (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><a href="about:blank" data-cy="add-batch" onClick={showAddBatch}><i className="fas fa-plus"></i></a></>) : null
+  const getEditContent = () => (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><a href="about:blank" data-cy="add-batch" onClick={showAddBatch}><Icon>add</Icon></a></>) : null
 
   const getSidebarModules = () => {
     let result = [];
@@ -45,7 +45,7 @@ export const DonationsPage = () => {
     let canViewBatcht = UserHelper.checkAccess(Permissions.givingApi.donations.view);
     for (let i = 0; i < batches.length; i++) {
       let b = batches[i];
-      const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch}><i className="fas fa-pencil-alt" /></a>) : null;
+      const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch}><Icon>edit</Icon></a>) : null;
       const batchLink = (canViewBatcht) ? (<Link to={"/donations/" + b.id}>{b.id}</Link>) : <>{b.id}</>;
       result.push(<tr key={i}>
         <td>{batchLink}</td>

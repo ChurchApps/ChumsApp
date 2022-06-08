@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, DisplayBox, FormInterface, QuestionInterface, FormQuestionEdit, Permissions, Loading, UserHelper } from ".";
 import { Table } from "react-bootstrap";
-import { Grid } from "@mui/material"
+import { Grid, Icon } from "@mui/material"
 
 interface Props { id: string }
 
@@ -13,7 +13,7 @@ export const Form: React.FC<Props> = (props) => {
   const questionUpdated = () => { loadQuestions(); setEditQuestionId("notset"); }
   const loadData = () => { ApiHelper.get("/forms/" + props.id, "MembershipApi").then(data => setForm(data)); loadQuestions(); }
   const loadQuestions = () => ApiHelper.get("/questions?formId=" + props.id, "MembershipApi").then(data => setQuestions(data));
-  const getEditContent = () => (<button className="no-default-style" aria-label="addQuestion" onClick={() => { setEditQuestionId(""); }}><i className="fas fa-plus"></i></button>)
+  const getEditContent = () => (<button className="no-default-style" aria-label="addQuestion" onClick={() => { setEditQuestionId(""); }}><Icon>add</Icon></button>)
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     let anchor = e.currentTarget as HTMLAnchorElement;
@@ -50,8 +50,8 @@ export const Form: React.FC<Props> = (props) => {
       return rows;
     }
     for (let i = 0; i < questions.length; i++) {
-      let upArrow = (i === 0) ? <span style={{ display: "inline-block", width: 20 }} /> : <button className="no-default-style" aria-label="moveUp" onClick={moveUp}><i className="fas fa-arrow-up" /></button>
-      let downArrow = (i === questions.length - 1) ? <></> : <> &nbsp; <button className="no-default-style" aria-label="moveDown" onClick={moveDown}><i className="fas fa-arrow-down" /></button></>
+      let upArrow = (i === 0) ? <span style={{ display: "inline-block", width: 20 }} /> : <button className="no-default-style" aria-label="moveUp" onClick={moveUp}><Icon>arrow_upward</Icon></button>
+      let downArrow = (i === questions.length - 1) ? <></> : <> &nbsp; <button className="no-default-style" aria-label="moveDown" onClick={moveDown}><Icon>arrow_downward</Icon></button></>
       rows.push(
         <tr key={i} data-index={i}>
           <td><a href="about:blank" onClick={handleClick}>{questions[i].title}</a></td>

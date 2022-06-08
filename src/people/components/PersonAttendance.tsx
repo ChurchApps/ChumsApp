@@ -3,6 +3,7 @@ import { DisplayBox, ApiHelper, AttendanceRecordInterface, DateHelper, GroupInte
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
+import { Icon } from "@mui/material";
 
 interface Props { personId: string }
 
@@ -43,20 +44,20 @@ export const PersonAttendance: React.FC<Props> = (props) => {
       }
       if (r.campus?.id === lastCampusId && !showRest) cols.push(<td></td>);
       else {
-        cols.push(<td><i className="fas fa-church"></i> {r.campus?.name}</td>);
+        cols.push(<td><Icon>church</Icon> {r.campus?.name}</td>);
         lastCampusId = r.campus?.id;
         showRest = true;
       }
       if (r.service?.id === lastServiceId && !showRest) cols.push(<td></td>);
       else {
-        cols.push(<td><i className="fas fa-calendar-alt"></i> {r.service?.name}</td>);
+        cols.push(<td><Icon>calendar_month</Icon> {r.service?.name}</td>);
         lastServiceId = r.service?.id;
         showRest = true;
       }
       if (r.serviceTime === undefined) cols.push(<td></td>);
       else cols.push(<td><i className="far fa-clock"></i> {r.serviceTime?.name}</td>);
-      if (group === null) cols.push(<td><i className="fas fa-list"></i></td>);
-      else cols.push(<td><i className="fas fa-list"></i> <Link to={"/groups/" + group.id}>{group.name}</Link></td>)
+      if (group === null) cols.push(<td><Icon>group</Icon></td>);
+      else cols.push(<td><Icon>group</Icon> <Link to={"/groups/" + group.id}>{group.name}</Link></td>)
       rows.push(<tr>{cols}</tr>);
     }
     return rows;

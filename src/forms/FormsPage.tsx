@@ -3,7 +3,7 @@ import { ApiHelper, DisplayBox, FormInterface, FormEdit, UserHelper, Permissions
 import { Link } from "react-router-dom"
 import { Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
-import { Grid } from "@mui/material"
+import { Grid, Icon } from "@mui/material"
 
 export const FormsPage = () => {
   const [forms, setForms] = React.useState<FormInterface[]>(null);
@@ -32,13 +32,13 @@ export const FormsPage = () => {
         || (UserHelper.checkAccess(Permissions.membershipApi.forms.edit) && form.contentType !== "form")
         || form?.action === "admin"
       );
-      const editLink = (canEdit && selectedTab === "forms") ? (<button aria-label="editForm" className="no-default-style" onClick={() => { setSelectedFormId(form.id); }}><i className="fas fa-pencil-alt"></i></button>) : null;
+      const editLink = (canEdit && selectedTab === "forms") ? (<button aria-label="editForm" className="no-default-style" onClick={() => { setSelectedFormId(form.id); }}><Icon>edit</Icon></button>) : null;
       const formUrl = EnvironmentHelper.B1Url.replace("{key}", UserHelper.currentChurch.subDomain) + "/forms/" + form.id;
       const formLink = (form.contentType === "form") ? <a href={formUrl}>{formUrl}</a> : null;
-      const archiveLink = (canEdit && selectedTab === "forms") ? (<button aria-label="archiveForm" className="no-default-style" onClick={() => { handleArchiveChange(form, true); }}><i className="fas fa-archive"></i></button>) : null;
-      const unarchiveLink = (canEdit && selectedTab === "archived") ? (<button className="no-default-style" onClick={() => { handleArchiveChange(form, false); }}><i className="fas fa-undo"></i></button>) : null;
+      const archiveLink = (canEdit && selectedTab === "forms") ? (<button aria-label="archiveForm" className="no-default-style" onClick={() => { handleArchiveChange(form, true); }}><Icon>delete</Icon></button>) : null;
+      const unarchiveLink = (canEdit && selectedTab === "archived") ? (<button className="no-default-style" onClick={() => { handleArchiveChange(form, false); }}><Icon>undo</Icon></button>) : null;
       result.push(<tr key={form.id}>
-        <td><i className="fas fa-align-left" /> <Link to={"/forms/" + form.id}>{form.name}</Link></td>
+        <td><Icon>format_align_left</Icon> <Link to={"/forms/" + form.id}>{form.name}</Link></td>
         <td>{formLink}</td>
         <td>{archiveLink || unarchiveLink}</td>
         <td>{editLink}</td>
@@ -81,7 +81,7 @@ export const FormsPage = () => {
 
   const getEditContent = () => {
     if (!formPermission || selectedTab === "archived") return null;
-    else return (<button aria-label="addForm" className="no-default-style" onClick={() => { setSelectedFormId(""); }}><i className="fas fa-plus"></i></button>);
+    else return (<button aria-label="addForm" className="no-default-style" onClick={() => { setSelectedFormId(""); }}><Icon>add</Icon></button>);
   }
 
   React.useEffect(() => { loadData(); return () => { isSubscribed.current = false } }, []);
@@ -100,7 +100,7 @@ export const FormsPage = () => {
     return (
       <Wrapper pageTitle={title}>
         <ul className="nav nav-tabs">
-          <li className="nav-item" key="forms"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("forms"); }} className={(selectedTab === "forms") ? "nav-link active" : "nav-link"}><i className="fas fa-align-left"></i> Forms</a></li>
+          <li className="nav-item" key="forms"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("forms"); }} className={(selectedTab === "forms") ? "nav-link active" : "nav-link"}><Icon>format_align_left</Icon> Forms</a></li>
           {archivedForms?.length > 0 && <li className="nav-item" key="archived"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("archived"); }} className={(selectedTab === "archived") ? "nav-link active" : "nav-link"}><i className="fa fa-archive"></i> Archived forms</a></li>}
         </ul>
         <Grid container spacing={3}>

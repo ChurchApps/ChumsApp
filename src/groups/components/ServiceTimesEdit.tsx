@@ -1,10 +1,11 @@
 import React from "react";
 import { ApiHelper, GroupInterface, GroupServiceTimeInterface, ServiceTimeInterface } from ".";
 import { Table, InputGroup, Button, FormControl } from "react-bootstrap";
+import { Icon } from "@mui/material";
 
 interface Props {
-    group: GroupInterface,
-    updatedFunction?: (group: GroupInterface) => void
+  group: GroupInterface,
+  updatedFunction?: (group: GroupInterface) => void
 }
 
 export const ServiceTimesEdit: React.FC<Props> = (props) => {
@@ -26,7 +27,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     let result: JSX.Element[] = [];
     for (let i = 0; i < groupServiceTimes.length; i++) {
       let gst = groupServiceTimes[i];
-      result.push(<tr key={gst.id}><td><i className="far fa-clock"></i> {gst.serviceTime.name}</td><td><a href="about:blank" className="text-danger" data-id={gst.id} onClick={handleRemove}><i className="fas fa-user-times"></i> Remove</a></td></tr>);
+      result.push(<tr key={gst.id}><td><i className="far fa-clock"></i> {gst.serviceTime.name}</td><td><a href="about:blank" className="text-danger" data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> Remove</a></td></tr>);
     }
     return result;
   }
@@ -61,7 +62,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
       <InputGroup>
         <FormControl as="select" aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange}>{getOptions()}</FormControl>
         <InputGroup.Append>
-          <Button variant="primary" data-cy="add-service-time" onClick={handleAdd}><i className="fas fa-plus"></i> Add</Button>
+          <Button variant="primary" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> Add</Button>
         </InputGroup.Append>
       </InputGroup>
     </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Question, ApiHelper, FormSubmissionInterface, UserHelper, Permissions, UniqueIdHelper } from "./";
-import { Grid } from "@mui/material"
+import { Grid, Icon } from "@mui/material"
 
 interface Props {
   formSubmissionId: string,
@@ -14,7 +14,7 @@ export const FormSubmission: React.FC<Props> = (props) => {
   const handleEdit = (e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); props.editFunction(props.formSubmissionId); }
   const getEditLink = () => {
     if (!formPermission) return null;
-    else return (<a href="about:blank" className="fa-pull-right" onClick={handleEdit}><i className="fas fa-pencil-alt"></i></a>);
+    else return (<a href="about:blank" className="fa-pull-right" onClick={handleEdit}><Icon>edit</Icon></a>);
   }
   const loadData = () => {
     if (!UniqueIdHelper.isMissing(props.formSubmissionId)) {

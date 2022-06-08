@@ -1,6 +1,6 @@
 import React from "react";
 import { PersonHelper, AssociatedForms, PersonInterface, Loading, DisplayBox } from "."
-import { Grid } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
 
 interface Props {
   id?: string,
@@ -32,7 +32,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
           homeLabel = "";
         }
         if (p.contactInfo.homePhone) {
-          contactMethods.push(<tr key="homePhone"><td><label>{homeLabel}</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.homePhone}</td></tr>);
+          contactMethods.push(<tr key="homePhone"><td><label>{homeLabel}</label></td><td><Icon>call</Icon></td><td>{p.contactInfo.homePhone}</td></tr>);
           homeLabel = "";
         }
 
@@ -42,10 +42,10 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
           if (p.contactInfo.address2) lines.push(<div key="address2">{p.contactInfo.address2}</div>);
           lines.push(<div key="contactInfo">{p.contactInfo.city}, {p.contactInfo.state} {p.contactInfo.zip}</div>);
 
-          contactMethods.push(<tr key="address"><td><label>{homeLabel}</label></td><td><i className="fas fa-map-marker-alt"></i></td><td>{lines}</td></tr>);
+          contactMethods.push(<tr key="address"><td><label>{homeLabel}</label></td><td><Icon>home_pin</Icon></td><td>{lines}</td></tr>);
         }
-        if (p.contactInfo.mobilePhone) contactMethods.push(<tr key="mobilePHone"><td><label>Mobile</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.mobilePhone}</td></tr>);
-        if (p.contactInfo.workPhone) contactMethods.push(<tr key="workPhone"><td><label>Work</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.workPhone}</td></tr>);
+        if (p.contactInfo.mobilePhone) contactMethods.push(<tr key="mobilePHone"><td><label>Mobile</label></td><td><Icon>phone_iphone</Icon></td><td>{p.contactInfo.mobilePhone}</td></tr>);
+        if (p.contactInfo.workPhone) contactMethods.push(<tr key="workPhone"><td><label>Work</label></td><td><Icon>call</Icon></td><td>{p.contactInfo.workPhone}</td></tr>);
       }
 
       return (<Grid container spacing={3}>

@@ -1,3 +1,4 @@
+import { Icon } from "@mui/material";
 import React from "react";
 import { Note, DisplayBox, UserHelper, Permissions, Loading, NoteInterface } from "./";
 
@@ -20,7 +21,7 @@ export function Notes({ showNoteBox, notes }: Props) {
   const canEdit = UserHelper.checkAccess(Permissions.membershipApi.notes.edit);
   const editContent = canEdit && (
     <button aria-label="addNote" className="no-default-style" onClick={() => { showNoteBox() }}>
-      <i className="fas fa-plus"></i>
+      <Icon>add</Icon>
     </button>
   )
 

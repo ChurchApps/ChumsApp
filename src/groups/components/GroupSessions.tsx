@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading } from ".";
 import { Table, Button, InputGroup, FormControl } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
+import { Icon } from "@mui/material";
 
 interface Props {
   group: GroupInterface,
@@ -46,7 +47,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
     let result: JSX.Element[] = [];
     for (let i = 0; i < visitSessions.length; i++) {
       let vs = visitSessions[i];
-      let editLink = (canEdit) ? (<a href="about:blank" onClick={handleRemove} className="text-danger" data-personid={vs.visit.personId}><i className="fas fa-user-times"></i> Remove</a>) : null;
+      let editLink = (canEdit) ? (<a href="about:blank" onClick={handleRemove} className="text-danger" data-personid={vs.visit.personId}><Icon>person_remove</Icon> Remove</a>) : null;
       let person = ArrayHelper.getOne(people, "id", vs.visit.personId);
       if (person) {
         result.push(

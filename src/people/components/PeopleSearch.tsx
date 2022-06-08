@@ -3,6 +3,7 @@ import { PersonHelper, PersonInterface, DisplayBox, ApiHelper } from ".";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition } from "../../components";
 import { EditCondition } from "./EditCondition";
+import { Icon } from "@mui/material";
 
 interface Props {
   updateSearchResults: (people: PersonInterface[]) => void
@@ -65,7 +66,7 @@ export function PeopleSearch(props: Props) {
 
   const getAddCondition = () => {
     if (showAddCondition) return <EditCondition conditionAdded={(condition) => { const c = [...conditions]; c.push(condition); setConditions(c); setShowAddCondition(false) }} />
-    else return <a href="about:blank" className="float-right text-success" onClick={(e) => { e.preventDefault(); setShowAddCondition(true); }}><i className="fas fa-plus"></i> Add Condition</a>
+    else return <a href="about:blank" className="float-right text-success" onClick={(e) => { e.preventDefault(); setShowAddCondition(true); }}><Icon>add</Icon> Add Condition</a>
   }
 
   const removeCondition = (index: number) => {

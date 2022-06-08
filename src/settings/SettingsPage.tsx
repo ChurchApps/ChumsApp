@@ -1,6 +1,6 @@
 import React from "react";
 import { UserHelper, BigLinkButton, Permissions, EnvironmentHelper, Wrapper } from "./components";
-import { Grid } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
 
 export const SettingsPage = () => {
 
@@ -16,7 +16,7 @@ export const SettingsPage = () => {
 
   return (
     <Wrapper pageTitle="Settings">
-      <h1><i className="fas fa-cog"></i> Settings</h1>
+      <h1><Icon>settings</Icon> Settings</h1>
       <Grid container className="justify-content-md-center" id="settingsBoxes">
         {getLinks()}
       </Grid>

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
+import { Icon } from "@mui/material";
 
 interface Props {
   group: GroupInterface,
@@ -61,7 +62,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
 
     for (let i = 0; i < groupMembers.length; i++) {
       let gm = groupMembers[i];
-      let editLink = (canEdit) ? <a href="about:blank" onClick={handleRemove} data-index={i} data-cy={`remove-member-${i}`} className="text-danger"><i className="fas fa-user-times"></i> Remove</a> : <></>
+      let editLink = (canEdit) ? <a href="about:blank" onClick={handleRemove} data-index={i} data-cy={`remove-member-${i}`} className="text-danger"><Icon>person_remove</Icon> Remove</a> : <></>
       rows.push(
         <tr key={i}>
           <td><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></td>

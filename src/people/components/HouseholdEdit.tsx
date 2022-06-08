@@ -3,6 +3,7 @@ import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, Perso
 import { Table, Form } from "react-bootstrap"
 import * as yup from "yup"
 import { Formik, FormikHelpers } from "formik"
+import { Icon } from "@mui/material"
 
 const schema = yup.object().shape({
   name: yup.string().required("Household name is required")
@@ -84,7 +85,7 @@ export function HouseholdEdit({ updatedFunction, household, members: currentMemb
           <option value="Other">Other</option>
         </select>
       </td>
-      <td><button onClick={() => handleRemove(index)} className="text-danger no-default-style"><i className="fas fa-user-times"></i> Remove</button></td>
+      <td><button onClick={() => handleRemove(index)} className="text-danger no-default-style"><Icon>person_remove</Icon> Remove</button></td>
     </tr>
   ))
 
@@ -126,7 +127,7 @@ export function HouseholdEdit({ updatedFunction, household, members: currentMemb
             <Table size="sm" id="householdMemberTable">
               <tbody>
                 {rows}
-                <tr><td></td><td></td><td><button className="text-success no-default-style" aria-label="addMember" onClick={() => setShowAdd(true)}> <i className="fas fa-user"></i> Add</button></td></tr>
+                <tr><td></td><td></td><td><button className="text-success no-default-style" aria-label="addMember" onClick={() => setShowAdd(true)}> <Icon>person_add</Icon> Add</button></td></tr>
               </tbody>
             </Table>
             {personAdd}

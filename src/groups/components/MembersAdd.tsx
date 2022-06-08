@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ApiHelper, GroupInterface, DisplayBox, GroupMemberInterface, PersonHelper, PersonInterface, Loading } from ".";
 import { Table } from "react-bootstrap";
+import { Icon } from "@mui/material";
 
 interface Props { group: GroupInterface, addFunction: (person: PersonInterface) => void }
 
@@ -34,7 +35,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
         <tr key={i}>
           <td><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></td>
           <td><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></td>
-          <td><a href="about:blank" className="text-success" data-cy="add-member-to-session" onClick={addMember} data-index={i}><i className="fas fa-user"></i> Add</a></td>
+          <td><a href="about:blank" className="text-success" data-cy="add-member-to-session" onClick={addMember} data-index={i}><Icon>person_add</Icon> Add</a></td>
         </tr>
       );
     }
