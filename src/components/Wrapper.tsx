@@ -3,8 +3,9 @@ import { ApiHelper, UserHelper } from ".";
 import { Box, Container, List } from "@mui/material";
 import { Permissions } from "./"
 import { SiteWrapper, NavItem } from "../appBase/components";
-import { UserMenu } from "./UserMenu";
+import { UserMenu } from "../appBase/components/material/UserMenu";
 import { AppearanceHelper } from "../appBase/helpers";
+import UserContext from "../UserContext";
 
 interface Props {
   pageTitle: string,
@@ -16,6 +17,8 @@ export const Wrapper: React.FC<Props> = props => {
   const [isFormMember, setIsFormMember] = React.useState<boolean>(false);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
   const [churchLogo, setChurchLogo] = React.useState<string>();
+
+  const context = React.useContext(UserContext);
 
   useEffect(() => {
     if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) {
@@ -51,7 +54,7 @@ export const Wrapper: React.FC<Props> = props => {
   });
 
   const navContent = <><List component="nav">{tabs}</List></>
-  const userMenu = <UserMenu />
+  const userMenu = <UserMenu profilePicture={context.profilePicture} userName={`${UserHelper.user.firstName} ${UserHelper.user.lastName}`} churches={UserHelper.churches} currentChurch={UserHelper.currentChurch} />
 
   return <>
     <SiteWrapper logoUrl={churchLogo || "/images/logo.png"} navContent={navContent} pageTitle={props.pageTitle} userMenu={userMenu}>
