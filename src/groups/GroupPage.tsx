@@ -29,7 +29,7 @@ export const GroupPage = () => {
   const getSidebarModules = () => {
     const result = [] as JSX.Element[];
     if (addSessionVisible) result.push(<SessionAdd key="sessionAdd" group={group} updatedFunction={handleSessionAdd} />);
-    if (addPersonVisible) result.push(<DisplayBox key="displayBox" id="personAddBox" headerIcon="fas fa-user" headerText="Add Person"><PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} /></DisplayBox>);
+    if (addPersonVisible) result.push(<DisplayBox key="displayBox" id="personAddBox" headerIcon="person" headerText="Add Person"><PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} /></DisplayBox>);
     if (addMemberVisible) result.push(<MembersAdd key="membersAdd" group={group} addFunction={addPerson} />);
     return result;
   }

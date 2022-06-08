@@ -37,7 +37,7 @@ export const BatchEdit: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.batchId]);
 
   return (
-    <InputBox id="batchBox" headerIcon="fas fa-hand-holding-usd" headerText="Edit Batch" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
+    <InputBox id="batchBox" headerIcon="volunteer_activism" headerText="Edit Batch" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
       <div className="form-group">
         <label>Name (optional)</label>
         <input type="text" data-cy="batch-name" className="form-control" name="name" value={batch.name} onChange={handleChange} onKeyDown={handleKeyDown} />

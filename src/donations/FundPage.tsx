@@ -105,12 +105,12 @@ export const FundPage = () => {
       <Wrapper pageTitle={fund.name + " Donations"}>
         <Grid container spacing={3}>
           <Grid item md={8} xs={12}>
-            <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations" editContent={getEditContent()}>
+            <DisplayBox headerIcon="volunteer_activism" headerText="Donations" editContent={getEditContent()}>
               {contents}
             </DisplayBox>
           </Grid>
           <Grid item md={4} xs={12}>
-            <InputBox headerIcon="fas fa-filter" headerText="Donation Filter" saveFunction={loadDonations} saveText="Filter">
+            <InputBox headerIcon="filter_alt" headerText="Donation Filter" saveFunction={loadDonations} saveText="Filter">
               <FormGroup>
                 <FormLabel>Start Date</FormLabel>
                 <FormControl name="startDate" type="date" data-cy="start-date" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} />

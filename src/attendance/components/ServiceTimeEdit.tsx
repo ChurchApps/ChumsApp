@@ -10,8 +10,8 @@ const schema = yup.object().shape({
 })
 
 interface Props {
-    serviceTime: ServiceTimeInterface,
-    updatedFunction: () => void
+  serviceTime: ServiceTimeInterface,
+  updatedFunction: () => void
 }
 
 export const ServiceTimeEdit: React.FC<Props> = (props) => {
@@ -48,7 +48,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
     loadData();
   }, [props.serviceTime, loadData]);
 
-  const serviceTimeCopy = {...serviceTime}
+  const serviceTimeCopy = { ...serviceTime }
   delete serviceTimeCopy.serviceId
   const initialValues: ServiceTimeInterface = { name: "", serviceId: serviceTime?.serviceId || services[0]?.id, ...serviceTimeCopy }
 
@@ -69,7 +69,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
         isSubmitting
       }) => (
         <Form noValidate>
-          <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={props.serviceTime?.id ? handleDelete : null} headerText={serviceTime.name} isSubmitting={isSubmitting} headerIcon="far fa-clock">
+          <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={props.serviceTime?.id ? handleDelete : null} headerText={serviceTime.name} isSubmitting={isSubmitting} headerIcon="schedule">
             <Form.Group>
               <Form.Label htmlFor="service">Service</Form.Label>
               <Form.Control

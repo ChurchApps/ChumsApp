@@ -111,7 +111,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.donationId]); //eslint-disable-line
 
   return (
-    <InputBox id="donationBox" data-cy="donation-box" headerIcon="fas fa-hand-holding-usd" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
+    <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
       <div className="form-group">
         <label>Person</label>
         {getPersonSection()}

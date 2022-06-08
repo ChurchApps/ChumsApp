@@ -37,7 +37,7 @@ export const GroupAdd: React.FC<Props> = (props) => {
         errors,
         isSubmitting
       }) => (
-        <InputBox headerText="Group Members" headerIcon="fas fa-users" cancelFunction={handleCancel} saveFunction={handleSubmit} saveText="Add Group" isSubmitting={isSubmitting}>
+        <InputBox headerText="Group Members" headerIcon="group" cancelFunction={handleCancel} saveFunction={handleSubmit} saveText="Add Group" isSubmitting={isSubmitting}>
           <Form noValidate>
             <Form.Group>
               <Form.Label htmlFor="categoryName">

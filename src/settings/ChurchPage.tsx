@@ -72,7 +72,7 @@ export const ChurchPage: React.FC = () => {
     <Wrapper pageTitle="Church Settings">
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox headerText="Edit Church Settings" headerIcon="fas fa-cog">
+          <DisplayBox headerText="Edit Church Settings" headerIcon="settings">
             <Grid container spacing={3}>
               <Grid item md={6} xs={12}>
                 <div className="form-check">

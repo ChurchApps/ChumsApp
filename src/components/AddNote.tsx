@@ -77,7 +77,7 @@ export function AddNote({
         <Form noValidate>
           <InputBox
             headerText={headerText}
-            headerIcon="far fa-sticky-note"
+            headerIcon="sticky_note_2"
             saveFunction={handleSubmit}
             cancelFunction={close}
             deleteFunction={deleteFunction}
@@ -89,7 +89,7 @@ export function AddNote({
                 as="textarea"
                 name="noteText"
                 aria-label={headerText}
-                style={{height: "100px"}}
+                style={{ height: "100px" }}
                 onChange={handleChange}
                 value={values.noteText}
                 placeholder="Some note..."

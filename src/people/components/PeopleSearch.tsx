@@ -57,7 +57,7 @@ export function PeopleSearch(props: Props) {
 
   }
 
-  const getSimpleSearch = () => (<DisplayBox headerIcon="fas fa-user" headerText="Simple Search" editContent={<a href="about:blank" onClick={toggleAdvanced}>Advanced</a>}>
+  const getSimpleSearch = () => (<DisplayBox headerIcon="person" headerText="Simple Search" editContent={<a href="about:blank" onClick={toggleAdvanced}>Advanced</a>}>
     <InputGroup>
       <FormControl id="searchText" aria-label="searchBox" name="searchText" type="text" placeholder="Name" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} />
       <InputGroup.Append><Button id="searchButton" variant="primary" onClick={handleSubmit}>Search</Button></InputGroup.Append>
@@ -92,7 +92,7 @@ export function PeopleSearch(props: Props) {
     return result;
   }
 
-  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="fas fa-user" headerText="Advanced Search" headerActionContent={<a href="about:blank" onClick={toggleAdvanced}>Simple</a>} saveFunction={handleAdvancedSearch} saveText="Search">
+  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<a href="about:blank" onClick={toggleAdvanced}>Simple</a>} saveFunction={handleAdvancedSearch} saveText="Search">
     <p>All people where:</p>
     {getDisplayConditions()}
     {getAddCondition()}

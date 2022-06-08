@@ -9,8 +9,8 @@ import {
   UniqueIdHelper,
   Loading, PersonHelper
 } from ".";
-import {Link} from "react-router-dom";
-import {Table} from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Table } from "react-bootstrap";
 
 interface Props {
   person: PersonInterface,
@@ -74,7 +74,7 @@ export const Household: React.FC<Props> = (props) => {
 
   if (mode === "display") {
     return (
-      <DisplayBox id="householdBox" headerIcon="fas fa-users" headerText={(household?.name || "") + " Household"} editFunction={getEditFunction()} ariaLabel="editHousehold">
+      <DisplayBox id="householdBox" headerIcon="group" headerText={(household?.name || "") + " Household"} editFunction={getEditFunction()} ariaLabel="editHousehold">
         {getTable()}
       </DisplayBox>
     );

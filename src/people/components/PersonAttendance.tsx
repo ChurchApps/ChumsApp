@@ -71,7 +71,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
   }
 
   return (
-    <DisplayBox headerIcon="far fa-calendar-alt" headerText="Attendance">
+    <DisplayBox headerIcon="calendar_month" headerText="Attendance">
       {getTable()}
     </DisplayBox>
   );
