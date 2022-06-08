@@ -84,7 +84,7 @@ export function PeopleSearch(props: Props) {
       const index = idx;
       let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
       result.push(<div>
-        <a href="about:blank" onClick={(e) => { e.preventDefault(); removeCondition(index) }}><i className="fas fa-trash text-danger" style={{ marginRight: 10 }}></i></a>
+        <a href="about:blank" onClick={(e) => { e.preventDefault(); removeCondition(index) }}><Icon style={{ marginRight: 10 }}>delete</Icon></a>
         <b>{displayField}</b> {displayOperator} <i>{displayValue}</i>
       </div>);
       idx++;

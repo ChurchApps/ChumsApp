@@ -77,7 +77,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
     else return (
       <InputGroup>
         <FormControl as="select" value={session?.id} onChange={selectSession}>{getSessionOptions()}</FormControl>
-        <InputGroup.Append><Button variant="primary" onClick={handleAdd} data-cy="create-new-session"><i className="far fa-calendar-alt"></i> New</Button></InputGroup.Append>
+        <InputGroup.Append><Button variant="primary" onClick={handleAdd} data-cy="create-new-session"><Icon>calendar_month</Icon> New</Button></InputGroup.Append>
       </InputGroup>
     );
   }

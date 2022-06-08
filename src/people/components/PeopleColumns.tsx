@@ -1,3 +1,4 @@
+import { Icon } from "@mui/material";
 import React, { SyntheticEvent } from "react";
 import { Dropdown } from "react-bootstrap";
 
@@ -16,7 +17,7 @@ export function PeopleColumns(props: Props) {
     props.columns.forEach(o => {
       const option = o;
       const selectedClass = (props.selectedColumns.indexOf(o.key) > -1) ? "checked" : ""
-      result.push(<Dropdown.Item key={option.key} className={selectedClass} onClick={(e) => { props.toggleColumn(option.key) }}><i className="fa fa-check-square"></i> {o.label}</Dropdown.Item>);
+      result.push(<Dropdown.Item key={option.key} className={selectedClass} onClick={(e) => { props.toggleColumn(option.key) }}><Icon>check_box</Icon> {o.label}</Dropdown.Item>);
     });
     return result;
   }
@@ -28,7 +29,7 @@ export function PeopleColumns(props: Props) {
   return (
     <Dropdown alignRight={true} id="fieldsDropdown" style={{ float: "right" }} onSelect={() => false} show={show} onToggle={handleToggle}>
       <Dropdown.Toggle id="dropdown-custom-components" className="btn-sm">
-        <i className="fa fa-columns" style={{ color: "#FFF" }}></i>
+        <Icon style={{ color: "#FFF" }}>view_column</Icon>
         Fields
       </Dropdown.Toggle>
 

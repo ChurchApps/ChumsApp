@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Accordion, Card, Button } from "react-bootstrap";
 import { DateHelper, ApiHelper, DisplayBox } from ".";
+import { Icon } from "@mui/material";
 
 export const DonationEvents: React.FC = () => {
   const [headerIcon, setHeaderIcon] = React.useState<string>("fas fa-exclamation-circle");
@@ -47,7 +48,7 @@ export const DonationEvents: React.FC = () => {
             <Accordion.Toggle as={Card.Header} eventKey={i} style={{ padding: "10px" }} className="pointer">
               <i style={{ marginRight: "5px" }} className={className}></i>
               <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
-              <i style={{ float: "right" }} className="fa fa-chevron-down"></i>
+              <Icon style={{ float: "right" }}>arrow_downward</Icon>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={i}>
               <Card.Body>

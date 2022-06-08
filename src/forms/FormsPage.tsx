@@ -101,7 +101,7 @@ export const FormsPage = () => {
       <Wrapper pageTitle={title}>
         <ul className="nav nav-tabs">
           <li className="nav-item" key="forms"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("forms"); }} className={(selectedTab === "forms") ? "nav-link active" : "nav-link"}><Icon>format_align_left</Icon> Forms</a></li>
-          {archivedForms?.length > 0 && <li className="nav-item" key="archived"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("archived"); }} className={(selectedTab === "archived") ? "nav-link active" : "nav-link"}><i className="fa fa-archive"></i> Archived forms</a></li>}
+          {archivedForms?.length > 0 && <li className="nav-item" key="archived"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("archived"); }} className={(selectedTab === "archived") ? "nav-link active" : "nav-link"}><Icon>archive</Icon> Archived forms</a></li>}
         </ul>
         <Grid container spacing={3}>
           <Grid item md={8} xs={12}>
