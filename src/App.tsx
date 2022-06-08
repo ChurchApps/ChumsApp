@@ -6,6 +6,11 @@ import { CookiesProvider } from "react-cookie";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
 const mdTheme = createTheme({
+  palette: {
+    secondary: {
+      main: "#444444"
+    }
+  },
   components: {
     MuiTextField: { defaultProps: { margin: "normal" } },
     MuiFormControl: { defaultProps: { margin: "normal" } }
