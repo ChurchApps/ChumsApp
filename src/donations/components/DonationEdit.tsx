@@ -9,8 +9,6 @@ export const DonationEdit: React.FC<Props> = (props) => {
   const [donation, setDonation] = React.useState<DonationInterface>({});
   const [fundDonations, setFundDonations] = React.useState<FundDonationInterface[]>([]);
   const [showSelectPerson, setShowSelectPerson] = React.useState(false);
-
-  //const getEditContent = () => { return (<a href="about:blank"><i className="fas fa-plus"></i></a>); }
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     let d = { ...donation } as DonationInterface;

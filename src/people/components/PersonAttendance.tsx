@@ -38,7 +38,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
       let showRest = false;
       if (r.visitDate === lastVisitDate && !showRest) cols.push(<td></td>);
       else {
-        cols.push(<td><i className="far fa-calendar-alt"></i> {DateHelper.formatHtml5Date(r.visitDate)}</td>);
+        cols.push(<td><Icon>calendar_month</Icon> {DateHelper.formatHtml5Date(r.visitDate)}</td>);
         lastVisitDate = r.visitDate;
         showRest = true;
       }
@@ -55,7 +55,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
         showRest = true;
       }
       if (r.serviceTime === undefined) cols.push(<td></td>);
-      else cols.push(<td><i className="far fa-clock"></i> {r.serviceTime?.name}</td>);
+      else cols.push(<td><Icon>schedule</Icon> {r.serviceTime?.name}</td>);
       if (group === null) cols.push(<td><Icon>group</Icon></td>);
       else cols.push(<td><Icon>group</Icon> <Link to={"/groups/" + group.id}>{group.name}</Link></td>)
       rows.push(<tr>{cols}</tr>);

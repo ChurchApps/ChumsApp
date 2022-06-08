@@ -28,7 +28,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
 
         let homeLabel = "Home";
         if (p.contactInfo.email) {
-          contactMethods.push(<tr key="email"><td><label>{homeLabel}</label></td><td><i className="far fa-envelope"></i></td><td><a href={"mailto:" + p.contactInfo.email}>{p.contactInfo.email}</a></td></tr>);
+          contactMethods.push(<tr key="email"><td><label>{homeLabel}</label></td><td><Icon>mail</Icon></td><td><a href={"mailto:" + p.contactInfo.email}>{p.contactInfo.email}</a></td></tr>);
           homeLabel = "";
         }
         if (p.contactInfo.homePhone) {

@@ -43,7 +43,7 @@ export const GroupsPage = () => {
     let lastCat = "";
     for (let i = 0; i < groups.length; i++) {
       let g = groups[i];
-      let cat = (g.categoryName !== lastCat) ? <><i className="far fa-folder"></i> {g.categoryName}</> : <></>
+      let cat = (g.categoryName !== lastCat) ? <><Icon>folder</Icon> {g.categoryName}</> : <></>
       let memberCount = g.memberCount === 1 ? "1 person" : g.memberCount.toString() + " people";
       rows.push(
         <tr key={g.id}>

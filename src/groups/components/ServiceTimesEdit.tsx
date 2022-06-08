@@ -27,7 +27,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     let result: JSX.Element[] = [];
     for (let i = 0; i < groupServiceTimes.length; i++) {
       let gst = groupServiceTimes[i];
-      result.push(<tr key={gst.id}><td><i className="far fa-clock"></i> {gst.serviceTime.name}</td><td><a href="about:blank" className="text-danger" data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> Remove</a></td></tr>);
+      result.push(<tr key={gst.id}><td><Icon>schedule</Icon> {gst.serviceTime.name}</td><td><a href="about:blank" className="text-danger" data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> Remove</a></td></tr>);
     }
     return result;
   }
