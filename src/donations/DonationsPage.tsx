@@ -86,7 +86,7 @@ export const DonationsPage = () => {
       <ReportWithFilter keyName="donationSummary" autoRun={true} />
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="fas fa-hand-holding-usd" headerText="Batches" editContent={getEditContent()}>
+          <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="volunteer_activism" headerText="Batches" editContent={getEditContent()}>
             {getTable()}
           </DisplayBox>
           <DonationEvents />

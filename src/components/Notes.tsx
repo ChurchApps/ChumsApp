@@ -26,7 +26,7 @@ export function Notes({ showNoteBox, notes }: Props) {
   )
 
   return (
-    <DisplayBox id="notesBox" data-cy="notes-box" headerIcon="far fa-sticky-note" headerText="Notes" editContent={editContent}>
+    <DisplayBox id="notesBox" data-cy="notes-box" headerIcon="sticky_note_2" headerText="Notes" editContent={editContent}>
       {getNotes()}
     </DisplayBox>
   );

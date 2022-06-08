@@ -26,5 +26,5 @@ export const Groups: React.FC<Props> = (props) => {
     }
   }
 
-  return <DisplayBox headerIcon="fas fa-list" headerText="Groups">{getRecords()}</DisplayBox>
+  return <DisplayBox headerIcon="group" headerText="Groups">{getRecords()}</DisplayBox>
 }

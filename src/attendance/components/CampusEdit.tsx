@@ -41,7 +41,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
         errors,
         isSubmitting
       }) => (
-        <InputBox id="campusBox" data-cy="campus-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={props.campus?.id ? handleDelete : null} headerText={campus.name} headerIcon="fas fa-church" isSubmitting={isSubmitting}>
+        <InputBox id="campusBox" data-cy="campus-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={props.campus?.id ? handleDelete : null} headerText={campus.name} headerIcon="church" isSubmitting={isSubmitting}>
           <Form.Group>
             <Form.Label htmlFor="campusName">Campus Name</Form.Label>
             <Form.Control

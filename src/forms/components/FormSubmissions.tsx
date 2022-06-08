@@ -156,10 +156,10 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     <Grid container spacing={3}>
       <Grid item md={8} xs={12} className="form-submission-summary">
         <div ref={contentRef} className="form-submission-summary">
-          <DisplayBox headerText="Form Submission Summary" headerIcon="fas fa-users" editContent={getEditLinks()}>
+          <DisplayBox headerText="Form Submission Summary" headerIcon="group" editContent={getEditLinks()}>
             <Grid container spacing={3}>{getSummary()}</Grid>
           </DisplayBox>
-          <DisplayBox headerText="Form Submission Results" headerIcon="fas fa-users">
+          <DisplayBox headerText="Form Submission Results" headerIcon="group">
             {getFormSubmissions()}
           </DisplayBox>
         </div>

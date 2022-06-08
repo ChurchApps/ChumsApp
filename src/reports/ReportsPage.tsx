@@ -11,7 +11,7 @@ export const ReportsPage = () => {
       <h1><Icon>summarize</Icon> Reports</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="reportsBox" headerIcon="fas fa-table" headerText="Reports">
+          <DisplayBox id="reportsBox" headerIcon="summarize" headerText="Reports">
             <ul>
               <li><Link to="/reports/birthdays">Birthdays</Link></li>
               <li><Link to="/reports/attendanceTrend">Attendance Trend</Link></li>

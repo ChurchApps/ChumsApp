@@ -64,7 +64,7 @@ export function FormEdit({ formId, updatedFunction }: Props) {
         isSubmitting
       }) => (
         <Form noValidate>
-          <InputBox id="formBox" headerIcon="fas fa-align-left" headerText="Edit Form" saveFunction={handleSubmit} isSubmitting={isSubmitting} cancelFunction={updatedFunction} deleteFunction={(formId) ? handleDelete : undefined}>
+          <InputBox id="formBox" headerIcon="format_align_left" headerText="Edit Form" saveFunction={handleSubmit} isSubmitting={isSubmitting} cancelFunction={updatedFunction} deleteFunction={(formId) ? handleDelete : undefined}>
             <Form.Group>
               <Form.Label htmlFor="name">Form Name</Form.Label>
               <Form.Control
@@ -79,7 +79,7 @@ export function FormEdit({ formId, updatedFunction }: Props) {
                 {errors.name}
               </Form.Control.Feedback>
             </Form.Group>
-            { !formId
+            {!formId
               && <Form.Group>
                 <Form.Label>Associate With</Form.Label>
                 <Form.Control
@@ -96,7 +96,7 @@ export function FormEdit({ formId, updatedFunction }: Props) {
                 </Form.Control>
               </Form.Group>
             }
-            { standAloneForm
+            {standAloneForm
               && <>
                 <Form.Group>
                   <Form.Label>Form Access</Form.Label>
@@ -121,7 +121,7 @@ export function FormEdit({ formId, updatedFunction }: Props) {
                 </Form.Group>
               </>
             }
-            { showDates
+            {showDates
               && <>
                 <Form.Group>
                   <Form.Label>Availability Start Date</Form.Label>

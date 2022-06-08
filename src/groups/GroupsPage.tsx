@@ -81,7 +81,7 @@ export const GroupsPage = () => {
     <Wrapper pageTitle="Groups">
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="groupsBox" headerIcon="fas fa-list" headerText="Groups" editContent={getEditContent()}>
+          <DisplayBox id="groupsBox" headerIcon="group" headerText="Groups" editContent={getEditContent()}>
             {getTable()}
           </DisplayBox>
         </Grid>

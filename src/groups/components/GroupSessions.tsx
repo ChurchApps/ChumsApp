@@ -114,6 +114,6 @@ export const GroupSessions: React.FC<Props> = (props) => {
     </>);
   }
 
-  return (<DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText="Sessions" headerIcon="far fa-calendar-alt" editContent={getHeaderSection()}>{content}</DisplayBox>);
+  return (<DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText="Sessions" headerIcon="calendar_month" editContent={getHeaderSection()}>{content}</DisplayBox>);
 }
 

@@ -122,7 +122,7 @@ export const AttendancePage = () => {
     <Wrapper pageTitle="Attendance">
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="fas fa-list" headerText="Groups" editContent={getEditLinks()}>
+          <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="group" headerText="Groups" editContent={getEditLinks()}>
             {getTable()}
           </DisplayBox>
         </Grid>

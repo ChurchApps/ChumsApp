@@ -107,7 +107,7 @@ export function HouseholdEdit({ updatedFunction, household, members: currentMemb
           errors,
           isSubmitting
         }) => (
-          <InputBox id="householdBox" headerIcon="fas fa-users" headerText={values.name + " Household"} isSubmitting={isSubmitting} saveFunction={handleSubmit} cancelFunction={updatedFunction}>
+          <InputBox id="householdBox" headerIcon="group" headerText={values.name + " Household"} isSubmitting={isSubmitting} saveFunction={handleSubmit} cancelFunction={updatedFunction}>
             <Form noValidate>
               <Form.Group>
                 <Form.Label htmlFor="name">Household Name</Form.Label>

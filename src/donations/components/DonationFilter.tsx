@@ -24,7 +24,7 @@ export const DonationFilter: React.FC<Props> = (props) => {
     setEndDate(props.endDate);
   }, [props.startDate, props.endDate]);
 
-  return (<InputBox id="donationFilterBox" headerIcon="fas fa-filter" headerText="Filter Donation Chart" saveFunction={handleFilter} saveText="Filter">
+  return (<InputBox id="donationFilterBox" headerIcon="filter_alt" headerText="Filter Donation Chart" saveFunction={handleFilter} saveText="Filter">
     <div className="form-group">
       <label>Start Date</label>
       <input type="date" className="form-control" name="startDate" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} onKeyDown={handleKeyDown} />

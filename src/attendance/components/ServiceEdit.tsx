@@ -10,8 +10,8 @@ const schema = yup.object().shape({
 })
 
 interface Props {
-    service: ServiceInterface,
-    updatedFunction: () => void
+  service: ServiceInterface,
+  updatedFunction: () => void
 }
 
 export const ServiceEdit: React.FC<Props> = (props) => {
@@ -54,7 +54,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   }, [props.service, loadData]);
 
   if (service === null || service.id === undefined) return null;
-  const serviceCopy = {...service}
+  const serviceCopy = { ...service }
   delete serviceCopy.campusId
   const initialValues: ServiceInterface = { name: "", campusId: service?.campusId || campuses[0]?.id, ...serviceCopy }
 
@@ -74,7 +74,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         isSubmitting
       }) => (
         <Form noValidate>
-          <InputBox id="serviceBox" data-cy="service-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={props.service?.id ? handleDelete : null} headerText={service.name} headerIcon="far fa-calendar-alt" isSubmitting={isSubmitting}>
+          <InputBox id="serviceBox" data-cy="service-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={props.service?.id ? handleDelete : null} headerText={service.name} headerIcon="calendar_month" isSubmitting={isSubmitting}>
             <Form.Group>
               <Form.Label htmlFor="campus">
                 Campus

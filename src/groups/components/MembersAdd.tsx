@@ -60,7 +60,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
   }
 
   return (
-    <DisplayBox headerIcon="fas fa-user" headerText="Available Group Members" data-cy="available-group-members">
+    <DisplayBox headerIcon="person" headerText="Available Group Members" data-cy="available-group-members">
       {content}
     </DisplayBox>
   );

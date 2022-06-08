@@ -52,7 +52,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
 
   if (redirect !== "") return <Navigate to={redirect} />
   else return (
-    <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="fas fa-list" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
+    <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item md={6} xs={12}>

@@ -53,7 +53,7 @@ export function FormQuestionEdit({ questionId, formId, updatedFunction }: Props)
         isSubmitting
       }) => (
         <Form noValidate>
-          <InputBox id="questionBox" headerIcon="fas fa-question" headerText="Edit Question" saveFunction={handleSubmit} cancelFunction={updatedFunction} isSubmitting={isSubmitting} deleteFunction={(!UniqueIdHelper.isMissing(questionId)) ? handleDelete : undefined}>
+          <InputBox id="questionBox" headerIcon="help" headerText="Edit Question" saveFunction={handleSubmit} cancelFunction={updatedFunction} isSubmitting={isSubmitting} deleteFunction={(!UniqueIdHelper.isMissing(questionId)) ? handleDelete : undefined}>
             <Form.Group>
               <Form.Label htmlFor="fieldType">Question Type</Form.Label>
               <Form.Control
