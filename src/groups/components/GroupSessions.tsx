@@ -1,8 +1,7 @@
 import React from "react";
 import { ApiHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading } from ".";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
-import { Table, TableBody, TableRow, TableCell, TableHead, Icon } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, Grid } from "@mui/material"
 
 interface Props {
   group: GroupInterface,
@@ -62,8 +61,8 @@ export const GroupSessions: React.FC<Props> = (props) => {
     return result;
   }
 
-  const selectSession = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    for (let i = 0; i < sessions.length; i++) if (sessions[i].id === e.currentTarget.value) setSession(sessions[i]);
+  const selectSession = (e: SelectChangeEvent<string>) => {
+    for (let i = 0; i < sessions.length; i++) if (sessions[i].id === e.target.value) setSession(sessions[i]);
   }
 
   const getSessionOptions = () => {
@@ -75,11 +74,26 @@ export const GroupSessions: React.FC<Props> = (props) => {
   const getHeaderSection = () => {
     if (!UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit)) return null;
     else return (
+      <Grid container>
+        <Grid>
+          <FormControl style={{ width: 130, marginTop: 0 }} size="small">
+            <InputLabel>Session</InputLabel>
+            <Select fullWidth label="New Session" value={session?.id} onChange={selectSession}>
+              {getSessionOptions()}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid>
+          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>calendar_month</Icon> New</Button>
+        </Grid>
+      </Grid>
+    );
+    /*else return (
       <InputGroup>
         <FormControl as="select" value={session?.id} onChange={selectSession}>{getSessionOptions()}</FormControl>
         <InputGroup.Append><Button variant="primary" onClick={handleAdd} data-cy="create-new-session"><Icon>calendar_month</Icon> New</Button></InputGroup.Append>
       </InputGroup>
-    );
+    );*/
   }
 
   const handleSessionSelected = React.useCallback(() => {

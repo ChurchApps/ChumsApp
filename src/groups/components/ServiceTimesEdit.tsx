@@ -1,7 +1,6 @@
 import React from "react";
 import { ApiHelper, GroupInterface, GroupServiceTimeInterface, ServiceTimeInterface } from ".";
-import { InputGroup, Button, FormControl } from "react-bootstrap";
-import { Table, TableBody, TableRow, TableCell, Icon } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, MenuItem } from "@mui/material"
 
 interface Props {
   group: GroupInterface,
@@ -34,7 +33,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
 
   const getOptions = () => {
     let result: JSX.Element[] = [];
-    for (let i = 0; i < serviceTimes.length; i++) result.push(<option value={serviceTimes[i].id}>{serviceTimes[i].longName}</option>);
+    for (let i = 0; i < serviceTimes.length; i++) result.push(<MenuItem value={serviceTimes[i].id}>{serviceTimes[i].longName}</MenuItem>);
     return result;
   }
 
@@ -51,7 +50,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     ApiHelper.delete("/groupservicetimes/" + id.toString(), "AttendanceApi").then(loadData);
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => setAddServiceTimeId(e.currentTarget.value);
+  const handleChange = (e: SelectChangeEvent<string>) => setAddServiceTimeId(e.target.value);
 
   React.useEffect(() => { if (props.group.id !== undefined) loadData(); }, [props.group, loadData]);
 
@@ -59,14 +58,14 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     <div>
       <label>Service Times (optional)</label>
       <Table><TableBody>{getRows()}</TableBody></Table>
-      <InputGroup>
-        <FormControl as="select" aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange}>{getOptions()}</FormControl>
-        <InputGroup.Append>
-          <Button variant="primary" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> Add</Button>
-        </InputGroup.Append>
-      </InputGroup>
+      <FormControl fullWidth>
+        <InputLabel>Add Service Time</InputLabel>
+        <Select fullWidth label="Add Service Time" aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange} endAdornment={
+          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> Add</Button>
+        }>
+          {getOptions()}
+        </Select>
+      </FormControl>
     </div>
-
   );
 }
-

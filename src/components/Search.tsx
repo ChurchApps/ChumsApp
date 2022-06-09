@@ -1,7 +1,6 @@
 import React from "react";
 import { PersonInterface, PersonHelper } from "./";
-import { InputGroup, FormControl, Button } from "react-bootstrap";
-import { Table, TableBody, TableRow, TableCell, Icon } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, Icon, TextField, Button } from "@mui/material"
 
 interface Props {
   handleSearch: (text: string) => void,
@@ -49,24 +48,9 @@ export const Search: React.FC<Props> = (props) => {
 
   return (
     <>
-      <InputGroup>
-        <FormControl
-          id="searchInput"
-          aria-label="searchPerson"
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-        />
-        <div className="input-group-append">
-          <Button
-            id="searchButton"
-            data-cy="search-button"
-            variant="primary"
-            onClick={() => props.handleSearch(searchText)}
-          >
-            <Icon>search</Icon> Search
-          </Button>
-        </div>
-      </InputGroup>
+      <TextField fullWidth name="personAddText" label="Person" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
+        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => props.handleSearch(searchText)}>Search</Button> }}
+      />
       <Table size="small" id="searchResults">
         <TableBody>{rows}</TableBody>
       </Table>

@@ -1,9 +1,8 @@
 import React from "react";
 import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper } from "./components";
 import { useParams, Link } from "react-router-dom";
-import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Grid } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, TableHead, Grid, TextField } from "@mui/material"
 
 export const FundPage = () => {
   const params = useParams();
@@ -111,20 +110,12 @@ export const FundPage = () => {
           </Grid>
           <Grid item md={4} xs={12}>
             <InputBox headerIcon="filter_alt" headerText="Donation Filter" saveFunction={loadDonations} saveText="Filter">
-              <FormGroup>
-                <FormLabel>Start Date</FormLabel>
-                <FormControl name="startDate" type="date" data-cy="start-date" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel>End Date</FormLabel>
-                <FormControl name="endDate" type="date" data-cy="end-date" value={DateHelper.formatHtml5Date(endDate)} onChange={handleChange} />
-              </FormGroup>
+              <TextField fullWidth label="Start Date" name="startDate" type="date" data-cy="start-date" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} />
+              <TextField fullWidth label="End Date" name="endDate" type="date" data-cy="end-date" value={DateHelper.formatHtml5Date(endDate)} onChange={handleChange} />
             </InputBox>
           </Grid>
         </Grid>
       </Wrapper>
     );
   }
-
 }
-

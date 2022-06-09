@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { DisplayBox, PersonAdd, PersonInterface } from ".";
 import { ApiHelper, MemberPermissionInterface, PersonHelper } from "../../helpers";
-import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button } from "@mui/material"
 
 interface Props { formId: string }
 
@@ -65,10 +64,10 @@ export const FormMembers: React.FC<Props> = (props) => {
         <TableRow key={fm.memberId}>
           <TableCell><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></TableCell>
           <TableCell>
-            <ButtonGroup size="sm">
-              <Button variant={fm.action === "admin" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId, "admin") }}>Admin</Button>
-              <Button variant={fm.action === "view" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId, "view") }}>View Only</Button>
-            </ButtonGroup>
+            <Stack direction="row">
+              <Button variant={fm.action === "admin" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, "admin") }}>Admin</Button>
+              <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, "view") }}>View Only</Button>
+            </Stack>
           </TableCell>
           <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} className="text-danger"><Icon>person_remove</Icon> Remove</a>}</TableCell>
         </TableRow>
