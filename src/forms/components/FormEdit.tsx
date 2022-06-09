@@ -1,24 +1,20 @@
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { ApiHelper, InputBox, FormInterface, DateHelper } from ".";
-import * as yup from "yup"
-import { Formik } from "formik"
-import { Form } from "react-bootstrap"
-
-const schema = yup.object().shape({
-  name: yup.string().required("Form name is required")
-})
+import { ErrorMessages } from "../../components";
 
 interface Props { formId: string, updatedFunction: () => void }
 
-export function FormEdit({ formId, updatedFunction }: Props) {
-  const [form, setForm] = useState<FormInterface>({} as FormInterface);
+export function FormEdit(props: Props) {
+  const [form, setForm] = useState<FormInterface>({ name: "", contentType: "person" } as FormInterface);
   const [standAloneForm, setStandAloneForm] = useState<boolean>(false);
   const [showDates, setShowDates] = useState<boolean>(false);
-  const initialValues: FormInterface = { name: "", contentType: "person", ...form }
+  const [errors, setErrors] = React.useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   function loadData() {
-    if (formId) {
-      ApiHelper.get("/forms/" + formId, "MembershipApi").then((data: FormInterface) => {
+    if (props.formId) {
+      ApiHelper.get("/forms/" + props.formId, "MembershipApi").then((data: FormInterface) => {
         if (data.restricted !== undefined && data.contentType === "form")
           setStandAloneForm(true);
         else
@@ -29,127 +25,95 @@ export function FormEdit({ formId, updatedFunction }: Props) {
     }
   }
 
-  function handleSave(data: FormInterface) {
-    data.restricted = (data.restricted?.toString() === "true");
-    data.accessStartTime = showDates ? DateHelper.convertDatePickerFormat(data.accessStartTime) : null;
-    data.accessEndTime = showDates ? DateHelper.convertDatePickerFormat(data.accessEndTime) : null;
-    ApiHelper.post("/forms", [data], "MembershipApi")
-      .then(() => {
-        updatedFunction()
-      })
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+    setErrors([]);
+    const f = { ...form } as FormInterface;
+    let value = e.target.value;
+    switch (e.target.name) {
+      case "contentType": f.contentType = value; break;
+      case "restricted": f.restricted = value === "true"; break;
+      case "accessStartTime": f.accessStartTime = showDates ? DateHelper.convertToDate(value) : null; break;
+      case "accessEndTime": f.accessEndTime = showDates ? DateHelper.convertToDate(value) : null; break;
+    }
+    setForm(f);
+  }
+
+  const validate = () => {
+    const result = [];
+    if (!form.name) result.push("Form name is required.");
+    if (showDates) {
+      if (!form.accessStartTime) result.push("Start date is required.");
+      if (!form.accessEndTime) result.push("End date is required.");
+    }
+    setErrors(result);
+    return result.length === 0;
+  }
+
+  function handleSave() {
+    if (validate()) {
+      setIsSubmitting(true);
+      const f = form;
+      if (showDates) {
+        f.accessEndTime = null;
+        f.accessStartTime = null;
+      }
+
+      ApiHelper.post("/forms", [f], "MembershipApi")
+        .then(props.updatedFunction)
+        .finally(() => { setIsSubmitting(false) })
+    }
   }
 
   function handleDelete() {
     if (window.confirm("Are you sure you wish to permanently delete this form?")) {
       ApiHelper.delete("/forms/" + form.id, "MembershipApi")
-        .then(() => updatedFunction());
+        .then(() => props.updatedFunction());
     }
   }
 
-  React.useEffect(loadData, [formId]);
+  React.useEffect(loadData, [props.formId]);
 
   return (
-    <Formik
-      validationSchema={schema}
-      onSubmit={handleSave}
-      initialValues={initialValues}
-      enableReinitialize={true}
-    >
-      {({
-        handleSubmit,
-        handleChange,
-        values,
-        touched,
-        errors,
-        isSubmitting
-      }) => (
-        <Form noValidate>
-          <InputBox id="formBox" headerIcon="format_align_left" headerText="Edit Form" saveFunction={handleSubmit} isSubmitting={isSubmitting} cancelFunction={updatedFunction} deleteFunction={(formId) ? handleDelete : undefined}>
-            <Form.Group>
-              <Form.Label htmlFor="name">Form Name</Form.Label>
-              <Form.Control
-                id="name"
-                name="name"
-                type="text"
-                value={values.name}
-                onChange={handleChange}
-                isInvalid={touched.name && !!errors.name}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.name}
-              </Form.Control.Feedback>
-            </Form.Group>
-            {!formId
-              && <Form.Group>
-                <Form.Label>Associate With</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="contentType"
-                  value={values.contentType}
-                  onChange={e => {
-                    handleChange(e);
-                    if (e.currentTarget.value === "form") setStandAloneForm(true);
-                  }}
-                >
-                  <option value="person">People</option>
-                  <option value="form">Stand Alone</option>
-                </Form.Control>
-              </Form.Group>
-            }
-            {standAloneForm
-              && <>
-                <Form.Group>
-                  <Form.Label>Form Access</Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="restricted"
-                    value={values.restricted?.toString() || "false"}
-                    onChange={handleChange}
-                  >
-                    <option value="false">Public</option>
-                    <option value="true">Restricted</option>
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                  <Form.Check
-                    type="checkbox"
-                    checked={showDates}
-                    name="limit"
-                    label="Set Form Availability Timeframe"
-                    onChange={(e: React.FormEvent<HTMLInputElement>) => setShowDates(e.currentTarget.checked)}
-                  />
-                </Form.Group>
-              </>
-            }
-            {showDates
-              && <>
-                <Form.Group>
-                  <Form.Label>Availability Start Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="accessStartTime"
-                    max={DateHelper.formatHtml5Date(values.accessEndTime)}
-                    value={DateHelper.formatHtml5Date(values.accessStartTime)}
-                    onChange={handleChange}
-                  >
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Availability End Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="accessEndTime"
-                    min={new Date(values.accessStartTime) > new Date() ? DateHelper.formatHtml5Date(values.accessStartTime) : DateHelper.formatHtml5Date(new Date())}
-                    value={DateHelper.formatHtml5Date(values.accessEndTime)}
-                    onChange={handleChange}
-                  >
-                  </Form.Control>
-                </Form.Group>
-              </>
-            }
-          </InputBox>
-        </Form>
-      )}
-    </Formik>
+    <InputBox id="formBox" headerIcon="format_align_left" headerText="Edit Form" saveFunction={handleSave} isSubmitting={isSubmitting} cancelFunction={props.updatedFunction} deleteFunction={(props.formId) ? handleDelete : undefined}>
+      <ErrorMessages errors={errors} />
+      <TextField fullWidth={true} label="Form Name" type="text" name="name" value={form.name} onChange={handleChange} />
+      {!props.formId
+        && <FormControl fullWidth>
+          <InputLabel>Associate With</InputLabel>
+          <Select name="contentType" value={form.contentType} onChange={e => { handleChange(e); if (e.target.value === "form") setStandAloneForm(true); }}>
+            <MenuItem value="person">People</MenuItem>
+            <MenuItem value="form">Stand Alone</MenuItem>
+          </Select>
+        </FormControl>
+      }
+      {standAloneForm
+        && <>
+          <FormControl fullWidth>
+            <InputLabel>Form Access</InputLabel>
+            <Select name="restricted" value={form?.restricted?.toString()} onChange={handleChange}>
+              <MenuItem value="false">Public</MenuItem>
+              <MenuItem value="true">Restricted</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel>Set Form Availability Timeframe</InputLabel>
+            <Select name="limit" value={showDates.toString()} onChange={e => { setShowDates(e.target.value === "true") }}>
+              <MenuItem value="false">No</MenuItem>
+              <MenuItem value="true">Yes</MenuItem>
+            </Select>
+          </FormControl>
+        </>
+      }
+      {showDates
+        && <>
+          <TextField fullWidth={true} type="date" label="Availability Start Date" name="accessStartTime" value={DateHelper.formatHtml5Date(form.accessStartTime)} onChange={handleChange}
+            InputProps={{ inputProps: { max: DateHelper.formatHtml5Date(form.accessEndTime) } }}
+          />
+          <TextField fullWidth={true} type="date" label="Availability End Date" name="accessEndTime" value={DateHelper.formatHtml5Date(form.accessEndTime)} onChange={handleChange}
+            InputProps={{ inputProps: { min: DateHelper.formatHtml5Date(form.accessStartTime) } }}
+          />
+        </>
+      }
+    </InputBox>
   );
 }
