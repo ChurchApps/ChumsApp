@@ -1,9 +1,8 @@
 import React from "react";
 import { PersonHelper, PersonInterface, DisplayBox, ApiHelper } from ".";
-import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition } from "../../components";
 import { EditCondition } from "./EditCondition";
-import { Icon } from "@mui/material";
+import { Button, Icon, IconButton, InputAdornment, OutlinedInput, TextField, FormControl } from "@mui/material";
 
 interface Props {
   updateSearchResults: (people: PersonInterface[]) => void
@@ -57,12 +56,16 @@ export function PeopleSearch(props: Props) {
 
   }
 
-  const getSimpleSearch = () => (<DisplayBox headerIcon="person" headerText="Simple Search" editContent={<a href="about:blank" onClick={toggleAdvanced}>Advanced</a>}>
-    <InputGroup>
-      <FormControl id="searchText" aria-label="searchBox" name="searchText" type="text" placeholder="Name" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} />
-      <InputGroup.Append><Button id="searchButton" variant="primary" onClick={handleSubmit}>Search</Button></InputGroup.Append>
-    </InputGroup>
-  </DisplayBox>)
+
+  const getSimpleSearch = () => {
+    return (<DisplayBox headerIcon="person" headerText="Simple Search" editContent={<a href="about:blank" onClick={toggleAdvanced}>Advanced</a>}>
+      <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
+        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label="Name" value={searchText} onChange={handleChange}
+          endAdornment={<Button variant="contained">Search</Button>}
+        />
+      </FormControl>
+    </DisplayBox >);
+  }
 
   const getAddCondition = () => {
     if (showAddCondition) return <EditCondition conditionAdded={(condition) => { const c = [...conditions]; c.push(condition); setConditions(c); setShowAddCondition(false) }} />

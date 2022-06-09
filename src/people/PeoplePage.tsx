@@ -49,9 +49,8 @@ export const PeoplePage = () => {
   const getEditContent = () => {
     if (searchResults == null) return <></>;
     else return (<>
-      <PeopleColumns selectedColumns={selectedColumns} toggleColumn={handleToggleColumn} columns={columns} />
-
       <ExportLink data={searchResults} filename="people.csv" /> &nbsp;
+      <PeopleColumns selectedColumns={selectedColumns} toggleColumn={handleToggleColumn} columns={columns} />
     </>);
   }
 
