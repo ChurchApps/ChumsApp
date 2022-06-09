@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup, Table } from "react-bootstrap";
+import { Button, ButtonGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { DisplayBox, PersonAdd, PersonInterface } from ".";
 import { ApiHelper, MemberPermissionInterface, PersonHelper } from "../../helpers";
-import { Grid, Icon } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material"
 
 interface Props { formId: string }
 
@@ -62,16 +62,16 @@ export const FormMembers: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
     formMembers.forEach(fm => {
       rows.push(
-        <tr key={fm.memberId}>
-          <td><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></td>
-          <td>
+        <TableRow key={fm.memberId}>
+          <TableCell><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></TableCell>
+          <TableCell>
             <ButtonGroup size="sm">
               <Button variant={fm.action === "admin" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId, "admin") }}>Admin</Button>
               <Button variant={fm.action === "view" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId, "view") }}>View Only</Button>
             </ButtonGroup>
-          </td>
-          <td>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} className="text-danger"><Icon>person_remove</Icon> Remove</a>}</td>
-        </tr>
+          </TableCell>
+          <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} className="text-danger"><Icon>person_remove</Icon> Remove</a>}</TableCell>
+        </TableRow>
       );
     });
     return rows;
@@ -79,14 +79,14 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<tr key="header"><th>Name</th><th>Permission</th><th>Action</th></tr>);
+    rows.push(<TableRow key="header"><th>Name</th><th>Permission</th><th>Action</th></TableRow>);
     return rows;
   }
 
   const getTable = () => (
     <Table id="formMembersTable">
-      <thead>{getTableHeader()}</thead>
-      <tbody>{getRows()}</tbody>
+      <TableHead>{getTableHeader()}</TableHead>
+      <TableBody>{getRows()}</TableBody>
     </Table>
   );
 

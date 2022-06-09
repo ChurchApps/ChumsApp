@@ -1,10 +1,8 @@
 import React from "react";
 import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit, ServiceEdit, ServiceInterface, ServiceTimeEdit, ServiceTimeInterface, Tabs, GroupServiceTimeInterface, GroupInterface, ArrayHelper, Loading } from "./components";
-
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
-import { Grid, Icon } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
@@ -41,7 +39,7 @@ export const AttendancePage = () => {
     const rows: JSX.Element[] = [];
 
     if (attendance.length === 0) {
-      rows.push(<tr key="0"><td>Group attendance will show up once sessions have been added to a group and people have attended those sessions.</td></tr>);
+      rows.push(<TableRow key="0"><TableCell>Group attendance will show up once sessions have been added to a group and people have attended those sessions.</TableCell></TableRow>);
       return rows;
     }
 
@@ -62,7 +60,7 @@ export const AttendancePage = () => {
     let categoryHtml = (group === undefined || group?.categoryName === lastCategory) ? <></> : <><Icon>folder</Icon>{group.categoryName}</>
     let groupHtml = (group === undefined) ? <></> : <><Icon>list</Icon><Link to={"/groups/" + group.id}>{group.name}</Link></>
 
-    const result = (<tr key={key}><td>{campusHtml}</td><td>{serviceHtml}</td><td>{serviceTimeHtml}</td><td>{categoryHtml}</td><td>{groupHtml}</td></tr>)
+    const result = (<TableRow key={key}><TableCell>{campusHtml}</TableCell><TableCell>{serviceHtml}</TableCell><TableCell>{serviceTimeHtml}</TableCell><TableCell>{categoryHtml}</TableCell><TableCell>{groupHtml}</TableCell></TableRow>)
 
     lastCampus = campus?.name;
     lastService = service?.name;
@@ -106,15 +104,15 @@ export const AttendancePage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (attendance.length === 0) return rows;
-    rows.push(<tr key="header"><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></tr>);
+    rows.push(<TableRow key="header"><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></TableRow>);
     return rows;
   }
 
   const getTable = () => {
     if (!attendance) return <Loading />
-    else return (<Table size="sm">
-      <thead>{getTableHeader()}</thead>
-      <tbody>{getRows()}</tbody>
+    else return (<Table size="small">
+      <TableHead>{getTableHeader()}</TableHead>
+      <TableBody>{getRows()}</TableBody>
     </Table>);
   }
 

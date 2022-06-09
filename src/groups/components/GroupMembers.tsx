@@ -1,8 +1,7 @@
 import React, { useRef, useState } from "react";
 import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading } from ".";
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
-import { Icon } from "@mui/material";
+import { Icon, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 interface Props {
   group: GroupInterface,
@@ -56,7 +55,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
 
     if (groupMembers.length === 0) {
-      rows.push(<tr key="0"><td>No group members found.</td></tr>)
+      rows.push(<TableRow key="0"><TableCell>No group members found.</TableCell></TableRow>)
       return rows;
     }
 
@@ -64,11 +63,11 @@ export const GroupMembers: React.FC<Props> = (props) => {
       let gm = groupMembers[i];
       let editLink = (canEdit) ? <a href="about:blank" onClick={handleRemove} data-index={i} data-cy={`remove-member-${i}`} className="text-danger"><Icon>person_remove</Icon> Remove</a> : <></>
       rows.push(
-        <tr key={i}>
-          <td><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></td>
-          <td><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></td>
-          <td>{editLink}</td>
-        </tr>
+        <TableRow key={i}>
+          <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
+          <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
+          <TableCell>{editLink}</TableCell>
+        </TableRow>
       );
     }
     return rows;
@@ -80,7 +79,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
       return rows;
     }
 
-    rows.push(<tr key="header"><th></th><th>Name</th><th>Action</th></tr>);
+    rows.push(<TableRow key="header"><th></th><th>Name</th><th>Action</th></TableRow>);
     return rows;
   }
 
@@ -99,8 +98,8 @@ export const GroupMembers: React.FC<Props> = (props) => {
   const getTable = () => {
     if (isLoading) return <Loading />
     else return (<Table id="groupMemberTable">
-      <thead>{getTableHeader()}</thead>
-      <tbody>{getRows()}</tbody>
+      <TableHead>{getTableHeader()}</TableHead>
+      <TableBody>{getRows()}</TableBody>
     </Table>);
   }
 

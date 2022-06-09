@@ -1,8 +1,7 @@
 import React from "react";
 import { ApiHelper, UserHelper, DonationInterface, DateHelper, CurrencyHelper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading } from ".";
-import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
-import { Icon } from "@mui/material";
+import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 interface Props { batch: DonationBatchInterface, funds: FundInterface[], addFunction: () => void, editFunction: (id: string) => void }
 
@@ -35,24 +34,24 @@ export const Donations: React.FC<Props> = (props) => {
   const getRows = () => {
     let rows: React.ReactNode[] = [];
     if (props.funds.length === 0) {
-      rows.push(<tr key="0" data-cy="error-message">No fund found. Please create a fund before making a donation</tr>)
+      rows.push(<TableRow key="0" data-cy="error-message">No fund found. Please create a fund before making a donation</TableRow>)
       return rows;
     }
     if (donations.length === 0) {
-      rows.push(<tr key="0">No donations have been tracked. Once donations are entered they will show up here.</tr>)
+      rows.push(<TableRow key="0">No donations have been tracked. Once donations are entered they will show up here.</TableRow>)
       return rows;
     }
-    rows.push(<tr><th>Id</th><th>Name</th><th>Date</th><th>Amount</th></tr>);
+    rows.push(<TableRow><th>Id</th><th>Name</th><th>Date</th><th>Amount</th></TableRow>);
     let canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
     for (let i = 0; i < donations.length; i++) {
       let d = donations[i];
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-link-${i}`} onClick={showEditDonation} data-id={d.id}>{d.id}</a>) : (<>{d.id}</>);
-      rows.push(<tr key={i}>
-        <td>{editLink}</td>
-        <td>{d.person?.name.display || "Anonymous"}</td>
-        <td>{DateHelper.formatHtml5Date(d.donationDate)}</td>
-        <td>{CurrencyHelper.formatCurrency(d.amount)}</td>
-      </tr>);
+      rows.push(<TableRow key={i}>
+        <TableCell>{editLink}</TableCell>
+        <TableCell>{d.person?.name.display || "Anonymous"}</TableCell>
+        <TableCell>{DateHelper.formatHtml5Date(d.donationDate)}</TableCell>
+        <TableCell>{CurrencyHelper.formatCurrency(d.amount)}</TableCell>
+      </TableRow>);
     }
     return rows;
   }
@@ -62,9 +61,9 @@ export const Donations: React.FC<Props> = (props) => {
   let content = <Loading />
   if (donations) {
     content = (<Table>
-      <tbody>
+      <TableBody>
         {getRows()}
-      </tbody>
+      </TableBody>
     </Table>);
   }
 

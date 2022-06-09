@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PersonHelper, PersonInterface, Loading, CreatePerson } from ".";
-import { Table } from "react-bootstrap";
+import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material"
 
 interface Props {
   people: PersonInterface[],
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function PeopleSearchResults(props: Props) {
-  let {people, columns, selectedColumns} = props;
+  let { people, columns, selectedColumns } = props;
 
   const [sortDirection, setSortDirection] = useState<boolean | null>(null)
   const [currentSortedCol, setCurrentSortedCol] = useState<string>("")
@@ -19,7 +19,7 @@ export function PeopleSearchResults(props: Props) {
     const result: JSX.Element[] = [];
     columns.forEach(c => {
       if (selectedColumns.indexOf(c.key) > -1) {
-        result.push(<td key={c.key}>{getColumn(p, c.key)}</td>);
+        result.push(<TableCell key={c.key}>{getColumn(p, c.key)}</TableCell>);
       }
     })
     return result;
@@ -53,18 +53,18 @@ export function PeopleSearchResults(props: Props) {
   }
 
   const sortTableByKey = (key: string, asc: boolean | null) => {
-    if(asc === null) asc = false;
+    if (asc === null) asc = false;
     setCurrentSortedCol(key)
     setSortDirection(!asc) //set sort direction for next time
-    people = people.sort(function(a: any, b: any) {
-      if(a[key] === null) return Infinity; // if value is null push to the end of array
+    people = people.sort(function (a: any, b: any) {
+      if (a[key] === null) return Infinity; // if value is null push to the end of array
 
-      if(typeof a[key].getMonth === "function"){
+      if (typeof a[key].getMonth === "function") {
         return asc ? (a[key].getTime() - b[key].getTime()) : (b[key].getTime() - a[key].getTime());
       }
 
       const parsedNum = parseInt(a[key]);
-      if (!isNaN(parsedNum)) { return asc ? (a[key] - b[key]) : (b[key] - a[key]);}
+      if (!isNaN(parsedNum)) { return asc ? (a[key] - b[key]) : (b[key] - a[key]); }
 
       const valA = a[key].toUpperCase();
       const valB = b[key].toUpperCase();
@@ -81,9 +81,9 @@ export function PeopleSearchResults(props: Props) {
 
   const getRows = () => {
     const result: JSX.Element[] = people?.map(p => (
-      <tr key={p.id}>
+      <TableRow key={p.id}>
         {getColumns(p)}
-      </tr>
+      </TableRow>
     ));
     return result;
   }
@@ -105,14 +105,14 @@ export function PeopleSearchResults(props: Props) {
       }
     })
 
-    return <thead><tr>{result}</tr></thead>;
+    return <TableHead><TableRow>{result}</TableRow></TableHead>;
   }
 
   const getResults = () => {
     if (people.length === 0) return <p>No results found.  Please search for a different name or add a new person</p>
     else return (<Table id="peopleTable">
       {getHeaders()}
-      <tbody>{getRows()}</tbody>
+      <TableBody>{getRows()}</TableBody>
     </Table>);
   }
 

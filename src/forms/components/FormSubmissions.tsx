@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { AnswerInterface, ApiHelper, DateHelper, DisplayBox, ExportLink, FormSubmissionInterface, MemberPermissionInterface, PersonInterface, QuestionInterface } from ".";
-import { Table, Card, ListGroup } from "react-bootstrap";
+import { Card, ListGroup } from "react-bootstrap";
 import { useReactToPrint } from "react-to-print";
-import { Grid, Icon } from "@mui/material";
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 
 interface Props { formId: string, memberPermissions: MemberPermissionInterface };
 
@@ -115,11 +115,11 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   const getTableRows = () => {
     let rows: JSX.Element[] = [];
     formSubmissions.forEach((submission: any, i: number) => {
-      rows.push(<tr key={i}>
-        <td key="personName"><a href={"/people/" + submission.person.id}>{submission.person.name}</a></td>
-        <td key="subDate">{DateHelper.prettyDate(new Date(submission.submissionDate))}</td>
+      rows.push(<TableRow key={i}>
+        <TableCell key="personName"><a href={"/people/" + submission.person.id}>{submission.person.name}</a></TableCell>
+        <TableCell key="subDate">{DateHelper.prettyDate(new Date(submission.submissionDate))}</TableCell>
         {getAnswers(submission)}
-      </tr>);
+      </TableRow>);
     });
     return rows;
   }
@@ -128,15 +128,15 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
     formSubmission.questions.forEach((question: QuestionInterface) => {
       let answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id);
-      rows.push(<td key={question.id}>{answer?.value || "-"}</td>);
+      rows.push(<TableCell key={question.id}>{answer?.value || "-"}</TableCell>);
     });
     return rows;
   }
 
   const getFormSubmissions = () => (
     <Table className="table-scroll-x">
-      <thead><tr key="header">{getTableHeader()}</tr></thead>
-      <tbody>{getTableRows()}</tbody>
+      <TableHead><TableRow key="header">{getTableHeader()}</TableRow></TableHead>
+      <TableBody>{getTableRows()}</TableBody>
     </Table>
   );
 

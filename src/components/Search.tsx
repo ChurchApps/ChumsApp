@@ -1,7 +1,7 @@
 import React from "react";
 import { PersonInterface, PersonHelper } from "./";
-import { InputGroup, FormControl, Button, Table } from "react-bootstrap";
-import { Icon } from "@mui/material";
+import { InputGroup, FormControl, Button } from "react-bootstrap";
+import { Table, TableBody, TableRow, TableCell, Icon } from "@mui/material"
 
 interface Props {
   handleSearch: (text: string) => void,
@@ -27,19 +27,19 @@ export const Search: React.FC<Props> = (props) => {
 
   const createRows = () => {
     const tableRows = props.searchResults?.map((person, index) => (
-      <tr key={person.id}>
-        <td>
+      <TableRow key={person.id}>
+        <TableCell>
           <img src={PersonHelper.getPhotoUrl(person)} alt="avatar" />
-        </td>
-        <td>{person.name.display}</td>
-        <td>
+        </TableCell>
+        <TableCell>{person.name.display}</TableCell>
+        <TableCell>
           <button className="text-success no-default-style" onClick={() => {
             props.handleClickAction(person.id);
           }}>
             <Icon>person</Icon> {props.buttonText}
           </button>
-        </td>
-      </tr>
+        </TableCell>
+      </TableRow>
     ));
 
     setRows(tableRows);
@@ -67,8 +67,8 @@ export const Search: React.FC<Props> = (props) => {
           </Button>
         </div>
       </InputGroup>
-      <Table size="sm" id="searchResults">
-        <tbody>{rows}</tbody>
+      <Table size="small" id="searchResults">
+        <TableBody>{rows}</TableBody>
       </Table>
     </>
   );

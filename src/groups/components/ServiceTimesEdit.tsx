@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, GroupInterface, GroupServiceTimeInterface, ServiceTimeInterface } from ".";
-import { Table, InputGroup, Button, FormControl } from "react-bootstrap";
-import { Icon } from "@mui/material";
+import { InputGroup, Button, FormControl } from "react-bootstrap";
+import { Table, TableBody, TableRow, TableCell, Icon } from "@mui/material"
 
 interface Props {
   group: GroupInterface,
@@ -27,7 +27,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     let result: JSX.Element[] = [];
     for (let i = 0; i < groupServiceTimes.length; i++) {
       let gst = groupServiceTimes[i];
-      result.push(<tr key={gst.id}><td><Icon>schedule</Icon> {gst.serviceTime.name}</td><td><a href="about:blank" className="text-danger" data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> Remove</a></td></tr>);
+      result.push(<TableRow key={gst.id}><TableCell><Icon>schedule</Icon> {gst.serviceTime.name}</TableCell><TableCell><a href="about:blank" className="text-danger" data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> Remove</a></TableCell></TableRow>);
     }
     return result;
   }
@@ -58,7 +58,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
   return (
     <div>
       <label>Service Times (optional)</label>
-      <Table><tbody>{getRows()}</tbody></Table>
+      <Table><TableBody>{getRows()}</TableBody></Table>
       <InputGroup>
         <FormControl as="select" aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange}>{getOptions()}</FormControl>
         <InputGroup.Append>

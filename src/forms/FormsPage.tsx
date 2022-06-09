@@ -1,9 +1,8 @@
 import React, { useRef } from "react";
 import { ApiHelper, DisplayBox, FormInterface, FormEdit, UserHelper, Permissions, Loading, EnvironmentHelper } from "./components"
 import { Link } from "react-router-dom"
-import { Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
-import { Grid, Icon } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const FormsPage = () => {
   const [forms, setForms] = React.useState<FormInterface[]>(null);
@@ -21,7 +20,7 @@ export const FormsPage = () => {
   const getRows = () => {
     let result: JSX.Element[] = [];
     if (!forms.length) {
-      result.push(<tr key="0"><td>No custom forms have been created yet. They will appear here when added.</td></tr>);
+      result.push(<TableRow key="0"><TableCell>No custom forms have been created yet. They will appear here when added.</TableCell></TableRow>);
       return result;
     }
 
@@ -37,12 +36,12 @@ export const FormsPage = () => {
       const formLink = (form.contentType === "form") ? <a href={formUrl}>{formUrl}</a> : null;
       const archiveLink = (canEdit && selectedTab === "forms") ? (<button aria-label="archiveForm" className="no-default-style" onClick={() => { handleArchiveChange(form, true); }}><Icon>delete</Icon></button>) : null;
       const unarchiveLink = (canEdit && selectedTab === "archived") ? (<button className="no-default-style" onClick={() => { handleArchiveChange(form, false); }}><Icon>undo</Icon></button>) : null;
-      result.push(<tr key={form.id}>
-        <td><Icon>format_align_left</Icon> <Link to={"/forms/" + form.id}>{form.name}</Link></td>
-        <td>{formLink}</td>
-        <td>{archiveLink || unarchiveLink}</td>
-        <td>{editLink}</td>
-      </tr>);
+      result.push(<TableRow key={form.id}>
+        <TableCell><Icon>format_align_left</Icon> <Link to={"/forms/" + form.id}>{form.name}</Link></TableCell>
+        <TableCell>{formLink}</TableCell>
+        <TableCell>{archiveLink || unarchiveLink}</TableCell>
+        <TableCell>{editLink}</TableCell>
+      </TableRow>);
     });
     return result;
   }
@@ -57,7 +56,7 @@ export const FormsPage = () => {
   const getArchivedRows = () => {
     let result: JSX.Element[] = [];
     if (!archivedForms.length) {
-      result.push(<tr key="0"><td>No archived forms.</td></tr>);
+      result.push(<TableRow key="0"><TableCell>No archived forms.</TableCell></TableRow>);
       return result;
     }
     return getRows();
@@ -68,7 +67,7 @@ export const FormsPage = () => {
     if (forms.length === 0) {
       return rows;
     }
-    rows.push(<tr key="header"><th colSpan={4}>Name</th></tr>);
+    rows.push(<TableRow key="header"><th colSpan={4}>Name</th></TableRow>);
     return rows;
   }
 
@@ -93,8 +92,8 @@ export const FormsPage = () => {
     let contents = <Loading />
     if (forms && archivedForms) {
       contents = (<Table>
-        <thead>{getTableHeader()}</thead>
-        <tbody>{selectedTab === "forms" ? getRows() : getArchivedRows()}</tbody>
+        <TableHead>{getTableHeader()}</TableHead>
+        <TableBody>{selectedTab === "forms" ? getRows() : getArchivedRows()}</TableBody>
       </Table>);
     }
     return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { PersonHelper, AssociatedForms, PersonInterface, Loading, DisplayBox } from "."
-import { Grid, Icon } from "@mui/material";
+import { Grid, Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 
 interface Props {
   id?: string,
@@ -28,11 +28,11 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
 
         let homeLabel = "Home";
         if (p.contactInfo.email) {
-          contactMethods.push(<tr key="email"><td><label>{homeLabel}</label></td><td><Icon>mail</Icon></td><td><a href={"mailto:" + p.contactInfo.email}>{p.contactInfo.email}</a></td></tr>);
+          contactMethods.push(<TableRow key="email"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>mail</Icon></TableCell><TableCell><a href={"mailto:" + p.contactInfo.email}>{p.contactInfo.email}</a></TableCell></TableRow>);
           homeLabel = "";
         }
         if (p.contactInfo.homePhone) {
-          contactMethods.push(<tr key="homePhone"><td><label>{homeLabel}</label></td><td><Icon>call</Icon></td><td>{p.contactInfo.homePhone}</td></tr>);
+          contactMethods.push(<TableRow key="homePhone"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell>{p.contactInfo.homePhone}</TableCell></TableRow>);
           homeLabel = "";
         }
 
@@ -42,10 +42,10 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
           if (p.contactInfo.address2) lines.push(<div key="address2">{p.contactInfo.address2}</div>);
           lines.push(<div key="contactInfo">{p.contactInfo.city}, {p.contactInfo.state} {p.contactInfo.zip}</div>);
 
-          contactMethods.push(<tr key="address"><td><label>{homeLabel}</label></td><td><Icon>home_pin</Icon></td><td>{lines}</td></tr>);
+          contactMethods.push(<TableRow key="address"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>home_pin</Icon></TableCell><TableCell>{lines}</TableCell></TableRow>);
         }
-        if (p.contactInfo.mobilePhone) contactMethods.push(<tr key="mobilePHone"><td><label>Mobile</label></td><td><Icon>phone_iphone</Icon></td><td>{p.contactInfo.mobilePhone}</td></tr>);
-        if (p.contactInfo.workPhone) contactMethods.push(<tr key="workPhone"><td><label>Work</label></td><td><Icon>call</Icon></td><td>{p.contactInfo.workPhone}</td></tr>);
+        if (p.contactInfo.mobilePhone) contactMethods.push(<TableRow key="mobilePHone"><TableCell><label>Mobile</label></TableCell><TableCell><Icon>phone_iphone</Icon></TableCell><TableCell>{p.contactInfo.mobilePhone}</TableCell></TableRow>);
+        if (p.contactInfo.workPhone) contactMethods.push(<TableRow key="workPhone"><TableCell><label>Work</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell>{p.contactInfo.workPhone}</TableCell></TableRow>);
       }
 
       return (<Grid container spacing={3}>
@@ -56,7 +56,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
           <h2>{person?.name.display}</h2>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>{leftAttributes}</Grid>
-            <Grid item md={6} xs={12}><table className="contactTable"><tbody>{contactMethods}</tbody></table></Grid>
+            <Grid item md={6} xs={12}><Table className="contactTable"><TableBody>{contactMethods}</TableBody></Table></Grid>
           </Grid>
         </Grid>
       </Grid>);
@@ -64,10 +64,8 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
   }
 
   return (
-    <>
-      <DisplayBox headerText="Person Details" editFunction={editFunction} footerContent={<AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />}  >
-        {getFields()}
-      </DisplayBox>
-    </>
+    <DisplayBox headerText="Person Details" editFunction={editFunction} footerContent={<AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />}>
+      {getFields()}
+    </DisplayBox>
   )
 }

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
-import { Grid, Icon } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
@@ -36,7 +35,7 @@ export const GroupsPage = () => {
     let rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
-      rows.push(<tr key="0"><td>No groups found. Please create a group.</td></tr>);
+      rows.push(<TableRow key="0"><TableCell>No groups found. Please create a group.</TableCell></TableRow>);
       return rows;
     }
 
@@ -46,14 +45,14 @@ export const GroupsPage = () => {
       let cat = (g.categoryName !== lastCat) ? <><Icon>folder</Icon> {g.categoryName}</> : <></>
       let memberCount = g.memberCount === 1 ? "1 person" : g.memberCount.toString() + " people";
       rows.push(
-        <tr key={g.id}>
-          <td>{cat}</td>
-          <td>
+        <TableRow key={g.id}>
+          <TableCell>{cat}</TableCell>
+          <TableCell>
             <Icon>group</Icon>{" "}
             <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
-          </td>
-          <td>{memberCount}</td>
-        </tr>
+          </TableCell>
+          <TableCell>{memberCount}</TableCell>
+        </TableRow>
       );
       lastCat = g.categoryName;
     }
@@ -63,7 +62,7 @@ export const GroupsPage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<tr key="header"><th>Category</th><th>Name</th><th>People</th></tr>);
+    rows.push(<TableRow key="header"><th>Category</th><th>Name</th><th>People</th></TableRow>);
     return rows;
   }
 
@@ -72,8 +71,8 @@ export const GroupsPage = () => {
   const getTable = () => {
     if (isLoading) return <Loading />
     else return (<Table>
-      <thead>{getTableHeader()}</thead>
-      <tbody>{getRows()}</tbody>
+      <TableHead>{getTableHeader()}</TableHead>
+      <TableBody>{getRows()}</TableBody>
     </Table>);
   }
 

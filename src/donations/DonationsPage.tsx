@@ -1,10 +1,9 @@
 import React from "react";
 import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, Permissions, Loading, DonationEvents, CurrencyHelper } from "./components";
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
 import { Wrapper } from "../components/Wrapper";
-import { Grid, Icon } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
@@ -37,7 +36,7 @@ export const DonationsPage = () => {
     const result: JSX.Element[] = [];
 
     if (batches.length === 0) {
-      result.push(<tr key="0">No batches found.</tr>)
+      result.push(<TableRow key="0">No batches found.</TableRow>)
       return result;
     }
 
@@ -47,14 +46,14 @@ export const DonationsPage = () => {
       let b = batches[i];
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch}><Icon>edit</Icon></a>) : null;
       const batchLink = (canViewBatcht) ? (<Link to={"/donations/" + b.id}>{b.id}</Link>) : <>{b.id}</>;
-      result.push(<tr key={i}>
-        <td>{batchLink}</td>
-        <td>{b.name}</td>
-        <td>{DateHelper.prettyDate(new Date(b.batchDate))}</td>
-        <td>{b.donationCount}</td>
-        <td>{CurrencyHelper.formatCurrency(b.totalAmount)}</td>
-        <td>{editLink}</td>
-      </tr>);
+      result.push(<TableRow key={i}>
+        <TableCell>{batchLink}</TableCell>
+        <TableCell>{b.name}</TableCell>
+        <TableCell>{DateHelper.prettyDate(new Date(b.batchDate))}</TableCell>
+        <TableCell>{b.donationCount}</TableCell>
+        <TableCell>{CurrencyHelper.formatCurrency(b.totalAmount)}</TableCell>
+        <TableCell>{editLink}</TableCell>
+      </TableRow>);
     }
     return result;
   }
@@ -66,7 +65,7 @@ export const DonationsPage = () => {
       return rows;
     }
 
-    rows.push(<tr key="header"><th>Id</th><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></tr>);
+    rows.push(<TableRow key="header"><th>Id</th><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></TableRow>);
     return rows;
   }
 
@@ -75,8 +74,8 @@ export const DonationsPage = () => {
   const getTable = () => {
     if (!batches) return <Loading />
     else return (<Table>
-      <thead>{getTableHeader()}</thead>
-      <tbody>{getRows()}</tbody>
+      <TableHead>{getTableHeader()}</TableHead>
+      <TableBody>{getRows()}</TableBody>
     </Table>);
   }
 

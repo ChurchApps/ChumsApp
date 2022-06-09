@@ -1,8 +1,8 @@
 import React from "react";
 import { ApiHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading } from ".";
-import { Table, Button, InputGroup, FormControl } from "react-bootstrap";
+import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
-import { Icon } from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, TableHead, Icon } from "@mui/material"
 
 interface Props {
   group: GroupInterface,
@@ -51,11 +51,11 @@ export const GroupSessions: React.FC<Props> = (props) => {
       let person = ArrayHelper.getOne(people, "id", vs.visit.personId);
       if (person) {
         result.push(
-          <tr key={vs.id}>
-            <td><img className="personPhoto" src={PersonHelper.getPhotoUrl(person)} alt="avatar" /></td>
-            <td><a className="personName" href={"/people/person.aspx?id=" + vs.visit.personId}>{person?.name?.display}</a></td>
-            <td>{editLink}</td>
-          </tr>
+          <TableRow key={vs.id}>
+            <TableCell><img className="personPhoto" src={PersonHelper.getPhotoUrl(person)} alt="avatar" /></TableCell>
+            <TableCell><a className="personName" href={"/people/person.aspx?id=" + vs.visit.personId}>{person?.name?.display}</a></TableCell>
+            <TableCell>{editLink}</TableCell>
+          </TableRow>
         );
       }
     }
@@ -108,8 +108,8 @@ export const GroupSessions: React.FC<Props> = (props) => {
       <span className="float-right"><ExportLink data={visitSessions} spaceAfter={true} filename="visits.csv" /></span>
       <b data-cy="session-present-msg">Attendance for {props.group.name}</b>
       <Table id="groupMemberTable">
-        <thead><tr><th></th><th>Name</th><th></th></tr></thead>
-        <tbody>{getRows()}</tbody>
+        <TableHead><TableRow><th></th><th>Name</th><th></th></TableRow></TableHead>
+        <TableBody>{getRows()}</TableBody>
       </Table>
     </>);
   }

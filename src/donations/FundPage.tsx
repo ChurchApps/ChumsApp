@@ -1,9 +1,9 @@
 import React from "react";
 import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper } from "./components";
 import { useParams, Link } from "react-router-dom";
-import { FormGroup, FormControl, FormLabel, Table } from "react-bootstrap";
+import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { Wrapper } from "../components/Wrapper";
-import { Grid } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, TableHead, Grid } from "@mui/material"
 
 export const FundPage = () => {
   const params = useParams();
@@ -58,21 +58,21 @@ export const FundPage = () => {
     let result: JSX.Element[] = [];
 
     if (fundDonations.length === 0) {
-      result.push(<tr key="0">No donations yet</tr>);
+      result.push(<TableRow key="0">No donations yet</TableRow>);
       return result;
     }
 
     for (let i = 0; i < fundDonations.length; i++) {
       let fd = fundDonations[i];
       let personCol = (UniqueIdHelper.isMissing(fd.donation?.personId))
-        ? (<td>Anonymous</td>)
-        : (<td><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || "Anonymous"}</Link></td>);
-      result.push(<tr key={i}>
-        <td>{DateHelper.formatHtml5Date(fd.donation.donationDate)}</td>
-        <td><Link data-cy={`batchId-${fd.donation.batchId}-${i}`} to={"/donations/" + fd.donation.batchId}>{fd.donation.batchId}</Link></td>
+        ? (<TableCell>Anonymous</TableCell>)
+        : (<TableCell><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || "Anonymous"}</Link></TableCell>);
+      result.push(<TableRow key={i}>
+        <TableCell>{DateHelper.formatHtml5Date(fd.donation.donationDate)}</TableCell>
+        <TableCell><Link data-cy={`batchId-${fd.donation.batchId}-${i}`} to={"/donations/" + fd.donation.batchId}>{fd.donation.batchId}</Link></TableCell>
         {personCol}
-        <td>{CurrencyHelper.formatCurrency(fd.amount)}</td>
-      </tr>);
+        <TableCell>{CurrencyHelper.formatCurrency(fd.amount)}</TableCell>
+      </TableRow>);
 
     }
     return result;
@@ -85,7 +85,7 @@ export const FundPage = () => {
       return rows;
     }
 
-    rows.push(<tr key="header"><th>Date</th><th>Batch</th><th>Donor</th><th>Amount</th></tr>);
+    rows.push(<TableRow key="header"><th>Date</th><th>Batch</th><th>Donor</th><th>Amount</th></TableRow>);
     return rows;
   }
 
@@ -96,8 +96,8 @@ export const FundPage = () => {
     let contents = <Loading />
     if (fundDonations) {
       contents = (<Table>
-        <thead>{getTableHeader()}</thead>
-        <tbody>{getRows()}</tbody>
+        <TableHead>{getTableHeader()}</TableHead>
+        <TableBody>{getRows()}</TableBody>
       </Table>);
     }
 
