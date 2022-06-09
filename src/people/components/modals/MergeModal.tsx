@@ -1,8 +1,7 @@
 import React from "react";
 import { PersonInterface, ContactInfoInterface, NameInterface } from "..";
-import { Modal, Button, Container, Form } from "react-bootstrap";
 import { EnvironmentHelper } from "../../../helpers"
-import { Grid } from "@mui/material"
+import { Dialog, Button, Container, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 
 interface Props {
   show: boolean;
@@ -44,13 +43,7 @@ export const MergeModal: React.FC<Props> = (props) => {
     const aggregate: any = {};
     const newConflicts: IConflicts[] = [];
 
-    const determine = (
-      basedOn: boolean,
-      key: string,
-      value1: any,
-      value2: any,
-      subKey?: string
-    ) => {
+    const determine = (basedOn: boolean, key: string, value1: any, value2: any, subKey?: string) => {
       if (basedOn) {
         if (subKey) {
           aggregate[key][subKey] = value1 || value2;
@@ -108,6 +101,13 @@ export const MergeModal: React.FC<Props> = (props) => {
           break;
       }
     });
+
+    //set initial values
+    newConflicts.forEach(c => {
+      c.selected = c.options[0]
+      console.log("Initial: " + c.selected);
+    })
+
     setAggregatePerson(aggregate);
     setConflicts(newConflicts);
   };
@@ -119,17 +119,8 @@ export const MergeModal: React.FC<Props> = (props) => {
     return false;
   };
 
-  const handleSelect = (
-    propertyName: string,
-    e: React.FormEvent<HTMLInputElement>
-  ) => {
-    const value = e.currentTarget.value;
-    const conflictsCopy = conflicts.map((e) => {
-      if (e.value === propertyName) {
-        e.selected = value;
-      }
-      return e;
-    });
+  const handleSelect = (propertyName: string, value: string) => {
+    const conflictsCopy = conflicts.map((c) => { if (c.value === propertyName) c.selected = value; return c; });
     setConflicts(conflictsCopy);
   };
 
@@ -173,50 +164,24 @@ export const MergeModal: React.FC<Props> = (props) => {
   React.useEffect(merge, [person1, person2]);
 
   const createConflictRows = () => conflicts.map((outer, i) => (
-    <Form.Group key={i}>
-      <Form.Label as="legend" column sm={2}>
-        {outer.value}
-      </Form.Label>
-      <Grid item md={10}>
+
+    <FormControl fullWidth>
+      <InputLabel>{outer.value}</InputLabel>
+      <Select name={outer.value} id={outer.value} value={outer.selected} onChange={(e) => { handleSelect(outer.value, e.target.value) }} >
         {outer.options.map((name, index) => {
-          const photoUrl = EnvironmentHelper.ContentRoot + name;
-          const label = outer.value === "photo" ? (<img src={photoUrl} alt="profile" height="200px" width="200px" />) : name;
-          return (
-            <Form.Check
-              key={index}
-              type="radio"
-              id={name}
-              label={label}
-              name={outer.value}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                handleSelect(outer.value, e)
-              }
-              value={name}
-            />
-          );
+          const label = outer.value === "photo" ? (<img src={EnvironmentHelper.ContentRoot + name} alt="profile" height="200px" width="200px" />) : name;
+          return (<MenuItem value={name}>{label}</MenuItem>)
         })}
-      </Grid>
-    </Form.Group>
+      </Select>
+    </FormControl>
   ));
 
   const { mergeInProgress } = props;
 
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      backdrop="static"
-      centered
-      data-cy="merge-modal"
-    >
-      <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Would you like to merge {person1?.name.display} with{" "}
-          {person2?.name.display}?
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+    <Dialog open={props.show} aria-labelledby="contained-modal-title-vcenter" data-cy="merge-modal">
+      <DialogTitle>Would you like to merge {person1?.name.display} with {person2?.name.display}?</DialogTitle>
+      <DialogContent>
         {conflicts.length > 0 && (
           <>
             <p>Here are some fields conflicting fields: </p>
@@ -225,25 +190,11 @@ export const MergeModal: React.FC<Props> = (props) => {
           </>
         )}
         {mergeInProgress && <p className="text-center font-italic mb-0">Merging records...</p>}
-      </Modal.Body>
-      <Modal.Footer bsPrefix="modal-footer justify-content-center">
-        <Button
-          variant="danger"
-          onClick={props.onHide}
-          disabled={mergeInProgress}
-          data-cy="cancel-merge"
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="success"
-          onClick={handleConfirm}
-          disabled={mergeInProgress}
-          data-cy="confirm-merge"
-        >
-          Confirm
-        </Button>
-      </Modal.Footer>
-    </Modal>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={props.onHide} data-cy="cancel-merge">Cancel</Button>
+        <Button onClick={handleConfirm} data-cy="confirm-merge">Confirm</Button>
+      </DialogActions>
+    </Dialog>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { Header, UserHelper } from "./components";
+import { UserHelper } from "./components";
 import { PeoplePage } from "./people/PeoplePage";
 import { PersonPage } from "./people/PersonPage";
 import { GroupsPage } from "./groups/GroupsPage";

@@ -1,7 +1,6 @@
 import React from "react";
-import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Grid } from "@mui/material"
+import { Grid, Card, CardContent } from "@mui/material"
 
 interface Props {
   href: string;
@@ -14,11 +13,11 @@ export const BigLinkButton: React.FC<Props> = (props) => (
   <Grid md={3}>
     <LinkType href={props.href} outsideLink={props.outsideLink}>
       <Card>
-        <Card.Body className="text-center">
+        <CardContent className="text-center">
           <i className={props.icon} style={{ fontSize: 40 }}></i>
           <br />
           {props.text}
-        </Card.Body>
+        </CardContent>
       </Card>
     </LinkType>
   </Grid>
