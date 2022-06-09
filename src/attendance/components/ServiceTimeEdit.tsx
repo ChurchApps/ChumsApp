@@ -1,13 +1,7 @@
 import React from "react";
-import { Form } from "react-bootstrap"
-import * as yup from "yup"
-import { Formik, FormikHelpers } from "formik"
 import { ServiceTimeInterface, ServiceInterface, InputBox, ApiHelper } from "./";
-
-const schema = yup.object().shape({
-  name: yup.string().required("Service time is required"),
-  serviceId: yup.string().required("Please select a service")
-})
+import { ErrorMessages } from "../../components";
+import { FormControl, InputLabel, Select, SelectChangeEvent, TextField } from "@mui/material";
 
 interface Props {
   serviceTime: ServiceTimeInterface,
@@ -17,12 +11,35 @@ interface Props {
 export const ServiceTimeEdit: React.FC<Props> = (props) => {
   const [serviceTime, setServiceTime] = React.useState({} as ServiceTimeInterface);
   const [services, setServices] = React.useState([] as ServiceInterface[]);
+  const [errors, setErrors] = React.useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  const handleSave = (data: ServiceTimeInterface, { setSubmitting }: FormikHelpers<ServiceTimeInterface>) => {
-    ApiHelper.post("/servicetimes", [data], "AttendanceApi").then(() => {
-      setSubmitting(false)
-      props.updatedFunction()
-    });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+    setErrors([]);
+    const st = { ...serviceTime } as ServiceTimeInterface;
+    let value = e.target.value;
+    switch (e.target.name) {
+      case "name": st.name = value; break;
+      case "serviceId": st.serviceId = value; break;
+    }
+    setServiceTime(st);
+  }
+
+  const validate = () => {
+    const result = [];
+    if (!serviceTime.name) result.push("Service time name is required.");
+    if (!serviceTime.serviceId) result.push("Please select a servie");
+    setErrors(result);
+    return result.length === 0;
+  }
+
+  const handleSave = () => {
+    if (validate()) {
+      setIsSubmitting(true)
+      ApiHelper.post("/servicetimes", [serviceTime], "AttendanceApi")
+        .then(props.updatedFunction)
+        .finally(() => { setIsSubmitting(false) });
+    }
   }
   const handleDelete = () => { if (window.confirm("Are you sure you wish to permanently delete this service time?")) ApiHelper.delete("/servicetimes/" + serviceTime.id, "AttendanceApi").then(props.updatedFunction); }
 
@@ -48,61 +65,17 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
     loadData();
   }, [props.serviceTime, loadData]);
 
-  const serviceTimeCopy = { ...serviceTime }
-  delete serviceTimeCopy.serviceId
-  const initialValues: ServiceTimeInterface = { name: "", serviceId: serviceTime?.serviceId || services[0]?.id, ...serviceTimeCopy }
-
   if (serviceTime === null || serviceTime.id === undefined) return null;
   return (
-    <Formik
-      validationSchema={schema}
-      onSubmit={handleSave}
-      initialValues={initialValues}
-      enableReinitialize={true}
-    >
-      {({
-        handleSubmit,
-        handleChange,
-        values,
-        touched,
-        errors,
-        isSubmitting
-      }) => (
-        <Form noValidate>
-          <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSubmit} deleteFunction={props.serviceTime?.id ? handleDelete : null} headerText={serviceTime.name} isSubmitting={isSubmitting} headerIcon="schedule">
-            <Form.Group>
-              <Form.Label htmlFor="service">Service</Form.Label>
-              <Form.Control
-                id="service"
-                name="serviceId"
-                as="select"
-                value={values.serviceId}
-                onChange={handleChange}
-                isInvalid={touched.serviceId && !!errors.serviceId}
-              >
-                {getServiceOptions()}
-              </Form.Control>
-              <Form.Control.Feedback type="invalid">
-                {errors.serviceId}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label htmlFor="name">Service Time Name</Form.Label>
-              <Form.Control
-                id="name"
-                name="name"
-                type="text"
-                value={values.name}
-                onChange={handleChange}
-                isInvalid={touched.name && !!errors.name}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.name}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </InputBox>
-        </Form>
-      )}
-    </Formik>
+    <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.serviceTime?.id ? handleDelete : null} headerText={serviceTime.name} isSubmitting={isSubmitting} headerIcon="schedule">
+      <ErrorMessages errors={errors} />
+      <FormControl fullWidth>
+        <InputLabel>Service</InputLabel>
+        <Select name="service" value={serviceTime.serviceId} onChange={handleChange}>
+          {getServiceOptions()}
+        </Select>
+      </FormControl>
+      <TextField fullWidth label="Service Time Name" id="name" name="name" type="text" value={serviceTime.name} onChange={handleChange} />
+    </InputBox>
   );
 }
