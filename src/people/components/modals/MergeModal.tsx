@@ -167,8 +167,8 @@ export const MergeModal: React.FC<Props> = (props) => {
 
     <FormControl fullWidth>
       <InputLabel>{outer.value}</InputLabel>
-      <Select name={outer.value} id={outer.value} value={outer.selected} onChange={(e) => { handleSelect(outer.value, e.target.value) }} >
-        {outer.options.map((name, index) => {
+      <Select name={outer.value} id={outer.value} value={outer.selected} onChange={(e) => { handleSelect(outer.value, e.target.value) }}>
+        {outer.options.map((name) => {
           const label = outer.value === "photo" ? (<img src={EnvironmentHelper.ContentRoot + name} alt="profile" height="200px" width="200px" />) : name;
           return (<MenuItem value={name}>{label}</MenuItem>)
         })}

@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Accordion, Card, Button } from "react-bootstrap";
 import { DateHelper, ApiHelper, DisplayBox } from ".";
-import { Icon } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Button } from "@mui/material";
 
 export const DonationEvents: React.FC = () => {
   const [headerIcon, setHeaderIcon] = React.useState<string>("fas fa-exclamation-circle");
@@ -44,27 +43,22 @@ export const DonationEvents: React.FC = () => {
       if (!log.resolved) className += " danger-text";
       logs.push(
         <Accordion key={i}>
-          <Card aria-label="card">
-            <Accordion.Toggle as={Card.Header} eventKey={i} style={{ padding: "10px" }} className="pointer">
-              <i style={{ marginRight: "5px" }} className={className}></i>
-              <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
-              <Icon style={{ float: "right" }}>arrow_downward</Icon>
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey={i}>
-              <Card.Body>
-                <ul>
-                  <li>Person: <Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link></li>
-                  <li className="capitalize">Event: <a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
-                  <li>Message: {log.message}</li>
-                  <li style={{ float: "right" }}>
-                    <Button aria-label="resolve-button" variant={log.resolved ? "secondary" : "primary"} onClick={() => handleClick(log.id, log.resolved)}>
-                      Mark as {log.resolved ? "Unresolved" : "Resolved"}
-                    </Button>
-                  </li>
-                </ul>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
+          <AccordionSummary>
+            <i style={{ marginRight: "5px" }} className={className}></i>
+            <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
+          </AccordionSummary>
+          <AccordionDetails>
+            <ul>
+              <li>Person: <Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link></li>
+              <li className="capitalize">Event: <a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
+              <li>Message: {log.message}</li>
+              <li style={{ float: "right" }}>
+                <Button aria-label="resolve-button" variant={log.resolved ? "outlined" : "contained"} onClick={() => handleClick(log.id, log.resolved)}>
+                  Mark as {log.resolved ? "Unresolved" : "Resolved"}
+                </Button>
+              </li>
+            </ul>
+          </AccordionDetails>
         </Accordion>
       );
     });

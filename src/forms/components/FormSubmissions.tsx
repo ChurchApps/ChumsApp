@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { AnswerInterface, ApiHelper, DateHelper, DisplayBox, ExportLink, FormSubmissionInterface, MemberPermissionInterface, PersonInterface, QuestionInterface } from ".";
-import { Card, ListGroup } from "react-bootstrap";
 import { useReactToPrint } from "react-to-print";
 import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 
@@ -80,7 +79,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     let results: JSX.Element[] = [];
     summaryValues.forEach((sv: any, i: number) => {
       const key: string = Object.keys(sv)[0];
-      results.push(<ListGroup.Item key={sv.text + "-" + i}>{`${sv.text}: ${sv[key]}`}</ListGroup.Item>);
+      results.push(<div key={sv.text + "-" + i}>{`${sv.text}: ${sv[key]}`}</div>);
     });
     return results;
   }
@@ -90,12 +89,8 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     summary.forEach((s: any, i: number) => {
       results.push(
         <Grid item xs={12} md={6} key={s.id + "-" + i}>
-          <Card style={{ marginBottom: "10px" }}>
-            <Card.Header>{s.title}</Card.Header>
-            <ListGroup variant="flush">
-              {getResultCount(s.values)}
-            </ListGroup>
-          </Card>
+          <h4>{s.title}</h4>
+          {getResultCount(s.values)}
         </Grid>
       );
     });
