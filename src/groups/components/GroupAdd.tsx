@@ -1,81 +1,50 @@
+import { TextField } from "@mui/material";
 import React from "react";
-import { Formik, FormikHelpers } from "formik";
-import * as yup from "yup";
-import { Form } from "react-bootstrap"
 import { ApiHelper, GroupInterface, InputBox } from ".";
-
-const schema = yup.object().shape({
-  categoryName: yup.string().required("Category name is required"),
-  name: yup.string().required("Group name is required")
-})
+import { ErrorMessages } from "../../components";
 
 interface Props { updatedFunction: () => void }
 
 export const GroupAdd: React.FC<Props> = (props) => {
+  const [group, setGroup] = React.useState<GroupInterface>({ categoryName: "", name: "" });
+  const [errors, setErrors] = React.useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
   const handleCancel = () => { props.updatedFunction(); };
-  const handleAdd = (data: GroupInterface, { setSubmitting }: FormikHelpers<GroupInterface>) => {
-    ApiHelper.post("/groups", [data], "MembershipApi").finally(() => {
-      setSubmitting(false)
-      props.updatedFunction()
-    });
+  const handleAdd = () => {
+    if (validate()) {
+      setIsSubmitting(true);
+      ApiHelper.post("/groups", [group], "MembershipApi").finally(() => {
+        setIsSubmitting(false)
+        props.updatedFunction()
+      });
+    }
   };
 
-  const initialValues: GroupInterface = { categoryName: "", name: "" }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setErrors([]);
+    const g = { ...group } as GroupInterface;
+    let value = e.target.value;
+    switch (e.target.name) {
+      case "name": g.name = value; break;
+      case "categoryName": g.categoryName = value; break;
+    }
+    setGroup(g);
+  }
+
+  const validate = () => {
+    const result = [];
+    if (!group.categoryName) result.push("Category name is required.");
+    if (!group.name) result.push("Group name is required.");
+    setErrors(result);
+    return result.length === 0;
+  }
 
   return (
-    <Formik
-      validationSchema={schema}
-      onSubmit={handleAdd}
-      initialValues={initialValues}
-      enableReinitialize={true}
-    >
-      {({
-        handleSubmit,
-        handleChange,
-        values,
-        touched,
-        errors,
-        isSubmitting
-      }) => (
-        <InputBox headerText="Group Members" headerIcon="group" cancelFunction={handleCancel} saveFunction={handleSubmit} saveText="Add Group" isSubmitting={isSubmitting}>
-          <Form noValidate>
-            <Form.Group>
-              <Form.Label htmlFor="categoryName">
-                Category Name
-              </Form.Label>
-              <Form.Control
-                type="text"
-                id="categoryName"
-                name="categoryName"
-                value={values.categoryName}
-                onChange={handleChange}
-                isInvalid={touched.categoryName && !!errors.categoryName}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.categoryName}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label htmlFor="groupName">
-                Group Name
-              </Form.Label>
-              <Form.Control
-                type="text"
-                id="groupName"
-                name="name"
-                value={values.name}
-                onChange={handleChange}
-                isInvalid={touched.name && !!errors.name}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.name}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Form>
-        </InputBox>
-      )}
-    </Formik>
-
+    <InputBox headerText="New Group" headerIcon="group" cancelFunction={handleCancel} saveFunction={handleAdd} saveText="Add Group" isSubmitting={isSubmitting}>
+      <ErrorMessages errors={errors} />
+      <TextField fullWidth={true} label="Category Name" type="text" id="categoryName" name="categoryName" value={group.categoryName} onChange={handleChange} />
+      <TextField fullWidth={true} label="Group Name" type="text" id="groupName" name="name" value={group.name} onChange={handleChange} />
+    </InputBox>
   );
 }
-

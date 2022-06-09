@@ -1,95 +1,67 @@
 import React from "react"
-import * as yup from "yup"
-import { Formik, FormikHelpers } from "formik"
-import { Form, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
-import { UserHelper, Permissions, NameInterface, PersonInterface, HouseholdInterface, ApiHelper } from "."
-import { Grid } from "@mui/material"
-
-const schema = yup.object().shape({
-  first: yup.string().required("Please enter a first name."),
-  last: yup.string().required("Please enter a last name.")
-})
+import { UserHelper, Permissions, PersonInterface, HouseholdInterface, ApiHelper } from "."
+import { Button, Grid, TextField } from "@mui/material"
+import { ErrorMessages } from "../../components"
 
 export function CreatePerson() {
-  const initialValues: NameInterface = { first: "", last: "" }
   const navigate = useNavigate()
+  const [person, setPerson] = React.useState<PersonInterface>({ name: { first: "", last: "" }, contactInfo: {} });
+  const [errors, setErrors] = React.useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  function handleSubmit(name: NameInterface, helpers: FormikHelpers<NameInterface>) {
-    let person = { name } as PersonInterface;
-    let household = { name: name.last } as HouseholdInterface;
-    ApiHelper.post("/households", [household], "MembershipApi").then(data => {
-      household.id = data[0].id;
-      person.householdId = household.id;
-      ApiHelper.post("/people", [person], "MembershipApi").then(data => {
-        person.id = data[0].id
-        navigate("/people/" + person.id);
-      }).finally(() => {
-        helpers?.setSubmitting(false)
+  const validate = () => {
+    const result = [];
+    if (!person.name?.first) result.push("Please enter a first name.");
+    if (!person.name?.last) result.push("Please enter a last name.");
+    setErrors(result);
+    return result.length === 0;
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setErrors([]);
+    const p = { ...person } as PersonInterface;
+    let value = e.target.value;
+    switch (e.target.name) {
+      case "first": p.name.first = value; break;
+      case "last": p.name.last = value; break;
+    }
+    setPerson(p);
+  }
+
+  function handleSubmit() {
+    let household = { name: person.name.last } as HouseholdInterface;
+    if (validate()) {
+      setIsSubmitting(true);
+      ApiHelper.post("/households", [household], "MembershipApi").then(data => {
+        household.id = data[0].id;
+        person.householdId = household.id;
+        ApiHelper.post("/people", [person], "MembershipApi").then(data => {
+          person.id = data[0].id
+          navigate("/people/" + person.id);
+        }).finally(() => {
+          setIsSubmitting(false);
+        });
       });
-    })
+    }
   }
 
   if (!UserHelper.checkAccess(Permissions.membershipApi.people.edit)) return null;
   return (
     <div>
       <p className="pl-1 mb-2 text-dark"><b>Add a New Person</b></p>
-      <Formik
-        validationSchema={schema}
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          values,
-          touched,
-          errors,
-          isSubmitting
-        }) => (
-          <Form noValidate onSubmit={handleSubmit}>
-            <Grid container spacing={3}>
-              <Grid item md={3} xs={12}>
-                <Form.Group>
-                  <Form.Control
-                    type="text"
-                    aria-label="firstName"
-                    placeholder="First Name"
-                    name="first"
-                    value={values.first}
-                    onChange={handleChange}
-                    isInvalid={touched.first && !!errors.first}
-                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.first}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Grid>
-              <Grid item md={3} xs={12}>
-                <Form.Group>
-                  <Form.Control
-                    type="text"
-                    aria-label="lastName"
-                    placeholder="Last Name"
-                    name="last"
-                    value={values.last}
-                    onChange={handleChange}
-                    isInvalid={touched.last && !!errors.last}
-                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.last}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <Button type="submit" variant="primary" disabled={isSubmitting}>Add</Button>
-              </Grid>
-            </Grid>
-          </Form>
-        )}
-      </Formik>
+      <ErrorMessages errors={errors} />
+      <Grid container spacing={3}>
+        <Grid item md={3} xs={12}>
+          <TextField fullWidth type="text" aria-label="firstName" placeholder="First Name" name="first" value={person.name.first} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
+        </Grid>
+        <Grid item md={3} xs={12}>
+          <TextField fullWidth type="text" aria-label="lastName" placeholder="Last Name" name="last" value={person.name.last} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <Button type="submit" variant="contained" disabled={isSubmitting}>Add</Button>
+        </Grid>
+      </Grid>
     </div>
   )
 }
