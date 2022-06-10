@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
-import { Wrapper } from "../components/Wrapper";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const GroupsPage = () => {
@@ -77,7 +76,8 @@ export const GroupsPage = () => {
   }
 
   return (
-    <Wrapper pageTitle="Groups">
+    <>
+      <h1><Icon>people</Icon> Groups</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <DisplayBox id="groupsBox" headerIcon="group" headerText="Groups" editContent={getEditContent()}>
@@ -86,6 +86,6 @@ export const GroupsPage = () => {
         </Grid>
         <Grid item md={4} xs={12}>{addBox}</Grid>
       </Grid>
-    </Wrapper>
+    </>
   );
 };

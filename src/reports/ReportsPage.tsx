@@ -2,12 +2,11 @@ import React from "react";
 import { DisplayBox } from "../components";
 import { Grid, Icon } from "@mui/material"
 import { Link } from "react-router-dom";
-import { Wrapper } from "../components/Wrapper";
 
 export const ReportsPage = () => {
   console.log("report page")
   return (
-    <Wrapper pageTitle="Reports">
+    <>
       <h1><Icon>summarize</Icon> Reports</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
@@ -23,6 +22,6 @@ export const ReportsPage = () => {
           </DisplayBox>
         </Grid>
       </Grid>
-    </Wrapper>
+    </>
   );
 }

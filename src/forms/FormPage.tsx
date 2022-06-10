@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs, ApiHelper, FormInterface, MemberPermissionInterface, UserHelper } from "./components";
 import { useParams } from "react-router-dom"
-import { Wrapper } from "../components/Wrapper";
+import { Icon } from "@mui/material";
 
 export const FormPage = () => {
   const params = useParams();
@@ -17,6 +17,9 @@ export const FormPage = () => {
   React.useEffect(loadData, []); //eslint-disable-line
 
   return form?.id ?
-    <Wrapper pageTitle={form?.name}><Tabs form={form} memberPermission={memberPermission} /> </Wrapper>
+    <>
+      <h1><Icon>list_alt</Icon> {form.name}</h1>
+      <Tabs form={form} memberPermission={memberPermission} />
+    </>
     : <></>;
 }

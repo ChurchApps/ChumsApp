@@ -1,10 +1,9 @@
 import React from "react";
 import { PersonInterface } from "../appBase/interfaces";
 import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns } from "./components";
-import { Grid } from "@mui/material"
+import { Grid, Icon } from "@mui/material"
 import { PersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
-import { Wrapper } from "../components/Wrapper";
 
 export const PeoplePage = () => {
 
@@ -57,7 +56,8 @@ export const PeoplePage = () => {
   React.useEffect(loadData, []);
 
   return (
-    <Wrapper pageTitle="Search People">
+    <>
+      <h1><Icon>person</Icon> Search People</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <DisplayBox id="peopleBox" headerIcon="person" headerText="People" editContent={getEditContent()}>
@@ -68,6 +68,6 @@ export const PeoplePage = () => {
           <PeopleSearch updateSearchResults={(people) => setSearchResults(people)} />
         </Grid>
       </Grid>
-    </Wrapper>
+    </>
   );
 }

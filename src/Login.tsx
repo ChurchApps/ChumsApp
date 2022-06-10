@@ -7,6 +7,7 @@ import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { ChurchInterface, UserInterface } from "./helpers";
 import ReactGA from "react-ga";
 import { EnvironmentHelper } from "./helpers";
+import { Box } from "@mui/material";
 
 export const Login: React.FC = (props: any) => {
   const [errors, setErrors] = React.useState<string[]>([])
@@ -50,7 +51,9 @@ export const Login: React.FC = (props: any) => {
     if (!jwt) jwt = "";
     if (!auth) auth = "";
 
-    return (<LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} loginSuccessOverride={successCallback} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} callbackErrors={errors} />);
+    return (<Box sx={{ display: "flex", backgroundColor: "#EEE", minHeight: "100vh" }}>
+      <LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} loginSuccessOverride={successCallback} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} callbackErrors={errors} />
+    </Box>);
   } else {
     // @ts-ignore
     let from = location.state?.from?.pathname || "/people";

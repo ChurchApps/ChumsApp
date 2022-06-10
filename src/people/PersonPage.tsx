@@ -1,8 +1,7 @@
 import React from "react";
 import { Person, Groups, Tabs, Household, ImageEditor, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, AddNote, NoteInterface, ArrayHelper } from "./components"
-import { Grid } from "@mui/material"
+import { Grid, Icon } from "@mui/material"
 import { useParams } from "react-router-dom";
-import { Wrapper } from "../components/Wrapper";
 
 export const PersonPage = () => {
   const params = useParams();
@@ -67,7 +66,8 @@ export const PersonPage = () => {
   React.useEffect(() => { loadNotes() }, [person?.id]); //eslint-disable-line
 
   return (
-    <Wrapper pageTitle={person?.name?.display || ""}>
+    <>
+      <h1><Icon>person</Icon> {person?.name?.display}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
@@ -81,7 +81,7 @@ export const PersonPage = () => {
           {showNoteBox && <AddNote contentId={person.id} noteId={noteId} close={() => setShowNoteBox(false)} updatedFunction={loadNotes} />}
         </Grid>
       </Grid>
-    </Wrapper>
+    </>
   )
 
 }

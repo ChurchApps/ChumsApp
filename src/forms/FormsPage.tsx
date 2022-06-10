@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { ApiHelper, DisplayBox, FormInterface, FormEdit, UserHelper, Permissions, Loading, EnvironmentHelper } from "./components"
 import { Link } from "react-router-dom"
-import { Wrapper } from "../components/Wrapper";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const FormsPage = () => {
@@ -97,7 +96,8 @@ export const FormsPage = () => {
       </Table>);
     }
     return (
-      <Wrapper pageTitle={title}>
+      <>
+        <h1><Icon>list_alt</Icon> {title}</h1>
         <ul className="nav nav-tabs">
           <li className="nav-item" key="forms"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("forms"); }} className={(selectedTab === "forms") ? "nav-link active" : "nav-link"}><Icon>format_align_left</Icon> Forms</a></li>
           {archivedForms?.length > 0 && <li className="nav-item" key="archived"><a href="about:blank" onClick={e => { e.preventDefault(); setSelectedTab("archived"); }} className={(selectedTab === "archived") ? "nav-link active" : "nav-link"}><Icon>archive</Icon> Archived forms</a></li>}
@@ -110,7 +110,7 @@ export const FormsPage = () => {
           </Grid>
           <Grid item md={4} xs={12}>{getSidebar()}</Grid>
         </Grid>
-      </Wrapper>
+      </>
     );
   }
 }

@@ -1,8 +1,7 @@
 //NOTE - Temporarily broken.
-
 import React from "react";
-import { ApiHelper, UserHelper, DisplayBox, SettingInterface, Permissions, Wrapper } from "./components";
-import { Grid } from "@mui/material"
+import { ApiHelper, UserHelper, DisplayBox, SettingInterface, Permissions } from "./components";
+import { Grid, Icon } from "@mui/material"
 
 enum SettingType {
   ALLOW_GUEST_CHECKIN = "Allow guest checkin"
@@ -69,7 +68,8 @@ export const ChurchPage: React.FC = () => {
     return <></>;
   }
   return (
-    <Wrapper pageTitle="Church Settings">
+    <>
+      <h1><Icon>settings</Icon> Church Settings</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <DisplayBox headerText="Edit Church Settings" headerIcon="settings">
@@ -89,6 +89,6 @@ export const ChurchPage: React.FC = () => {
           </DisplayBox>
         </Grid>
       </Grid>
-    </Wrapper>
+    </>
   );
 };

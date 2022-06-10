@@ -1,5 +1,5 @@
 import React from "react";
-import { UserHelper, BigLinkButton, Permissions, EnvironmentHelper, Wrapper } from "./components";
+import { UserHelper, BigLinkButton, Permissions, EnvironmentHelper } from "./components";
 import { Grid, Icon } from "@mui/material";
 
 export const SettingsPage = () => {
@@ -15,12 +15,12 @@ export const SettingsPage = () => {
   }
 
   return (
-    <Wrapper pageTitle="Settings">
+    <>
       <h1><Icon>settings</Icon> Settings</h1>
       <Grid container className="justify-content-md-center" id="settingsBoxes">
         {getLinks()}
       </Grid>
-    </Wrapper>
+    </>
   );
 }
 

@@ -1,8 +1,7 @@
 import React from "react";
 import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper } from "./components";
 import { useParams, Link } from "react-router-dom";
-import { Wrapper } from "../components/Wrapper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Grid, TextField } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, TableHead, Grid, TextField, Icon } from "@mui/material"
 
 export const FundPage = () => {
   const params = useParams();
@@ -101,7 +100,8 @@ export const FundPage = () => {
     }
 
     return (
-      <Wrapper pageTitle={fund.name + " Donations"}>
+      <>
+        <h1><Icon>volunteer_activism</Icon> {fund.name} Donations</h1>
         <Grid container spacing={3}>
           <Grid item md={8} xs={12}>
             <DisplayBox headerIcon="volunteer_activism" headerText="Donations" editContent={getEditContent()}>
@@ -115,7 +115,7 @@ export const FundPage = () => {
             </InputBox>
           </Grid>
         </Grid>
-      </Wrapper>
+      </>
     );
   }
 }

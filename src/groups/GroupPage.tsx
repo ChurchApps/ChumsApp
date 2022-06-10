@@ -1,8 +1,7 @@
 import React from "react";
 import { ApiHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, PersonHelper } from "./components";
 import { useParams } from "react-router-dom";
-import { Grid } from "@mui/material"
-import { Wrapper } from "../components/Wrapper";
+import { Grid, Icon } from "@mui/material"
 
 export const GroupPage = () => {
   const params = useParams();
@@ -46,7 +45,8 @@ export const GroupPage = () => {
   }
 
   return (
-    <Wrapper pageTitle={group?.name}>
+    <>
+      <h1><Icon>people</Icon> {group?.name}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <GroupDetails group={group} updatedFunction={handleGroupUpdated} />
@@ -54,6 +54,6 @@ export const GroupPage = () => {
         </Grid>
         <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
       </Grid>
-    </Wrapper>
+    </>
   );
 }

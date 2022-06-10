@@ -1,7 +1,6 @@
 import React from "react";
 import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit, ServiceEdit, ServiceInterface, ServiceTimeEdit, ServiceTimeInterface, Tabs, GroupServiceTimeInterface, GroupInterface, ArrayHelper, Loading } from "./components";
 import { Link } from "react-router-dom";
-import { Wrapper } from "../components/Wrapper";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const AttendancePage = () => {
@@ -117,7 +116,8 @@ export const AttendancePage = () => {
   }
 
   return (
-    <Wrapper pageTitle="Attendance">
+    <>
+      <h1><Icon>calendar_month</Icon> Attendance</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="group" headerText="Groups" editContent={getEditLinks()}>
@@ -131,7 +131,7 @@ export const AttendancePage = () => {
         </Grid>
       </Grid>
       <Tabs />
-    </Wrapper>
+    </>
   );
 }
 

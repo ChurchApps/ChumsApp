@@ -2,7 +2,6 @@ import React from "react";
 import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, Permissions, Loading, DonationEvents, CurrencyHelper } from "./components";
 import { Link } from "react-router-dom";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
-import { Wrapper } from "../components/Wrapper";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const DonationsPage = () => {
@@ -81,7 +80,8 @@ export const DonationsPage = () => {
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
   else return (
-    <Wrapper pageTitle="Donations">
+    <>
+      <h1><Icon>volunteer_activism</Icon> Donations</h1>
       <ReportWithFilter keyName="donationSummary" autoRun={true} />
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
@@ -92,6 +92,6 @@ export const DonationsPage = () => {
         </Grid>
         <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
       </Grid>
-    </Wrapper>
+    </>
   );
 }
