@@ -60,7 +60,7 @@ export function PeopleSearch(props: Props) {
     <DisplayBox headerIcon="person" headerText="Simple Search" editContent={<Button onClick={toggleAdvanced} sx={{textTransform: "none"}}>Advanced</Button>}>
       <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
         <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label="Name" value={searchText} onChange={handleChange}
-          endAdornment={<Button variant="contained">Search</Button>}
+          endAdornment={<Button variant="contained" onClick={handleSubmit}>Search</Button>}
         />
       </FormControl>
     </DisplayBox>
