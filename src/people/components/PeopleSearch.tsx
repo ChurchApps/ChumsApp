@@ -57,7 +57,7 @@ export function PeopleSearch(props: Props) {
   }
 
   const getSimpleSearch = () => (
-    <DisplayBox headerIcon="person" headerText="Simple Search" editContent={<a href="about:blank" onClick={toggleAdvanced}>Advanced</a>}>
+    <DisplayBox headerIcon="person" headerText="Simple Search" editContent={<Button onClick={toggleAdvanced} sx={{textTransform: "none"}}>Advanced</Button>}>
       <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
         <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label="Name" value={searchText} onChange={handleChange}
           endAdornment={<Button variant="contained">Search</Button>}
@@ -94,7 +94,7 @@ export function PeopleSearch(props: Props) {
     return result;
   }
 
-  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<a href="about:blank" onClick={toggleAdvanced}>Simple</a>} saveFunction={handleAdvancedSearch} saveText="Search">
+  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<Button onClick={toggleAdvanced} sx={{textTransform: "none"}}>Simple</Button>} saveFunction={handleAdvancedSearch} saveText="Search">
     <p>All people where:</p>
     {getDisplayConditions()}
     {getAddCondition()}
