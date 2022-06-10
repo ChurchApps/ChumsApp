@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PersonHelper, PersonInterface, Loading, CreatePerson } from ".";
-import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip } from "@mui/material"
 
 interface Props {
   people: PersonInterface[],
@@ -25,10 +25,19 @@ export function PeopleSearchResults(props: Props) {
     return result;
   }
 
+  const getPhotoJSX = (p: PersonInterface) => {
+    const photoUrl = PersonHelper.getPhotoUrl(p);
+    if (photoUrl === "/images/sample-profile.png") {
+      return <img src={photoUrl} alt="avatar" />
+    } else {
+      return <Tooltip componentsProps={{ tooltip: {sx: {padding: "0"}}}} title={<div dangerouslySetInnerHTML={{ __html: '<img src="' + photoUrl + '" style="max-width: 200px"/>'}} />} arrow placement="right"><a href={photoUrl} target="_blank"><img src={photoUrl} alt="avatar" /></a></Tooltip>
+    }
+  }
+
   const getColumn = (p: PersonInterface, key: string) => {
     let result = <></>;
     switch (key) {
-      case "photo": result = (<img src={PersonHelper.getPhotoUrl(p)} alt="avatar" />); break;
+      case "photo": result = (getPhotoJSX(p)); break;
       case "displayName": result = (<Link to={"/people/" + p.id.toString()}>{p.name.display}</Link>); break;
       case "lastName": result = (<>{p.name.last}</>); break;
       case "firstName": result = (<>{p.name.first}</>); break;
