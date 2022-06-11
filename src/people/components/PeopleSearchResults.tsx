@@ -103,12 +103,12 @@ export function PeopleSearchResults(props: Props) {
       if (selectedColumns.indexOf(c.key) > -1) {
         result.push(
           <th key={c.key} onClick={() => sortTableByKey(c.key, sortDirection)}>
-            <span>{c.shortName}</span>
-            {c.key !== "photo"
-              && <>
-                <div className={`${sortDirection && currentSortedCol === c.key ? "sortAscActive" : "sortAsc"}`}></div>
-                <div className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div>
-              </>
+            <span style={{float: "left"}}>{c.shortName}</span>
+            {c.key !== "photo" &&
+              <div style={{display: "flex"}}>
+                <div style={{marginTop: "5px"}} className={`${sortDirection && currentSortedCol === c.key ? "sortAscActive" : "sortAsc"}`}></div>
+                <div style={{marginTop: "14px"}} className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div>
+              </div>
             }
           </th>)
       }
