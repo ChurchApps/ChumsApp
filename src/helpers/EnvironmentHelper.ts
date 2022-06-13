@@ -1,6 +1,7 @@
 import { ApiHelper } from "../appBase/helpers/ApiHelper";
+import { EnvironmentHelperBase } from "../appBase/helpers/EnvironmentHelperBase";
 
-export class EnvironmentHelper {
+export class EnvironmentHelper extends EnvironmentHelperBase {
   private static AccessApi = "";
   private static AttendanceApi = "";
   private static GivingApi = "";
@@ -8,19 +9,16 @@ export class EnvironmentHelper {
   private static ReportingApi = "";
   static B1Url = "";
 
-  static ContentRoot = "";
   static AccountsAppUrl = "";
   static ChurchAppsUrl = "";
   static GoogleAnalyticsTag = "";
 
   static init = () => {
-    EnvironmentHelper.initProd();
-    /*
     switch (process.env.REACT_APP_STAGE) {
       case "staging": EnvironmentHelper.initStaging(); break;
       case "prod": EnvironmentHelper.initProd(); break;
       default: EnvironmentHelper.initDev(); break;
-    }*/
+    }
     ApiHelper.apiConfigs = [
       { keyName: "AccessApi", url: EnvironmentHelper.AccessApi, jwt: "", permisssions: [] },
       { keyName: "AttendanceApi", url: EnvironmentHelper.AttendanceApi, jwt: "", permisssions: [] },
@@ -36,7 +34,7 @@ export class EnvironmentHelper {
     EnvironmentHelper.GivingApi = process.env.REACT_APP_GIVING_API || "";
     EnvironmentHelper.MembershipApi = process.env.REACT_APP_MEMBERSHIP_API || "";
     EnvironmentHelper.ReportingApi = process.env.REACT_APP_REPORTING_API || "";
-    EnvironmentHelper.ContentRoot = process.env.REACT_APP_CONTENT_ROOT || "";
+    EnvironmentHelperBase.ContentRoot = process.env.REACT_APP_CONTENT_ROOT || "";
     EnvironmentHelper.AccountsAppUrl = process.env.REACT_APP_ACCOUNTS_APP_URL || "";
     EnvironmentHelper.ChurchAppsUrl = process.env.REACT_APP_CHURCH_APPS_URL || "";
     EnvironmentHelper.GoogleAnalyticsTag = process.env.REACT_APP_GOOGLE_ANALYTICS || "";
@@ -50,7 +48,7 @@ export class EnvironmentHelper {
     EnvironmentHelper.GivingApi = "https://givingapi.staging.churchapps.org";
     EnvironmentHelper.MembershipApi = "https://membershipapi.staging.churchapps.org";
     EnvironmentHelper.ReportingApi = "https://reportingapi.staging.churchapps.org";
-    EnvironmentHelper.ContentRoot = "https://content.staging.churchapps.org";
+    EnvironmentHelperBase.ContentRoot = "https://content.staging.churchapps.org";
     EnvironmentHelper.AccountsAppUrl = "https://accounts.staging.churchapps.org";
     EnvironmentHelper.ChurchAppsUrl = "https://staging.churchapps.org";
     EnvironmentHelper.GoogleAnalyticsTag = "";
@@ -64,7 +62,7 @@ export class EnvironmentHelper {
     EnvironmentHelper.GivingApi = "https://givingapi.churchapps.org";
     EnvironmentHelper.MembershipApi = "https://membershipapi.churchapps.org";
     EnvironmentHelper.ReportingApi = "https://reportingapi.churchapps.org";
-    EnvironmentHelper.ContentRoot = "https://content.churchapps.org";
+    EnvironmentHelperBase.ContentRoot = "https://content.churchapps.org";
     EnvironmentHelper.AccountsAppUrl = "https://accounts.churchapps.org";
     EnvironmentHelper.ChurchAppsUrl = "https://churchapps.org";
     EnvironmentHelper.GoogleAnalyticsTag = "UA-164774603-4";

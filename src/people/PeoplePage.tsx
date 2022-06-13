@@ -2,7 +2,7 @@ import React from "react";
 import { PersonInterface } from "../appBase/interfaces";
 import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns } from "./components";
 import { Grid, Icon } from "@mui/material"
-import { PersonHelper } from "../helpers";
+import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
 
 export const PeoplePage = () => {
@@ -33,7 +33,7 @@ export const PeoplePage = () => {
 
   const loadData = () => {
     ApiHelper.get("/people/recent", "MembershipApi").then(data => {
-      setSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
+      setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
     });
   }
 

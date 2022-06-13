@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { PersonHelper, DateHelper, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading, ErrorMessages } from "."
+import { ChumsPersonHelper, PersonHelper, DateHelper, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading, ErrorMessages } from "."
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
@@ -84,7 +84,7 @@ export function PersonEdit(props: Props) {
     if (validate()) {
       setIsSubmitting(true)
 
-      if (PersonHelper.getExpandedPersonObject(person).id === context.person.id) context.setProfilePicture(person.photo || PersonHelper.getPhotoUrl(person));
+      if (ChumsPersonHelper.getExpandedPersonObject(person).id === context.person.id) context.setPerson(person);
       /*
       
             if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {

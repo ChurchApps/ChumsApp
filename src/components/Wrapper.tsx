@@ -19,8 +19,8 @@ export const Wrapper: React.FC<Props> = props => {
         if (data?.length > 0 && data.find((error: any) => !error.resolved)) setDonationError(true);
       });
     }
-    if (!formPermission && UserHelper?.person?.id) {
-      ApiHelper.get("/memberpermissions/member/" + UserHelper.person.id, "MembershipApi").then(data => setIsFormMember(data.length));
+    if (!formPermission && context?.person?.id) {
+      ApiHelper.get("/memberpermissions/member/" + context.person?.id, "MembershipApi").then(data => setIsFormMember(data.length));
     }
   }, [formPermission]);
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { PersonHelper, PersonInterface, Loading, CreatePerson } from ".";
+import { PersonHelper, ChumsPersonHelper, PersonInterface, Loading, CreatePerson } from ".";
 import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip } from "@mui/material"
 
 interface Props {
@@ -30,7 +30,7 @@ export function PeopleSearchResults(props: Props) {
     if (photoUrl === "/images/sample-profile.png") {
       return <img src={photoUrl} alt="avatar" />
     } else {
-      return <Tooltip componentsProps={{ tooltip: {sx: {padding: "0"}}}} title={<div dangerouslySetInnerHTML={{ __html: '<img src="' + photoUrl + '" style="max-width: 200px"/>'}} />} arrow placement="right"><a href={photoUrl} target="_blank"><img src={photoUrl} alt="avatar" /></a></Tooltip>
+      return <Tooltip componentsProps={{ tooltip: { sx: { padding: "0" } } }} title={<div dangerouslySetInnerHTML={{ __html: '<img src="' + photoUrl + '" style="max-width: 200px"/>' }} />} arrow placement="right"><a href={photoUrl} target="_blank"><img src={photoUrl} alt="avatar" /></a></Tooltip>
     }
   }
 
@@ -49,7 +49,7 @@ export function PeopleSearchResults(props: Props) {
       case "email": result = (<>{p.contactInfo.email}</>); break;
       case "phone": result = (<>{p.contactInfo.mobilePhone || p.contactInfo.homePhone || p.contactInfo.workPhone}</>); break;
       case "birthDate": result = (<>{(p.birthDate === null) ? "" : new Date(p.birthDate).toLocaleDateString()}</>); break;
-      case "birthDay": result = (<>{PersonHelper.getBirthDay(p)}</>); break;
+      case "birthDay": result = (<>{ChumsPersonHelper.getBirthDay(p)}</>); break;
       case "age": result = (<>{(p.birthDate === null) ? "" : PersonHelper.getAge(p.birthDate).split(" ")[0]}</>); break;
       case "gender": result = (<>{p.gender}</>); break;
       case "membershipStatus": result = (<>{p.membershipStatus}</>); break;
@@ -103,11 +103,11 @@ export function PeopleSearchResults(props: Props) {
       if (selectedColumns.indexOf(c.key) > -1) {
         result.push(
           <th key={c.key} onClick={() => sortTableByKey(c.key, sortDirection)}>
-            <span style={{float: "left"}}>{c.shortName}</span>
+            <span style={{ float: "left" }}>{c.shortName}</span>
             {c.key !== "photo" &&
-              <div style={{display: "flex"}}>
-                <div style={{marginTop: "5px"}} className={`${sortDirection && currentSortedCol === c.key ? "sortAscActive" : "sortAsc"}`}></div>
-                <div style={{marginTop: "14px"}} className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div>
+              <div style={{ display: "flex" }}>
+                <div style={{ marginTop: "5px" }} className={`${sortDirection && currentSortedCol === c.key ? "sortAscActive" : "sortAsc"}`}></div>
+                <div style={{ marginTop: "14px" }} className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div>
               </div>
             }
           </th>)

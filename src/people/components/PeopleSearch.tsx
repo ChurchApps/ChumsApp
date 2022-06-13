@@ -1,5 +1,5 @@
 import React from "react";
-import { PersonHelper, PersonInterface, DisplayBox, ApiHelper } from ".";
+import { ChumsPersonHelper, PersonInterface, DisplayBox, ApiHelper } from ".";
 import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition } from "../../components";
 import { EditCondition } from "./EditCondition";
 import { Button, Icon, OutlinedInput, FormControl } from "@mui/material";
@@ -25,7 +25,7 @@ export function PeopleSearch(props: Props) {
     let term = searchText.trim();
     const condition: SearchCondition = { field: "displayName", operator: "contains", value: term }
     ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi").then(data => {
-      props.updateSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
+      props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
     });
   }
 
@@ -51,13 +51,13 @@ export function PeopleSearch(props: Props) {
   const handleAdvancedSearch = async () => {
     const postConditions = await convertConditions();
     ApiHelper.post("/people/advancedSearch", postConditions, "MembershipApi").then(data => {
-      props.updateSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
+      props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
     });
 
   }
 
   const getSimpleSearch = () => (
-    <DisplayBox headerIcon="person" headerText="Simple Search" editContent={<Button onClick={toggleAdvanced} sx={{textTransform: "none"}}>Advanced</Button>}>
+    <DisplayBox headerIcon="person" headerText="Simple Search" editContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Advanced</Button>}>
       <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
         <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label="Name" value={searchText} onChange={handleChange}
           endAdornment={<Button variant="contained" onClick={handleSubmit}>Search</Button>}
@@ -94,7 +94,7 @@ export function PeopleSearch(props: Props) {
     return result;
   }
 
-  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<Button onClick={toggleAdvanced} sx={{textTransform: "none"}}>Simple</Button>} saveFunction={handleAdvancedSearch} saveText="Search">
+  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Simple</Button>} saveFunction={handleAdvancedSearch} saveText="Search">
     <p>All people where:</p>
     {getDisplayConditions()}
     {getAddCondition()}

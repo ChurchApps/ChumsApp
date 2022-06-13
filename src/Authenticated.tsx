@@ -19,9 +19,6 @@ import { Box } from "@mui/material";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
-  //to force rerender on login
-  // var user = React.useContext(UserContext)?.userName;
-  // var church = React.useContext(UserContext)?.churchName;
 
   if (UserHelper.churchChanged) {
     UserHelper.churchChanged = false;

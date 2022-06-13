@@ -14,26 +14,6 @@ export const Login: React.FC = (props: any) => {
   const [cookies] = useCookies();
   const location = useLocation();
 
-  const successCallback = async () => {
-    try {
-      if (UserHelper.currentChurch?.apis?.length === 0) {
-        setErrors([`You don't have access of ${UserHelper.currentChurch.name}.`])
-        return
-      }
-      const person: PersonInterface = await ApiHelper.get(`/people/${UserHelper.currentChurch.personId}`, "MembershipApi");
-      UserHelper.person = person;
-      context.setProfilePicture(PersonHelper.getPhotoUrl(UserHelper.person))
-      context.setPerson(PersonHelper.getExpandedPersonObject(UserHelper.person))
-      context.setUserName(UserHelper.currentChurch.id.toString());
-    } catch (err) {
-      console.log(err)
-      context.setPerson(PersonHelper.getExpandedPersonObject(UserHelper.person))
-      context.setProfilePicture(PersonHelper.getPhotoUrl(UserHelper.person))
-      context.setUserName(UserHelper.currentChurch.id.toString());
-
-    }
-  }
-
   const postChurchRegister = async (church: ChurchInterface) => {
     if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.event({ category: "Church", action: "Register" });
   }
@@ -44,7 +24,7 @@ export const Login: React.FC = (props: any) => {
 
   const context = React.useContext(UserContext);
 
-  if (context.userName === "" || !ApiHelper.isAuthenticated) {
+  if (context.user === null || !ApiHelper.isAuthenticated) {
     let search = new URLSearchParams(window.location.search);
     let jwt = search.get("jwt") || cookies.jwt;
     let auth = search.get("auth");
@@ -52,7 +32,7 @@ export const Login: React.FC = (props: any) => {
     if (!auth) auth = "";
 
     return (<Box sx={{ display: "flex", backgroundColor: "#EEE", minHeight: "100vh" }}>
-      <LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} loginSuccessOverride={successCallback} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} callbackErrors={errors} />
+      <LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} callbackErrors={errors} />
     </Box>);
   } else {
     // @ts-ignore
