@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Dialog, Button, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 
 interface Props {
   show: boolean;
@@ -10,25 +10,14 @@ interface Props {
 }
 
 export const UpdateHouseHold: React.FC<Props> = (props) => (
-  <Modal
-    {...props}
-    size="lg"
-    aria-labelledby="contained-modal-title-vcenter"
-    centered
-  >
-    <Modal.Header closeButton>
-      <Modal.Title id="contained-modal-title-vcenter">
-          Update Address
-      </Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      <p>
-        {props.text}
-      </p>
-    </Modal.Body>
-    <Modal.Footer bsPrefix="modal-footer justify-content-center">
-      <Button onClick={props.handleNo} variant="secondary" data-cy="no-button">No</Button>
-      <Button onClick={props.handleYes} variant="primary" data-cy="yes-button">Yes</Button>
-    </Modal.Footer>
-  </Modal>
+  <Dialog open={props.show} aria-labelledby="contained-modal-title-vcenter" data-cy="update-household-modal">
+    <DialogTitle>Update Address</DialogTitle>
+    <DialogContent>
+      <p>{props.text}</p>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={props.handleNo} data-cy="no-button">No</Button>
+      <Button onClick={props.handleYes} data-cy="yes-button">Yes</Button>
+    </DialogActions>
+  </Dialog>
 );

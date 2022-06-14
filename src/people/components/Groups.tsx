@@ -1,7 +1,7 @@
 import React from "react";
 import { DisplayBox, ApiHelper, UniqueIdHelper, Loading } from "."
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
+import { Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 
 interface Props { personId: string }
 
@@ -19,11 +19,11 @@ export const Groups: React.FC<Props> = (props) => {
       const items = [];
       for (let i = 0; i < groupMembers.length; i++) {
         let gm = groupMembers[i];
-        items.push(<tr key={gm.id}><td><i className="fas fa-list"></i> <Link to={"/groups/" + gm.groupId}>{gm.group.name}</Link></td></tr>);
+        items.push(<TableRow key={gm.id}><TableCell><Icon>group</Icon> <Link to={"/groups/" + gm.groupId}>{gm.group.name}</Link></TableCell></TableRow>);
       }
-      return (<Table size="sm"><tbody>{items}</tbody></Table>)
+      return (<Table size="small"><TableBody>{items}</TableBody></Table>)
     }
   }
 
-  return <DisplayBox headerIcon="fas fa-list" headerText="Groups">{getRecords()}</DisplayBox>
+  return <DisplayBox headerIcon="group" headerText="Groups">{getRecords()}</DisplayBox>
 }

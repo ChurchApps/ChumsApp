@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { Header, UserHelper } from "./components";
+import { UserHelper, Wrapper } from "./components";
 import { PeoplePage } from "./people/PeoplePage";
 import { PersonPage } from "./people/PersonPage";
 import { GroupsPage } from "./groups/GroupsPage";
@@ -14,22 +14,19 @@ import { Settings } from "./settings/Settings";
 import { FormPage } from "./forms/FormPage";
 import { ReportsPage } from "./reports/ReportsPage";
 import { ReportPage } from "./reports/ReportPage";
+import { Box } from "@mui/material";
 // import UserContext from "./UserContext";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
-  //to force rerender on login
-  // var user = React.useContext(UserContext)?.userName;
-  // var church = React.useContext(UserContext)?.churchName;
 
   if (UserHelper.churchChanged) {
     UserHelper.churchChanged = false;
     navigate("/people")
   }
   else return (
-    <>
-      <Header></Header>
-      <div className="container">
+    <Box sx={{ display: "flex", backgroundColor: "#EEE" }}>
+      <Wrapper>
         <Routes>
           <Route path="/people/:id" element={<PersonPage />} />
           <Route path="/people" element={<PeoplePage />} />
@@ -45,7 +42,8 @@ export const Authenticated: React.FC = () => {
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/settings/*" element={<Settings />} />
         </Routes>
-      </div>
-    </>
+      </Wrapper>
+    </Box>
+
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { QuestionInterface } from ".";
-import { Table, Button, FormGroup, FormLabel, FormControl } from "react-bootstrap";
+import { Table, TableBody, TableRow, TableCell, TableHead, FormLabel, TextField, Button } from "@mui/material"
 
 interface Props { question: QuestionInterface, updatedFunction: (question: QuestionInterface) => void }
 
@@ -8,7 +8,7 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
   const [choiceValue, setChoiceValue] = React.useState("");
   const [choiceText, setChoiceText] = React.useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     switch (e.target.name) {
       case "choiceValue": setChoiceValue(e.target.value); break;
       case "choiceText": setChoiceText(e.target.value); break;
@@ -39,30 +39,30 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
     if (props.question.choices) {
       for (let i = 0; i < props.question.choices?.length; i++) {
         let c = props.question.choices[i];
-        result.push(<tr key={i}>
-          <td>{c.value}</td>
-          <td>{c.text}</td>
-          <td><Button variant="danger" size="sm" onClick={handleRemove} data-index={i}>Remove</Button></td>
-        </tr>);
+        result.push(<TableRow key={i}>
+          <TableCell>{c.value}</TableCell>
+          <TableCell>{c.text}</TableCell>
+          <TableCell><Button variant="contained" size="small" onClick={handleRemove} data-index={i}>Remove</Button></TableCell>
+        </TableRow>);
       }
     }
     return result;
   }
 
   return (
-    <FormGroup>
+    <>
       <FormLabel>Choices</FormLabel>
-      <Table size="sm">
-        <thead><tr><th>Value</th><th>Text</th><th>Action</th></tr></thead>
-        <tbody>
+      <Table size="small">
+        <TableHead><TableRow><th>Value</th><th>Text</th><th>Action</th></TableRow></TableHead>
+        <TableBody>
           {getRows()}
-          <tr>
-            <td><FormControl size="sm" name="choiceValue" data-cy="value" value={choiceValue} onChange={handleChange} /></td>
-            <td><FormControl size="sm" name="choiceText" data-cy="text" value={choiceText} onChange={handleChange} /></td>
-            <td><Button id="addQuestionChoiceButton" data-cy="add-button" variant="success" size="sm" onClick={handleAdd}>Add</Button></td>
-          </tr>
-        </tbody>
+          <TableRow>
+            <TableCell><TextField label="Value" fullWidth size="small" name="choiceValue" data-cy="value" value={choiceValue} onChange={handleChange} /></TableCell>
+            <TableCell><TextField label="Text" fullWidth size="small" name="choiceText" data-cy="text" value={choiceText} onChange={handleChange} /></TableCell>
+            <TableCell><Button id="addQuestionChoiceButton" data-cy="add-button" variant="contained" size="small" onClick={handleAdd}>Add</Button></TableCell>
+          </TableRow>
+        </TableBody>
       </Table>
-    </FormGroup>
+    </>
   );
 }

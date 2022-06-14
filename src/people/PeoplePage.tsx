@@ -1,8 +1,8 @@
 import React from "react";
 import { PersonInterface } from "../appBase/interfaces";
 import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns } from "./components";
-import { Row, Col } from "react-bootstrap";
-import { PersonHelper } from "../helpers";
+import { Grid, Icon } from "@mui/material"
+import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
 
 export const PeoplePage = () => {
@@ -33,7 +33,7 @@ export const PeoplePage = () => {
 
   const loadData = () => {
     ApiHelper.get("/people/recent", "MembershipApi").then(data => {
-      setSearchResults(data.map((d: PersonInterface) => PersonHelper.getExpandedPersonObject(d)))
+      setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
     });
   }
 
@@ -48,9 +48,8 @@ export const PeoplePage = () => {
   const getEditContent = () => {
     if (searchResults == null) return <></>;
     else return (<>
-      <PeopleColumns selectedColumns={selectedColumns} toggleColumn={handleToggleColumn} columns={columns} />
-
       <ExportLink data={searchResults} filename="people.csv" /> &nbsp;
+      <PeopleColumns selectedColumns={selectedColumns} toggleColumn={handleToggleColumn} columns={columns} />
     </>);
   }
 
@@ -58,17 +57,17 @@ export const PeoplePage = () => {
 
   return (
     <>
-      <h1><i className="fas fa-user"></i> People</h1>
-      <Row>
-        <Col lg={8}>
-          <DisplayBox id="peopleBox" headerIcon="fas fa-user" headerText="People" editContent={getEditContent()}>
+      <h1><Icon>person</Icon> Search People</h1>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
+          <DisplayBox id="peopleBox" headerIcon="person" headerText="People" editContent={getEditContent()}>
             <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} />
           </DisplayBox>
-        </Col>
-        <Col lg={4}>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <PeopleSearch updateSearchResults={(people) => setSearchResults(people)} />
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
     </>
   );
 }

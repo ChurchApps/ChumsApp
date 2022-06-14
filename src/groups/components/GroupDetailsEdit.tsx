@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, GroupInterface, InputBox, ErrorMessages, ServiceTimesEdit } from ".";
 import { Navigate } from "react-router-dom";
-import { Row, Col, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
 
 interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }
 
@@ -12,14 +12,14 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
 
   const handleCancel = () => props.updatedFunction(group);
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
     let g = { ...group };
-    switch (e.currentTarget.name) {
-      case "categoryName": g.categoryName = e.currentTarget.value; break;
-      case "name": g.name = e.currentTarget.value; break;
-      case "trackAttendance": g.trackAttendance = (e.currentTarget.value === "true"); break;
-      case "parentPickup": g.parentPickup = (e.currentTarget.value === "true"); break;
+    switch (e.target.name) {
+      case "categoryName": g.categoryName = e.target.value; break;
+      case "name": g.name = e.target.value; break;
+      case "trackAttendance": g.trackAttendance = (e.target.value === "true"); break;
+      case "parentPickup": g.parentPickup = (e.target.value === "true"); break;
     }
     setGroup(g);
   }
@@ -51,45 +51,37 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
 
   if (redirect !== "") return <Navigate to={redirect} />
   else return (
-    <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="fas fa-list" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
+    <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
       <ErrorMessages errors={errors} />
-      <Row>
-        <Col>
-          <FormGroup>
-            <FormLabel>Category Name</FormLabel>
-            <FormControl type="text" name="categoryName" value={group.categoryName} onChange={handleChange} onKeyDown={handleKeyDown} />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <FormLabel>Group Name</FormLabel>
-            <FormControl type="text" name="name" value={group.name} onChange={handleChange} onKeyDown={handleKeyDown} />
-          </FormGroup>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <FormGroup>
-            <FormLabel htmlFor="trackAttendance">Track Attendance</FormLabel>
-            <FormControl as="select" id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </FormControl>
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <FormLabel>Parent Pickup</FormLabel>
-            <FormControl as="select" name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </FormControl>
-          </FormGroup>
-        </Col>
-      </Row>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={12}>
+          <TextField fullWidth type="text" name="categoryName" label="Category Name" value={group.categoryName} onChange={handleChange} onKeyDown={handleKeyDown} />
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <TextField fullWidth label="Group Name" type="text" name="name" value={group.name} onChange={handleChange} onKeyDown={handleKeyDown} />
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={12}>
+          <FormControl fullWidth>
+            <InputLabel>Track Attendance</InputLabel>
+            <Select label="Track Attendance" id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+              <MenuItem value="false">No</MenuItem>
+              <MenuItem value="true">Yes</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <FormControl fullWidth>
+            <InputLabel>Parent Pickup</InputLabel>
+            <Select label="Parent Pickup" name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+              <MenuItem value="false">No</MenuItem>
+              <MenuItem value="true">Yes</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
       <ServiceTimesEdit group={group} />
-
     </InputBox>
   );
 }
-

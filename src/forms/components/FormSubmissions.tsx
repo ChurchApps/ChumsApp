@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { AnswerInterface, ApiHelper, DateHelper, DisplayBox, ExportLink, FormSubmissionInterface, MemberPermissionInterface, PersonInterface, QuestionInterface } from ".";
-import { Table, Row, Col, Card, ListGroup } from "react-bootstrap";
 import { useReactToPrint } from "react-to-print";
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 
 interface Props { formId: string, memberPermissions: MemberPermissionInterface };
 
@@ -79,7 +79,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     let results: JSX.Element[] = [];
     summaryValues.forEach((sv: any, i: number) => {
       const key: string = Object.keys(sv)[0];
-      results.push(<ListGroup.Item key={sv.text + "-" + i}>{`${sv.text}: ${sv[key]}`}</ListGroup.Item>);
+      results.push(<div key={sv.text + "-" + i}>{`${sv.text}: ${sv[key]}`}</div>);
     });
     return results;
   }
@@ -88,14 +88,10 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     let results: JSX.Element[] = [];
     summary.forEach((s: any, i: number) => {
       results.push(
-        <Col xs={12} md={6} key={s.id + "-" + i}>
-          <Card style={{ marginBottom: "10px" }}>
-            <Card.Header>{s.title}</Card.Header>
-            <ListGroup variant="flush">
-              {getResultCount(s.values)}
-            </ListGroup>
-          </Card>
-        </Col>
+        <Grid item xs={12} md={6} key={s.id + "-" + i}>
+          <h4>{s.title}</h4>
+          {getResultCount(s.values)}
+        </Grid>
       );
     });
     return results;
@@ -114,11 +110,11 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   const getTableRows = () => {
     let rows: JSX.Element[] = [];
     formSubmissions.forEach((submission: any, i: number) => {
-      rows.push(<tr key={i}>
-        <td key="personName"><a href={"/people/" + submission.person.id}>{submission.person.name}</a></td>
-        <td key="subDate">{DateHelper.prettyDate(new Date(submission.submissionDate))}</td>
+      rows.push(<TableRow key={i}>
+        <TableCell key="personName"><a href={"/people/" + submission.person.id}>{submission.person.name}</a></TableCell>
+        <TableCell key="subDate">{DateHelper.prettyDate(new Date(submission.submissionDate))}</TableCell>
         {getAnswers(submission)}
-      </tr>);
+      </TableRow>);
     });
     return rows;
   }
@@ -127,15 +123,15 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
     formSubmission.questions.forEach((question: QuestionInterface) => {
       let answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id);
-      rows.push(<td key={question.id}>{answer?.value || "-"}</td>);
+      rows.push(<TableCell key={question.id}>{answer?.value || "-"}</TableCell>);
     });
     return rows;
   }
 
   const getFormSubmissions = () => (
     <Table className="table-scroll-x">
-      <thead><tr key="header">{getTableHeader()}</tr></thead>
-      <tbody>{getTableRows()}</tbody>
+      <TableHead><TableRow key="header">{getTableHeader()}</TableRow></TableHead>
+      <TableBody>{getTableRows()}</TableBody>
     </Table>
   );
 
@@ -144,7 +140,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     return (
       <>
         <ExportLink data={summaryCsv} spaceAfter={true} filename={formName} />
-        <a aria-label="print-summary" href="about:blank" onClick={(e) => { e.preventDefault(); handleSummaryPrint(); }}><i className="fas fa-print"></i></a>
+        <a aria-label="print-summary" href="about:blank" onClick={(e) => { e.preventDefault(); handleSummaryPrint(); }}><Icon>print</Icon></a>
       </>
     );
   }
@@ -152,17 +148,17 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.formId]); //eslint-disable-line
 
   return (
-    <Row>
-      <Col lg={8} className="form-submission-summary">
+    <Grid container spacing={3}>
+      <Grid item md={8} xs={12} className="form-submission-summary">
         <div ref={contentRef} className="form-submission-summary">
-          <DisplayBox headerText="Form Submission Summary" headerIcon="fas fa-users" editContent={getEditLinks()}>
-            <Row>{getSummary()}</Row>
+          <DisplayBox headerText="Form Submission Summary" headerIcon="group" editContent={getEditLinks()}>
+            <Grid container spacing={3}>{getSummary()}</Grid>
           </DisplayBox>
-          <DisplayBox headerText="Form Submission Results" headerIcon="fas fa-users">
+          <DisplayBox headerText="Form Submission Results" headerIcon="group">
             {getFormSubmissions()}
           </DisplayBox>
         </div>
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
 }

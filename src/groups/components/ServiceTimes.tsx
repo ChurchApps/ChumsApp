@@ -1,6 +1,6 @@
 import React from "react";
 import { ApiHelper, GroupInterface, GroupServiceTimeInterface } from ".";
-
+import { Table, TableBody, TableRow, TableCell } from "@mui/material";
 interface Props { group: GroupInterface }
 
 export const ServiceTimes: React.FC<Props> = (props) => {
@@ -21,14 +21,14 @@ export const ServiceTimes: React.FC<Props> = (props) => {
   React.useEffect(() => { if (props.group.id !== undefined) loadData() }, [props.group, loadData]);
 
   return (
-    <table>
-      <tbody>
-        <tr>
-          <td><label>Service(s):</label></td>
-          <td>{getRows()}</td>
-        </tr>
-      </tbody>
-    </table>
+    <Table>
+      <TableBody>
+        <TableRow>
+          <TableCell><label>Service(s):</label></TableCell>
+          <TableCell>{getRows()}</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
 
   );
 }

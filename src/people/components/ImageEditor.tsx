@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { InputBox, PersonHelper, PersonInterface } from ".";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { Button } from "react-bootstrap";
+import { SmallButton } from "../../appBase/components";
 
 interface Props {
   person: PersonInterface,
@@ -30,7 +30,7 @@ export const ImageEditor = ({ person, updatedFunction, onCancel }: Props) => {
 
   const getHeaderButton = () => (<div>
     <input type="file" onChange={handleUpload} id="fileUpload" accept="image/*" style={{ display: "none" }} />
-    <Button size="sm" variant="info" onClick={(e: React.MouseEvent) => { e.preventDefault(); document.getElementById("fileUpload").click(); }}>Upload</Button>
+    <SmallButton icon="upload" text="Upload" onClick={() => { document.getElementById("fileUpload").click(); }} />
   </div>)
 
   const cropperRef = React.useRef<HTMLImageElement>(null);

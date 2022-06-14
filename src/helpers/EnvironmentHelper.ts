@@ -1,6 +1,7 @@
 import { ApiHelper } from "../appBase/helpers/ApiHelper";
+import { EnvironmentHelperBase } from "../appBase/helpers/EnvironmentHelperBase";
 
-export class EnvironmentHelper {
+export class EnvironmentHelper extends EnvironmentHelperBase {
   private static AccessApi = "";
   private static AttendanceApi = "";
   private static GivingApi = "";
@@ -8,12 +9,13 @@ export class EnvironmentHelper {
   private static ReportingApi = "";
   static B1Url = "";
 
-  static ContentRoot = "";
   static AccountsAppUrl = "";
   static ChurchAppsUrl = "";
   static GoogleAnalyticsTag = "";
 
   static init = () => {
+    //this.initProd();
+
     switch (process.env.REACT_APP_STAGE) {
       case "staging": EnvironmentHelper.initStaging(); break;
       case "prod": EnvironmentHelper.initProd(); break;
@@ -26,6 +28,7 @@ export class EnvironmentHelper {
       { keyName: "MembershipApi", url: EnvironmentHelper.MembershipApi, jwt: "", permisssions: [] },
       { keyName: "ReportingApi", url: EnvironmentHelper.ReportingApi, jwt: "", permisssions: [] }
     ];
+    EnvironmentHelperBase.ContentRoot = this.ContentRoot;
   }
 
   static initDev = () => {

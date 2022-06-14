@@ -1,3 +1,4 @@
+import { Icon } from "@mui/material";
 import React from "react";
 import { UserHelper, Permissions, FormMembers, Form, MemberPermissionInterface, FormSubmissions, FormInterface } from ".";
 
@@ -36,7 +37,7 @@ export const Tabs: React.FC<Props> = (props) => {
 
   return (
     <>
-      <h1><i className="fas fa-list"></i> {props.form.name}</h1>
+      <h1><Icon>list</Icon> {props.form.name}</h1>
       <ul className="nav nav-tabs">{tabs}</ul>{currentTab}
     </>
   );

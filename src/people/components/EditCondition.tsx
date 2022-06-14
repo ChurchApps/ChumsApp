@@ -1,6 +1,6 @@
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
 import { ApiHelper, SearchCondition } from ".";
-import { Button, FormControl } from "react-bootstrap";
 import { Permissions } from "."
 import { GroupInterface } from "../../helpers";
 interface Props {
@@ -13,17 +13,19 @@ export function EditCondition(props: Props) {
   const [loadedOptions, setLoadedOptions] = React.useState<any[]>([]);
   const [loadedOptionsField, setLoadedOptionsField] = React.useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     let c = { ...condition }
-    switch (e.currentTarget.id) {
+    console.log(e.target.name)
+    switch (e.target.name) {
+
       case "field":
-        c.field = e.currentTarget.value;
+        c.field = e.target.value;
         break;
       case "operator":
-        c.operator = e.currentTarget.value;
+        c.operator = e.target.value;
         break;
       case "value":
-        c.value = e.currentTarget.value;
+        c.value = e.target.value;
         break;
     }
     setCondition(c);
@@ -38,47 +40,45 @@ export function EditCondition(props: Props) {
   }
 
   const getValueField = () => {
-    let options: JSX.Element = <></>;
+    let options: JSX.Element[] = [];
     let result: JSX.Element = null;
     switch (condition.field) {
       case "gender":
-        options = <><option value="Unspecified">Unspecified</option><option value="Male">Male</option><option value="Female">Female</option></>
+        options = [<MenuItem value="Unspecified">Unspecified</MenuItem>, <MenuItem value="Male">Male</MenuItem>, <MenuItem value="Female">Female</MenuItem>]
         setDefaultValue("Unspecified");
         result = getValueSelect(options);
         break;
       case "maritalStatus":
-        options = <><option value="Unknown">Unknown</option><option value="Single">Single</option><option value="Married">Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></>
+        options = [<MenuItem value="Unknown">Unknown</MenuItem>, <MenuItem value="Single">Single</MenuItem>, <MenuItem value="Married">Married</MenuItem>, <MenuItem value="Divorced">Divorced</MenuItem>, <MenuItem value="Widowed">Widowed</MenuItem>]
         setDefaultValue("Unknown");
         result = getValueSelect(options);
         break;
       case "membershipStatus":
-        options = <><option value="Visitor">Visitor</option><option value="Member">Member</option><option value="Staff">Staff</option></>
+        options = [<MenuItem value="Visitor">Visitor</MenuItem>, <MenuItem value="Member">Member</MenuItem>, <MenuItem value="Staff">Staff</MenuItem>]
         setDefaultValue("Visitor");
         result = getValueSelect(options);
         break;
       case "groupMember":
-        let optionItems: JSX.Element[] = [];
-        loadedOptions.forEach(o => { optionItems.push(<option value={JSON.stringify(o)}>{o.text}</option>); });
-        options = <>{optionItems}</>
+        loadedOptions.forEach(o => { options.push(<MenuItem value={JSON.stringify(o)}>{o.text}</MenuItem>); });
         setDefaultValue((loadedOptions?.length > 0) ? JSON.stringify(loadedOptions[0]) : "");
         result = getValueSelect(options);
         break;
       case "birthMonth":
       case "anniversaryMonth":
-        options = <><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></>
+        options = [<MenuItem value="1">January</MenuItem>, <MenuItem value="2">February</MenuItem>, <MenuItem value="3">March</MenuItem>, <MenuItem value="4">April</MenuItem>, <MenuItem value="5">May</MenuItem>, <MenuItem value="6">June</MenuItem>, <MenuItem value="7">July</MenuItem>, <MenuItem value="8">August</MenuItem>, <MenuItem value="9">September</MenuItem>, <MenuItem value="10">October</MenuItem>, <MenuItem value="11">November</MenuItem>, <MenuItem value="12">December</MenuItem>]
         setDefaultValue("1");
         result = getValueSelect(options);
         break;
       case "birthDate":
       case "anniversary":
-        result = <FormControl type="date" style={{ marginBottom: 5 }} id="value" placeholder="Value" value={condition.value} onChange={handleChange} />
+        result = <TextField fullWidth label="Value" type="date" style={{ marginBottom: 5 }} name="value" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
       case "age":
       case "yearsMarried":
-        result = <FormControl type="number" style={{ marginBottom: 5 }} id="value" placeholder="Value" value={condition.value} onChange={handleChange} />
+        result = <TextField fullWidth label="Value" type="number" style={{ marginBottom: 5 }} name="value" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
       default:
-        result = <FormControl style={{ marginBottom: 5 }} id="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} />
+        result = <TextField fullWidth label="Value" style={{ marginBottom: 5 }} name="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
     }
     return result;
@@ -97,28 +97,32 @@ export function EditCondition(props: Props) {
     }
   }, [condition?.field.toString()]); //eslint-disable-line
 
-  const getValueSelect = (options: JSX.Element) => (<FormControl as="select" style={{ marginBottom: 5 }} id="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange}>
-    {options}
+  const getValueSelect = (options: JSX.Element[]) => (<FormControl fullWidth>
+    <InputLabel>Value</InputLabel>
+    <Select name="value" label="Value" type="text" placeholder="Value" value={condition.value} onChange={handleChange}>
+      {options}
+    </Select>
   </FormControl>)
 
   const getOperatorOptions = () => {
-    let result = <>
-      <option value="equals">=</option>
-      <option value="contains">contains</option>
-      <option value="startsWith">starts with</option>
-      <option value="endsWith">ends with</option>
-      <option value="greaterThan">&gt;</option>
-      <option value="greaterThanEqual">&gt;=</option>
-      <option value="lessThan">&lt;</option>
-      <option value="lessThanEqual">&lt;=</option>
-      <option value="notEquals">!=</option>
-    </>
+    let result = [
+      <MenuItem value="equals">=</MenuItem>,
+      <MenuItem value="contains">contains</MenuItem>,
+      <MenuItem value="startsWith">starts with</MenuItem>,
+      <MenuItem value="endsWith">ends with</MenuItem>,
+      <MenuItem value="greaterThan">&gt;</MenuItem>,
+      <MenuItem value="greaterThanEqual">&gt;=</MenuItem>,
+      <MenuItem value="lessThan">&lt;</MenuItem>,
+      <MenuItem value="lessThanEqual">&lt;=</MenuItem>,
+      <MenuItem value="notEquals">!=</MenuItem>
+    ]
+
     switch (condition?.field) {
       case "gender":
-        result = <>
-          <option value="equals">=</option>
-          <option value="notEquals">!=</option>
-        </>
+        result = [
+          <MenuItem value="equals">=</MenuItem>,
+          <MenuItem value="notEquals">!=</MenuItem>
+        ]
         break;
       case "groupMember":
         if (condition.operator !== "in" && condition.operator !== "notIn") {
@@ -126,50 +130,55 @@ export function EditCondition(props: Props) {
           c.operator = "in";
           setCondition(c);
         }
-        result = <>
-          <option value="in">is member of</option>
-          <option value="notIn">is not member of</option>
-        </>
+        result = [
+          <MenuItem value="in">is member of</MenuItem>,
+          <MenuItem value="notIn">is not member of</MenuItem>
+        ]
         break;
     }
     return result;
   }
 
   return <>
-    <FormControl as="select" style={{ marginBottom: 5 }} id="field" type="text" placeholder="Value" value={condition.field} onChange={handleChange}>
-      <optgroup label="Person">
-        <option value="displayName">Display Name</option>
-        <option value="firstName">First Name</option>
-        <option value="lastName">Last Name</option>
-        <option value="middleName">Middle Name</option>
-        <option value="nickName">Nick Name</option>
-        <option value="prefix">Prefix</option>
-        <option value="suffix">Suffix</option>
-        <option value="birthDate">Birth Date</option>
-        <option value="birthMonth">Birth Month</option>
-        <option value="age">Age</option>
-        <option value="gender">Gender</option>
-        <option value="maritalStatus">Marital Status</option>
-        <option value="anniversary">Anniversary</option>
-        <option value="anniversaryMonth">Anniversary Month</option>
-        <option value="yearsMarried">Years Married</option>
-        <option value="phone">Phone</option>
-        <option value="email">Email</option>
-        <option value="address">Address</option>
-        <option value="city">City</option>
-        <option value="state">State/Province</option>
-        <option value="zip">Zip/Postal</option>
-      </optgroup>
-      <optgroup label="Membership">
-        <option value="membershipStatus">Membership Status</option>
-        {(Permissions.membershipApi.groupMembers) && <option value="groupMember">Group Member</option>}
-      </optgroup>
+    <FormControl fullWidth>
+      <InputLabel>Field</InputLabel>
+      <Select name="field" label="Field" type="text" value={condition.field} onChange={handleChange}>
+        <MenuItem value="person" disabled>Person</MenuItem>
+        <MenuItem value="displayName">Display Name</MenuItem>
+        <MenuItem value="firstName">First Name</MenuItem>
+        <MenuItem value="lastName">Last Name</MenuItem>
+        <MenuItem value="middleName">Middle Name</MenuItem>
+        <MenuItem value="nickName">Nick Name</MenuItem>
+        <MenuItem value="prefix">Prefix</MenuItem>
+        <MenuItem value="suffix">Suffix</MenuItem>
+        <MenuItem value="birthDate">Birth Date</MenuItem>
+        <MenuItem value="birthMonth">Birth Month</MenuItem>
+        <MenuItem value="age">Age</MenuItem>
+        <MenuItem value="gender">Gender</MenuItem>
+        <MenuItem value="maritalStatus">Marital Status</MenuItem>
+        <MenuItem value="anniversary">Anniversary</MenuItem>
+        <MenuItem value="anniversaryMonth">Anniversary Month</MenuItem>
+        <MenuItem value="yearsMarried">Years Married</MenuItem>
+        <MenuItem value="phone">Phone</MenuItem>
+        <MenuItem value="email">Email</MenuItem>
+        <MenuItem value="address">Address</MenuItem>
+        <MenuItem value="city">City</MenuItem>
+        <MenuItem value="state">State/Province</MenuItem>
+        <MenuItem value="zip">Zip/Postal</MenuItem>
+        <MenuItem value="membership" disabled>Membership</MenuItem>
+        <MenuItem value="membershipStatus">Membership Status</MenuItem>
+        {(Permissions.membershipApi.groupMembers) && <MenuItem value="groupMember">Group Member</MenuItem>}
+      </Select>
     </FormControl>
-    <FormControl as="select" style={{ marginBottom: 5 }} id="operator" type="text" placeholder="Value" value={condition.operator} onChange={handleChange}>
-      {getOperatorOptions()}
+    <FormControl fullWidth>
+      <InputLabel>Operator</InputLabel>
+      <Select name="operator" label="Operator" type="text" placeholder="Value" value={condition.operator} onChange={handleChange}>
+        {getOperatorOptions()}
+      </Select>
     </FormControl>
+
     {getValueField()}
-    <Button variant="success" className="btn-block" onClick={() => { props.conditionAdded(condition) }}>Save Condition</Button>
+    <Button variant="outlined" style={{ width: "100%" }} onClick={() => { props.conditionAdded(condition) }}>Save Condition</Button>
   </>
 }
 

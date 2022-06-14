@@ -1,16 +1,16 @@
 import React from "react";
 import { DisplayBox } from "../components";
-import { Row, Col } from "react-bootstrap";
+import { Grid, Icon } from "@mui/material"
 import { Link } from "react-router-dom";
 
 export const ReportsPage = () => {
   console.log("report page")
   return (
     <>
-      <h1><i className="fas fa-table"></i> Reports</h1>
-      <Row>
-        <Col lg={8}>
-          <DisplayBox id="reportsBox" headerIcon="fas fa-table" headerText="Reports">
+      <h1><Icon>summarize</Icon> Reports</h1>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
+          <DisplayBox id="reportsBox" headerIcon="summarize" headerText="Reports">
             <ul>
               <li><Link to="/reports/birthdays">Birthdays</Link></li>
               <li><Link to="/reports/attendanceTrend">Attendance Trend</Link></li>
@@ -20,8 +20,8 @@ export const ReportsPage = () => {
             </ul>
 
           </DisplayBox>
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
     </>
   );
 }

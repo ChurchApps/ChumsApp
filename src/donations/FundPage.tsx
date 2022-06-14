@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper } from "./components";
 import { useParams, Link } from "react-router-dom";
-import { Row, Col, FormGroup, FormControl, FormLabel, Table } from "react-bootstrap";
+import { Table, TableBody, TableRow, TableCell, TableHead, Grid, TextField, Icon } from "@mui/material"
 
 export const FundPage = () => {
   const params = useParams();
@@ -56,21 +56,21 @@ export const FundPage = () => {
     let result: JSX.Element[] = [];
 
     if (fundDonations.length === 0) {
-      result.push(<tr key="0">No donations yet</tr>);
+      result.push(<TableRow key="0">No donations yet</TableRow>);
       return result;
     }
 
     for (let i = 0; i < fundDonations.length; i++) {
       let fd = fundDonations[i];
       let personCol = (UniqueIdHelper.isMissing(fd.donation?.personId))
-        ? (<td>Anonymous</td>)
-        : (<td><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || "Anonymous"}</Link></td>);
-      result.push(<tr key={i}>
-        <td>{DateHelper.formatHtml5Date(fd.donation.donationDate)}</td>
-        <td><Link data-cy={`batchId-${fd.donation.batchId}-${i}`} to={"/donations/" + fd.donation.batchId}>{fd.donation.batchId}</Link></td>
+        ? (<TableCell>Anonymous</TableCell>)
+        : (<TableCell><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || "Anonymous"}</Link></TableCell>);
+      result.push(<TableRow key={i}>
+        <TableCell>{DateHelper.formatHtml5Date(fd.donation.donationDate)}</TableCell>
+        <TableCell><Link data-cy={`batchId-${fd.donation.batchId}-${i}`} to={"/donations/" + fd.donation.batchId}>{fd.donation.batchId}</Link></TableCell>
         {personCol}
-        <td>{CurrencyHelper.formatCurrency(fd.amount)}</td>
-      </tr>);
+        <TableCell>{CurrencyHelper.formatCurrency(fd.amount)}</TableCell>
+      </TableRow>);
 
     }
     return result;
@@ -83,7 +83,7 @@ export const FundPage = () => {
       return rows;
     }
 
-    rows.push(<tr key="header"><th>Date</th><th>Batch</th><th>Donor</th><th>Amount</th></tr>);
+    rows.push(<TableRow key="header"><th>Date</th><th>Batch</th><th>Donor</th><th>Amount</th></TableRow>);
     return rows;
   }
 
@@ -94,37 +94,28 @@ export const FundPage = () => {
     let contents = <Loading />
     if (fundDonations) {
       contents = (<Table>
-        <thead>{getTableHeader()}</thead>
-        <tbody>{getRows()}</tbody>
+        <TableHead>{getTableHeader()}</TableHead>
+        <TableBody>{getRows()}</TableBody>
       </Table>);
     }
 
     return (
       <>
-        <h1><i className="fas fa-hand-holding-usd"></i> {fund.name} Donations</h1>
-        <Row>
-          <Col lg={8}>
-            <DisplayBox headerIcon="fas fa-hand-holding-usd" headerText="Donations" editContent={getEditContent()}>
+        <h1><Icon>volunteer_activism</Icon> {fund.name} Donations</h1>
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
+            <DisplayBox headerIcon="volunteer_activism" headerText="Donations" editContent={getEditContent()}>
               {contents}
             </DisplayBox>
-          </Col>
-          <Col lg={4}>
-            <InputBox headerIcon="fas fa-filter" headerText="Donation Filter" saveFunction={loadDonations} saveText="Filter">
-              <FormGroup>
-                <FormLabel>Start Date</FormLabel>
-                <FormControl name="startDate" type="date" data-cy="start-date" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel>End Date</FormLabel>
-                <FormControl name="endDate" type="date" data-cy="end-date" value={DateHelper.formatHtml5Date(endDate)} onChange={handleChange} />
-              </FormGroup>
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <InputBox headerIcon="filter_alt" headerText="Donation Filter" saveFunction={loadDonations} saveText="Filter">
+              <TextField fullWidth label="Start Date" name="startDate" type="date" data-cy="start-date" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} />
+              <TextField fullWidth label="End Date" name="endDate" type="date" data-cy="end-date" value={DateHelper.formatHtml5Date(endDate)} onChange={handleChange} />
             </InputBox>
-          </Col>
-        </Row>
-
+          </Grid>
+        </Grid>
       </>
     );
   }
-
 }
-

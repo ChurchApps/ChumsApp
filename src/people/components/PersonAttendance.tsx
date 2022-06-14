@@ -1,8 +1,8 @@
 import React from "react";
 import { DisplayBox, ApiHelper, AttendanceRecordInterface, DateHelper, GroupInterface, UniqueIdHelper, Loading } from ".";
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
+import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 interface Props { personId: string }
 
@@ -21,7 +21,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
 
     if (records.length === 0) {
-      rows.push(<tr key="0">No attendance records.  Attendance will appear once attendance has been tracked for a group session.</tr>);
+      rows.push(<TableRow key="0">No attendance records.  Attendance will appear once attendance has been tracked for a group session.</TableRow>);
       return rows;
     }
 
@@ -35,29 +35,29 @@ export const PersonAttendance: React.FC<Props> = (props) => {
 
       let cols: JSX.Element[] = [];
       let showRest = false;
-      if (r.visitDate === lastVisitDate && !showRest) cols.push(<td></td>);
+      if (r.visitDate === lastVisitDate && !showRest) cols.push(<TableCell></TableCell>);
       else {
-        cols.push(<td><i className="far fa-calendar-alt"></i> {DateHelper.formatHtml5Date(r.visitDate)}</td>);
+        cols.push(<TableCell><Icon>calendar_month</Icon> {DateHelper.formatHtml5Date(r.visitDate)}</TableCell>);
         lastVisitDate = r.visitDate;
         showRest = true;
       }
-      if (r.campus?.id === lastCampusId && !showRest) cols.push(<td></td>);
+      if (r.campus?.id === lastCampusId && !showRest) cols.push(<TableCell></TableCell>);
       else {
-        cols.push(<td><i className="fas fa-church"></i> {r.campus?.name}</td>);
+        cols.push(<TableCell><Icon>church</Icon> {r.campus?.name}</TableCell>);
         lastCampusId = r.campus?.id;
         showRest = true;
       }
-      if (r.service?.id === lastServiceId && !showRest) cols.push(<td></td>);
+      if (r.service?.id === lastServiceId && !showRest) cols.push(<TableCell></TableCell>);
       else {
-        cols.push(<td><i className="fas fa-calendar-alt"></i> {r.service?.name}</td>);
+        cols.push(<TableCell><Icon>calendar_month</Icon> {r.service?.name}</TableCell>);
         lastServiceId = r.service?.id;
         showRest = true;
       }
-      if (r.serviceTime === undefined) cols.push(<td></td>);
-      else cols.push(<td><i className="far fa-clock"></i> {r.serviceTime?.name}</td>);
-      if (group === null) cols.push(<td><i className="fas fa-list"></i></td>);
-      else cols.push(<td><i className="fas fa-list"></i> <Link to={"/groups/" + group.id}>{group.name}</Link></td>)
-      rows.push(<tr>{cols}</tr>);
+      if (r.serviceTime === undefined) cols.push(<TableCell></TableCell>);
+      else cols.push(<TableCell><Icon>schedule</Icon> {r.serviceTime?.name}</TableCell>);
+      if (group === null) cols.push(<TableCell><Icon>group</Icon></TableCell>);
+      else cols.push(<TableCell><Icon>group</Icon> <Link to={"/groups/" + group.id}>{group.name}</Link></TableCell>)
+      rows.push(<TableRow>{cols}</TableRow>);
     }
     return rows;
   }
@@ -66,11 +66,11 @@ export const PersonAttendance: React.FC<Props> = (props) => {
 
   const getTable = () => {
     if (!records || !groups) return <Loading />;
-    else return (<Table><tbody>{getRows()}</tbody></Table>);
+    else return (<Table><TableBody>{getRows()}</TableBody></Table>);
   }
 
   return (
-    <DisplayBox headerIcon="far fa-calendar-alt" headerText="Attendance">
+    <DisplayBox headerIcon="calendar_month" headerText="Attendance">
       {getTable()}
     </DisplayBox>
   );

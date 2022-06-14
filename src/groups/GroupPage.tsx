@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, MembersAdd, DisplayBox, GroupInterface, GroupDetails, PersonAdd, PersonInterface, Tabs, SessionAdd, SessionInterface, PersonHelper } from "./components";
 import { useParams } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
+import { Grid, Icon } from "@mui/material"
 
 export const GroupPage = () => {
   const params = useParams();
@@ -28,7 +28,7 @@ export const GroupPage = () => {
   const getSidebarModules = () => {
     const result = [] as JSX.Element[];
     if (addSessionVisible) result.push(<SessionAdd key="sessionAdd" group={group} updatedFunction={handleSessionAdd} />);
-    if (addPersonVisible) result.push(<DisplayBox key="displayBox" id="personAddBox" headerIcon="fas fa-user" headerText="Add Person"><PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} /></DisplayBox>);
+    if (addPersonVisible) result.push(<DisplayBox key="displayBox" id="personAddBox" headerIcon="person" headerText="Add Person"><PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} /></DisplayBox>);
     if (addMemberVisible) result.push(<MembersAdd key="membersAdd" group={group} addFunction={addPerson} />);
     return result;
   }
@@ -46,14 +46,14 @@ export const GroupPage = () => {
 
   return (
     <>
-      <h1><i className="fas fa-list"></i> {group.name}</h1>
-      <Row>
-        <Col lg={8}>
+      <h1><Icon>people</Icon> {group?.name}</h1>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <GroupDetails group={group} updatedFunction={handleGroupUpdated} />
           <Tabs group={group} addedPerson={addedPerson} addedSession={addedSession} addedCallback={handleAddedCallback} sidebarVisibilityFunction={handleSidebarVisibility} />
-        </Col>
-        <Col lg={4}>{getSidebarModules()}</Col>
-      </Row>
+        </Grid>
+        <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
+      </Grid>
     </>
   );
 }

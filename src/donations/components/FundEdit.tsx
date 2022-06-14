@@ -37,7 +37,7 @@ export const FundEdit: React.FC<Props> = (props) => {
   React.useEffect(() => { setFund(props.fund); }, [props.fund]);
 
   return (
-    <InputBox id="fundsBox" headerIcon="fas fa-hand-holding-usd" headerText="Edit Fund" cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete}>
+    <InputBox id="fundsBox" headerIcon="volunteer_activism" headerText="Edit Fund" cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete}>
       <ErrorMessages errors={errors} />
       <div className="form-group">
         <label>Name</label>

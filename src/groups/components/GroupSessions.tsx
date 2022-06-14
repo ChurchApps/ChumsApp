@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading } from ".";
-import { Table, Button, InputGroup, FormControl } from "react-bootstrap";
 import { ArrayHelper } from "../../helpers";
+import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, Grid } from "@mui/material"
 
 interface Props {
   group: GroupInterface,
@@ -46,23 +46,23 @@ export const GroupSessions: React.FC<Props> = (props) => {
     let result: JSX.Element[] = [];
     for (let i = 0; i < visitSessions.length; i++) {
       let vs = visitSessions[i];
-      let editLink = (canEdit) ? (<a href="about:blank" onClick={handleRemove} className="text-danger" data-personid={vs.visit.personId}><i className="fas fa-user-times"></i> Remove</a>) : null;
+      let editLink = (canEdit) ? (<a href="about:blank" onClick={handleRemove} className="text-danger" data-personid={vs.visit.personId}><Icon>person_remove</Icon> Remove</a>) : null;
       let person = ArrayHelper.getOne(people, "id", vs.visit.personId);
       if (person) {
         result.push(
-          <tr key={vs.id}>
-            <td><img className="personPhoto" src={PersonHelper.getPhotoUrl(person)} alt="avatar" /></td>
-            <td><a className="personName" href={"/people/person.aspx?id=" + vs.visit.personId}>{person?.name?.display}</a></td>
-            <td>{editLink}</td>
-          </tr>
+          <TableRow key={vs.id}>
+            <TableCell><img className="personPhoto" src={PersonHelper.getPhotoUrl(person)} alt="avatar" /></TableCell>
+            <TableCell><a className="personName" href={"/people/person.aspx?id=" + vs.visit.personId}>{person?.name?.display}</a></TableCell>
+            <TableCell>{editLink}</TableCell>
+          </TableRow>
         );
       }
     }
     return result;
   }
 
-  const selectSession = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    for (let i = 0; i < sessions.length; i++) if (sessions[i].id === e.currentTarget.value) setSession(sessions[i]);
+  const selectSession = (e: SelectChangeEvent<string>) => {
+    for (let i = 0; i < sessions.length; i++) if (sessions[i].id === e.target.value) setSession(sessions[i]);
   }
 
   const getSessionOptions = () => {
@@ -74,11 +74,26 @@ export const GroupSessions: React.FC<Props> = (props) => {
   const getHeaderSection = () => {
     if (!UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit)) return null;
     else return (
+      <Grid container>
+        <Grid>
+          <FormControl style={{ width: 130, marginTop: 0 }} size="small">
+            <InputLabel>Session</InputLabel>
+            <Select fullWidth label="New Session" value={session?.id} onChange={selectSession}>
+              {getSessionOptions()}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid>
+          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>calendar_month</Icon> New</Button>
+        </Grid>
+      </Grid>
+    );
+    /*else return (
       <InputGroup>
         <FormControl as="select" value={session?.id} onChange={selectSession}>{getSessionOptions()}</FormControl>
-        <InputGroup.Append><Button variant="primary" onClick={handleAdd} data-cy="create-new-session"><i className="far fa-calendar-alt"></i> New</Button></InputGroup.Append>
+        <InputGroup.Append><Button variant="primary" onClick={handleAdd} data-cy="create-new-session"><Icon>calendar_month</Icon> New</Button></InputGroup.Append>
       </InputGroup>
-    );
+    );*/
   }
 
   const handleSessionSelected = React.useCallback(() => {
@@ -107,12 +122,12 @@ export const GroupSessions: React.FC<Props> = (props) => {
       <span className="float-right"><ExportLink data={visitSessions} spaceAfter={true} filename="visits.csv" /></span>
       <b data-cy="session-present-msg">Attendance for {props.group.name}</b>
       <Table id="groupMemberTable">
-        <thead><tr><th></th><th>Name</th><th></th></tr></thead>
-        <tbody>{getRows()}</tbody>
+        <TableHead><TableRow><th></th><th>Name</th><th></th></TableRow></TableHead>
+        <TableBody>{getRows()}</TableBody>
       </Table>
     </>);
   }
 
-  return (<DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText="Sessions" headerIcon="far fa-calendar-alt" editContent={getHeaderSection()}>{content}</DisplayBox>);
+  return (<DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText="Sessions" headerIcon="calendar_month" editContent={getHeaderSection()}>{content}</DisplayBox>);
 }
 

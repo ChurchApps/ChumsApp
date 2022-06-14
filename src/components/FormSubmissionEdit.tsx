@@ -84,6 +84,6 @@ export const FormSubmissionEdit: React.FC<Props> = (props) => {
     for (let i = 0; i < questions.length; i++) questionList.push(<QuestionEdit key={questions[i].id} question={questions[i]} answer={getAnswer(questions[i].id)} changeFunction={handleChange} />);
   }
 
-  return <InputBox id="formSubmissionBox" headerText={formSubmission?.form?.name || "Edit Form"} headerIcon="fas fa-user" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={getDeleteFunction()}>{questionList}</InputBox>;
+  return <InputBox id="formSubmissionBox" headerText={formSubmission?.form?.name || "Edit Form"} headerIcon="person" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={getDeleteFunction()}>{questionList}</InputBox>;
 }
 

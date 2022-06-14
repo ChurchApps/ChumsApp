@@ -1,11 +1,11 @@
 import React from "react";
-import { PersonHelper, AssociatedForms, PersonInterface, Loading } from "."
-import { Row, Col } from "react-bootstrap";
+import { PersonHelper, AssociatedForms, PersonInterface, Loading, DisplayBox } from "."
+import { Grid, Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 
 interface Props {
   id?: string,
   person: PersonInterface
-  editFunction: (e: React.MouseEvent) => void,
+  editFunction: () => void,
   updatedFunction: () => void
 }
 
@@ -28,11 +28,11 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
 
         let homeLabel = "Home";
         if (p.contactInfo.email) {
-          contactMethods.push(<tr key="email"><td><label>{homeLabel}</label></td><td><i className="far fa-envelope"></i></td><td><a href={"mailto:" + p.contactInfo.email}>{p.contactInfo.email}</a></td></tr>);
+          contactMethods.push(<TableRow key="email"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>mail</Icon></TableCell><TableCell><a href={"mailto:" + p.contactInfo.email}>{p.contactInfo.email}</a></TableCell></TableRow>);
           homeLabel = "";
         }
         if (p.contactInfo.homePhone) {
-          contactMethods.push(<tr key="homePhone"><td><label>{homeLabel}</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.homePhone}</td></tr>);
+          contactMethods.push(<TableRow key="homePhone"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell>{p.contactInfo.homePhone}</TableCell></TableRow>);
           homeLabel = "";
         }
 
@@ -42,39 +42,30 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
           if (p.contactInfo.address2) lines.push(<div key="address2">{p.contactInfo.address2}</div>);
           lines.push(<div key="contactInfo">{p.contactInfo.city}, {p.contactInfo.state} {p.contactInfo.zip}</div>);
 
-          contactMethods.push(<tr key="address"><td><label>{homeLabel}</label></td><td><i className="fas fa-map-marker-alt"></i></td><td>{lines}</td></tr>);
+          contactMethods.push(<TableRow key="address"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>home_pin</Icon></TableCell><TableCell>{lines}</TableCell></TableRow>);
         }
-        if (p.contactInfo.mobilePhone) contactMethods.push(<tr key="mobilePHone"><td><label>Mobile</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.mobilePhone}</td></tr>);
-        if (p.contactInfo.workPhone) contactMethods.push(<tr key="workPhone"><td><label>Work</label></td><td><i className="fas fa-phone"></i></td><td>{p.contactInfo.workPhone}</td></tr>);
+        if (p.contactInfo.mobilePhone) contactMethods.push(<TableRow key="mobilePHone"><TableCell><label>Mobile</label></TableCell><TableCell><Icon>phone_iphone</Icon></TableCell><TableCell>{p.contactInfo.mobilePhone}</TableCell></TableRow>);
+        if (p.contactInfo.workPhone) contactMethods.push(<TableRow key="workPhone"><TableCell><label>Work</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell>{p.contactInfo.workPhone}</TableCell></TableRow>);
       }
 
-      return (<Row>
-        <Col xs={3}>
+      return (<Grid container spacing={3}>
+        <Grid item xs={3}>
           <img src={PersonHelper.getPhotoUrl(person)} className="img-fluid profilePic" aria-label="personImage" id="imgPreview" alt="avatar" />
-        </Col>
-        <Col xs={9}>
+        </Grid>
+        <Grid item xs={9}>
           <h2>{person?.name.display}</h2>
-          <Row>
-            <Col lg={6}>{leftAttributes}</Col>
-            <Col lg={6}><table className="contactTable"><tbody>{contactMethods}</tbody></table></Col>
-          </Row>
-        </Col>
-      </Row>);
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>{leftAttributes}</Grid>
+            <Grid item md={6} xs={12}><Table className="contactTable"><TableBody>{contactMethods}</TableBody></Table></Grid>
+          </Grid>
+        </Grid>
+      </Grid>);
     }
   }
 
   return (
-    <div id={id} className="inputBox" data-cy="person-details-box">
-      <div className="header">
-        <Row>
-          <Col xs={8}><i className="fas fa-user"></i> Personal Details</Col>
-          <Col xs={4} style={{ textAlign: "right" }}><button className="fa-pull-right no-default-style" aria-label="editPerson" onClick={editFunction}><i className="fas fa-pencil-alt" /></button></Col>
-        </Row>
-      </div>
-      <div className="content">
-        {getFields()}
-      </div>
-      <AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />
-    </div>
+    <DisplayBox headerText="Person Details" editFunction={editFunction} footerContent={<AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />}>
+      {getFields()}
+    </DisplayBox>
   )
 }

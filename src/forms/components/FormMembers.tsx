@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup, Col, Row, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { DisplayBox, PersonAdd, PersonInterface } from ".";
 import { ApiHelper, MemberPermissionInterface, PersonHelper } from "../../helpers";
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button } from "@mui/material"
 
 interface Props { formId: string }
 
@@ -61,16 +61,16 @@ export const FormMembers: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
     formMembers.forEach(fm => {
       rows.push(
-        <tr key={fm.memberId}>
-          <td><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></td>
-          <td>
-            <ButtonGroup size="sm">
-              <Button variant={fm.action === "admin" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId, "admin") }}>Admin</Button>
-              <Button variant={fm.action === "view" ? "primary" : "outline-primary"} onClick={(e) => { handleActionChange(fm.memberId, "view") }}>View Only</Button>
-            </ButtonGroup>
-          </td>
-          <td>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} className="text-danger"><i className="fas fa-user-times"></i> Remove</a>}</td>
-        </tr>
+        <TableRow key={fm.memberId}>
+          <TableCell><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></TableCell>
+          <TableCell>
+            <Stack direction="row">
+              <Button variant={fm.action === "admin" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, "admin") }}>Admin</Button>
+              <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, "view") }}>View Only</Button>
+            </Stack>
+          </TableCell>
+          <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} className="text-danger"><Icon>person_remove</Icon> Remove</a>}</TableCell>
+        </TableRow>
       );
     });
     return rows;
@@ -78,14 +78,14 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<tr key="header"><th>Name</th><th>Permission</th><th>Action</th></tr>);
+    rows.push(<TableRow key="header"><th>Name</th><th>Permission</th><th>Action</th></TableRow>);
     return rows;
   }
 
   const getTable = () => (
     <Table id="formMembersTable">
-      <thead>{getTableHeader()}</thead>
-      <tbody>{getRows()}</tbody>
+      <TableHead>{getTableHeader()}</TableHead>
+      <TableBody>{getRows()}</TableBody>
     </Table>
   );
 
@@ -99,17 +99,17 @@ export const FormMembers: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.formId]);
 
   return (
-    <Row>
-      <Col lg={8}>
-        <DisplayBox headerText="Form Members" headerIcon="fas fa-users">
+    <Grid container spacing={3}>
+      <Grid item md={8} xs={12}>
+        <DisplayBox headerText="Form Members" headerIcon="group">
           {getTable()}
         </DisplayBox>
-      </Col>
-      <Col lg={4}>
-        <DisplayBox headerText="Add Person" headerIcon="fas fa-users">
+      </Grid>
+      <Grid item md={4} xs={12}>
+        <DisplayBox headerText="Add Person" headerIcon="person_add">
           <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} filterList={filterList} />
         </DisplayBox>
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
 }

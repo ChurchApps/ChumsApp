@@ -1,16 +1,7 @@
 import React from "react";
-import {
-  DisplayBox,
-  ApiHelper,
-  HouseholdEdit,
-  UserHelper,
-  PersonInterface,
-  Permissions,
-  UniqueIdHelper,
-  Loading, PersonHelper
-} from ".";
-import {Link} from "react-router-dom";
-import {Table} from "react-bootstrap";
+import { DisplayBox, ApiHelper, HouseholdEdit, UserHelper, PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper } from ".";
+import { Link } from "react-router-dom";
+import { Table, TableBody, TableRow, TableCell } from "@mui/material"
 
 interface Props {
   person: PersonInterface,
@@ -53,12 +44,12 @@ export const Household: React.FC<Props> = (props) => {
       for (let i = 0; i < members.length; i++) {
         let m = members[i];
         rows.push(
-          <tr key={m.id}>
-            <td><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></td>
-            <td><Link to={"/people/" + m.id}>{m.name.display}</Link>
+          <TableRow key={m.id}>
+            <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>
+            <TableCell><Link to={"/people/" + m.id}>{m.name.display}</Link>
               <div>{m.householdRole}</div>
-            </td>
-          </tr>
+            </TableCell>
+          </TableRow>
         );
       }
     }
@@ -67,17 +58,17 @@ export const Household: React.FC<Props> = (props) => {
 
   const getTable = () => {
     if (!members) return <Loading size="sm" />
-    else return (<Table size="sm" id="household">
-      <tbody>{getRows()}</tbody>
+    else return (<Table size="small" id="household">
+      <TableBody>{getRows()}</TableBody>
     </Table>);
   }
 
   if (mode === "display") {
     return (
-      <DisplayBox id="householdBox" headerIcon="fas fa-users" headerText={(household?.name || "") + " Household"} editFunction={getEditFunction()} ariaLabel="editHousehold">
+      <DisplayBox id="householdBox" headerIcon="group" headerText={(household?.name || "") + " Household"} editFunction={getEditFunction()} ariaLabel="editHousehold">
         {getTable()}
       </DisplayBox>
     );
-  } else return <HouseholdEdit household={household} members={members} updatedFunction={handleUpdate} person={props.person} />
+  } else return <HouseholdEdit household={household} currentMembers={members} updatedFunction={handleUpdate} currentPerson={props.person} />
 }
 

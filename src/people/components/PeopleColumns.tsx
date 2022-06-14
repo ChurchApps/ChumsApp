@@ -1,5 +1,6 @@
-import React, { SyntheticEvent } from "react";
-import { Dropdown } from "react-bootstrap";
+import { Grid, Icon, Menu, MenuItem } from "@mui/material";
+import React from "react";
+import { SmallButton } from "../../appBase/components";
 
 interface Props {
   columns: { key: string, label: string, shortName: string }[],
@@ -8,33 +9,38 @@ interface Props {
 }
 
 export function PeopleColumns(props: Props) {
+  const [anchorEl, setAnchorEl] = React.useState<null | Element>(null);
 
-  const [show, setShow] = React.useState(false)
+  const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
+    e.preventDefault();
+    console.log(e.currentTarget);
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const getItems = () => {
     const result: JSX.Element[] = []
     props.columns.forEach(o => {
       const option = o;
       const selectedClass = (props.selectedColumns.indexOf(o.key) > -1) ? "checked" : ""
-      result.push(<Dropdown.Item key={option.key} className={selectedClass} onClick={(e) => { props.toggleColumn(option.key) }}><i className="fa fa-check-square"></i> {o.label}</Dropdown.Item>);
+      result.push(<Grid item md={6} xs={12}>
+        <MenuItem key={option.key} className={selectedClass} onClick={(e) => { props.toggleColumn(option.key) }}><Icon>check_box</Icon> {o.label}</MenuItem>
+      </Grid>);
     });
     return result;
   }
-
-  const handleToggle = (isOpen: boolean, e: SyntheticEvent<Dropdown, Event>, metadata: any) => {
-    if (metadata.source !== "select") setShow(!show);
-  }
-
   return (
-    <Dropdown alignRight={true} id="fieldsDropdown" style={{ float: "right" }} onSelect={() => false} show={show} onToggle={handleToggle}>
-      <Dropdown.Toggle id="dropdown-custom-components" className="btn-sm">
-        <i className="fa fa-columns" style={{ color: "#FFF" }}></i>
-        Fields
-      </Dropdown.Toggle>
+    <>
+      <SmallButton icon="view_column" text="fields" onClick={handleClick} />
+      <Menu id="fieldsMenu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        <Grid container spacing={3} style={{ maxWidth: 400 }}>
+          {getItems()}
+        </Grid>
 
-      <Dropdown.Menu>
-        {getItems()}
-      </Dropdown.Menu>
-    </Dropdown>
+      </Menu>
+    </>
   )
 }

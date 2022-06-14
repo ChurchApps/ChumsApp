@@ -1,27 +1,33 @@
 import React, { ChangeEvent } from "react"
-import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, UpdateHouseHold } from "."
-import { Table, Form } from "react-bootstrap"
-import * as yup from "yup"
-import { Formik, FormikHelpers } from "formik"
+import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, UpdateHouseHold, ErrorMessages } from "."
+import { Icon, Table, TableBody, TableCell, TableRow, TextField } from "@mui/material"
 
-const schema = yup.object().shape({
-  name: yup.string().required("Household name is required")
-})
+interface Props { updatedFunction: () => void, household: HouseholdInterface, currentMembers: PersonInterface[], currentPerson: PersonInterface }
 
-interface Props { updatedFunction: () => void, household: HouseholdInterface, members: PersonInterface[], person: PersonInterface }
-
-export function HouseholdEdit({ updatedFunction, household, members: currentMembers, person: currentPerson }: Props) {
-  const [members, setMembers] = React.useState<PersonInterface[]>([...currentMembers]);
+export function HouseholdEdit(props: Props) {
+  const [members, setMembers] = React.useState<PersonInterface[]>([...props.currentMembers]);
   const [showAdd, setShowAdd] = React.useState(false);
   const [showUpdateAddressModal, setShowUpdateAddressModal] = React.useState<boolean>(false)
   const [text, setText] = React.useState("");
   const [selectedPerson, setSelectedPerson] = React.useState<PersonInterface>(null)
-  const initialValues: HouseholdInterface = { name: "", ...household }
+  const [household, setHousehold] = React.useState<HouseholdInterface>({ name: "" });
+  const [errors, setErrors] = React.useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   function handleRemove(index: number) {
     let m = [...members];
     m.splice(index, 1);
     setMembers(m);
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setErrors([]);
+    const h = { ...household } as HouseholdInterface;
+    let value = e.target.value;
+    switch (e.target.name) {
+      case "name": h.name = value; break;
+    }
+    setHousehold(h);
   }
 
   function handleChangeRole(e: ChangeEvent<HTMLSelectElement>, index: number) {
@@ -36,24 +42,34 @@ export function HouseholdEdit({ updatedFunction, household, members: currentMemb
       addPerson(person);
       return;
     }
-    setText(`Would you like to update ${person.name.first}"s address to match ${currentPerson.name.first}"s (${PersonHelper.addressToString(currentPerson.contactInfo)})?`);
+    setText(`Would you like to update ${person.name.first}"s address to match ${props.currentPerson.name.first}"s (${PersonHelper.addressToString(props.currentPerson.contactInfo)})?`);
     setShowUpdateAddressModal(true);
   }
 
   function addPerson(person?: PersonInterface) {
     const addPerson: PersonInterface = person || selectedPerson;
-    addPerson.householdId = household.id;
+    addPerson.householdId = props.household.id;
     addPerson.householdRole = "Other";
     let m = [...members];
     m.push(addPerson);
     setMembers(m);
   }
 
-  function handleSave(values: HouseholdInterface, { setSubmitting }: FormikHelpers<HouseholdInterface>) {
-    let promises = [];
-    promises.push(ApiHelper.post("/households", [values], "MembershipApi"));
-    promises.push(ApiHelper.post("/people/household/" + values.id, members, "MembershipApi"));
-    Promise.all(promises).then(() => updatedFunction()).finally(() => setSubmitting(false));
+  const validate = () => {
+    const result = [];
+    if (!household.name) result.push("Please provide a household name.");
+    setErrors(result);
+    return result.length === 0;
+  }
+
+  function handleSave() {
+    if (validate()) {
+      setIsSubmitting(true);
+      let promises = [];
+      promises.push(ApiHelper.post("/households", [household], "MembershipApi"));
+      promises.push(ApiHelper.post("/people/household/" + household.id, members, "MembershipApi"));
+      Promise.all(promises).then(() => props.updatedFunction()).finally(() => setIsSubmitting(false));
+    }
   }
 
   function handleNo() {
@@ -63,7 +79,7 @@ export function HouseholdEdit({ updatedFunction, household, members: currentMemb
 
   async function handleYes() {
     setShowUpdateAddressModal(false);
-    selectedPerson.contactInfo = PersonHelper.changeOnlyAddress(selectedPerson.contactInfo, currentPerson.contactInfo);
+    selectedPerson.contactInfo = PersonHelper.changeOnlyAddress(selectedPerson.contactInfo, props.currentPerson.contactInfo);
     try {
       await ApiHelper.post("/people", [selectedPerson], "MembershipApi");
     } catch (err) {
@@ -73,9 +89,9 @@ export function HouseholdEdit({ updatedFunction, household, members: currentMemb
   }
 
   const rows = members.map((m, index) => (
-    <tr key={m.id}>
-      <td><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></td>
-      <td>
+    <TableRow key={m.id}>
+      <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>
+      <TableCell>
         {m.name.display}
         <select value={m.householdRole || ""} aria-label="role" onChange={(e) => handleChangeRole(e, index)} className="form-control form-control-sm">
           <option value="Head">Head</option>
@@ -83,56 +99,34 @@ export function HouseholdEdit({ updatedFunction, household, members: currentMemb
           <option value="Child">Child</option>
           <option value="Other">Other</option>
         </select>
-      </td>
-      <td><button onClick={() => handleRemove(index)} className="text-danger no-default-style"><i className="fas fa-user-times"></i> Remove</button></td>
-    </tr>
+      </TableCell>
+      <TableCell><button onClick={() => handleRemove(index)} className="text-danger no-default-style"><Icon>person_remove</Icon> Remove</button></TableCell>
+    </TableRow>
   ))
 
-  let personAdd = (showAdd) ? <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={currentPerson} /> : null;
+  React.useEffect(() => { setHousehold(props.household) }, [props.household]);
+
+  let personAdd = (showAdd) ? <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={props.currentPerson} /> : null;
   return (
     <>
       <UpdateHouseHold show={showUpdateAddressModal} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} text={text} />
-      <Formik
-        validationSchema={schema}
-        onSubmit={handleSave}
-        initialValues={initialValues}
-        enableReinitialize={true}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          values,
-          touched,
-          errors,
-          isSubmitting
-        }) => (
-          <InputBox id="householdBox" headerIcon="fas fa-users" headerText={values.name + " Household"} isSubmitting={isSubmitting} saveFunction={handleSubmit} cancelFunction={updatedFunction}>
-            <Form noValidate>
-              <Form.Group>
-                <Form.Label htmlFor="name">Household Name</Form.Label>
-                <Form.Control
-                  name="name"
-                  id="name"
-                  type="text"
-                  value={values.name}
-                  onChange={handleChange}
-                  isInvalid={touched.name && !!errors.name}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.name}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Form>
-            <Table size="sm" id="householdMemberTable">
-              <tbody>
-                {rows}
-                <tr><td></td><td></td><td><button className="text-success no-default-style" aria-label="addMember" onClick={() => setShowAdd(true)}> <i className="fas fa-user"></i> Add</button></td></tr>
-              </tbody>
-            </Table>
-            {personAdd}
-          </InputBox>
-        )}
-      </Formik>
+      <InputBox id="householdBox" headerIcon="group" headerText={household?.name + " Household"} isSubmitting={isSubmitting} saveFunction={handleSave} cancelFunction={props.updatedFunction}>
+        <ErrorMessages errors={errors} />
+        <TextField fullWidth name="name" id="name" type="text" value={household?.name} onChange={handleChange} label="Household Name" />
+        <Table size="small" id="householdMemberTable">
+          <TableBody>
+            {rows}
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell>
+                <button className="text-success no-default-style" aria-label="addMember" onClick={() => setShowAdd(true)}> <Icon>person_add</Icon> Add</button>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        {personAdd}
+      </InputBox>
     </>
   );
 }

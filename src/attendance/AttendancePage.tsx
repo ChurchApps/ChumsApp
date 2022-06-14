@@ -1,8 +1,7 @@
 import React from "react";
 import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit, ServiceEdit, ServiceInterface, ServiceTimeEdit, ServiceTimeInterface, Tabs, GroupServiceTimeInterface, GroupInterface, ArrayHelper, Loading } from "./components";
-
 import { Link } from "react-router-dom";
-import { Row, Col, Table } from "react-bootstrap";
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
@@ -39,7 +38,7 @@ export const AttendancePage = () => {
     const rows: JSX.Element[] = [];
 
     if (attendance.length === 0) {
-      rows.push(<tr key="0"><td>Group attendance will show up once sessions have been added to a group and people have attended those sessions.</td></tr>);
+      rows.push(<TableRow key="0"><TableCell>Group attendance will show up once sessions have been added to a group and people have attended those sessions.</TableCell></TableRow>);
       return rows;
     }
 
@@ -54,13 +53,13 @@ export const AttendancePage = () => {
   }
 
   const getRow = (campus: CampusInterface, service: ServiceInterface, serviceTime: ServiceTimeInterface, group: GroupInterface, key: string) => {
-    let campusHtml = (campus === undefined || campus?.name === lastCampus) ? <></> : <><i className="fas fa-church"></i><a href="about:blank" onClick={(e) => { e.preventDefault(); selectCampus(campus); }}>{campus.name}</a></>
-    let serviceHtml = (service === undefined || service?.name === lastService) ? <></> : <><i className="far fa-calendar-alt"></i><a href="about:blank" onClick={(e) => { e.preventDefault(); selectService(service); }}>{service.name}</a></>
-    let serviceTimeHtml = (serviceTime === undefined || serviceTime?.name === lastServiceTime) ? <></> : <><i className="far fa-clock"></i><a href="about:blank" onClick={(e) => { e.preventDefault(); selectServiceTime(serviceTime); }}>{serviceTime.name}</a></>
-    let categoryHtml = (group === undefined || group?.categoryName === lastCategory) ? <></> : <><i className="far fa-folder"></i>{group.categoryName}</>
-    let groupHtml = (group === undefined) ? <></> : <><i className="fas fa-list"></i><Link to={"/groups/" + group.id}>{group.name}</Link></>
+    let campusHtml = (campus === undefined || campus?.name === lastCampus) ? <></> : <><Icon>church</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectCampus(campus); }}>{campus.name}</a></>
+    let serviceHtml = (service === undefined || service?.name === lastService) ? <></> : <><Icon>calendar_month</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectService(service); }}>{service.name}</a></>
+    let serviceTimeHtml = (serviceTime === undefined || serviceTime?.name === lastServiceTime) ? <></> : <><Icon>schedule</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectServiceTime(serviceTime); }}>{serviceTime.name}</a></>
+    let categoryHtml = (group === undefined || group?.categoryName === lastCategory) ? <></> : <><Icon>folder</Icon>{group.categoryName}</>
+    let groupHtml = (group === undefined) ? <></> : <><Icon>list</Icon><Link to={"/groups/" + group.id}>{group.name}</Link></>
 
-    const result = (<tr key={key}><td>{campusHtml}</td><td>{serviceHtml}</td><td>{serviceTimeHtml}</td><td>{categoryHtml}</td><td>{groupHtml}</td></tr>)
+    const result = (<TableRow key={key}><TableCell>{campusHtml}</TableCell><TableCell>{serviceHtml}</TableCell><TableCell>{serviceTimeHtml}</TableCell><TableCell>{categoryHtml}</TableCell><TableCell>{groupHtml}</TableCell></TableRow>)
 
     lastCampus = campus?.name;
     lastService = service?.name;
@@ -92,11 +91,11 @@ export const AttendancePage = () => {
 
   const getEditLinks = () => (
     <>
-      <a id="addBtnGroup" aria-label="addButton" data-cy="add-button" type="button" data-toggle="dropdown" aria-expanded="false" href="about:blank"><i className="fas fa-plus"></i></a>
+      <a id="addBtnGroup" aria-label="addButton" data-cy="add-button" type="button" data-toggle="dropdown" aria-expanded="false" href="about:blank"><Icon>add</Icon></a>
       <div className="dropdown-menu" aria-labelledby="addBtnGroup">
-        <a className="dropdown-item" data-cy="add-campus" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectCampus({ id: "", name: "New Campus" }); }}><i className="fas fa-church"></i> Add Campus</a>
-        <a className="dropdown-item" aria-label="addService" data-cy="add-service" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectService({ id: "", campusId: "", name: "New Service" }); }}><i className="fas fa-calendar-alt"></i> Add Service</a>
-        <a className="dropdown-item" data-cy="add-service-time" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectServiceTime({ id: "", serviceId: "", name: "New Service Time" }); }}><i className="far fa-clock"></i> Add Service Time</a>
+        <a className="dropdown-item" data-cy="add-campus" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectCampus({ id: "", name: "New Campus" }); }}><Icon>church</Icon> Add Campus</a>
+        <a className="dropdown-item" aria-label="addService" data-cy="add-service" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectService({ id: "", campusId: "", name: "New Service" }); }}><Icon>calendar_month</Icon> Add Service</a>
+        <a className="dropdown-item" data-cy="add-service-time" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectServiceTime({ id: "", serviceId: "", name: "New Service Time" }); }}><Icon>more_time</Icon> Add Service Time</a>
       </div>
     </>
   )
@@ -104,36 +103,35 @@ export const AttendancePage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (attendance.length === 0) return rows;
-    rows.push(<tr key="header"><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></tr>);
+    rows.push(<TableRow key="header"><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></TableRow>);
     return rows;
   }
 
   const getTable = () => {
     if (!attendance) return <Loading />
-    else return (<Table size="sm">
-      <thead>{getTableHeader()}</thead>
-      <tbody>{getRows()}</tbody>
+    else return (<Table size="small">
+      <TableHead>{getTableHeader()}</TableHead>
+      <TableBody>{getRows()}</TableBody>
     </Table>);
   }
 
   return (
-    <form method="post">
-      <h1><i className="far fa-calendar-alt"></i> Attendance</h1>
-      <Row>
-        <Col lg={8}>
-          <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="fas fa-list" headerText="Groups" editContent={getEditLinks()}>
+    <>
+      <h1><Icon>calendar_month</Icon> Attendance</h1>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
+          <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="group" headerText="Groups" editContent={getEditLinks()}>
             {getTable()}
           </DisplayBox>
-        </Col>
-        <Col lg={4}>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <CampusEdit campus={selectedCampus} updatedFunction={handleUpdated} />
           <ServiceEdit service={selectedService} updatedFunction={handleUpdated} />
           <ServiceTimeEdit serviceTime={selectedServiceTime} updatedFunction={handleUpdated} />
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
       <Tabs />
-
-    </form>
+    </>
   );
 }
 

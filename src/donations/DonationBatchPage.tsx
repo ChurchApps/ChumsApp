@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, DonationEdit, DonationBatchInterface, UserHelper, Donations, FundInterface, Permissions } from "./components";
 import { useParams } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
+import { Grid, Icon } from "@mui/material"
 
 export const DonationBatchPage = () => {
   const params = useParams();
@@ -29,11 +29,11 @@ export const DonationBatchPage = () => {
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return (<></>);
   return (
     <>
-      <h1 data-cy="batch-heading"><i className="fas fa-hand-holding-usd"></i> Batch #{batch.id}</h1>
-      <Row>
-        <Col lg={8}><Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} funds={funds} /></Col>
-        <Col lg={4}>{getSidebarModules()}</Col>
-      </Row>
+      <h1><Icon>volunteer_activism</Icon> Batch # {batch.id}</h1>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}><Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} funds={funds} /></Grid>
+        <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
+      </Grid>
     </>
   );
 }

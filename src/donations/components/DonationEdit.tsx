@@ -1,3 +1,4 @@
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
 import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, DateHelper, PersonInterface, UniqueIdHelper, PersonHelper } from ".";
 import { FundDonations } from "../../appBase/donationComponents/components/FundDonations";
@@ -9,13 +10,11 @@ export const DonationEdit: React.FC<Props> = (props) => {
   const [donation, setDonation] = React.useState<DonationInterface>({});
   const [fundDonations, setFundDonations] = React.useState<FundDonationInterface[]>([]);
   const [showSelectPerson, setShowSelectPerson] = React.useState(false);
-
-  //const getEditContent = () => { return (<a href="about:blank"><i className="fas fa-plus"></i></a>); }
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     let d = { ...donation } as DonationInterface;
     let value = e.target.value;
-    switch (e.currentTarget.name) {
+    switch (e.target.name) {
       case "notes": d.notes = value; break;
       case "date": d.donationDate = new Date(value); break;
       case "method": d.method = value; break;
@@ -113,29 +112,23 @@ export const DonationEdit: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.donationId]); //eslint-disable-line
 
   return (
-    <InputBox id="donationBox" data-cy="donation-box" headerIcon="fas fa-hand-holding-usd" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
+    <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
       <div className="form-group">
         <label>Person</label>
         {getPersonSection()}
       </div>
-      <div className="form-group">
-        <label>Date</label>
-        <input type="date" className="form-control" name="date" value={DateHelper.formatHtml5Date(donation.donationDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
-      </div>
-      <div className="form-group">
-        <label>Method</label>
-        <select name="method" className="form-control" value={donation.method} onChange={handleChange} onKeyDown={handleKeyDown}>
-          <option value="Check">Check</option>
-          <option value="Cash">Cash</option>
-          <option value="Card">Card</option>
-        </select>
-      </div>
+      <TextField fullWidth label="Date" type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <FormControl fullWidth>
+        <InputLabel>Method</InputLabel>
+        <Select name="method" value={donation.method} onChange={handleChange} onKeyDown={handleKeyDown}>
+          <MenuItem value="Check">Check</MenuItem>
+          <MenuItem value="Cash">Cash</MenuItem>
+          <MenuItem value="Card">Card</MenuItem>
+        </Select>
+      </FormControl>
       {getMethodDetails()}
       <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
-      <div className="form-group">
-        <label>Notes</label>
-        <textarea className="form-control" data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown}></textarea>
-      </div>
+      <TextField fullWidth label="Notes" data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline />
     </InputBox>
   );
 }

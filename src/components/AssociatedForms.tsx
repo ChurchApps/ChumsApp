@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { FormSubmission, FormSubmissionEdit, FormSubmissionInterface, UserHelper, ApiHelper, Permissions } from "./";
-import { Button } from "react-bootstrap";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Icon } from "@mui/material";
 
 interface Props {
-    contentType: string,
-    contentId: string,
-    formSubmissions: FormSubmissionInterface[],
-    updatedFunction: () => void
+  contentType: string,
+  contentId: string,
+  formSubmissions: FormSubmissionInterface[],
+  updatedFunction: () => void
 }
 
 export const AssociatedForms: React.FC<Props> = (props) => {
@@ -15,6 +15,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   const [allForms, setAllForms] = useState(null);
   const [unsubmittedForms, setUnsubmittedForms] = useState([]);
   const [selectedFormId, setSelectedFormId] = useState<string>("");
+  const [expanded, setExpanded] = useState<string>("");
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const handleEdit = (formSubmissionId: string) => { setMode("edit"); setEditFormSubmissionId(formSubmissionId); }
@@ -35,34 +36,31 @@ export const AssociatedForms: React.FC<Props> = (props) => {
     let cards: any[] = [];
     const submittedCards = getSubmittedCards() || []; // when there are no submitted cards, function will return undefined
     const unsubmittedCards = getUnsubmittedCards();
-    cards.push(...submittedCards,...unsubmittedCards);
+    cards.push(...submittedCards, ...unsubmittedCards);
     return cards;
   }
 
   const getSubmittedCards = () => props.formSubmissions?.map(fs => (
-    <div key={fs.id} className="card">
-      <div className="card-header" id={"heading" + fs.id}>
-        <div>
-          <Button variant="link" data-toggle="collapse" data-target={"#collapse" + fs.id} aria-controls={"collapse" + fs.id}>{fs.form.name}</Button>
-        </div>
-      </div>
-      <div id={"collapse" + fs.id} className="collapse" aria-labelledby={"heading" + fs.id} data-parent="#formSubmissionsAccordion">
+    <Accordion expanded={expanded === "submitted" + fs.id} onChange={() => { setExpanded("submitted" + fs.id) }}>
+      <AccordionSummary>
+        <span>{fs.form.name}</span>
+      </AccordionSummary>
+      <AccordionDetails>
         <div className="card-body"><FormSubmission formSubmissionId={fs.id} editFunction={handleEdit} /> </div>
-      </div>
-    </div>
+      </AccordionDetails>
+    </Accordion>
   ))
 
   const getUnsubmittedCards = () => unsubmittedForms.map(uf => (
-    <div key={uf.id} className="card">
-      <div className="card-header" id={"heading" + uf.id}>
-        <div className="addableForm">
-          <button className="float-right text-success no-default-style" onClick={() => handleAdd(uf.id)}>
-            <i className="fas fa-plus" />
-          </button>
-          <span>{uf.name}</span>
-        </div>
-      </div>
-    </div>
+    <Accordion expanded={expanded === "unsubmitted" + uf.id} onChange={() => { setExpanded("unsubmitted" + uf.id) }}>
+      <AccordionSummary onClick={() => handleAdd(uf.id)}>
+        <Button variant="text" onClick={() => handleAdd(uf.id)}><Icon>add</Icon></Button>
+        <span>{uf.name}</span>
+      </AccordionSummary>
+      <AccordionDetails>
+      </AccordionDetails>
+    </Accordion>
+
   ))
 
   const determineUnsubmitted = () => {
@@ -89,5 +87,5 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   //add unRestrictedFormId=""
   if (!formPermission) return <></>
   if (mode === "edit") return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={selectedFormId} contentType={props.contentType} contentId={props.contentId} />;
-  else return <div className="accordion" id="formSubmissionsAccordion">{getCards()}</div>;
+  else return <div id="formSubmissionsAccordion">{getCards()}</div>;
 }

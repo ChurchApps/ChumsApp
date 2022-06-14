@@ -1,16 +1,5 @@
 import React from "react"
-import {PersonHelper, PersonInterface} from "./helpers";
-
-export interface UserContextInterface {
-  userName: string,
-  setUserName: (userName: string) => void,
-  churchName: string,
-  setChurchName: (churchName: string) => void,
-  profilePicture: string,
-  setProfilePicture: (profilePicture: string) => void,
-  person: PersonInterface | null,
-  setPerson: (person: PersonInterface) => void,
-}
+import { ChurchInterface, PersonInterface, UserContextInterface, UserInterface } from "./helpers";
 
 const UserContext = React.createContext<UserContextInterface | undefined>(undefined);
 
@@ -18,22 +7,24 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const UserProvider = ({children}: Props) => {
-  const [userName, setUserName] = React.useState("");
-  const [churchName, setChurchName] = React.useState("");
-  const [profilePicture, setProfilePicture] = React.useState(PersonHelper.getPhotoUrl(null));
-  const [person, setPerson] = React.useState(null);
+export const UserProvider = ({ children }: Props) => {
+  const [user, setUser] = React.useState<UserInterface>(null);
+  const [person, setPerson] = React.useState<PersonInterface>(null);
+  const [church, setChurch] = React.useState<ChurchInterface>(null);
+  const [churches, setChurches] = React.useState<ChurchInterface[]>(null);
+
   return <UserContext.Provider value={{
-    userName,
-    setUserName,
-    churchName,
-    setChurchName,
-    profilePicture,
-    setProfilePicture,
+    user,
+    setUser,
+    church,
+    setChurch,
+    churches,
+    setChurches,
     person,
     setPerson
   }}>{children} </UserContext.Provider>
 };
 
 export default UserContext;
+
 

@@ -1,10 +1,10 @@
 import React from "react";
 import { ApiHelper, GroupInterface, GroupServiceTimeInterface, ServiceTimeInterface } from ".";
-import { Table, InputGroup, Button, FormControl } from "react-bootstrap";
+import { Table, TableBody, TableRow, TableCell, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, MenuItem } from "@mui/material"
 
 interface Props {
-    group: GroupInterface,
-    updatedFunction?: (group: GroupInterface) => void
+  group: GroupInterface,
+  updatedFunction?: (group: GroupInterface) => void
 }
 
 export const ServiceTimesEdit: React.FC<Props> = (props) => {
@@ -26,14 +26,14 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     let result: JSX.Element[] = [];
     for (let i = 0; i < groupServiceTimes.length; i++) {
       let gst = groupServiceTimes[i];
-      result.push(<tr key={gst.id}><td><i className="far fa-clock"></i> {gst.serviceTime.name}</td><td><a href="about:blank" className="text-danger" data-id={gst.id} onClick={handleRemove}><i className="fas fa-user-times"></i> Remove</a></td></tr>);
+      result.push(<TableRow key={gst.id}><TableCell><Icon>schedule</Icon> {gst.serviceTime.name}</TableCell><TableCell><a href="about:blank" className="text-danger" data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> Remove</a></TableCell></TableRow>);
     }
     return result;
   }
 
   const getOptions = () => {
     let result: JSX.Element[] = [];
-    for (let i = 0; i < serviceTimes.length; i++) result.push(<option value={serviceTimes[i].id}>{serviceTimes[i].longName}</option>);
+    for (let i = 0; i < serviceTimes.length; i++) result.push(<MenuItem value={serviceTimes[i].id}>{serviceTimes[i].longName}</MenuItem>);
     return result;
   }
 
@@ -50,22 +50,22 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     ApiHelper.delete("/groupservicetimes/" + id.toString(), "AttendanceApi").then(loadData);
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => setAddServiceTimeId(e.currentTarget.value);
+  const handleChange = (e: SelectChangeEvent<string>) => setAddServiceTimeId(e.target.value);
 
   React.useEffect(() => { if (props.group.id !== undefined) loadData(); }, [props.group, loadData]);
 
   return (
     <div>
       <label>Service Times (optional)</label>
-      <Table><tbody>{getRows()}</tbody></Table>
-      <InputGroup>
-        <FormControl as="select" aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange}>{getOptions()}</FormControl>
-        <InputGroup.Append>
-          <Button variant="primary" data-cy="add-service-time" onClick={handleAdd}><i className="fas fa-plus"></i> Add</Button>
-        </InputGroup.Append>
-      </InputGroup>
+      <Table><TableBody>{getRows()}</TableBody></Table>
+      <FormControl fullWidth>
+        <InputLabel>Add Service Time</InputLabel>
+        <Select fullWidth label="Add Service Time" aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange} endAdornment={
+          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> Add</Button>
+        }>
+          {getOptions()}
+        </Select>
+      </FormControl>
     </div>
-
   );
 }
-

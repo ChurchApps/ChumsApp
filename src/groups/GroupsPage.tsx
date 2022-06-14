@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
-import { Row, Col, Table } from "react-bootstrap";
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
@@ -15,7 +15,7 @@ export const GroupsPage = () => {
         <>
           <ExportLink data={groups} spaceAfter={true} filename="groups.csv" />{" "}
           <button className="no-default-style" aria-label="addGroup" onClick={() => { setShowAdd(true); }}>
-            <i className="fas fa-plus"></i>
+            <Icon>add</Icon>
           </button>
         </>
       );
@@ -34,24 +34,24 @@ export const GroupsPage = () => {
     let rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
-      rows.push(<tr key="0"><td>No groups found. Please create a group.</td></tr>);
+      rows.push(<TableRow key="0"><TableCell>No groups found. Please create a group.</TableCell></TableRow>);
       return rows;
     }
 
     let lastCat = "";
     for (let i = 0; i < groups.length; i++) {
       let g = groups[i];
-      let cat = (g.categoryName !== lastCat) ? <><i className="far fa-folder"></i> {g.categoryName}</> : <></>
+      let cat = (g.categoryName !== lastCat) ? <><Icon>folder</Icon> {g.categoryName}</> : <></>
       let memberCount = g.memberCount === 1 ? "1 person" : g.memberCount.toString() + " people";
       rows.push(
-        <tr key={g.id}>
-          <td>{cat}</td>
-          <td>
-            <i className="fas fa-list"></i>{" "}
+        <TableRow key={g.id}>
+          <TableCell>{cat}</TableCell>
+          <TableCell>
+            <Icon>group</Icon>{" "}
             <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
-          </td>
-          <td>{memberCount}</td>
-        </tr>
+          </TableCell>
+          <TableCell>{memberCount}</TableCell>
+        </TableRow>
       );
       lastCat = g.categoryName;
     }
@@ -61,7 +61,7 @@ export const GroupsPage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<tr key="header"><th>Category</th><th>Name</th><th>People</th></tr>);
+    rows.push(<TableRow key="header"><th>Category</th><th>Name</th><th>People</th></TableRow>);
     return rows;
   }
 
@@ -70,22 +70,22 @@ export const GroupsPage = () => {
   const getTable = () => {
     if (isLoading) return <Loading />
     else return (<Table>
-      <thead>{getTableHeader()}</thead>
-      <tbody>{getRows()}</tbody>
+      <TableHead>{getTableHeader()}</TableHead>
+      <TableBody>{getRows()}</TableBody>
     </Table>);
   }
 
   return (
     <>
-      <h1><i className="fas fa-list"></i> Groups</h1>
-      <Row>
-        <Col lg={8}>
-          <DisplayBox id="groupsBox" headerIcon="fas fa-list" headerText="Groups" editContent={getEditContent()}>
+      <h1><Icon>people</Icon> Groups</h1>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
+          <DisplayBox id="groupsBox" headerIcon="group" headerText="Groups" editContent={getEditContent()}>
             {getTable()}
           </DisplayBox>
-        </Col>
-        <Col lg={4}>{addBox}</Col>
-      </Row>
+        </Grid>
+        <Grid item md={4} xs={12}>{addBox}</Grid>
+      </Grid>
     </>
   );
 };

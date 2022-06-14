@@ -3,15 +3,32 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ControlPanel } from "./ControlPanel";
 import { UserProvider } from "./UserContext";
 import { CookiesProvider } from "react-cookie";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+
+const mdTheme = createTheme({
+  palette: {
+    secondary: {
+      main: "#444444"
+    }
+  },
+  components: {
+    MuiTextField: { defaultProps: { margin: "normal" } },
+    MuiFormControl: { defaultProps: { margin: "normal" } }
+  }
+});
+
 
 const App: React.FC = () => (
   <UserProvider>
     <CookiesProvider>
-      <Router>
-        <Routes>
-          <Route path="/*" element={<ControlPanel />} />
-        </Routes>
-      </Router>
+      <ThemeProvider theme={mdTheme}>
+        <CssBaseline />
+        <Router>
+          <Routes>
+            <Route path="/*" element={<ControlPanel />} />
+          </Routes>
+        </Router>
+      </ThemeProvider>
     </CookiesProvider>
   </UserProvider>
 );

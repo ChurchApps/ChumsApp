@@ -1,3 +1,4 @@
+import { Icon } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { PersonHelper, DateHelper, NoteInterface } from "./";
 
@@ -30,10 +31,7 @@ export const Note: React.FC<Props> = (props) => {
           </div>
           <div>
             <button aria-label="editNote" className="no-default-style" onClick={() => props.showNoteBox(note.id)}>
-              <i
-                className="fas fa-pencil-alt"
-                style={{ color: "#03a9f4" }}
-              ></i>
+              <Icon style={{ color: "#03a9f4" }}>edit</Icon>
             </button>
           </div>
         </div>

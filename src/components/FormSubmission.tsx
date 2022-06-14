@@ -1,10 +1,10 @@
 import React from "react";
 import { Question, ApiHelper, FormSubmissionInterface, UserHelper, Permissions, UniqueIdHelper } from "./";
-import { Row, Col } from "react-bootstrap";
+import { Grid, Icon } from "@mui/material"
 
 interface Props {
-    formSubmissionId: string,
-    editFunction: (formSubmissionId: string) => void
+  formSubmissionId: string,
+  editFunction: (formSubmissionId: string) => void
 }
 
 export const FormSubmission: React.FC<Props> = (props) => {
@@ -14,7 +14,7 @@ export const FormSubmission: React.FC<Props> = (props) => {
   const handleEdit = (e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); props.editFunction(props.formSubmissionId); }
   const getEditLink = () => {
     if (!formPermission) return null;
-    else return (<a href="about:blank" className="fa-pull-right" onClick={handleEdit}><i className="fas fa-pencil-alt"></i></a>);
+    else return (<a href="about:blank" className="pull-right" onClick={handleEdit}><Icon>edit</Icon></a>);
   }
   const loadData = () => {
     if (!UniqueIdHelper.isMissing(props.formSubmissionId)) {
@@ -43,10 +43,10 @@ export const FormSubmission: React.FC<Props> = (props) => {
     <>
       {getEditLink()}
       <div className="content">
-        <Row>
-          <Col lg={6}>{firstHalf}</Col>
-          <Col lg={6}>{secondHalf}</Col>
-        </Row>
+        <Grid container spacing={3}>
+          <Grid item md={6} xs={12}>{firstHalf}</Grid>
+          <Grid item md={6} xs={12}>{secondHalf}</Grid>
+        </Grid>
       </div>
     </>
   );
