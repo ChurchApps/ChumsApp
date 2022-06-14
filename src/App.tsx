@@ -17,7 +17,6 @@ const mdTheme = createTheme({
   }
 });
 
-
 const App: React.FC = () => (
   <UserProvider>
     <CookiesProvider>

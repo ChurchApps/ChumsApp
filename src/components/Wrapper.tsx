@@ -22,6 +22,7 @@ export const Wrapper: React.FC<Props> = props => {
     if (!formPermission && context?.person?.id) {
       ApiHelper.get("/memberpermissions/member/" + context.person?.id, "MembershipApi").then(data => setIsFormMember(data.length));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formPermission]);
 
   const tabs = []

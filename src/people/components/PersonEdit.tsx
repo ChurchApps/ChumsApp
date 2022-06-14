@@ -14,10 +14,10 @@ interface Props {
 
 export function PersonEdit(props: Props) {
   const context = React.useContext(UserContext);
-  const [updatedPerson, setUpdatedPerson] = useState<PersonInterface>({ name: {}, contactInfo: {} })
+  const [updatedPerson] = useState<PersonInterface>({ name: {}, contactInfo: {} })
   const [redirect, setRedirect] = useState("");
   const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
-  const [text, setText] = useState("");
+  const [text] = useState("");
   const [members, setMembers] = useState<PersonInterface[]>(null);
   const formRef = useRef(null)
   const [errors, setErrors] = React.useState<string[]>([]);
@@ -29,7 +29,6 @@ export function PersonEdit(props: Props) {
     membershipStatus: "", gender: "", birthDate: null, maritalStatus: ""
   });
 
-
   //const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     setErrors([]);
@@ -40,7 +39,7 @@ export function PersonEdit(props: Props) {
       case "name.middle": p.name.middle = value; break;
       case "name.last": p.name.last = value; break;
       case "name.nick": p.name.nick = value; break;
-      case "name.last": p.contactInfo.email = value; break;
+      case "name.email": p.contactInfo.email = value; break;
       case "contactInfo.address1": p.contactInfo.address1 = value; break;
       case "contactInfo.address2": p.contactInfo.address2 = value; break;
       case "contactInfo.city": p.contactInfo.city = value; break;
@@ -58,7 +57,6 @@ export function PersonEdit(props: Props) {
     }
     setPerson(p);
   }
-
 
   function handleDelete() {
     if (window.confirm("Are you sure you wish to permanently delete this person record?"))
@@ -86,7 +84,6 @@ export function PersonEdit(props: Props) {
 
       if (ChumsPersonHelper.getExpandedPersonObject(person).id === context.person.id) context.setPerson(person);
       /*
-      
             if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {
               setText(`You updated the address to ${PersonHelper.addressToString(data.contactInfo)} for ${data.name.display}.  Would you like to apply that to the entire ${data.name.last} family?`)
               setShowUpdateAddressModal(true)
@@ -155,6 +152,7 @@ export function PersonEdit(props: Props) {
   }
 
   React.useEffect(() => { setPerson(props.person) }, [props.person]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchMembers, [props.person]);
 
   const editForm = (

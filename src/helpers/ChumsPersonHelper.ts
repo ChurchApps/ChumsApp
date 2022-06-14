@@ -12,7 +12,6 @@ export class ChumsPersonHelper {
     }
   }
 
-
   static getExpandedPersonObject(person: PersonInterface) {
     return {
       ...person,

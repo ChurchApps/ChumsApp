@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { ApiHelper, UserHelper, PersonInterface, PersonHelper } from "./components";
+import { ApiHelper } from "./components";
 import UserContext from "./UserContext";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { ChurchInterface, UserInterface } from "./helpers";
@@ -10,7 +10,7 @@ import { EnvironmentHelper } from "./helpers";
 import { Box } from "@mui/material";
 
 export const Login: React.FC = (props: any) => {
-  const [errors, setErrors] = React.useState<string[]>([])
+  const [errors] = React.useState<string[]>([])
   const [cookies] = useCookies();
   const location = useLocation();
 

@@ -18,8 +18,8 @@ export const FormPage = () => {
 
   React.useEffect(loadData, []); //eslint-disable-line
 
-  return form?.id ?
-    <>
+  return form?.id
+    ? <>
       <h1><Icon>list_alt</Icon> {form.name}</h1>
       <Tabs form={form} memberPermission={memberPermission} />
     </>
