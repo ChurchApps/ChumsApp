@@ -1,11 +1,20 @@
 import React, { useEffect } from "react";
 import { ApiHelper, UserHelper } from ".";
-import { List } from "@mui/material";
+import { List, styled } from "@mui/material";
 import { Permissions } from "./"
 import { SiteWrapper, NavItem } from "../appBase/components";
 import UserContext from "../UserContext";
+import { Themes } from "../appBase/helpers";
 
 interface Props { pageTitle?: string, children: React.ReactNode }
+
+/*
+const StyledList = styled(List)(
+  ({ theme }) => ({
+    "& .selected .MuiListItemText-root span": { fontWeight: "bold" }
+  })
+);
+*/
 
 export const Wrapper: React.FC<Props> = props => {
   const [donationError, setDonationError] = React.useState<boolean>(false);
@@ -22,18 +31,38 @@ export const Wrapper: React.FC<Props> = props => {
     if (!formPermission && context?.person?.id) {
       ApiHelper.get("/memberpermissions/member/" + context.person?.id, "MembershipApi").then(data => setIsFormMember(data.length));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formPermission]);
 
+  const getSelectedTab = () => {
+    const path = window.location.pathname;
+    let result = "";
+    if (path.startsWith("/people")) result = "people";
+    else if (path.startsWith("/groups")) result = "groups";
+    else if (path.startsWith("/attendance")) result = "attendance";
+    else if (path.startsWith("/donations")) result = "donations";
+    else if (path.startsWith("/forms")) result = "forms";
+    else if (path.startsWith("/settings")) result = "settings";
+    return result;
+  }
+
+  const selectedTab = getSelectedTab();
   const tabs = []
   const donationIcon = donationError ? "error" : "volunteer_activism";
-  tabs.push(<NavItem url="/people" label="People" icon="person" />);
-  tabs.push(<NavItem url="/groups" label="Groups" icon="people" />);
-  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) tabs.push(<NavItem url="/attendance" label="Attendance" icon="calendar_month" />);
-  if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) tabs.push(<NavItem url="/donations" label="Donations" icon={donationIcon} />);
-  if (formPermission || isFormMember) tabs.push(<NavItem url="/forms" label="Form" icon="list_alt" />);
-  if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) tabs.push(<NavItem url="/settings" label="Settings" icon="settings" />);
-  const navContent = <><List component="nav">{tabs}</List></>
+  tabs.push(<NavItem url="/people" label="People" icon="person" selected={selectedTab === "people"} />);
+  tabs.push(<NavItem url="/groups" label="Groups" icon="people" selected={selectedTab === "groups"} />);
+  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) tabs.push(<NavItem url="/attendance" label="Attendance" icon="calendar_month" selected={selectedTab === "attendance"} />);
+  if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) tabs.push(<NavItem url="/donations" label="Donations" icon={donationIcon} selected={selectedTab === "donations"} />);
+  if (formPermission || isFormMember) tabs.push(<NavItem url="/forms" label="Form" icon="list_alt" selected={selectedTab === "forms"} />);
+  if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) tabs.push(<NavItem url="/settings" label="Settings" icon="settings" selected={selectedTab === "settings"} />);
+
+  const style = { "& .selected .MuiListItemButton-root": { backgroundColor: "#333333" } }
+  console.log("style");
+  console.log(style);
+  console.log("Theme.NavBarStyle");
+  console.log(Themes.NavBarStyle);
+
+  const navContent = <><List component="nav" sx={style} >{tabs}</List></>
 
   return <SiteWrapper navContent={navContent} context={context}>{props.children}</SiteWrapper>
 };
