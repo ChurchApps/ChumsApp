@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { SmallButton } from "../../appBase/components";
 
 interface Props {
   group: GroupInterface,
@@ -23,12 +24,10 @@ export const GroupMembers: React.FC<Props> = (props) => {
     }).finally(() => { setIsLoading(false) });
   }, [props.group.id]);
 
-  const handleRemove = (e: React.MouseEvent) => {
-    e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let idx = parseInt(anchor.getAttribute("data-index"));
+  const handleRemove = (member: GroupMemberInterface) => {
     let members = [...groupMembers];
-    let member = members.splice(idx, 1)[0];
+    let idx = members.indexOf(member);
+    members.splice(idx, 1);
     setGroupMembers(members);
     ApiHelper.delete("/groupmembers/" + member.id, "MembershipApi");
   }
@@ -60,13 +59,14 @@ export const GroupMembers: React.FC<Props> = (props) => {
     }
 
     for (let i = 0; i < groupMembers.length; i++) {
-      let gm = groupMembers[i];
-      let editLink = (canEdit) ? <a href="about:blank" onClick={handleRemove} data-index={i} data-cy={`remove-member-${i}`} className="text-danger"><Icon>person_remove</Icon> Remove</a> : <></>
+      const gm = groupMembers[i];
+      //let editLink = (canEdit) ? <a href="about:blank" onClick={handleRemove} data-index={i} data-cy={`remove-member-${i}`} className="text-danger"><Icon>person_remove</Icon> Remove</a> : <></>
+      let editLink = (canEdit) ? <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(gm)} color="error" /> : <></>
       rows.push(
         <TableRow key={i}>
           <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
-          <TableCell>{editLink}</TableCell>
+          <TableCell style={{ textAlign: "right" }}>{editLink}</TableCell>
         </TableRow>
       );
     }
@@ -79,7 +79,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
       return rows;
     }
 
-    rows.push(<TableRow key="header"><th></th><th>Name</th><th>Action</th></TableRow>);
+    rows.push(<TableRow key="header"><th></th><th>Name</th><th></th></TableRow>);
     return rows;
   }
 

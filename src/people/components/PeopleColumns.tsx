@@ -34,7 +34,7 @@ export function PeopleColumns(props: Props) {
   }
   return (
     <>
-      <SmallButton icon="view_column" text="fields" onClick={handleClick} />
+      <SmallButton icon="view_column" onClick={handleClick} />
       <Menu id="fieldsMenu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <Grid container spacing={3} style={{ maxWidth: 400 }}>
           {getItems()}
