@@ -18,34 +18,34 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
       let contactMethods = [];
       if (person) {
         const p = { ...person };
-        if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>Gender:</label> {p.gender}</div>);
-        if (p.birthDate) leftAttributes.push(<div key="age"><label>Age:</label> {PersonHelper.getAge(p.birthDate)}</div>);
+        if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>Gender:</label> <b>{p.gender}</b></div>);
+        if (p.birthDate) leftAttributes.push(<div key="age"><label>Age:</label> <b>{PersonHelper.getAge(p.birthDate)}</b></div>);
         if (p.maritalStatus && p.maritalStatus !== "Single") {
-          if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> {p.maritalStatus} ({new Date(p.anniversary).toLocaleDateString()})</div>);
-          else leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> {p.maritalStatus}</div>);
+          if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> <b>{p.maritalStatus} ({new Date(p.anniversary).toLocaleDateString()})</b></div>);
+          else leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> <b>{p.maritalStatus}</b></div>);
         }
-        if (p.membershipStatus) leftAttributes.push(<div key="membership"><label>Membership:</label> {p.membershipStatus}</div>);
+        if (p.membershipStatus) leftAttributes.push(<div key="membership"><label>Membership:</label> <b>{p.membershipStatus}</b></div>);
 
         let homeLabel = "Home";
         if (p.contactInfo.email) {
-          contactMethods.push(<TableRow key="email"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>mail</Icon></TableCell><TableCell><a href={"mailto:" + p.contactInfo.email}>{p.contactInfo.email}</a></TableCell></TableRow>);
+          contactMethods.push(<TableRow key="email"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>mail</Icon></TableCell><TableCell><a href={"mailto:" + p.contactInfo.email}><b>{p.contactInfo.email}</b></a></TableCell></TableRow>);
           homeLabel = "";
         }
         if (p.contactInfo.homePhone) {
-          contactMethods.push(<TableRow key="homePhone"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell>{p.contactInfo.homePhone}</TableCell></TableRow>);
+          contactMethods.push(<TableRow key="homePhone"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell><b>{p.contactInfo.homePhone}</b></TableCell></TableRow>);
           homeLabel = "";
         }
 
         if (p.contactInfo.address1) {
           let lines = [];
-          lines.push(<div key="address1">{p.contactInfo.address1}</div>);
-          if (p.contactInfo.address2) lines.push(<div key="address2">{p.contactInfo.address2}</div>);
+          lines.push(<div key="address1"><b>{p.contactInfo.address1}</b></div>);
+          if (p.contactInfo.address2) lines.push(<div key="address2"><b>{p.contactInfo.address2}</b></div>);
           lines.push(<div key="contactInfo">{p.contactInfo.city}, {p.contactInfo.state} {p.contactInfo.zip}</div>);
 
           contactMethods.push(<TableRow key="address"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>home_pin</Icon></TableCell><TableCell>{lines}</TableCell></TableRow>);
         }
-        if (p.contactInfo.mobilePhone) contactMethods.push(<TableRow key="mobilePHone"><TableCell><label>Mobile</label></TableCell><TableCell><Icon>phone_iphone</Icon></TableCell><TableCell>{p.contactInfo.mobilePhone}</TableCell></TableRow>);
-        if (p.contactInfo.workPhone) contactMethods.push(<TableRow key="workPhone"><TableCell><label>Work</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell>{p.contactInfo.workPhone}</TableCell></TableRow>);
+        if (p.contactInfo.mobilePhone) contactMethods.push(<TableRow key="mobilePHone"><TableCell><label>Mobile</label></TableCell><TableCell><Icon>phone_iphone</Icon></TableCell><TableCell><b>{p.contactInfo.mobilePhone}</b></TableCell></TableRow>);
+        if (p.contactInfo.workPhone) contactMethods.push(<TableRow key="workPhone"><TableCell><label>Work</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell><b>{p.contactInfo.workPhone}</b></TableCell></TableRow>);
       }
 
       return (<Grid container spacing={3}>

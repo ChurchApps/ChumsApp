@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ApiHelper, GroupInterface, DisplayBox, GroupMemberInterface, PersonHelper, PersonInterface, Loading } from ".";
-import { Icon, Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
+import { SmallButton } from "../../appBase/components";
 
 interface Props { group: GroupInterface, addFunction: (person: PersonInterface) => void }
 
@@ -10,16 +11,12 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const isSubscribed = useRef(true)
 
   const loadData = React.useCallback(() => { ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => { if (isSubscribed.current) { setGroupMembers(data) } }); }, [props.group, isSubscribed]);
-  const addMember = (e: React.MouseEvent) => {
-
-    e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let idx = parseInt(anchor.getAttribute("data-index"));
-    let gm = groupMembers;
-    let person = gm.splice(idx, 1)[0].person;
-    setGroupMembers(gm);
+  const addMember = (gm: GroupMemberInterface) => {
+    let members = groupMembers;
+    let idx = members.indexOf(gm);
+    let person = members.splice(idx, 1)[0].person;
+    setGroupMembers(members);
     props.addFunction(person);
-
   }
 
   const getRows = () => {
@@ -29,12 +26,12 @@ export const MembersAdd: React.FC<Props> = (props) => {
       return rows;
     }
     for (let i = 0; i < groupMembers.length; i++) {
-      let gm = groupMembers[i];
+      const gm = groupMembers[i];
       rows.push(
         <TableRow key={i}>
           <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
-          <TableCell><a href="about:blank" className="text-success" data-cy="add-member-to-session" onClick={addMember} data-index={i}><Icon>person_add</Icon> Add</a></TableCell>
+          <TableCell><SmallButton icon="person_add" text="Add" onClick={() => addMember(gm)} color="success" /></TableCell>
         </TableRow>
       );
     }
@@ -44,7 +41,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) return rows;
-    rows.push(<TableRow key="0"><th></th><th>Name</th><th>Action</th></TableRow>);
+    rows.push(<TableRow key="0"><th></th><th>Name</th><th></th></TableRow>);
     return rows;
   }
 

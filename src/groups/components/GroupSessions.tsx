@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading } from ".";
 import { ArrayHelper } from "../../helpers";
 import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, Grid } from "@mui/material"
+import { SmallButton } from "../../appBase/components";
 
 interface Props {
   group: GroupInterface,
@@ -32,11 +33,8 @@ export const GroupSessions: React.FC<Props> = (props) => {
     });
   }, [props.group]);
 
-  const handleRemove = (e: React.MouseEvent) => {
-    e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let personId = anchor.getAttribute("data-personid");
-    ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + personId, "AttendanceApi").then(loadAttendance);
+  const handleRemove = (vs: VisitSessionInterface) => {
+    ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + vs.visit.personId, "AttendanceApi").then(loadAttendance);
   }
 
   const handleAdd = (e: React.MouseEvent) => { e.preventDefault(); props.sidebarVisibilityFunction("addSession", true); }
@@ -45,15 +43,16 @@ export const GroupSessions: React.FC<Props> = (props) => {
     let canEdit = UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit);
     let result: JSX.Element[] = [];
     for (let i = 0; i < visitSessions.length; i++) {
-      let vs = visitSessions[i];
-      let editLink = (canEdit) ? (<a href="about:blank" onClick={handleRemove} className="text-danger" data-personid={vs.visit.personId}><Icon>person_remove</Icon> Remove</a>) : null;
+      const vs = visitSessions[i];
+      //let editLink = (canEdit) ? (<a href="about:blank" onClick={handleRemove} className="text-danger" data-personid={vs.visit.personId}><Icon>person_remove</Icon> Remove</a>) : null;
+      let editLink = (canEdit) ? <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(vs)} color="error" /> : <></>
       let person = ArrayHelper.getOne(people, "id", vs.visit.personId);
       if (person) {
         result.push(
           <TableRow key={vs.id}>
             <TableCell><img className="personPhoto" src={PersonHelper.getPhotoUrl(person)} alt="avatar" /></TableCell>
             <TableCell><a className="personName" href={"/people/person.aspx?id=" + vs.visit.personId}>{person?.name?.display}</a></TableCell>
-            <TableCell>{editLink}</TableCell>
+            <TableCell style={{ textAlign: "right" }}>{editLink}</TableCell>
           </TableRow>
         );
       }

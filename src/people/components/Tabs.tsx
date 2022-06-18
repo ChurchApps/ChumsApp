@@ -1,4 +1,4 @@
-import { Box, Paper, Tabs as MaterialTabs, Tab, Icon, } from "@mui/material";
+import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 import React from "react";
 import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, NoteInterface } from ".";
 import { DonationPage } from "../../appBase/donationComponents/DonationPage";
@@ -9,9 +9,9 @@ export const Tabs: React.FC<Props> = (props) => {
   const [selectedTab, setSelectedTab] = React.useState("");
   const [tabIndex, setTabIndex] = React.useState(0);
 
-  const getTab = (index: number, keyName: string, icon: string, text: string) => {
-    return <Tab style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
-  }
+  const getTab = (index: number, keyName: string, icon: string, text: string) => (
+    <Tab style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
+  )
 
   React.useEffect(() => setPersonId(props.person?.id), [props.person]);
 
@@ -33,7 +33,7 @@ export const Tabs: React.FC<Props> = (props) => {
 
   return (<Paper>
     <Box>
-      <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} >
+      <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }}>
         {tabs}
       </MaterialTabs>
       {currentTab}
