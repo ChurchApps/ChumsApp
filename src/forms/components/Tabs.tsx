@@ -1,18 +1,19 @@
-import { Icon } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
 import { UserHelper, Permissions, FormMembers, Form, MemberPermissionInterface, FormSubmissions, FormInterface } from ".";
+import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 interface Props { form: FormInterface, memberPermission: MemberPermissionInterface }
 
 export const Tabs: React.FC<Props> = (props) => {
   const [selectedTab, setSelectedTab] = React.useState("");
+  const [tabIndex, setTabIndex] = React.useState(0);
 
-  const getTab = (keyName: string, icon: string, text: string) => {
-    let className = (keyName === selectedTab) ? "nav-link active" : "nav-link";
-    return <li className="nav-item" key={keyName}><a href="about:blank" aria-label={`${keyName}-tab`} onClick={e => { e.preventDefault(); setSelectedTab(keyName) }} className={className}><i className={icon}></i> {text}</a></li>
-  }
+  const getTab = (index: number, keyName: string, icon: string, text: string) => (
+    <Tab style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
+  )
 
-  let tabs: any = [];
+  let tabs = [];
   let defaultTab = "";
   let currentTab = null;
 
@@ -23,9 +24,10 @@ export const Tabs: React.FC<Props> = (props) => {
   const formMemberAdmin = formMemberAction === "admin" && formType !== undefined && formType === "form";
   const formMemberView = formMemberAction === "view" && formType !== undefined && formType === "form";
 
-  if (formAdmin || formEdit || formMemberAdmin) { tabs.push(getTab("questions", "far fa-sticky-note", "Questions")); defaultTab = "questions"; }
-  if ((formAdmin || formMemberAdmin) && formType === "form") { tabs.push(getTab("members", "far fa-calendar-alt", "Form Members")); }
-  if ((formAdmin || formMemberAdmin || formMemberView) && formType === "form") { tabs.push(getTab("submissions", "far fa-calendar-alt", "Form Submissions")); if (defaultTab !== "questions") defaultTab = "submissions" }
+  if (formAdmin || formEdit || formMemberAdmin) { tabs.push(getTab(0, "questions", "far fa-sticky-note", "Questions")); defaultTab = "questions"; }
+  if ((formAdmin || formMemberAdmin) && formType === "form") { tabs.push(getTab(1, "members", "far fa-calendar-alt", "Form Members")); }
+  if ((formAdmin || formMemberAdmin || formMemberView) && formType === "form") { tabs.push(getTab(2, "submissions", "far fa-calendar-alt", "Form Submissions")); if (defaultTab !== "questions") defaultTab = "submissions" }
+
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
@@ -35,10 +37,20 @@ export const Tabs: React.FC<Props> = (props) => {
     default: currentTab = <div>Unauthorized</div>; break;
   }
 
-  return (
-    <>
-      <h1><Icon>list</Icon> {props.form.name}</h1>
-      <ul className="nav nav-tabs">{tabs}</ul>{currentTab}
-    </>
+  return (<>
+    <Grid container spacing={3}>
+      <Grid item md={8} xs={12}>
+        <Paper>
+          <Box>
+            <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
+              {tabs}
+            </MaterialTabs>
+
+          </Box>
+        </Paper>
+      </Grid>
+    </Grid>
+    {currentTab}
+  </>
   );
 }

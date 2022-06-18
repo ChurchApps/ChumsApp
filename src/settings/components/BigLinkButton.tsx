@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Grid, Card, CardContent } from "@mui/material"
+import { Grid, Card, CardContent, Icon } from "@mui/material"
 
 interface Props {
   href: string;
@@ -10,11 +10,11 @@ interface Props {
 }
 
 export const BigLinkButton: React.FC<Props> = (props) => (
-  <Grid md={3}>
+  <Grid item md={3}>
     <LinkType href={props.href} outsideLink={props.outsideLink}>
       <Card>
         <CardContent className="text-center">
-          <i className={props.icon} style={{ fontSize: 40 }}></i>
+          <Icon style={{ fontSize: 40 }}>{props.icon}</Icon>
           <br />
           {props.text}
         </CardContent>
