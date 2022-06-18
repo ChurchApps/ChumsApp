@@ -1,20 +1,12 @@
 import React, { useEffect } from "react";
 import { ApiHelper, UserHelper } from ".";
-import { List, styled } from "@mui/material";
+import { List } from "@mui/material";
 import { Permissions } from "./"
 import { SiteWrapper, NavItem } from "../appBase/components";
 import UserContext from "../UserContext";
 import { Themes } from "../appBase/helpers";
 
 interface Props { pageTitle?: string, children: React.ReactNode }
-
-/*
-const StyledList = styled(List)(
-  ({ theme }) => ({
-    "& .selected .MuiListItemText-root span": { fontWeight: "bold" }
-  })
-);
-*/
 
 export const Wrapper: React.FC<Props> = props => {
   const [donationError, setDonationError] = React.useState<boolean>(false);
@@ -56,13 +48,7 @@ export const Wrapper: React.FC<Props> = props => {
   if (formPermission || isFormMember) tabs.push(<NavItem url="/forms" label="Form" icon="list_alt" selected={selectedTab === "forms"} />);
   if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) tabs.push(<NavItem url="/settings" label="Settings" icon="settings" selected={selectedTab === "settings"} />);
 
-  const style = { "& .selected .MuiListItemButton-root": { backgroundColor: "#333333" } }
-  console.log("style");
-  console.log(style);
-  console.log("Theme.NavBarStyle");
-  console.log(Themes.NavBarStyle);
-
-  const navContent = <><List component="nav" sx={style} >{tabs}</List></>
+  const navContent = <><List component="nav" sx={Themes.NavBarStyle}>{tabs}</List></>
 
   return <SiteWrapper navContent={navContent} context={context}>{props.children}</SiteWrapper>
 };
