@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, FundInterface, FundEdit, DisplayBox, UserHelper, Permissions, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { SmallButton } from "../../appBase/components";
 
 export const Funds: React.FC = () => {
   const [funds, setFunds] = React.useState<FundInterface[]>(null);
@@ -12,7 +13,7 @@ export const Funds: React.FC = () => {
   }
   const handleFundUpdated = () => { loadData(); setEditFund(null); }
   const getEditSection = () => {
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<a href="about:blank" data-cy="add-fund" onClick={(e: React.MouseEvent) => { e.preventDefault(); setEditFund({ id: "", name: "" }) }}><Icon>add</Icon></a>);
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<SmallButton onClick={() => { setEditFund({ id: "", name: "" }) }} icon="add" />);
     else return null;
   }
 

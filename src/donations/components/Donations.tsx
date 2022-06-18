@@ -1,7 +1,8 @@
 import React from "react";
 import { ApiHelper, UserHelper, DonationInterface, DateHelper, CurrencyHelper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading } from ".";
 import { ArrayHelper } from "../../helpers";
-import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { SmallButton } from "../../appBase/components";
 
 interface Props { batch: DonationBatchInterface, funds: FundInterface[], addFunction: () => void, editFunction: (id: string) => void }
 
@@ -9,10 +10,9 @@ export const Donations: React.FC<Props> = (props) => {
   const [donations, setDonations] = React.useState<DonationInterface[]>(null);
 
   const loadData = React.useCallback(() => { ApiHelper.get("/donations?batchId=" + props.batch?.id, "GivingApi").then(data => populatePeople(data)); }, [props.batch]);
-  const showAddDonation = (e: React.MouseEvent) => { e.preventDefault(); props.addFunction() }
   const getEditContent = () => {
     if (props.funds.length === 0) return null;
-    return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={donations} spaceAfter={true} filename="donations.csv" /><a href="about:blank" data-cy="make-donation" onClick={showAddDonation}><Icon>add</Icon></a></>) : null;
+    return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={donations} spaceAfter={true} filename="donations.csv" /><SmallButton onClick={() => { props.addFunction() }} icon="add" /></>) : null;
   }
 
   const populatePeople = async (data: DonationInterface[]) => {

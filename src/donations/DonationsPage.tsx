@@ -3,12 +3,12 @@ import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, F
 import { Link } from "react-router-dom";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
+import { SmallButton } from "../appBase/components";
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
   const [batches, setBatches] = React.useState<DonationBatchInterface[]>(null);
 
-  const showAddBatch = (e: React.MouseEvent) => { e.preventDefault(); setEditBatchId(""); }
   const batchUpdated = () => { setEditBatchId("notset"); loadData(); }
 
   const showEditBatch = (e: React.MouseEvent) => {
@@ -18,11 +18,9 @@ export const DonationsPage = () => {
     setEditBatchId(id);
   }
 
-  const loadData = () => {
-    ApiHelper.get("/donationbatches", "GivingApi").then(data => { setBatches(data); });
-  }
+  const loadData = () => { ApiHelper.get("/donationbatches", "GivingApi").then(data => { setBatches(data); }); }
 
-  const getEditContent = () => (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><a href="about:blank" data-cy="add-batch" onClick={showAddBatch}><Icon>add</Icon></a></>) : null
+  const getEditContent = () => (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><SmallButton onClick={() => { setEditBatchId("") }} icon="add" /></>) : null
 
   const getSidebarModules = () => {
     let result = [];

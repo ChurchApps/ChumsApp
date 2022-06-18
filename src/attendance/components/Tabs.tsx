@@ -1,20 +1,21 @@
 import React from "react";
 import { ReportWithFilter } from "../../appBase/components/reporting/ReportWithFilter";
 import { UserHelper, Permissions } from "./";
+import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 export const Tabs: React.FC = () => {
   const [selectedTab, setSelectedTab] = React.useState("");
+  const [tabIndex, setTabIndex] = React.useState(0);
 
-  const getTab = (keyName: string, icon: string, text: string, dataCy?: string) => {
-    let className = (keyName === selectedTab) ? "nav-link active" : "nav-link";
-    return <li className="nav-item" key={keyName}><a href="about:blank" data-cy={dataCy} onClick={e => { e.preventDefault(); setSelectedTab(keyName) }} className={className}><i className={icon}></i> {text}</a></li>
-  }
+  const getTab = (index: number, keyName: string, icon: string, text: string) => (
+    <Tab style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
+  )
 
   let tabs = [];
   let defaultTab = "";
   let currentTab = null;
-  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab("attendance", "far fa-calendar-alt", "Attendance Trend", "trends-tab")); if (defaultTab === "") defaultTab = "attendance"; }
-  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab("groups", "fas fa-user", "Group Attendance", "group-tab")); if (defaultTab === "") defaultTab = "groups"; }
+  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(0, "attendance", "far fa-calendar-alt", "Attendance Trend")); if (defaultTab === "") defaultTab = "attendance"; }
+  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "groups", "fas fa-user", "Group Attendance")); if (defaultTab === "") defaultTab = "groups"; }
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
@@ -23,7 +24,12 @@ export const Tabs: React.FC = () => {
     default: currentTab = <div>Not implemented</div>; break;
   }
 
-  return (<>
-    <ul id="attendanceTabs" className="nav nav-tabs">{tabs}</ul>{currentTab}
-  </>);
+  return (<Paper>
+    <Box>
+      <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
+        {tabs}
+      </MaterialTabs>
+      {currentTab}
+    </Box>
+  </Paper>);
 }
