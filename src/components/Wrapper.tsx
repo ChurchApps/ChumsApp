@@ -50,5 +50,5 @@ export const Wrapper: React.FC<Props> = props => {
 
   const navContent = <><List component="nav" sx={Themes.NavBarStyle}>{tabs}</List></>
 
-  return <SiteWrapper navContent={navContent} context={context}>{props.children}</SiteWrapper>
+  return <SiteWrapper navContent={navContent} context={context} appName="Chums">{props.children}</SiteWrapper>
 };
