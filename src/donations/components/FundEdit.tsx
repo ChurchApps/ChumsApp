@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ApiHelper, InputBox, FundInterface, ErrorMessages } from ".";
+import { TextField } from "@mui/material";
 
 interface Props { fund: FundInterface, updatedFunction: () => void }
 export const FundEdit: React.FC<Props> = (props) => {
@@ -39,10 +40,7 @@ export const FundEdit: React.FC<Props> = (props) => {
   return (
     <InputBox id="fundsBox" headerIcon="volunteer_activism" headerText="Edit Fund" cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete}>
       <ErrorMessages errors={errors} />
-      <div className="form-group">
-        <label>Name</label>
-        <input name="fundName" type="text" data-cy="fund-name" className="form-control" value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />
-      </div>
+      <TextField fullWidth name="fundName" label="Name" value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />
     </InputBox>
 
   );

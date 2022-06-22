@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit, ServiceEdit, ServiceInterface, ServiceTimeEdit, ServiceTimeInterface, Tabs, GroupServiceTimeInterface, GroupInterface, ArrayHelper, Loading } from "./components";
 import { Link } from "react-router-dom";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem } from "@mui/material"
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
@@ -12,6 +12,15 @@ export const AttendancePage = () => {
   const [selectedService, setSelectedService] = React.useState<ServiceInterface>(null);
   const [selectedServiceTime, setSelectedServiceTime] = React.useState<ServiceTimeInterface>(null);
   //const [filter, setFilter] = React.useState<AttendanceFilterInterface>(AttendanceHelper.createFilter());
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (e: React.MouseEvent) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleUpdated = () => { removeEditors(); loadData(); }
   const selectCampus = (campus: CampusInterface) => { removeEditors(); if (campus.name !== "Undefined") setSelectedCampus(campus); }
@@ -91,12 +100,36 @@ export const AttendancePage = () => {
 
   const getEditLinks = () => (
     <>
-      <a id="addBtnGroup" aria-label="addButton" data-cy="add-button" type="button" data-toggle="dropdown" aria-expanded="false" href="about:blank"><Icon>add</Icon></a>
-      <div className="dropdown-menu" aria-labelledby="addBtnGroup">
-        <a className="dropdown-item" data-cy="add-campus" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectCampus({ id: "", name: "New Campus" }); }}><Icon>church</Icon> Add Campus</a>
-        <a className="dropdown-item" aria-label="addService" data-cy="add-service" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectService({ id: "", campusId: "", name: "New Service" }); }}><Icon>calendar_month</Icon> Add Service</a>
-        <a className="dropdown-item" data-cy="add-service-time" href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectServiceTime({ id: "", serviceId: "", name: "New Service Time" }); }}><Icon>more_time</Icon> Add Service Time</a>
-      </div>
+      <IconButton
+        aria-label="addButton"
+        id="addBtnGroup"
+        data-cy="add-button"
+        aria-controls={open ? "add-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <Icon color="primary">add</Icon>
+      </IconButton>
+      <Menu
+        id="add-menu"
+        MenuListProps={{
+          "aria-labelledby": "addBtnGroup"
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem data-cy="add-campus" onClick={() => {handleClose(); selectCampus({ id: "", name: "New Campus" }); }}>
+          <Icon sx={{mr: "3px"}}>church</Icon> Add Campus
+        </MenuItem>
+        <MenuItem aria-label="addService" data-cy="add-service" onClick={() => {handleClose(); selectService({ id: "", campusId: "", name: "New Service" }); }}>
+          <Icon sx={{mr: "3px"}}>calendar_month</Icon> Add Service
+        </MenuItem>
+        <MenuItem data-cy="add-service-time" onClick={() => {handleClose(); selectServiceTime({ id: "", serviceId: "", name: "New Service Time" }); }}>
+          <Icon sx={{mr: "3px"}}>more_time</Icon> Add Service Time
+        </MenuItem>
+      </Menu>
     </>
   )
 

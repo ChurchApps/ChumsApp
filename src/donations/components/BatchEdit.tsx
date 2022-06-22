@@ -1,5 +1,6 @@
 import React from "react";
 import { ApiHelper, InputBox, DateHelper, DonationBatchInterface, UniqueIdHelper } from ".";
+import { TextField } from "@mui/material";
 
 interface Props { batchId: string, updatedFunction: () => void }
 
@@ -38,10 +39,7 @@ export const BatchEdit: React.FC<Props> = (props) => {
 
   return (
     <InputBox id="batchBox" headerIcon="volunteer_activism" headerText="Edit Batch" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
-      <div className="form-group">
-        <label>Name (optional)</label>
-        <input type="text" data-cy="batch-name" className="form-control" name="name" value={batch.name} onChange={handleChange} onKeyDown={handleKeyDown} />
-      </div>
+      <TextField fullWidth name="name" data-cy="batch-name" label="Name (optional)" value={batch.name} onChange={handleChange} onKeyDown={handleKeyDown} />
       <div className="form-group">
         <label>Date</label>
         <input type="date" data-cy="batch-date" className="form-control" name="date" value={DateHelper.formatHtml5Date(batch.batchDate)} onChange={handleChange} onKeyDown={handleKeyDown} />

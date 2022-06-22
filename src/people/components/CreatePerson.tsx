@@ -49,17 +49,17 @@ export function CreatePerson() {
   if (!UserHelper.checkAccess(Permissions.membershipApi.people.edit)) return null;
   return (
     <div>
-      <p className="pl-1 mb-2 text-dark"><b>Add a New Person</b></p>
+      <p className="pl-1 mb-3 text-dark"><b>Add a New Person</b></p>
       <ErrorMessages errors={errors} />
-      <Grid container spacing={3}>
-        <Grid item md={3} xs={12}>
-          <TextField fullWidth type="text" aria-label="firstName" placeholder="First Name" name="first" value={person.name.first} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
+      <Grid container spacing={3} alignItems="center">
+        <Grid item md={4} xs={12}>
+          <TextField size="small" margin="none" fullWidth type="text" aria-label="firstName" label="First Name" name="first" value={person.name.first} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
         </Grid>
-        <Grid item md={3} xs={12}>
-          <TextField fullWidth type="text" aria-label="lastName" placeholder="Last Name" name="last" value={person.name.last} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
+        <Grid item md={4} xs={12}>
+          <TextField size="small" margin="none" fullWidth type="text" aria-label="lastName" label="Last Name" name="last" value={person.name.last} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
         </Grid>
-        <Grid item md={6} xs={12}>
-          <Button type="submit" variant="contained" disabled={isSubmitting}>Add</Button>
+        <Grid item md={4} xs={12}>
+          <Button type="submit" fullWidth variant="contained" disabled={isSubmitting}>Add</Button>
         </Grid>
       </Grid>
     </div>

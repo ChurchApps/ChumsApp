@@ -2,7 +2,7 @@ import React from "react";
 import { ChumsPersonHelper, PersonInterface, DisplayBox, ApiHelper } from ".";
 import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition } from "../../components";
 import { EditCondition } from "./EditCondition";
-import { Button, Icon, OutlinedInput, FormControl } from "@mui/material";
+import { Button, Icon, OutlinedInput, FormControl, InputLabel } from "@mui/material";
 
 interface Props {
   updateSearchResults: (people: PersonInterface[]) => void
@@ -59,6 +59,7 @@ export function PeopleSearch(props: Props) {
   const getSimpleSearch = () => (
     <DisplayBox headerIcon="person" headerText="Simple Search" editContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Advanced</Button>}>
       <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
+        <InputLabel htmlFor="searchText">Name</InputLabel>
         <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label="Name" value={searchText} onChange={handleChange}
           endAdornment={<Button variant="contained" onClick={handleSubmit}>Search</Button>}
         />
