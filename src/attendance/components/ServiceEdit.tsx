@@ -73,7 +73,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel>Campus</InputLabel>
-        <Select name="campusId" value={service.campusId} onChange={handleChange}>
+        <Select name="campus" value={service.campusId} onChange={handleChange}>
           {getCampusOptions()}
         </Select>
       </FormControl>
