@@ -40,10 +40,7 @@ export const BatchEdit: React.FC<Props> = (props) => {
   return (
     <InputBox id="batchBox" headerIcon="volunteer_activism" headerText="Edit Batch" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
       <TextField fullWidth name="name" data-cy="batch-name" label="Name (optional)" value={batch.name} onChange={handleChange} onKeyDown={handleKeyDown} />
-      <div className="form-group">
-        <label>Date</label>
-        <input type="date" data-cy="batch-date" className="form-control" name="date" value={DateHelper.formatHtml5Date(batch.batchDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
-      </div>
+      <TextField fullWidth type="date" data-cy="batch-date" name="date" InputLabelProps={{shrink: true}} label="Date" value={DateHelper.formatHtml5Date(batch.batchDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
     </InputBox>
   );
 }

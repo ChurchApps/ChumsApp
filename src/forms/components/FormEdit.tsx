@@ -80,8 +80,8 @@ export function FormEdit(props: Props) {
       <TextField fullWidth={true} label="Form Name" type="text" name="name" value={form.name} onChange={handleChange} />
       {!props.formId
         && <FormControl fullWidth>
-          <InputLabel>Associate With</InputLabel>
-          <Select name="contentType" value={form.contentType} onChange={e => { handleChange(e); if (e.target.value === "form") setStandAloneForm(true); }}>
+          <InputLabel id="associate">Associate With</InputLabel>
+          <Select name="contentType" labelId="associate" label="Associate With" value={form.contentType} onChange={e => { handleChange(e); if (e.target.value === "form") setStandAloneForm(true); }}>
             <MenuItem value="person">People</MenuItem>
             <MenuItem value="form">Stand Alone</MenuItem>
           </Select>
@@ -107,10 +107,10 @@ export function FormEdit(props: Props) {
       }
       {showDates
         && <>
-          <TextField fullWidth={true} type="date" label="Availability Start Date" name="accessStartTime" value={DateHelper.formatHtml5Date(form.accessStartTime)} onChange={handleChange}
+          <TextField fullWidth={true} type="date" label="Availability Start Date" InputLabelProps={{shrink: true}} name="accessStartTime" value={DateHelper.formatHtml5Date(form.accessStartTime)} onChange={handleChange}
             InputProps={{ inputProps: { max: DateHelper.formatHtml5Date(form.accessEndTime) } }}
           />
-          <TextField fullWidth={true} type="date" label="Availability End Date" name="accessEndTime" value={DateHelper.formatHtml5Date(form.accessEndTime)} onChange={handleChange}
+          <TextField fullWidth={true} type="date" label="Availability End Date" InputLabelProps={{shrink: true}} name="accessEndTime" value={DateHelper.formatHtml5Date(form.accessEndTime)} onChange={handleChange}
             InputProps={{ inputProps: { min: DateHelper.formatHtml5Date(form.accessStartTime) } }}
           />
         </>

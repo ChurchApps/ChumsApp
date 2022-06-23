@@ -55,7 +55,7 @@ export function AddNote(props: Props) {
   return (
     <InputBox headerText={headerText} headerIcon="sticky_note_2" saveFunction={handleSave} cancelFunction={props.close} deleteFunction={deleteFunction} isSubmitting={isSubmitting}>
       <ErrorMessages errors={errors} />
-      <TextField fullWidth multiline name="noteText" aria-label={headerText} style={{ height: "100px" }} onChange={handleChange} value={note?.contents} placeholder="Some note..." />
+      <TextField fullWidth multiline name="noteText" aria-label={headerText} style={{ height: "100px" }} onChange={handleChange} value={note?.contents} label="Some note..." />
     </InputBox>
   );
 }

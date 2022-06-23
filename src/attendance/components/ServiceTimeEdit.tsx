@@ -70,8 +70,8 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
     <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.serviceTime?.id ? handleDelete : null} headerText={serviceTime.name} isSubmitting={isSubmitting} headerIcon="schedule">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
-        <InputLabel>Service</InputLabel>
-        <Select name="service" value={serviceTime.serviceId} onChange={handleChange}>
+        <InputLabel id="service">Service</InputLabel>
+        <Select name="service" labelId="service" label="Service" value={serviceTime.serviceId} onChange={handleChange}>
           {getServiceOptions()}
         </Select>
       </FormControl>

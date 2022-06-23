@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Box } from "@mui/material";
 import React from "react";
 import { ApiHelper, InputBox, DonationInterface, FundDonationInterface, PersonAdd, FundInterface, DateHelper, PersonInterface, UniqueIdHelper, PersonHelper } from ".";
 import { FundDonations } from "../../appBase/donationComponents/components/FundDonations";
@@ -64,10 +64,9 @@ export const DonationEdit: React.FC<Props> = (props) => {
   const getMethodDetails = () => {
     if (donation.method === "Cash") return null;
     let label = (donation.method === "Check") ? "Check #" : "Last 4 digits";
-    return (<div className="form-group">
-      <label>{label}</label>
-      <input type="text" className="form-control" name="methodDetails" value={donation.methodDetails} onChange={handleChange} />
-    </div>);
+    return (
+      <TextField fullWidth name="methodDetails" label={label} value={donation.methodDetails} onChange={handleChange} />
+    );
   }
 
   const handlePersonAdd = (p: PersonInterface) => {
@@ -113,14 +112,14 @@ export const DonationEdit: React.FC<Props> = (props) => {
 
   return (
     <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
-      <div className="form-group">
+      <Box mb={2}>
         <label>Person</label>
         {getPersonSection()}
-      </div>
+      </Box>
       <TextField fullWidth label="Date" type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
       <FormControl fullWidth>
-        <InputLabel>Method</InputLabel>
-        <Select name="method" value={donation.method} onChange={handleChange} onKeyDown={handleKeyDown}>
+        <InputLabel id="method">Method</InputLabel>
+        <Select name="method" labelId="method" label="Method" value={donation.method} onChange={handleChange} onKeyDown={handleKeyDown}>
           <MenuItem value="Check">Check</MenuItem>
           <MenuItem value="Cash">Cash</MenuItem>
           <MenuItem value="Card">Card</MenuItem>

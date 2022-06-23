@@ -195,8 +195,8 @@ export function PersonEdit(props: Props) {
             </Grid>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>Membership Status</InputLabel>
-                <Select name="membershipStatus" id="membershipStatus" value={person.membershipStatus || ""} onChange={handleChange}>
+                <InputLabel id="membershipStatus-label">Membership Status</InputLabel>
+                <Select name="membershipStatus" id="membershipStatus" labelId="membershipStatus-label" label="Membership Status" value={person.membershipStatus || ""} onChange={handleChange}>
                   <MenuItem value="Member">Member</MenuItem>
                   <MenuItem value="Visitor">Visitor</MenuItem>
                   <MenuItem value="Staff">Staff</MenuItem>
@@ -204,15 +204,15 @@ export function PersonEdit(props: Props) {
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="birthDate" id="birthDate" label="Birthdate" value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{shrink: true}} label="Birthdate" value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} />
             </Grid>
           </Grid>
 
           <Grid container spacing={3}>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>Gender</InputLabel>
-                <Select name="gender" id="gender" value={person.gender} onChange={handleChange}>
+                <InputLabel id="gender-label">Gender</InputLabel>
+                <Select name="gender" id="gender" labelId="gender-label" label="Gender" value={person.gender} onChange={handleChange}>
                   <MenuItem value="Unspecified">Unspecified</MenuItem>
                   <MenuItem value="Male">Male</MenuItem>
                   <MenuItem value="Female">Female</MenuItem>
@@ -221,8 +221,8 @@ export function PersonEdit(props: Props) {
             </Grid>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>Marital Status</InputLabel>
-                <Select name="maritalStatus" id="maritalStatus" value={person.maritalStatus || ""} onChange={handleChange}>
+                <InputLabel id="maritalStatus-label">Marital Status</InputLabel>
+                <Select name="maritalStatus" id="maritalStatus" label="Marital Status" labelId="maritalStatus-label" value={person.maritalStatus || ""} onChange={handleChange}>
                   <MenuItem value="Unknown">Unknown</MenuItem>
                   <MenuItem value="Single">Single</MenuItem>
                   <MenuItem value="Married">Married</MenuItem>
@@ -232,7 +232,7 @@ export function PersonEdit(props: Props) {
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="anniversary" id="anniversary" label="Anniversary" value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{shrink: true}} label="Anniversary" value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} />
             </Grid>
           </Grid>
 

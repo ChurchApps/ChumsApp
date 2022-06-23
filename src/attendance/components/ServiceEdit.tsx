@@ -72,8 +72,8 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     <InputBox id="serviceBox" data-cy="service-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.service?.id ? handleDelete : null} headerText={service.name} headerIcon="calendar_month" isSubmitting={isSubmitting}>
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
-        <InputLabel>Campus</InputLabel>
-        <Select name="campus" value={service.campusId} onChange={handleChange}>
+        <InputLabel id="campus">Campus</InputLabel>
+        <Select name="campus" labelId="campus" label="Campus" value={service.campusId} onChange={handleChange}>
           {getCampusOptions()}
         </Select>
       </FormControl>
