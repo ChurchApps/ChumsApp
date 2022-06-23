@@ -30,6 +30,7 @@ export function FormEdit(props: Props) {
     const f = { ...form } as FormInterface;
     let value = e.target.value;
     switch (e.target.name) {
+      case "name": f.name = value; break;
       case "contentType": f.contentType = value; break;
       case "restricted": f.restricted = value === "true"; break;
       case "accessStartTime": f.accessStartTime = showDates ? DateHelper.convertToDate(value) : null; break;
@@ -90,14 +91,14 @@ export function FormEdit(props: Props) {
         && <>
           <FormControl fullWidth>
             <InputLabel>Form Access</InputLabel>
-            <Select name="restricted" value={form?.restricted?.toString()} onChange={handleChange}>
+            <Select label="Form Access" name="restricted" value={form?.restricted?.toString()} onChange={handleChange}>
               <MenuItem value="false">Public</MenuItem>
               <MenuItem value="true">Restricted</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
             <InputLabel>Set Form Availability Timeframe</InputLabel>
-            <Select name="limit" value={showDates.toString()} onChange={e => { setShowDates(e.target.value === "true") }}>
+            <Select label="Set Form Availability Timeframe" name="limit" value={showDates.toString()} onChange={e => { setShowDates(e.target.value === "true") }}>
               <MenuItem value="false">No</MenuItem>
               <MenuItem value="true">Yes</MenuItem>
             </Select>
