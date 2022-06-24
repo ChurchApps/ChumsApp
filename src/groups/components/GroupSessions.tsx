@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading } from ".";
 import { ArrayHelper } from "../../helpers";
-import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, Grid } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, Grid, MenuItem } from "@mui/material"
 import { SmallButton } from "../../appBase/components";
 
 interface Props {
@@ -66,23 +66,23 @@ export const GroupSessions: React.FC<Props> = (props) => {
 
   const getSessionOptions = () => {
     let result: JSX.Element[] = [];
-    for (let i = 0; i < sessions.length; i++) result.push(<option value={sessions[i].id} key={sessions[i].id}>{sessions[i].displayName}</option>);
+    for (let i = 0; i < sessions.length; i++) result.push(<MenuItem value={sessions[i].id} key={sessions[i].id}>{sessions[i].displayName}</MenuItem>);
     return result;
   }
 
   const getHeaderSection = () => {
     if (!UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit)) return null;
     else return (
-      <Grid container>
-        <Grid>
-          <FormControl style={{ width: 130, marginTop: 0 }} size="small">
-            <InputLabel>Session</InputLabel>
-            <Select fullWidth label="New Session" value={session?.id} onChange={selectSession}>
+      <Grid container columnSpacing={2}>
+        <Grid item>
+          <FormControl style={{ width: 140, marginTop: 0 }} size="small">
+            <InputLabel id="sessions">Session</InputLabel>
+            <Select fullWidth labelId="sessions" label="Session" value={session?.id} onChange={selectSession}>
               {getSessionOptions()}
             </Select>
           </FormControl>
         </Grid>
-        <Grid>
+        <Grid item>
           <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>calendar_month</Icon> New</Button>
         </Grid>
       </Grid>

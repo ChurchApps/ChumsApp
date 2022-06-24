@@ -1,5 +1,6 @@
 import React from "react";
 import { ApiHelper, GroupInterface, GroupServiceTimeInterface, InputBox, ErrorMessages, SessionInterface, DateHelper, UniqueIdHelper } from ".";
+import { TextField, FormControl, Select, InputLabel, SelectChangeEvent, MenuItem } from "@mui/material"
 
 interface Props { group: GroupInterface, updatedFunction: (session: SessionInterface) => void }
 
@@ -42,14 +43,15 @@ export const SessionAdd: React.FC<Props> = (props) => {
       let options = [];
       for (let i = 0; i < groupServiceTimes.length; i++) {
         let gst = groupServiceTimes[i];
-        options.push(<option key={i} value={gst.serviceTimeId}>{gst.serviceTime.name}</option>);
+        options.push(<MenuItem key={i} value={gst.serviceTimeId}>{gst.serviceTime.name}</MenuItem>);
       }
 
-      return (
-        <div className="form-group">
-          <label htmlFor="serviceTime">Service Time</label>
-          <select id="serviceTime" className="form-control" value={serviceTimeId} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setServiceTimeId(e.currentTarget.value) }} onKeyDown={handleKeyDown}>{options}</select>
-        </div>);
+      return (<FormControl>
+        <InputLabel id="service-time">Service Time</InputLabel>
+        <Select label="Service Time" labelId="service-time" value={serviceTimeId} onChange={(e: SelectChangeEvent<string>) => { setServiceTimeId(e.target.value) }} onKeyDown={handleKeyDown}>
+          {options}
+        </Select>
+      </FormControl>);
     }
   }
 
@@ -60,10 +62,8 @@ export const SessionAdd: React.FC<Props> = (props) => {
       <ErrorMessages errors={errors} />
       {getServiceTimes()}
 
-      <div className="form-group">
-        <label>Session Date</label>
-        <input type="date" className="form-control" value={DateHelper.formatHtml5Date(sessionDate)} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSessionDate(new Date(e.currentTarget.value))} onKeyDown={handleKeyDown} />
-      </div>
+      <TextField fullWidth type="date" InputLabelProps={{shrink: true}} label="Session Date" value={DateHelper.formatHtml5Date(sessionDate)} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSessionDate(new Date(e.currentTarget.value))} onKeyDown={handleKeyDown} />
+
     </InputBox>
 
   );

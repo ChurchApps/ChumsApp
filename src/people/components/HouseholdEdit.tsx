@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react"
 import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, UpdateHouseHold, ErrorMessages } from "."
-import { Icon, Table, TableBody, TableCell, TableRow, TextField } from "@mui/material"
+import { Icon, Table, TableBody, TableCell, TableRow, TextField, FormControl, SelectChangeEvent, Select, MenuItem, InputLabel } from "@mui/material"
 
 interface Props { updatedFunction: () => void, household: HouseholdInterface, currentMembers: PersonInterface[], currentPerson: PersonInterface }
 
@@ -30,9 +30,9 @@ export function HouseholdEdit(props: Props) {
     setHousehold(h);
   }
 
-  function handleChangeRole(e: ChangeEvent<HTMLSelectElement>, index: number) {
+  function handleChangeRole(e: SelectChangeEvent<string>, index: number) {
     let m = [...members];
-    m[index].householdRole = e.currentTarget.value;
+    m[index].householdRole = e.target.value;
     setMembers(m);
   }
 
@@ -93,12 +93,15 @@ export function HouseholdEdit(props: Props) {
       <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>
       <TableCell>
         {m.name.display}
-        <select value={m.householdRole || ""} aria-label="role" onChange={(e) => handleChangeRole(e, index)} className="form-control form-control-sm">
-          <option value="Head">Head</option>
-          <option value="Spouse">Spouse</option>
-          <option value="Child">Child</option>
-          <option value="Other">Other</option>
-        </select>
+        <FormControl fullWidth>
+          <InputLabel id="household-role">Role</InputLabel>
+          <Select aria-label="role" value={m.householdRole || ""} label="Role" labelId="household-role" onChange={(e: SelectChangeEvent<string>) => handleChangeRole(e, index)}>
+            <MenuItem value="Head">Head</MenuItem>
+            <MenuItem value="Spouse">Spouse</MenuItem>
+            <MenuItem value="Child">Child</MenuItem>
+            <MenuItem value="Other">Other</MenuItem>
+          </Select>
+        </FormControl>
       </TableCell>
       <TableCell><button onClick={() => handleRemove(index)} className="text-danger no-default-style"><Icon>person_remove</Icon> Remove</button></TableCell>
     </TableRow>

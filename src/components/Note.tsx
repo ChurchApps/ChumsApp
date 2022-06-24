@@ -1,4 +1,4 @@
-import { Icon } from "@mui/material";
+import { Icon, IconButton } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { PersonHelper, DateHelper, NoteInterface } from "./";
 
@@ -30,9 +30,9 @@ export const Note: React.FC<Props> = (props) => {
             <b>{note.person.name.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
           </div>
           <div>
-            <button aria-label="editNote" className="no-default-style" onClick={() => props.showNoteBox(note.id)}>
+            <IconButton aria-label="editNote" onClick={() => props.showNoteBox(note.id)}>
               <Icon style={{ color: "#03a9f4" }}>edit</Icon>
-            </button>
+            </IconButton>
           </div>
         </div>
         {contents.map((c, i) => c ? <p key={i}>{c}</p> : <br />)}

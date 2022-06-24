@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton } from "@mui/material"
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
@@ -12,12 +12,12 @@ export const GroupsPage = () => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) return null;
     else
       return (
-        <>
+        <Stack direction="row" alignItems="center">
           <ExportLink data={groups} spaceAfter={true} filename="groups.csv" />{" "}
-          <button className="no-default-style" aria-label="addGroup" onClick={() => { setShowAdd(true); }}>
+          <IconButton aria-label="addGroup" color="primary" onClick={() => { setShowAdd(true); }}>
             <Icon>add</Icon>
-          </button>
-        </>
+          </IconButton>
+        </Stack>
       );
   };
 
