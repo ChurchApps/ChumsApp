@@ -41,7 +41,7 @@ export const Funds: React.FC = () => {
       result.push(<TableBody key={result.length - 1}>
         <TableRow>
           <TableCell> {viewLink}</TableCell>
-          <TableCell className="text-right"> {editLink}</TableCell>
+          <TableCell align="right"> {editLink}</TableCell>
         </TableRow>
       </TableBody>)
     }

@@ -16,7 +16,7 @@ export const SettingsPage = () => {
   return (
     <>
       <h1><Icon>settings</Icon> Settings</h1>
-      <Grid container spacing={3} id="settingsBoxes">
+      <Grid container spacing={2} id="settingsBoxes">
         {getLinks()}
       </Grid>
     </>

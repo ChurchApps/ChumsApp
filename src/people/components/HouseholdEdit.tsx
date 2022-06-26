@@ -103,7 +103,7 @@ export function HouseholdEdit(props: Props) {
           </Select>
         </FormControl>
       </TableCell>
-      <TableCell><button onClick={() => handleRemove(index)} className="text-danger no-default-style"><Icon>person_remove</Icon> Remove</button></TableCell>
+      <TableCell><button onClick={() => handleRemove(index)} style={{color: "#dc3545"}} className="no-default-style"><Icon>person_remove</Icon> Remove</button></TableCell>
     </TableRow>
   ))
 
@@ -123,7 +123,7 @@ export function HouseholdEdit(props: Props) {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell>
-                <button className="text-success no-default-style" aria-label="addMember" onClick={() => setShowAdd(true)}> <Icon>person_add</Icon> Add</button>
+                <button style={{display: "flex", alignItems: "center", color: "#28a745"}} className="no-default-style" aria-label="addMember" onClick={() => setShowAdd(true)}> <Icon sx={{marginRight: "5px"}}>person_add</Icon> Add</button>
               </TableCell>
             </TableRow>
           </TableBody>

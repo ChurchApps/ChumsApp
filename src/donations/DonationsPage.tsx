@@ -2,7 +2,7 @@ import React from "react";
 import { ApiHelper, DisplayBox, BatchEdit, DonationBatchInterface, DateHelper, Funds, UserHelper, ExportLink, Permissions, Loading, DonationEvents, CurrencyHelper } from "./components";
 import { Link } from "react-router-dom";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
 import { SmallButton } from "../appBase/components";
 
 export const DonationsPage = () => {
@@ -62,7 +62,7 @@ export const DonationsPage = () => {
       return rows;
     }
 
-    rows.push(<TableRow key="header"><th>Id</th><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Id</th><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></TableRow>);
     return rows;
   }
 
@@ -70,10 +70,12 @@ export const DonationsPage = () => {
 
   const getTable = () => {
     if (!batches) return <Loading />
-    else return (<Table>
-      <TableHead>{getTableHeader()}</TableHead>
-      <TableBody>{getRows()}</TableBody>
-    </Table>);
+    else return (<Paper sx={{ width: "100%", overflowX: "auto" }}>
+      <Table>
+        <TableHead>{getTableHeader()}</TableHead>
+        <TableBody>{getRows()}</TableBody>
+      </Table>
+    </Paper>);
   }
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);

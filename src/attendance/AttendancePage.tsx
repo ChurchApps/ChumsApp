@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit, ServiceEdit, ServiceInterface, ServiceTimeEdit, ServiceTimeInterface, Tabs, GroupServiceTimeInterface, GroupInterface, ArrayHelper, Loading } from "./components";
 import { Link } from "react-router-dom";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box } from "@mui/material"
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
@@ -62,11 +62,11 @@ export const AttendancePage = () => {
   }
 
   const getRow = (campus: CampusInterface, service: ServiceInterface, serviceTime: ServiceTimeInterface, group: GroupInterface, key: string) => {
-    let campusHtml = (campus === undefined || campus?.name === lastCampus) ? <></> : <><Icon>church</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectCampus(campus); }}>{campus.name}</a></>
-    let serviceHtml = (service === undefined || service?.name === lastService) ? <></> : <><Icon>calendar_month</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectService(service); }}>{service.name}</a></>
-    let serviceTimeHtml = (serviceTime === undefined || serviceTime?.name === lastServiceTime) ? <></> : <><Icon>schedule</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectServiceTime(serviceTime); }}>{serviceTime.name}</a></>
-    let categoryHtml = (group === undefined || group?.categoryName === lastCategory) ? <></> : <><Icon>folder</Icon>{group.categoryName}</>
-    let groupHtml = (group === undefined) ? <></> : <><Icon>list</Icon><Link to={"/groups/" + group.id}>{group.name}</Link></>
+    let campusHtml = (campus === undefined || campus?.name === lastCampus) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>church</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectCampus(campus); }}>{campus.name}</a></Box>
+    let serviceHtml = (service === undefined || service?.name === lastService) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>calendar_month</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectService(service); }}>{service.name}</a></Box>
+    let serviceTimeHtml = (serviceTime === undefined || serviceTime?.name === lastServiceTime) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>schedule</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectServiceTime(serviceTime); }}>{serviceTime.name}</a></Box>
+    let categoryHtml = (group === undefined || group?.categoryName === lastCategory) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>folder</Icon>{group.categoryName}</Box>
+    let groupHtml = (group === undefined) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>list</Icon><Link to={"/groups/" + group.id}>{group.name}</Link></Box>
 
     const result = (<TableRow key={key}><TableCell>{campusHtml}</TableCell><TableCell>{serviceHtml}</TableCell><TableCell>{serviceTimeHtml}</TableCell><TableCell>{categoryHtml}</TableCell><TableCell>{groupHtml}</TableCell></TableRow>)
 
@@ -136,16 +136,18 @@ export const AttendancePage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (attendance.length === 0) return rows;
-    rows.push(<TableRow key="header"><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></TableRow>);
     return rows;
   }
 
   const getTable = () => {
     if (!attendance) return <Loading />
-    else return (<Table size="small">
-      <TableHead>{getTableHeader()}</TableHead>
-      <TableBody>{getRows()}</TableBody>
-    </Table>);
+    else return (<Paper sx={{ width: "100%", overflowX: "auto" }}>
+      <Table size="small">
+        <TableHead>{getTableHeader()}</TableHead>
+        <TableBody sx={{whiteSpace: "nowrap"}}>{getRows()}</TableBody>
+      </Table>
+    </Paper>);
   }
 
   return (

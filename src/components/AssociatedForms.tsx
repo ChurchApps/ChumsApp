@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormSubmission, FormSubmissionEdit, FormSubmissionInterface, UserHelper, ApiHelper, Permissions } from "./";
-import { Accordion, AccordionDetails, AccordionSummary, Button, Icon } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Icon, Box } from "@mui/material";
 
 interface Props {
   contentType: string,
@@ -54,8 +54,10 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   const getUnsubmittedCards = () => unsubmittedForms.map(uf => (
     <Accordion expanded={expanded === "unsubmitted" + uf.id} onChange={() => { setExpanded("unsubmitted" + uf.id) }}>
       <AccordionSummary onClick={() => handleAdd(uf.id)}>
-        <Button variant="text" onClick={() => handleAdd(uf.id)}><Icon>add</Icon></Button>
-        <span>{uf.name}</span>
+        <Box sx={{display: "flex", alignItems: "center"}}>
+          <Button variant="text" onClick={() => handleAdd(uf.id)}><Icon>add</Icon></Button>
+          <span>{uf.name}</span>
+        </Box>
       </AccordionSummary>
       <AccordionDetails>
       </AccordionDetails>

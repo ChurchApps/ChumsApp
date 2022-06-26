@@ -186,7 +186,7 @@ export const MergeModal: React.FC<Props> = (props) => {
           <>
             <p>Here are some fields conflicting fields: </p>
             <Container>{createConflictRows()}</Container>
-            <span className="text-danger font-italic">{error}</span>
+            <span style={{color: "#dc3545"}} className="font-italic">{error}</span>
           </>
         )}
         {mergeInProgress && <p className="text-center font-italic mb-0">Merging records...</p>}

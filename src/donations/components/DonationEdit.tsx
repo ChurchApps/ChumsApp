@@ -65,7 +65,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
     if (donation.method === "Cash") return null;
     let label = (donation.method === "Check") ? "Check #" : "Last 4 digits";
     return (
-      <TextField fullWidth name="methodDetails" label={label} value={donation.methodDetails} onChange={handleChange} />
+      <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails} onChange={handleChange} />
     );
   }
 
@@ -97,13 +97,13 @@ export const DonationEdit: React.FC<Props> = (props) => {
     if (showSelectPerson) return (<>
       <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} />
       <hr />
-      <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); handlePersonAdd(null); }}>Anonymous</a>
+      <a href="about:blank" className="text-decoration" onClick={(e: React.MouseEvent) => { e.preventDefault(); handlePersonAdd(null); }}>Anonymous</a>
     </>
     );
     else {
       let personText = (donation.person === undefined || donation.person === null) ? ("Anonymous") : donation.person.name.display;
       return (<div>
-        <a href="about:blank" data-cy="donating-person" onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowSelectPerson(true); }}>{personText}</a>
+        <a href="about:blank" className="text-decoration" data-cy="donating-person" onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowSelectPerson(true); }}>{personText}</a>
       </div>);
     }
   }

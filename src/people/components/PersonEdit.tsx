@@ -163,8 +163,8 @@ export function PersonEdit(props: Props) {
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             <Grid item sm={3} className="my-auto">
-              <a href="about:blank" className="d-block" onClick={handlePhotoClick}>
-                <img src={PersonHelper.getPhotoUrl(person)} className="img-fluid profilePic d-block mx-auto" id="imgPreview" alt="avatar" />
+              <a href="about:blank" onClick={handlePhotoClick}>
+                <img src={PersonHelper.getPhotoUrl(person)} className="w-100 profilePic" id="imgPreview" alt="avatar" />
               </a>
             </Grid>
             <Grid item sm={1}>

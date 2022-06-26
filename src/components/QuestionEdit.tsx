@@ -1,5 +1,6 @@
 import React from "react";
 import { AnswerInterface, QuestionInterface } from "./";
+import { Select, MenuItem, SelectChangeEvent, FormControl, InputLabel, TextField } from "@mui/material";
 
 interface Props {
     answer: AnswerInterface
@@ -8,8 +9,8 @@ interface Props {
 }
 
 export const QuestionEdit: React.FC<Props> = (props) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    props.changeFunction(props.question.id, e.currentTarget.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+    props.changeFunction(props.question.id, e.target.value);
   }
   let q = props.question;
 
@@ -18,27 +19,42 @@ export const QuestionEdit: React.FC<Props> = (props) => {
     let input = null;
     let choiceOptions = [];
     if (q.choices !== undefined && q.choices !== null) {
-      for (let i = 0; i < q.choices.length; i++) choiceOptions.push(<option value={q.choices[i].value}>{q.choices[i].text}</option>);
+      for (let i = 0; i < q.choices.length; i++) choiceOptions.push(<MenuItem value={q.choices[i].value}>{q.choices[i].text}</MenuItem>);
     }
 
     let answerValue = (props.answer === null) ? "" : props.answer.value
-
     switch (q.fieldType) {
-      case "Textbox": input = <input type="text" className="form-control" value={answerValue} placeholder={q.placeholder} onChange={handleChange} />; break;
-      case "Multiple Choice": input = <select className="form-control" value={answerValue} onChange={handleChange}>{choiceOptions}</select>; break;
-      case "Yes/No": input = <select className="form-control" value={answerValue} onChange={handleChange}><option value="False">No</option><option value="True">Yes</option></select>; break;
+      case "Textbox": input = <TextField fullWidth label={q.title} placeholder={q.placeholder} value={answerValue} onChange={handleChange} />; break;
+      case "Multiple Choice": {
+        input = (
+          <FormControl fullWidth>
+            <InputLabel>{q.title}</InputLabel>
+            <Select fullWidth label={q.title} value={answerValue} onChange={handleChange}>{choiceOptions}</Select>
+          </FormControl>);
+        break;
+      }
+      case "Yes/No": {
+        input = (
+          <FormControl fullWidth>
+            <InputLabel>{q.title}</InputLabel>
+            <Select fullWidth label={q.title} value={answerValue} onChange={handleChange}>
+              <MenuItem value="False">No</MenuItem>
+              <MenuItem value="True">Yes</MenuItem>
+            </Select>
+          </FormControl>);
+        break;
+      }
       case "Whole Number":
       case "Decimal":
-        input = input = <input type="number" className="form-control" value={answerValue} placeholder={q.placeholder} onChange={handleChange} />;
+        input = <TextField fullWidth type="number" label={q.title} placeholder={q.placeholder} value={answerValue} onChange={handleChange} />;
         break;
-      case "Date": input = <input type="date" className="form-control" value={answerValue} placeholder={q.placeholder} onChange={handleChange} />; break;
-      case "Phone Number": input = <input type="tel" className="form-control" value={answerValue} placeholder="555-555-5555" onChange={handleChange} />; break;
-      case "Email": input = <input type="email" className="form-control" value={answerValue} placeholder="john@doe.com" onChange={handleChange} />; break;
-      case "Text Area": input = <textarea className="form-control" value={answerValue} placeholder={q.placeholder} onChange={handleChange} />; break;
+      case "Date": input = <TextField fullWidth type="date" InputLabelProps={{shrink: true}} label={q.title} placeholder={q.placeholder} value={answerValue} onChange={handleChange} />; break;
+      case "Phone Number": input = <TextField fullWidth type="number" label={q.title} placeholder="555-555-5555" value={answerValue} onChange={handleChange} />; break;
+      case "Email": input = <TextField fullWidth type="email" label={q.title} placeholder="john@doe.com" value={answerValue} onChange={handleChange} />; break;
+      case "Text Area": input = <TextField fullWidth multiline rows={4} label={q.title} placeholder={q.placeholder} value={answerValue} onChange={handleChange} />; break;
       default: return null;
     }
-    let desc = (q.description === null || q.description === "") ? "" : <span className="description">({q.description})</span>
-    return <div className="form-group"><label>{q.title}{desc}</label>{input}</div>;
+    return input;
   }
 
 }

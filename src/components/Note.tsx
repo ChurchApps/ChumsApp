@@ -1,4 +1,4 @@
-import { Icon, IconButton } from "@mui/material";
+import { Icon, IconButton, Stack, Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { PersonHelper, DateHelper, NoteInterface } from "./";
 
@@ -24,8 +24,8 @@ export const Note: React.FC<Props> = (props) => {
       <div className="postedBy">
         <img src={photoUrl} alt="avatar" />
       </div>
-      <div className="w-100 note-contents">
-        <div className="d-flex justify-content-between">
+      <Box sx={{width: "100%"}} className="note-contents">
+        <Stack direction="row" justifyContent="space-between">
           <div>
             <b>{note.person.name.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
           </div>
@@ -34,9 +34,9 @@ export const Note: React.FC<Props> = (props) => {
               <Icon style={{ color: "#03a9f4" }}>edit</Icon>
             </IconButton>
           </div>
-        </div>
+        </Stack>
         {contents.map((c, i) => c ? <p key={i}>{c}</p> : <br />)}
-      </div>
+      </Box>
     </div>
   );
 };

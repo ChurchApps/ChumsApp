@@ -67,8 +67,20 @@ h1 {
   margin-bottom: 0;
 }
 
+.w-100 {
+  width: 100%;
+}
+
+.text-decoration {
+  text-decoration: none;
+}
+
+.text-decoration:hover {
+  text-decoration: underline;
+}
+
 .text-grey {
-  color: #A9A9A9
+  color: #a9a9a9;
 }
 
 .personPhoto {
@@ -102,7 +114,7 @@ h1 {
 
 #peopleTable th:active {
   cursor: pointer;
-  color: gray
+  color: gray;
 }
 
 .sortAsc {
@@ -142,8 +154,6 @@ h1 {
   border-top: 5px solid black;
   display: inline-block;
 }
-
-
 
 #household img {
   width: 60px;
@@ -617,7 +627,6 @@ label .description {
   padding-right: 2px;
 }
 
-
 #advancedSearch .footer .btn-success {
   background-color: #03a9f4;
   border-color: #03a9f4;
@@ -640,6 +649,7 @@ label .description {
 .no-default-style {
   border: none;
   background: none;
+  cursor: pointer;
 }
 
 .danger-text {
@@ -663,7 +673,7 @@ label .description {
 }
 
 #fieldsDropdown .dropdown-menu i {
-  color: #DDD;
+  color: #ddd;
 }
 
 #fieldsDropdown .dropdown-menu .checked i {

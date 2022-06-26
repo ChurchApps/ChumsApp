@@ -67,7 +67,7 @@ export const Form: React.FC<Props> = (props) => {
     if (questions.length === 0) {
       return rows;
     }
-    rows.push(<TableRow key="header"><th>Question</th><th>Type</th><th>Action</th><th>Required</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Question</th><th>Type</th><th>Action</th><th>Required</th></TableRow>);
     return rows;
   }
   const getSidebarModules = () => {

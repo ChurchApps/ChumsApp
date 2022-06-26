@@ -66,8 +66,8 @@ export function FormQuestionEdit(props: Props) {
     <InputBox id="questionBox" headerIcon="help" headerText="Edit Question" saveFunction={handleSave} cancelFunction={props.updatedFunction} isSubmitting={isSubmitting} deleteFunction={(!UniqueIdHelper.isMissing(question.id)) ? handleDelete : undefined}>
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
-        <InputLabel>Provider</InputLabel>
-        <Select name="fieldType" value={question.fieldType} onChange={handleChange}>
+        <InputLabel id="provider">Provider</InputLabel>
+        <Select name="fieldType" labelId="provider" label="Provider" value={question.fieldType} onChange={handleChange}>
           <MenuItem value="Textbox">Textbox</MenuItem>
           <MenuItem value="Whole Number">Whole Number</MenuItem>
           <MenuItem value="Decimal">Decimal</MenuItem>

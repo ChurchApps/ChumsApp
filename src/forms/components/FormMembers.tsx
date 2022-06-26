@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { DisplayBox, PersonAdd, PersonInterface } from ".";
 import { ApiHelper, MemberPermissionInterface, PersonHelper } from "../../helpers";
-import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper } from "@mui/material"
 
 interface Props { formId: string }
 
@@ -64,12 +64,12 @@ export const FormMembers: React.FC<Props> = (props) => {
         <TableRow key={fm.memberId}>
           <TableCell><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></TableCell>
           <TableCell>
-            <Stack direction="row">
+            <Stack direction="row" spacing={1}>
               <Button variant={fm.action === "admin" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, "admin") }}>Admin</Button>
               <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, "view") }}>View Only</Button>
             </Stack>
           </TableCell>
-          <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} className="text-danger"><Icon>person_remove</Icon> Remove</a>}</TableCell>
+          <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} style={{display: "flex", alignItems: "center", color: "#dc3545"}}><Icon sx={{marginRight: "5px"}}>person_remove</Icon> Remove</a>}</TableCell>
         </TableRow>
       );
     });
@@ -78,15 +78,16 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<TableRow key="header"><th>Name</th><th>Permission</th><th>Action</th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>Name</th><th>Permission</th><th>Action</th></TableRow>);
     return rows;
   }
 
-  const getTable = () => (
-    <Table id="formMembersTable">
+  const getTable = () => (<Paper sx={{ width: "100%", overflowX: "auto" }}>
+    <Table id="formMembersTable" padding="normal">
       <TableHead>{getTableHeader()}</TableHead>
-      <TableBody>{getRows()}</TableBody>
+      <TableBody sx={{padding: 0}}>{getRows()}</TableBody>
     </Table>
+  </Paper>
   );
 
   const updateFilterList = (id: string, action: string) => {

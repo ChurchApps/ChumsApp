@@ -10,10 +10,10 @@ interface Props {
 }
 
 export const BigLinkButton: React.FC<Props> = (props) => (
-  <Grid item md={3}>
+  <Grid item md={3} xs={6}>
     <LinkType href={props.href} outsideLink={props.outsideLink}>
       <Card>
-        <CardContent className="text-center">
+        <CardContent sx={{textAlign: "center"}}>
           <Icon style={{ fontSize: 40 }}>{props.icon}</Icon>
           <br />
           {props.text}
@@ -29,6 +29,6 @@ interface LinkTypeProps {
 }
 
 const LinkType: React.FC<LinkTypeProps> = (props) => {
-  if (props.outsideLink) return <a href={props.href} target="_blank" rel="noopener noreferrer">{props.children}</a>
+  if (props.outsideLink) return <a href={props.href} className="text-decoration" target="_blank" rel="noopener noreferrer">{props.children}</a>
   else return <Link to={props.href}>{props.children}</Link>
 }

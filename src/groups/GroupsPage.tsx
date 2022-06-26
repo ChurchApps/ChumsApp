@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
@@ -41,14 +41,16 @@ export const GroupsPage = () => {
     let lastCat = "";
     for (let i = 0; i < groups.length; i++) {
       let g = groups[i];
-      let cat = (g.categoryName !== lastCat) ? <><Icon>folder</Icon> {g.categoryName}</> : <></>
+      let cat = (g.categoryName !== lastCat) ? <Box sx={{display: "flex", alignItems: "center"}}><Icon>folder</Icon> {g.categoryName}</Box> : <></>
       let memberCount = g.memberCount === 1 ? "1 person" : g.memberCount.toString() + " people";
       rows.push(
-        <TableRow key={g.id}>
+        <TableRow sx={{whiteSpace: "nowrap"}} key={g.id}>
           <TableCell>{cat}</TableCell>
           <TableCell>
-            <Icon>group</Icon>{" "}
-            <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
+            <Box sx={{display: "flex", alignItems: "center"}}>
+              <Icon sx={{marginRight: "5px"}}>group</Icon>{" "}
+              <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
+            </Box>
           </TableCell>
           <TableCell>{memberCount}</TableCell>
         </TableRow>
@@ -61,7 +63,7 @@ export const GroupsPage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<TableRow key="header"><th>Category</th><th>Name</th><th>People</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Category</th><th>Name</th><th>People</th></TableRow>);
     return rows;
   }
 
@@ -69,10 +71,12 @@ export const GroupsPage = () => {
 
   const getTable = () => {
     if (isLoading) return <Loading />
-    else return (<Table>
-      <TableHead>{getTableHeader()}</TableHead>
-      <TableBody>{getRows()}</TableBody>
-    </Table>);
+    else return (<Paper sx={{ width: "100%", overflowX: "auto" }}>
+      <Table>
+        <TableHead>{getTableHeader()}</TableHead>
+        <TableBody>{getRows()}</TableBody>
+      </Table>
+    </Paper>);
   }
 
   return (
