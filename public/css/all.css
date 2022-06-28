@@ -244,7 +244,7 @@ h1 {
   margin-bottom: 0px !important;
 }
 
-.statusList li:before {
+/* .statusList li:before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   padding-right: 10px;
@@ -264,7 +264,7 @@ h1 {
 .statusList li.complete:before {
   content: "\f00c";
   color: #1c7430;
-}
+} */
 
 .report .heading1 {
   font-weight: bold;
