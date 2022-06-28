@@ -159,7 +159,7 @@ export function PersonEdit(props: Props) {
     !person
       ? <Loading />
       : (
-        <InputBox headerIcon="fas fa-user" headerText="Personal Details" cancelFunction={props.updatedFunction} deleteFunction={handleDelete} saveFunction={handleSave} isSubmitting={isSubmitting} headerActionContent={<Button id="mergeButton" size="small" onClick={props.showMergeSearch}>Merge</Button>}>
+        <InputBox headerIcon="person" headerText="Personal Details" cancelFunction={props.updatedFunction} deleteFunction={handleDelete} saveFunction={handleSave} isSubmitting={isSubmitting} headerActionContent={<Button id="mergeButton" size="small" onClick={props.showMergeSearch}>Merge</Button>}>
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             <Grid item sm={3} className="my-auto">

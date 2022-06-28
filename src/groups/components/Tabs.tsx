@@ -42,8 +42,8 @@ export const Tabs: React.FC<Props> = (props) => {
     let tabs = [];
     let defaultTab = ""
 
-    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) { tabs.push(getTab(0, "members", "fas fa-users", "Members")); defaultTab = "members"; }
-    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && props.group?.trackAttendance) { tabs.push(getTab(1, "sessions", "far fa-calendar-alt", "Sessions")); if (defaultTab === "") defaultTab = "sessions"; }
+    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) { tabs.push(getTab(0, "members", "people", "Members")); defaultTab = "members"; }
+    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && props.group?.trackAttendance) { tabs.push(getTab(1, "sessions", "calendar_month", "Sessions")); if (defaultTab === "") defaultTab = "sessions"; }
     if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
     return tabs;
   }

@@ -53,7 +53,7 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
     <>
       <FormLabel>Choices</FormLabel>
       <Table size="small">
-        <TableHead><TableRow><th>Value</th><th>Text</th><th>Action</th></TableRow></TableHead>
+        <TableHead><TableRow sx={{textAlign: "left"}}><th>Value</th><th>Text</th><th>Action</th></TableRow></TableHead>
         <TableBody>
           {getRows()}
           <TableRow>

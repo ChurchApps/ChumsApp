@@ -19,9 +19,9 @@ export const Tabs: React.FC<Props> = (props) => {
   let tabs = [];
   let defaultTab = ""
   let currentTab = null;
-  if (UserHelper.checkAccess(Permissions.membershipApi.notes.view)) { tabs.push(getTab(0, "notes", "far fa-sticky-note", "Notes")); defaultTab = "notes"; }
-  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "attendance", "far fa-calendar-alt", "Attendance")); if (defaultTab === "") defaultTab = "attendance"; }
-  if (UserHelper.checkAccess(Permissions.givingApi.donations.view)) { tabs.push(getTab(2, "donations", "fas fa-hand-holding-usd", "Donations")); if (defaultTab === "") defaultTab = "donations"; }
+  if (UserHelper.checkAccess(Permissions.membershipApi.notes.view)) { tabs.push(getTab(0, "notes", "notes", "Notes")); defaultTab = "notes"; }
+  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "attendance", "calendar_month", "Attendance")); if (defaultTab === "") defaultTab = "attendance"; }
+  if (UserHelper.checkAccess(Permissions.givingApi.donations.view)) { tabs.push(getTab(2, "donations", "volunteer_activism", "Donations")); if (defaultTab === "") defaultTab = "donations"; }
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {

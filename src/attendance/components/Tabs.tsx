@@ -14,8 +14,8 @@ export const Tabs: React.FC = () => {
   let tabs = [];
   let defaultTab = "";
   let currentTab = null;
-  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(0, "attendance", "far fa-calendar-alt", "Attendance Trend")); if (defaultTab === "") defaultTab = "attendance"; }
-  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "groups", "fas fa-user", "Group Attendance")); if (defaultTab === "") defaultTab = "groups"; }
+  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(0, "attendance", "calendar_month", "Attendance Trend")); if (defaultTab === "") defaultTab = "attendance"; }
+  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "groups", "person", "Group Attendance")); if (defaultTab === "") defaultTab = "groups"; }
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {

@@ -38,7 +38,7 @@ export const FormsPage = () => {
       const archiveLink = (canEdit && selectedTab === "forms") ? (<SmallButton icon="delete" text="Archive" color="error" onClick={() => { handleArchiveChange(form, true); }} />) : null;
       const unarchiveLink = (canEdit && selectedTab === "archived") ? (<SmallButton icon="undo" text="Restore" color="success" onClick={() => { handleArchiveChange(form, false); }} />) : null;
       result.push(<TableRow key={form.id}>
-        <TableCell><Icon>format_align_left</Icon> <Link to={"/forms/" + form.id}>{form.name}</Link></TableCell>
+        <TableCell><Box sx={{display: "flex", alignItems: "center"}}><Icon sx={{fontSize: 20, marginRight: "5px"}}>format_align_left</Icon> <Link to={"/forms/" + form.id}>{form.name}</Link></Box></TableCell>
         <TableCell>{formLink}</TableCell>
         <TableCell style={{ textAlign: "right" }}>{archiveLink || unarchiveLink} {editLink}</TableCell>
       </TableRow>);
@@ -88,7 +88,7 @@ export const FormsPage = () => {
   if (!forms && !archivedForms) return (<></>);
   else {
     let title = (selectedTab === "forms") ? "Forms" : "Archived Forms";
-    let icon = (selectedTab === "forms") ? "fas fa-align-left" : "fas fa-archive";
+    let icon = (selectedTab === "forms") ? "format_align_left" : "archive";
     let contents = <Loading />
     if (forms && archivedForms) {
       contents = (<Table>

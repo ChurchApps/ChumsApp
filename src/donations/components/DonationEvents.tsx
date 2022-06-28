@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { DateHelper, ApiHelper, DisplayBox } from ".";
-import { Accordion, AccordionDetails, AccordionSummary, Button } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Icon } from "@mui/material";
 
 export const DonationEvents: React.FC = () => {
-  const [headerIcon, setHeaderIcon] = React.useState<string>("fas fa-exclamation-circle");
+  const [headerIcon, setHeaderIcon] = React.useState<string>("error");
   const [unresolvedErrorCount, setUnresolvedErrorCount] = React.useState<number>();
   const [errorLogs, setErrorLogs] = React.useState<any>([]);
   const [people, setPeople] = React.useState([]);
@@ -39,12 +39,10 @@ export const DonationEvents: React.FC = () => {
     errorLogs.forEach((log: any, i: string) => {
       i = i.toString();
       let eventType = log.eventType.replace(".", " ");
-      let className = "fas fa-exclamation-circle";
-      if (!log.resolved) className += " danger-text";
       logs.push(
         <Accordion key={i}>
           <AccordionSummary>
-            <i style={{ marginRight: "5px" }} className={className}></i>
+            <Icon sx={{marginRight: "5px", color: !log.resolved ? "#dc3545" : "#000"}}>error</Icon>
             <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
           </AccordionSummary>
           <AccordionDetails>
