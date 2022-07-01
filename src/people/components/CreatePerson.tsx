@@ -59,7 +59,7 @@ export function CreatePerson() {
           <TextField size="small" margin="none" fullWidth type="text" aria-label="lastName" label="Last Name" name="last" value={person.name.last} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
         </Grid>
         <Grid item md={4} xs={12}>
-          <Button type="submit" fullWidth variant="contained" disabled={isSubmitting}>Add</Button>
+          <Button type="submit" fullWidth variant="contained" disabled={isSubmitting} onClick={handleSubmit}>Add</Button>
         </Grid>
       </Grid>
     </div>
