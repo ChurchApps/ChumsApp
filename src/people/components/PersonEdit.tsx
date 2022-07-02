@@ -39,7 +39,7 @@ export function PersonEdit(props: Props) {
       case "name.middle": p.name.middle = value; break;
       case "name.last": p.name.last = value; break;
       case "name.nick": p.name.nick = value; break;
-      case "name.email": p.contactInfo.email = value; break;
+      case "contactInfo.email": p.contactInfo.email = value; break;
       case "contactInfo.address1": p.contactInfo.address1 = value; break;
       case "contactInfo.address2": p.contactInfo.address2 = value; break;
       case "contactInfo.city": p.contactInfo.city = value; break;
@@ -204,7 +204,7 @@ export function PersonEdit(props: Props) {
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{shrink: true}} label="Birthdate" value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{ shrink: true }} label="Birthdate" value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} />
             </Grid>
           </Grid>
 
@@ -232,7 +232,7 @@ export function PersonEdit(props: Props) {
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{shrink: true}} label="Anniversary" value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{ shrink: true }} label="Anniversary" value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} />
             </Grid>
           </Grid>
 
