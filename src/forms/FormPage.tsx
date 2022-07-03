@@ -20,7 +20,7 @@ export const FormPage = () => {
 
   return form?.id
     ? <>
-      <h1><Icon>list_alt</Icon> {form.name}</h1>
+      <h1><Icon>description</Icon> {form.name}</h1>
       <Tabs form={form} memberPermission={memberPermission} />
     </>
     : <></>;
