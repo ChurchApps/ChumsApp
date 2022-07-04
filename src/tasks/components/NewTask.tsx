@@ -1,0 +1,99 @@
+import { Grid, Icon, TextField } from "@mui/material";
+import React from "react";
+import { ApiHelper, NoteInterface, TaskInterface } from ".";
+import { ErrorMessages, InputBox } from "../../appBase/components";
+import { ContentPicker } from "./ContentPicker";
+
+interface Props {
+  onCancel: () => void,
+  onSave: () => void
+}
+
+export const NewTask = (props: Props) => {
+  const [task, setTask] = React.useState<TaskInterface>({ status: "Open" });
+  const [note, setNote] = React.useState<NoteInterface>({});
+  const [assignedToName, setAssignedToName] = React.useState("");
+  const [associatedWithName, setAssociatedWithName] = React.useState("");
+  const [modalField, setModalField] = React.useState("");
+  const [errors, setErrors] = React.useState([]);
+
+  const validate = () => {
+    const result = [];
+    if (!task.associatedWithId) result.push("Please associated this task with a person.");
+    if (!task.assignedToId) result.push("Please assign this task to a person.");
+    if (!task.title?.trim()) result.push("Please enter a title for this task.");
+    setErrors(result);
+    return result.length === 0;
+  }
+
+  const handleSave = async () => {
+    console.log("SAVING");
+    if (validate()) {
+      const tasks = await ApiHelper.post("/tasks", [task], "DoingApi");
+      if (note.contents.trim() !== "") {
+        note.contentType = "task";
+        note.contentId = tasks[0].id;
+        await ApiHelper.post("/notes", [note], "DoingApi");
+        props.onSave();
+      }
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const val = e.target.value;
+
+    switch (e.target.name) {
+      case "title":
+        const t = { ...task };
+        t.title = val;
+        setTask(t);
+        break;
+      case "note":
+        const n = { ...note };
+        n.contents = val;
+        setNote(n);
+        break;
+    }
+  }
+
+  const handleContentPicked = (contentType: string, contentId: string, label: string) => {
+    const t = { ...task };
+    switch (modalField) {
+      case "associatedWith":
+        t.associatedWithType = contentType;
+        t.associatedWithId = contentId;
+        setAssociatedWithName(label);
+        break;
+      case "assignedTo":
+        t.assignedToType = contentType;
+        t.assignedToId = contentId;
+        setAssignedToName(label);
+        break;
+    }
+
+    setTask(t);
+    setModalField("")
+  }
+
+  const handleModalClose = () => { setModalField(""); }
+
+  return (
+    <InputBox headerIcon="list_alt" headerText="New Task" saveFunction={handleSave} cancelFunction={props.onCancel}>
+      <ErrorMessages errors={errors} />
+      <Grid container spacing={3}>
+        <Grid item xs={6} md={3}>
+          <TextField fullWidth label="Associate with" value={associatedWithName} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} />
+        </Grid>
+        <Grid item xs={6} md={3}>
+          <TextField fullWidth label="Assign to" value={assignedToName} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField fullWidth label="Title" value={task.title} name="title" onChange={handleChange} />
+        </Grid>
+      </Grid>
+
+      <TextField fullWidth label="Notes" value={note.contents} name="note" onChange={handleChange} multiline />
+      {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
+    </InputBox>
+  );
+}
