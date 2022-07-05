@@ -1,6 +1,6 @@
 import { Grid, Icon, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, NoteInterface, TaskInterface } from ".";
+import { ApiHelper, NoteInterface, TaskInterface, UserHelper } from ".";
 import { ErrorMessages, InputBox } from "../../appBase/components";
 import { ContentPicker } from "./ContentPicker";
 
@@ -10,10 +10,8 @@ interface Props {
 }
 
 export const NewTask = (props: Props) => {
-  const [task, setTask] = React.useState<TaskInterface>({ status: "Open" });
+  const [task, setTask] = React.useState<TaskInterface>({ status: "Open", createdByType: "person", createdById: UserHelper.person?.id, createdByLabel: UserHelper.person?.name?.display, associatedWithType: "person", associatedWithId: UserHelper.person?.id, associatedWithLabel: UserHelper.person?.name?.display });
   const [note, setNote] = React.useState<NoteInterface>({});
-  const [assignedToName, setAssignedToName] = React.useState("");
-  const [associatedWithName, setAssociatedWithName] = React.useState("");
   const [modalField, setModalField] = React.useState("");
   const [errors, setErrors] = React.useState([]);
 
@@ -62,12 +60,12 @@ export const NewTask = (props: Props) => {
       case "associatedWith":
         t.associatedWithType = contentType;
         t.associatedWithId = contentId;
-        setAssociatedWithName(label);
+        t.associatedWithLabel = label;
         break;
       case "assignedTo":
         t.assignedToType = contentType;
         t.assignedToId = contentId;
-        setAssignedToName(label);
+        t.assignedToLabel = label;
         break;
     }
 
@@ -82,10 +80,10 @@ export const NewTask = (props: Props) => {
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={6} md={3}>
-          <TextField fullWidth label="Associate with" value={associatedWithName} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} />
+          <TextField fullWidth label="Associate with" value={task.associatedWithLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} />
         </Grid>
         <Grid item xs={6} md={3}>
-          <TextField fullWidth label="Assign to" value={assignedToName} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
+          <TextField fullWidth label="Assign to" value={task.assignedToLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField fullWidth label="Title" value={task.title} name="title" onChange={handleChange} />

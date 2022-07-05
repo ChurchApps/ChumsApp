@@ -17,10 +17,17 @@ import { ReportPage } from "./reports/ReportPage";
 import { Box } from "@mui/material";
 import { TasksPage } from "./tasks/TasksPage";
 import { TaskPage } from "./tasks/TaskPage";
-// import UserContext from "./UserContext";
+import UserContext from "./UserContext";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
+
+  let context = React.useContext(UserContext);
+
+  UserHelper.currentChurch = context.church;
+  UserHelper.churches = context.churches;
+  UserHelper.user = context.user;
+  UserHelper.person = context.person;
 
   if (UserHelper.churchChanged) {
     UserHelper.churchChanged = false;
