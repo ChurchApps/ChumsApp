@@ -28,7 +28,7 @@ export const Wrapper: React.FC<Props> = props => {
 
   const getSelectedTab = () => {
     const path = window.location.pathname;
-    let result = "";
+    let result = "dashboard";
     if (path.startsWith("/people")) result = "people";
     else if (path.startsWith("/groups")) result = "groups";
     else if (path.startsWith("/attendance")) result = "attendance";
@@ -42,6 +42,8 @@ export const Wrapper: React.FC<Props> = props => {
   const selectedTab = getSelectedTab();
   const tabs = []
   const donationIcon = donationError ? "error" : "volunteer_activism";
+
+  if (false) tabs.push(<NavItem url="/" label="Dashboard" icon="home" selected={selectedTab === "dashboard"} />);
   tabs.push(<NavItem url="/people" label="People" icon="person" selected={selectedTab === "people"} />);
   tabs.push(<NavItem url="/groups" label="Groups" icon="people" selected={selectedTab === "groups"} />);
   if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) tabs.push(<NavItem url="/attendance" label="Attendance" icon="calendar_month" selected={selectedTab === "attendance"} />);

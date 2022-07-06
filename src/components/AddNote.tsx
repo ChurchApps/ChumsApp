@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { ApiHelper, NoteInterface, InputBox } from "."
+import { ApiHelper, NoteInterface, InputBox, ApiListType } from "."
 import { TextField } from "@mui/material"
 import { ErrorMessages } from "../appBase/components"
 
@@ -8,6 +8,8 @@ type Props = {
   contentId: string;
   noteId?: string;
   updatedFunction: () => void;
+  apiName?: ApiListType;
+  contentType?: string;
 };
 
 export function AddNote(props: Props) {
@@ -17,8 +19,8 @@ export function AddNote(props: Props) {
   const headerText = props.noteId ? "Edit note" : "Add a note"
 
   useEffect(() => {
-    if (props.noteId) ApiHelper.get(`/notes/${props.noteId}`, "MembershipApi").then(n => setNote(n));
-    else setNote({ contentId: props.contentId, contentType: "person", contents: "" })
+    if (props.noteId) ApiHelper.get(`/notes/${props.noteId}`, props.apiName || "MembershipApi").then(n => setNote(n));
+    else setNote({ contentId: props.contentId, contentType: props.contentType || "person", contents: "" })
   }, [props.noteId]) //eslint-disable-line
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -38,14 +40,14 @@ export function AddNote(props: Props) {
   async function handleSave() {
     if (validate()) {
       setIsSubmitting(true);
-      ApiHelper.post("/notes", [note], "MembershipApi")
+      ApiHelper.post("/notes", [note], props.apiName || "MembershipApi")
         .then(() => { props.close(); props.updatedFunction() })
         .finally(() => { setIsSubmitting(false) });
     }
   };
 
   async function deleteNote() {
-    await ApiHelper.delete(`/notes/${props.noteId}`, "MembershipApi")
+    await ApiHelper.delete(`/notes/${props.noteId}`, props.apiName || "MembershipApi")
     props.updatedFunction()
     props.close();
   }

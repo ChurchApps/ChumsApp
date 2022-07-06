@@ -6,7 +6,8 @@ import { ContentPicker } from "./ContentPicker";
 
 interface Props {
   onCancel: () => void,
-  onSave: () => void
+  onSave: () => void,
+  compact?: boolean
 }
 
 export const NewTask = (props: Props) => {
@@ -25,7 +26,6 @@ export const NewTask = (props: Props) => {
   }
 
   const handleSave = async () => {
-    console.log("SAVING");
     if (validate()) {
       const tasks = await ApiHelper.post("/tasks", [task], "DoingApi");
       if (note.contents.trim() !== "") {
@@ -79,13 +79,13 @@ export const NewTask = (props: Props) => {
     <InputBox headerIcon="list_alt" headerText="New Task" saveFunction={handleSave} cancelFunction={props.onCancel}>
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={6} md={(props.compact) ? 6 : 3}>
           <TextField fullWidth label="Associate with" value={task.associatedWithLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} />
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={6} md={(props.compact) ? 6 : 3}>
           <TextField fullWidth label="Assign to" value={task.assignedToLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={(props.compact) ? 12 : 6}>
           <TextField fullWidth label="Title" value={task.title} name="title" onChange={handleChange} />
         </Grid>
       </Grid>

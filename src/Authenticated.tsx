@@ -18,6 +18,7 @@ import { Box } from "@mui/material";
 import { TasksPage } from "./tasks/TasksPage";
 import { TaskPage } from "./tasks/TaskPage";
 import UserContext from "./UserContext";
+import { DashboardPage } from "./dashboard/DashboardPage";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
@@ -52,6 +53,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/settings/*" element={<Settings />} />
           <Route path="/tasks/:id" element={<TaskPage />} />
           <Route path="/tasks" element={<TasksPage />} />
+          <Route path="/" element={<DashboardPage />} />
         </Routes>
       </Wrapper>
     </Box>
