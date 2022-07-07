@@ -1,6 +1,6 @@
 import React from "react"
 import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, UpdateHouseHold, ErrorMessages } from "."
-import { Icon, Table, TableBody, TableCell, TableRow, TextField, FormControl, SelectChangeEvent, Select, MenuItem, InputLabel } from "@mui/material"
+import { Table, TableBody, TableCell, TableRow, TextField, FormControl, SelectChangeEvent, Select, MenuItem, InputLabel } from "@mui/material"
 import { SmallButton } from "../../appBase/components";
 
 interface Props { updatedFunction: () => void, household: HouseholdInterface, currentMembers: PersonInterface[], currentPerson: PersonInterface }
@@ -106,7 +106,7 @@ export function HouseholdEdit(props: Props) {
       <TableCell>
         <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(index)} />
       </TableCell>
-    </TableRow >
+    </TableRow>
   ))
 
   React.useEffect(() => { setHousehold(props.household) }, [props.household]);
