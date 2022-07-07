@@ -1,6 +1,7 @@
 import React from "react"
 import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, UpdateHouseHold, ErrorMessages } from "."
 import { Icon, Table, TableBody, TableCell, TableRow, TextField, FormControl, SelectChangeEvent, Select, MenuItem, InputLabel } from "@mui/material"
+import { SmallButton } from "../../appBase/components";
 
 interface Props { updatedFunction: () => void, household: HouseholdInterface, currentMembers: PersonInterface[], currentPerson: PersonInterface }
 
@@ -91,11 +92,10 @@ export function HouseholdEdit(props: Props) {
   const rows = members.map((m, index) => (
     <TableRow key={m.id}>
       <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>
-      <TableCell>
-        {m.name.display}
-        <FormControl fullWidth>
-          <InputLabel id="household-role">Role</InputLabel>
-          <Select aria-label="role" value={m.householdRole || ""} label="Role" labelId="household-role" onChange={(e: SelectChangeEvent<string>) => handleChangeRole(e, index)}>
+      <TableCell style={{ width: "100%" }}>
+        <FormControl fullWidth style={{ marginTop: 0 }}>
+          <InputLabel id="household-role">{m.name.display}</InputLabel>
+          <Select aria-label="role" value={m.householdRole || ""} size="small" label={m.name.display} labelId="household-role" onChange={(e: SelectChangeEvent<string>) => handleChangeRole(e, index)}>
             <MenuItem value="Head">Head</MenuItem>
             <MenuItem value="Spouse">Spouse</MenuItem>
             <MenuItem value="Child">Child</MenuItem>
@@ -103,8 +103,10 @@ export function HouseholdEdit(props: Props) {
           </Select>
         </FormControl>
       </TableCell>
-      <TableCell><button onClick={() => handleRemove(index)} style={{color: "#dc3545"}} className="no-default-style"><Icon>person_remove</Icon> Remove</button></TableCell>
-    </TableRow>
+      <TableCell>
+        <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(index)} />
+      </TableCell>
+    </TableRow >
   ))
 
   React.useEffect(() => { setHousehold(props.household) }, [props.household]);
@@ -123,7 +125,7 @@ export function HouseholdEdit(props: Props) {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell>
-                <button style={{display: "flex", alignItems: "center", color: "#28a745"}} className="no-default-style" aria-label="addMember" onClick={() => setShowAdd(true)}> <Icon sx={{marginRight: "5px"}}>person_add</Icon> Add</button>
+                <SmallButton icon="person_add" text="Add" onClick={() => setShowAdd(true)} />
               </TableCell>
             </TableRow>
           </TableBody>
