@@ -73,7 +73,7 @@ export const TaskList = (props: Props) => {
   }
 
   return (<>
-    {showAdd && <NewTask compact={props.compact} onCancel={() => { setShowAdd(false); }} onSave={() => { setShowAdd(false); }} />}
+    {showAdd && <NewTask compact={props.compact} onCancel={() => { setShowAdd(false); }} onSave={() => { loadData(); setShowAdd(false); }} />}
     <DisplayBox headerIcon="list_alt" headerText="Tasks" editContent={editContent}>
       {getAssignedToMe()}
       {createdByMe()}
