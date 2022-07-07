@@ -11,7 +11,16 @@ interface Props {
 }
 
 export const NewTask = (props: Props) => {
-  const [task, setTask] = React.useState<TaskInterface>({ status: "Open", createdByType: "person", createdById: UserHelper.person?.id, createdByLabel: UserHelper.person?.name?.display, associatedWithType: "person", associatedWithId: UserHelper.person?.id, associatedWithLabel: UserHelper.person?.name?.display });
+  const initialData = {
+    status: "Open",
+    createdByType: "person",
+    createdById: UserHelper.person?.id,
+    createdByLabel: UserHelper.person?.name?.display,
+    associatedWithType: "person",
+    associatedWithId: UserHelper.person?.id,
+    associatedWithLabel: UserHelper.person?.name?.display
+  }
+  const [task, setTask] = React.useState<TaskInterface>(initialData);
   const [note, setNote] = React.useState<NoteInterface>({});
   const [modalField, setModalField] = React.useState("");
   const [errors, setErrors] = React.useState([]);
@@ -28,7 +37,7 @@ export const NewTask = (props: Props) => {
   const handleSave = async () => {
     if (validate()) {
       const tasks = await ApiHelper.post("/tasks", [task], "DoingApi");
-      if (note.contents.trim() !== "") {
+      if (note.contents?.trim() !== "") {
         note.contentType = "task";
         note.contentId = tasks[0].id;
         await ApiHelper.post("/notes", [note], "DoingApi");
