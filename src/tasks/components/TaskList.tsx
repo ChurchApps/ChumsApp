@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { NewTask } from "./";
 import UserContext from "../../UserContext";
 
-interface Props { compact?: boolean; }
+interface Props { compact?: boolean; status: string }
 
 export const TaskList = (props: Props) => {
   const [showAdd, setShowAdd] = React.useState(false);
@@ -15,9 +15,12 @@ export const TaskList = (props: Props) => {
 
   const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true) }} />
 
-  const loadData = () => { ApiHelper.get("/tasks", "DoingApi").then(data => setTasks(data)); }
+  const loadData = () => {
+    if (props.status === "Closed") ApiHelper.get("/tasks/closed", "DoingApi").then(data => setTasks(data));
+    else ApiHelper.get("/tasks", "DoingApi").then(data => setTasks(data));
+  }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, [props.status]);
 
   const getTask = (task: TaskInterface) => (<div style={{ borderTop: "1px solid #CCC", paddingTop: 10, paddingBottom: 10 }}>
     <Grid container spacing={3}>
@@ -37,7 +40,7 @@ export const TaskList = (props: Props) => {
   </div>)
 
   const getHeader = () => {
-    if (props.compact) return (<div style={{ paddingBottom: 10 }}><Grid container spacing={3}><Grid item xs={12}>Title</Grid></Grid></div>);
+    if (props.compact) return <></>;
     else return (<div style={{ paddingBottom: 10 }}>
       <Grid container spacing={3}>
         <Grid item xs={6}>

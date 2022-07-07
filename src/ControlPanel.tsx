@@ -24,14 +24,7 @@ export const ControlPanel = () => {
     <Routes>
       <Route path="/logout" element={<Logout />} />
       <Route path="/login" element={<Login />} />
-      <Route
-        path="/*"
-        element={
-          <RequireAuth>
-            <Authenticated />
-          </RequireAuth>
-        }
-      />
+      <Route path="/*" element={<RequireAuth><Authenticated /></RequireAuth>} />
     </Routes>
   );
 };

@@ -32,7 +32,7 @@ export const Authenticated: React.FC = () => {
 
   if (UserHelper.churchChanged) {
     UserHelper.churchChanged = false;
-    navigate("/people")
+    navigate("/")
   }
   else return (
     <Box sx={{ display: "flex", backgroundColor: "#EEE" }}>

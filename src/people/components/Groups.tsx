@@ -3,7 +3,7 @@ import { DisplayBox, ApiHelper, UniqueIdHelper, Loading } from "."
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 
-interface Props { personId: string }
+interface Props { personId: string, title?: string }
 
 export const Groups: React.FC<Props> = (props) => {
   const [groupMembers, setGroupMembers] = React.useState(null);
@@ -14,7 +14,7 @@ export const Groups: React.FC<Props> = (props) => {
 
   const getRecords = () => {
     if (!groupMembers) return <Loading size="sm" />
-    else if (groupMembers.length === 0) return (<p>Not part of any group yet.</p>)
+    else if (groupMembers.length === 0) return (<p>Not currently a member of any groups.</p>)
     else {
       const items = [];
       for (let i = 0; i < groupMembers.length; i++) {
@@ -25,5 +25,5 @@ export const Groups: React.FC<Props> = (props) => {
     }
   }
 
-  return <DisplayBox headerIcon="group" headerText="Groups">{getRecords()}</DisplayBox>
+  return <DisplayBox headerIcon="group" headerText={props.title || "Groups"}>{getRecords()}</DisplayBox>
 }

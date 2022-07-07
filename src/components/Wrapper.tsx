@@ -43,14 +43,14 @@ export const Wrapper: React.FC<Props> = props => {
   const tabs = []
   const donationIcon = donationError ? "error" : "volunteer_activism";
 
-  if (false) tabs.push(<NavItem url="/" label="Dashboard" icon="home" selected={selectedTab === "dashboard"} />);
+  tabs.push(<NavItem url="/" label="Dashboard" icon="home" selected={selectedTab === "dashboard"} />);
   tabs.push(<NavItem url="/people" label="People" icon="person" selected={selectedTab === "people"} />);
   tabs.push(<NavItem url="/groups" label="Groups" icon="people" selected={selectedTab === "groups"} />);
   if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) tabs.push(<NavItem url="/attendance" label="Attendance" icon="calendar_month" selected={selectedTab === "attendance"} />);
   if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) tabs.push(<NavItem url="/donations" label="Donations" icon={donationIcon} selected={selectedTab === "donations"} />);
   if (formPermission || isFormMember) tabs.push(<NavItem url="/forms" label="Form" icon="description" selected={selectedTab === "forms"} />);
 
-  if (false) tabs.push(<NavItem url="/tasks" label="Tasks" icon="list_alt" selected={selectedTab === "tasks"} />);
+  tabs.push(<NavItem url="/tasks" label="Tasks" icon="list_alt" selected={selectedTab === "tasks"} />);
   if (UserHelper.checkAccess(Permissions.accessApi.roles.view)) tabs.push(<NavItem url="/settings" label="Settings" icon="settings" selected={selectedTab === "settings"} />);
 
   const navContent = <><List component="nav" sx={Themes.NavBarStyle}>{tabs}</List></>
