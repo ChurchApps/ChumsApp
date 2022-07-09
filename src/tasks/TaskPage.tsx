@@ -67,7 +67,10 @@ export const TaskPage = () => {
   const handleModalClose = () => { setModalField(""); }
   const closeStatusMenu = () => { setAnchorEl(null); }
 
-  const getContentLink = (contentType: string, contentId: string, contentLabel: string) => (<Link to={"/people/" + contentId}>{contentLabel}</Link>)
+  const getContentLink = (contentType: string, contentId: string, contentLabel: string) => {
+    if (contentType === "group") return <Link to={"/groups/" + contentId}>{contentLabel}</Link>
+    else return <Link to={"/people/" + contentId}>{contentLabel}</Link>
+  }
 
   const getDateClosed = () => {
     if (task?.dateClosed) return (<>
