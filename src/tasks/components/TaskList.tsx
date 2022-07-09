@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, TaskInterface } from "../components";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupMemberInterface, TaskInterface, UserHelper } from "../components";
 import { SmallButton } from "../../appBase/components";
 import { Link } from "react-router-dom";
 import { NewTask } from "./";
@@ -11,6 +11,8 @@ interface Props { compact?: boolean; status: string }
 export const TaskList = (props: Props) => {
   const [showAdd, setShowAdd] = React.useState(false);
   const [tasks, setTasks] = React.useState<TaskInterface[]>([])
+  const [groupTasks, setGroupTasks] = React.useState<TaskInterface[]>([])
+  const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([])
   let context = React.useContext(UserContext)
 
   const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true) }} />
@@ -18,9 +20,18 @@ export const TaskList = (props: Props) => {
   const loadData = () => {
     if (props.status === "Closed") ApiHelper.get("/tasks/closed", "DoingApi").then(data => setTasks(data));
     else ApiHelper.get("/tasks", "DoingApi").then(data => setTasks(data));
+    if (UserHelper.person?.id) ApiHelper.get("/groupmembers?personId=" + UserHelper.person?.id, "MembershipApi").then(data => setGroupMembers(data))
+  }
+
+  const loadGroupTasks = () => {
+    if (groupMembers?.length > 0) {
+      const groupIds = ArrayHelper.getIds(groupMembers, "groupId");
+      ApiHelper.post("/tasks/loadForGroups", { groupIds, status: props.status }, "DoingApi").then(d => setGroupTasks(d));
+    }
   }
 
   React.useEffect(loadData, [props.status]);
+  React.useEffect(loadGroupTasks, [groupMembers, props.status]);
 
   const getTask = (task: TaskInterface) => (<div style={{ borderTop: "1px solid #CCC", paddingTop: 10, paddingBottom: 10 }}>
     <Grid container spacing={3}>
@@ -52,6 +63,19 @@ export const TaskList = (props: Props) => {
     </div>)
   }
 
+  const getAssignedToMyGroups = () => {
+    if (groupMembers?.length > 0) {
+      const groupIds = ArrayHelper.getIds(groupMembers, "groupId");
+      const assignedToMyGroups = (groupTasks?.length > 0) ? ArrayHelper.getAllArray(groupTasks, "assignedToId", groupIds) : []
+      if (assignedToMyGroups.length === 0) return <></>
+      else return (<>
+        <h4>Assigned to My Groups</h4>
+        {getHeader()}
+        {assignedToMyGroups.map(t => getTask(t))}
+      </>);
+    }
+  }
+
   const getAssignedToMe = () => {
     const assignedToMe = (tasks?.length > 0) ? ArrayHelper.getAll(tasks, "assignedToId", context.person?.id) : []
     if (assignedToMe.length === 0) return <></>
@@ -76,6 +100,7 @@ export const TaskList = (props: Props) => {
     {showAdd && <NewTask compact={props.compact} onCancel={() => { setShowAdd(false); }} onSave={() => { loadData(); setShowAdd(false); }} />}
     <DisplayBox headerIcon="list_alt" headerText="Tasks" editContent={editContent}>
       {getAssignedToMe()}
+      {getAssignedToMyGroups()}
       {createdByMe()}
     </DisplayBox>
   </>);
