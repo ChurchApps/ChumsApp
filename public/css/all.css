@@ -9,6 +9,11 @@
 
 a {
   color: #24b8ff;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
 }
 
 h1 {
