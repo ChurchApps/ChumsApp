@@ -24,10 +24,10 @@ export const Note: React.FC<Props> = (props) => {
       <div className="postedBy">
         <img src={photoUrl} alt="avatar" />
       </div>
-      <Box sx={{width: "100%"}} className="note-contents">
+      <Box sx={{ width: "100%" }} className="note-contents">
         <Stack direction="row" justifyContent="space-between">
           <div>
-            <b>{note.person.name.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
+            <b>{note.person?.name?.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
           </div>
           <div>
             <IconButton aria-label="editNote" onClick={() => props.showNoteBox(note.id)}>
