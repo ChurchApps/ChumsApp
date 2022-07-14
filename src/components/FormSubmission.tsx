@@ -1,6 +1,6 @@
 import React from "react";
 import { Question, ApiHelper, FormSubmissionInterface, UserHelper, Permissions, UniqueIdHelper } from "./";
-import { Grid, Icon } from "@mui/material"
+import { Grid } from "@mui/material"
 import { SmallButton } from "../appBase/components";
 
 interface Props {
@@ -11,7 +11,6 @@ interface Props {
 export const FormSubmission: React.FC<Props> = (props) => {
   const [formSubmission, setFormSubmission] = React.useState(null);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
-
 
   const getEditLink = () => {
     if (!formPermission) return null;
