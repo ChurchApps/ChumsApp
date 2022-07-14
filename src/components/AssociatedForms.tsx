@@ -54,7 +54,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   const getUnsubmittedCards = () => unsubmittedForms.map(uf => (
     <Accordion expanded={expanded === "unsubmitted" + uf.id} onChange={() => { setExpanded("unsubmitted" + uf.id) }}>
       <AccordionSummary onClick={() => handleAdd(uf.id)}>
-        <Box sx={{display: "flex", alignItems: "center"}}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           <Button variant="text" onClick={() => handleAdd(uf.id)}><Icon>add</Icon></Button>
           <span>{uf.name}</span>
         </Box>

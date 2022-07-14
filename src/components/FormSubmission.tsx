@@ -1,6 +1,7 @@
 import React from "react";
 import { Question, ApiHelper, FormSubmissionInterface, UserHelper, Permissions, UniqueIdHelper } from "./";
 import { Grid, Icon } from "@mui/material"
+import { SmallButton } from "../appBase/components";
 
 interface Props {
   formSubmissionId: string,
@@ -11,10 +12,10 @@ export const FormSubmission: React.FC<Props> = (props) => {
   const [formSubmission, setFormSubmission] = React.useState(null);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
-  const handleEdit = (e: React.MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); props.editFunction(props.formSubmissionId); }
+
   const getEditLink = () => {
     if (!formPermission) return null;
-    else return (<a href="about:blank" className="pull-right" onClick={handleEdit}><Icon>edit</Icon></a>);
+    else return <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { props.editFunction(props.formSubmissionId); }} /></span>
   }
   const loadData = () => {
     if (!UniqueIdHelper.isMissing(props.formSubmissionId)) {
@@ -41,11 +42,14 @@ export const FormSubmission: React.FC<Props> = (props) => {
 
   return (
     <>
-      {getEditLink()}
       <div className="content">
+
         <Grid container spacing={3}>
           <Grid item md={6} xs={12}>{firstHalf}</Grid>
-          <Grid item md={6} xs={12}>{secondHalf}</Grid>
+          <Grid item md={6} xs={12}>
+            {getEditLink()}
+            {secondHalf}
+          </Grid>
         </Grid>
       </div>
     </>
