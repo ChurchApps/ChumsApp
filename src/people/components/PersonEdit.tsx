@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { ChumsPersonHelper, PersonHelper, DateHelper, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading, ErrorMessages } from "."
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
@@ -19,7 +19,6 @@ export function PersonEdit(props: Props) {
   const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
   const [text] = useState("");
   const [members, setMembers] = useState<PersonInterface[]>(null);
-  const formRef = useRef(null)
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -135,8 +134,7 @@ export function PersonEdit(props: Props) {
 
   function handlePhotoClick(e: React.MouseEvent) {
     e.preventDefault();
-    const values = formRef.current.values
-    props.togglePhotoEditor(true, values);
+    props.togglePhotoEditor(true, person);
   }
 
   function formattedPhoneNumber(value: string) {
