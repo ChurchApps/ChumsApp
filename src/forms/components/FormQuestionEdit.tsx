@@ -1,6 +1,7 @@
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { ApiHelper, InputBox, QuestionInterface, ChoicesEdit, UniqueIdHelper } from ".";
+import useMountedState from "../../appBase/hooks/useMountedState";
 import { ErrorMessages } from "../../components";
 
 interface Props {
@@ -13,8 +14,12 @@ export function FormQuestionEdit(props: Props) {
   const [question, setQuestion] = useState<QuestionInterface>({ title: "", fieldType: "Textbox", placeholder: "", required: false, description: "", choices: null } as QuestionInterface);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const isMounted = useMountedState();
 
   function loadData() {
+    if(!isMounted()) {
+      return;
+    }
     if (props.questionId) ApiHelper.get("/questions/" + props.questionId + "?formId=" + props.formId, "MembershipApi").then((data: QuestionInterface) => setQuestion(data));
     else setQuestion({ formId: props.formId, fieldType: "Textbox" } as QuestionInterface);
   }
@@ -80,15 +85,15 @@ export function FormQuestionEdit(props: Props) {
         </Select>
       </FormControl>
 
-      <TextField fullWidth label="Title" id="title" type="text" name="title" value={question.title} onChange={handleChange} />
-      <TextField fullWidth label="Description" id="description" type="text" name="description" value={question.description} onChange={handleChange} />
+      <TextField fullWidth label="Title" id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} />
+      <TextField fullWidth label="Description" id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} />
 
       {
         question.fieldType === "Multiple Choice"
           ? <ChoicesEdit question={question} updatedFunction={setQuestion} />
-          : <TextField fullWidth label="Placeholder (optional)" id="placeholder" type="text" name="placeholder" value={question.placeholder} onChange={handleChange} />
+          : <TextField fullWidth label="Placeholder (optional)" id="placeholder" type="text" name="placeholder" value={question.placeholder || ""} onChange={handleChange} />
       }
-      <FormControlLabel control={<Checkbox defaultChecked />} label="Require an answer for this question" name="required" checked={question.required} onChange={handleCheckChange} />
+      <FormControlLabel control={<Checkbox />} label="Require an answer for this question" name="required" checked={!!question.required} onChange={handleCheckChange} />
     </InputBox>
   );
 }

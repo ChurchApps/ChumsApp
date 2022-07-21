@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.90",
     "@mui/material": "^5.8.2",
     "@stripe/react-stripe-js": "^1.7.0",
@@ -13,6 +14,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/adm-zip": "^0.4.34",
+    "@types/flexsearch": "^0.7.3",
     "@types/google.visualization": "0.0.68",
     "@types/jest": "^27.4.0",
     "@types/papaparse": "^5.3.1",

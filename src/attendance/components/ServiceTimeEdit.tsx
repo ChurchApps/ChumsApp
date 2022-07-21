@@ -1,7 +1,7 @@
 import React from "react";
 import { ServiceTimeInterface, ServiceInterface, InputBox, ApiHelper } from "./";
 import { ErrorMessages } from "../../components";
-import { FormControl, InputLabel, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem } from "@mui/material";
 
 interface Props {
   serviceTime: ServiceTimeInterface,
@@ -56,7 +56,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
 
   const getServiceOptions = () => {
     let options = [];
-    for (let i = 0; i < services.length; i++) options.push(<option value={services[i].id}>{services[i].name}</option>);
+    for (let i = 0; i < services.length; i++) options.push(<MenuItem key={i} value={services[i].id}>{services[i].name}</MenuItem>);
     return options;
   }
 

@@ -90,7 +90,7 @@ export function HouseholdEdit(props: Props) {
   }
 
   const rows = members.map((m, index) => (
-    <TableRow key={m.id}>
+    <TableRow key={index}>
       <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>
       <TableCell style={{ width: "100%" }}>
         <FormControl fullWidth style={{ marginTop: 0 }}>
@@ -109,7 +109,12 @@ export function HouseholdEdit(props: Props) {
     </TableRow>
   ))
 
-  React.useEffect(() => { setHousehold(props.household) }, [props.household]);
+  React.useEffect(() => {
+    setHousehold(props.household);
+    return () => {
+      setHousehold(null);
+    };
+  }, [props.household]);
 
   let personAdd = (showAdd) ? <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={props.currentPerson} /> : null;
   return (

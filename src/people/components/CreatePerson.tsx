@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom"
 import { UserHelper, Permissions, PersonInterface, HouseholdInterface, ApiHelper } from "."
 import { Button, Grid, TextField } from "@mui/material"
 import { ErrorMessages } from "../../components"
+import useMountedState from "../../appBase/hooks/useMountedState"
 
 export function CreatePerson() {
   const navigate = useNavigate()
   const [person, setPerson] = React.useState<PersonInterface>({ name: { first: "", last: "" }, contactInfo: {} });
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const isMounted = useMountedState()
 
   const validate = () => {
     const result = [];
@@ -40,7 +42,9 @@ export function CreatePerson() {
           person.id = data[0].id
           navigate("/people/" + person.id);
         }).finally(() => {
-          setIsSubmitting(false);
+          if (isMounted()) {
+            setIsSubmitting(false);
+          }
         });
       });
     }
@@ -53,10 +57,10 @@ export function CreatePerson() {
       <ErrorMessages errors={errors} />
       <Grid container spacing={3} alignItems="center">
         <Grid item md={4} xs={12}>
-          <TextField size="small" margin="none" fullWidth type="text" aria-label="firstName" label="First Name" name="first" value={person.name.first} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
+          <TextField size="small" margin="none" fullWidth type="text" aria-label="firstName" label="First Name" name="first" value={person.name.first || ""} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
         </Grid>
         <Grid item md={4} xs={12}>
-          <TextField size="small" margin="none" fullWidth type="text" aria-label="lastName" label="Last Name" name="last" value={person.name.last} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
+          <TextField size="small" margin="none" fullWidth type="text" aria-label="lastName" label="Last Name" name="last" value={person.name.last || ""} onChange={handleChange} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSubmit} />
         </Grid>
         <Grid item md={4} xs={12}>
           <Button type="submit" fullWidth variant="contained" disabled={isSubmitting} onClick={handleSubmit}>Add</Button>

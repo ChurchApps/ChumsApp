@@ -65,7 +65,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
     if (donation.method === "Cash") return null;
     let label = (donation.method === "Check") ? "Check #" : "Last 4 digits";
     return (
-      <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails} onChange={handleChange} />
+      <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails || ""} onChange={handleChange} />
     );
   }
 
@@ -116,10 +116,10 @@ export const DonationEdit: React.FC<Props> = (props) => {
         <label>Person</label>
         {getPersonSection()}
       </Box>
-      <TextField fullWidth label="Date" type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth label="Date" type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
       <FormControl fullWidth>
         <InputLabel id="method">Method</InputLabel>
-        <Select name="method" labelId="method" label="Method" value={donation.method} onChange={handleChange} onKeyDown={handleKeyDown}>
+        <Select name="method" labelId="method" label="Method" value={donation.method || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
           <MenuItem value="Check">Check</MenuItem>
           <MenuItem value="Cash">Cash</MenuItem>
           <MenuItem value="Card">Card</MenuItem>

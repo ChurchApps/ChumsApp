@@ -21,7 +21,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
 
     if (records.length === 0) {
-      rows.push(<TableRow key="0">No attendance records.  Attendance will appear once attendance has been tracked for a group session.</TableRow>);
+      rows.push(<TableRow key="0"><TableCell>No attendance records. Attendance will appear once attendance has been tracked for a group session.</TableCell></TableRow>);
       return rows;
     }
 
@@ -37,26 +37,26 @@ export const PersonAttendance: React.FC<Props> = (props) => {
       let showRest = false;
       if (r.visitDate === lastVisitDate && !showRest) cols.push(<TableCell></TableCell>);
       else {
-        cols.push(<TableCell><Icon>calendar_month</Icon> {DateHelper.formatHtml5Date(r.visitDate)}</TableCell>);
+        cols.push(<TableCell><Icon>calendar_month</Icon>{DateHelper.formatHtml5Date(r.visitDate)}</TableCell>);
         lastVisitDate = r.visitDate;
         showRest = true;
       }
       if (r.campus?.id === lastCampusId && !showRest) cols.push(<TableCell></TableCell>);
       else {
-        cols.push(<TableCell><Icon>church</Icon> {r.campus?.name}</TableCell>);
+        cols.push(<TableCell><Icon>church</Icon>{r.campus?.name}</TableCell>);
         lastCampusId = r.campus?.id;
         showRest = true;
       }
       if (r.service?.id === lastServiceId && !showRest) cols.push(<TableCell></TableCell>);
       else {
-        cols.push(<TableCell><Icon>calendar_month</Icon> {r.service?.name}</TableCell>);
+        cols.push(<TableCell><Icon>calendar_month</Icon>{r.service?.name}</TableCell>);
         lastServiceId = r.service?.id;
         showRest = true;
       }
       if (r.serviceTime === undefined) cols.push(<TableCell></TableCell>);
-      else cols.push(<TableCell><Icon>schedule</Icon> {r.serviceTime?.name}</TableCell>);
+      else cols.push(<TableCell><Icon>schedule</Icon>{r.serviceTime?.name}</TableCell>);
       if (group === null) cols.push(<TableCell><Icon>group</Icon></TableCell>);
-      else cols.push(<TableCell><Icon>group</Icon> <Link to={"/groups/" + group.id}>{group.name}</Link></TableCell>)
+      else cols.push(<TableCell><Icon>group</Icon><Link to={"/groups/" + group.id}>{group.name}</Link></TableCell>)
       rows.push(<TableRow>{cols}</TableRow>);
     }
     return rows;

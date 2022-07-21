@@ -13,7 +13,6 @@ export function PeopleColumns(props: Props) {
 
   const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
     e.preventDefault();
-    console.log(e.currentTarget);
     setAnchorEl(e.currentTarget);
   };
 
@@ -23,11 +22,11 @@ export function PeopleColumns(props: Props) {
 
   const getItems = () => {
     const result: JSX.Element[] = []
-    props.columns.forEach(o => {
+    props.columns.forEach((o, i) => {
       const option = o;
       const selectedClass = (props.selectedColumns.indexOf(o.key) > -1) ? "checked" : ""
-      result.push(<Grid item md={6} xs={12}>
-        <MenuItem key={option.key} className={selectedClass} onClick={(e) => { props.toggleColumn(option.key) }}><Icon>check_box</Icon> {o.label}</MenuItem>
+      result.push(<Grid key={i} item md={6} xs={12}>
+        <MenuItem key={i} className={selectedClass} onClick={(e) => { props.toggleColumn(option.key) }}><Icon>check_box</Icon> {o.label}</MenuItem>
       </Grid>);
     });
     return result;

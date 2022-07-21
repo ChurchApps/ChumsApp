@@ -92,10 +92,10 @@ export const NewTask = (props: Props) => {
           <TextField fullWidth label="Associate with" value={task.associatedWithLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} />
         </Grid>
         <Grid item xs={6} md={(props.compact) ? 6 : 3}>
-          <TextField fullWidth label="Assign to" value={task.assignedToLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
+          <TextField fullWidth label="Assign to" value={task.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
         </Grid>
         <Grid item xs={12} md={(props.compact) ? 12 : 6}>
-          <TextField fullWidth label="Title" value={task.title} name="title" onChange={handleChange} />
+          <TextField fullWidth label="Title" value={task.title || ""} name="title" onChange={handleChange} />
         </Grid>
       </Grid>
 

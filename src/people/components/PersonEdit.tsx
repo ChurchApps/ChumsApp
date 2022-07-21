@@ -149,7 +149,12 @@ export function PersonEdit(props: Props) {
     return value;
   }
 
-  React.useEffect(() => { setPerson(props.person) }, [props.person]);
+  React.useEffect(() => {
+    setPerson(props.person);
+    return () => {
+      setPerson(null);
+    }
+  }, [props.person]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchMembers, [props.person]);
 
@@ -210,7 +215,7 @@ export function PersonEdit(props: Props) {
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
                 <InputLabel id="gender-label">Gender</InputLabel>
-                <Select name="gender" id="gender" labelId="gender-label" label="Gender" value={person.gender} onChange={handleChange}>
+                <Select name="gender" id="gender" labelId="gender-label" label="Gender" value={person.gender || ""} onChange={handleChange}>
                   <MenuItem value="Unspecified">Unspecified</MenuItem>
                   <MenuItem value="Male">Male</MenuItem>
                   <MenuItem value="Female">Female</MenuItem>

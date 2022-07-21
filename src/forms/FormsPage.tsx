@@ -98,7 +98,7 @@ export const FormsPage = () => {
     }
 
     const getTab = (index: number, keyName: string, icon: string, text: string) => (
-      <Tab style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
+      <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
     )
 
     let tabs = [];

@@ -1,6 +1,6 @@
 import React from "react";
 import { ServiceInterface, InputBox, ApiHelper, CampusInterface, UniqueIdHelper, ErrorMessages } from "./";
-import { FormControl, InputLabel, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem } from "@mui/material";
 
 interface Props {
   service: ServiceInterface,
@@ -57,7 +57,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
 
   const getCampusOptions = () => {
     let options = [];
-    for (let i = 0; i < campuses.length; i++) options.push(<option value={campuses[i].id}>{campuses[i].name}</option>);
+    for (let i = 0; i < campuses.length; i++) options.push(<MenuItem key={i} value={campuses[i].id}>{campuses[i].name}</MenuItem>);
     return options;
   }
 

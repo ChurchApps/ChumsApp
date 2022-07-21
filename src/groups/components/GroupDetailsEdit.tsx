@@ -2,6 +2,7 @@ import React from "react";
 import { ApiHelper, GroupInterface, InputBox, ErrorMessages, ServiceTimesEdit } from ".";
 import { Navigate } from "react-router-dom";
 import { FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }
 
@@ -9,6 +10,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   const [group, setGroup] = React.useState<GroupInterface>({} as GroupInterface);
   const [errors, setErrors] = React.useState([]);
   const [redirect, setRedirect] = React.useState("");
+  const isMounted = useMountedState();
 
   const handleCancel = () => props.updatedFunction(group);
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
@@ -47,7 +49,11 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     }
   }
 
-  React.useEffect(() => { setGroup(props.group) }, [props.group]);
+  React.useEffect(() => {
+    if (isMounted()) {
+      setGroup(props.group)
+    }
+  }, [props.group, isMounted]);
 
   if (redirect !== "") return <Navigate to={redirect} />
   else return (
@@ -55,10 +61,10 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item md={6} xs={12}>
-          <TextField fullWidth type="text" name="categoryName" label="Category Name" value={group.categoryName} onChange={handleChange} onKeyDown={handleKeyDown} />
+          <TextField fullWidth type="text" name="categoryName" label="Category Name" value={group.categoryName || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
         <Grid item md={6} xs={12}>
-          <TextField fullWidth label="Group Name" type="text" name="name" value={group.name} onChange={handleChange} onKeyDown={handleKeyDown} />
+          <TextField fullWidth label="Group Name" type="text" name="name" value={group.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
       </Grid>
       <Grid container spacing={3}>

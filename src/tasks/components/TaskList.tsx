@@ -5,6 +5,7 @@ import { SmallButton } from "../../appBase/components";
 import { Link } from "react-router-dom";
 import { NewTask } from "./";
 import UserContext from "../../UserContext";
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 interface Props { compact?: boolean; status: string }
 
@@ -13,27 +14,34 @@ export const TaskList = (props: Props) => {
   const [tasks, setTasks] = React.useState<TaskInterface[]>([])
   const [groupTasks, setGroupTasks] = React.useState<TaskInterface[]>([])
   const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([])
+  const isMounted = useMountedState()
   let context = React.useContext(UserContext)
 
   const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true) }} />
 
   const loadData = () => {
+    if(!isMounted()) {
+      return;
+    }
     if (props.status === "Closed") ApiHelper.get("/tasks/closed", "DoingApi").then(data => setTasks(data));
     else ApiHelper.get("/tasks", "DoingApi").then(data => setTasks(data));
-    if (UserHelper.person?.id) ApiHelper.get("/groupmembers?personId=" + UserHelper.person?.id, "MembershipApi").then(data => setGroupMembers(data))
+    if (UserHelper.person?.id) ApiHelper.get("/groupmembers?personId=" + UserHelper.person?.id, "MembershipApi").then(data => setGroupMembers(data));
   }
 
   const loadGroupTasks = () => {
+    if(!isMounted()) {
+      return;
+    }
     if (groupMembers?.length > 0) {
       const groupIds = ArrayHelper.getIds(groupMembers, "groupId");
       ApiHelper.post("/tasks/loadForGroups", { groupIds, status: props.status }, "DoingApi").then(d => setGroupTasks(d));
     }
   }
 
-  React.useEffect(loadData, [props.status]);
-  React.useEffect(loadGroupTasks, [groupMembers, props.status]);
+  React.useEffect(loadData, [props.status, isMounted]);
+  React.useEffect(loadGroupTasks, [groupMembers, props.status, isMounted]);
 
-  const getTask = (task: TaskInterface) => (<div style={{ borderTop: "1px solid #CCC", paddingTop: 10, paddingBottom: 10 }}>
+  const getTask = (task: TaskInterface) => (<div key={task.id} style={{ borderTop: "1px solid #CCC", paddingTop: 10, paddingBottom: 10 }}>
     <Grid container spacing={3}>
       <Grid item xs={(props.compact) ? 12 : 6}>
         <b><Link to={"/tasks/" + task.id}>{task.title}</Link></b><br />

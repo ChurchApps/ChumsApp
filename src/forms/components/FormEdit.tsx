@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { ApiHelper, InputBox, FormInterface, DateHelper } from ".";
+import useMountedState from "../../appBase/hooks/useMountedState";
 import { ErrorMessages } from "../../components";
 
 interface Props { formId: string, updatedFunction: () => void }
@@ -11,10 +12,14 @@ export function FormEdit(props: Props) {
   const [showDates, setShowDates] = useState<boolean>(false);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const isMounted = useMountedState();
 
   function loadData() {
     if (props.formId) {
       ApiHelper.get("/forms/" + props.formId, "MembershipApi").then((data: FormInterface) => {
+        if(!isMounted()) {
+          return;
+        }
         if (data.restricted !== undefined && data.contentType === "form")
           setStandAloneForm(true);
         else
@@ -72,7 +77,7 @@ export function FormEdit(props: Props) {
     }
   }
 
-  React.useEffect(loadData, [props.formId]);
+  React.useEffect(loadData, [props.formId, isMounted]);
 
   return (
     <InputBox id="formBox" headerIcon="format_align_left" headerText="Edit Form" saveFunction={handleSave} isSubmitting={isSubmitting} cancelFunction={props.updatedFunction} deleteFunction={(props.formId) ? handleDelete : undefined}>

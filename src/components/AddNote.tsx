@@ -20,8 +20,11 @@ export function AddNote(props: Props) {
 
   useEffect(() => {
     if (props.noteId) ApiHelper.get(`/notes/${props.noteId}`, props.apiName || "MembershipApi").then(n => setNote(n));
-    else setNote({ contentId: props.contentId, contentType: props.contentType || "person", contents: "" })
-  }, [props.noteId]) //eslint-disable-line
+    else setNote({ contentId: props.contentId, contentType: props.contentType || "person", contents: "" });
+    return () => {
+      setNote(null);
+    };
+  }, [props.noteId, props.apiName, props.contentId, props.contentType])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);

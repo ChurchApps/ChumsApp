@@ -19,7 +19,7 @@ export const QuestionEdit: React.FC<Props> = (props) => {
     let input = null;
     let choiceOptions = [];
     if (q.choices !== undefined && q.choices !== null) {
-      for (let i = 0; i < q.choices.length; i++) choiceOptions.push(<MenuItem value={q.choices[i].value}>{q.choices[i].text}</MenuItem>);
+      for (let i = 0; i < q.choices.length; i++) choiceOptions.push(<MenuItem key={i} value={q.choices[i].value}>{q.choices[i].text}</MenuItem>);
     }
 
     let answerValue = (props.answer === null) ? "" : props.answer.value
