@@ -1,7 +1,8 @@
 import React from "react";
-import { Person, Groups, Tabs, Household, ImageEditor, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, AddNote, NoteInterface, ArrayHelper } from "./components"
+import { Person, Groups, Tabs, Household, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, AddNote, NoteInterface, ArrayHelper , PersonHelper} from "./components"
 import { Grid, Icon } from "@mui/material"
 import { useParams } from "react-router-dom";
+import { ImageEditor } from "../appBase/components";
 
 export const PersonPage = () => {
   const params = useParams();
@@ -32,7 +33,12 @@ export const PersonPage = () => {
   }
 
   const imageEditor = inPhotoEditMode && (
-    <ImageEditor updatedFunction={handlePhotoUpdated} person={person} onCancel={() => togglePhotoEditor(false)} />
+    <ImageEditor
+      aspectRatio={4/3}
+      photoUrl={PersonHelper.getPhotoUrl(person)}
+      onCancel={() => togglePhotoEditor(false)}
+      onUpdate={handlePhotoUpdated}
+    />
   );
   const getGroups = () => (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) ? <Groups personId={person?.id} /> : null
 
