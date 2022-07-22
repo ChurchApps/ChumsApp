@@ -53,7 +53,7 @@ export const AttendancePage = () => {
   let lastServiceTime = "";
   let lastCategory = "";
 
-  React.useEffect(() => { loadData(); }, [isMounted]);
+  React.useEffect(() => { loadData(); }, [isMounted]); //eslint-disable-line
 
   const compare = (a: GroupInterface, b: GroupInterface) => a.categoryName.localeCompare(b.categoryName) || a.name.localeCompare(b.name)
 
