@@ -33,7 +33,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
 
   const getOptions = () => {
     let result: JSX.Element[] = [];
-    for (let i = 0; i < serviceTimes.length; i++) result.push(<MenuItem value={serviceTimes[i].id}>{serviceTimes[i].longName}</MenuItem>);
+    for (let i = 0; i < serviceTimes.length; i++) result.push(<MenuItem key={i} value={serviceTimes[i].id}>{serviceTimes[i].longName}</MenuItem>);
     return result;
   }
 

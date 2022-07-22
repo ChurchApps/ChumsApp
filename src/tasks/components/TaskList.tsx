@@ -20,21 +20,31 @@ export const TaskList = (props: Props) => {
   const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true) }} />
 
   const loadData = () => {
-    if(!isMounted()) {
-      return;
-    }
-    if (props.status === "Closed") ApiHelper.get("/tasks/closed", "DoingApi").then(data => setTasks(data));
-    else ApiHelper.get("/tasks", "DoingApi").then(data => setTasks(data));
-    if (UserHelper.person?.id) ApiHelper.get("/groupmembers?personId=" + UserHelper.person?.id, "MembershipApi").then(data => setGroupMembers(data));
+    if (props.status === "Closed") ApiHelper.get("/tasks/closed", "DoingApi").then(data => {
+      if(isMounted()) {
+        setTasks(data);
+      }
+    });
+    else ApiHelper.get("/tasks", "DoingApi").then(data => {
+      if(isMounted()) {
+        setTasks(data);
+      }
+    });
+    if (UserHelper.person?.id) ApiHelper.get("/groupmembers?personId=" + UserHelper.person?.id, "MembershipApi").then(data => {
+      if(isMounted()) {
+        setGroupMembers(data);
+      }
+    });
   }
 
   const loadGroupTasks = () => {
-    if(!isMounted()) {
-      return;
-    }
     if (groupMembers?.length > 0) {
       const groupIds = ArrayHelper.getIds(groupMembers, "groupId");
-      ApiHelper.post("/tasks/loadForGroups", { groupIds, status: props.status }, "DoingApi").then(d => setGroupTasks(d));
+      ApiHelper.post("/tasks/loadForGroups", { groupIds, status: props.status }, "DoingApi").then(d => {
+        if(isMounted()) {
+          setGroupTasks(d);
+        }
+      });
     }
   }
 

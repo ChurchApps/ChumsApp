@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { ApiHelper, DisplayBox, GroupInterface, GroupAdd, UserHelper, ExportLink, Permissions, Loading } from "./components";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
+import useMountedState from "../appBase/hooks/useMountedState";
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
   const [showAdd, setShowAdd] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const isMounted = useMountedState();
 
   const getEditContent = () => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) return null;
@@ -25,10 +27,19 @@ export const GroupsPage = () => {
 
   const loadData = () => {
     setIsLoading(true)
-    ApiHelper.get("/groups", "MembershipApi").then((data) => { setGroups(data); }).finally(() => setIsLoading(false));
+    ApiHelper.get("/groups", "MembershipApi")
+      .then((data) => {
+        if(isMounted()) {
+          setGroups(data);
+        }
+      })
+      .finally(() => {
+        if(isMounted()) {
+          setIsLoading(false);
+        }})
   };
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, [isMounted]);
 
   const getRows = () => {
     let rows: JSX.Element[] = [];

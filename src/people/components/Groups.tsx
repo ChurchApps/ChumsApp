@@ -2,15 +2,21 @@ import React from "react";
 import { DisplayBox, ApiHelper, UniqueIdHelper, Loading } from "."
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 interface Props { personId: string, title?: string }
 
 export const Groups: React.FC<Props> = (props) => {
   const [groupMembers, setGroupMembers] = React.useState(null);
+  const isMounted = useMountedState();
 
   React.useEffect(() => {
-    if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/groupmembers?personId=" + props.personId, "MembershipApi").then(data => setGroupMembers(data))
-  }, [props.personId]);
+    if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/groupmembers?personId=" + props.personId, "MembershipApi").then(data => {
+      if(isMounted()) {
+        setGroupMembers(data);
+      }
+    })
+  }, [props.personId, isMounted]);
 
   const getRecords = () => {
     if (!groupMembers) return <Loading size="sm" />

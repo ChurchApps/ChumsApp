@@ -2,6 +2,7 @@ import React from "react";
 import { ServiceTimeInterface, ServiceInterface, InputBox, ApiHelper } from "./";
 import { ErrorMessages } from "../../components";
 import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem } from "@mui/material";
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 interface Props {
   serviceTime: ServiceTimeInterface,
@@ -13,6 +14,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
   const [services, setServices] = React.useState([] as ServiceInterface[]);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const isMounted = useMountedState();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     setErrors([]);
@@ -45,14 +47,18 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
 
   const loadData = React.useCallback(() => {
     ApiHelper.get("/services", "AttendanceApi").then(data => {
-      setServices(data);
+      if(isMounted()) {
+        setServices(data);
+      }
       if (data.length > 0) {
         let st = { ...props.serviceTime };
         st.serviceId = data[0].id;
-        setServiceTime(st);
+        if(isMounted()) {
+          setServiceTime(st);
+        }
       }
     });
-  }, [props.serviceTime]);
+  }, [props.serviceTime, isMounted]);
 
   const getServiceOptions = () => {
     let options = [];
@@ -63,7 +69,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
   React.useEffect(() => {
     setServiceTime(props.serviceTime);
     loadData();
-  }, [props.serviceTime, loadData]);
+  }, [props.serviceTime, loadData, isMounted]);
 
   if (serviceTime === null || serviceTime.id === undefined) return null;
   return (

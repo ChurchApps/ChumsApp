@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
 import { SmallButton } from "../appBase/components";
+import useMountedState from "../appBase/hooks/useMountedState";
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
   const [batches, setBatches] = React.useState<DonationBatchInterface[]>(null);
+  const isMounted = useMountedState();
 
   const batchUpdated = () => { setEditBatchId("notset"); loadData(); }
 
@@ -18,7 +20,10 @@ export const DonationsPage = () => {
     setEditBatchId(id);
   }
 
-  const loadData = () => { ApiHelper.get("/donationbatches", "GivingApi").then(data => { setBatches(data); }); }
+  const loadData = () => { ApiHelper.get("/donationbatches", "GivingApi").then(data => {
+    if(isMounted()) {
+      setBatches(data);
+    }}); }
 
   const getEditContent = () => (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><SmallButton onClick={() => { setEditBatchId("") }} icon="add" /></>) : null
 
@@ -66,7 +71,7 @@ export const DonationsPage = () => {
     return rows;
   }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, [isMounted]);
 
   const getTable = () => {
     if (!batches) return <Loading />

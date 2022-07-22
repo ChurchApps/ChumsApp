@@ -1,6 +1,7 @@
 import React from "react";
 import { ServiceInterface, InputBox, ApiHelper, CampusInterface, UniqueIdHelper, ErrorMessages } from "./";
 import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem } from "@mui/material";
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 interface Props {
   service: ServiceInterface,
@@ -12,6 +13,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   const [campuses, setCampuses] = React.useState([] as CampusInterface[]);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const isMounted = useMountedState();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     setErrors([]);
@@ -43,17 +45,21 @@ export const ServiceEdit: React.FC<Props> = (props) => {
 
   const loadData = React.useCallback(() => {
     ApiHelper.get("/campuses", "AttendanceApi").then(data => {
-      setCampuses(data);
+      if(isMounted()) {
+        setCampuses(data);
+      }
       if (data.length > 0) {
         if (UniqueIdHelper.isMissing(service?.campusId)) {
           let s = { ...props.service };
           s.campusId = data[0].id;
-          setService(s);
+          if(isMounted()) {
+            setService(s);
+          }
         }
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.service]);
+  }, [props.service, isMounted]);
 
   const getCampusOptions = () => {
     let options = [];
@@ -64,7 +70,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   React.useEffect(() => {
     setService(props.service);
     loadData();
-  }, [props.service, loadData]);
+  }, [props.service, loadData, isMounted]);
 
   if (service === null || service.id === undefined) return null;
 

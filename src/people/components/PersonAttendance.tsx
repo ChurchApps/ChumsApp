@@ -3,17 +3,25 @@ import { DisplayBox, ApiHelper, AttendanceRecordInterface, DateHelper, GroupInte
 import { Link } from "react-router-dom";
 import { ArrayHelper } from "../../helpers";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 interface Props { personId: string }
 
 export const PersonAttendance: React.FC<Props> = (props) => {
   const [records, setRecords] = React.useState<AttendanceRecordInterface[]>(null);
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
+  const isMounted = useMountedState();
 
   const loadData = () => {
     if (!UniqueIdHelper.isMissing(props.personId)) {
-      ApiHelper.get("/attendancerecords?personId=" + props.personId, "AttendanceApi").then(data => setRecords(data));
-      ApiHelper.get("/groups", "MembershipApi").then(data => setGroups(data));
+      ApiHelper.get("/attendancerecords?personId=" + props.personId, "AttendanceApi").then(data => {
+        if(isMounted()) {
+          setRecords(data);
+        }});
+      ApiHelper.get("/groups", "MembershipApi").then(data => {
+        if(isMounted()) {
+          setGroups(data);
+        }});
     }
   }
 
@@ -62,7 +70,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
     return rows;
   }
 
-  React.useEffect(loadData, [props.personId]);
+  React.useEffect(loadData, [props.personId, isMounted]);
 
   const getTable = () => {
     if (!records || !groups) return <Loading />;

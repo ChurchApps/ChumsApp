@@ -2,11 +2,13 @@ import React from "react";
 import { ApiHelper, DisplayBox, AttendanceInterface, CampusInterface, CampusEdit, ServiceEdit, ServiceInterface, ServiceTimeEdit, ServiceTimeInterface, Tabs, GroupServiceTimeInterface, GroupInterface, ArrayHelper, Loading } from "./components";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box } from "@mui/material"
+import useMountedState from "../appBase/hooks/useMountedState";
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
   const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
   const [groups, setGroups] = React.useState<GroupInterface[]>([]);
+  const isMounted = useMountedState();
 
   const [selectedCampus, setSelectedCampus] = React.useState<CampusInterface>(null);
   const [selectedService, setSelectedService] = React.useState<ServiceInterface>(null);
@@ -29,9 +31,21 @@ export const AttendancePage = () => {
   const removeEditors = () => { setSelectedCampus(null); setSelectedService(null); setSelectedServiceTime(null); }
 
   const loadData = () => {
-    ApiHelper.get("/attendancerecords/tree", "AttendanceApi").then(data => setAttendance(data))
-    ApiHelper.get("/groupservicetimes", "AttendanceApi").then(data => setGroupServiceTimes(data))
-    ApiHelper.get("/groups", "MembershipApi").then(data => setGroups(data))
+    ApiHelper.get("/attendancerecords/tree", "AttendanceApi").then(data => {
+      if(isMounted()) {
+        setAttendance(data);
+      }
+    })
+    ApiHelper.get("/groupservicetimes", "AttendanceApi").then(data => {
+      if(isMounted()) {
+        setGroupServiceTimes(data);
+      }
+    })
+    ApiHelper.get("/groups", "MembershipApi").then(data => {
+      if(isMounted()) {
+        setGroups(data);
+      }
+    })
   }
 
   let lastCampus = "";
@@ -39,7 +53,7 @@ export const AttendancePage = () => {
   let lastServiceTime = "";
   let lastCategory = "";
 
-  React.useEffect(() => { loadData(); }, []);
+  React.useEffect(() => { loadData(); }, [isMounted]);
 
   const compare = (a: GroupInterface, b: GroupInterface) => a.categoryName.localeCompare(b.categoryName) || a.name.localeCompare(b.name)
 

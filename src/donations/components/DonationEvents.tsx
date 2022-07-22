@@ -2,15 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { DateHelper, ApiHelper, DisplayBox } from ".";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Icon } from "@mui/material";
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 export const DonationEvents: React.FC = () => {
   const [headerIcon, setHeaderIcon] = React.useState<string>("error");
   const [unresolvedErrorCount, setUnresolvedErrorCount] = React.useState<number>();
   const [errorLogs, setErrorLogs] = React.useState<any>([]);
   const [people, setPeople] = React.useState([]);
+  const isMounted = useMountedState();
 
   const loadData = () => {
     ApiHelper.get("/eventLog/type/failed", "GivingApi").then(logs => {
+      if(!isMounted()) {
+        return;
+      }
       setErrorLogs(logs);
       if (logs?.length > 0) {
         const unresolvedCount = logs.filter((log: any) => !log.resolved).length;
@@ -19,7 +24,11 @@ export const DonationEvents: React.FC = () => {
       }
       let personIds = "";
       logs.map((log: any) => personIds += log.personId + ",");
-      if (personIds) ApiHelper.get("/people/ids?ids=" + personIds, "MembershipApi").then(people => setPeople(people));
+      if (personIds) ApiHelper.get("/people/ids?ids=" + personIds, "MembershipApi").then(people => {
+        if(isMounted()) {
+          setPeople(people);
+        }
+      });
     });
   }
 

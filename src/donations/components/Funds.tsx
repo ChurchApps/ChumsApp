@@ -3,13 +3,18 @@ import { ApiHelper, FundInterface, FundEdit, DisplayBox, UserHelper, Permissions
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { SmallButton } from "../../appBase/components";
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 export const Funds: React.FC = () => {
   const [funds, setFunds] = React.useState<FundInterface[]>(null);
   const [editFund, setEditFund] = React.useState<FundInterface>(null);
+  const isMounted = useMountedState();
 
   const loadData = () => {
-    ApiHelper.get("/funds", "GivingApi").then(data => { setFunds(data) });
+    ApiHelper.get("/funds", "GivingApi").then(data => {
+      if(isMounted()) {
+        setFunds(data);
+      }});
   }
   const handleFundUpdated = () => { loadData(); setEditFund(null); }
   const getEditSection = () => {
@@ -48,7 +53,7 @@ export const Funds: React.FC = () => {
     return result;
   }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, [isMounted]);
 
   if (editFund === null) {
     let contents = <Loading />

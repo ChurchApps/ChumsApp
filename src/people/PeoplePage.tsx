@@ -4,11 +4,13 @@ import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns }
 import { Grid, Icon } from "@mui/material"
 import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
+import useMountedState from "../appBase/hooks/useMountedState";
 
 export const PeoplePage = () => {
 
   const [searchResults, setSearchResults] = React.useState(null);
   const [selectedColumns, setSelectedColumns] = React.useState<string[]>(["photo", "displayName"]);
+  const isMounted = useMountedState();
 
   const columns = [
     { key: "photo", label: "Photo", shortName: "" },
@@ -33,6 +35,9 @@ export const PeoplePage = () => {
 
   const loadData = () => {
     ApiHelper.get("/people/recent", "MembershipApi").then(data => {
+      if(!isMounted()) {
+        return;
+      }
       setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
     });
   }
@@ -53,7 +58,7 @@ export const PeoplePage = () => {
     </>);
   }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, [isMounted]);
 
   return (
     <>
