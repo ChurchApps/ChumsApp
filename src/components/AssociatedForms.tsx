@@ -51,7 +51,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
     </Accordion>
   ))
 
-  const getUnsubmittedCards = () => unsubmittedForms.filter(v => v.contentType === "person").map(uf => (
+  const getUnsubmittedCards = () => unsubmittedForms.filter(v => v.contentType !== "form").map(uf => (
     <Accordion key={uf.id} expanded={expanded === "unsubmitted" + uf.id} onChange={() => { setExpanded("unsubmitted" + uf.id) }}>
       <AccordionSummary onClick={() => handleAdd(uf.id)}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
