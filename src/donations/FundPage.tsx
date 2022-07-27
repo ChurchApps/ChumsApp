@@ -56,7 +56,7 @@ export const FundPage = () => {
     let result: JSX.Element[] = [];
 
     if (fundDonations.length === 0) {
-      result.push(<TableRow key="0">No donations yet</TableRow>);
+      result.push(<TableRow key="0"><TableCell>No donations yet</TableCell></TableRow>);
       return result;
     }
 
