@@ -1,5 +1,5 @@
 import React from "react";
-import { PersonHelper, AssociatedForms, PersonInterface, Loading, DisplayBox } from "."
+import { PersonHelper, AssociatedForms, PersonInterface, Loading, DisplayBox, DateHelper } from "."
 import { Grid, Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 
 interface Props {
@@ -21,7 +21,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
         if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>Gender:</label> <b>{p.gender}</b></div>);
         if (p.birthDate) leftAttributes.push(<div key="age"><label>Age:</label> <b>{PersonHelper.getAge(p.birthDate)}</b></div>);
         if (p.maritalStatus && p.maritalStatus !== "Single") {
-          if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> <b>{p.maritalStatus} ({new Date(p.anniversary).toLocaleDateString()})</b></div>);
+          if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> <b>{p.maritalStatus} ({DateHelper.getShortDate(DateHelper.toDate(p.anniversary))})</b></div>);
           else leftAttributes.push(<div key="maritalStatus"><label>Marital Status:</label> <b>{p.maritalStatus}</b></div>);
         }
         if (p.membershipStatus) leftAttributes.push(<div key="membership"><label>Membership:</label> <b>{p.membershipStatus}</b></div>);
@@ -50,7 +50,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
 
       return (<Grid container spacing={3}>
         <Grid item xs={3}>
-          <img style={{width: "100%"}} src={PersonHelper.getPhotoUrl(person)} className="profilePic" aria-label="personImage" id="imgPreview" alt="avatar" />
+          <img style={{ width: "100%" }} src={PersonHelper.getPhotoUrl(person)} className="profilePic" aria-label="personImage" id="imgPreview" alt="avatar" />
         </Grid>
         <Grid item xs={9}>
           <h2>{person?.name.display}</h2>
