@@ -105,7 +105,6 @@ export const MergeModal: React.FC<Props> = (props) => {
     //set initial values
     newConflicts.forEach(c => {
       c.selected = c.options[0]
-      console.log("Initial: " + c.selected);
     })
 
     setAggregatePerson(aggregate);
@@ -165,12 +164,12 @@ export const MergeModal: React.FC<Props> = (props) => {
 
   const createConflictRows = () => conflicts.map((outer, i) => (
 
-    <FormControl fullWidth>
+    <FormControl key={i} fullWidth>
       <InputLabel>{outer.value}</InputLabel>
-      <Select name={outer.value} id={outer.value} value={outer.selected} onChange={(e) => { handleSelect(outer.value, e.target.value) }}>
-        {outer.options.map((name) => {
+      <Select name={outer.value} label={outer.value} id={outer.value} value={outer.selected} onChange={(e) => { handleSelect(outer.value, e.target.value) }}>
+        {outer.options.map((name, i) => {
           const label = outer.value === "photo" ? (<img src={EnvironmentHelper.Common.ContentRoot + name} alt="profile" height="200px" width="200px" />) : name;
-          return (<MenuItem value={name}>{label}</MenuItem>)
+          return (<MenuItem key={i} value={name}>{label}</MenuItem>)
         })}
       </Select>
     </FormControl>

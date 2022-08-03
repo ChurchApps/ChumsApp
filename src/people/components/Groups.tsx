@@ -1,7 +1,7 @@
 import React from "react";
 import { DisplayBox, ApiHelper, UniqueIdHelper, Loading } from "."
 import { Link } from "react-router-dom";
-import { Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
+import { Icon, Table, TableBody, TableRow, TableCell, Box } from "@mui/material";
 import useMountedState from "../../appBase/hooks/useMountedState";
 
 interface Props { personId: string, title?: string }
@@ -25,7 +25,7 @@ export const Groups: React.FC<Props> = (props) => {
       const items = [];
       for (let i = 0; i < groupMembers.length; i++) {
         let gm = groupMembers[i];
-        items.push(<TableRow key={gm.id}><TableCell><Icon>group</Icon> <Link to={"/groups/" + gm.groupId}>{gm.group.name}</Link></TableCell></TableRow>);
+        items.push(<TableRow key={gm.id}><TableCell><Box sx={{display: "flex", alignItems: "center"}}><Icon sx={{marginRight: "5px"}}>group</Icon><Link to={"/groups/" + gm.groupId}>{gm.group.name}</Link></Box></TableCell></TableRow>);
       }
       return (<Table size="small"><TableBody>{items}</TableBody></Table>)
     }

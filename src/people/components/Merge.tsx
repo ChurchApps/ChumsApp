@@ -12,6 +12,7 @@ import {
   FormSubmissionInterface
 } from "."
 import { useNavigate } from "react-router-dom"
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 interface Props {
   hideMergeBox: () => void,
@@ -23,7 +24,8 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
   const [showMergeModal, setShowMergeModal] = React.useState<boolean>(false);
   const [personToMerge, setPersonToMerge] = React.useState<PersonInterface>(null);
   const [mergeInProgress, setMergeInProgress] = React.useState<boolean>(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const isMounted = useMountedState();
 
   const handleSave = () => {
     props.hideMergeBox();
@@ -139,9 +141,13 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
       promises.push(ApiHelper.post(`/people`, [person], "MembershipApi"));
       promises.push(ApiHelper.delete(`/people/${id}`, "MembershipApi"));
       Promise.all(promises).then(() => {
-        setShowMergeModal(false);
+        if(isMounted()) {
+          setShowMergeModal(false);
+        }
         navigate("/people");
-        setMergeInProgress(false);
+        if(isMounted()) {
+          setMergeInProgress(false);
+        }
       })
     } catch (err) {
       setMergeInProgress(false);

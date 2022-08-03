@@ -92,7 +92,7 @@ export function HouseholdEdit(props: Props) {
   const rows = members.map((m, index) => (
     <TableRow key={index}>
       <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>
-      <TableCell style={{ width: "100%" }}>
+      <TableCell>
         <FormControl fullWidth style={{ marginTop: 0 }}>
           <InputLabel id="household-role">{m.name.display}</InputLabel>
           <Select aria-label="role" value={m.householdRole || ""} size="small" label={m.name.display} labelId="household-role" onChange={(e: SelectChangeEvent<string>) => handleChangeRole(e, index)}>

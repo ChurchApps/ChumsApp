@@ -79,7 +79,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
       return rows;
     }
 
-    rows.push(<TableRow key="header"><th></th><th>Name</th><th></th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th></th><th>Name</th><th></th></TableRow>);
     return rows;
   }
 

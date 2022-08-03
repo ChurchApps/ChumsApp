@@ -2,7 +2,7 @@ import React from "react";
 import { ChumsPersonHelper, PersonInterface, DisplayBox, ApiHelper } from ".";
 import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition } from "../../components";
 import { EditCondition } from "./EditCondition";
-import { Button, Icon, OutlinedInput, FormControl, InputLabel } from "@mui/material";
+import { Button, Icon, OutlinedInput, FormControl, InputLabel, Box } from "@mui/material";
 
 interface Props {
   updateSearchResults: (people: PersonInterface[]) => void
@@ -30,7 +30,6 @@ export function PeopleSearch(props: Props) {
   }
 
   const convertConditions = async () => {
-    console.log(conditions)
     const result: SearchCondition[] = [];
     for (const c of conditions) {
       switch (c.field) {
@@ -69,7 +68,7 @@ export function PeopleSearch(props: Props) {
 
   const getAddCondition = () => {
     if (showAddCondition) return <EditCondition conditionAdded={(condition) => { const c = [...conditions]; c.push(condition); setConditions(c); setShowAddCondition(false) }} />
-    else return <a href="about:blank" className="float-right text-success" onClick={(e) => { e.preventDefault(); setShowAddCondition(true); }}><Icon>add</Icon> Add Condition</a>
+    else return <a href="about:blank" style={{display: "flex", alignItems: "center", marginBottom: "10px", justifyContent: "flex-end"}} onClick={(e) => { e.preventDefault(); setShowAddCondition(true); }}><Icon>add</Icon> Add Condition</a>
   }
 
   const removeCondition = (index: number) => {
@@ -86,10 +85,10 @@ export function PeopleSearch(props: Props) {
       const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in");
       const index = idx;
       let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
-      result.push(<div>
-        <a href="about:blank" onClick={(e) => { e.preventDefault(); removeCondition(index) }}><Icon style={{ marginRight: 10 }}>delete</Icon></a>
-        <b>{displayField}</b> {displayOperator} <i>{displayValue}</i>
-      </div>);
+      result.push(<Box key={index} sx={{display: "flex", alignItems: "center"}} mb={1}>
+        <a href="about:blank" style={{display: "flex"}} onClick={(e) => { e.preventDefault(); removeCondition(index) }}><Icon sx={{ marginRight: "5px" }}>delete</Icon></a>
+        <Box><b>{displayField}</b> {displayOperator} <i>{displayValue}</i></Box>
+      </Box>);
       idx++;
     }
     return result;

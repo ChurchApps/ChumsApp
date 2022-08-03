@@ -15,7 +15,6 @@ export function EditCondition(props: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     let c = { ...condition }
-    console.log(e.target.name)
     switch (e.target.name) {
 
       case "field":
@@ -44,29 +43,29 @@ export function EditCondition(props: Props) {
     let result: JSX.Element = null;
     switch (condition.field) {
       case "gender":
-        options = [<MenuItem value="Unspecified">Unspecified</MenuItem>, <MenuItem value="Male">Male</MenuItem>, <MenuItem value="Female">Female</MenuItem>]
+        options = [<MenuItem key="/Unspecified" value="Unspecified">Unspecified</MenuItem>, <MenuItem value="Male">Male</MenuItem>, <MenuItem value="Female">Female</MenuItem>]
         setDefaultValue("Unspecified");
         result = getValueSelect(options);
         break;
       case "maritalStatus":
-        options = [<MenuItem value="Unknown">Unknown</MenuItem>, <MenuItem value="Single">Single</MenuItem>, <MenuItem value="Married">Married</MenuItem>, <MenuItem value="Divorced">Divorced</MenuItem>, <MenuItem value="Widowed">Widowed</MenuItem>]
+        options = [<MenuItem key="/Unknown" value="Unknown">Unknown</MenuItem>, <MenuItem value="Single">Single</MenuItem>, <MenuItem value="Married">Married</MenuItem>, <MenuItem value="Divorced">Divorced</MenuItem>, <MenuItem value="Widowed">Widowed</MenuItem>]
         setDefaultValue("Unknown");
         result = getValueSelect(options);
         break;
       case "membershipStatus":
-        options = [<MenuItem value="Visitor">Visitor</MenuItem>, <MenuItem value="Member">Member</MenuItem>, <MenuItem value="Staff">Staff</MenuItem>]
+        options = [<MenuItem key="/Visitor" value="Visitor">Visitor</MenuItem>, <MenuItem value="Member">Member</MenuItem>, <MenuItem value="Staff">Staff</MenuItem>]
         setDefaultValue("Visitor");
         result = getValueSelect(options);
         break;
       case "groupMember":
-        loadedOptions.forEach(o => { options.push(<MenuItem value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+        loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
         setDefaultValue((loadedOptions?.length > 0) ? JSON.stringify(loadedOptions[0]) : "");
         result = getValueSelect(options);
         break;
       case "birthMonth":
       case "anniversaryMonth":
-        options = [<MenuItem value="1">January</MenuItem>, <MenuItem value="2">February</MenuItem>, <MenuItem value="3">March</MenuItem>, <MenuItem value="4">April</MenuItem>, <MenuItem value="5">May</MenuItem>, <MenuItem value="6">June</MenuItem>, <MenuItem value="7">July</MenuItem>, <MenuItem value="8">August</MenuItem>, <MenuItem value="9">September</MenuItem>, <MenuItem value="10">October</MenuItem>, <MenuItem value="11">November</MenuItem>, <MenuItem value="12">December</MenuItem>]
-        setDefaultValue("1");
+        options = [<MenuItem key="January" value="1">January</MenuItem>, <MenuItem key="February" value="2">February</MenuItem>, <MenuItem key="March" value="3">March</MenuItem>, <MenuItem key="April" value="4">April</MenuItem>, <MenuItem key="May" value="5">May</MenuItem>, <MenuItem key="June" value="6">June</MenuItem>, <MenuItem key="July" value="7">July</MenuItem>, <MenuItem key="August" value="8">August</MenuItem>, <MenuItem key="September" value="9">September</MenuItem>, <MenuItem key="October" value="10">October</MenuItem>, <MenuItem key="November" value="11">November</MenuItem>, <MenuItem key="December" value="12">December</MenuItem>]
+        setDefaultValue("January");
         result = getValueSelect(options);
         break;
       case "birthDate":
@@ -106,22 +105,22 @@ export function EditCondition(props: Props) {
 
   const getOperatorOptions = () => {
     let result = [
-      <MenuItem value="equals">=</MenuItem>,
-      <MenuItem value="contains">contains</MenuItem>,
-      <MenuItem value="startsWith">starts with</MenuItem>,
-      <MenuItem value="endsWith">ends with</MenuItem>,
-      <MenuItem value="greaterThan">&gt;</MenuItem>,
-      <MenuItem value="greaterThanEqual">&gt;=</MenuItem>,
-      <MenuItem value="lessThan">&lt;</MenuItem>,
-      <MenuItem value="lessThanEqual">&lt;=</MenuItem>,
-      <MenuItem value="notEquals">!=</MenuItem>
+      <MenuItem key="/equals" value="equals">=</MenuItem>,
+      <MenuItem key="/contains" value="contains">contains</MenuItem>,
+      <MenuItem key="/startsWith" value="startsWith">starts with</MenuItem>,
+      <MenuItem key="/endsWith" value="endsWith">ends with</MenuItem>,
+      <MenuItem key="/greaterThan" value="greaterThan">&gt;</MenuItem>,
+      <MenuItem key="/greaterThanEqual" value="greaterThanEqual">&gt;=</MenuItem>,
+      <MenuItem key="/lessThan" value="lessThan">&lt;</MenuItem>,
+      <MenuItem key="/lessThanEqual" value="lessThanEqual">&lt;=</MenuItem>,
+      <MenuItem key="/notEquals" value="notEquals">!=</MenuItem>
     ]
 
     switch (condition?.field) {
       case "gender":
         result = [
-          <MenuItem value="equals">=</MenuItem>,
-          <MenuItem value="notEquals">!=</MenuItem>
+          <MenuItem key="/gender-equals" value="equals">=</MenuItem>,
+          <MenuItem key="/gender-notEquals" value="notEquals">!=</MenuItem>
         ]
         break;
       case "groupMember":
@@ -131,8 +130,8 @@ export function EditCondition(props: Props) {
           setCondition(c);
         }
         result = [
-          <MenuItem value="in">is member of</MenuItem>,
-          <MenuItem value="notIn">is not member of</MenuItem>
+          <MenuItem key="/in" value="in">is member of</MenuItem>,
+          <MenuItem key="/notIn" value="notIn">is not member of</MenuItem>
         ]
         break;
     }
@@ -143,31 +142,31 @@ export function EditCondition(props: Props) {
     <FormControl fullWidth>
       <InputLabel>Field</InputLabel>
       <Select name="field" label="Field" type="text" value={condition.field} onChange={handleChange}>
-        <MenuItem value="person" disabled>Person</MenuItem>
-        <MenuItem value="displayName">Display Name</MenuItem>
-        <MenuItem value="firstName">First Name</MenuItem>
-        <MenuItem value="lastName">Last Name</MenuItem>
-        <MenuItem value="middleName">Middle Name</MenuItem>
-        <MenuItem value="nickName">Nick Name</MenuItem>
-        <MenuItem value="prefix">Prefix</MenuItem>
-        <MenuItem value="suffix">Suffix</MenuItem>
-        <MenuItem value="birthDate">Birth Date</MenuItem>
-        <MenuItem value="birthMonth">Birth Month</MenuItem>
-        <MenuItem value="age">Age</MenuItem>
-        <MenuItem value="gender">Gender</MenuItem>
-        <MenuItem value="maritalStatus">Marital Status</MenuItem>
-        <MenuItem value="anniversary">Anniversary</MenuItem>
-        <MenuItem value="anniversaryMonth">Anniversary Month</MenuItem>
-        <MenuItem value="yearsMarried">Years Married</MenuItem>
-        <MenuItem value="phone">Phone</MenuItem>
-        <MenuItem value="email">Email</MenuItem>
-        <MenuItem value="address">Address</MenuItem>
-        <MenuItem value="city">City</MenuItem>
-        <MenuItem value="state">State/Province</MenuItem>
-        <MenuItem value="zip">Zip/Postal</MenuItem>
-        <MenuItem value="membership" disabled>Membership</MenuItem>
-        <MenuItem value="membershipStatus">Membership Status</MenuItem>
-        {(Permissions.membershipApi.groupMembers) && <MenuItem value="groupMember">Group Member</MenuItem>}
+        <MenuItem key="/person" value="person" disabled>Person</MenuItem>
+        <MenuItem key="/displayName" value="displayName">Display Name</MenuItem>
+        <MenuItem key="/firstName" value="firstName">First Name</MenuItem>
+        <MenuItem key="/lastName" value="lastName">Last Name</MenuItem>
+        <MenuItem key="/middleName" value="middleName">Middle Name</MenuItem>
+        <MenuItem key="/nickName" value="nickName">Nick Name</MenuItem>
+        <MenuItem key="/prefix" value="prefix">Prefix</MenuItem>
+        <MenuItem key="/suffix" value="suffix">Suffix</MenuItem>
+        <MenuItem key="/birthDate" value="birthDate">Birth Date</MenuItem>
+        <MenuItem key="/birthMonth" value="birthMonth">Birth Month</MenuItem>
+        <MenuItem key="/age" value="age">Age</MenuItem>
+        <MenuItem key="/gender64" value="gender">Gender</MenuItem>
+        <MenuItem key="/maritalStatus" value="maritalStatus">Marital Status</MenuItem>
+        <MenuItem key="/anniversary" value="anniversary">Anniversary</MenuItem>
+        <MenuItem key="/anniversaryMonth" value="anniversaryMonth">Anniversary Month</MenuItem>
+        <MenuItem key="/yearsMarried" value="yearsMarried">Years Married</MenuItem>
+        <MenuItem key="/phone" value="phone">Phone</MenuItem>
+        <MenuItem key="/email" value="email">Email</MenuItem>
+        <MenuItem key="/address" value="address">Address</MenuItem>
+        <MenuItem key="/city" value="city">City</MenuItem>
+        <MenuItem key="/state" value="state">State/Province</MenuItem>
+        <MenuItem key="/zip" value="zip">Zip/Postal</MenuItem>
+        <MenuItem key="/membership" value="membership" disabled>Membership</MenuItem>
+        <MenuItem key="/membershipStatus" value="membershipStatus">Membership Status</MenuItem>
+        {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">Group Member</MenuItem>}
       </Select>
     </FormControl>
     <FormControl fullWidth>
@@ -178,7 +177,7 @@ export function EditCondition(props: Props) {
     </FormControl>
 
     {getValueField()}
-    <Button variant="outlined" style={{ width: "100%" }} onClick={() => { props.conditionAdded(condition) }}>Save Condition</Button>
+    <Button variant="outlined" fullWidth onClick={() => { props.conditionAdded(condition) }}>Save Condition</Button>
   </>
 }
 
