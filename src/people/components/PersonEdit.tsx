@@ -81,7 +81,7 @@ export function PersonEdit(props: Props) {
     if (validate()) {
       setIsSubmitting(true)
 
-      if (ChumsPersonHelper.getExpandedPersonObject(person).id === context.person.id) context.setPerson(person);
+      if (ChumsPersonHelper.getExpandedPersonObject(person).id === context.person?.id) context.setPerson(person);
       /*
             if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {
               setText(`You updated the address to ${PersonHelper.addressToString(data.contactInfo)} for ${data.name.display}.  Would you like to apply that to the entire ${data.name.last} family?`)
