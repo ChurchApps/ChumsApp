@@ -14,10 +14,9 @@ interface Props {
 
 export function PersonEdit(props: Props) {
   const context = React.useContext(UserContext);
-  const [updatedPerson] = useState<PersonInterface>({ name: {}, contactInfo: {} })
   const [redirect, setRedirect] = useState("");
   const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
-  const [text] = useState("");
+  const [text, setText] = useState("");
   const [members, setMembers] = useState<PersonInterface[]>(null);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -82,14 +81,15 @@ export function PersonEdit(props: Props) {
       setIsSubmitting(true)
 
       if (ChumsPersonHelper.getExpandedPersonObject(person).id === context.person?.id) context.setPerson(person);
-      /*
-            if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, data.contactInfo)) {
-              setText(`You updated the address to ${PersonHelper.addressToString(data.contactInfo)} for ${data.name.display}.  Would you like to apply that to the entire ${data.name.last} family?`)
-              setShowUpdateAddressModal(true)
-              setUpdatedPerson({ ...data })
-              return;
-            }
-      */
+
+      const { contactInfo: contactFromProps } = props.person
+
+      if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, person.contactInfo)) {
+        setText(`You updated the address to ${PersonHelper.addressToString(person.contactInfo)} for ${person.name.display}.  Would you like to apply that to the entire ${person.name.last} family?`)
+        setShowUpdateAddressModal(true)
+        return;
+      }
+
       await updatePerson(person);
     }
   }
@@ -104,11 +104,11 @@ export function PersonEdit(props: Props) {
     setShowUpdateAddressModal(false)
     await Promise.all(
       members.map(async member => {
-        member.contactInfo = PersonHelper.changeOnlyAddress(member.contactInfo, updatedPerson.contactInfo)
+        member.contactInfo = PersonHelper.changeOnlyAddress(member.contactInfo, person.contactInfo)
         try {
           await ApiHelper.post("/people", [member], "MembershipApi");
         } catch (err) {
-          console.log(`error in updating ${updatedPerson.name.display}"s address`);
+          console.log(`error in updating ${person.name.display}"s address`);
         }
       })
     )
@@ -117,13 +117,13 @@ export function PersonEdit(props: Props) {
 
   function handleNo() {
     setShowUpdateAddressModal(false)
-    updatePerson(updatedPerson)
+    updatePerson(person)
   }
 
   function fetchMembers() {
     try {
-      if (person.householdId != null) {
-        ApiHelper.get("/people/household/" + person.householdId, "MembershipApi").then(data => {
+      if (props.person.householdId != null) {
+        ApiHelper.get("/people/household/" + props.person.householdId, "MembershipApi").then(data => {
           setMembers(data);
         });
       }
@@ -150,7 +150,7 @@ export function PersonEdit(props: Props) {
   }
 
   React.useEffect(() => {
-    setPerson(props.person);
+    setPerson({ ...props.person, contactInfo: { ...props.person.contactInfo } });
     return () => {
       setPerson(null);
     }
