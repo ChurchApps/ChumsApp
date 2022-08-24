@@ -47,10 +47,9 @@ export const DonationsPage = () => {
     for (let i = 0; i < batches.length; i++) {
       let b = batches[i];
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch}><Icon>edit</Icon></a>) : null;
-      const batchLink = (canViewBatcht) ? (<Link to={"/donations/" + b.id}>{b.id}</Link>) : <>{b.id}</>;
+      const batchLink = (canViewBatcht) ? (<Link to={"/donations/" + b.id}>{b.name}</Link>) : <>{b.name}</>;
       result.push(<TableRow key={i}>
         <TableCell>{batchLink}</TableCell>
-        <TableCell>{b.name}</TableCell>
         <TableCell>{DateHelper.prettyDate(new Date(b.batchDate))}</TableCell>
         <TableCell>{b.donationCount}</TableCell>
         <TableCell>{CurrencyHelper.formatCurrency(b.totalAmount)}</TableCell>
@@ -67,7 +66,7 @@ export const DonationsPage = () => {
       return rows;
     }
 
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Id</th><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></TableRow>);
     return rows;
   }
 
