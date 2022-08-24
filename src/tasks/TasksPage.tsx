@@ -8,6 +8,7 @@ export const TasksPage = () => {
 
   return (<>
     <span style={{ float: "right", paddingTop: 15 }}>
+      <SmallButton icon="settings_suggest" text="Automations" href="/tasks/automations" /> &nbsp;
       {(status === "Open") && <SmallButton icon="list_alt" text="Show Closed" onClick={() => { setStatus("Closed") }} />}
       {(status === "Closed") && <SmallButton icon="list_alt" text="Show Open" onClick={() => { setStatus("Open") }} />}
     </span>
