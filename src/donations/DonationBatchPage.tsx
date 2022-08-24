@@ -29,7 +29,7 @@ export const DonationBatchPage = () => {
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return (<></>);
   return (
     <>
-      <h1><Icon>volunteer_activism</Icon> Batch # {batch.id}</h1>
+      <h1><Icon>volunteer_activism</Icon> {batch.name}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}><Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} funds={funds} /></Grid>
         <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
