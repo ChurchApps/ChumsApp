@@ -1,15 +1,16 @@
 import { Grid, Icon, TextField } from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, AutomationInterface } from "../../components";
+import { ErrorMessages, InputBox, AutomationInterface, ApiHelper } from "../../components";
 
 interface Props {
   onCancel: () => void,
-  onSave: () => void,
+  onSave: (automation: AutomationInterface) => void,
 }
 
 export const AutomationEdit = (props: Props) => {
   const [automation, setAutomation] = React.useState<AutomationInterface>(null);
   const [errors, setErrors] = React.useState([]);
+
 
   const validate = () => {
     const result: string[] = [];
@@ -19,7 +20,9 @@ export const AutomationEdit = (props: Props) => {
 
   const handleSave = async () => {
     if (validate()) {
-
+      ApiHelper.post("/automations", [automation], "DoingApi").then(d => {
+        props.onSave(d[0]);
+      });
     }
   }
 
@@ -39,7 +42,7 @@ export const AutomationEdit = (props: Props) => {
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <TextField fullWidth label="Title" value={automation.title || ""} name="title" onChange={handleChange} />
+          <TextField fullWidth label="Title" value={automation?.title || ""} name="title" onChange={handleChange} />
         </Grid>
       </Grid>
     </InputBox>
