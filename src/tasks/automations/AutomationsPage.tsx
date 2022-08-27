@@ -35,7 +35,7 @@ export const AutomationsPage = () => {
     }
   }
 
-  const handleAdd = (automation: AutomationInterface) => {
+  const handleAdded = (automation: AutomationInterface) => {
     setShowAdd(false);
     setEditAutomation(automation);
     loadData();
@@ -43,7 +43,7 @@ export const AutomationsPage = () => {
 
   React.useEffect(loadData, [isMounted]);
 
-  const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true); }} />
+  const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true); setEditAutomation(null); }} />
 
   return (<>
     <h1><Icon>settings_suggest</Icon> Managed Automated Tasks</h1>
@@ -56,8 +56,8 @@ export const AutomationsPage = () => {
         </DisplayBox>
       </Grid>
       <Grid item md={4} xs={12}>
-        {showAdd && <AutomationEdit onCancel={() => { setShowAdd(false) }} onSave={handleAdd} />}
-        {editAutomation && <AutomationDetails automation={editAutomation} />}
+        {showAdd && <AutomationEdit automation={{ title: "", active: true }} onCancel={() => { setShowAdd(false); }} onSave={handleAdded} />}
+        {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} />}
       </Grid>
     </Grid>
 

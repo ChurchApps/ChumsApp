@@ -3,6 +3,7 @@ import React from "react";
 import { ErrorMessages, InputBox, AutomationInterface, ApiHelper } from "../../components";
 
 interface Props {
+  automation: AutomationInterface,
   onCancel: () => void,
   onSave: (automation: AutomationInterface) => void,
 }
@@ -11,6 +12,12 @@ export const AutomationEdit = (props: Props) => {
   const [automation, setAutomation] = React.useState<AutomationInterface>(null);
   const [errors, setErrors] = React.useState([]);
 
+
+  const init = () => {
+    setAutomation(props.automation);
+  }
+
+  React.useEffect(init, [props.automation]);
 
   const validate = () => {
     const result: string[] = [];
