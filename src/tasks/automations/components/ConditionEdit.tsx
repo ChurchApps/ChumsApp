@@ -2,6 +2,7 @@ import { ResetTvOutlined } from "@mui/icons-material";
 import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ErrorMessages, InputBox, ApiHelper, ConditionInterface } from "../../components";
+import { ConditionAttendance } from "./ConditionAttendance";
 import { ConditionDay } from "./ConditionDay";
 import { ConditionPerson } from "./ConditionPerson";
 
@@ -41,6 +42,8 @@ export const ConditionEdit = (props: Props) => {
     switch (e.target.name) {
       case "field":
         c.field = val;
+        c.value = "";
+        c.fieldData = "";
         break;
     }
     setCondition(c);
@@ -57,15 +60,24 @@ export const ConditionEdit = (props: Props) => {
       case "maritalStatus":
         result = <ConditionPerson condition={condition} onChange={(c) => setCondition(c)} />
         break;
+      case "attended":
+        result = <ConditionAttendance condition={condition} onChange={(c) => setCondition(c)} />
+        break;
     }
     return result;
   }
 
-  //<MenuItem value="creationDays">Days Since Created</MenuItem>
+
+  const handleDelete = async () => {
+    const conf = window.confirm("Are you sure you want to delete this condition?");
+    if (!conf) return;
+    await ApiHelper.delete("/conditions/" + condition.id, "DoingApi")
+    props.onSave(null);
+  }
 
   if (!condition) return <></>
   return (
-    <InputBox headerIcon="settings_suggest" headerText="Edit Condition" saveFunction={handleSave} cancelFunction={props.onCancel}>
+    <InputBox headerIcon="settings_suggest" headerText="Edit Condition" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={condition?.id ? handleDelete : undefined}>
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel>Condition Type</InputLabel>

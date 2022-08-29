@@ -11,8 +11,9 @@ export const ConditionDay = (props: Props) => {
 
   const init = () => {
     const c = { ...props.condition };
-    c.value = (c.field === "dayOfWeek") ? "0" : "1"
+    if (!c.value) c.value = (c.field === "dayOfWeek") ? "0" : "1"
     c.operator = "=";
+    c.label = getLabel(c);
     props.onChange(c);
   }
 
@@ -21,7 +22,17 @@ export const ConditionDay = (props: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const c = { ...props.condition };
     c.value = e.target.value;
+    c.label = getLabel(c);
     props.onChange(c);
+  }
+
+  const getLabel = (c: ConditionInterface) => {
+    let result = "";
+    if (c.field === "dayOfWeek") {
+      const dayLabels = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      result = "Day of week is " + dayLabels[parseInt(c.value)];
+    } else result = "Day of month is " + c.value;
+    return result;
   }
 
   const getDayOfWeek = () => (

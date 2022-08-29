@@ -11,9 +11,12 @@ export const ConditionPerson = (props: Props) => {
 
   const init = () => {
     const c = { ...props.condition };
-    if (c.field === "maritalStatus") c.value = "Unknown";
-    if (c.field === "membershipStatus") c.value = "Visitor";
-    c.operator = "=";
+    if (!c.value) {
+      if (c.field === "maritalStatus") c.value = "Unknown";
+      if (c.field === "membershipStatus") c.value = "Visitor";
+      c.operator = "=";
+    }
+    c.label = getLabel(c);
     props.onChange(c);
   }
 
@@ -30,7 +33,15 @@ export const ConditionPerson = (props: Props) => {
         c.operator = val;
         break;
     }
+    c.label = getLabel(c);
     props.onChange(c);
+  }
+
+  const getLabel = (c: ConditionInterface) => {
+    let result = (c.field === "maritalStatus") ? "Marital status is " : "Membership status is ";
+    if (c.operator === "!=") result += "not ";
+    result += c.value;
+    return result;
   }
 
   const getMaritalStatus = () => (

@@ -19,7 +19,7 @@ export const ConditionDetails = (props: Props) => {
     const conjunctions: ConjunctionInterface[] = ArrayHelper.getAll(props.conjunctions, "parentId", parentId)
     for (let c of conjunctions) {
       c.conjunctions = buildTree(c.id);
-      c.conditions = ArrayHelper.getAll(props.conditions, "conjunctionId", parentId);
+      c.conditions = ArrayHelper.getAll(props.conditions, "conjunctionId", c.id);
     }
     return conjunctions;
   }
@@ -36,16 +36,26 @@ export const ConditionDetails = (props: Props) => {
     );
   };
 
-  const getLevel = (conjunctions: ConjunctionInterface[], level: number) => {
+  const getLevel = (conjunctions: ConjunctionInterface[], conditions: ConditionInterface[], level: number) => {
     const result: JSX.Element[] = [];
+    conditions?.forEach(cd => {
+      const cond = cd;
+      result.push(<li>
+        <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { props.setEditCondition(cond); }} /></span>
+        <Icon style={{ marginTop: 5, marginBottom: -5 }}>done</Icon> &nbsp; {cd.label}
+      </li>)
+    });
     conjunctions?.forEach(cj => {
       const conj = cj;
       const text = (cj.groupType === "or") ? (<i><u>Any</u> of these conditions are true</i>) : (<i><u>All</u> of these conditions are true</i>);
       result.push(<li>
-        <span style={{ float: "right" }}><SmallButton icon="add" onClick={(e) => { setMenuAnchor(e.currentTarget); setParentId(conj.id); }} /></span>
-        {text}
+        <span style={{ float: "right" }}>
+          <SmallButton icon="add" onClick={(e) => { setMenuAnchor(e.currentTarget); setParentId(conj.id); console.log(conj.id) }} />
+          <SmallButton icon="edit" onClick={() => { props.setEditConjunction(conj); }} />
+        </span>
+        <Icon style={{ marginTop: 5, marginBottom: -5 }}>account_tree</Icon> &nbsp; {text}
         {getConditionMenu()}
-        {getLevel(cj.conjunctions, level + 1)}
+        {getLevel(cj.conjunctions, cj.conditions, level + 1)}
       </li>);
     })
 
@@ -59,30 +69,8 @@ export const ConditionDetails = (props: Props) => {
     <>
       <br />
       <span style={{ float: "right" }}><SmallButton icon="add" onClick={() => { props.setEditConjunction({ automationId: props.automation.id, groupType: "and" }) }} /></span><b>Conditions:</b>
-
       <hr />
-
-      {getLevel(tree, 0)}
-
-
-
-      <hr />
-
-
-      <i><u>All</u> of these conditions are true</i>
-      <blockquote>
-        <ul>
-          <li>Membership Status = 'Visitor'</li>
-          <li><i><u>Any</u> of these conditions are true</i>
-            <blockquote>
-              <ul>
-                <li>Has visited "101"</li>
-                <li>Has visited "Meet and Greet"</li>
-              </ul>
-            </blockquote>
-          </li>
-        </ul>
-      </blockquote>
+      {getLevel(tree, [], 0)}
     </>
   );
 }
