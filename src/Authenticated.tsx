@@ -17,6 +17,7 @@ import { ReportPage } from "./reports/ReportPage";
 import { Box } from "@mui/material";
 import { TasksPage } from "./tasks/TasksPage";
 import { TaskPage } from "./tasks/TaskPage";
+import { AutomationsPage } from "./tasks/automations/AutomationsPage";
 import UserContext from "./UserContext";
 import { DashboardPage } from "./dashboard/DashboardPage";
 
@@ -51,6 +52,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/reports/:keyName" element={<ReportPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/settings/*" element={<Settings />} />
+          <Route path="/tasks/automations" element={<AutomationsPage />} />
           <Route path="/tasks/:id" element={<TaskPage />} />
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/" element={<DashboardPage />} />
