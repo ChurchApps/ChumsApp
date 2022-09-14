@@ -17,13 +17,10 @@ export const AutomationDetails = (props: Props) => {
   const [editDetails, setEditDetails] = React.useState(false);
   const [editAction, setEditAction] = React.useState<ActionInterface>(null);
   const [actions, setActions] = React.useState<ActionInterface[]>([]);
-
-
   const [conjunctions, setConjunctions] = React.useState<ConjunctionInterface[]>(null);
   const [editConjunction, setEditConjunction] = React.useState<ConjunctionInterface>(null);
   const [conditions, setConditions] = React.useState<ConditionInterface[]>(null);
   const [editCondition, setEditCondition] = React.useState<ConditionInterface>(null);
-
 
   const loadData = () => {
     ApiHelper.get("/actions/automation/" + props.automation.id, "DoingApi").then(a => setActions(a));
@@ -35,7 +32,6 @@ export const AutomationDetails = (props: Props) => {
     setAutomation(props.automation);
     loadData();
   }
-
 
   const getActions = () => {
     const result: JSX.Element[] = []
@@ -51,7 +47,7 @@ export const AutomationDetails = (props: Props) => {
     return result;
   }
 
-  React.useEffect(init, [props.automation]);
+  React.useEffect(init, [props.automation]); //eslint-disable-line
 
   if (editDetails) {
     return <AutomationEdit automation={automation} onCancel={() => { setEditDetails(false); }} onSave={(a: AutomationInterface) => { setEditDetails(false); setAutomation(a); props.onChange(); }} />
@@ -63,7 +59,7 @@ export const AutomationDetails = (props: Props) => {
     return <ConditionEdit condition={editCondition} onCancel={() => setEditCondition(null)} onSave={(c: ConditionInterface) => { setEditCondition(null); loadData(); }} />
   }
   else return (
-    <DisplayBox headerIcon="settings_suggest" headerText="Automation Details" >
+    <DisplayBox headerIcon="settings_suggest" headerText="Automation Details">
       <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditDetails(true); }} /></span><b>Automation Details:</b>
       <hr />
       Name: {automation?.title}
@@ -76,8 +72,6 @@ export const AutomationDetails = (props: Props) => {
       </ul>
 
       <ConditionDetails automation={automation} conjunctions={conjunctions} conditions={conditions} setEditConjunction={setEditConjunction} setEditCondition={setEditCondition} />
-
-
 
     </DisplayBox>
   );

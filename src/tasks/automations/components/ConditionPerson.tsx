@@ -20,7 +20,7 @@ export const ConditionPerson = (props: Props) => {
     props.onChange(c);
   }
 
-  React.useEffect(init, [props.condition.field]);
+  React.useEffect(init, [props.condition.field]); //eslint-disable-line
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const c = { ...props.condition };

@@ -1,4 +1,4 @@
-import { Grid, Icon, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import React from "react";
 import { ErrorMessages, InputBox, AutomationInterface, ApiHelper } from "../../components";
 
@@ -11,7 +11,6 @@ interface Props {
 export const AutomationEdit = (props: Props) => {
   const [automation, setAutomation] = React.useState<AutomationInterface>(null);
   const [errors, setErrors] = React.useState([]);
-
 
   const init = () => {
     setAutomation(props.automation);

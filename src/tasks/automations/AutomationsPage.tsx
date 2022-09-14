@@ -1,6 +1,6 @@
-import { Grid, Icon, Link, Table, TableCell, TableRow, TextField } from "@mui/material";
+import { Grid, Icon, Table, TableCell, TableRow } from "@mui/material";
 import React from "react";
-import { InputBox, SmallButton } from "../../appBase/components";
+import { SmallButton } from "../../appBase/components";
 import useMountedState from "../../appBase/hooks/useMountedState";
 import { ApiHelper, AutomationInterface, DisplayBox } from "../components";
 import { AutomationDetails } from "./components/AutomationDetails";
@@ -60,10 +60,5 @@ export const AutomationsPage = () => {
         {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} />}
       </Grid>
     </Grid>
-
-
-
-
   </>);
-
 };

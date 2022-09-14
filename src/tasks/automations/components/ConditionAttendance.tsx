@@ -23,7 +23,7 @@ export const ConditionAttendance = (props: Props) => {
     props.onChange(c);
   }
 
-  React.useEffect(init, [props.condition.field]);
+  React.useEffect(init, [props.condition.field]); //eslint-disable-line
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const c = { ...props.condition };
@@ -37,10 +37,6 @@ export const ConditionAttendance = (props: Props) => {
         break;
     }
     props.onChange(c);
-  }
-
-  const getLabel = (c: ConditionInterface) => {
-    return "Attendance todo";
   }
 
   const handleFieldDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
@@ -57,18 +53,18 @@ export const ConditionAttendance = (props: Props) => {
     c.fieldData = JSON.stringify(fieldData);
     props.onChange(c);
   }
-
-  const getCampus = () => (
-    <FormControl fullWidth>
-      <InputLabel>Campus</InputLabel>
-      <Select fullWidth label="Campus" value={fieldData.campusId || ""} name="campusId" onChange={handleFieldDataChange}>
-        <MenuItem value="Member">Member</MenuItem>
-        <MenuItem value="Visitor">Visitor</MenuItem>
-        <MenuItem value="Staff">Staff</MenuItem>
-      </Select>
-    </FormControl>
-  )
-
+  /*
+    const getCampus = () => (
+      <FormControl fullWidth>
+        <InputLabel>Campus</InputLabel>
+        <Select fullWidth label="Campus" value={fieldData.campusId || ""} name="campusId" onChange={handleFieldDataChange}>
+          <MenuItem value="Member">Member</MenuItem>
+          <MenuItem value="Visitor">Visitor</MenuItem>
+          <MenuItem value="Staff">Staff</MenuItem>
+        </Select>
+      </FormControl>
+    )
+  */
   return <>
     <FormControl fullWidth>
       <InputLabel>Operator</InputLabel>

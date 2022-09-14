@@ -26,15 +26,12 @@ export const ConditionDetails = (props: Props) => {
 
   const tree = buildTree(null);
 
-  const getConditionMenu = () => {
-    return (
-      <Menu id="addMenu" anchorEl={menuAnchor} open={Boolean(menuAnchor)} onClose={() => { setMenuAnchor(null) }} MenuListProps={{ "aria-labelledby": "addMenuButton" }}>
-        <MenuItem onClick={() => { props.setEditConjunction({ automationId: props.automation.id, groupType: "and", parentId: parentId }) }} ><Icon>account_tree</Icon> &nbsp; Add Conjunction</MenuItem>
-        <MenuItem onClick={() => { props.setEditCondition({ conjunctionId: parentId, field: "dayOfWeek" }) }}  ><Icon>done</Icon> &nbsp; Add Condition</MenuItem>
-      </Menu>
-
-    );
-  };
+  const getConditionMenu = () => (
+    <Menu id="addMenu" anchorEl={menuAnchor} open={Boolean(menuAnchor)} onClose={() => { setMenuAnchor(null) }} MenuListProps={{ "aria-labelledby": "addMenuButton" }}>
+      <MenuItem onClick={() => { props.setEditConjunction({ automationId: props.automation.id, groupType: "and", parentId: parentId }) }}><Icon>account_tree</Icon> &nbsp; Add Conjunction</MenuItem>
+      <MenuItem onClick={() => { props.setEditCondition({ conjunctionId: parentId, field: "dayOfWeek" }) }}><Icon>done</Icon> &nbsp; Add Condition</MenuItem>
+    </Menu>
+  );
 
   const getLevel = (conjunctions: ConjunctionInterface[], conditions: ConditionInterface[], level: number) => {
     const result: JSX.Element[] = [];

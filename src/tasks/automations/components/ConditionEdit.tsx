@@ -1,4 +1,3 @@
-import { ResetTvOutlined } from "@mui/icons-material";
 import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ErrorMessages, InputBox, ApiHelper, ConditionInterface } from "../../components";
@@ -66,7 +65,6 @@ export const ConditionEdit = (props: Props) => {
     }
     return result;
   }
-
 
   const handleDelete = async () => {
     const conf = window.confirm("Are you sure you want to delete this condition?");
