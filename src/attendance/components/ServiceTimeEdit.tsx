@@ -22,7 +22,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
     let value = e.target.value;
     switch (e.target.name) {
       case "name": st.name = value; break;
-      case "serviceId": st.serviceId = value; break;
+      case "service": st.serviceId = value; break;
     }
     setServiceTime(st);
   }
@@ -47,13 +47,13 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
 
   const loadData = React.useCallback(() => {
     ApiHelper.get("/services", "AttendanceApi").then(data => {
-      if(isMounted()) {
+      if (isMounted()) {
         setServices(data);
       }
       if (data.length > 0) {
         let st = { ...props.serviceTime };
         st.serviceId = data[0].id;
-        if(isMounted()) {
+        if (isMounted()) {
           setServiceTime(st);
         }
       }
