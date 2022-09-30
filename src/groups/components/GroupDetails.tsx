@@ -7,7 +7,7 @@ interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface
 export const GroupDetails: React.FC<Props> = (props) => {
   const [mode, setMode] = React.useState("display");
   const handleEdit = () => setMode("edit");
-  const getEditFunction = () => (UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) ? handleEdit : null
+  const getEditFunction = () => (UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) ? handleEdit : undefined
 
   const handleUpdated = (g: GroupInterface) => { setMode("display"); props.updatedFunction(g); }
 

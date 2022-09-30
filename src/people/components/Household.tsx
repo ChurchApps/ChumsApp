@@ -31,7 +31,7 @@ export const Household: React.FC<Props> = (props) => {
       ApiHelper.get("/people/household/" + household.id, "MembershipApi").then(data => setMembers(data));
     }
   }
-  const getEditFunction = () => (UserHelper.checkAccess(Permissions.membershipApi.households.edit)) ? handleEdit : null
+  const getEditFunction = () => (UserHelper.checkAccess(Permissions.membershipApi.households.edit)) ? handleEdit : undefined
   React.useEffect(loadData, [props.person]);
   React.useEffect(() => {
     setPhoto(PersonHelper.getPhotoUrl(props.person))

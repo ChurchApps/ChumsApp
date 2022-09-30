@@ -14,7 +14,7 @@ export const Person: React.FC<Props> = ({ id, person, togglePhotoEditor, updated
 
   const handleEdit = () => { setMode("edit"); }
   const handleUpdated = () => { setMode("display"); updatedFunction(); }
-  const getEditFunction = () => (UserHelper.checkAccess(Permissions.membershipApi.people.edit)) ? handleEdit : null
+  const getEditFunction = () => (UserHelper.checkAccess(Permissions.membershipApi.people.edit)) ? handleEdit : undefined
 
   if (mode === "display") return <PersonView id={id} person={person} editFunction={getEditFunction()} updatedFunction={updatedFunction} />
   else return <PersonEdit id={id} person={person} updatedFunction={handleUpdated} togglePhotoEditor={togglePhotoEditor} showMergeSearch={showMergeSearch} />
