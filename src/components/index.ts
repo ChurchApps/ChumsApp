@@ -1,4 +1,4 @@
-export { ErrorMessages, ExportLink, DisplayBox, InputBox, PersonAdd, Loading, FormSubmissionEdit } from "../appBase/components"
+export { ErrorMessages, ExportLink, DisplayBox, InputBox, PersonAdd, Loading, FormSubmissionEdit, CreatePerson } from "../appBase/components"
 export * from "../helpers"
 export * from "../appBase/interfaces"
 export { Footer } from "./Footer"
