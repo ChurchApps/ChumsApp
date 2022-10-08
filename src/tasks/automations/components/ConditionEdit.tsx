@@ -57,6 +57,8 @@ export const ConditionEdit = (props: Props) => {
         break;
       case "membershipStatus":
       case "maritalStatus":
+      case "gender":
+      case "city":
         result = <ConditionPerson condition={condition} onChange={(c) => setCondition(c)} />
         break;
       case "attended":
@@ -84,6 +86,8 @@ export const ConditionEdit = (props: Props) => {
           <MenuItem value="dayOfWeek">Day of Week</MenuItem>
           <MenuItem value="dayOfMonth">Day of Month</MenuItem>
           <ListSubheader>Person</ListSubheader>
+          <MenuItem value="gender">Gender</MenuItem>
+          <MenuItem value="city">City</MenuItem>
           <MenuItem value="membershipStatus">Membership Status</MenuItem>
           <MenuItem value="maritalStatus">Marital Status</MenuItem>
 
