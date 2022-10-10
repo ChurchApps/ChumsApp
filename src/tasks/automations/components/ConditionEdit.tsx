@@ -84,19 +84,22 @@ export const ConditionEdit = (props: Props) => {
         <Select fullWidth label="Condition Type" value={condition.field} name="field" onChange={handleChange}>
           <ListSubheader>General</ListSubheader>
           <MenuItem value="today">Todays Date</MenuItem>
-          <ListSubheader>Person</ListSubheader>
 
+          <ListSubheader>Name</ListSubheader>
           <MenuItem key="/displayName" value="displayName">Display Name</MenuItem>
           <MenuItem key="/firstName" value="firstName">First Name</MenuItem>
           <MenuItem key="/lastName" value="lastName">Last Name</MenuItem>
           <MenuItem key="/middleName" value="middleName">Middle Name</MenuItem>
           <MenuItem key="/nickName" value="nickName">Nick Name</MenuItem>
-          <MenuItem key="/prefix" value="prefix">Prefix</MenuItem>
-          <MenuItem key="/suffix" value="suffix">Suffix</MenuItem>
+
+          <ListSubheader>Personal Attributes</ListSubheader>
           <MenuItem key="/birthDate" value="birthDate">Birth Date</MenuItem>
           <MenuItem key="/gender" value="gender">Gender</MenuItem>
           <MenuItem key="/maritalStatus" value="maritalStatus">Marital Status</MenuItem>
           <MenuItem key="/anniversary" value="anniversary">Anniversary</MenuItem>
+          <MenuItem key="/membershipStatus" value="membershipStatus">Membership Status</MenuItem>
+
+          <ListSubheader>Contact Info</ListSubheader>
           <MenuItem key="/phone" value="phone">Phone</MenuItem>
           <MenuItem key="/email" value="email">Email</MenuItem>
           <MenuItem key="/address" value="address">Address</MenuItem>
@@ -104,9 +107,7 @@ export const ConditionEdit = (props: Props) => {
           <MenuItem key="/state" value="state">State/Province</MenuItem>
           <MenuItem key="/zip" value="zip">Zip/Postal</MenuItem>
 
-          <MenuItem key="/membershipStatus" value="membershipStatus">Membership Status</MenuItem>
-          <MenuItem value="maritalStatus">Marital Status</MenuItem>
-
+          <ListSubheader>Coming Soon</ListSubheader>
           <MenuItem value="attended">Attended...</MenuItem>
           <MenuItem value="gave">Gave to...</MenuItem>
         </Select>

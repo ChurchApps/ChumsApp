@@ -34,8 +34,7 @@ export const ConditionDate = (props: Props) => {
         break;
       case "datePart":
         c.fieldData = JSON.stringify({ datePart: val });
-        if (val === "dayOfWeek") c.value = "0";
-        if (val === "month" || val === "dayOfMonth" || val === "years") c.value = "1";
+        if (val === "dayOfWeek" || val === "month" || val === "dayOfMonth" || val === "years") c.value = "1";
         break;
     }
     c.label = ConditionHelper.getLabel(c);
@@ -62,13 +61,13 @@ export const ConditionDate = (props: Props) => {
     <FormControl fullWidth>
       <InputLabel>Day of Week</InputLabel>
       <Select fullWidth label="Day of Week" value={props.condition.value || ""} name="value" onChange={handleChange}>
-        <MenuItem value="0">Sunday</MenuItem>
-        <MenuItem value="1">Monday</MenuItem>
-        <MenuItem value="2">Tuesday</MenuItem>
-        <MenuItem value="3">Wednesday</MenuItem>
-        <MenuItem value="4">Thursday</MenuItem>
-        <MenuItem value="5">Friday</MenuItem>
-        <MenuItem value="6">Saturday</MenuItem>
+        <MenuItem value="1">Sunday</MenuItem>
+        <MenuItem value="2">Monday</MenuItem>
+        <MenuItem value="3">Tuesday</MenuItem>
+        <MenuItem value="4">Wednesday</MenuItem>
+        <MenuItem value="5">Thursday</MenuItem>
+        <MenuItem value="6">Friday</MenuItem>
+        <MenuItem value="7">Saturday</MenuItem>
       </Select>
     </FormControl>
   )

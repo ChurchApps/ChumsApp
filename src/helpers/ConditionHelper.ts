@@ -25,7 +25,7 @@ export class ConditionHelper {
     let displayValue = c.value;
     const dayLabels = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const monthLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    if (fieldData.datePart === "dayOfWeek") displayValue = dayLabels[parseInt(c.value)];
+    if (fieldData.datePart === "dayOfWeek") displayValue = dayLabels[parseInt(c.value) - 1];
     if (fieldData.datePart === "month") displayValue = monthLabels[parseInt(c.value) - 1];
 
     const result = displayField + " " + displayOperator + " " + displayValue;
