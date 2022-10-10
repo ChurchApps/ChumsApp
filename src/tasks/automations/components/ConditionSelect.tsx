@@ -1,24 +1,24 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ConditionInterface } from "../../components";
+import { ConditionHelper, ConditionInterface } from "../../components";
 
 interface Props {
   condition: ConditionInterface,
   onChange: (condition: ConditionInterface) => void
 }
 
-export const ConditionPerson = (props: Props) => {
+export const ConditionSelect = (props: Props) => {
 
   const init = () => {
     const c = { ...props.condition };
     if (!c.value) {
-      if (c.field === "city") c.value = "";
+      c.value = "";
       if (c.field === "gender") c.value = "Unknown";
       if (c.field === "maritalStatus") c.value = "Unknown";
       if (c.field === "membershipStatus") c.value = "Visitor";
       c.operator = "=";
     }
-    c.label = getLabel(c);
+    c.label = ConditionHelper.getLabel(c);
     props.onChange(c);
   }
 
@@ -35,31 +35,9 @@ export const ConditionPerson = (props: Props) => {
         c.operator = val;
         break;
     }
-    c.label = getLabel(c);
+    c.label = ConditionHelper.getLabel(c);
     props.onChange(c);
   }
-
-  const getLabel = (c: ConditionInterface) => {
-    let result = "";
-    switch (c.field) {
-      case "gender": result = "Gender "; break;
-      case "city": result = "City "; break;
-      case "maritalStatus": result = "Marital status "; break;
-      case "membershipStatus": result = "Membership status "; break;
-    }
-
-    let displayOperator = c.operator;
-    if (displayOperator === "=") displayOperator = "is";
-    else if (displayOperator === "!=") displayOperator = "is not";
-    else if (displayOperator === "startsWith") displayOperator = "starts with";
-    else if (displayOperator === "endsWith") displayOperator = "ends with";
-    result += " " + displayOperator + " " + c.value;
-    return result;
-  }
-
-  const getCity = () => (
-    <TextField fullWidth type="text" label="City" value={props.condition.value || ""} name="value" onChange={handleChange} />
-  )
 
   const getGender = () => (
     <FormControl fullWidth>
@@ -96,38 +74,12 @@ export const ConditionPerson = (props: Props) => {
     </FormControl>
   )
 
-  const getTextOperators = () => {
-    return [
-      <MenuItem key="/equals" value="=">=</MenuItem>,
-      <MenuItem key="/contains" value="contains">contains</MenuItem>,
-      <MenuItem key="/startsWith" value="startsWith">starts with</MenuItem>,
-      <MenuItem key="/endsWith" value="endsWith">ends with</MenuItem>,
-      <MenuItem key="/greaterThan" value=">">&gt;</MenuItem>,
-      <MenuItem key="/greaterThanEqual" value=">=">&gt;=</MenuItem>,
-      <MenuItem key="/lessThan" value="<">&lt;</MenuItem>,
-      <MenuItem key="/lessThanEqual" value="<=">&lt;=</MenuItem>,
-      <MenuItem key="/notEquals" value="!=">!=</MenuItem>,
-    ]
-  }
-
-  const getDropDownOperators = () => {
-    return [
-      <MenuItem value="=">is</MenuItem>,
-      <MenuItem value="!=">is not</MenuItem>
-    ]
-  }
-
-  const getOperators = () => {
-    let result: JSX.Element[] = []
+  const getValueField = () => {
+    let result = <></>;
     switch (props.condition.field) {
-      case "city":
-        result = getTextOperators();
-        break;
-      case "gender":
-      case "maritalStatus":
-      case "membershipStatus":
-        result = getDropDownOperators();
-        break;
+      case "gender": result = getGender(); break;
+      case "maritalStatus": result = getMaritalStatus(); break;
+      case "membershipStatus": result = getMembershipStatus(); break;
     }
     return result;
   }
@@ -137,12 +89,10 @@ export const ConditionPerson = (props: Props) => {
     <FormControl fullWidth>
       <InputLabel>Operator</InputLabel>
       <Select fullWidth label="Operator" value={props.condition.operator || ""} name="operator" onChange={handleChange}>
-        {getOperators()}
+        <MenuItem value="=">is</MenuItem>
+        <MenuItem value="!=">is not</MenuItem>
       </Select>
     </FormControl>
-    {(props.condition.field === "city") && getCity()}
-    {(props.condition.field === "gender") && getGender()}
-    {(props.condition.field === "maritalStatus") && getMaritalStatus()}
-    {(props.condition.field === "membershipStatus") && getMembershipStatus()}
+    {getValueField()}
   </>
 }

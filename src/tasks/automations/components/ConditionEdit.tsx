@@ -3,7 +3,8 @@ import React from "react";
 import { ErrorMessages, InputBox, ApiHelper, ConditionInterface } from "../../components";
 import { ConditionAttendance } from "./ConditionAttendance";
 import { ConditionDay } from "./ConditionDay";
-import { ConditionPerson } from "./ConditionPerson";
+import { ConditionSelect } from "./ConditionSelect";
+import { ConditionText } from "./ConditionText";
 
 interface Props {
   condition: ConditionInterface,
@@ -49,21 +50,19 @@ export const ConditionEdit = (props: Props) => {
   }
 
   const getQuestionDetails = () => {
-    let result = <></>
+    let result = <ConditionText condition={condition} onChange={(c) => setCondition(c)} />
     switch (condition?.field) {
       case "dayOfWeek":
       case "dayOfMonth":
         result = <ConditionDay condition={condition} onChange={(c) => setCondition(c)} />
         break;
-      case "membershipStatus":
-      case "maritalStatus":
-      case "gender":
-      case "city":
-        result = <ConditionPerson condition={condition} onChange={(c) => setCondition(c)} />
-        break;
       case "attended":
         result = <ConditionAttendance condition={condition} onChange={(c) => setCondition(c)} />
         break;
+      case "membershipStatus":
+      case "maritalStatus":
+      case "gender":
+        result = <ConditionSelect condition={condition} onChange={(c) => setCondition(c)} />
     }
     return result;
   }
@@ -86,9 +85,30 @@ export const ConditionEdit = (props: Props) => {
           <MenuItem value="dayOfWeek">Day of Week</MenuItem>
           <MenuItem value="dayOfMonth">Day of Month</MenuItem>
           <ListSubheader>Person</ListSubheader>
-          <MenuItem value="gender">Gender</MenuItem>
-          <MenuItem value="city">City</MenuItem>
-          <MenuItem value="membershipStatus">Membership Status</MenuItem>
+
+          <MenuItem key="/displayName" value="displayName">Display Name</MenuItem>
+          <MenuItem key="/firstName" value="firstName">First Name</MenuItem>
+          <MenuItem key="/lastName" value="lastName">Last Name</MenuItem>
+          <MenuItem key="/middleName" value="middleName">Middle Name</MenuItem>
+          <MenuItem key="/nickName" value="nickName">Nick Name</MenuItem>
+          <MenuItem key="/prefix" value="prefix">Prefix</MenuItem>
+          <MenuItem key="/suffix" value="suffix">Suffix</MenuItem>
+          <MenuItem key="/birthDate" value="birthDate">Birth Date</MenuItem>
+          <MenuItem key="/birthMonth" value="birthMonth">Birth Month</MenuItem>
+          <MenuItem key="/age" value="age">Age</MenuItem>
+          <MenuItem key="/gender" value="gender">Gender</MenuItem>
+          <MenuItem key="/maritalStatus" value="maritalStatus">Marital Status</MenuItem>
+          <MenuItem key="/anniversary" value="anniversary">Anniversary</MenuItem>
+          <MenuItem key="/anniversaryMonth" value="anniversaryMonth">Anniversary Month</MenuItem>
+          <MenuItem key="/yearsMarried" value="yearsMarried">Years Married</MenuItem>
+          <MenuItem key="/phone" value="phone">Phone</MenuItem>
+          <MenuItem key="/email" value="email">Email</MenuItem>
+          <MenuItem key="/address" value="address">Address</MenuItem>
+          <MenuItem key="/city" value="city">City</MenuItem>
+          <MenuItem key="/state" value="state">State/Province</MenuItem>
+          <MenuItem key="/zip" value="zip">Zip/Postal</MenuItem>
+
+          <MenuItem key="/membershipStatus" value="membershipStatus">Membership Status</MenuItem>
           <MenuItem value="maritalStatus">Marital Status</MenuItem>
 
           <MenuItem value="attended">Attended...</MenuItem>
