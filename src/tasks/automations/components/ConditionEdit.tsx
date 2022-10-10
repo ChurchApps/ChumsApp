@@ -107,12 +107,14 @@ export const ConditionEdit = (props: Props) => {
           <MenuItem key="/state" value="state">State/Province</MenuItem>
           <MenuItem key="/zip" value="zip">Zip/Postal</MenuItem>
 
-          <ListSubheader>Coming Soon</ListSubheader>
-          <MenuItem value="attended">Attended...</MenuItem>
-          <MenuItem value="gave">Gave to...</MenuItem>
         </Select>
       </FormControl>
       {getQuestionDetails()}
     </InputBox>
   );
 }
+/*
+<ListSubheader>Coming Soon</ListSubheader>
+          <MenuItem value="attended">Attended...</MenuItem>
+          <MenuItem value="gave">Gave to...</MenuItem>
+*/
