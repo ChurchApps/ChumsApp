@@ -2,7 +2,7 @@ import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeE
 import React from "react";
 import { ErrorMessages, InputBox, ApiHelper, ConditionInterface } from "../../components";
 import { ConditionAttendance } from "./ConditionAttendance";
-import { ConditionDay } from "./ConditionDay";
+import { ConditionDate } from "./ConditionDate";
 import { ConditionSelect } from "./ConditionSelect";
 import { ConditionText } from "./ConditionText";
 
@@ -52,9 +52,10 @@ export const ConditionEdit = (props: Props) => {
   const getQuestionDetails = () => {
     let result = <ConditionText condition={condition} onChange={(c) => setCondition(c)} />
     switch (condition?.field) {
-      case "dayOfWeek":
-      case "dayOfMonth":
-        result = <ConditionDay condition={condition} onChange={(c) => setCondition(c)} />
+      case "today":
+      case "birthDate":
+      case "anniversary":
+        result = <ConditionDate condition={condition} onChange={(c) => setCondition(c)} />
         break;
       case "attended":
         result = <ConditionAttendance condition={condition} onChange={(c) => setCondition(c)} />
@@ -82,8 +83,7 @@ export const ConditionEdit = (props: Props) => {
         <InputLabel>Condition Type</InputLabel>
         <Select fullWidth label="Condition Type" value={condition.field} name="field" onChange={handleChange}>
           <ListSubheader>General</ListSubheader>
-          <MenuItem value="dayOfWeek">Day of Week</MenuItem>
-          <MenuItem value="dayOfMonth">Day of Month</MenuItem>
+          <MenuItem value="today">Todays Date</MenuItem>
           <ListSubheader>Person</ListSubheader>
 
           <MenuItem key="/displayName" value="displayName">Display Name</MenuItem>
@@ -94,13 +94,9 @@ export const ConditionEdit = (props: Props) => {
           <MenuItem key="/prefix" value="prefix">Prefix</MenuItem>
           <MenuItem key="/suffix" value="suffix">Suffix</MenuItem>
           <MenuItem key="/birthDate" value="birthDate">Birth Date</MenuItem>
-          <MenuItem key="/birthMonth" value="birthMonth">Birth Month</MenuItem>
-          <MenuItem key="/age" value="age">Age</MenuItem>
           <MenuItem key="/gender" value="gender">Gender</MenuItem>
           <MenuItem key="/maritalStatus" value="maritalStatus">Marital Status</MenuItem>
           <MenuItem key="/anniversary" value="anniversary">Anniversary</MenuItem>
-          <MenuItem key="/anniversaryMonth" value="anniversaryMonth">Anniversary Month</MenuItem>
-          <MenuItem key="/yearsMarried" value="yearsMarried">Years Married</MenuItem>
           <MenuItem key="/phone" value="phone">Phone</MenuItem>
           <MenuItem key="/email" value="email">Email</MenuItem>
           <MenuItem key="/address" value="address">Address</MenuItem>
