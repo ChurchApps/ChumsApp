@@ -4,7 +4,7 @@ export class ConditionHelper {
 
   static getTitleCase = (word: string) => {
     const words = word.replace(/([A-Z])/g, " $1");
-    return words.substring(0, 1).toUpperCase() + word.substring(1, word.length);
+    return words.substring(0, 1).toUpperCase() + words.substring(1, words.length);
   }
 
   static getLabel(c: ConditionInterface) {
@@ -26,7 +26,10 @@ export class ConditionHelper {
     const dayLabels = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const monthLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     if (fieldData.datePart === "dayOfWeek") displayValue = dayLabels[parseInt(c.value) - 1];
-    if (fieldData.datePart === "month") displayValue = monthLabels[parseInt(c.value) - 1];
+    if (fieldData.datePart === "month") {
+      if (c.value.indexOf("{") > -1) displayValue = this.getTitleCase(c.value.replace("{", "").replace("}", ""));
+      else displayValue = monthLabels[parseInt(c.value) - 1];
+    }
 
     const result = displayField + " " + displayOperator + " " + displayValue;
 

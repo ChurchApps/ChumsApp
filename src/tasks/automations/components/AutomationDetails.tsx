@@ -41,7 +41,7 @@ export const AutomationDetails = (props: Props) => {
         const action = a;
         result.push(<li>
           <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditAction(action); }} /></span>
-          <b>Task:</b> {d.title} - <i>{d.associatedWithLabel}</i></li>);
+          <b>Task:</b> {d.title} - <i>{d.assignedToLabel}</i></li>);
       }
     });
     return result;

@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
 import { ConditionInterface } from "../../components";
 import { ConditionHelper } from "../../../helpers"
@@ -76,6 +76,7 @@ export const ConditionDate = (props: Props) => {
     <FormControl fullWidth>
       <InputLabel>Month</InputLabel>
       <Select fullWidth label="Month" value={props.condition.value || ""} name="value" onChange={handleChange}>
+        <ListSubheader>Absolute Values</ListSubheader>
         <MenuItem value="1">January</MenuItem>
         <MenuItem value="2">February</MenuItem>
         <MenuItem value="3">March</MenuItem>
@@ -88,6 +89,10 @@ export const ConditionDate = (props: Props) => {
         <MenuItem value="10">October</MenuItem>
         <MenuItem value="11">November</MenuItem>
         <MenuItem value="12">December</MenuItem>
+        <ListSubheader>Relative Values</ListSubheader>
+        <MenuItem value="{previousMonth}">Previous Month</MenuItem>
+        <MenuItem value="{currentMonth}">Current Month</MenuItem>
+        <MenuItem value="{nextMonth}">Next Month</MenuItem>
       </Select>
     </FormControl>
   )

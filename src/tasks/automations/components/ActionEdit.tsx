@@ -74,11 +74,6 @@ export const ActionEdit = (props: Props) => {
   const handleContentPicked = (contentType: string, contentId: string, label: string) => {
     const d = { ...taskDetails };
     switch (modalField) {
-      case "associatedWith":
-        d.associatedWithType = contentType;
-        d.associatedWithId = contentId;
-        d.associatedWithLabel = label;
-        break;
       case "assignedTo":
         d.assignedToType = contentType;
         d.assignedToId = contentId;
@@ -99,7 +94,6 @@ export const ActionEdit = (props: Props) => {
       <Select fullWidth label="Action Type" value={action?.actionType} onChange={handleChange}>
         <MenuItem value="task">Assign a Task</MenuItem>
       </Select>
-      <TextField fullWidth label="Associate with" value={taskDetails.associatedWithLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} />
       <TextField fullWidth label="Assign to" value={taskDetails.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
       <TextField fullWidth label="Task Title" value={taskDetails?.title || ""} name="title" onChange={handleDetailsChange} />
       <TextField fullWidth label="Task Note" value={taskDetails?.note || ""} name="note" onChange={handleDetailsChange} multiline={true} />
