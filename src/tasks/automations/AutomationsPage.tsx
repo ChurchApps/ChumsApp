@@ -56,7 +56,7 @@ export const AutomationsPage = () => {
         </DisplayBox>
       </Grid>
       <Grid item md={4} xs={12}>
-        {showAdd && <AutomationEdit automation={{ title: "", active: true }} onCancel={() => { setShowAdd(false); }} onSave={handleAdded} />}
+        {showAdd && <AutomationEdit automation={{ title: "", active: true, recurs: "never" }} onCancel={() => { setShowAdd(false); }} onSave={handleAdded} />}
         {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} />}
       </Grid>
     </Grid>

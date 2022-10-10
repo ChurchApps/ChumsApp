@@ -1,4 +1,4 @@
-import { Grid, TextField } from "@mui/material";
+import { FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
 import { ErrorMessages, InputBox, AutomationInterface, ApiHelper } from "../../components";
 
@@ -32,15 +32,18 @@ export const AutomationEdit = (props: Props) => {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const val = e.target.value;
+    const a = { ...automation };
     switch (e.target.name) {
       case "title":
-        const a = { ...automation };
         a.title = val;
-        setAutomation(a);
+        break;
+      case "recurs":
+        a.recurs = val;
         break;
     }
+    setAutomation(a);
   }
 
   return (
@@ -49,6 +52,15 @@ export const AutomationEdit = (props: Props) => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField fullWidth label="Title" value={automation?.title || ""} name="title" onChange={handleChange} />
+          <FormControl fullWidth>
+            <InputLabel>Repeat</InputLabel>
+            <Select fullWidth label="Repeat" value={automation?.recurs || ""} name="recurs" onChange={handleChange}>
+              <MenuItem value="never">Never</MenuItem>
+              <MenuItem value="yearly">Yearly</MenuItem>
+              <MenuItem value="monthly">Monthly</MenuItem>
+            </Select>
+          </FormControl>
+
         </Grid>
       </Grid>
     </InputBox>
