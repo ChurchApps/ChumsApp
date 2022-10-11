@@ -68,7 +68,8 @@ export const TaskPage = () => {
   const closeStatusMenu = () => { setAnchorEl(null); }
 
   const getContentLink = (contentType: string, contentId: string, contentLabel: string) => {
-    if (contentType === "group") return <Link to={"/groups/" + contentId}>{contentLabel}</Link>
+    if (contentType === "system") return <span>{contentLabel}</span>
+    else if (contentType === "group") return <Link to={"/groups/" + contentId}>{contentLabel}</Link>
     else return <Link to={"/people/" + contentId}>{contentLabel}</Link>
   }
 

@@ -1,22 +1,24 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ConditionInterface } from "../../components";
+import { ConditionHelper, ConditionInterface } from "../../components";
 
 interface Props {
   condition: ConditionInterface,
   onChange: (condition: ConditionInterface) => void
 }
 
-export const ConditionPerson = (props: Props) => {
+export const ConditionSelect = (props: Props) => {
 
   const init = () => {
     const c = { ...props.condition };
     if (!c.value) {
+      c.value = "";
+      if (c.field === "gender") c.value = "Unknown";
       if (c.field === "maritalStatus") c.value = "Unknown";
       if (c.field === "membershipStatus") c.value = "Visitor";
       c.operator = "=";
     }
-    c.label = getLabel(c);
+    c.label = ConditionHelper.getLabel(c);
     props.onChange(c);
   }
 
@@ -33,16 +35,20 @@ export const ConditionPerson = (props: Props) => {
         c.operator = val;
         break;
     }
-    c.label = getLabel(c);
+    c.label = ConditionHelper.getLabel(c);
     props.onChange(c);
   }
 
-  const getLabel = (c: ConditionInterface) => {
-    let result = (c.field === "maritalStatus") ? "Marital status is " : "Membership status is ";
-    if (c.operator === "!=") result += "not ";
-    result += c.value;
-    return result;
-  }
+  const getGender = () => (
+    <FormControl fullWidth>
+      <InputLabel>Gender</InputLabel>
+      <Select fullWidth label="Gender" value={props.condition.value || ""} name="value" onChange={handleChange}>
+        <MenuItem value="Unknown">Unknown</MenuItem>
+        <MenuItem value="Male">Male</MenuItem>
+        <MenuItem value="Female">Female</MenuItem>
+      </Select>
+    </FormControl>
+  )
 
   const getMaritalStatus = () => (
     <FormControl fullWidth>
@@ -68,15 +74,25 @@ export const ConditionPerson = (props: Props) => {
     </FormControl>
   )
 
+  const getValueField = () => {
+    let result = <></>;
+    switch (props.condition.field) {
+      case "gender": result = getGender(); break;
+      case "maritalStatus": result = getMaritalStatus(); break;
+      case "membershipStatus": result = getMembershipStatus(); break;
+    }
+    return result;
+  }
+
+  console.log(props.condition.operator)
   return <>
     <FormControl fullWidth>
       <InputLabel>Operator</InputLabel>
-      <Select fullWidth label="Marital Status" value={props.condition.operator || ""} name="operator" onChange={handleChange}>
+      <Select fullWidth label="Operator" value={props.condition.operator || ""} name="operator" onChange={handleChange}>
         <MenuItem value="=">is</MenuItem>
         <MenuItem value="!=">is not</MenuItem>
       </Select>
     </FormControl>
-    {(props.condition.field === "maritalStatus") && getMaritalStatus()}
-    {(props.condition.field === "membershipStatus") && getMembershipStatus()}
+    {getValueField()}
   </>
 }

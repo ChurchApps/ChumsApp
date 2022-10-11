@@ -41,7 +41,7 @@ export const AutomationDetails = (props: Props) => {
         const action = a;
         result.push(<li>
           <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditAction(action); }} /></span>
-          <b>Task:</b> {d.title} - <i>{d.associatedWithLabel}</i></li>);
+          <b>Task:</b> {d.title} - <i>{d.assignedToLabel}</i></li>);
       }
     });
     return result;
@@ -62,9 +62,9 @@ export const AutomationDetails = (props: Props) => {
     <DisplayBox headerIcon="settings_suggest" headerText="Automation Details">
       <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditDetails(true); }} /></span><b>Automation Details:</b>
       <hr />
-      Name: {automation?.title}
-
-      <br /><br />
+      <div><b>Name:</b> {automation?.title}</div>
+      <div><b>Repeats:</b> {automation?.recurs}</div>
+      <br />
       <span style={{ float: "right" }}><SmallButton icon="add" onClick={() => { setEditAction({ automationId: automation.id, actionType: "task" }) }} /></span><b>Actions:</b>
       <hr />
       <ul>
