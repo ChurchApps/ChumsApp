@@ -13,7 +13,7 @@ export const BigLinkButton: React.FC<Props> = (props) => (
   <Grid item md={3} xs={6}>
     <LinkType href={props.href} outsideLink={props.outsideLink}>
       <Card>
-        <CardContent sx={{textAlign: "center"}}>
+        <CardContent sx={{ textAlign: "center" }}>
           <Icon style={{ fontSize: 40 }}>{props.icon}</Icon>
           <br />
           {props.text}
@@ -26,6 +26,7 @@ export const BigLinkButton: React.FC<Props> = (props) => (
 interface LinkTypeProps {
   outsideLink?: boolean;
   href: string;
+  children?: JSX.Element;
 }
 
 const LinkType: React.FC<LinkTypeProps> = (props) => {
