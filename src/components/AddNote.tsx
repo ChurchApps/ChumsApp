@@ -1,41 +1,38 @@
 import React, { useState, useEffect } from "react"
-import { ApiHelper, NoteInterface, InputBox, ApiListType } from "."
+import { ApiHelper, MessageInterface } from "."
 import { TextField } from "@mui/material"
 import { ErrorMessages } from "../appBase/components"
 
 type Props = {
-  close: () => void;
-  contentId: string;
-  noteId?: string;
+  messageId?: string;
   updatedFunction: () => void;
-  apiName?: ApiListType;
-  contentType?: string;
+  conversationId?: string;
 };
 
 export function AddNote(props: Props) {
-  const [note, setNote] = useState<NoteInterface>()
+  const [message, setMessage] = useState<MessageInterface>()
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const headerText = props.noteId ? "Edit note" : "Add a note"
+  const headerText = props.messageId ? "Edit note" : "Add a note"
 
   useEffect(() => {
-    if (props.noteId) ApiHelper.get(`/notes/${props.noteId}`, props.apiName || "MembershipApi").then(n => setNote(n));
-    else setNote({ contentId: props.contentId, contentType: props.contentType || "person", contents: "" });
+    if (props.messageId) ApiHelper.get(`/messages/${props.messageId}`, "MessagingApi").then(n => setMessage(n));
+    else setMessage({ conversationId: props.conversationId, content: "" });
     return () => {
-      setNote(null);
+      setMessage(null);
     };
-  }, [props.noteId, props.apiName, props.contentId, props.contentType])
+  }, [props.messageId, props.conversationId])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);
-    const n = { ...note } as NoteInterface;
-    n.contents = e.target.value;
-    setNote(n);
+    const m = { ...message } as MessageInterface;
+    m.content = e.target.value;
+    setMessage(m);
   }
 
   const validate = () => {
     const result = [];
-    if (!note.contents.trim()) result.push("Please enter a note.");
+    if (!message.content.trim()) result.push("Please enter a note.");
     setErrors(result);
     return result.length === 0;
   }
@@ -43,24 +40,23 @@ export function AddNote(props: Props) {
   async function handleSave() {
     if (validate()) {
       setIsSubmitting(true);
-      ApiHelper.post("/notes", [note], props.apiName || "MembershipApi")
-        .then(() => { props.close(); props.updatedFunction() })
+      ApiHelper.post("/messages", [message], "MessagingApi")
+        .then(() => { props.updatedFunction() })
         .finally(() => { setIsSubmitting(false) });
     }
   };
 
   async function deleteNote() {
-    await ApiHelper.delete(`/notes/${props.noteId}`, props.apiName || "MembershipApi")
+    await ApiHelper.delete(`/messages/${props.messageId}`, "MessagingApi")
     props.updatedFunction()
-    props.close();
   }
 
-  const deleteFunction = props.noteId ? deleteNote : null;
+  const deleteFunction = props.messageId ? deleteNote : null;
 
   return (
-    <InputBox headerText={headerText} headerIcon="sticky_note_2" saveFunction={handleSave} cancelFunction={props.close} deleteFunction={deleteFunction} isSubmitting={isSubmitting}>
+    <>
       <ErrorMessages errors={errors} />
-      <TextField fullWidth multiline name="noteText" aria-label={headerText} style={{ height: "100px" }} onChange={handleChange} value={note?.contents} InputLabelProps={{ shrink: !!note?.contents }} label="Some note..." />
-    </InputBox>
+      <TextField fullWidth multiline name="noteText" aria-label={headerText} style={{ height: "100px" }} onChange={handleChange} value={message?.content} InputLabelProps={{ shrink: !!message?.content }} label="Add a note..." />
+    </>
   );
 }

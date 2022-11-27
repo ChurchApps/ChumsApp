@@ -1,24 +1,25 @@
 import { Icon, IconButton, Stack, Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { PersonHelper, DateHelper, NoteInterface } from "./";
+import { PersonHelper, DateHelper, NoteInterface, MessageInterface } from "./";
 
 interface Props {
-  note: NoteInterface;
-  showNoteBox: (noteId?: string) => void
+  //note: NoteInterface;
+  message: MessageInterface;
+  showEditNote: (noteId?: string) => void
 }
 
 export const Note: React.FC<Props> = (props) => {
-  const [note, setNote] = useState<NoteInterface>(null);
+  const [message, setMessage] = useState<MessageInterface>(null);
 
-  useEffect(() => setNote(props.note), [props.note]);
+  useEffect(() => setMessage(props.message), [props.message]);
 
-  if (note === null) return null;
-  const photoUrl = PersonHelper.getPhotoUrl(note.person);
-  let datePosted = new Date(note.updatedAt);
+  if (message === null) return null;
+  const photoUrl = PersonHelper.getPhotoUrl(message.person);
+  let datePosted = new Date(message.timeUpdated || message.timeSent);
   const displayDuration = DateHelper.getDisplayDuration(datePosted);
 
-  const isEdited = note.updatedAt !== note.createdAt && <>(edited)</>;
-  const contents = note.contents?.split("\n");
+  const isEdited = message.timeUpdated && message.timeUpdated !== message.timeSent && <>(edited)</>;
+  const contents = message.content?.split("\n");
   return (
     <div className="note">
       <div className="postedBy">
@@ -27,10 +28,10 @@ export const Note: React.FC<Props> = (props) => {
       <Box sx={{ width: "100%" }} className="note-contents">
         <Stack direction="row" justifyContent="space-between">
           <div>
-            <b>{note.person?.name?.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
+            <b>{message.person?.name?.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
           </div>
           <div>
-            <IconButton aria-label="editNote" onClick={() => props.showNoteBox(note.id)}>
+            <IconButton aria-label="editNote" onClick={() => props.showEditNote(message.id)}>
               <Icon style={{ color: "#03a9f4" }}>edit</Icon>
             </IconButton>
           </div>

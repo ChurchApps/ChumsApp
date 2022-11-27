@@ -2,7 +2,7 @@ import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 import React from "react";
 import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, NoteInterface } from ".";
 import { DonationPage } from "../../appBase/donationComponents/DonationPage";
-interface Props { person: PersonInterface, showNoteBox: (noteId?: string) => void, notes: NoteInterface[] }
+interface Props { person: PersonInterface, conversationId: string }
 
 export const Tabs: React.FC<Props> = (props) => {
   const [personId, setPersonId] = React.useState(props.person?.id);
@@ -25,7 +25,7 @@ export const Tabs: React.FC<Props> = (props) => {
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
-    case "notes": currentTab = <Notes showNoteBox={props.showNoteBox} notes={props.notes} />; break;
+    case "notes": currentTab = <Notes conversationId={props.conversationId} />; break;
     case "attendance": currentTab = <PersonAttendance personId={personId} />; break;
     case "donations": currentTab = <DonationPage personId={personId} />; break;
     default: currentTab = <div>Not implemented</div>; break;
