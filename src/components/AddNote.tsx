@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { ApiHelper, MessageInterface } from "."
-import { TextField } from "@mui/material"
+import { Button, Stack, TextField } from "@mui/material"
 import { ErrorMessages } from "../appBase/components"
 
 type Props = {
   messageId?: string;
-  updatedFunction: () => void;
+  onUpdate: () => void;
+  createConversation: () => Promise<string>;
   conversationId?: string;
 };
 
@@ -40,15 +41,20 @@ export function AddNote(props: Props) {
   async function handleSave() {
     if (validate()) {
       setIsSubmitting(true);
-      ApiHelper.post("/messages", [message], "MessagingApi")
-        .then(() => { props.updatedFunction() })
+      let cId = props.conversationId;
+      if (!cId) cId = await props.createConversation();
+
+      const m = { ...message };
+      m.conversationId = cId;
+      ApiHelper.post("/messages", [m], "MessagingApi")
+        .then(() => { props.onUpdate() })
         .finally(() => { setIsSubmitting(false) });
     }
   };
 
   async function deleteNote() {
     await ApiHelper.delete(`/messages/${props.messageId}`, "MessagingApi")
-    props.updatedFunction()
+    props.onUpdate()
   }
 
   const deleteFunction = props.messageId ? deleteNote : null;
@@ -56,7 +62,10 @@ export function AddNote(props: Props) {
   return (
     <>
       <ErrorMessages errors={errors} />
-      <TextField fullWidth multiline name="noteText" aria-label={headerText} style={{ height: "100px" }} onChange={handleChange} value={message?.content} InputLabelProps={{ shrink: !!message?.content }} label="Add a note..." />
+      <TextField fullWidth multiline name="noteText" aria-label={headerText} onChange={handleChange} value={message?.content} InputLabelProps={{ shrink: !!message?.content }} label="Add a note..." />
+      <Stack direction="row" spacing={1} justifyContent="end">
+        <Button key="save" type="button" variant="contained" disableElevation onClick={handleSave} disabled={isSubmitting} sx={{ "&:focus": { outline: "none" } }}>Add Note</Button>
+      </Stack>
     </>
   );
 }

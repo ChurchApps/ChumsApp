@@ -1,6 +1,6 @@
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 import React from "react";
-import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, NoteInterface } from ".";
+import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, NoteInterface, ConversationInterface, ApiHelper } from ".";
 import { DonationPage } from "../../appBase/donationComponents/DonationPage";
 interface Props { person: PersonInterface, conversationId: string }
 
@@ -12,6 +12,17 @@ export const Tabs: React.FC<Props> = (props) => {
   const getTab = (index: number, keyName: string, icon: string, text: string) => (
     <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
   )
+
+  const handleCreateConversation = async () => {
+    return "";
+    //const conv: ConversationInterface = { allowAnonymousPosts: false, contentType: "person", contentId: personId, title: "Person #" + personId + " Notes", visibility: "hidden" }
+    //const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
+    //const t = { ...task };
+    //t.conversationId = result[0].id;
+    //ApiHelper.post("/tasks", [t], "DoingApi");
+    //setTask(t);
+    //return t.conversationId;
+  }
 
   React.useEffect(() => setPersonId(props.person?.id), [props.person]);
 
@@ -25,7 +36,7 @@ export const Tabs: React.FC<Props> = (props) => {
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
-    case "notes": currentTab = <Notes conversationId={props.conversationId} />; break;
+    case "notes": currentTab = <Notes conversationId={props.conversationId} createConversation={handleCreateConversation} />; break;
     case "attendance": currentTab = <PersonAttendance personId={personId} />; break;
     case "donations": currentTab = <DonationPage personId={personId} />; break;
     default: currentTab = <div>Not implemented</div>; break;
