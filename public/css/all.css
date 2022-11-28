@@ -68,6 +68,10 @@ h1 {
   border-radius: 5px;
 }
 
+.note-contents p:first-of-type {
+  margin-top: 0;
+}
+
 .note-contents p {
   margin-bottom: 0;
 }

@@ -14,15 +14,17 @@ export function Notes(props: Props) {
   const [messages, setMessages] = React.useState<MessageInterface[]>(null)
 
   const loadNotes = async () => {
-    const noteData: MessageInterface[] = (props.conversationId) ? await ApiHelper.get("/messages/conversation/" + props.conversationId, "MessagingApi") : [];
-    if (noteData.length > 0) {
-      const peopleIds = ArrayHelper.getIds(noteData, "personId");
+    const messages: MessageInterface[] = (props.conversationId) ? await ApiHelper.get("/messages/conversation/" + props.conversationId, "MessagingApi") : [];
+    if (messages.length > 0) {
+      console.log(messages);
+      const peopleIds = ArrayHelper.getIds(messages, "personId");
+      console.log(peopleIds);
       const people = await ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi");
-      noteData.forEach(n => {
+      messages.forEach(n => {
         n.person = ArrayHelper.getOne(people, "id", n.personId);
       })
     }
-    setMessages(noteData)
+    setMessages(messages)
   };
 
   const handleShowEdit = (messageId: string) => {

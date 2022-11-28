@@ -70,7 +70,6 @@ export const TaskPage = () => {
   }
 
   const handleCreateConversation = async () => {
-    console.log("**********CREATE CONVERSATION")
     const conv: ConversationInterface = { allowAnonymousPosts: false, contentType: "task", contentId: task.id, title: "Task #" + task.id + " Notes", visibility: "hidden" }
     const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
     const t = { ...task };

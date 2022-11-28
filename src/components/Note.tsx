@@ -29,6 +29,7 @@ export const Note: React.FC<Props> = (props) => {
         <Stack direction="row" justifyContent="space-between">
           <div>
             <b>{message.person?.name?.display}</b> · <span className="text-grey">{displayDuration}{isEdited}</span>
+            {contents.map((c, i) => c ? <p key={i}>{c}</p> : <br />)}
           </div>
           <div>
             <IconButton aria-label="editNote" onClick={() => props.showEditNote(message.id)}>
@@ -36,7 +37,7 @@ export const Note: React.FC<Props> = (props) => {
             </IconButton>
           </div>
         </Stack>
-        {contents.map((c, i) => c ? <p key={i}>{c}</p> : <br />)}
+
       </Box>
     </div>
   );
