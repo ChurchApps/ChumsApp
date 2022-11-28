@@ -56,7 +56,7 @@ export const PersonPage = () => {
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
-          <Tabs person={person} conversationId={""} />
+          <Tabs person={person} />
         </Grid>
         <Grid item md={4} xs={12}>
           {addMergeSearch}

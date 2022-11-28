@@ -2,10 +2,10 @@ import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 import React from "react";
 import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, NoteInterface, ConversationInterface, ApiHelper } from ".";
 import { DonationPage } from "../../appBase/donationComponents/DonationPage";
-interface Props { person: PersonInterface, conversationId: string }
+interface Props { person: PersonInterface }
 
 export const Tabs: React.FC<Props> = (props) => {
-  const [personId, setPersonId] = React.useState(props.person?.id);
+  const [person, setPerson] = React.useState<PersonInterface>(props.person);
   const [selectedTab, setSelectedTab] = React.useState("");
   const [tabIndex, setTabIndex] = React.useState(0);
 
@@ -14,19 +14,18 @@ export const Tabs: React.FC<Props> = (props) => {
   )
 
   const handleCreateConversation = async () => {
-    return "";
-    //const conv: ConversationInterface = { allowAnonymousPosts: false, contentType: "person", contentId: personId, title: "Person #" + personId + " Notes", visibility: "hidden" }
-    //const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
-    //const t = { ...task };
-    //t.conversationId = result[0].id;
-    //ApiHelper.post("/tasks", [t], "DoingApi");
-    //setTask(t);
-    //return t.conversationId;
+    const conv: ConversationInterface = { allowAnonymousPosts: false, contentType: "person", contentId: person.id, title: person.name.display + " Notes", visibility: "hidden" }
+    const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
+    const p = { ...person };
+    p.conversationId = result[0].id;
+    ApiHelper.post("/people", [p], "MembershipApi");
+    setPerson(p);
+    return p.conversationId;
   }
 
-  React.useEffect(() => setPersonId(props.person?.id), [props.person]);
+  React.useEffect(() => setPerson(props.person), [props.person]);
 
-  if (props.person === undefined || props.person === null) return null;
+  if (person === undefined || person === null) return null;
   let tabs = [];
   let defaultTab = ""
   let currentTab = null;
@@ -36,9 +35,9 @@ export const Tabs: React.FC<Props> = (props) => {
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
-    case "notes": currentTab = <Notes conversationId={props.conversationId} createConversation={handleCreateConversation} />; break;
-    case "attendance": currentTab = <PersonAttendance personId={personId} />; break;
-    case "donations": currentTab = <DonationPage personId={personId} />; break;
+    case "notes": currentTab = <Notes conversationId={person?.conversationId} createConversation={handleCreateConversation} />; break;
+    case "attendance": currentTab = <PersonAttendance personId={person.id} />; break;
+    case "donations": currentTab = <DonationPage personId={person.id} />; break;
     default: currentTab = <div>Not implemented</div>; break;
   }
 
