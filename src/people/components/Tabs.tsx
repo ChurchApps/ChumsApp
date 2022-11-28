@@ -1,6 +1,6 @@
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 import React from "react";
-import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, NoteInterface, ConversationInterface, ApiHelper } from ".";
+import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, ConversationInterface, ApiHelper } from ".";
 import { DonationPage } from "../../appBase/donationComponents/DonationPage";
 interface Props { person: PersonInterface }
 
@@ -29,7 +29,7 @@ export const Tabs: React.FC<Props> = (props) => {
   let tabs = [];
   let defaultTab = ""
   let currentTab = null;
-  if (UserHelper.checkAccess(Permissions.membershipApi.notes.view)) { tabs.push(getTab(0, "notes", "notes", "Notes")); defaultTab = "notes"; }
+  if (UserHelper.checkAccess(Permissions.membershipApi.people.edit)) { tabs.push(getTab(0, "notes", "notes", "Notes")); defaultTab = "notes"; }
   if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "attendance", "calendar_month", "Attendance")); if (defaultTab === "") defaultTab = "attendance"; }
   if (UserHelper.checkAccess(Permissions.givingApi.donations.view)) { tabs.push(getTab(2, "donations", "volunteer_activism", "Donations")); if (defaultTab === "") defaultTab = "donations"; }
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);

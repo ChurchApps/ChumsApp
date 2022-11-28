@@ -64,7 +64,8 @@ export function AddNote(props: Props) {
       <ErrorMessages errors={errors} />
       <TextField fullWidth multiline name="noteText" aria-label={headerText} onChange={handleChange} value={message?.content} InputLabelProps={{ shrink: !!message?.content }} label="Add a note..." />
       <Stack direction="row" spacing={1} justifyContent="end">
-        <Button key="save" type="button" variant="contained" disableElevation onClick={handleSave} disabled={isSubmitting} sx={{ "&:focus": { outline: "none" } }}>Add Note</Button>
+        {deleteFunction && <Button key="delete" type="button" variant="outlined" color="error" disableElevation onClick={deleteFunction} disabled={isSubmitting} sx={{ "&:focus": { outline: "none" } }}>Delete Note</Button>}
+        <Button key="save" type="button" variant="contained" disableElevation onClick={handleSave} disabled={isSubmitting} sx={{ "&:focus": { outline: "none" } }}>{(props.messageId) ? "Save Changes" : "Add Note"}</Button>
       </Stack>
     </>
   );

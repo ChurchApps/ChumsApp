@@ -1,6 +1,6 @@
 import { Icon, IconButton, Stack, Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { PersonHelper, DateHelper, NoteInterface, MessageInterface } from "./";
+import { PersonHelper, DateHelper, MessageInterface } from "./";
 
 interface Props {
   //note: NoteInterface;

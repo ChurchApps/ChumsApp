@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Icon, Menu, MenuItem, Typography } from "@mui/material";
-import { ApiHelper, DisplayBox, TaskInterface, NoteInterface, ArrayHelper, Notes, AddNote, DateHelper, MessageInterface, ConversationInterface } from "../components";
+import { ApiHelper, DisplayBox, TaskInterface, Notes, DateHelper, ConversationInterface } from "../components";
 import { SmallButton } from "../appBase/components";
 import { Link, useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
@@ -8,21 +8,12 @@ import { ContentPicker } from "./components/ContentPicker";
 export const TaskPage = () => {
   const params = useParams();
   const [task, setTask] = React.useState<TaskInterface>(null);
-  const [notes, setNotes] = React.useState<NoteInterface[]>(null)
-  const [showEditNote, setShowEditNote] = React.useState<boolean>(false);
-  const [noteId, setNoteId] = React.useState<string>("");
   const [modalField, setModalField] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const loadData = () => { ApiHelper.get("/tasks/" + params.id, "DoingApi").then(data => setTask(data)); }
 
   React.useEffect(loadData, [params.id]);
-
-
-  const handleNotesClick = (noteId?: string) => {
-    setNoteId(noteId);
-    setShowEditNote(true);
-  }
 
   const handleContentPicked = (contentType: string, contentId: string, label: string) => {
     const t = { ...task };
