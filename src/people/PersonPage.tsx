@@ -1,5 +1,5 @@
 import React from "react";
-import { Person, Groups, Tabs, Household, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, AddNote, NoteInterface, ArrayHelper , PersonHelper} from "./components"
+import { Person, Groups, Tabs, Household, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, PersonHelper } from "./components"
 import { Grid, Icon } from "@mui/material"
 import { useParams } from "react-router-dom";
 import { ImageEditor } from "../appBase/components";
@@ -7,11 +7,8 @@ import { ImageEditor } from "../appBase/components";
 export const PersonPage = () => {
   const params = useParams();
   const [person, setPerson] = React.useState<PersonInterface>(null);
-  const [notes, setNotes] = React.useState<NoteInterface[]>(null)
   const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
   const [showMergeSearch, setShowMergeSearch] = React.useState<boolean>(false);
-  const [showNoteBox, setShowNoteBox] = React.useState<boolean>(false);
-  const [noteId, setNoteId] = React.useState<string>("");
 
   const loadData = () => { ApiHelper.get("/people/" + params.id, "MembershipApi").then(data => setPerson(data)); }
 
@@ -34,7 +31,7 @@ export const PersonPage = () => {
 
   const imageEditor = inPhotoEditMode && (
     <ImageEditor
-      aspectRatio={4/3}
+      aspectRatio={4 / 3}
       photoUrl={PersonHelper.getPhotoUrl(person)}
       onCancel={() => togglePhotoEditor(false)}
       onUpdate={handlePhotoUpdated}
@@ -50,26 +47,8 @@ export const PersonPage = () => {
     setShowMergeSearch(false)
   }
 
-  const handleNotesClick = (noteId?: string) => {
-    setNoteId(noteId);
-    setShowNoteBox(true);
-  }
-
-  const loadNotes = async () => {
-    const noteData: NoteInterface[] = await ApiHelper.get("/notes/person/" + person?.id, "MembershipApi");
-    if (noteData.length > 0) {
-      const peopleIds = ArrayHelper.getIds(noteData, "addedBy");
-      const people = await ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi");
-      noteData.forEach(n => {
-        n.person = ArrayHelper.getOne(people, "id", n.addedBy);
-      })
-    }
-    setNotes(noteData)
-  };
-
   const addMergeSearch = (showMergeSearch) ? <Merge hideMergeBox={hideMergeBox} person={person} /> : <></>;
   React.useEffect(loadData, [params.id]);
-  React.useEffect(() => { loadNotes() }, [person?.id]); //eslint-disable-line
 
   return (
     <>
@@ -77,14 +56,13 @@ export const PersonPage = () => {
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
-          <Tabs person={person} showNoteBox={handleNotesClick} notes={notes} />
+          <Tabs person={person} />
         </Grid>
         <Grid item md={4} xs={12}>
           {addMergeSearch}
           {imageEditor}
           <Household person={person} reload={person?.photoUpdated} />
           {getGroups()}
-          {showNoteBox && <AddNote contentId={person.id} noteId={noteId} close={() => setShowNoteBox(false)} updatedFunction={loadNotes} />}
         </Grid>
       </Grid>
     </>

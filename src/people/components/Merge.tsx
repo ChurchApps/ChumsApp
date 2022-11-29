@@ -6,7 +6,6 @@ import {
   PersonInterface,
   ApiHelper,
   GroupMemberInterface,
-  NoteInterface,
   VisitInterface,
   DonationInterface,
   FormSubmissionInterface
@@ -66,6 +65,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     }
   }
 
+  /*
   const fetchNotes = async (contentId: string) => {
     try {
       const notes: NoteInterface[] = await ApiHelper.get(`/notes/person/${contentId}`, "MembershipApi");
@@ -73,7 +73,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     } catch (err) {
       console.log("Error in fetching notes: ", err)
     }
-  }
+  }*/
 
   const fetchVisits = async (personId: string) => {
     try {
@@ -108,7 +108,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
       const { id, householdId } = personToRemove;
       const householdMembers = await fetchHouseholdMembers(householdId);
       const groupMembers = await fetchGroupMembers(id);
-      const notes = await fetchNotes(id);
+      //const notes = await fetchNotes(id);
       const visits = await fetchVisits(id);
       const donations = await fetchDonations(id);
       const formSubmission = await fetchFormSubmissions(id);
@@ -122,10 +122,12 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         groupMember.personId = person.id;
         promises.push(ApiHelper.post("/groupmembers", [groupMember], "MembershipApi"));
       });
+      /*
       notes.forEach(note => {
         note.contentId = person.id;
         promises.push(ApiHelper.post("/notes", [note], "MembershipApi"));
-      })
+      })*/
+
       visits.forEach(visit => {
         visit.personId = person.id;
         promises.push(ApiHelper.post(`/visits`, [visit], "AttendanceApi"));
@@ -141,11 +143,11 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
       promises.push(ApiHelper.post(`/people`, [person], "MembershipApi"));
       promises.push(ApiHelper.delete(`/people/${id}`, "MembershipApi"));
       Promise.all(promises).then(() => {
-        if(isMounted()) {
+        if (isMounted()) {
           setShowMergeModal(false);
         }
         navigate("/people");
-        if(isMounted()) {
+        if (isMounted()) {
           setMergeInProgress(false);
         }
       })

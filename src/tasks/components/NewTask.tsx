@@ -1,6 +1,6 @@
 import { Grid, Icon, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, NoteInterface, TaskInterface, UserHelper } from ".";
+import { ApiHelper, ConversationInterface, MessageInterface, TaskInterface, UserHelper } from ".";
 import { ErrorMessages, InputBox } from "../../appBase/components";
 import { ContentPicker } from "./ContentPicker";
 
@@ -21,7 +21,7 @@ export const NewTask = (props: Props) => {
     associatedWithLabel: UserHelper.person?.name?.display
   }
   const [task, setTask] = React.useState<TaskInterface>(initialData);
-  const [note, setNote] = React.useState<NoteInterface>({});
+  const [message, setMessage] = React.useState<MessageInterface>({});
   const [modalField, setModalField] = React.useState("");
   const [errors, setErrors] = React.useState([]);
 
@@ -37,10 +37,17 @@ export const NewTask = (props: Props) => {
   const handleSave = async () => {
     if (validate()) {
       const tasks = await ApiHelper.post("/tasks", [task], "DoingApi");
-      if (note.contents?.trim() !== "") {
-        note.contentType = "task";
-        note.contentId = tasks[0].id;
-        await ApiHelper.post("/notes", [note], "DoingApi");
+      if (message.content?.trim() !== "") {
+
+        const conv: ConversationInterface = { allowAnonymousPosts: false, contentType: "task", contentId: task.id, title: "Task #" + tasks[0].id + " Notes", visibility: "hidden" }
+        const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
+        const t = { ...tasks[0] };
+        t.conversationId = result[0].id;
+        ApiHelper.post("/tasks", [t], "DoingApi");
+
+        message.conversationId = t.conversationId;
+        //message.contentId = tasks[0].id;
+        await ApiHelper.post("/messages", [message], "DoingApi");
         props.onSave();
       }
     }
@@ -56,9 +63,9 @@ export const NewTask = (props: Props) => {
         setTask(t);
         break;
       case "note":
-        const n = { ...note };
-        n.contents = val;
-        setNote(n);
+        const m = { ...message };
+        m.content = val;
+        setMessage(m);
         break;
     }
   }
@@ -99,7 +106,7 @@ export const NewTask = (props: Props) => {
         </Grid>
       </Grid>
 
-      <TextField fullWidth label="Notes" value={note.contents} name="note" onChange={handleChange} multiline />
+      <TextField fullWidth label="Notes" value={message.content} name="note" onChange={handleChange} multiline />
       {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
     </InputBox>
   );
