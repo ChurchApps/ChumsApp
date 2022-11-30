@@ -1,7 +1,6 @@
 PORT=3101
 
 #Update values and rename to .env.  For local development you may keep these values.
-REACT_APP_ACCESS_API=https://accessapi.staging.churchapps.org
 REACT_APP_ATTENDANCE_API=https://attendanceapi.staging.churchapps.org
 REACT_APP_GIVING_API=https://givingapi.staging.churchapps.org
 REACT_APP_MEMBERSHIP_API=https://membershipapi.staging.churchapps.org

@@ -47,7 +47,6 @@ jobs:
           spec: |
             cypress/integration/!(Donations).spec.ts
         env:
-          CYPRESS_ACCESS_API: 'https://accessapi.staging.churchapps.org'
           CYPRESS_ATTENDANCE_API: 'https://attendanceapi.staging.churchapps.org'
           CYPRESS_GIVING_API: 'https://givingapi.staging.churchapps.org'
           CYPRESS_MEMBERSHIP_API: 'https://membershipapi.staging.churchapps.org'

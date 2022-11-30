@@ -8,7 +8,6 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 #### Join us on [Slack](https://join.slack.com/t/livechurchsolutions/shared_invite/zt-i88etpo5-ZZhYsQwQLVclW12DKtVflg).
 
 ### Depends on
-* [AccessApi](https://github.com/LiveChurchSolutions/AccessApi)
 * [AttendanceApi](https://github.com/LiveChurchSolutions/AttendanceApi)
 * [GivingApi](https://github.com/LiveChurchSolutions/GivingApi)
 * [MembershipApi](https://github.com/LiveChurchSolutions/MembershipApi)
