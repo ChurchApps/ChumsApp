@@ -36,6 +36,7 @@ export const Wrapper: React.FC<Props> = props => {
     else if (path.startsWith("/forms")) result = "forms";
     else if (path.startsWith("/settings")) result = "settings";
     else if (path.startsWith("/tasks")) result = "tasks";
+    else if (path.startsWith("/admin")) result = "admin";
     return result;
   }
 
@@ -52,6 +53,7 @@ export const Wrapper: React.FC<Props> = props => {
 
   tabs.push(<NavItem url="/tasks" key="/tasks" label="Tasks" icon="list_alt" selected={selectedTab === "tasks"} />);
   if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) tabs.push(<NavItem url="/settings" key="/settings" label="Settings" icon="settings" selected={selectedTab === "settings"} />);
+  if (UserHelper.checkAccess(Permissions.membershipApi.server.admin)) tabs.push(<NavItem key="/admin" url="/admin" label="Server Admin" icon="admin_panel_settings" selected={selectedTab === "admin"} />);
 
   const navContent = <><List component="nav" sx={Themes.NavBarStyle}>{tabs}</List></>
 
