@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react"
-import { useParams, Link } from "react-router-dom"
+import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { DisplayBox, UserHelper, ApiHelper, Permissions, ChurchInterface } from "."
 import { RoleInterface } from "../../helpers"
-import UserContext from "../../UserContext"
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { SmallButton } from "../../appBase/components"
 
@@ -13,15 +12,12 @@ interface Props {
 }
 
 export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church }) => {
+
   const [roles, setRoles] = useState<RoleInterface[]>([]);
-  const params = useParams();
-  const context = useContext(UserContext);
 
   const loadData = () => {
     if (selectedRoleId !== "notset") return;
-    const churchId = params.id;
-    if (churchId !== UserHelper.currentChurch.id) UserHelper.selectChurch(context, churchId);
-    ApiHelper.get(`/roles/church/${churchId}`, "MembershipApi").then(roles => setRoles(roles));
+    ApiHelper.get(`/roles/church/${church.id}`, "MembershipApi").then(roles => setRoles(roles));
   }
 
   const getEditContent = () => {
@@ -32,7 +28,6 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
   const getRows = () => {
     const result: JSX.Element[] = [];
     const sortedRoles = [...roles].sort((a, b) => a.name > b.name ? 1 : -1);
-    const churchId = params.id;
     const canEdit = (
       UserHelper.checkAccess(Permissions.membershipApi.roles.edit)
       && UserHelper.checkAccess(Permissions.membershipApi.users.edit)
@@ -42,7 +37,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     if (UserHelper.checkAccess(Permissions.membershipApi.rolePermissions.edit)) {
       result.push(
         <TableRow key="everyone">
-          <TableCell><i className="groups" /> <Link to={`/${churchId}/role/everyone`}>(Everyone)</Link></TableCell>
+          <TableCell><i className="groups" /> <Link to={`/settings/role/everyone`}>(Everyone)</Link></TableCell>
           <TableCell></TableCell>
         </TableRow>
       );
@@ -51,7 +46,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     sortedRoles.forEach(role => {
       const editLink = (canEdit) ? <SmallButton icon="edit" toolTip="Edit" onClick={() => { selectRoleId(role.id) }} /> : null;
       result.push(<TableRow key={role.id}>
-        <TableCell><i className="lock" /> <Link to={`/${churchId}/role/${role.id}`}>{role.name}</Link></TableCell>
+        <TableCell><i className="lock" /> <Link to={`/settings/role/${role.id}`}>{role.name}</Link></TableCell>
         <TableCell align="right">{editLink}</TableCell>
       </TableRow>);
     });

@@ -1,12 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { SettingsPage } from "./SettingsPage"
-import { ChurchPage } from "./ChurchPage"
+import { ManageChurch } from "./ManageChurch"
+import { RolePage } from "./RolePage"
 
 export const Settings: React.FC = () => (
   <Routes>
-    <Route path="/church" element={<ChurchPage />} />
-    <Route path="/" element={<SettingsPage />} />
+    <Route path="/role/:roleId" element={<RolePage />} />
+    <Route path="/" element={<ManageChurch />} />
   </Routes>
 )
 
