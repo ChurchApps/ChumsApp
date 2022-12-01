@@ -1,5 +1,5 @@
 import React from "react"
-import { ChurchInterface, PersonInterface, UserContextInterface, UserInterface } from "./helpers";
+import { ChurchInterface, LoginUserChurchInterface, PersonInterface, UserContextInterface, UserInterface } from "./helpers";
 
 const UserContext = React.createContext<UserContextInterface | undefined>(undefined);
 
@@ -10,16 +10,16 @@ interface Props {
 export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = React.useState<UserInterface>(null);
   const [person, setPerson] = React.useState<PersonInterface>(null);
-  const [church, setChurch] = React.useState<ChurchInterface>(null);
-  const [churches, setChurches] = React.useState<ChurchInterface[]>(null);
+  const [userChurch, setUserChurch] = React.useState<LoginUserChurchInterface>(null);
+  const [userChurches, setUserChurches] = React.useState<LoginUserChurchInterface[]>(null);
 
   return <UserContext.Provider value={{
     user,
     setUser,
-    church,
-    setChurch,
-    churches,
-    setChurches,
+    userChurch,
+    setUserChurch,
+    userChurches,
+    setUserChurches,
     person,
     setPerson
   }}>{children} </UserContext.Provider>

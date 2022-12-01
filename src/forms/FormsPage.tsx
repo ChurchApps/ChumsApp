@@ -33,7 +33,7 @@ export const FormsPage = () => {
         || form?.action === "admin"
       );
       const editLink = (canEdit && selectedTab === "forms") ? (<SmallButton icon="edit" text="Edit" onClick={() => { setSelectedFormId(form.id); }} />) : null;
-      const formUrl = EnvironmentHelper.B1Url.replace("{key}", UserHelper.currentChurch.subDomain) + "/forms/" + form.id;
+      const formUrl = EnvironmentHelper.B1Url.replace("{key}", UserHelper.currentUserChurch.church.subDomain) + "/forms/" + form.id;
       const formLink = (form.contentType === "form") ? <a href={formUrl}>{formUrl}</a> : null;
       const archiveLink = (canEdit && selectedTab === "forms") ? (<SmallButton icon="delete" text="Archive" color="error" onClick={() => { handleArchiveChange(form, true); }} />) : null;
       const unarchiveLink = (canEdit && selectedTab === "archived") ? (<SmallButton icon="undo" text="Restore" color="success" onClick={() => { handleArchiveChange(form, false); }} />) : null;

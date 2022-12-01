@@ -97,7 +97,7 @@ export const UserAdd = (props: Props) => {
   const createUserAndToGroup = async (firstName: string, lastName: string, userEmail: string) => {
     const userPayload: LoadCreateUserRequestInterface = { firstName, lastName, userEmail };
     const user: UserInterface = await ApiHelper.post("/users/loadOrCreate", userPayload, "MembershipApi");
-    const roleMember: RoleMemberInterface = { userId: user.id, roleId: props.role.id, churchId: UserHelper.currentChurch.id };
+    const roleMember: RoleMemberInterface = { userId: user.id, roleId: props.role.id, churchId: UserHelper.currentUserChurch.church.id };
     await ApiHelper.post("/rolemembers/", [roleMember], "MembershipApi");
 
     return user;
