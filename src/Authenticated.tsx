@@ -14,12 +14,15 @@ import { Settings } from "./settings/Settings";
 import { FormPage } from "./forms/FormPage";
 import { ReportsPage } from "./reports/ReportsPage";
 import { ReportPage } from "./reports/ReportPage";
+import { ReportPage as AdminReportPage } from "./serverAdmin/ReportPage";
 import { Box } from "@mui/material";
 import { TasksPage } from "./tasks/TasksPage";
 import { TaskPage } from "./tasks/TaskPage";
 import { AutomationsPage } from "./tasks/automations/AutomationsPage";
 import UserContext from "./UserContext";
 import { DashboardPage } from "./dashboard/DashboardPage";
+import { AdminPage } from "./serverAdmin/AdminPage";
+import { ProfilePage } from "./profile/ProfilePage";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
@@ -39,6 +42,8 @@ export const Authenticated: React.FC = () => {
     <Box sx={{ display: "flex", backgroundColor: "#EEE" }}>
       <Wrapper>
         <Routes>
+          <Route path="/admin/report/:keyName" element={<AdminReportPage />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="/people/:id" element={<PersonPage />} />
           <Route path="/people" element={<PeoplePage />} />
           <Route path="/groups/:id" element={<GroupPage />} />
@@ -55,6 +60,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/tasks/automations" element={<AutomationsPage />} />
           <Route path="/tasks/:id" element={<TaskPage />} />
           <Route path="/tasks" element={<TasksPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/" element={<DashboardPage />} />
         </Routes>
       </Wrapper>

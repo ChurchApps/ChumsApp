@@ -3,7 +3,6 @@ import { CommonEnvironmentHelper } from "../appBase/helpers/CommonEnvironmentHel
 
 export class EnvironmentHelper {
   static B1Url = "";
-  static AccountsAppUrl = "";
   static ChurchAppsUrl = "";
   static GoogleAnalyticsTag = "";
   static Common = CommonEnvironmentHelper;
