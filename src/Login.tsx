@@ -28,11 +28,13 @@ export const Login: React.FC = (props: any) => {
     let search = new URLSearchParams(window.location.search);
     let jwt = search.get("jwt") || cookies.jwt;
     let auth = search.get("auth");
+    let returnUrl = search.get("returnUrl");
     if (!jwt) jwt = "";
     if (!auth) auth = "";
+    if (!returnUrl) returnUrl = "";
 
     return (<Box sx={{ display: "flex", backgroundColor: "#EEE", minHeight: "100vh" }}>
-      <LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} callbackErrors={errors} />
+      <LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} churchRegisteredCallback={postChurchRegister} userRegisteredCallback={trackUserRegister} callbackErrors={errors} returnUrl={returnUrl} />
     </Box>);
   } else {
     // @ts-ignore
