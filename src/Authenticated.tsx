@@ -22,6 +22,7 @@ import { AutomationsPage } from "./tasks/automations/AutomationsPage";
 import UserContext from "./UserContext";
 import { DashboardPage } from "./dashboard/DashboardPage";
 import { AdminPage } from "./serverAdmin/AdminPage";
+import { ProfilePage } from "./profile/ProfilePage";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
@@ -59,6 +60,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/tasks/automations" element={<AutomationsPage />} />
           <Route path="/tasks/:id" element={<TaskPage />} />
           <Route path="/tasks" element={<TasksPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/" element={<DashboardPage />} />
         </Routes>
       </Wrapper>
