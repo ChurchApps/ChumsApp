@@ -62,10 +62,10 @@ export const AdminPage = () => {
 
     const result = await ApiHelper.get("/churches/" + churchId + "/impersonate", "MembershipApi");
 
-    const idx = ArrayHelper.getIndex(UserHelper.churches, "id", churchId);
-    if (idx > -1) UserHelper.churches.splice(idx, 1);
+    const idx = ArrayHelper.getIndex(UserHelper.userChurches, "church.id", churchId);
+    if (idx > -1) UserHelper.userChurches.splice(idx, 1);
 
-    UserHelper.churches.push(...result.churches);
+    UserHelper.userChurches.push(...result.churches);
 
     UserHelper.selectChurch(context, result.churches[0].id, null)
 

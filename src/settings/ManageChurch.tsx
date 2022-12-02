@@ -10,7 +10,7 @@ export const ManageChurch = () => {
 
   const loadData = () => {
     //const churchId = params.id;
-    const churchId = UserHelper.currentChurch.id;
+    const churchId = UserHelper.currentUserChurch.church.id;
     if (!UserHelper.checkAccess(Permissions.membershipApi.settings.edit)) setRedirectUrl("/");
     ApiHelper.get("/churches/" + churchId + "?include=permissions", "MembershipApi").then(data => setChurch(data));
   }
@@ -30,7 +30,7 @@ export const ManageChurch = () => {
     return modules;
   }
 
-  React.useEffect(loadData, [UserHelper.currentChurch.id]); //eslint-disable-line
+  React.useEffect(loadData, [UserHelper.currentUserChurch.church.id]); //eslint-disable-line
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (

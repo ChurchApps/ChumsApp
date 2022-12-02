@@ -29,8 +29,8 @@ export const Authenticated: React.FC = () => {
 
   let context = React.useContext(UserContext);
 
-  UserHelper.currentChurch = context.church;
-  UserHelper.churches = context.churches;
+  UserHelper.currentUserChurch = context.userChurch;
+  UserHelper.userChurches = context.userChurches;
   UserHelper.user = context.user;
   UserHelper.person = context.person;
 
