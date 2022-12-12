@@ -65,9 +65,9 @@ export const AdminPage = () => {
     const idx = ArrayHelper.getIndex(UserHelper.userChurches, "church.id", churchId);
     if (idx > -1) UserHelper.userChurches.splice(idx, 1);
 
-    UserHelper.userChurches.push(...result.churches);
+    UserHelper.userChurches.push(...result.userChurches);
 
-    UserHelper.selectChurch(context, result.churches[0].id, null)
+    UserHelper.selectChurch(context, result.userChurches[0].id, null)
 
     setRedirectUrl(`/settings`);
 
