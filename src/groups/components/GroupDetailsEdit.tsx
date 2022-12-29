@@ -103,7 +103,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
             <TextField fullWidth multiline label="About Text" type="text" name="about" value={group.about || ""} onChange={handleChange} />
           </Grid>
           <Grid item md={6} xs={12}>
-            {group.photoUrl && <><img src={group.photoUrl} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} /><br /></>}
+            {group.photoUrl && <><img src={group.photoUrl} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="group" /><br /></>}
             {!group.photoUrl && (<InputLabel>Group Photo</InputLabel>)}
             <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>Select photo</Button>
           </Grid>
@@ -111,7 +111,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
         </Grid>
         <ServiceTimesEdit group={group} />
       </InputBox>
-      {selectPhotoField && <GalleryModal onClose={() => setSelectPhotoField(null)} onSelect={handlePhotoSelected} aspectRatio={2} />}
+      {selectPhotoField && <GalleryModal onClose={() => setSelectPhotoField(null)} onSelect={handlePhotoSelected} aspectRatio={4} />}
     </>
   );
 }

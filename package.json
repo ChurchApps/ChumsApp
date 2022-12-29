@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@lexical/react": "^0.7.5",
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.90",
     "@mui/material": "^5.8.2",
@@ -33,6 +34,7 @@
     "flexsearch": "^0.7.21",
     "jszip": "^3.7.1",
     "jwt-decode": "^3.1.2",
+    "lexical": "^0.7.5",
     "markdown-draft-js": "^2.4.0",
     "original-fs": "^1.1.0",
     "papaparse": "^5.3.1",
