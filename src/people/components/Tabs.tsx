@@ -1,13 +1,15 @@
+import React, { useContext } from "react";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
-import React from "react";
 import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, ConversationInterface, ApiHelper } from ".";
 import { DonationPage } from "../../appBase/donationComponents/DonationPage";
+import UserContext from "../../UserContext";
 interface Props { person: PersonInterface }
 
 export const Tabs: React.FC<Props> = (props) => {
   const [person, setPerson] = React.useState<PersonInterface>(props.person);
   const [selectedTab, setSelectedTab] = React.useState("");
   const [tabIndex, setTabIndex] = React.useState(0);
+  const context = useContext(UserContext);
 
   const getTab = (index: number, keyName: string, icon: string, text: string) => (
     <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
@@ -35,7 +37,7 @@ export const Tabs: React.FC<Props> = (props) => {
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
-    case "notes": currentTab = <Notes conversationId={person?.conversationId} createConversation={handleCreateConversation} />; break;
+    case "notes": currentTab = <Notes context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />; break;
     case "attendance": currentTab = <PersonAttendance personId={person.id} />; break;
     case "donations": currentTab = <DonationPage personId={person.id} />; break;
     default: currentTab = <div>Not implemented</div>; break;
