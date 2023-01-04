@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Grid, Icon, Menu, MenuItem, Typography } from "@mui/material";
 import { ApiHelper, DisplayBox, TaskInterface, Notes, DateHelper, ConversationInterface } from "../components";
 import { SmallButton } from "../appBase/components";
 import { Link, useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
+import UserContext from "../UserContext";
 
 export const TaskPage = () => {
   const params = useParams();
   const [task, setTask] = React.useState<TaskInterface>(null);
   const [modalField, setModalField] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const context = useContext(UserContext);
 
   const loadData = () => { ApiHelper.get("/tasks/" + params.id, "DoingApi").then(data => setTask(data)); }
 
@@ -77,7 +79,7 @@ export const TaskPage = () => {
 
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <Notes conversationId={task?.conversationId} createConversation={handleCreateConversation} />
+          <Notes context={context} conversationId={task?.conversationId} createConversation={handleCreateConversation} />
         </Grid>
         <Grid item md={4} xs={12}>
           <DisplayBox headerIcon="list_alt" headerText="Task Details">
