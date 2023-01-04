@@ -4,14 +4,10 @@
     "react"
   ],
   "rules": {
-    "comma-dangle": ["warn", "never"],
+    "comma-dangle": "off",
     "eol-last": ["warn", "always"],
     "quote-props": ["error", "as-needed"],
-    "quotes": ["warn", "double", {
-        "avoidEscape": true,
-        "allowTemplateLiterals": true
-      }
-    ],
+    "quotes": "off",
     "no-trailing-spaces": "warn",
     "no-var": "error",
     "operator-linebreak": ["warn", "before"],
@@ -19,7 +15,8 @@
     "indent": ["warn", 2, { "SwitchCase": 1 }],
     "arrow-body-style": ["warn", "as-needed"],
     "react/jsx-tag-spacing": ["warn", { "beforeSelfClosing": "always", "beforeClosing": "never" }],
-    "no-multiple-empty-lines": ["warn", { "max": 1 }],
-    "jsx-quotes": ["warn", "prefer-double"]
+    "no-multiple-empty-lines": "off",
+    "jsx-quotes": ["warn", "prefer-double"],
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }
