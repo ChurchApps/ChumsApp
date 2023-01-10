@@ -23,7 +23,7 @@ export const ManageChurch = () => {
     modules.push(<DisplayBox headerIcon="link" headerText="Tools" editContent={false}>
       <table className="table">
         <tbody>
-          <tr><td><a href={"https://transfer.chums.org/"} target="_blank" style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>Import/Export</a></td></tr>
+          <tr><td><a href={"https://transfer.chums.org/"} target="_blank" rel="noreferrer noopener" style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>Import/Export</a></td></tr>
         </tbody>
       </table>
     </DisplayBox>);
