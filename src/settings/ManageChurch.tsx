@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ChurchInterface, ApiHelper, UserHelper, ChurchSettings, Permissions, Appearance, Roles, RoleEdit, DisplayBox } from "./components"
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Grid, Box, Icon } from "@mui/material";
 
 export const ManageChurch = () => {
@@ -23,7 +23,7 @@ export const ManageChurch = () => {
     modules.push(<DisplayBox headerIcon="link" headerText="Tools" editContent={false}>
       <table className="table">
         <tbody>
-          <tr><td><Link to={"https://transfer.chums.org/"} style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>Import/Export</Link></td></tr>
+          <tr><td><a href={"https://transfer.chums.org/"} target="_blank" style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>Import/Export</a></td></tr>
         </tbody>
       </table>
     </DisplayBox>);
