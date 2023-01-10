@@ -260,6 +260,7 @@ export function PersonEdit(props: Props) {
               <div className="section">Phone</div>
               <TextField fullWidth name="contactInfo.homePhone" id="homePhone" label="Home" value={person.contactInfo?.homePhone || ""} onChange={e => { e.target.value = formattedPhoneNumber(e.target.value); handleChange(e) }} InputProps={{ inputProps: { maxLength: 12 } }} />
               <TextField fullWidth name="contactInfo.workPhone" id="workPhone" label="Work" value={person.contactInfo?.workPhone || ""} onChange={e => { e.target.value = formattedPhoneNumber(e.target.value); handleChange(e) }} InputProps={{ inputProps: { maxLength: 12 } }} />
+              <TextField fullWidth name="contactInfo.mobilePhone" id="mobilePhone" label="Mobile" value={person.contactInfo?.mobilePhone || ""} onChange={e => { e.target.value = formattedPhoneNumber(e.target.value); handleChange(e) }} InputProps={{ inputProps: { maxLength: 12 } }} />
             </Grid>
           </Grid>
         </InputBox>
