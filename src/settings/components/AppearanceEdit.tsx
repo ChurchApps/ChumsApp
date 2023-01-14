@@ -65,7 +65,7 @@ export const AppearanceEdit: React.FC<Props> = (props) => {
         <div style={{ backgroundColor: "#EEE", padding: 10 }}>
 
           <label>Logo - Light background</label><br />
-          <p style={{ color: "#999", fontSize: 12 }}>Upload horizontal logo with a transparent background suitable for use of light backrounds.</p>
+          <p style={{ color: "#999", fontSize: 12 }}>Upload horizontal logo with a transparent background suitable for use of light backrounds. The ideal size is 1280 pixels wide by 320 pixels high.</p>
           {getLogoLink("logoLight", "#EEE")}
 
         </div>
@@ -73,7 +73,7 @@ export const AppearanceEdit: React.FC<Props> = (props) => {
         <div style={{ backgroundColor: "#333", padding: 10, color: "#FFF" }}>
 
           <label>Logo - Dark background</label><br />
-          <p style={{ color: "#999", fontSize: 12 }}>Upload horizontal logo with a transparent background suitable for use of dark backrounds.</p>
+          <p style={{ color: "#999", fontSize: 12 }}>Upload horizontal logo with a transparent background suitable for use of dark backrounds. The ideal size is 1280 pixels wide by 320 pixels high.</p>
           {getLogoLink("logoDark", "#333")}
 
         </div>
