@@ -4,7 +4,8 @@ import { useCookies } from "react-cookie";
 import { ApiHelper } from "./components";
 import UserContext from "./UserContext";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
-import { ChurchInterface, UserInterface } from "./helpers";
+import { ChurchInterface, UserHelper, UserInterface } from "./helpers";
+import { Permissions } from "./appBase/interfaces";
 import ReactGA from "react-ga";
 import { EnvironmentHelper } from "./helpers";
 import { Box } from "@mui/material";
@@ -39,6 +40,9 @@ export const Login: React.FC = (props: any) => {
   } else {
     // @ts-ignore
     let from = location.state?.from?.pathname || "/";
-    return <Navigate to={from} replace />;
+    if (!UserHelper.checkAccess(Permissions.membershipApi.people.view))
+      return <Navigate to={from + 'profile'} replace />;
+    else
+      return <Navigate to={from} replace />;
   }
 };
