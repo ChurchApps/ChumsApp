@@ -25,11 +25,11 @@ export const Login: React.FC = (props: any) => {
 
   const context = React.useContext(UserContext);
 
+  let search = new URLSearchParams(window.location.search);
+  let returnUrl = search.get("returnUrl");
   if (context.user === null || !ApiHelper.isAuthenticated) {
-    let search = new URLSearchParams(window.location.search);
     let jwt = search.get("jwt") || cookies.jwt;
     let auth = search.get("auth");
-    let returnUrl = search.get("returnUrl");
     if (!jwt) jwt = "";
     if (!auth) auth = "";
     if (!returnUrl) returnUrl = "";
@@ -42,6 +42,8 @@ export const Login: React.FC = (props: any) => {
     let from = location.state?.from?.pathname || "/";
     if (!UserHelper.checkAccess(Permissions.membershipApi.people.view))
       return <Navigate to={from + 'profile'} replace />;
+    else if (returnUrl)
+      return <Navigate to={returnUrl} replace />;
     else
       return <Navigate to={from} replace />;
   }
