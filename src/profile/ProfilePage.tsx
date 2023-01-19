@@ -1,6 +1,6 @@
-import { Grid, Icon, TextField } from "@mui/material";
+import { Grid, Icon, TextField, Checkbox } from "@mui/material";
 import React, { useState } from "react";
-import { InputBox, ApiHelper, ErrorMessages, UserHelper } from "./components"
+import { InputBox, ApiHelper, ErrorMessages, UserHelper, PersonHelper } from "./components"
 
 export const ProfilePage = () => {
   const [password, setPassword] = useState<string>("");
@@ -8,6 +8,7 @@ export const ProfilePage = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [optedOut, setOptedOut] = useState<boolean>(false);
   const [errors, setErrors] = useState([]);
 
   const initData = () => {
@@ -15,6 +16,9 @@ export const ProfilePage = () => {
     setFirstName(firstName);
     setLastName(lastName);
     setEmail(email);
+
+    const { optedOut } = UserHelper.person;
+    setOptedOut(optedOut);
   }
 
   const handleSave = () => {
@@ -23,6 +27,7 @@ export const ProfilePage = () => {
       if (password.length >= 8) promises.push(ApiHelper.post("/users/updatePassword", { newPassword: password }, "MembershipApi"));
       if (areNamesChanged()) promises.push(ApiHelper.post("/users/setDisplayName", { firstName, lastName }, "MembershipApi"));
       if (email !== UserHelper.user.email) promises.push(ApiHelper.post("/users/updateEmail", { email: email }, "MembershipApi"));
+      promises.push(ApiHelper.post("/users/updateOptedOut", {personId: UserHelper.person.id, optedOut: optedOut }, "MembershipApi"));
 
       Promise.all(promises).then(() => {
         UserHelper.user.firstName = firstName;
@@ -49,6 +54,9 @@ export const ProfilePage = () => {
         break;
       case "email":
         setEmail(val);
+        break;
+      case "optedOut":
+        setOptedOut(e.currentTarget.checked);
         break;
       case "password":
         setPassword(val);
@@ -90,6 +98,8 @@ export const ProfilePage = () => {
           <Grid item>
             <TextField type="password" fullWidth name="password" label="New password" value={password} onChange={handleChange} />
             <TextField type="password" fullWidth name="passwordVerify" label="Verify password" value={passwordVerify} onChange={handleChange} />
+            <Checkbox name="optedOut" checked={optedOut} onChange={handleChange} />
+            <label htmlFor="optedOut">Directory opt-out</label>
           </Grid>
         </Grid>
       </InputBox>
