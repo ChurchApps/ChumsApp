@@ -33,6 +33,7 @@ export const ProfilePage = () => {
         UserHelper.user.firstName = firstName;
         UserHelper.user.lastName = lastName;
         UserHelper.user.email = email;
+        UserHelper.person.optedOut = optedOut;
         alert("Changes saved.");
       });
     }
