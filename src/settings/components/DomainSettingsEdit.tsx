@@ -78,7 +78,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
   return (
     <>
       <div className="subHead">Domains</div>
-      <p>You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS: <i style={{ fontSize: 12 }}>A: 18.188.67.144</i></p>
+      <p>You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS: <i style={{ fontSize: 12 }}>CNAME: proxy.b1.church</i></p>
       <Grid container spacing={3}>
         <Grid item md={6} xs={12}>
           <Table>
