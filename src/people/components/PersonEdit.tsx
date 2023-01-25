@@ -48,9 +48,6 @@ export function PersonEdit(props: Props) {
       case "contactInfo.homePhone": p.contactInfo.homePhone = value; break;
       case "contactInfo.workPhone": p.contactInfo.workPhone = value; break;
       case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = value; break;
-      case "contactInfo.homeExtention": p.contactInfo.homeExtention = value; break;
-      case "contactInfo.workExtention": p.contactInfo.workExtention = value; break;
-      case "contactInfo.mobileExtention": p.contactInfo.mobileExtention = value; break;
       case "membershipStatus": p.membershipStatus = value; break;
       case "gender": p.gender = value; break;
       case "maritalStatus": p.maritalStatus = value; break;
@@ -79,7 +76,8 @@ export function PersonEdit(props: Props) {
   }
 
   const validateEmail = (email: string) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email))
-  const validatePhone = (phone: string) => (/^((\\+[+1-9]{1,4}[ \\-]*)|(\\([+0-9]{2,3}\\)[ \\-]*)|([+0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/.test(phone))
+  // /^((\\+[+1-9]{1,4}[ \\-]*)|(\\([+0-9]{2,3}\\)[ \\-]*)|([+0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+  const validatePhone = (phone: string) => (/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phone))
 
   const validate = () => {
     const result = [];
@@ -97,9 +95,9 @@ export function PersonEdit(props: Props) {
     if (validate()) {
       setIsSubmitting(true)
       const p = JSON.parse(JSON.stringify({ ...person }));
-      extention.homeExtention && (p.contactInfo.homePhone = p.contactInfo.homePhone + "x" + extention.homeExtention);
-      extention.workExtention && (p.contactInfo.workPhone = p.contactInfo.workPhone + "x" + extention.workExtention);
-      extention.mobileExtention && (p.contactInfo.mobilePhone = p.contactInfo.mobilePhone + "x" + extention.mobileExtention);
+      extention.homeExtention && (p.contactInfo.homePhone = p.contactInfo.homePhone.replace(/[^+0-9-]/g, "") + "x" + extention.homeExtention);
+      extention.workExtention && (p.contactInfo.workPhone = p.contactInfo.workPhone.replace(/[^+0-9-]/g, "") + "x" + extention.workExtention);
+      extention.mobileExtention && (p.contactInfo.mobilePhone = p.contactInfo.mobilePhone.replace(/[^+0-9-]/g, "") + "x" + extention.mobileExtention);
       ["homePhone", "workPhone", "mobilePhone"].forEach(item => {
         p.contactInfo[item] = p.contactInfo[item].replaceAll("-", "")
       })
@@ -276,9 +274,9 @@ export function PersonEdit(props: Props) {
             </Grid>
             <Grid item md={3}>
               <div className="section">Phone</div>
-              <TextField fullWidth name="contactInfo.homePhone" id="homePhone" label="Home" value={person.contactInfo?.homePhone || ""} onChange={e => { e.target.value = formattedPhoneNumber(e.target.value); handleChange(e) }} InputProps={{ inputProps: { maxLength: 16 } }} />
-              <TextField fullWidth name="contactInfo.workPhone" id="workPhone" label="Work" value={person.contactInfo?.workPhone || ""} onChange={e => { e.target.value = formattedPhoneNumber(e.target.value); handleChange(e) }} InputProps={{ inputProps: { maxLength: 16 } }} />
-              <TextField fullWidth name="contactInfo.mobilePhone" id="mobilePhone" label="Mobile" value={person.contactInfo?.mobilePhone || ""} onChange={e => { e.target.value = formattedPhoneNumber(e.target.value); handleChange(e) }} InputProps={{ inputProps: { maxLength: 16 } }} />
+              <TextField fullWidth name="contactInfo.homePhone" id="homePhone" label="Home" value={person.contactInfo?.homePhone || ""} onChange={handleChange} InputProps={{ inputProps: { maxLength: 16 } }} />
+              <TextField fullWidth name="contactInfo.workPhone" id="workPhone" label="Work" value={person.contactInfo?.workPhone || ""} onChange={handleChange} InputProps={{ inputProps: { maxLength: 16 } }} />
+              <TextField fullWidth name="contactInfo.mobilePhone" id="mobilePhone" label="Mobile" value={person.contactInfo?.mobilePhone || ""} onChange={handleChange} InputProps={{ inputProps: { maxLength: 16 } }} />
             </Grid>
             <Grid item md={1}>
               <div className="section">Extention</div>
