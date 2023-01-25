@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { ChumsPersonHelper, PersonHelper, DateHelper, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading, ErrorMessages } from "."
+import { ChumsPersonHelper, PersonHelper, DateHelper, InputBox, ApiHelper, PersonInterface, UpdateHouseHold, Loading, ErrorMessages, PhoneExtentionInterface } from "."
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
 
-interface PhoneExtentionInterface { homeExtention: string, workExtention: string, mobileExtention: string }
 interface Props {
   id?: string,
   updatedFunction: () => void,
@@ -300,7 +299,6 @@ export function PersonEdit(props: Props) {
     )
   }
 }
-
 
 export function formattedPhoneNumber(value: string) {
   value = value.replace(/[^+0-9-]/g, "");
