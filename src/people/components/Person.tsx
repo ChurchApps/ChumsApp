@@ -1,16 +1,15 @@
 import React from "react";
-import { PersonView, PersonEdit, PersonInterface, UserHelper, Permissions, PhoneExtentionInterface } from "."
+import { PersonView, PersonEdit, PersonInterface, UserHelper, Permissions } from "."
 
 interface Props {
   id?: string
   person: PersonInterface,
   togglePhotoEditor: (show: boolean, inProgressEditPerson: PersonInterface) => void,
   updatedFunction: () => void,
-  showMergeSearch: () => void,
-  extention?: PhoneExtentionInterface,
+  showMergeSearch: () => void
 }
 
-export const Person: React.FC<Props> = ({ id, person, togglePhotoEditor, updatedFunction, showMergeSearch, extention }) => {
+export const Person: React.FC<Props> = ({ id, person, togglePhotoEditor, updatedFunction, showMergeSearch }) => {
   const [mode, setMode] = React.useState("display");
 
   const handleEdit = () => { setMode("edit"); }
@@ -18,5 +17,5 @@ export const Person: React.FC<Props> = ({ id, person, togglePhotoEditor, updated
   const getEditFunction = () => (UserHelper.checkAccess(Permissions.membershipApi.people.edit)) ? handleEdit : undefined
 
   if (mode === "display") return <PersonView id={id} person={person} editFunction={getEditFunction()} updatedFunction={updatedFunction} />
-  else return <PersonEdit id={id} person={person} updatedFunction={handleUpdated} togglePhotoEditor={togglePhotoEditor} showMergeSearch={showMergeSearch} extention={extention} />
+  else return <PersonEdit id={id} person={person} updatedFunction={handleUpdated} togglePhotoEditor={togglePhotoEditor} showMergeSearch={showMergeSearch} />
 }
