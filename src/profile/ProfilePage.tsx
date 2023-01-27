@@ -17,8 +17,10 @@ export const ProfilePage = () => {
     setLastName(lastName);
     setEmail(email);
 
-    const { optedOut } = UserHelper.person;
-    setOptedOut(optedOut);
+    if(UserHelper.person) {
+      const { optedOut } = UserHelper.person;
+      setOptedOut(optedOut);
+    }
   }
 
   const handleSave = () => {
