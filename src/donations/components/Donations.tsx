@@ -41,7 +41,7 @@ export const Donations: React.FC<Props> = (props) => {
       rows.push(<TableRow key="0">No donations have been tracked. Once donations are entered they will show up here.</TableRow>)
       return rows;
     }
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>Id</th><th>Name</th><th>Date</th><th>Amount</th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>Id</th><th>Name</th><th>Date</th><th>Fees</th><th>Amount</th></TableRow>);
     let canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
     for (let i = 0; i < donations.length; i++) {
       let d = donations[i];
@@ -50,6 +50,7 @@ export const Donations: React.FC<Props> = (props) => {
         <TableCell>{editLink}</TableCell>
         <TableCell>{d.person?.name.display || "Anonymous"}</TableCell>
         <TableCell>{DateHelper.formatHtml5Date(d.donationDate)}</TableCell>
+        <TableCell>{CurrencyHelper.formatCurrency(d.fees ?? 0)}</TableCell>
         <TableCell>{CurrencyHelper.formatCurrency(d.amount)}</TableCell>
       </TableRow>);
     }
