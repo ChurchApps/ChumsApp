@@ -12,6 +12,20 @@ interface Props {
   showMergeSearch: () => void
 }
 
+export function formattedPhoneNumber(value: string) {
+  value = value.replace(/[^+0-9-]/g, "");
+  value = value.replaceAll("-", "");
+  let length = value.length - 10;
+  if (value.length > 3 && value.length <= 6)
+    value = value.slice(0, 3) + "-" + value.slice(3);
+  else if (value.length > 6 && value.length < 11)
+    value = value.slice(0, 3) + "-" + value.slice(3, 6) + "-" + value.slice(6);
+  else if (value.length > 10)
+    value = value.slice(0, length) + "-" + value.slice(length, length + 3) + "-" + value.slice(length + 3, length + 6) + "-" + value.slice(length + 6);
+
+  return value;
+}
+
 export function PersonEdit(props: Props) {
   const context = React.useContext(UserContext);
   const [redirect, setRedirect] = useState("");
@@ -43,9 +57,9 @@ export function PersonEdit(props: Props) {
       case "contactInfo.city": p.contactInfo.city = value; break;
       case "contactInfo.state": p.contactInfo.state = value; break;
       case "contactInfo.zip": p.contactInfo.zip = value; break;
-      case "contactInfo.homePhone": p.contactInfo.homePhone = value; break;
-      case "contactInfo.workPhone": p.contactInfo.workPhone = value; break;
-      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = value; break;
+      case "contactInfo.homePhone": p.contactInfo.homePhone = (value + 'x' +  p.contactInfo.homePhone.split('x')[1]); break;
+      case "contactInfo.workPhone": p.contactInfo.workPhone = (value + 'x' +  p.contactInfo.workPhone.split('x')[1]); break;
+      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = (value + 'x' +  p.contactInfo.mobilePhone.split('x')[1]); break;
       case "membershipStatus": p.membershipStatus = value; break;
       case "gender": p.gender = value; break;
       case "maritalStatus": p.maritalStatus = value; break;
@@ -62,16 +76,17 @@ export function PersonEdit(props: Props) {
   }
 
   const validateEmail = (email: string) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email))
-  const validatePhone = (phone: string) => (/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/.test(phone))
+  // /^((\\+[+1-9]{1,4}[ \\-]*)|(\\([+0-9]{2,3}\\)[ \\-]*)|([+0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+  const validatePhone = (phone: string) => (/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phone))
 
   const validate = () => {
     const result = [];
     if (!person.name.first) result.push("First name is required");
     if (!person.name.last) result.push("Last name is required");
     if (person.contactInfo.email && !validateEmail(person.contactInfo.email)) result.push("Please enter a valid email address.");
-    if (person.contactInfo.homePhone && !validatePhone(person.contactInfo.homePhone)) result.push("Please enter a valid home phone.");
-    if (person.contactInfo.workPhone && !validatePhone(person.contactInfo.workPhone)) result.push("Please enter a valid work phone.");
-    if (person.contactInfo.mobilePhone && !validatePhone(person.contactInfo.mobilePhone)) result.push("Please enter a valid mobile phone.");
+    if (person.contactInfo.homePhone && !validatePhone(person.contactInfo.homePhone.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid home phone.");
+    if (person.contactInfo.workPhone && !validatePhone(person.contactInfo.workPhone.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid work phone.");
+    if (person.contactInfo.mobilePhone && !validatePhone(person.contactInfo.mobilePhone.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid mobile phone.");
     setErrors(result);
     return result.length === 0;
   }
@@ -79,7 +94,10 @@ export function PersonEdit(props: Props) {
   async function handleSave() {
     if (validate()) {
       setIsSubmitting(true)
-
+      const p = JSON.parse(JSON.stringify({ ...person }));
+      p.contactInfo.homePhone = (p.contactInfo.homePhone.replaceAll("-", "").replace(/[^+0-9-x]/g, ""));
+      p.contactInfo.workPhone = (p.contactInfo.workPhone.replaceAll("-", "").replace(/[^+0-9-x]/g, ""));
+      p.contactInfo.mobilePhone = (p.contactInfo.mobilePhone.replaceAll("-", "").replace(/[^+0-9-x]/g, ""));
       if (ChumsPersonHelper.getExpandedPersonObject(person).id === context.person?.id) context.setPerson(person);
 
       const { contactInfo: contactFromProps } = props.person
@@ -90,12 +108,22 @@ export function PersonEdit(props: Props) {
         return;
       }
 
-      await updatePerson(person);
+      await updatePerson(p);
     }
+  }
+  const handleChangeExtention = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const p = { ...person } as PersonInterface;
+    let value = e.target.value;
+    switch (e.target.name) {
+      case "contactInfo.homePhone": p.contactInfo.homePhone = p.contactInfo.homePhone.split('x')[0] + 'x' + value; break;
+      case "contactInfo.workPhone": p.contactInfo.workPhone = p.contactInfo.workPhone.split('x')[0] + 'x' + value; break;
+      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = p.contactInfo.mobilePhone.split('x')[0] + 'x' + value; break;
+    }
+    setPerson(p);
   }
 
   const updatePerson = async (p: PersonInterface) => {
-    await ApiHelper.post("/people/", [person], "MembershipApi");
+    await ApiHelper.post("/people/", [p], "MembershipApi");
     props.updatedFunction();
     setIsSubmitting(false)
   }
@@ -137,20 +165,17 @@ export function PersonEdit(props: Props) {
     props.togglePhotoEditor(true, person);
   }
 
-  function formattedPhoneNumber(value: string) {
-    value = value.replace(/[^0-9-]/g, "");
-    value = value.replaceAll("-", "");
-
-    if (value.length > 3 && value.length <= 6)
-      value = value.slice(0, 3) + "-" + value.slice(3);
-    else if (value.length > 6)
-      value = value.slice(0, 3) + "-" + value.slice(3, 6) + "-" + value.slice(6);
-
-    return value;
-  }
-
   React.useEffect(() => {
-    setPerson({ ...props.person, contactInfo: { ...props.person.contactInfo } });
+    const { homePhone, workPhone, mobilePhone } = props.person.contactInfo;
+    setPerson({
+      ...props.person, contactInfo:
+      {
+        ...props.person.contactInfo,
+        homePhone: formattedPhoneNumber(homePhone.split('x')[0]) + 'x' + homePhone.split('x')[1],
+        workPhone: formattedPhoneNumber(workPhone.split('x')[0]) + 'x' + workPhone.split('x')[1],
+        mobilePhone: formattedPhoneNumber(mobilePhone.split('x')[0]) + 'x' + mobilePhone.split('x')[1]
+      }
+    });
     return () => {
       setPerson(null);
     }
@@ -240,7 +265,7 @@ export function PersonEdit(props: Props) {
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item md={9}>
+            <Grid item md={8}>
               <div className="section">Address</div>
               <TextField name="contactInfo.address1" id="address1" fullWidth label="Line 1" value={person.contactInfo?.address1 || ""} onChange={handleChange} />
               <TextField name="contactInfo.address2" id="address2" fullWidth label="Line 2" value={person.contactInfo?.address2 || ""} onChange={handleChange} />
@@ -258,9 +283,15 @@ export function PersonEdit(props: Props) {
             </Grid>
             <Grid item md={3}>
               <div className="section">Phone</div>
-              <TextField fullWidth name="contactInfo.homePhone" id="homePhone" label="Home" value={person.contactInfo?.homePhone || ""} onChange={e => { e.target.value = formattedPhoneNumber(e.target.value); handleChange(e) }} InputProps={{ inputProps: { maxLength: 12 } }} />
-              <TextField fullWidth name="contactInfo.workPhone" id="workPhone" label="Work" value={person.contactInfo?.workPhone || ""} onChange={e => { e.target.value = formattedPhoneNumber(e.target.value); handleChange(e) }} InputProps={{ inputProps: { maxLength: 12 } }} />
-              <TextField fullWidth name="contactInfo.mobilePhone" id="mobilePhone" label="Mobile" value={person.contactInfo?.mobilePhone || ""} onChange={e => { e.target.value = formattedPhoneNumber(e.target.value); handleChange(e) }} InputProps={{ inputProps: { maxLength: 12 } }} />
+              <TextField fullWidth name="contactInfo.homePhone" id="homePhone" label="Home" value={person.contactInfo?.homePhone?.split('x')[0] || ""} onChange={handleChange} InputProps={{ inputProps: { maxLength: 15 } }} />
+              <TextField fullWidth name="contactInfo.workPhone" id="workPhone" label="Work" value={person.contactInfo?.workPhone?.split('x')[0] || ""} onChange={handleChange} InputProps={{ inputProps: { maxLength: 15 } }} />
+              <TextField fullWidth name="contactInfo.mobilePhone" id="mobilePhone" label="Mobile" value={person.contactInfo?.mobilePhone?.split('x')[0] || ""} onChange={handleChange} InputProps={{ inputProps: { maxLength: 15 } }} />
+            </Grid>
+            <Grid item md={1}>
+              <div className="section">Extention</div>
+              <TextField fullWidth name="contactInfo.homePhone" label="Home" value={person.contactInfo?.homePhone?.split('x')[1] || ""} onChange={handleChangeExtention} InputProps={{ inputProps: { maxLength: 4 } }} />
+              <TextField fullWidth name="contactInfo.workPhone" label="Work" value={person.contactInfo?.workPhone?.split('x')[1] || ""} onChange={handleChangeExtention} InputProps={{ inputProps: { maxLength: 4 } }} />
+              <TextField fullWidth name="contactInfo.mobilePhone" label="Mobile" value={person.contactInfo?.mobilePhone?.split('x')[1] || ""} onChange={handleChangeExtention} InputProps={{ inputProps: { maxLength: 4 } }} />
             </Grid>
           </Grid>
         </InputBox>
