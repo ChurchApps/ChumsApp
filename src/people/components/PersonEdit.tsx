@@ -57,9 +57,9 @@ export function PersonEdit(props: Props) {
       case "contactInfo.city": p.contactInfo.city = value; break;
       case "contactInfo.state": p.contactInfo.state = value; break;
       case "contactInfo.zip": p.contactInfo.zip = value; break;
-      case "contactInfo.homePhone": p.contactInfo.homePhone = (value + 'x' +  p.contactInfo.homePhone.split('x')[1]); break;
-      case "contactInfo.workPhone": p.contactInfo.workPhone = (value + 'x' +  p.contactInfo.workPhone.split('x')[1]); break;
-      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = (value + 'x' +  p.contactInfo.mobilePhone.split('x')[1]); break;
+      case "contactInfo.homePhone": p.contactInfo.homePhone = (value + 'x' + p.contactInfo.homePhone.split('x')[1]); break;
+      case "contactInfo.workPhone": p.contactInfo.workPhone = (value + 'x' + p.contactInfo.workPhone.split('x')[1]); break;
+      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = (value + 'x' + p.contactInfo.mobilePhone.split('x')[1]); break;
       case "membershipStatus": p.membershipStatus = value; break;
       case "gender": p.gender = value; break;
       case "maritalStatus": p.maritalStatus = value; break;
@@ -76,8 +76,7 @@ export function PersonEdit(props: Props) {
   }
 
   const validateEmail = (email: string) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email))
-  // /^((\\+[+1-9]{1,4}[ \\-]*)|(\\([+0-9]{2,3}\\)[ \\-]*)|([+0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-  const validatePhone = (phone: string) => (/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phone))
+  const validatePhone = (phone: string) => (/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phone)); //eslint-disable-line
 
   const validate = () => {
     const result = [];
