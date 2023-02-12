@@ -57,9 +57,9 @@ export function PersonEdit(props: Props) {
       case "contactInfo.city": p.contactInfo.city = value; break;
       case "contactInfo.state": p.contactInfo.state = value; break;
       case "contactInfo.zip": p.contactInfo.zip = value; break;
-      case "contactInfo.homePhone": p.contactInfo.homePhone = (value + 'x' + p.contactInfo.homePhone.split('x')[1]); break;
-      case "contactInfo.workPhone": p.contactInfo.workPhone = (value + 'x' + p.contactInfo.workPhone.split('x')[1]); break;
-      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = (value + 'x' + p.contactInfo.mobilePhone.split('x')[1]); break;
+      case "contactInfo.homePhone": p.contactInfo.homePhone = (value + 'x' + p.contactInfo.homePhone?.split('x')[1]); break;
+      case "contactInfo.workPhone": p.contactInfo.workPhone = (value + 'x' + p.contactInfo.workPhone?.split('x')[1]); break;
+      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = (value + 'x' + p.contactInfo.mobilePhone?.split('x')[1]); break;
       case "membershipStatus": p.membershipStatus = value; break;
       case "gender": p.gender = value; break;
       case "maritalStatus": p.maritalStatus = value; break;
@@ -83,9 +83,9 @@ export function PersonEdit(props: Props) {
     if (!person.name.first) result.push("First name is required");
     if (!person.name.last) result.push("Last name is required");
     if (person.contactInfo.email && !validateEmail(person.contactInfo.email)) result.push("Please enter a valid email address.");
-    if (person.contactInfo.homePhone && !validatePhone(person.contactInfo.homePhone.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid home phone.");
-    if (person.contactInfo.workPhone && !validatePhone(person.contactInfo.workPhone.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid work phone.");
-    if (person.contactInfo.mobilePhone && !validatePhone(person.contactInfo.mobilePhone.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid mobile phone.");
+    if (person.contactInfo.homePhone && !validatePhone(person.contactInfo.homePhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid home phone.");
+    if (person.contactInfo.workPhone && !validatePhone(person.contactInfo.workPhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid work phone.");
+    if (person.contactInfo.mobilePhone && !validatePhone(person.contactInfo.mobilePhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid mobile phone.");
     setErrors(result);
     return result.length === 0;
   }
@@ -114,9 +114,9 @@ export function PersonEdit(props: Props) {
     const p = { ...person } as PersonInterface;
     let value = e.target.value;
     switch (e.target.name) {
-      case "contactInfo.homePhone": p.contactInfo.homePhone = p.contactInfo.homePhone.split('x')[0] + 'x' + value; break;
-      case "contactInfo.workPhone": p.contactInfo.workPhone = p.contactInfo.workPhone.split('x')[0] + 'x' + value; break;
-      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = p.contactInfo.mobilePhone.split('x')[0] + 'x' + value; break;
+      case "contactInfo.homePhone": p.contactInfo.homePhone = p.contactInfo.homePhone?.split('x')[0] + 'x' + value; break;
+      case "contactInfo.workPhone": p.contactInfo.workPhone = p.contactInfo.workPhone?.split('x')[0] + 'x' + value; break;
+      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = p.contactInfo.mobilePhone?.split('x')[0] + 'x' + value; break;
     }
     setPerson(p);
   }
@@ -170,9 +170,9 @@ export function PersonEdit(props: Props) {
       ...props.person, contactInfo:
       {
         ...props.person.contactInfo,
-        homePhone: formattedPhoneNumber(homePhone.split('x')[0]) + 'x' + homePhone.split('x')[1],
-        workPhone: formattedPhoneNumber(workPhone.split('x')[0]) + 'x' + workPhone.split('x')[1],
-        mobilePhone: formattedPhoneNumber(mobilePhone.split('x')[0]) + 'x' + mobilePhone.split('x')[1]
+        homePhone: formattedPhoneNumber(homePhone?.split('x')[0]) + 'x' + homePhone?.split('x')[1],
+        workPhone: formattedPhoneNumber(workPhone?.split('x')[0]) + 'x' + workPhone?.split('x')[1],
+        mobilePhone: formattedPhoneNumber(mobilePhone?.split('x')[0]) + 'x' + mobilePhone?.split('x')[1]
       }
     });
     return () => {
