@@ -13,6 +13,7 @@ interface Props {
 }
 
 export function formattedPhoneNumber(value: string) {
+  if (!value) return "";
   value = value.replace(/[^+0-9-]/g, "");
   value = value.replaceAll("-", "");
   let length = value.length - 10;

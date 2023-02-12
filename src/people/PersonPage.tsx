@@ -10,7 +10,20 @@ export const PersonPage = () => {
   const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
   const [showMergeSearch, setShowMergeSearch] = React.useState<boolean>(false);
 
-  const loadData = () => { ApiHelper.get("/people/" + params.id, "MembershipApi").then(data => setPerson(data)); }
+  const loadData = () => {
+    ApiHelper.get("/people/" + params.id, "MembershipApi").then(data => {
+      const p: PersonInterface = data;
+      if (!p.contactInfo) p.contactInfo = { homePhone: "", workPhone: "", mobilePhone: "" }
+      else {
+        if (!p.contactInfo.homePhone) p.contactInfo.homePhone = "";
+        if (!p.contactInfo.mobilePhone) p.contactInfo.mobilePhone = "";
+        if (!p.contactInfo.workPhone) p.contactInfo.workPhone = "";
+
+      }
+      setPerson(data)
+    }
+    );
+  }
 
   const handlePhotoUpdated = (dataUrl: string) => {
     const updatedPerson = { ...person };
