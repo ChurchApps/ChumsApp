@@ -84,9 +84,9 @@ export function PersonEdit(props: Props) {
     if (!person.name.first) result.push("First name is required");
     if (!person.name.last) result.push("Last name is required");
     if (person.contactInfo.email && !validateEmail(person.contactInfo.email)) result.push("Please enter a valid email address.");
-    if (person.contactInfo.homePhone && !validatePhone(person.contactInfo.homePhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid home phone.");
-    if (person.contactInfo.workPhone && !validatePhone(person.contactInfo.workPhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid work phone.");
-    if (person.contactInfo.mobilePhone && !validatePhone(person.contactInfo.mobilePhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid mobile phone.");
+    if (person.contactInfo.homePhone?.split('x')[0] && !validatePhone(person.contactInfo.homePhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid home phone.");
+    if (person.contactInfo.workPhone?.split('x')[0] && !validatePhone(person.contactInfo.workPhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid work phone.");
+    if (person.contactInfo.mobilePhone?.split('x')[0] && !validatePhone(person.contactInfo.mobilePhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid mobile phone.");
     setErrors(result);
     return result.length === 0;
   }
@@ -95,9 +95,9 @@ export function PersonEdit(props: Props) {
     if (validate()) {
       setIsSubmitting(true)
       const p = JSON.parse(JSON.stringify({ ...person }));
-      p.contactInfo.homePhone = (p.contactInfo.homePhone.replaceAll("-", "").replace(/[^+0-9-x]/g, ""));
-      p.contactInfo.workPhone = (p.contactInfo.workPhone.replaceAll("-", "").replace(/[^+0-9-x]/g, ""));
-      p.contactInfo.mobilePhone = (p.contactInfo.mobilePhone.replaceAll("-", "").replace(/[^+0-9-x]/g, ""));
+      p.contactInfo.homePhone = p.contactInfo.homePhone?.split('x')[0] ? (p.contactInfo.homePhone.replaceAll("-", "").replace(/[^+0-9-x]/g, "")) : null;
+      p.contactInfo.workPhone = p.contactInfo.workPhone?.split('x')[0] ? (p.contactInfo.workPhone.replaceAll("-", "").replace(/[^+0-9-x]/g, "")) : null;
+      p.contactInfo.mobilePhone = p.contactInfo.mobilePhone?.split('x')[0] ? (p.contactInfo.mobilePhone.replaceAll("-", "").replace(/[^+0-9-x]/g, "")) : null;
       if (ChumsPersonHelper.getExpandedPersonObject(person).id === context.person?.id) context.setPerson(person);
 
       const { contactInfo: contactFromProps } = props.person
@@ -171,9 +171,9 @@ export function PersonEdit(props: Props) {
       ...props.person, contactInfo:
       {
         ...props.person.contactInfo,
-        homePhone: formattedPhoneNumber(homePhone?.split('x')[0]) + 'x' + homePhone?.split('x')[1],
-        workPhone: formattedPhoneNumber(workPhone?.split('x')[0]) + 'x' + workPhone?.split('x')[1],
-        mobilePhone: formattedPhoneNumber(mobilePhone?.split('x')[0]) + 'x' + mobilePhone?.split('x')[1]
+        homePhone: formattedPhoneNumber(homePhone?.split('x')[0]) + 'x' + (homePhone?.split('x')[1] ?? ''),
+        workPhone: formattedPhoneNumber(workPhone?.split('x')[0]) + 'x' + (workPhone?.split('x')[1] ?? ''),
+        mobilePhone: formattedPhoneNumber(mobilePhone?.split('x')[0]) + 'x' + (mobilePhone?.split('x')[1] ?? '')
       }
     });
     return () => {
