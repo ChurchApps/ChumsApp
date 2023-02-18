@@ -8,9 +8,11 @@ export const ManageChurch = () => {
   const [redirectUrl, setRedirectUrl] = useState<string>("");
   const [selectedRoleId, setSelectedRoleId] = useState<string>("notset");
 
+  const jwt = ApiHelper.getConfig("MembershipApi").jwt;
+  const churchId = UserHelper.currentUserChurch.church.id;
+
   const loadData = () => {
     //const churchId = params.id;
-    const churchId = UserHelper.currentUserChurch.church.id;
     if (!UserHelper.checkAccess(Permissions.membershipApi.settings.edit)) setRedirectUrl("/");
     ApiHelper.get("/churches/" + churchId + "?include=permissions", "MembershipApi").then(data => setChurch(data));
   }
@@ -23,7 +25,9 @@ export const ManageChurch = () => {
     modules.push(<DisplayBox headerIcon="link" headerText="Tools" editContent={false}>
       <table className="table">
         <tbody>
-          <tr><td><a href={"https://transfer.chums.org/"} target="_blank" rel="noreferrer noopener" style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>Import/Export</a></td></tr>
+          <tr><td>
+            <a href={`https://transfer.chums.org/login?jwt=${jwt}&churchId=${churchId}`} target="_blank" rel="noreferrer noopener" style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>Import/Export</a>
+          </td></tr>
         </tbody>
       </table>
     </DisplayBox>);
