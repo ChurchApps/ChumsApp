@@ -1,5 +1,6 @@
-import { Grid, Icon, TextField, Checkbox } from "@mui/material";
+import { Grid, Icon, TextField, Checkbox, Typography, Button } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { InputBox, ApiHelper, ErrorMessages, UserHelper, PersonHelper } from "./components"
 
 export const ProfilePage = () => {
@@ -10,6 +11,7 @@ export const ProfilePage = () => {
   const [email, setEmail] = useState<string>("");
   const [optedOut, setOptedOut] = useState<boolean>(false);
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   const initData = () => {
     const { email, firstName, lastName } = UserHelper.user;
@@ -85,6 +87,14 @@ export const ProfilePage = () => {
     return errors.length === 0;
   }
 
+  const handleAccountDelete = () => {
+    if (window.confirm("Are you sure you wish to permanently delete your account?")) {
+      ApiHelper.delete("/users/" + UserHelper.user.id.toString(), "MembershipApi").then(() => {
+        navigate("/logout", { replace: true })
+      })
+    }
+  }
+
   React.useEffect(initData, []);
 
   return (
@@ -105,6 +115,10 @@ export const ProfilePage = () => {
             <label htmlFor="optedOut">Directory opt-out</label>
           </Grid>
         </Grid>
+      </InputBox>
+      <InputBox headerText="Account Deletion" saveFunction={null}>
+        <Typography color="GrayText">Careful, these actions are permanent</Typography>
+        <Button variant="outlined" color="error" sx={{ marginTop: 4 }} onClick={handleAccountDelete}>Delete my account</Button>
       </InputBox>
     </>
   );
