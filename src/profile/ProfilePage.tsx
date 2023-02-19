@@ -89,7 +89,7 @@ export const ProfilePage = () => {
 
   const handleAccountDelete = () => {
     if (window.confirm("Are you sure you wish to permanently delete your account?")) {
-      ApiHelper.delete("/users/" + UserHelper.user.id.toString(), "MembershipApi").then(() => {
+      ApiHelper.delete("/users", "MembershipApi").then(() => {
         navigate("/logout", { replace: true })
       })
     }
