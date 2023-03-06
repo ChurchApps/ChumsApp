@@ -16,6 +16,7 @@ export const NewTask = (props: Props) => {
     createdByType: "person",
     createdById: UserHelper.person?.id,
     createdByLabel: UserHelper.person?.name?.display,
+    dateCreated: new Date(),
     associatedWithType: "person",
     associatedWithId: UserHelper.person?.id,
     associatedWithLabel: UserHelper.person?.name?.display
