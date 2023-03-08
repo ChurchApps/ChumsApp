@@ -60,8 +60,10 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
       <Table><TableBody>{getRows()}</TableBody></Table>
       <FormControl fullWidth>
         <InputLabel>Add Service Time</InputLabel>
-        <Select fullWidth label="Add Service Time" aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange} endAdornment={
+        <Select fullWidth label="Add Service Time" aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange} endAdornment={<>
+          <Icon>arrow_drop_down</Icon>
           <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> Add</Button>
+        </>
         }>
           {getOptions()}
         </Select>
