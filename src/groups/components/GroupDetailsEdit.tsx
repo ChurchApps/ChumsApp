@@ -1,39 +1,84 @@
 import React from "react";
-import { ApiHelper, GroupInterface, InputBox, ErrorMessages, ServiceTimesEdit } from ".";
+import {
+  ApiHelper,
+  GroupInterface,
+  InputBox,
+  ErrorMessages,
+  ServiceTimesEdit,
+} from ".";
 import { Navigate } from "react-router-dom";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
+import {
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+} from "@mui/material";
 import useMountedState from "../../appBase/hooks/useMountedState";
 import { GalleryModal } from "../../appBase/components/gallery/GalleryModal";
+import MDEditor from "@uiw/react-md-editor";
 
-interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }
+interface Props {
+  group: GroupInterface;
+  updatedFunction: (group: GroupInterface) => void;
+}
 
 export const GroupDetailsEdit: React.FC<Props> = (props) => {
-  const [group, setGroup] = React.useState<GroupInterface>({} as GroupInterface);
+  const [group, setGroup] = React.useState<GroupInterface>(
+    {} as GroupInterface
+  );
   const [errors, setErrors] = React.useState([]);
   const [redirect, setRedirect] = React.useState("");
   const [selectPhotoField, setSelectPhotoField] = React.useState<string>(null);
   const isMounted = useMountedState();
 
   const handleCancel = () => props.updatedFunction(group);
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<any>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSave();
+    }
+  };
+  const handleChange = (
+    e:
+      | React.ChangeEvent<
+          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >
+      | SelectChangeEvent<string>
+  ) => {
     e.preventDefault();
     let g = { ...group };
     switch (e.target.name) {
-      case "categoryName": g.categoryName = e.target.value; break;
-      case "name": g.name = e.target.value; break;
-      case "about": g.about = e.target.value; break;
-      case "trackAttendance": g.trackAttendance = (e.target.value === "true"); break;
-      case "parentPickup": g.parentPickup = (e.target.value === "true"); break;
+      case "categoryName":
+        g.categoryName = e.target.value;
+        break;
+      case "name":
+        g.name = e.target.value;
+        break;
+      case "trackAttendance":
+        g.trackAttendance = e.target.value === "true";
+        break;
+      case "parentPickup":
+        g.parentPickup = e.target.value === "true";
+        break;
     }
     setGroup(g);
-  }
+  };
 
   const handlePhotoSelected = (image: string) => {
     let g = { ...group };
     g.photoUrl = image;
     setGroup(g);
     setSelectPhotoField(null);
+  };
+
+  const handleAbout = (value: string) => {
+    let g = { ...group };
+    g.about = value;
+    setGroup(g)
   }
 
   const validate = () => {
@@ -42,76 +87,146 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     if (group.name === "") errors.push("Please enter a group name.");
     setErrors(errors);
     return errors.length === 0;
-  }
+  };
 
   const handleSave = () => {
     if (validate()) {
-      ApiHelper.post("/groups", [group], "MembershipApi").then(data => {
+      ApiHelper.post("/groups", [group], "MembershipApi").then((data) => {
         setGroup(data);
         props.updatedFunction(data);
       });
     }
-  }
+  };
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to permanently delete this group?")) {
-      ApiHelper.delete("/groups/" + group.id.toString(), "MembershipApi").then(() => setRedirect("/groups"));
+    if (
+      window.confirm("Are you sure you wish to permanently delete this group?")
+    ) {
+      ApiHelper.delete("/groups/" + group.id.toString(), "MembershipApi").then(
+        () => setRedirect("/groups")
+      );
     }
-  }
+  };
 
   React.useEffect(() => {
     if (isMounted()) {
-      setGroup(props.group)
+      setGroup(props.group);
     }
   }, [props.group, isMounted]);
 
-  if (redirect !== "") return <Navigate to={redirect} />
-  else return (
-    <>
-      <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
-        <ErrorMessages errors={errors} />
-        <Grid container spacing={3}>
-          <Grid item md={6} xs={12}>
-            <TextField fullWidth type="text" name="categoryName" label="Category Name" value={group.categoryName || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+  if (redirect !== "") return <Navigate to={redirect} />;
+  else
+    return (
+      <>
+        <InputBox
+          id="groupDetailsBox"
+          headerText="Group Details"
+          headerIcon="group"
+          saveFunction={handleSave}
+          cancelFunction={handleCancel}
+          deleteFunction={handleDelete}
+        >
+          <ErrorMessages errors={errors} />
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                type="text"
+                name="categoryName"
+                label="Category Name"
+                value={group.categoryName || ""}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Group Name"
+                type="text"
+                name="name"
+                value={group.name || ""}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+              />
+            </Grid>
           </Grid>
-          <Grid item md={6} xs={12}>
-            <TextField fullWidth label="Group Name" type="text" name="name" value={group.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>Track Attendance</InputLabel>
+                <Select
+                  label="Track Attendance"
+                  id="trackAttendance"
+                  name="trackAttendance"
+                  data-cy="select-attendance-type"
+                  value={group.trackAttendance?.toString() || "false"}
+                  onChange={handleChange}
+                  onKeyDown={handleKeyDown}
+                >
+                  <MenuItem value="false">No</MenuItem>
+                  <MenuItem value="true">Yes</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>Parent Pickup</InputLabel>
+                <Select
+                  label="Parent Pickup"
+                  name="parentPickup"
+                  value={group.parentPickup?.toString() || "false"}
+                  onChange={handleChange}
+                  onKeyDown={handleKeyDown}
+                >
+                  <MenuItem value="false">No</MenuItem>
+                  <MenuItem value="true">Yes</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item md={6} xs={12}>
-            <FormControl fullWidth>
-              <InputLabel>Track Attendance</InputLabel>
-              <Select label="Track Attendance" id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                <MenuItem value="false">No</MenuItem>
-                <MenuItem value="true">Yes</MenuItem>
-              </Select>
-            </FormControl>
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
+              <FormControl data-color-mode="light" fullWidth>
+                <MDEditor
+                  preview="edit"
+                  height={125}
+                  style={{ marginBottom: 16, marginLeft: "0.08rem" }}
+                  value={group.about}
+                  placeholder={"About Text"}
+                  onChange={handleAbout}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              {group.photoUrl && (
+                <>
+                  <img
+                    src={group.photoUrl}
+                    style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }}
+                    alt="group"
+                  />
+                  <br />
+                </>
+              )}
+              {!group.photoUrl && <InputLabel>Group Photo</InputLabel>}
+              <Button
+                variant="contained"
+                onClick={() => setSelectPhotoField("photoUrl")}
+              >
+                Select photo
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item md={6} xs={12}>
-            <FormControl fullWidth>
-              <InputLabel>Parent Pickup</InputLabel>
-              <Select label="Parent Pickup" name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                <MenuItem value="false">No</MenuItem>
-                <MenuItem value="true">Yes</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item md={6} xs={12}>
-            <TextField fullWidth multiline label="About Text" type="text" name="about" value={group.about || ""} onChange={handleChange} />
-          </Grid>
-          <Grid item md={6} xs={12}>
-            {group.photoUrl && <><img src={group.photoUrl} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="group" /><br /></>}
-            {!group.photoUrl && (<InputLabel>Group Photo</InputLabel>)}
-            <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>Select photo</Button>
-          </Grid>
-
-        </Grid>
-        <ServiceTimesEdit group={group} />
-      </InputBox>
-      {selectPhotoField && <GalleryModal onClose={() => setSelectPhotoField(null)} onSelect={handlePhotoSelected} aspectRatio={4} />}
-    </>
-  );
-}
+          <ServiceTimesEdit group={group} />
+        </InputBox>
+        {selectPhotoField && (
+          <GalleryModal
+            onClose={() => setSelectPhotoField(null)}
+            onSelect={handlePhotoSelected}
+            aspectRatio={4}
+          />
+        )}
+      </>
+    );
+};
