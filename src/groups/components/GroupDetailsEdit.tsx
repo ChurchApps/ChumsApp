@@ -1,25 +1,10 @@
 import React from "react";
-import {
-  ApiHelper,
-  GroupInterface,
-  InputBox,
-  ErrorMessages,
-  ServiceTimesEdit,
-} from ".";
+import { ApiHelper, GroupInterface, InputBox, ErrorMessages, ServiceTimesEdit } from ".";
 import { Navigate } from "react-router-dom";
-import {
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField,
-} from "@mui/material";
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import useMountedState from "../../appBase/hooks/useMountedState";
 import { GalleryModal } from "../../appBase/components/gallery/GalleryModal";
-import MDEditor from "@uiw/react-md-editor";
+import { MarkdownEditor } from "../../appBase/components";
 
 interface Props {
   group: GroupInterface;
@@ -27,9 +12,7 @@ interface Props {
 }
 
 export const GroupDetailsEdit: React.FC<Props> = (props) => {
-  const [group, setGroup] = React.useState<GroupInterface>(
-    {} as GroupInterface
-  );
+  const [group, setGroup] = React.useState<GroupInterface>({} as GroupInterface);
   const [errors, setErrors] = React.useState([]);
   const [redirect, setRedirect] = React.useState("");
   const [selectPhotoField, setSelectPhotoField] = React.useState<string>(null);
@@ -75,11 +58,11 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     setSelectPhotoField(null);
   };
 
-  const handleAbout = (value: string) => {
+  const handleMarkdownChange = (newValue: string) => {
     let g = { ...group };
-    g.about = value;
+    g.about = newValue;
     setGroup(g)
-  }
+  };
 
   const validate = () => {
     let errors = [];
@@ -187,16 +170,12 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
           </Grid>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
-              <FormControl data-color-mode="light" fullWidth>
-                <MDEditor
-                  preview="edit"
-                  height={125}
-                  style={{ marginBottom: 16, marginLeft: "0.08rem" }}
-                  value={group.about}
-                  placeholder={"About Text"}
-                  onChange={handleAbout}
-                />
-              </FormControl>
+              <MarkdownEditor
+                value={group.about || ""}
+                onChange={(val) => handleMarkdownChange(val)}
+                style={{ maxHeight: 200, overflowY: "scroll" }}
+                placeholder="Group Description"
+              />
             </Grid>
             <Grid item md={6} xs={12}>
               {group.photoUrl && (
@@ -220,6 +199,11 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
           </Grid>
           <ServiceTimesEdit group={group} />
         </InputBox>
+        <MarkdownEditor
+          value={group.about || ""}
+          onChange={(val) => handleMarkdownChange(val)}
+          style={{ maxHeight: 200, overflowY: "scroll" }}
+        />
         {selectPhotoField && (
           <GalleryModal
             onClose={() => setSelectPhotoField(null)}

@@ -4,6 +4,7 @@ import { ControlPanel } from "./ControlPanel";
 import { UserProvider } from "./UserContext";
 import { CookiesProvider } from "react-cookie";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import "./appBase/components/markdownEditor/editor.css";
 
 const mdTheme = createTheme({
   palette: {
