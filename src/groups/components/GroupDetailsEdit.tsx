@@ -25,28 +25,14 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
       handleSave();
     }
   };
-  const handleChange = (
-    e:
-      | React.ChangeEvent<
-          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-        >
-      | SelectChangeEvent<string>
-  ) => {
+  const handleChange = (e: | React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>| SelectChangeEvent<string>) => {
     e.preventDefault();
     let g = { ...group };
     switch (e.target.name) {
-      case "categoryName":
-        g.categoryName = e.target.value;
-        break;
-      case "name":
-        g.name = e.target.value;
-        break;
-      case "trackAttendance":
-        g.trackAttendance = e.target.value === "true";
-        break;
-      case "parentPickup":
-        g.parentPickup = e.target.value === "true";
-        break;
+      case "categoryName": g.categoryName = e.target.value; break;
+      case "name": g.name = e.target.value; break;
+      case "trackAttendance": g.trackAttendance = e.target.value === "true"; break;
+      case "parentPickup": g.parentPickup = e.target.value === "true"; break;
     }
     setGroup(g);
   };
@@ -59,9 +45,11 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   };
 
   const handleMarkdownChange = (newValue: string) => {
-    let g = { ...group };
-    g.about = newValue;
-    setGroup(g)
+    if (group.id) {
+      let g = { ...group };
+      g.about = newValue;
+      setGroup(g)
+    }
   };
 
   const validate = () => {
@@ -82,71 +70,34 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   };
 
   const handleDelete = () => {
-    if (
-      window.confirm("Are you sure you wish to permanently delete this group?")
-    ) {
-      ApiHelper.delete("/groups/" + group.id.toString(), "MembershipApi").then(
-        () => setRedirect("/groups")
-      );
+    if (window.confirm("Are you sure you wish to permanently delete this group?")) {
+      ApiHelper.delete("/groups/" + group.id.toString(), "MembershipApi").then(() => setRedirect("/groups"));
     }
   };
 
   React.useEffect(() => {
-    if (isMounted()) {
-      setGroup(props.group);
-    }
+    if (isMounted()) { setGroup(props.group); }
   }, [props.group, isMounted]);
 
   if (redirect !== "") return <Navigate to={redirect} />;
   else
     return (
       <>
-        <InputBox
-          id="groupDetailsBox"
-          headerText="Group Details"
-          headerIcon="group"
-          saveFunction={handleSave}
-          cancelFunction={handleCancel}
-          deleteFunction={handleDelete}
-        >
+        <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                type="text"
-                name="categoryName"
-                label="Category Name"
-                value={group.categoryName || ""}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-              />
+              <TextField fullWidth type="text" name="categoryName" label="Category Name" value={group.categoryName || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
             <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Group Name"
-                type="text"
-                name="name"
-                value={group.name || ""}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-              />
+              <TextField fullWidth label="Group Name" type="text" name="name" value={group.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
           </Grid>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Track Attendance</InputLabel>
-                <Select
-                  label="Track Attendance"
-                  id="trackAttendance"
-                  name="trackAttendance"
-                  data-cy="select-attendance-type"
-                  value={group.trackAttendance?.toString() || "false"}
-                  onChange={handleChange}
-                  onKeyDown={handleKeyDown}
-                >
+                <Select label="Track Attendance" id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
                   <MenuItem value="false">No</MenuItem>
                   <MenuItem value="true">Yes</MenuItem>
                 </Select>
@@ -155,13 +106,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
             <Grid item md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Parent Pickup</InputLabel>
-                <Select
-                  label="Parent Pickup"
-                  name="parentPickup"
-                  value={group.parentPickup?.toString() || "false"}
-                  onChange={handleChange}
-                  onKeyDown={handleKeyDown}
-                >
+                <Select label="Parent Pickup" name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
                   <MenuItem value="false">No</MenuItem>
                   <MenuItem value="true">Yes</MenuItem>
                 </Select>
@@ -170,31 +115,15 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
           </Grid>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
-              <MarkdownEditor
-                value={group.about || ""}
-                onChange={(val) => handleMarkdownChange(val)}
-                style={{ maxHeight: 200, overflowY: "scroll" }}
-                placeholder="Group Description"
-              />
+              <MarkdownEditor value={group.about || ""} onChange={(val) => handleMarkdownChange(val)} style={{ maxHeight: 200, overflowY: "scroll" }} placeholder="Group Description" />
             </Grid>
             <Grid item md={6} xs={12}>
-              {group.photoUrl && (
-                <>
-                  <img
-                    src={group.photoUrl}
-                    style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }}
-                    alt="group"
-                  />
-                  <br />
-                </>
-              )}
+              {group.photoUrl && (<>
+                <img src={group.photoUrl} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="group" />
+                <br />
+              </>)}
               {!group.photoUrl && <InputLabel>Group Photo</InputLabel>}
-              <Button
-                variant="contained"
-                onClick={() => setSelectPhotoField("photoUrl")}
-              >
-                Select photo
-              </Button>
+              <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>Select photo</Button>
             </Grid>
           </Grid>
           <ServiceTimesEdit group={group} />
