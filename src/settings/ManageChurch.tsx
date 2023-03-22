@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ChurchInterface, ApiHelper, UserHelper, ChurchSettings, Permissions, Appearance, Roles, RoleEdit, DisplayBox } from "./components"
+import { ChurchInterface, ApiHelper, UserHelper, ChurchSettings, Permissions, Roles, RoleEdit, DisplayBox } from "./components"
 import { Navigate } from "react-router-dom";
-import { Grid, Box, Icon } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
 
 export const ManageChurch = () => {
   const [church, setChurch] = useState<ChurchInterface>(null);
@@ -18,7 +18,7 @@ export const ManageChurch = () => {
   }
 
   const getSidebar = () => {
-    let modules: JSX.Element[] = [<Box key="appearence" sx={{ marginBottom: 2 }}><Appearance /></Box>];
+    let modules: JSX.Element[] = [];
     if (selectedRoleId !== "notset") {
       modules.splice(1, 0, <RoleEdit key="roleEdit" roleId={selectedRoleId} updatedFunction={() => { setSelectedRoleId("notset") }} />);
     }
