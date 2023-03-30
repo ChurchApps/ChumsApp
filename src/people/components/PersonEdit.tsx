@@ -220,7 +220,6 @@ export function PersonEdit(props: Props) {
               </Grid>
             </Grid>
           </Grid>
-
           <Grid container spacing={3}>
             <Grid item md={4} xs={12}>
               <TextField fullWidth name="name.nick" id="nick" label="Nickname" value={person.name.nick || ""} onChange={handleChange} />
