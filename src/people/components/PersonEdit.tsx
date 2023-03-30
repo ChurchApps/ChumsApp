@@ -215,7 +215,7 @@ export function PersonEdit(props: Props) {
                   <TextField fullWidth name="contactInfo.email" label="Email" type="email" id="email" value={person.contactInfo.email || ""} onChange={handleChange} />
                 </Grid>
                 <Grid item md={6} xs={12}>
-                  <TextField fullWidth name="nametagNotes" label="Name Tag Notes" id="nametagnotes" value={person.nametagNotes || ""} onChange={handleChange} />
+                  <TextField inputProps={{ maxLength: 20 }} fullWidth name="nametagNotes" label="Name Tag Notes" id="nametagnotes" value={person.nametagNotes || ""} onChange={handleChange} />
                 </Grid>
               </Grid>
             </Grid>
