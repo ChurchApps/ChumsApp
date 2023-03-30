@@ -29,6 +29,7 @@
     "jszip": "^3.7.1",
     "jwt-decode": "^3.1.2",
     "lexical": "^0.7.5",
+    "material-symbols": "^0.5.3",
     "original-fs": "^1.1.0",
     "papaparse": "^5.3.1",
     "react": "^18.2.0",
