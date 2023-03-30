@@ -39,7 +39,7 @@ export function PersonEdit(props: Props) {
   const [person, setPerson] = React.useState<PersonInterface>({
     name: { first: "", last: "", middle: "", nick: "", display: "" },
     contactInfo: { address1: "", address2: "", city: "", state: "", zip: "", email: "", homePhone: "", workPhone: "", mobilePhone: "" },
-    membershipStatus: "", gender: "", birthDate: null, maritalStatus: ""
+    membershipStatus: "", gender: "", birthDate: null, maritalStatus: "", nametagNotes: ""
   });
 
   //const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
@@ -64,6 +64,7 @@ export function PersonEdit(props: Props) {
       case "membershipStatus": p.membershipStatus = value; break;
       case "gender": p.gender = value; break;
       case "maritalStatus": p.maritalStatus = value; break;
+      case "nametagNotes": p.nametagNotes = value; break;
       case "anniversary": p.anniversary = DateHelper.convertToDate(value); break;
       case "birthDate": p.birthDate = DateHelper.convertToDate(value); break;
       case "photo": p.photo = value; break;
@@ -199,24 +200,26 @@ export function PersonEdit(props: Props) {
             </Grid>
             <Grid item sm={8}>
               <Grid container spacing={3}>
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
                   <TextField fullWidth name="name.first" label="First Name" id="first" value={person.name.first || ""} onChange={handleChange} />
                 </Grid>
-                <Grid item md={6} xs={12}>
+                <Grid item md={4} xs={12}>
+                  <TextField fullWidth name="name.middle" label="Middle Name" id="middle" value={person.name.middle || ""} onChange={handleChange} />
+                </Grid>
+                <Grid item md={4} xs={12}>
                   <TextField fullWidth name="name.last" label="Last Name" id="last" value={person.name.last || ""} onChange={handleChange} />
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={12}>
-                  <TextField fullWidth name="name.middle" label="Middle Name" id="middle" value={person.name.middle || ""} onChange={handleChange} />
+                  <TextField fullWidth name="contactInfo.email" label="Email" type="email" id="email" value={person.contactInfo.email || ""} onChange={handleChange} />
                 </Grid>
                 <Grid item md={6} xs={12}>
-                  <TextField fullWidth name="contactInfo.email" label="Email" type="email" id="email" value={person.contactInfo.email || ""} onChange={handleChange} />
+                  <TextField inputProps={{ maxLength: 20 }} fullWidth name="nametagNotes" label="Name Tag Notes" id="nametagnotes" value={person.nametagNotes || ""} onChange={handleChange} />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
-
           <Grid container spacing={3}>
             <Grid item md={4} xs={12}>
               <TextField fullWidth name="name.nick" id="nick" label="Nickname" value={person.name.nick || ""} onChange={handleChange} />

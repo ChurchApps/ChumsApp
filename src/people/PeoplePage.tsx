@@ -30,7 +30,8 @@ export const PeoplePage = () => {
     { key: "gender", label: "Gender", shortName: "Gender" },
     { key: "membershipStatus", label: "Membership Status", shortName: "Membership" },
     { key: "maritalStatus", label: "Marital Status", shortName: "Married" },
-    { key: "anniversary", label: "Anniversary", shortName: "Anniversary" }
+    { key: "anniversary", label: "Anniversary", shortName: "Anniversary" },
+    { key: "nametagNotes", label: "Name Tag Notes", shortName: "Notes" }
   ];
 
   const loadData = () => {
