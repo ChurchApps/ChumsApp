@@ -7,16 +7,13 @@ import { Login } from "./Login";
 
 import { Authenticated } from "./Authenticated";
 import { Logout } from "./Logout";
-import ReactGA from "react-ga4";
-import { EnvironmentHelper } from "./helpers";
+import { AnalyticsHelper } from "./appBase/helpers";
 
 export const ControlPanel = () => {
-  const location = useLocation();
-  if (EnvironmentHelper.GoogleAnalyticsTag !== "") {
-    ReactGA.initialize([{trackingId: EnvironmentHelper.GoogleAnalyticsTag}]);
-    ReactGA.send({ hitType: "pageview", page: window.location.pathname + window.location.search });
-  }
-  React.useEffect(() => { if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.send({ hitType: "pageview", page: window.location.pathname + window.location.search }); }, [location]);
+
+  const location = (typeof(window) === "undefined") ? null : window.location;
+  AnalyticsHelper.init();
+  React.useEffect(() => { AnalyticsHelper.logPageView() }, [location]);
 
   let user = React.useContext(UserContext).user; //to force rerender on login
   if (user === null) console.log("Church is null");
