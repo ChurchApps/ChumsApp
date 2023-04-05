@@ -6,7 +6,7 @@ import UserContext from "./UserContext";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { ChurchInterface, UserHelper, UserInterface } from "./helpers";
 import { Permissions } from "./appBase/interfaces";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import { EnvironmentHelper } from "./helpers";
 import { Box } from "@mui/material";
 

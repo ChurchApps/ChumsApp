@@ -39,7 +39,7 @@ export class EnvironmentHelper {
 
   //NOTE: None of these values are secret.
   static initProd = () => {
-    EnvironmentHelper.GoogleAnalyticsTag = "UA-164774603-4";
+    EnvironmentHelper.GoogleAnalyticsTag = "G-JB7VCG51LF";
   }
 
 }
