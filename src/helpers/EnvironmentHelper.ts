@@ -4,7 +4,6 @@ import { CommonEnvironmentHelper } from "../appBase/helpers/CommonEnvironmentHel
 export class EnvironmentHelper {
   static B1Url = "";
   static ChurchAppsUrl = "";
-  static GoogleAnalyticsTag = "";
   static Common = CommonEnvironmentHelper;
 
   static init = () => {
@@ -29,17 +28,15 @@ export class EnvironmentHelper {
   }
 
   static initDev = () => {
-    EnvironmentHelper.GoogleAnalyticsTag = process.env.REACT_APP_GOOGLE_ANALYTICS || "";
   }
 
   //NOTE: None of these values are secret.
   static initStaging = () => {
-    EnvironmentHelper.GoogleAnalyticsTag = "";
   }
 
   //NOTE: None of these values are secret.
   static initProd = () => {
-    EnvironmentHelper.GoogleAnalyticsTag = "G-JB7VCG51LF";
+    EnvironmentHelper.Common.GoogleAnalyticsTag = "G-JB7VCG51LF";
   }
 
 }
