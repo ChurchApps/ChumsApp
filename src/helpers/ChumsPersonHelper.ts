@@ -2,14 +2,23 @@ import { PersonInterface } from ".";
 import { PersonHelper } from "../appBase/helpers";
 
 export class ChumsPersonHelper {
-
   static getBirthDay(person: PersonInterface) {
     if (person?.birthDate === null) return "";
     else {
-      const parts = new Date(person.birthDate).toDateString().split(" ");
+      const parts = ChumsPersonHelper.getDateStringFromDate(person.birthDate)
+        .split(" ");
 
       return parts[1] + " " + parts[2];
     }
+  }
+
+  // This function assumes that the date is in the GMT timezone (no offset)
+  static getDateStringFromDate(date: Date) {
+    const [year, month, day] = date.toISOString().split("T")[0].split("-").map(
+      (v) => +v,
+    );
+
+    return new Date(year, month - 1, day).toDateString();
   }
 
   static getExpandedPersonObject(person: PersonInterface) {
@@ -24,11 +33,12 @@ export class ChumsPersonHelper {
       lastName: person?.name?.last,
       firstName: person?.name?.first,
       middleName: person?.name?.middle,
-      age: person?.birthDate === null ? "" : PersonHelper.getAge(person?.birthDate).split(" ")[0],
+      age: person?.birthDate === null
+        ? ""
+        : PersonHelper.getAge(person?.birthDate).split(" ")[0],
       displayName: person?.name?.display,
       birthDate: person?.birthDate ? new Date(person?.birthDate) : null,
-      anniversary: person?.anniversary ? new Date(person?.anniversary) : null
-    } as PersonInterface
+      anniversary: person?.anniversary ? new Date(person?.anniversary) : null,
+    } as PersonInterface;
   }
-
 }
