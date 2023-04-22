@@ -48,13 +48,13 @@ export function PeopleSearchResults(props: Props) {
       case "zip": result = (<>{p.contactInfo.zip}</>); break;
       case "email": result = (<>{p.contactInfo.email}</>); break;
       case "phone": result = (<>{p.contactInfo.mobilePhone || p.contactInfo.homePhone || p.contactInfo.workPhone}</>); break;
-      case "birthDate": result = (<>{(p.birthDate === null) ? "" : DateHelper.toDate(p.birthDate).toDateString()}</>); break;
+      case "birthDate": result = (<>{(p.birthDate === null) ? "" : ChumsPersonHelper.getDateStringFromDate(p.birthDate)}</>); break;
       case "birthDay": result = (<>{ChumsPersonHelper.getBirthDay(p)}</>); break;
       case "age": result = (<>{(p.birthDate === null) ? "" : PersonHelper.getAge(p.birthDate).split(" ")[0]}</>); break;
       case "gender": result = (<>{p.gender}</>); break;
       case "membershipStatus": result = (<>{p.membershipStatus}</>); break;
       case "maritalStatus": result = (<>{p.maritalStatus}</>); break;
-      case "anniversary": result = (<>{(p.anniversary === null) ? "" : DateHelper.toDate(p.anniversary).toDateString()}</>); break;
+      case "anniversary": result = (<>{(p.anniversary === null) ? "" : ChumsPersonHelper.getDateStringFromDate(p.anniversary)}</>); break;
 
     }
 
