@@ -6,6 +6,7 @@ interface Props {
   automation: AutomationInterface,
   onCancel: () => void,
   onSave: (automation: AutomationInterface) => void,
+  onDelete?: () => void,
 }
 
 export const AutomationEdit = (props: Props) => {
@@ -31,6 +32,8 @@ export const AutomationEdit = (props: Props) => {
       });
     }
   }
+  const handleDelete = () => { ApiHelper.delete("/automations/" + automation.id, "DoingApi").then(() => { props.onDelete(); }); }
+  const checkDelete = automation?.id ? handleDelete : undefined;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const val = e.target.value;
@@ -47,7 +50,7 @@ export const AutomationEdit = (props: Props) => {
   }
 
   return (
-    <InputBox headerIcon="settings_suggest" headerText="Edit Automation" saveFunction={handleSave} cancelFunction={props.onCancel}>
+    <InputBox headerIcon="settings_suggest" headerText="Edit Automation" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={checkDelete}>
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={12}>

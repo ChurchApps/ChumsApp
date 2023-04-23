@@ -9,7 +9,8 @@ import { ConditionEdit } from "./ConditionEdit";
 
 interface Props {
   automation: AutomationInterface,
-  onChange: () => void
+  onChange: () => void,
+  onDelete?: () => void,
 }
 
 export const AutomationDetails = (props: Props) => {
@@ -50,7 +51,7 @@ export const AutomationDetails = (props: Props) => {
   React.useEffect(init, [props.automation]); //eslint-disable-line
 
   if (editDetails) {
-    return <AutomationEdit automation={automation} onCancel={() => { setEditDetails(false); }} onSave={(a: AutomationInterface) => { setEditDetails(false); setAutomation(a); props.onChange(); }} />
+    return <AutomationEdit automation={automation} onDelete={() => { setEditDetails(false); props.onDelete(); props.onChange(); }} onCancel={() => { setEditDetails(false); }} onSave={(a: AutomationInterface) => { setEditDetails(false); setAutomation(a); props.onChange(); }} />
   } else if (editAction) {
     return <ActionEdit action={editAction} onCancel={() => setEditAction(null)} onSave={(a: ActionInterface) => { setEditAction(null); loadData(); }} />
   } else if (editConjunction) {
