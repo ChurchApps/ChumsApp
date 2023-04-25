@@ -42,7 +42,8 @@ export const AutomationsPage = () => {
   }
 
   const handleDelete = () => {
-    setEditAutomation(null)
+    setEditAutomation(null);
+    loadData();
   }
 
   React.useEffect(loadData, [isMounted]);
