@@ -41,6 +41,11 @@ export const AutomationsPage = () => {
     loadData();
   }
 
+  const handleDelete = () => {
+    setEditAutomation(null);
+    loadData();
+  }
+
   React.useEffect(loadData, [isMounted]);
 
   const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true); setEditAutomation(null); }} />
@@ -57,7 +62,7 @@ export const AutomationsPage = () => {
       </Grid>
       <Grid item md={4} xs={12}>
         {showAdd && <AutomationEdit automation={{ title: "", active: true, recurs: "never" }} onCancel={() => { setShowAdd(false); }} onSave={handleAdded} />}
-        {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} />}
+        {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} onDelete={handleDelete} />}
       </Grid>
     </Grid>
   </>);
