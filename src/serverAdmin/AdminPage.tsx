@@ -1,8 +1,9 @@
 import React from "react";
 import { ChurchInterface, ApiHelper, DisplayBox, UserHelper, DateHelper, ArrayHelper } from "./components";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Grid, TextField, Button, Icon } from "@mui/material";
 import UserContext from "../UserContext";
+import { ReportWithFilter } from "../appBase/components/reporting";
 
 export const AdminPage = () => {
   const [searchText, setSearchText] = React.useState<string>("")
@@ -83,6 +84,7 @@ export const AdminPage = () => {
   else return (
     <>
       <h1><Icon>admin_panel_settings</Icon> Server Admin</h1>
+
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <DisplayBox headerIcon="church" headerText="Churches">
@@ -102,13 +104,10 @@ export const AdminPage = () => {
           </DisplayBox>
         </Grid>
         <Grid item md={4} xs={12}>
-          <DisplayBox headerIcon="summarize" headerText="Reports">
-            <ul>
-              <li><Link to="/admin/report/activeChurches">Active Churches</Link></li>
-            </ul>
-          </DisplayBox>
+
         </Grid>
       </Grid>
+      <ReportWithFilter keyName="usageTrends" autoRun={true} />
     </>
   );
 

@@ -5,7 +5,6 @@ import { UserProvider } from "./UserContext";
 import { CookiesProvider } from "react-cookie";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import "./appBase/components/markdownEditor/editor.css";
-import {Helmet} from "react-helmet";
 import { EnvironmentHelper } from "./helpers";
 
 const mdTheme = createTheme({
@@ -21,17 +20,13 @@ const mdTheme = createTheme({
 });
 
 const App: React.FC = () => (
-  <UserProvider>
-    <CookiesProvider>
-      <ThemeProvider theme={mdTheme}>
-        <CssBaseline />
-        <Helmet>
-          {EnvironmentHelper.Common.GoogleAnalyticsTag && (
-            <>
-              <script async src={`https://www.googletagmanager.com/gtag/js?id=${EnvironmentHelper.Common.GoogleAnalyticsTag}`} />
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
+  <>
+    {EnvironmentHelper.Common.GoogleAnalyticsTag && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${EnvironmentHelper.Common.GoogleAnalyticsTag}`} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -39,19 +34,23 @@ const App: React.FC = () => (
               page_path: window.location.pathname,
             });
           `,
-                }}
-              />
-            </>
-          )}
+          }}
+        />
+      </>
+    )}
 
-        </Helmet>
-        <Router>
-          <Routes>
-            <Route path="/*" element={<ControlPanel />} />
-          </Routes>
-        </Router>
-      </ThemeProvider>
-    </CookiesProvider>
-  </UserProvider>
+    <UserProvider>
+      <CookiesProvider>
+        <ThemeProvider theme={mdTheme}>
+          <CssBaseline />
+          <Router>
+            <Routes>
+              <Route path="/*" element={<ControlPanel />} />
+            </Routes>
+          </Router>
+        </ThemeProvider>
+      </CookiesProvider>
+    </UserProvider>
+  </>
 );
 export default App;
