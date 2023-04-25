@@ -13,14 +13,14 @@ interface Props {
 export const GroupMembers: React.FC<Props> = (props) => {
   const [groupMembers, setGroupMembers] = useState<GroupMemberInterface[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const isSubscribed = useRef(true);
+  //const isSubscribed = useRef(true);
 
   const loadData = React.useCallback(() => {
     setIsLoading(true);
     ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => {
-      if (isSubscribed.current) {
-        setGroupMembers(data)
-      }
+      //if (isSubscribed.current) {
+      setGroupMembers(data)
+      //}
     }).finally(() => { setIsLoading(false) });
   }, [props.group.id]);
 
@@ -30,6 +30,12 @@ export const GroupMembers: React.FC<Props> = (props) => {
     members.splice(idx, 1);
     setGroupMembers(members);
     ApiHelper.delete("/groupmembers/" + member.id, "MembershipApi");
+  }
+
+  const handleToggleLeader = (member: GroupMemberInterface) => {
+    member.leader = !member.leader;
+    console.log("Member", member);
+    ApiHelper.post("/groupmembers", [member], "MembershipApi").then(() => { loadData() });
   }
 
   const getMemberByPersonId = React.useCallback((personId: string) => {
@@ -61,12 +67,18 @@ export const GroupMembers: React.FC<Props> = (props) => {
     for (let i = 0; i < groupMembers.length; i++) {
       const gm = groupMembers[i];
       //let editLink = (canEdit) ? <a href="about:blank" onClick={handleRemove} data-index={i} data-cy={`remove-member-${i}`} className="text-danger"><Icon>person_remove</Icon> Remove</a> : <></>
-      let editLink = (canEdit) ? <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(gm)} color="error" /> : <></>
+      let editLinks = []
+      if (canEdit) {
+        if (gm.leader) editLinks.push(<SmallButton icon="key_off" toolTip="Remove Leader Access" onClick={() => handleToggleLeader(gm)} color="error" />);
+        else editLinks.push(<SmallButton icon="key" toolTip="Promote to Leader" onClick={() => handleToggleLeader(gm)} color="success" />);
+        editLinks.push(<SmallButton icon="person_remove" toolTip="Remove" onClick={() => handleRemove(gm)} color="error" />);
+      }
+
       rows.push(
         <TableRow key={i}>
           <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
-          <TableCell style={{ textAlign: "right" }}>{editLink}</TableCell>
+          <TableCell style={{ textAlign: "right" }}>{editLinks}</TableCell>
         </TableRow>
       );
     }
@@ -87,7 +99,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
 
   React.useEffect(() => {
     if (props.group.id !== undefined) { loadData() }; return () => {
-      isSubscribed.current = false
+      //isSubscribed.current = false
     }
   }, [props.group, loadData]);
 
