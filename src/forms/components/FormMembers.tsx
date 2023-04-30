@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch } from "@mui/material"
 import { DisplayBox, PersonAdd, PersonInterface } from ".";
 import { ApiHelper, MemberPermissionInterface, PersonHelper } from "../../helpers";
-import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper } from "@mui/material"
 
 interface Props { formId: string }
 
@@ -49,6 +49,21 @@ export const FormMembers: React.FC<Props> = (props) => {
     setFormMembers(fm);
   }
 
+  const handleEmailAccessChange = (event: React.ChangeEvent<HTMLInputElement>, personId: string) => {
+    let member;
+    let fm = [...formMembers];
+    const emailAccess = event.target.checked;
+    fm.map((p: MemberPermissionInterface) => {
+      if (p.memberId === personId) {
+        p.emailAccess = emailAccess;
+        member = p;
+      }
+      return p;
+    });
+    ApiHelper.post("/memberpermissions?formId=" + props.formId, [member], "MembershipApi");
+    setFormMembers(fm);
+  }
+
   const handleRemoveMember = (personId: string) => {
     updateFilterList(personId, "remove");
     let fm = [...formMembers];
@@ -70,6 +85,7 @@ export const FormMembers: React.FC<Props> = (props) => {
             </Stack>
           </TableCell>
           <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} style={{display: "flex", alignItems: "center", color: "#dc3545"}}><Icon sx={{marginRight: "5px"}}>person_remove</Icon> Remove</a>}</TableCell>
+          <TableCell><Switch checked={fm.emailAccess === true} onChange={(e) => { handleEmailAccessChange(e, fm.memberId) }} /></TableCell>
         </TableRow>
       );
     });
@@ -78,7 +94,7 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>Name</th><th>Permission</th><th>Action</th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>Name</th><th>Permission</th><th>Action</th><th>Email Access</th></TableRow>);
     return rows;
   }
 
