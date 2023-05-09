@@ -14,8 +14,8 @@ export const FormsPage = () => {
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const loadData = () => {
-    ApiHelper.get("/forms", "MembershipApi").then(data => { if (isSubscribed.current) { setForms(data) } });
-    ApiHelper.get("/forms/archived", "MembershipApi").then(data => { if (isSubscribed.current) { setArchivedForms(data) } });
+    ApiHelper.get("/forms", "MembershipApi").then(data => { setForms(data) });
+    ApiHelper.get("/forms/archived", "MembershipApi").then(data => { setArchivedForms(data) });
   }
 
   const getRows = () => {
@@ -83,7 +83,7 @@ export const FormsPage = () => {
     else return (<button aria-label="addForm" className="no-default-style" onClick={() => { setSelectedFormId(""); }}><Icon>add</Icon></button>);
   }
 
-  React.useEffect(() => { loadData(); return () => { isSubscribed.current = false } }, []);
+  React.useEffect(loadData, []);
 
   if (!forms && !archivedForms) return (<></>);
   else {
