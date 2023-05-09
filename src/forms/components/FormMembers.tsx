@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton } from "@mui/material";
+import { Info } from "@mui/icons-material";
 import { DisplayBox, PersonAdd, PersonInterface } from ".";
 import { ApiHelper, MemberPermissionInterface, PersonHelper } from "../../helpers";
-import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper } from "@mui/material"
 
 interface Props { formId: string }
 
@@ -35,19 +36,20 @@ export const FormMembers: React.FC<Props> = (props) => {
     updateFilterList(p.id, "add");
   }
 
-  const handleActionChange = (personId: string, action: string) => {
+  const handleActionChange = (personId: string, action: {}) => {
     let member;
     let fm = [...formMembers];
-    fm.map((p: MemberPermissionInterface) => {
+    const fmArray = fm.map((p: MemberPermissionInterface) => {
       if (p.memberId === personId) {
-        p.action = action;
+        p = {...p, ...action};
         member = p;
       }
       return p;
     });
     ApiHelper.post("/memberpermissions?formId=" + props.formId, [member], "MembershipApi");
-    setFormMembers(fm);
+    setFormMembers(fmArray);
   }
+
 
   const handleRemoveMember = (personId: string) => {
     updateFilterList(personId, "remove");
@@ -65,11 +67,12 @@ export const FormMembers: React.FC<Props> = (props) => {
           <TableCell><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></TableCell>
           <TableCell>
             <Stack direction="row" spacing={1}>
-              <Button variant={fm.action === "admin" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, "admin") }}>Admin</Button>
-              <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, "view") }}>View Only</Button>
+              <Button variant={fm.action === "admin" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, {action: "admin"}) }}>Admin</Button>
+              <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, {action: "view"}) }}>View Only</Button>
             </Stack>
           </TableCell>
           <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} style={{display: "flex", alignItems: "center", color: "#dc3545"}}><Icon sx={{marginRight: "5px"}}>person_remove</Icon> Remove</a>}</TableCell>
+          <TableCell><Switch checked={fm.emailNotification === true} onChange={(e) => { handleActionChange(fm.memberId, {emailNotification: e.target.checked}) }} /></TableCell>
         </TableRow>
       );
     });
@@ -78,7 +81,7 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>Name</th><th>Permission</th><th>Action</th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>Name</th><th>Permission</th><th>Action</th><th>Email Notification<Tooltip title="Whenever the form is submitted, you'll get notified via mail." arrow><IconButton><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
     return rows;
   }
 
