@@ -138,7 +138,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
       })
       formSubmission.forEach(form => {
         form.contentId = person.id;
-        promises.push(ApiHelper.post("/formsubmissions", [form], "MembershipApi"));
+        promises.push(ApiHelper.post("/formsubmissions", { formSubmissions: [form] }, "MembershipApi"));
       })
       promises.push(ApiHelper.post(`/people`, [person], "MembershipApi"));
       promises.push(ApiHelper.delete(`/people/${id}`, "MembershipApi"));
