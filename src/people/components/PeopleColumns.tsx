@@ -1,4 +1,4 @@
-import { Grid, Icon, Menu, MenuItem } from "@mui/material";
+import { Grid, Menu, MenuItem, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import React from "react";
 import { SmallButton } from "../../appBase/components";
 
@@ -24,9 +24,9 @@ export function PeopleColumns(props: Props) {
     const result: JSX.Element[] = []
     props.columns.forEach((o, i) => {
       const option = o;
-      const selectedClass = (props.selectedColumns.indexOf(o.key) > -1) ? "checked" : ""
+      const selectedClass = (props.selectedColumns.indexOf(o.key) > -1) ? "checked" : "";
       result.push(<Grid key={i} item md={6} xs={12}>
-        <MenuItem key={i} className={selectedClass} onClick={(e) => { props.toggleColumn(option.key) }}><Icon>check_box</Icon> {o.label}</MenuItem>
+        <MenuItem key={i}><FormControlLabel control={<Checkbox size="small" checked={selectedClass === "checked"} onChange={(e) => { props.toggleColumn(e.target.name); }} name={option.key} />} label={option.label} /></MenuItem>
       </Grid>);
     });
     return result;
@@ -35,10 +35,11 @@ export function PeopleColumns(props: Props) {
     <>
       <SmallButton icon="view_column" onClick={handleClick} />
       <Menu id="fieldsMenu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <Grid container spacing={3} style={{ maxWidth: 400 }}>
-          {getItems()}
-        </Grid>
-
+        <FormGroup>
+          <Grid container spacing={3} style={{ maxWidth: 400 }}>
+            {getItems()}
+          </Grid>
+        </FormGroup>
       </Menu>
     </>
   )
