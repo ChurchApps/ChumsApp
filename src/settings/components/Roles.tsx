@@ -35,7 +35,6 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     { name: "Church Staff", description: "Can edit most data in Chums.org, including people, groups, attendance and forms.", permissions: [
       Permissions.membershipApi.people.view,
       Permissions.membershipApi.people.edit,
-      Permissions.membershipApi.households.edit,
       Permissions.membershipApi.groups.edit,
       Permissions.membershipApi.groupMembers.view,
       Permissions.membershipApi.groupMembers.edit,
@@ -44,15 +43,11 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
       Permissions.attendanceApi.attendance.edit,
       Permissions.attendanceApi.attendance.view,
       Permissions.attendanceApi.services.edit,
-      Permissions.attendanceApi.settings.edit,
     ]},
     { name: "Content Admin", description: "Can edit website content, mobile content and sermons.", permissions: [
       Permissions.contentApi.chat.host,
       Permissions.contentApi.content.edit,
-      Permissions.contentApi.links.edit,
-      Permissions.contentApi.pages.edit,
-      Permissions.contentApi.settings.edit,
-      Permissions.contentApi.streamingServices.edit,
+      Permissions.contentApi.streamingServices.edit
     ]},
     { name: "Lessons Admin", description: "Can set up classrooms and schedule lessons on Lessons.church.", permissions: [
       { api: "LessonsApi", contentType:"Schedules", permission: "Edit" }
@@ -110,11 +105,11 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     const sortedRoles = [...roles].sort((a, b) => a.name > b.name ? 1 : -1);
     const canEdit = (
       UserHelper.checkAccess(Permissions.membershipApi.roles.edit)
-      && UserHelper.checkAccess(Permissions.membershipApi.users.edit)
+      && UserHelper.checkAccess(Permissions.membershipApi.roles.edit)
       && UserHelper.checkAccess(Permissions.membershipApi.people.view)
     );
 
-    if (UserHelper.checkAccess(Permissions.membershipApi.rolePermissions.edit)) {
+    if (UserHelper.checkAccess(Permissions.membershipApi.roles.edit)) {
       result.push(
         <TableRow key="everyone">
           <TableCell><i className="groups" /> <Link to={`/settings/role/everyone`}>(Everyone)</Link></TableCell>

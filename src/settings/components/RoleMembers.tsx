@@ -31,7 +31,7 @@ export const RoleMembers: React.FC<Props> = (props) => {
   }
 
   const getRows = () => {
-    let canEdit = UserHelper.checkAccess(Permissions.membershipApi.roleMembers.edit);
+    let canEdit = UserHelper.checkAccess(Permissions.membershipApi.roles.edit);
     let rows: JSX.Element[] = [];
     if (isRoleEveryone) {
       rows.push(<TableRow><TableCell key="0">This role applies to all the members of the church.</TableCell></TableRow>)
