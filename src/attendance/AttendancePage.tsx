@@ -114,26 +114,10 @@ export const AttendancePage = () => {
 
   const getEditLinks = () => (
     <>
-      <IconButton
-        aria-label="addButton"
-        id="addBtnGroup"
-        data-cy="add-button"
-        aria-controls={open ? "add-menu" : undefined}
-        aria-expanded={open ? "true" : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
+      <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" aria-controls={open ? "add-menu" : undefined} aria-expanded={open ? "true" : undefined} aria-haspopup="true" onClick={handleClick}>
         <Icon color="primary">add</Icon>
       </IconButton>
-      <Menu
-        id="add-menu"
-        MenuListProps={{
-          "aria-labelledby": "addBtnGroup"
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
+      <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem data-cy="add-campus" onClick={() => {handleClose(); selectCampus({ id: "", name: "New Campus" }); }}>
           <Icon sx={{mr: "3px"}}>church</Icon> Add Campus
         </MenuItem>
