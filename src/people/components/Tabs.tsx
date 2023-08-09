@@ -39,7 +39,7 @@ export const Tabs: React.FC<Props> = (props) => {
   switch (selectedTab) {
     case "notes": currentTab = <Notes context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />; break;
     case "attendance": currentTab = <PersonAttendance personId={person.id} />; break;
-    case "donations": currentTab = <DonationPage personId={person.id} />; break;
+    case "donations": currentTab = <DonationPage personId={person.id} churchName={UserHelper.currentUserChurch.church.name} />; break;
     default: currentTab = <div>Not implemented</div>; break;
   }
 
