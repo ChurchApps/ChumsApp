@@ -2,7 +2,7 @@ import React from "react";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton } from "@mui/material";
 import HelpIcon from '@mui/icons-material/Help';
 import { ApiHelper } from ".";
-import { PaymentGatewaysInterface, UniqueIdHelper, GenericSettingInterface } from "../../helpers";
+import { PaymentGatewaysInterface, UniqueIdHelper } from "../../helpers";
 
 interface Props { churchId: string, saveTrigger: Date | null }
 
@@ -11,8 +11,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
   const [provider, setProvider] = React.useState("");
   const [publicKey, setPublicKey] = React.useState("");
   const [privateKey, setPrivateKey] = React.useState("");
-  const [payFeeSettings, setPayFeeSettings] = React.useState<GenericSettingInterface>(null);
-  const [payFee, setPayFee] = React.useState("false");
+  const [payFees, setPayFees] = React.useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
@@ -41,10 +40,9 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
             </IconButton>
           </Tooltip>
           <Switch
-            checked={payFee === "true"}
+            checked={payFees === true}
             onChange={(e) => {
-              if (e.target.checked === true) setPayFee("true");
-              else setPayFee("false");
+              setPayFees(e.target.checked);
             }}
           />
         </Stack>
@@ -57,15 +55,16 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
       if (!UniqueIdHelper.isMissing(gateway?.id)) ApiHelper.delete("/gateways/" + gateway.id, "GivingApi");
     } else {
       const gw: PaymentGatewaysInterface = (gateway === null) ? { churchId: props.churchId } : gateway;
-      const pfs: GenericSettingInterface = (payFeeSettings === null) ? { churchId: props.churchId, keyName: "payFees" } : payFeeSettings;
       if (privateKey !== "") {
         gw.provider = provider;
         gw.publicKey = publicKey;
         gw.privateKey = privateKey;
+        gw.payFees = payFees;
         ApiHelper.post("/gateways", [gw], "GivingApi");
       }
-      pfs.value = payFee;
-      ApiHelper.post("/settings", [pfs], "GivingApi");
+      if (gw.payFees !== payFees) {
+        ApiHelper.patch(`/gateways/${gateway.id}`, { payFees : payFees }, "GivingApi");
+      }
     }
   }
 
@@ -75,22 +74,17 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
 
   const loadData = async () => {
     const gateways = await ApiHelper.get("/gateways", "GivingApi");
-    const feeSettings = await ApiHelper.get("/settings", "GivingApi").then((data) => data.filter((i: GenericSettingInterface) => i.keyName === "payFees"));
     if (gateways.length === 0) {
       setGateway(null);
       setProvider("");
       setPublicKey("");
-      setPayFeeSettings(null);
-      setPayFee("false");
+      setPayFees(false);
     }
     else {
       setGateway(gateways[0]);
       setProvider(gateways[0].provider);
       setPublicKey(gateways[0].publicKey);
-      if (feeSettings.length > 0) {
-        setPayFeeSettings(feeSettings[0]);
-        setPayFee(feeSettings[0].value);
-      }
+      setPayFees(gateways[0].payFees)
     }
     setPrivateKey("");
   }
