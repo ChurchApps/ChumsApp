@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { ApiHelper, RoleInterface, UserAdd, UserHelper, Permissions, RoleMemberInterface } from "./components";
+import { ApiHelper, RoleInterface, UserAdd, UserHelper, Permissions, RoleMemberInterface, DisplayBox, RolePermissions, RoleMembers } from "./components";
 import { useParams } from "react-router-dom"
-import { RoleMembers } from "./components/RoleMembers";
-import { RolePermissions } from "./components/RolePermissions";
-import { Grid, Icon } from "@mui/material";
+import { Icon, Grid } from "@mui/material";
+
+
 
 export const RolePage = () => {
   const params = useParams();
@@ -31,10 +31,13 @@ export const RolePage = () => {
 
   const getSidebar = () => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.roles.edit)) return (null);
-    else return (<>
-      {getAddUser()}
-      <RolePermissions role={role} />
-    </>);
+    else {
+      if (role.name==="Domain Admins") return (<DisplayBox id="rolePermissionsBox" headerText="Edit Permissions" headerIcon="lock"><p>Permissions cannot be edited for the Domain Admins role.  Domain Admins have full access.</p></DisplayBox>)
+      else return (<>
+        {getAddUser()}
+        <RolePermissions role={role} />
+      </>);
+    }
   }
 
   React.useEffect(loadData, []); //eslint-disable-line
