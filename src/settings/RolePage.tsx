@@ -32,7 +32,10 @@ export const RolePage = () => {
   const getSidebar = () => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.roles.edit)) return (null);
     else {
-      if (role.name==="Domain Admins") return (<DisplayBox id="rolePermissionsBox" headerText="Edit Permissions" headerIcon="lock"><p>Permissions cannot be edited for the Domain Admins role.  Domain Admins have full access.</p></DisplayBox>)
+      if (role.name==="Domain Admins") return (<>
+        {getAddUser()}
+        <DisplayBox id="rolePermissionsBox" headerText="Edit Permissions" headerIcon="lock"><p>Permissions cannot be edited for the Domain Admins role.  Domain Admins have full access.</p></DisplayBox>
+      </>)
       else return (<>
         {getAddUser()}
         <RolePermissions role={role} />
