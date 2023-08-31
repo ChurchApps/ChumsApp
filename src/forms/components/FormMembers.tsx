@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton } from "@mui/material";
 import { Info } from "@mui/icons-material";
-import { DisplayBox, PersonAdd, PersonInterface } from ".";
-import { ApiHelper, MemberPermissionInterface, PersonHelper } from "../../helpers";
+import { DisplayBox, PersonAdd, PersonInterface, ApiHelper, MemberPermissionInterface, PersonHelper } from "@churchapps/apphelper";
 
 interface Props { formId: string }
 

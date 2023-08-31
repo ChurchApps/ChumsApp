@@ -1,4 +1,4 @@
-import { ConditionInterface } from ".";
+import { ConditionInterface } from "@churchapps/apphelper";
 
 export class ConditionHelper {
 

@@ -1,7 +1,6 @@
 import { TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, GroupInterface, InputBox } from ".";
-import { ErrorMessages } from "../../components";
+import { ApiHelper, GroupInterface, InputBox, ErrorMessages } from "@churchapps/apphelper";
 
 interface Props { updatedFunction: () => void }
 
