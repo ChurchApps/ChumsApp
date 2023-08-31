@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ApiHelper, InputBox, FundInterface, ErrorMessages } from ".";
+import { ApiHelper, InputBox, FundInterface, ErrorMessages } from "@churchapps/apphelper";
 import { TextField } from "@mui/material";
 
 interface Props { fund: FundInterface, updatedFunction: () => void }

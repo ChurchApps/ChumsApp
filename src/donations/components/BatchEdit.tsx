@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, InputBox, DateHelper, DonationBatchInterface, UniqueIdHelper } from ".";
+import { ApiHelper, InputBox, DateHelper, DonationBatchInterface, UniqueIdHelper } from "@churchapps/apphelper";
 import { TextField } from "@mui/material";
 
 interface Props { batchId: string, updatedFunction: () => void }

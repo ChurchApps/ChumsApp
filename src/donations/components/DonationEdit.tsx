@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Box } from "@mui/material";
 import React from "react";
-import { ApiHelper, InputBox, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper } from ".";
-import { DonationInterface, FundDonationInterface, FundInterface, PersonInterface } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper } from "@churchapps/apphelper";
+import { FundDonations, DonationInterface, FundDonationInterface, FundInterface, PersonInterface } from "@churchapps/apphelper";
 
 interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
 

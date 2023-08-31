@@ -1,8 +1,9 @@
 import React from "react";
 import { Grid, Icon } from "@mui/material";
 import { TaskList } from "../tasks/components/TaskList";
-import { PeopleSearch, UserHelper } from "./components";
+import { PeopleSearch } from "./components";
 import { Groups } from "../people/components";
+import { UserHelper } from "@churchapps/apphelper";
 
 export const DashboardPage = () => (<>
   <h1><Icon>home</Icon> Chums Dashboard</h1>
