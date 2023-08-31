@@ -1,6 +1,7 @@
 import React from "react";
 import { PersonInterface } from "@churchapps/apphelper";
-import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns } from "./components";
+import { PeopleSearchResults, PeopleColumns } from "./components";
+import { ApiHelper, DisplayBox, ExportLink } from "@churchapps/apphelper";
 import { Grid, Icon } from "@mui/material"
 import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";

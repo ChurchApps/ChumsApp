@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import React, { useState } from "react";
-import { ApiHelper, InputBox, RoleInterface, UniqueIdHelper, ErrorMessages } from "./";
+import { ApiHelper, InputBox, RoleInterface, UniqueIdHelper, ErrorMessages } from "@churchapps/apphelper";
 
 interface Props {
   roleId: string,

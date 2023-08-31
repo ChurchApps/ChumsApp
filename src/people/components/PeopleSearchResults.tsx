@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { PersonHelper, ChumsPersonHelper, PersonInterface, Loading, CreatePerson, DateHelper } from ".";
+import { ChumsPersonHelper } from ".";
+import { PersonHelper, PersonInterface, Loading, CreatePerson, DateHelper } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip } from "@mui/material"
 
 interface Props {

@@ -1,5 +1,6 @@
 import React from "react";
-import { Person, Groups, Tabs, Household, UserHelper, ApiHelper, PersonInterface, Merge, Permissions, PersonHelper } from "./components"
+import { Person, Groups, Tabs, Household, Merge } from "./components"
+import { UserHelper, ApiHelper, PersonInterface,Permissions, PersonHelper } from "@churchapps/apphelper"
 import { Grid, Icon } from "@mui/material"
 import { useParams } from "react-router-dom";
 import { ImageEditor } from "@churchapps/apphelper";
