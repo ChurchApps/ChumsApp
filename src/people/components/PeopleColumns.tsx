@@ -1,6 +1,6 @@
 import { Grid, Menu, MenuItem, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import React from "react";
-import { SmallButton } from "../../appBase/components";
+import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
   columns: { key: string, label: string, shortName: string }[],

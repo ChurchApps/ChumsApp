@@ -2,7 +2,7 @@ import React from "react";
 import { ApiHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading } from ".";
 import { ArrayHelper } from "../../helpers";
 import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, Grid, MenuItem } from "@mui/material"
-import { SmallButton } from "../../appBase/components";
+import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
   group: GroupInterface,

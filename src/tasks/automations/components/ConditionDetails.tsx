@@ -1,7 +1,7 @@
 import { Icon, Menu, MenuItem } from "@mui/material";
 import React from "react";
-import { SmallButton } from "../../../appBase/components";
-import { ArrayHelper, AutomationInterface, ConditionInterface, ConjunctionInterface } from "../../components";
+import { SmallButton, AutomationInterface, ConditionInterface, ConjunctionInterface } from "@churchapps/apphelper";
+import { ArrayHelper  } from "../../components";
 
 interface Props {
   automation: AutomationInterface,

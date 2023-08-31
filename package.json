@@ -3,51 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
-    "@lexical/react": "^0.7.5",
-    "@mui/icons-material": "^5.8.4",
-    "@mui/lab": "^5.0.0-alpha.90",
-    "@mui/material": "^5.8.2",
-    "@stripe/react-stripe-js": "^1.14.2",
-    "@stripe/stripe-js": "^1.22.0",
-    "@types/adm-zip": "^0.4.34",
-    "@types/flexsearch": "^0.7.3",
-    "@types/google.visualization": "0.0.68",
-    "@types/jest": "^27.4.0",
-    "@types/papaparse": "^5.3.1",
-    "@types/react-cropper": "^1.3.1",
-    "@types/react-csv": "^1.1.2",
-    "@types/react-router-dom": "^5.3.2",
-    "@uiw/react-markdown-preview": "^4.1.6",
-    "axios": "^1.2.1",
-    "buffer": "^6.0.3",
-    "date-fns": "^2.28.0",
-    "eslint-config-next": "^13.0.3",
-    "file-saver": "^2.0.5",
-    "flexsearch": "^0.7.21",
-    "jszip": "^3.7.1",
-    "jwt-decode": "^3.1.2",
-    "lexical": "^0.7.5",
-    "material-symbols": "^0.5.3",
-    "original-fs": "^1.1.0",
-    "papaparse": "^5.3.1",
+    "@churchapps/apphelper": "^0.0.1",
+    "@mui/icons-material": "^5.14.7",
+    "@mui/material": "^5.14.7",
+    "@types/react-cropper": "^1.3.2",
+    "@types/react-router-dom": "^5.3.3",
     "react": "^18.2.0",
-    "react-activity": "^2.1.1",
-    "react-cookie": "^4.1.1",
-    "react-cropper": "^2.1.8",
-    "react-csv": "^2.2.1",
+    "react-cookie": "^6.1.0",
+    "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",
-    "react-draft-wysiwyg": "^1.15.0",
-    "react-ga4": "^2.1.0",
-    "react-google-charts": "^3.0.15",
-    "react-google-recaptcha": "^3.1.0",
-    "react-helmet": "^6.1.0",
-    "react-router-dom": "^6.2.1",
-    "react-scripts": "^5.0.0",
-    "react-to-print": "^2.14.3",
-    "rrule": "^2.7.2",
-    "typescript": "^4.5.4"
+    "react-router-dom": "^6.15.0",
+    "react-scripts": "^5.0.1",
+    "react-to-print": "^2.14.13"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "lint-staged": "^14.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -63,8 +35,7 @@
     "predeploy-prod": "export REACT_APP_STAGE=prod&& npm run build",
     "exec-deploy-prod": "aws s3 sync build/ s3://chums-app",
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3FB2K4FSP7ZUB --paths \"/*\"",
-    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod",
-    "prepare": "husky install"
+    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,js}": [
@@ -76,17 +47,5 @@
     "not ie 11",
     "not dead",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "@types/file-saver": "^2.0.4",
-    "@types/flexsearch": "^0.7.3",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.8",
-    "@types/react-draft-wysiwyg": "^1.13.4",
-    "@types/react-google-recaptcha": "^2.1.5",
-    "@types/react-helmet": "^6.1.6",
-    "google-charts": "^2.0.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.1.4"
-  }
+  ]
 }

@@ -3,7 +3,7 @@ import { DisplayBox, ApiHelper, AttendanceRecordInterface, DateHelper, GroupInte
 import { Link } from "react-router-dom";
 import { ArrayHelper } from "../../helpers";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
-import useMountedState from "../../appBase/hooks/useMountedState";
+import { useMountedState } from "@churchapps/apphelper";
 
 interface Props { personId: string }
 

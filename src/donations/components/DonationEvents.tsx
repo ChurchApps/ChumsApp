@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { DateHelper, ApiHelper, DisplayBox } from ".";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Icon } from "@mui/material";
-import useMountedState from "../../appBase/hooks/useMountedState";
+import { useMountedState } from "@churchapps/apphelper";
 
 export const DonationEvents: React.FC = () => {
   const [headerIcon, setHeaderIcon] = React.useState<string>("error");

@@ -1,6 +1,6 @@
 import React from "react";
-import { SmallButton } from "../../../appBase/components";
-import { ActionInterface, ApiHelper, AutomationInterface, ConditionInterface, ConjunctionInterface, DisplayBox } from "../../components";
+import { SmallButton, ActionInterface, AutomationInterface, ConditionInterface, ConjunctionInterface } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox } from "../../components";
 import { ActionEdit } from "./ActionEdit";
 import { AutomationEdit } from "./AutomationEdit";
 import { ConditionDetails } from "./ConditionDetails";

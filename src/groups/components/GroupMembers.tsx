@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading } from ".";
 import { Link } from "react-router-dom";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { SmallButton } from "../../appBase/components";
+import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
   group: GroupInterface,

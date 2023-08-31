@@ -7,9 +7,8 @@ import { Login } from "./Login";
 
 import { Authenticated } from "./Authenticated";
 import { Logout } from "./Logout";
-import { AnalyticsHelper, UserHelper } from "./appBase/helpers";
-import { ErrorLogInterface, ErrrorAppDataInterface } from "./appBase/interfaces/Error";
-import { ErrorHelper } from "./appBase/helpers/ErrorHelper";
+import { AnalyticsHelper, UserHelper, ErrorHelper, ErrorLogInterface, ErrrorAppDataInterface  } from "@churchapps/apphelper";
+
 
 export const ControlPanel = () => {
   const [errors, setErrors] = React.useState([]);

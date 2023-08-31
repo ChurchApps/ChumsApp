@@ -1,7 +1,7 @@
 import React from "react"
 import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, UpdateHouseHold, ErrorMessages } from "."
 import { Table, TableBody, TableCell, TableRow, TextField, FormControl, SelectChangeEvent, Select, MenuItem, InputLabel } from "@mui/material"
-import { SmallButton } from "../../appBase/components";
+import { SmallButton } from "@churchapps/apphelper";
 
 interface Props { updatedFunction: () => void, household: HouseholdInterface, currentMembers: PersonInterface[], currentPerson: PersonInterface }
 

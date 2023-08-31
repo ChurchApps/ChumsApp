@@ -1,7 +1,7 @@
 import { Grid, Icon, Table, TableCell, TableRow } from "@mui/material";
 import React from "react";
-import { SmallButton } from "../../appBase/components";
-import useMountedState from "../../appBase/hooks/useMountedState";
+import { SmallButton } from "@churchapps/apphelper";
+import { useMountedState } from "@churchapps/apphelper";
 import { ApiHelper, AutomationInterface, DisplayBox } from "../components";
 import { AutomationDetails } from "./components/AutomationDetails";
 import { AutomationEdit } from "./components/AutomationEdit";

@@ -11,7 +11,7 @@ import {
   FormSubmissionInterface
 } from "."
 import { useNavigate } from "react-router-dom"
-import useMountedState from "../../appBase/hooks/useMountedState";
+import { useMountedState } from "@churchapps/apphelper";
 
 interface Props {
   hideMergeBox: () => void,

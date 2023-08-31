@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs } from "@mui/material";
 import React from "react";
 import { GroupInterface, PersonHelper, PersonInterface, SelectGroup } from ".";
-import { PersonAdd } from "../../appBase/components";
+import { PersonAdd } from "@churchapps/apphelper";
 
 interface Props {
   onClose: () => void,

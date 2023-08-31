@@ -2,7 +2,7 @@ import React from "react";
 import { ApiHelper, UserHelper, DonationInterface, DateHelper, CurrencyHelper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading } from ".";
 import { ArrayHelper } from "../../helpers";
 import { Table, TableBody, TableCell, TableRow } from "@mui/material";
-import { SmallButton } from "../../appBase/components";
+import { SmallButton } from "@churchapps/apphelper";
 
 interface Props { batch: DonationBatchInterface, funds: FundInterface[], addFunction: () => void, editFunction: (id: string) => void }
 

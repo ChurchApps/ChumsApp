@@ -1,6 +1,6 @@
 import { Icon } from "@mui/material";
 import React from "react";
-import { SmallButton } from "../appBase/components";
+import { SmallButton } from "@churchapps/apphelper";
 import { TaskList } from "./components/TaskList";
 
 export const TasksPage = () => {

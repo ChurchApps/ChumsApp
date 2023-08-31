@@ -3,9 +3,8 @@ import { useLocation, Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ApiHelper } from "./components";
 import UserContext from "./UserContext";
-import { LoginPage } from "./appBase/pageComponents/LoginPage";
+import { LoginPage, Permissions } from "@churchapps/apphelper";
 import { UserHelper } from "./helpers";
-import { Permissions } from "./appBase/interfaces";
 import { Box } from "@mui/material";
 
 export const Login: React.FC = (props: any) => {

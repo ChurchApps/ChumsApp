@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Grid, Icon, Menu, MenuItem, Typography } from "@mui/material";
 import { ApiHelper, DisplayBox, TaskInterface, Notes, DateHelper, ConversationInterface } from "../components";
-import { SmallButton } from "../appBase/components";
+import { SmallButton } from "@churchapps/apphelper";
 import { Link, useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
 import UserContext from "../UserContext";

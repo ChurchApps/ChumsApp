@@ -1,7 +1,7 @@
 import React from "react";
-import { Question, ApiHelper, FormSubmissionInterface, UserHelper, Permissions, UniqueIdHelper } from "./";
+import { Question, ApiHelper, UserHelper, UniqueIdHelper } from "./";
 import { Grid } from "@mui/material"
-import { SmallButton } from "../appBase/components";
+import { SmallButton, FormSubmissionInterface, Permissions } from "@churchapps/apphelper";
 
 interface Props {
   formSubmissionId: string,
