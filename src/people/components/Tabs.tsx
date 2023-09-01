@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
-import { UserHelper, Notes, PersonAttendance, Permissions, PersonInterface, ConversationInterface, ApiHelper } from ".";
-import { DonationPage } from "../../appBase/donationComponents/DonationPage";
+import { PersonAttendance } from ".";
+import { DonationPage, Permissions, PersonInterface, ConversationInterface, UserHelper, Notes, ApiHelper } from "@churchapps/apphelper";
 import UserContext from "../../UserContext";
 interface Props { person: PersonInterface }
 

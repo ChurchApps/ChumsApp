@@ -1,8 +1,7 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, SearchCondition } from ".";
-import { Permissions } from "."
-import { GroupInterface } from "../../helpers";
+import { ApiHelper, SearchCondition, Permissions, GroupInterface } from "@churchapps/apphelper";
+
 interface Props {
   conditionAdded: (condition: any) => void
 }

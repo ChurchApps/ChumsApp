@@ -1,5 +1,4 @@
-import { ApiHelper } from "../appBase/helpers/ApiHelper";
-import { CommonEnvironmentHelper } from "../appBase/helpers/CommonEnvironmentHelper";
+import { CommonEnvironmentHelper, ApiHelper } from "@churchapps/apphelper";
 
 export class EnvironmentHelper {
   static B1Url = "";

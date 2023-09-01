@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ApiHelper, GroupInterface } from "../../helpers";
+import { ApiHelper, GroupInterface } from "@churchapps/apphelper";
 import { TextField, Button, Table, TableBody, TableRow, TableCell } from "@mui/material";
-import { SmallButton } from "../../appBase/components";
+import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
   addFunction: (group: GroupInterface) => void,

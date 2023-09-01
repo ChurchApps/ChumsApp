@@ -1,8 +1,8 @@
 import React from "react";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton } from "@mui/material";
 import HelpIcon from '@mui/icons-material/Help';
-import { ApiHelper } from ".";
-import { PaymentGatewaysInterface, UniqueIdHelper } from "../../helpers";
+import { ApiHelper, UniqueIdHelper } from "@churchapps/apphelper";
+import { PaymentGatewaysInterface } from "../../helpers";
 
 interface Props { churchId: string, saveTrigger: Date | null }
 

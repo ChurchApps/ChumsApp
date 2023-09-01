@@ -1,9 +1,9 @@
 import React from "react";
-import { ChurchInterface, ApiHelper, DisplayBox, UserHelper, DateHelper, ArrayHelper } from "./components";
+import { ApiHelper, DisplayBox, UserHelper, DateHelper, ArrayHelper } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { Grid, TextField, Button, Icon } from "@mui/material";
 import UserContext from "../UserContext";
-import { ReportWithFilter } from "../appBase/components/reporting";
+import { ReportWithFilter, ChurchInterface } from "@churchapps/apphelper";
 
 export const AdminPage = () => {
   const [searchText, setSearchText] = React.useState<string>("")

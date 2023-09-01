@@ -1,7 +1,7 @@
 import { Grid, Icon, TextField, Checkbox, Typography, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { InputBox, ApiHelper, ErrorMessages, UserHelper, PersonHelper } from "./components"
+import { InputBox, ApiHelper, ErrorMessages, UserHelper } from "@churchapps/apphelper"
 
 export const ProfilePage = () => {
   const [password, setPassword] = useState<string>("");

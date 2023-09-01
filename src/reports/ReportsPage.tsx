@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox } from "../components";
+import { DisplayBox } from "@churchapps/apphelper";
 import { Grid, Icon } from "@mui/material"
 import { Link } from "react-router-dom";
 

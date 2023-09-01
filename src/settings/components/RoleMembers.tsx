@@ -1,7 +1,6 @@
 import React from "react";
-import { ApiHelper, DisplayBox, UserHelper, RoleMemberInterface, RoleInterface, Permissions } from "./";
+import { ApiHelper, DisplayBox, UserHelper, RoleMemberInterface, RoleInterface, Permissions, SmallButton } from "@churchapps/apphelper";
 import { Stack, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { SmallButton } from "../../appBase/components";
 
 interface Props {
   role: RoleInterface,

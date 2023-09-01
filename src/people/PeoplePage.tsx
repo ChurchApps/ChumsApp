@@ -1,10 +1,11 @@
 import React from "react";
-import { PersonInterface } from "../appBase/interfaces";
-import { PeopleSearchResults, ApiHelper, DisplayBox, ExportLink, PeopleColumns } from "./components";
+import { PersonInterface } from "@churchapps/apphelper";
+import { PeopleSearchResults, PeopleColumns } from "./components";
+import { ApiHelper, DisplayBox, ExportLink } from "@churchapps/apphelper";
 import { Grid, Icon } from "@mui/material"
 import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
-import useMountedState from "../appBase/hooks/useMountedState";
+import { useMountedState } from "@churchapps/apphelper";
 
 export const PeoplePage = () => {
 

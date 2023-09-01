@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
-import { ApiHelper, UserHelper } from ".";
 import { List } from "@mui/material";
-import { Permissions } from "./"
-import { SiteWrapper, NavItem } from "../appBase/components";
+import { SiteWrapper, NavItem, ApiHelper, UserHelper, Permissions, Themes } from "@churchapps/apphelper";
 import UserContext from "../UserContext";
-import { Themes } from "../appBase/helpers";
 
 interface Props { pageTitle?: string, children: React.ReactNode }
 

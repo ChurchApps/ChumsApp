@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ConditionHelper, ConditionInterface } from "../../components";
+import { ConditionHelper } from "../../components";
+import { ConditionInterface } from "@churchapps/apphelper";
 
 interface Props {
   condition: ConditionInterface,

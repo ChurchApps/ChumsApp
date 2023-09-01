@@ -1,6 +1,6 @@
 import React from "react";
 import UserContext from "./UserContext"
-import { LogoutPage } from "./appBase/pageComponents";
+import { LogoutPage } from "@churchapps/apphelper";
 
 export const Logout = () => {
   const context = React.useContext(UserContext)

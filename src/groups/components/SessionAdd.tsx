@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, GroupInterface, GroupServiceTimeInterface, InputBox, ErrorMessages, SessionInterface, DateHelper, UniqueIdHelper } from ".";
+import { ApiHelper, GroupInterface, GroupServiceTimeInterface, InputBox, ErrorMessages, SessionInterface, DateHelper, UniqueIdHelper } from "@churchapps/apphelper";
 import { TextField, FormControl, Select, InputLabel, SelectChangeEvent, MenuItem } from "@mui/material"
 
 interface Props { group: GroupInterface, updatedFunction: (session: SessionInterface) => void }

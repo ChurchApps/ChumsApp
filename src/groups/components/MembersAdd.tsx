@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ApiHelper, GroupInterface, DisplayBox, GroupMemberInterface, PersonHelper, PersonInterface, Loading } from ".";
+import { ApiHelper, GroupInterface, DisplayBox, GroupMemberInterface, PersonHelper, PersonInterface, Loading } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
-import { SmallButton } from "../../appBase/components";
+import { SmallButton } from "@churchapps/apphelper";
 
 interface Props { group: GroupInterface, addFunction: (person: PersonInterface) => void }
 

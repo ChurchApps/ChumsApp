@@ -1,17 +1,8 @@
 import React from "react"
-import {
-  InputBox,
-  Search,
-  MergeModal,
-  PersonInterface,
-  ApiHelper,
-  GroupMemberInterface,
-  VisitInterface,
-  DonationInterface,
-  FormSubmissionInterface
-} from "."
+import { Search, MergeModal } from "."
+import { InputBox, PersonInterface, ApiHelper, GroupMemberInterface, VisitInterface, DonationInterface, FormSubmissionInterface } from "@churchapps/apphelper"
 import { useNavigate } from "react-router-dom"
-import useMountedState from "../../appBase/hooks/useMountedState";
+import { useMountedState } from "@churchapps/apphelper";
 
 interface Props {
   hideMergeBox: () => void,

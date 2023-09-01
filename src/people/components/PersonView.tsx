@@ -1,5 +1,6 @@
 import React from "react";
-import { PersonHelper, AssociatedForms, PersonInterface, Loading, DisplayBox, DateHelper } from "."
+import { AssociatedForms } from "."
+import { PersonHelper, PersonInterface, Loading, DisplayBox, DateHelper } from "@churchapps/apphelper"
 import { Grid, Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { formattedPhoneNumber } from "./PersonEdit";
 

@@ -1,5 +1,6 @@
 import React from "react";
-import { Tabs, ApiHelper, FormInterface, MemberPermissionInterface } from "./components";
+import { Tabs } from "./components";
+import { ApiHelper, FormInterface, MemberPermissionInterface } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom"
 import { Icon } from "@mui/material";
 import UserContext from "../UserContext";

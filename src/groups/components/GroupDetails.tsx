@@ -1,5 +1,6 @@
 import React from "react";
-import { GroupInterface, DisplayBox, GroupDetailsEdit, ServiceTimes, UserHelper, Permissions, Loading } from ".";
+import { GroupDetailsEdit, ServiceTimes } from ".";
+import { GroupInterface, DisplayBox, UserHelper, Permissions, Loading } from "@churchapps/apphelper";
 import { Grid } from "@mui/material"
 
 interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }

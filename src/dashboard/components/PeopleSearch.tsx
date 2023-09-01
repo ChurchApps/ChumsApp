@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, FormControl, InputLabel, OutlinedInput } from "@mui/material";
-import { ApiHelper, ChumsPersonHelper, DisplayBox, PersonInterface, SearchCondition } from "../components";
+import { ChumsPersonHelper } from "../components";
+import { ApiHelper, DisplayBox, PersonInterface, SearchCondition } from "@churchapps/apphelper";
 import { PeopleSearchResults } from "../../people/components";
 
 export const PeopleSearch = () => {

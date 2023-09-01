@@ -1,5 +1,5 @@
 import React from "react";
-import { QuestionInterface } from ".";
+import { QuestionInterface } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead, FormLabel, TextField, Button } from "@mui/material"
 
 interface Props { question: QuestionInterface, updatedFunction: (question: QuestionInterface) => void }

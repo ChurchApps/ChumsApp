@@ -1,6 +1,6 @@
 import React from "react";
-import { CampusInterface, InputBox, ApiHelper, ErrorMessages } from "./";
 import { SelectChangeEvent, TextField } from "@mui/material";
+import { CampusInterface, InputBox, ApiHelper, ErrorMessages } from "@churchapps/apphelper";
 
 interface Props { campus: CampusInterface, updatedFunction: () => void }
 

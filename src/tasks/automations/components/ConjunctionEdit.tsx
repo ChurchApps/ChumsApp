@@ -1,6 +1,6 @@
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, ConjunctionInterface, ApiHelper } from "../../components";
+import { ErrorMessages, InputBox, ConjunctionInterface, ApiHelper } from "@churchapps/apphelper";
 
 interface Props {
   conjunction: ConjunctionInterface,

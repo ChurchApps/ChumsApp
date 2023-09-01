@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import React from "react";
-import { ChurchInterface, DisplayBox, UserHelper, ChurchSettingsEdit, Permissions } from "./";
+import { ChurchSettingsEdit } from "./";
+import { ChurchInterface, DisplayBox, UserHelper, Permissions } from "@churchapps/apphelper";
 
 interface Props { church: ChurchInterface, updatedFunction: () => void }
 

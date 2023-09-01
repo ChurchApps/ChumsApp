@@ -1,7 +1,6 @@
 import React from "react";
-import { ApiHelper, ReportInterface } from "../components";
 import { useParams } from "react-router-dom";
-import { ReportWithFilter } from "../appBase/components/reporting/ReportWithFilter";
+import { ReportWithFilter, ReportInterface, ApiHelper } from "@churchapps/apphelper";
 import { Icon } from "@mui/material";
 
 export const ReportPage = () => {
