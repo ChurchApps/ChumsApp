@@ -4,7 +4,7 @@ import { ControlPanel } from "./ControlPanel";
 import { UserProvider } from "./UserContext";
 import { CookiesProvider } from "react-cookie";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-//import "@churchapps/apphelper/components/markdownEditor/editor.css";
+import "@churchapps/apphelper/dist/components/markdownEditor/editor.css";
 //TODO export the css from apphelper
 import { EnvironmentHelper } from "./helpers";
 
