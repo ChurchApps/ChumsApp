@@ -1,6 +1,6 @@
 import { Icon, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, ActionInterface, ApiHelper } from "../../components";
+import { ErrorMessages, InputBox, ActionInterface, ApiHelper } from "@churchapps/apphelper";
 import { ContentPicker } from "../../components/ContentPicker";
 
 interface Props {

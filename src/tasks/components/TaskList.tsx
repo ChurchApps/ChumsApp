@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupMemberInterface, TaskInterface, UserHelper } from "../components";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupMemberInterface, TaskInterface, UserHelper } from "@churchapps/apphelper";
 import { SmallButton } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { NewTask } from "./";
