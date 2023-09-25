@@ -116,7 +116,7 @@ export const TaskList = (props: Props) => {
 
   return (<>
     {showAdd && <NewTask compact={props.compact} onCancel={() => { setShowAdd(false); }} onSave={() => { loadData(); setShowAdd(false); }} />}
-    <DisplayBox headerIcon="list_alt" headerText="Tasks" editContent={editContent}>
+    <DisplayBox headerIcon="list_alt" headerText="Tasks" editContent={editContent} help="chums/tasks">
       {getAssignedToMe()}
       {getAssignedToMyGroups()}
       {createdByMe()}

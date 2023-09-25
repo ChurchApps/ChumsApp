@@ -56,7 +56,7 @@ export function PeopleSearch(props: Props) {
   }
 
   const getSimpleSearch = () => (
-    <DisplayBox headerIcon="person" headerText="Simple Search" editContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Advanced</Button>}>
+    <DisplayBox headerIcon="person" headerText="Simple Search" help="chums/advanced-search" editContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Advanced</Button>}>
       <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
         <InputLabel htmlFor="searchText">Name</InputLabel>
         <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label="Name" value={searchText} onChange={handleChange}
@@ -94,7 +94,7 @@ export function PeopleSearch(props: Props) {
     return result;
   }
 
-  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Simple</Button>} saveFunction={handleAdvancedSearch} saveText="Search">
+  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Simple</Button>} saveFunction={handleAdvancedSearch} saveText="Search" help="chums/advanced-search">
     <p>All people where:</p>
     {getDisplayConditions()}
     {getAddCondition()}

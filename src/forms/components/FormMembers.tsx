@@ -104,7 +104,7 @@ export const FormMembers: React.FC<Props> = (props) => {
   return (
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
-        <DisplayBox headerText="Form Members" headerIcon="group">
+        <DisplayBox headerText="Form Members" headerIcon="group" help="chums/forms">
           {getTable()}
         </DisplayBox>
       </Grid>

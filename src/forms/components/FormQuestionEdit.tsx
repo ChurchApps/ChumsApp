@@ -67,7 +67,7 @@ export function FormQuestionEdit(props: Props) {
   React.useEffect(loadData, [props.questionId || props.formId]); //eslint-disable-line
 
   return (
-    <InputBox id="questionBox" headerIcon="help" headerText="Edit Question" saveFunction={handleSave} cancelFunction={props.updatedFunction} isSubmitting={isSubmitting} deleteFunction={(!UniqueIdHelper.isMissing(question.id)) ? handleDelete : undefined}>
+    <InputBox id="questionBox" headerIcon="help" headerText="Edit Question" saveFunction={handleSave} cancelFunction={props.updatedFunction} isSubmitting={isSubmitting} deleteFunction={(!UniqueIdHelper.isMissing(question.id)) ? handleDelete : undefined} help="chums/forms">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel id="provider">Provider</InputLabel>

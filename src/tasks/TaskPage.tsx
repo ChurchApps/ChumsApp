@@ -82,7 +82,7 @@ export const TaskPage = () => {
           <Notes context={context} conversationId={task?.conversationId} createConversation={handleCreateConversation} />
         </Grid>
         <Grid item md={4} xs={12}>
-          <DisplayBox headerIcon="list_alt" headerText="Task Details">
+          <DisplayBox headerIcon="list_alt" headerText="Task Details" help="chums/tasks">
             <div><Typography variant="subtitle1">Date Created</Typography></div>
             <div><Typography variant="caption">{DateHelper.prettyDate(DateHelper.convertToDate(task?.dateCreated))}</Typography></div>
             <hr />

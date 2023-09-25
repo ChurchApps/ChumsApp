@@ -77,7 +77,7 @@ export const ConditionEdit = (props: Props) => {
 
   if (!condition) return <></>
   return (
-    <InputBox headerIcon="settings_suggest" headerText="Edit Condition" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={condition?.id ? handleDelete : undefined}>
+    <InputBox headerIcon="settings_suggest" headerText="Edit Condition" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={condition?.id ? handleDelete : undefined} help="chums/automations">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel>Condition Type</InputLabel>

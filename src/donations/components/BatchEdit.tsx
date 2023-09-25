@@ -38,7 +38,7 @@ export const BatchEdit: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.batchId]);
 
   return (
-    <InputBox id="batchBox" headerIcon="volunteer_activism" headerText="Edit Batch" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
+    <InputBox id="batchBox" headerIcon="volunteer_activism" headerText="Edit Batch" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
       <TextField fullWidth name="name" data-cy="batch-name" label="Name (optional)" value={batch.name} onChange={handleChange} onKeyDown={handleKeyDown} />
       <TextField fullWidth type="date" data-cy="batch-date" name="date" InputLabelProps={{shrink: true}} label="Date" value={DateHelper.formatHtml5Date(batch.batchDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
     </InputBox>

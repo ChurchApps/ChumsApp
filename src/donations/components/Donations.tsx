@@ -66,7 +66,7 @@ export const Donations: React.FC<Props> = (props) => {
   }
 
   return (
-    <DisplayBox id="donationsBox" headerIcon="volunteer_activism" headerText="Donations" editContent={getEditContent()}>
+    <DisplayBox id="donationsBox" headerIcon="volunteer_activism" headerText="Donations" editContent={getEditContent()} help="chums/manual-input">
       {content}
     </DisplayBox>
   );

@@ -104,7 +104,7 @@ export const FundPage = () => {
         <h1><Icon>volunteer_activism</Icon> {fund.name} Donations</h1>
         <Grid container spacing={3}>
           <Grid item md={8} xs={12}>
-            <DisplayBox headerIcon="volunteer_activism" headerText="Donations" editContent={getEditContent()}>
+            <DisplayBox headerIcon="volunteer_activism" headerText="Donations" editContent={getEditContent()} help="chums/giving">
               {contents}
             </DisplayBox>
           </Grid>

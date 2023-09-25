@@ -58,7 +58,7 @@ export const SessionAdd: React.FC<Props> = (props) => {
   React.useEffect(() => { if (props.group.id !== undefined) loadData(); }, [props.group, loadData]);
 
   return (
-    <InputBox data-cy="add-session-box" headerIcon="calendar_month" headerText="Add a Session" saveFunction={handleSave} cancelFunction={handleCancel}>
+    <InputBox data-cy="add-session-box" headerIcon="calendar_month" headerText="Add a Session" saveFunction={handleSave} cancelFunction={handleCancel} help="chums/attendance">
       <ErrorMessages errors={errors} />
       {getServiceTimes()}
 

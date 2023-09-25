@@ -46,7 +46,7 @@ export const ConjunctionEdit = (props: Props) => {
 
   if (!conjunction) return <></>
   return (
-    <InputBox headerIcon="settings_suggest" headerText="Edit Conjunction" saveFunction={handleSave} cancelFunction={props.onCancel}>
+    <InputBox headerIcon="settings_suggest" headerText="Edit Conjunction" saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
       <ErrorMessages errors={errors} />
       <Select fullWidth label="Conjunction Type" value={conjunction?.groupType} name="groupType" onChange={handleChange}>
         <MenuItem value="and">AND - All of the conditions are true</MenuItem>

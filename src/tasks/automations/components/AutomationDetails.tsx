@@ -60,7 +60,7 @@ export const AutomationDetails = (props: Props) => {
     return <ConditionEdit condition={editCondition} onCancel={() => setEditCondition(null)} onSave={(c: ConditionInterface) => { setEditCondition(null); loadData(); }} />
   }
   else return (
-    <DisplayBox headerIcon="settings_suggest" headerText="Automation Details">
+    <DisplayBox headerIcon="settings_suggest" headerText="Automation Details" help="chums/automations">
       <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditDetails(true); }} /></span><b>Automation Details:</b>
       <hr />
       <div><b>Name:</b> {automation?.title}</div>

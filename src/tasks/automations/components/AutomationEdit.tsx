@@ -50,7 +50,7 @@ export const AutomationEdit = (props: Props) => {
   }
 
   return (
-    <InputBox headerIcon="settings_suggest" headerText="Edit Automation" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={checkDelete}>
+    <InputBox headerIcon="settings_suggest" headerText="Edit Automation" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={checkDelete} help="chums/automations">
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={12}>

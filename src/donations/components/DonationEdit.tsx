@@ -111,7 +111,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.donationId]); //eslint-disable-line
 
   return (
-    <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave}>
+    <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
       <Box mb={2}>
         <label>Person</label>
         {getPersonSection()}

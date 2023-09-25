@@ -59,7 +59,7 @@ export const RolePermissions: React.FC<Props> = (props) => {
   React.useEffect(() => { if (props.role?.id !== undefined) loadPermissions() }, [props.role, loadPermissions]);
 
   return (
-    <DisplayBox id="rolePermissionsBox" headerText="Edit Permissions" headerIcon="lock">
+    <DisplayBox id="rolePermissionsBox" headerText="Edit Permissions" headerIcon="lock" help="chums/assigning-roles">
       <div>
         {getSections()}
       </div>

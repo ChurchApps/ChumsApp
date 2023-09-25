@@ -83,7 +83,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   else
     return (
       <>
-        <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
+        <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} help="chums/groups">
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>

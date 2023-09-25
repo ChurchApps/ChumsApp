@@ -30,7 +30,7 @@ export const GroupDetails: React.FC<Props> = (props) => {
 
   if (mode === "edit") return <GroupDetailsEdit group={props.group} updatedFunction={handleUpdated} />
   else return (
-    <DisplayBox id="groupDetailsBox" data-cy="group-details-box" headerText="Group Details" headerIcon="group" editFunction={getEditFunction()}>
+    <DisplayBox id="groupDetailsBox" data-cy="group-details-box" headerText="Group Details" headerIcon="group" editFunction={getEditFunction()} help="chums/groups">
       {getRows()}
     </DisplayBox>
   );

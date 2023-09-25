@@ -89,7 +89,7 @@ export const ActionEdit = (props: Props) => {
 
   if (!action) return <></>
   return (
-    <InputBox headerIcon="settings_suggest" headerText="Edit Action" saveFunction={handleSave} cancelFunction={props.onCancel}>
+    <InputBox headerIcon="settings_suggest" headerText="Edit Action" saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
       <ErrorMessages errors={errors} />
       <Select fullWidth label="Action Type" value={action?.actionType} onChange={handleChange}>
         <MenuItem value="task">Assign a Task</MenuItem>

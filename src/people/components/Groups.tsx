@@ -31,5 +31,5 @@ export const Groups: React.FC<Props> = (props) => {
     }
   }
 
-  return <DisplayBox headerIcon="group" headerText={props.title || "Groups"}>{getRecords()}</DisplayBox>
+  return <DisplayBox headerIcon="group" headerText={props.title || "Groups"} help="chums/groups">{getRecords()}</DisplayBox>
 }

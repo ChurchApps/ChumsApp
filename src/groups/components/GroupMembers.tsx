@@ -116,7 +116,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
   }
 
   return (
-    <DisplayBox id="groupMembersBox" data-cy="group-members-tab" headerText="Group Members" headerIcon="group" editContent={getEditContent()}>
+    <DisplayBox id="groupMembersBox" data-cy="group-members-tab" headerText="Group Members" headerIcon="group" editContent={getEditContent()} help="chums/groups">
       {getTable()}
     </DisplayBox>
   );

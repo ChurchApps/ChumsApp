@@ -39,7 +39,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
   if (campus === null || campus.id === undefined) return null;
 
   return (
-    <InputBox id="campusBox" data-cy="campus-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.campus?.id ? handleDelete : null} headerText={campus.name} headerIcon="church" isSubmitting={isSubmitting}>
+    <InputBox id="campusBox" data-cy="campus-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.campus?.id ? handleDelete : null} headerText={campus.name} headerIcon="church" isSubmitting={isSubmitting} help="chums/attendance">
       <ErrorMessages errors={errors} />
       <TextField fullWidth label="Campus Name" id="name" name="name" type="text" value={campus.name} onChange={handleChange} />
     </InputBox>

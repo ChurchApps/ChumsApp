@@ -131,7 +131,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
   useEffect(loadData, [selectedRoleId, church]); //eslint-disable-line
 
   return (
-    <DisplayBox id="rolesBox" headerText="Roles" headerIcon="lock" editContent={getEditContent()}>
+    <DisplayBox id="rolesBox" headerText="Roles" headerIcon="lock" editContent={getEditContent()} help="chums/assigning-roles">
       <Table id="roleMemberTable">
         <TableHead><TableRow><TableCell>Name</TableCell><TableCell></TableCell></TableRow></TableHead>
         <TableBody>{getRows()}</TableBody>

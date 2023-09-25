@@ -58,7 +58,7 @@ export const Funds: React.FC = () => {
     let contents = <Loading />
     if (funds) contents = <Table size="small">{getRows()}</Table>
     return (
-      <DisplayBox id="fundsBox" headerIcon="volunteer_activism" data-cy="funds-box" headerText="Funds" editContent={getEditSection()}>
+      <DisplayBox id="fundsBox" headerIcon="volunteer_activism" data-cy="funds-box" headerText="Funds" editContent={getEditSection()} help="chums/giving">
         {contents}
       </DisplayBox>
     );

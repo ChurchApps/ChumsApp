@@ -92,7 +92,7 @@ export const Form: React.FC<Props> = (props) => {
       <>
         <Grid container spacing={3}>
           <Grid item md={8} xs={12}>
-            <DisplayBox id="questionsBox" headerText="Questions" headerIcon="help" editContent={getEditContent()}>
+            <DisplayBox id="questionsBox" headerText="Questions" headerIcon="help" editContent={getEditContent()} help="chums/forms">
               {contents}
             </DisplayBox>
           </Grid>

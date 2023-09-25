@@ -65,7 +65,7 @@ export const RoleMembers: React.FC<Props> = (props) => {
   }
 
   return (
-    <DisplayBox id="roleMembersBox" headerText="Members" headerIcon="person" editContent={getEditContent()}>
+    <DisplayBox id="roleMembersBox" headerText="Members" headerIcon="person" editContent={getEditContent()} help="chums/assigning-roles">
       <Table id="roleMemberTable">
         <TableHead>{getTableHeader()}</TableHead>
         <TableBody>{getRows()}</TableBody>

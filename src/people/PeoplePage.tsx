@@ -67,7 +67,7 @@ export const PeoplePage = () => {
       <h1><Icon>person</Icon> Search People</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="peopleBox" headerIcon="person" headerText="People" editContent={getEditContent()}>
+          <DisplayBox id="peopleBox" headerIcon="person" headerText="People" editContent={getEditContent()} help="chums/adding-people">
             <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} />
           </DisplayBox>
         </Grid>

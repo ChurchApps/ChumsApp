@@ -154,7 +154,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
           <DisplayBox headerText="Form Submission Summary" headerIcon="group" editContent={getEditLinks()}>
             <Grid container spacing={3}>{getSummary()}</Grid>
           </DisplayBox>
-          <DisplayBox headerText="Form Submission Results" headerIcon="group">
+          <DisplayBox headerText="Form Submission Results" headerIcon="group" help="chums/forms">
             {getFormSubmissions()}
           </DisplayBox>
         </div>

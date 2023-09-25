@@ -55,7 +55,7 @@ export const AutomationsPage = () => {
 
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
-        <DisplayBox headerIcon="settings_suggest" headerText="Automated Tasks" editContent={editContent}>
+        <DisplayBox headerIcon="settings_suggest" headerText="Automated Tasks" editContent={editContent} help="chums/automations">
           {getRows()}
 
         </DisplayBox>
