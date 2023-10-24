@@ -3,6 +3,7 @@ import { List } from "@mui/material";
 import { SiteWrapper, NavItem, ApiHelper, UserHelper, Permissions, Themes } from "@churchapps/apphelper";
 import UserContext from "../UserContext";
 
+
 interface Props { pageTitle?: string, children: React.ReactNode }
 
 export const Wrapper: React.FC<Props> = props => {
