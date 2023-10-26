@@ -13,7 +13,7 @@ export const FormPage = () => {
   const loadData = () => {
     ApiHelper.get("/forms/" + params.id, "MembershipApi").then(data => {
       setForm(data);
-      if (data.contentType === "form") ApiHelper.get("/memberpermissions?memberId=" + context.person?.id + "&formId=" + params.id, "MembershipApi").then(results => setMemberPermission(results));
+      if (data.contentType === "form") ApiHelper.get("/memberpermissions/form/" + params.id + "/my", "MembershipApi").then(results => setMemberPermission(results));
     });
   }
 
