@@ -46,7 +46,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
 
   const loadData = () => {
     if (UniqueIdHelper.isMissing(props.donationId)) {
-      setDonation({ donationDate: new Date(), batchId: props.batchId, amount: 0, method: "Cash" });
+      setDonation({ donationDate: new Date(), batchId: props.batchId, amount: 0, method: "Check" });
       let fd: FundDonationInterface = { amount: 0, fundId: props.funds[0].id };
       setFundDonations([fd]);
     }
