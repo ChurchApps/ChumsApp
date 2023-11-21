@@ -31,6 +31,7 @@ export const Donations: React.FC<Props> = (props) => {
 
   const getRows = () => {
     let rows: React.ReactNode[] = [];
+    let total = 0;
     if (props.funds.length === 0) {
       rows.push(<TableRow key="0" data-cy="error-message">No fund found. Please create a fund before making a donation</TableRow>)
       return rows;
@@ -43,6 +44,7 @@ export const Donations: React.FC<Props> = (props) => {
     let canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
     for (let i = 0; i < donations.length; i++) {
       let d = donations[i];
+      total = total + d.amount;
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-link-${i}`} onClick={showEditDonation} data-id={d.id}>{d.id}</a>) : (<>{d.id}</>);
       rows.push(<TableRow key={i}>
         <TableCell>{editLink}</TableCell>
@@ -51,6 +53,12 @@ export const Donations: React.FC<Props> = (props) => {
         <TableCell>{CurrencyHelper.formatCurrency(d.amount)}</TableCell>
       </TableRow>);
     }
+    rows.push(<TableRow sx={{ borderTop: 2 }}>
+      <TableCell sx={{ fontWeight: "bold", fontSize: 15 }}>Total</TableCell>
+      <TableCell></TableCell>
+      <TableCell></TableCell>
+      <TableCell sx={{ fontWeight: "bold", fontSize: 15 }}>{CurrencyHelper.formatCurrency(total)}</TableCell>
+    </TableRow>);
     return rows;
   }
 
