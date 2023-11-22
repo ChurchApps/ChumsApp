@@ -70,7 +70,7 @@ export function PeopleSearchResults(props: Props) {
       if (a[key] === null) return Infinity; // if value is null push to the end of array
 
       if (typeof a[key].getMonth === "function") {
-        return asc ? (a[key].getTime() - b[key].getTime()) : (b[key].getTime() - a[key].getTime());
+        return asc ? (a[key]?.getTime() - b[key]?.getTime()) : (b[key]?.getTime() - a[key]?.getTime());
       }
 
       const parsedNum = parseInt(a[key]);
