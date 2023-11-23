@@ -8,6 +8,8 @@ import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } f
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
   const [batches, setBatches] = React.useState<DonationBatchInterface[]>(null);
+  const [sortDirection, setSortDirection] = React.useState<boolean | null>(null);
+  const [currentSortedCol, setCurrentSortedCol] = React.useState<string>("");
   const isMounted = useMountedState();
 
   const batchUpdated = () => { setEditBatchId("notset"); loadData(); }
@@ -32,6 +34,45 @@ export const DonationsPage = () => {
     result.push(<Funds key={result.length - 1} />);
     return result;
   }
+
+  const sortTable = (key: string, asc: boolean | null) => {
+    let sortedBatches;
+    if (asc === null) asc = false;
+    setCurrentSortedCol(key);
+
+    sortedBatches = batches.sort(function(a: any, b: any) {
+      if (a[key] === null) return Infinity;
+
+      if (key === "batchDate") {
+        if (typeof new Date(a[key]).getMonth === "function") {
+          return asc ? (new Date(a[key])?.getTime() - new Date(b[key])?.getTime()) : (new Date(b[key])?.getTime() - new Date(a[key])?.getTime());
+        }
+      }
+
+      const parsedNum = parseInt(a[key]);
+      if (!isNaN(parsedNum)) { return asc ? (a[key] - b[key]) : (b[key] - a[key]); }
+
+      const valA = a[key].toUpperCase();
+      const valB = b[key].toUpperCase();
+      if (valA < valB) {
+        return asc ? 1 : -1;
+      }
+      if (valA > valB) {
+        return asc ? -1 : 1;
+      }
+
+      return 0;
+    });
+    setBatches(sortedBatches);
+    setSortDirection(!asc);
+  }
+
+  const getSortArrows = (key: string) => (
+    <div style={{ display: "flex" }}>
+      <div style={{ marginTop: "5px" }} className={`${sortDirection && currentSortedCol === key ? "sortAscActive" : "sortAsc"}`}></div>
+      <div style={{ marginTop: "14px" }} className={`${!sortDirection && currentSortedCol === key ? "sortDescActive" : "sortDesc"}`}></div>
+    </div>
+  )
 
   const getRows = () => {
     const result: JSX.Element[] = [];
@@ -65,7 +106,21 @@ export const DonationsPage = () => {
       return rows;
     }
 
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Name</th><th>Date</th><th>Donations</th><th>Total</th><th>Edit</th></TableRow>);
+    rows.push(
+      <TableRow sx={{textAlign: "left"}} key="header">
+        <th onClick={() => sortTable("name", sortDirection)}>
+          <span style={{ float: "left", paddingRight: "5px", cursor: "default" }}>Name</span>
+          {getSortArrows("name")}
+        </th>
+        <th onClick={() => sortTable("batchDate", sortDirection)}>
+          <span style={{ float: "left", paddingRight: "5px", cursor: "default" }}>Date</span>
+          {getSortArrows("batchDate")}
+        </th>
+        <th>Donations</th>
+        <th>Total</th>
+        <th>Edit</th>
+      </TableRow>
+    );
     return rows;
   }
 
