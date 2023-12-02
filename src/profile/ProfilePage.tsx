@@ -1,7 +1,7 @@
-import { Grid, Icon, TextField, Checkbox, Typography, Button } from "@mui/material";
+import { Grid, Icon, TextField, Checkbox, Typography, Button, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { InputBox, ApiHelper, ErrorMessages, UserHelper } from "@churchapps/apphelper"
+import { InputBox, ApiHelper, ErrorMessages, UserHelper, NotificationPreferenceInterface } from "@churchapps/apphelper"
 
 export const ProfilePage = () => {
   const [password, setPassword] = useState<string>("");
@@ -11,6 +11,7 @@ export const ProfilePage = () => {
   const [email, setEmail] = useState<string>("");
   const [optedOut, setOptedOut] = useState<boolean>(false);
   const [errors, setErrors] = useState([]);
+  const [pref, setPref] = useState<NotificationPreferenceInterface>({} as NotificationPreferenceInterface);
   const navigate = useNavigate();
 
   const initData = () => {
@@ -23,6 +24,9 @@ export const ProfilePage = () => {
       const { optedOut } = UserHelper.person;
       setOptedOut(optedOut);
     }
+
+    ApiHelper.get("/notificationPreferences/my", "MessagingApi").then(data => { setPref(data); });
+
   }
 
   const handleSave = () => {
@@ -43,9 +47,26 @@ export const ProfilePage = () => {
     }
   }
 
+  const handleNotificationSave = () => {
+    ApiHelper.post("/notificationPreferences", [pref], "MessagingApi").then(() => {
+      alert("Changes saved.");
+    });
+  }
+
   const areNamesChanged = () => {
     const { firstName: first, lastName: last } = UserHelper.user;
     return firstName !== first || lastName !== last;
+  }
+
+  const handlePrefChange = (e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>) => {
+    const p = { ...pref } as NotificationPreferenceInterface;
+    let value = e.target.value;
+    switch (e.target.name) {
+      case "push": p.allowPush = value === "true"; break;
+      case "emailFrequency": p.emailFrequency = value; break;
+    }
+    setPref(p);
+
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,6 +137,32 @@ export const ProfilePage = () => {
           </Grid>
         </Grid>
       </InputBox>
+
+      <InputBox headerText="Notification Preferences" saveFunction={handleNotificationSave}>
+        <p>Choose how you would like to receive updates about private messages, conversations, forms and other notifications.</p>
+        <Grid container spacing={3}>
+          <Grid item sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id="push">Allow Push Notifications</InputLabel>
+              <Select fullWidth name="push" labelId="push" label="Allow Push Notifications" value={pref.allowPush?.toString() || "true"} onChange={handlePrefChange}>
+                <MenuItem value="true">Yes</MenuItem>
+                <MenuItem value="false">No</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id="emailFrequency">Email Frequency</InputLabel>
+              <Select fullWidth name="emailFrequency" labelId="emailFrequency" label="Email Frequency" value={pref.emailFrequency || "daily"} onChange={handlePrefChange}>
+                <MenuItem value="never">Never</MenuItem>
+                <MenuItem value="individual">Individual</MenuItem>
+                <MenuItem value="daily">Daily</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+      </InputBox>
+
       <InputBox headerText="Account Deletion" saveFunction={null}>
         <Typography color="GrayText">Careful, these actions are permanent</Typography>
         <Button variant="outlined" color="error" sx={{ marginTop: 4 }} onClick={handleAccountDelete}>Delete my account</Button>
