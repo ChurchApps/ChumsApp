@@ -27,7 +27,7 @@ export const Tabs: React.FC<Props> = (props) => {
 
   if (formAdmin || formEdit || formMemberAdmin) { tabs.push(getTab(0, "questions", "notes", "Questions")); defaultTab = "questions"; }
   if ((formAdmin || formMemberAdmin) && formType === "form") { tabs.push(getTab(1, "members", "calendar_month", "Form Members")); }
-  if ((formAdmin || formMemberAdmin || formMemberView) && formType === "form") { tabs.push(getTab(2, "submissions", "calendar_month", "Form Submissions")); if (defaultTab !== "questions") defaultTab = "submissions" }
+  if ((formAdmin || formMemberAdmin || formMemberView)) { tabs.push(getTab(2, "submissions", "calendar_month", "Form Submissions")); if (defaultTab !== "questions") defaultTab = "submissions" }
 
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 

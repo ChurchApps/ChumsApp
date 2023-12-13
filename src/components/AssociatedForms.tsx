@@ -89,6 +89,6 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   useEffect(determineUnsubmitted, [allForms, props]);
   //add unRestrictedFormId=""
   if (!formPermission) return <></>
-  if (mode === "edit") return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={selectedFormId} contentType={props.contentType} contentId={props.contentId} />;
+  if (mode === "edit") return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={selectedFormId} contentType={props.contentType} contentId={props.contentId} personId={props.contentId} />;
   else return <div id="formSubmissionsAccordion">{getCards()}</div>;
 }
