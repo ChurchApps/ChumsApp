@@ -16,32 +16,35 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     content: () => contentRef.current
   });
 
-  const loadData = () => {
-    ApiHelper.get("/people", "MembershipApi").then(people => {
-      ApiHelper.get("/formsubmissions/formId/" + props.formId, "MembershipApi").then(formSubmissions => {
-        let csv: any[] = [];
-        let summaryData: any = [];
-        formSubmissions.forEach((formSubmission: any) => {
-          let csvData: any = {};
-          formSubmission = setFormSubmissionData(people, formSubmission);
-          formSubmission.questions.forEach((question: QuestionInterface) => {
-            const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id) || null;
-            const answerValue = answer?.value || "";
-            if (question.fieldType === "Yes/No" && answer?.value) answer.value = yesNoMap[answer.value];
-            csvData[question.title] = answerValue;
-            formSubmission.csvData.push({ [question.title]: answerValue });
-            if (question.fieldType === "Multiple Choice" || question.fieldType === "Yes/No") {
-              if (!summaryData.length) summaryData.push(setSummaryResultDefault(question, answer));
-              else setSummaryResultData(summaryData, question, answer);
-            }
-          });
-          csv.push(csvData);
-        });
-        setSummary(summaryData);
-        setFormSubmissions(formSubmissions);
-        setSummaryCsv(csv);
+  const loadData = async () => {
+    const people = await ApiHelper.get("/people", "MembershipApi");
+    const formSubmissions = await ApiHelper.get("/formsubmissions/formId/" + props.formId, "MembershipApi")
+
+    let csv: any[] = [];
+    let summaryData: any = [];
+    formSubmissions.forEach((formSubmission: any) => {
+      let submittedBy = getPerson(people, formSubmission);
+      let csvData: any = {};
+      csvData["For"] = submittedBy?.name?.display || "Anonymous";
+      formSubmission = setFormSubmissionData(people, formSubmission);
+      formSubmission.questions.forEach((question: QuestionInterface) => {
+        const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id) || null;
+        const answerValue = answer?.value || "";
+        if (question.fieldType === "Yes/No" && answer?.value) answer.value = yesNoMap[answer.value];
+        csvData[question.title] = answerValue;
+        formSubmission.csvData.push({ [question.title]: answerValue });
+        if (question.fieldType === "Multiple Choice" || question.fieldType === "Yes/No") {
+          if (!summaryData.length) summaryData.push(setSummaryResultDefault(question, answer));
+          else setSummaryResultData(summaryData, question, answer);
+        }
       });
+      csv.push(csvData);
     });
+    setSummary(summaryData);
+    setFormSubmissions(formSubmissions);
+    setSummaryCsv(csv);
+
+
   }
 
   const setSummaryResultData = (summaryData: any, question: QuestionInterface, answer: AnswerInterface) => {
@@ -55,8 +58,15 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     else summaryData.push(setSummaryResultDefault(question, answer));
   }
 
+  const getPerson = (people:PersonInterface[], formSubmission: any) => {
+    let result = people.find((person: PersonInterface) => person.id === formSubmission.submittedBy);
+    if (formSubmission.contentType==="person") result = people.find((person: PersonInterface) => person.id === formSubmission.contentId);
+    return result;
+  }
+
   const setFormSubmissionData = (people: PersonInterface[], formSubmission: any) => {
-    const submittedBy = people.find((person: PersonInterface) => person.id === formSubmission.submittedBy);
+    let submittedBy = getPerson(people, formSubmission);
+
     formSubmission.person = { name: submittedBy?.name?.display || "Anonymous", id: submittedBy?.id || null };
     formSubmission.mappedQA = [];
     formSubmission.csvData = [];
@@ -100,9 +110,9 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     let result: JSX.Element[] = [];
     if (formSubmissions.length) {
-      result.push(<th key="submittedBy">Submitted By</th>);
-      result.push(<th key="submissionDate">Submission Date</th>);
-      formSubmissions[0].questions.forEach((question: QuestionInterface) => result.push(<th key={question.id}>{question.title}</th>));
+      result.push(<TableCell key="submittedBy">{(formSubmissions[0].contentType==="person") ? "Submitted For" : "Submitted By" }</TableCell>);
+      result.push(<TableCell key="submissionDate">Submission Date</TableCell>);
+      formSubmissions[0].questions.forEach((question: QuestionInterface) => result.push(<TableCell key={question.id}>{question.title}</TableCell>));
     }
     return result;
   }
@@ -129,10 +139,12 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   }
 
   const getFormSubmissions = () => (
-    <Table className="table-scroll-x">
-      <TableHead><TableRow key="header">{getTableHeader()}</TableRow></TableHead>
-      <TableBody>{getTableRows()}</TableBody>
-    </Table>
+    <div style={{width: "100%", overflowX: "scroll"}}>
+      <Table>
+        <TableHead><TableRow key="header">{getTableHeader()}</TableRow></TableHead>
+        <TableBody>{getTableRows()}</TableBody>
+      </Table>
+    </div>
   );
 
   const getEditLinks = () => {
@@ -145,7 +157,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     );
   }
 
-  React.useEffect(loadData, [props.formId]); //eslint-disable-line
+  React.useEffect(() => { loadData() }, [props.formId]); //eslint-disable-line
 
   return (
     <Grid container spacing={3}>
