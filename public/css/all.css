@@ -678,6 +678,8 @@ label .description {
   color: #007bff;
 }
 
+#smallPeopleTable img { max-height: 50px; }
+
 @media print {
   .form-submission-summary {
     margin: 20px;
