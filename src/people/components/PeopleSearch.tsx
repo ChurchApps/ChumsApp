@@ -94,7 +94,7 @@ export function PeopleSearch(props: Props) {
     return result;
   }
 
-  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Simple</Button>} saveFunction={handleAdvancedSearch} saveText="Search" help="chums/advanced-search">
+  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Simple</Button>} saveFunction={handleAdvancedSearch} saveText="Search" isSubmitting={conditions.length < 1} help="chums/advanced-search">
     <p>All people where:</p>
     {getDisplayConditions()}
     {getAddCondition()}
