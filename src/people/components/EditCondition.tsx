@@ -31,7 +31,7 @@ export function EditCondition(props: Props) {
   }
 
   const setDefaultValue = (val: string) => {
-    if (!condition.value && val !== "") {
+    if ((!condition.value && val !== "") || val !== condition.value) {
       let c = { ...condition }
       c.value = val;
       setCondition(c);
