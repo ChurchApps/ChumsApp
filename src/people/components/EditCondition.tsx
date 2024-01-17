@@ -1,6 +1,6 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, SearchCondition, Permissions, GroupInterface } from "@churchapps/apphelper";
+import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading } from "@churchapps/apphelper";
 
 interface Props {
   conditionAdded: (condition: any) => void
@@ -11,6 +11,7 @@ export function EditCondition(props: Props) {
   const [condition, setCondition] = React.useState<SearchCondition>({ field: "displayName", operator: "equals", value: "" });
   const [loadedOptions, setLoadedOptions] = React.useState<any[]>([]);
   const [loadedOptionsField, setLoadedOptionsField] = React.useState("");
+  const [loadingOptions, setLoadingOptions] = React.useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     let c = { ...condition }
@@ -18,6 +19,8 @@ export function EditCondition(props: Props) {
 
       case "field":
         c.field = e.target.value;
+        c.operator = "equals";
+        c.value = "";
         break;
       case "operator":
         c.operator = e.target.value;
@@ -64,12 +67,12 @@ export function EditCondition(props: Props) {
       case "birthMonth":
       case "anniversaryMonth":
         options = [<MenuItem key="January" value="1">January</MenuItem>, <MenuItem key="February" value="2">February</MenuItem>, <MenuItem key="March" value="3">March</MenuItem>, <MenuItem key="April" value="4">April</MenuItem>, <MenuItem key="May" value="5">May</MenuItem>, <MenuItem key="June" value="6">June</MenuItem>, <MenuItem key="July" value="7">July</MenuItem>, <MenuItem key="August" value="8">August</MenuItem>, <MenuItem key="September" value="9">September</MenuItem>, <MenuItem key="October" value="10">October</MenuItem>, <MenuItem key="November" value="11">November</MenuItem>, <MenuItem key="December" value="12">December</MenuItem>]
-        setDefaultValue("January");
+        setDefaultValue("1");
         result = getValueSelect(options);
         break;
       case "birthDate":
       case "anniversary":
-        result = <TextField fullWidth label="Value" type="date" style={{ marginBottom: 5 }} name="value" placeholder="Value" value={condition.value} onChange={handleChange} />
+        result = <TextField fullWidth label="Value" type="date" InputLabelProps={{ shrink: true }} style={{ marginBottom: 5 }} name="value" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
       case "age":
       case "yearsMarried":
@@ -86,10 +89,12 @@ export function EditCondition(props: Props) {
     if (condition.field !== loadedOptionsField) {
       setLoadedOptionsField(condition.field);
       if (condition.field === "groupMember") {
+        setLoadingOptions(true);
         ApiHelper.get("/groups", "MembershipApi").then((groups: GroupInterface[]) => {
           const options: any[] = [];
           groups.forEach(g => { options.push({ value: g.id, text: g.name }); });
           setLoadedOptions(options);
+          setLoadingOptions(false);
         });
       }
     }
@@ -103,17 +108,7 @@ export function EditCondition(props: Props) {
   </FormControl>)
 
   const getOperatorOptions = () => {
-    let result = [
-      <MenuItem key="/equals" value="equals">=</MenuItem>,
-      <MenuItem key="/contains" value="contains">contains</MenuItem>,
-      <MenuItem key="/startsWith" value="startsWith">starts with</MenuItem>,
-      <MenuItem key="/endsWith" value="endsWith">ends with</MenuItem>,
-      <MenuItem key="/greaterThan" value="greaterThan">&gt;</MenuItem>,
-      <MenuItem key="/greaterThanEqual" value="greaterThanEqual">&gt;=</MenuItem>,
-      <MenuItem key="/lessThan" value="lessThan">&lt;</MenuItem>,
-      <MenuItem key="/lessThanEqual" value="lessThanEqual">&lt;=</MenuItem>,
-      <MenuItem key="/notEquals" value="notEquals">!=</MenuItem>
-    ]
+    let result = [];
 
     switch (condition?.field) {
       case "gender":
@@ -131,6 +126,19 @@ export function EditCondition(props: Props) {
         result = [
           <MenuItem key="/in" value="in">is member of</MenuItem>,
           <MenuItem key="/notIn" value="notIn">is not member of</MenuItem>
+        ]
+        break;
+      default:
+        result = [
+          <MenuItem key="/equals" value="equals">=</MenuItem>,
+          <MenuItem key="/contains" value="contains">contains</MenuItem>,
+          <MenuItem key="/startsWith" value="startsWith">starts with</MenuItem>,
+          <MenuItem key="/endsWith" value="endsWith">ends with</MenuItem>,
+          <MenuItem key="/greaterThan" value="greaterThan">&gt;</MenuItem>,
+          <MenuItem key="/greaterThanEqual" value="greaterThanEqual">&gt;=</MenuItem>,
+          <MenuItem key="/lessThan" value="lessThan">&lt;</MenuItem>,
+          <MenuItem key="/lessThanEqual" value="lessThanEqual">&lt;=</MenuItem>,
+          <MenuItem key="/notEquals" value="notEquals">!=</MenuItem>
         ]
         break;
     }
@@ -175,7 +183,7 @@ export function EditCondition(props: Props) {
       </Select>
     </FormControl>
 
-    {getValueField()}
+    {loadingOptions ? <Loading /> : <>{getValueField()}</>}
     <Button variant="outlined" fullWidth onClick={() => { props.conditionAdded(condition) }}>Save Condition</Button>
   </>
 }
