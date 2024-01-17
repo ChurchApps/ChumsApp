@@ -19,6 +19,8 @@ export function EditCondition(props: Props) {
 
       case "field":
         c.field = e.target.value;
+        c.operator = "equals";
+        c.value = "";
         break;
       case "operator":
         c.operator = e.target.value;
@@ -70,7 +72,7 @@ export function EditCondition(props: Props) {
         break;
       case "birthDate":
       case "anniversary":
-        result = <TextField fullWidth label="Value" type="date" style={{ marginBottom: 5 }} name="value" placeholder="Value" value={condition.value} onChange={handleChange} />
+        result = <TextField fullWidth label="Value" type="date" InputLabelProps={{ shrink: true }} style={{ marginBottom: 5 }} name="value" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
       case "age":
       case "yearsMarried":
@@ -106,17 +108,7 @@ export function EditCondition(props: Props) {
   </FormControl>)
 
   const getOperatorOptions = () => {
-    let result = [
-      <MenuItem key="/equals" value="equals">=</MenuItem>,
-      <MenuItem key="/contains" value="contains">contains</MenuItem>,
-      <MenuItem key="/startsWith" value="startsWith">starts with</MenuItem>,
-      <MenuItem key="/endsWith" value="endsWith">ends with</MenuItem>,
-      <MenuItem key="/greaterThan" value="greaterThan">&gt;</MenuItem>,
-      <MenuItem key="/greaterThanEqual" value="greaterThanEqual">&gt;=</MenuItem>,
-      <MenuItem key="/lessThan" value="lessThan">&lt;</MenuItem>,
-      <MenuItem key="/lessThanEqual" value="lessThanEqual">&lt;=</MenuItem>,
-      <MenuItem key="/notEquals" value="notEquals">!=</MenuItem>
-    ];
+    let result = [];
 
     switch (condition?.field) {
       case "gender":
@@ -134,6 +126,19 @@ export function EditCondition(props: Props) {
         result = [
           <MenuItem key="/in" value="in">is member of</MenuItem>,
           <MenuItem key="/notIn" value="notIn">is not member of</MenuItem>
+        ]
+        break;
+      default:
+        result = [
+          <MenuItem key="/equals" value="equals">=</MenuItem>,
+          <MenuItem key="/contains" value="contains">contains</MenuItem>,
+          <MenuItem key="/startsWith" value="startsWith">starts with</MenuItem>,
+          <MenuItem key="/endsWith" value="endsWith">ends with</MenuItem>,
+          <MenuItem key="/greaterThan" value="greaterThan">&gt;</MenuItem>,
+          <MenuItem key="/greaterThanEqual" value="greaterThanEqual">&gt;=</MenuItem>,
+          <MenuItem key="/lessThan" value="lessThan">&lt;</MenuItem>,
+          <MenuItem key="/lessThanEqual" value="lessThanEqual">&lt;=</MenuItem>,
+          <MenuItem key="/notEquals" value="notEquals">!=</MenuItem>
         ]
         break;
     }
