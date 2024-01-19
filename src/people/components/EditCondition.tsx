@@ -1,6 +1,6 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading } from "@churchapps/apphelper";
+import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface } from "@churchapps/apphelper";
 
 interface Props {
   conditionAdded: (condition: any) => void
@@ -78,6 +78,11 @@ export function EditCondition(props: Props) {
       case "yearsMarried":
         result = <TextField fullWidth label="Value" type="number" style={{ marginBottom: 5 }} name="value" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
+      case "donationMember":
+        loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+        setDefaultValue((loadedOptions?.length > 0) ? JSON.stringify(loadedOptions[0]) : "");
+        result = getValueSelect(options);
+        break;
       default:
         result = <TextField fullWidth label="Value" style={{ marginBottom: 5 }} name="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
@@ -96,6 +101,15 @@ export function EditCondition(props: Props) {
           setLoadedOptions(options);
           setLoadingOptions(false);
         });
+      }
+      if (condition.field === "donationMember") {
+        setLoadingOptions(true);
+        ApiHelper.get("/funds", "GivingApi").then((funds: FundInterface[]) => {
+          const options: any[] = [];
+          funds.forEach(f => { options.push({ value: f.id, text: f.name }); });
+          setLoadedOptions(options);
+          setLoadingOptions(false);
+        })
       }
     }
   }, [condition?.field.toString()]); //eslint-disable-line
@@ -127,6 +141,16 @@ export function EditCondition(props: Props) {
           <MenuItem key="/in" value="in">is member of</MenuItem>,
           <MenuItem key="/notIn" value="notIn">is not member of</MenuItem>
         ]
+        break;
+      case "donationMember":
+        if (condition.operator !== "donatedTo") {
+          const c = { ...condition };
+          c.operator = "donatedTo";
+          setCondition(c);
+        }
+        result = [
+          <MenuItem key="/donatedTo" value="donatedTo">has donated to</MenuItem>
+        ];
         break;
       default:
         result = [
@@ -174,6 +198,8 @@ export function EditCondition(props: Props) {
         <MenuItem key="/membership" value="membership" disabled>Membership</MenuItem>
         <MenuItem key="/membershipStatus" value="membershipStatus">Membership Status</MenuItem>
         {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">Group Member</MenuItem>}
+        <MenuItem key="/donation" value="donation" disabled>Donation</MenuItem>
+        {(Permissions.givingApi.donations) && <MenuItem key="/donationMember" value="donationMember">Member</MenuItem>}
       </Select>
     </FormControl>
     <FormControl fullWidth>
