@@ -108,6 +108,19 @@ export const AdminPage = () => {
         </Grid>
       </Grid>
       <ReportWithFilter keyName="usageTrends" autoRun={true} />
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
+          <DisplayBox headerIcon="summarize" headerText="Notes on How Values are Calculated">
+            <ul>
+              <li><b>Chums</b> - Comparable software is Breeze.  They charge $72/mo or $864/year.</li>
+              <li><b>B1</b> - Comparable software is SubSplash.  They start at $99/mo or $1200/year.  This does not include the cut they take on donations.</li>
+              <li><b>Lessons</b> - Comparable content is Orange.  They charge $1023/year for churches with 26-50 viewers for 252 Basic.</li>
+              <li><b>FreeShow</b> - Comparable software is ProPresenter.  It's $399 for a site license.  I made assumptions that the average church installs the software on 3 computers and divided our total installs by 3 to get the number of churches.  I also made the assumption that churches will upgrade to a newer version every 5 years on average.  So $399 / 5 years / 3 computers = $26.60 annual cost per computer.  If we can quantify these assumptions we should update this number.</li>
+            </ul>
+          </DisplayBox>
+
+        </Grid>
+      </Grid>
     </>
   );
 
