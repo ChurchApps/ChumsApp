@@ -1,6 +1,6 @@
 import React from "react";
 import { ChumsPersonHelper } from ".";
-import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition, PersonInterface, DisplayBox, ApiHelper } from "@churchapps/apphelper";
+import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition, PersonInterface, DisplayBox, ApiHelper, FundDonationInterface } from "@churchapps/apphelper";
 import { EditCondition } from "./EditCondition";
 import { Button, Icon, OutlinedInput, FormControl, InputLabel, Box } from "@mui/material";
 
@@ -38,6 +38,12 @@ export function PeopleSearch(props: Props) {
           const members: GroupMemberInterface[] = await ApiHelper.get("/groupmembers?groupId=" + val.value, "MembershipApi");
           const peopleIds = ArrayHelper.getIds(members, "personId");
           result.push({ field: "id", operator: c.operator, value: peopleIds.join(",") });
+          break;
+        case "donationMember":
+          const fundVal = JSON.parse(c.value);
+          const donationMember: FundDonationInterface[] = await ApiHelper.get("/funddonations?fundId=" + fundVal.value, "GivingApi");
+          const memberIds = ArrayHelper.getUniqueValues(donationMember, "donation.personId").filter(f => f !== null);
+          result.push({ field: "id", operator: c.operator, value: memberIds.join(",") });
           break;
         default:
           result.push(c);
@@ -82,7 +88,7 @@ export function PeopleSearch(props: Props) {
     let idx = 0;
     for (let c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in");
+      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedTo", "donated to");
       const index = idx;
       let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
       result.push(<Box key={index} sx={{display: "flex", alignItems: "center"}} mb={1}>
