@@ -1,6 +1,6 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface } from "@churchapps/apphelper";
+import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface, CampusInterface } from "@churchapps/apphelper";
 
 interface Props {
   conditionAdded: (condition: any) => void
@@ -26,8 +26,33 @@ export function EditCondition(props: Props) {
         c.operator = e.target.value;
         break;
       case "value":
+        const parsedValue = c.field === "campus" && JSON.parse(c?.value);
         c.value = e.target.value;
+        if (parsedValue && Array.isArray(parsedValue)) {
+          const newValue = [JSON.parse(e.target.value), parsedValue[1]];
+          c.value = JSON.stringify(newValue);
+        }
         break;
+      case "from":
+        const parsed = JSON.parse(c?.value);
+        let newObj;
+        if (Array.isArray(parsed)) {
+          newObj = [{ value: parsed[0].value, text: parsed[0].text }, { from: e.target.value, to: parsed[1]?.to }];
+        } else {
+          newObj = [{ value: parsed.value, text: parsed.text }, { from: e.target.value, to: parsed.to }];
+        }
+        c.value = JSON.stringify(newObj);
+        break;
+      case "to":
+        const parsedObj = JSON.parse(c?.value);
+        let obj;
+        if (Array.isArray(parsedObj)) {
+          obj = [{ value: parsedObj[0].value, text: parsedObj[0].text }, { from: parsedObj[1]?.from, to: e.target.value }];
+        } else {
+          obj = [{ value: parsedObj.value, text: parsedObj.text }, { from: parsedObj?.from, to: e.target.value }];
+        }
+        c.value = JSON.stringify(obj);
+      break;
     }
     setCondition(c);
   }
@@ -83,6 +108,17 @@ export function EditCondition(props: Props) {
         setDefaultValue((loadedOptions?.length > 0) ? JSON.stringify(loadedOptions[0]) : "");
         result = getValueSelect(options);
         break;
+      case "campus":
+        loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+        setDefaultValue((loadedOptions?.length > 0) ? JSON.stringify(loadedOptions[0]) : "");
+        result = <>
+          {getValueSelect(options)}
+          <Stack direction="row" spacing={2} sx={{ marginTop: "16px", marginBottom: "8px" }}>
+            <TextField fullWidth label="From" name="from" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
+            <TextField fullWidth label="To" name="to" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
+          </Stack>
+        </>;
+        break;  
       default:
         result = <TextField fullWidth label="Value" style={{ marginBottom: 5 }} name="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
@@ -111,15 +147,28 @@ export function EditCondition(props: Props) {
           setLoadingOptions(false);
         })
       }
+      if (condition.field === "campus") {
+        setLoadingOptions(true);
+        ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => {
+          const options: any[] = [];
+          data.forEach(c => { options.push({ value: c.id, text: c.name }); });
+          setLoadedOptions(options);
+          setLoadingOptions(false);
+        });
+      }
     }
   }, [condition?.field.toString()]); //eslint-disable-line
 
-  const getValueSelect = (options: JSX.Element[]) => (<FormControl fullWidth>
-    <InputLabel>Value</InputLabel>
-    <Select name="value" label="Value" type="text" placeholder="Value" value={condition.value} onChange={handleChange}>
-      {options}
-    </Select>
-  </FormControl>)
+  const getValueSelect = (options: JSX.Element[]) => {
+    const parsedValue = condition.field === "campus" && condition.value !== "" && JSON.parse(condition.value);
+    const selectValue = (parsedValue && Array.isArray(parsedValue)) ? JSON.stringify(parsedValue[0]) : condition.value;
+    return (<FormControl fullWidth>
+      <InputLabel>Value</InputLabel>
+      <Select name="value" label="Value" type="text" placeholder="Value" value={selectValue} onChange={handleChange}>
+        {options}
+      </Select>
+    </FormControl>)
+  }
 
   const getOperatorOptions = () => {
     let result = [];
@@ -151,6 +200,16 @@ export function EditCondition(props: Props) {
         result = [
           <MenuItem key="/donatedTo" value="donatedTo">has donated to</MenuItem>
         ];
+        break;
+      case "campus":
+        if (condition.operator !== "attenedCampus") {
+          const c = { ...condition };
+          c.operator = "attenedCampus";
+          setCondition(c);
+        }
+        result = [
+          <MenuItem key="/attenedCampus" value="attenedCampus">has attended</MenuItem>
+        ]
         break;
       default:
         result = [
@@ -200,6 +259,8 @@ export function EditCondition(props: Props) {
         {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">Group Member</MenuItem>}
         <MenuItem key="/donation" value="donation" disabled>Donation</MenuItem>
         {(Permissions.givingApi.donations) && <MenuItem key="/donationMember" value="donationMember">Member</MenuItem>}
+        <MenuItem key="/attendance" value="attendance" disabled>Attendance</MenuItem>
+        {(Permissions.attendanceApi.attendance) && <MenuItem key="/campus" value="campus">Campus</MenuItem>}
       </Select>
     </FormControl>
     <FormControl fullWidth>

@@ -45,6 +45,12 @@ export function PeopleSearch(props: Props) {
           const memberIds = ArrayHelper.getUniqueValues(donationMember, "donation.personId").filter(f => f !== null);
           result.push({ field: "id", operator: c.operator, value: memberIds.join(",") });
           break;
+        case "campus":
+          const campusVal = JSON.parse(c.value);
+          const campusAttendees = await ApiHelper.get(`/attendancerecords/search?campusId=${campusVal[0].value}&from=${campusVal[1].from}&to=${campusVal[1].to}`, "AttendanceApi");
+          const attendeeIds = ArrayHelper.getIds(campusAttendees, "personId");
+          result.push({ field: "id", operator: c.operator, value: attendeeIds.join(",") });
+          break;
         default:
           result.push(c);
           break;
@@ -88,9 +94,13 @@ export function PeopleSearch(props: Props) {
     let idx = 0;
     for (let c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedTo", "donated to");
+      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedTo", "donated to").replace("attenedCampus", "attendees at");
       const index = idx;
       let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
+      if (c.field === "campus") {
+        const parsedValue = JSON.parse(c.value);
+        displayValue = `${parsedValue[0].text} [${parsedValue[1]?.from} - ${parsedValue[1]?.to}]`;
+      }
       result.push(<Box key={index} sx={{display: "flex", alignItems: "center"}} mb={1}>
         <a href="about:blank" style={{display: "flex"}} onClick={(e) => { e.preventDefault(); removeCondition(index) }}><Icon sx={{ marginRight: "5px" }}>delete</Icon></a>
         <Box><b>{displayField}</b> {displayOperator} <i>{displayValue}</i></Box>
