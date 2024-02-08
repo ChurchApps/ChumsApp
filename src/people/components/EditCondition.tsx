@@ -52,7 +52,7 @@ export function EditCondition(props: Props) {
           obj = [{ value: parsedObj.value, text: parsedObj.text }, { from: parsedObj?.from, to: e.target.value }];
         }
         c.value = JSON.stringify(obj);
-      break;
+        break;
     }
     setCondition(c);
   }
@@ -118,7 +118,7 @@ export function EditCondition(props: Props) {
             <TextField fullWidth label="To" name="to" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
           </Stack>
         </>;
-        break;  
+        break;
       default:
         result = <TextField fullWidth label="Value" style={{ marginBottom: 5 }} name="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
