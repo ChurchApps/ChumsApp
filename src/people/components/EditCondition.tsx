@@ -24,12 +24,12 @@ export function EditCondition(props: Props) {
         break;
       case "operator":
         c.operator = e.target.value;
-        if (c.field === "memberDonations") {
+        if (c.field === "memberDonations" || c.field === "memberAttendance") {
           c.value = "";
         }
         break;
       case "value":
-        const parsedValue = (c.field === "campus" || c.field === "memberDonations") && JSON.parse(c?.value);
+        const parsedValue = (c.field === "memberAttendance" || c.field === "memberDonations") && JSON.parse(c?.value);
         c.value = e.target.value;
         if (parsedValue && Array.isArray(parsedValue)) {
           const newValue = [JSON.parse(e.target.value), parsedValue[1]];
@@ -110,7 +110,7 @@ export function EditCondition(props: Props) {
         let defaultDonationValue;
         if (condition.operator === "donatedToAny") {
           options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>Any</MenuItem>);
-          defaultDonationValue = JSON.stringify([{value: "any", text: "Any"}, { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]);
+          defaultDonationValue = JSON.stringify([{ value: "any", text: "Any" }, { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]);
         } else  {
           loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultDonationValue = (loadedOptions?.length > 0) ? JSON.stringify([loadedOptions[0], { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]) : "";
@@ -124,9 +124,16 @@ export function EditCondition(props: Props) {
           </Stack>
         </>;
         break;
-      case "campus":
-        loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
-        setDefaultValue((loadedOptions?.length > 0) ? JSON.stringify(loadedOptions[0]) : "");
+      case "memberAttendance":
+        let defaultAttendanceValue;
+        if (condition.operator === "attenedAny") {
+          options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>Any</MenuItem>);
+          defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]);
+        } else {
+          loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          defaultAttendanceValue = (loadedOptions?.length > 0) ? JSON.stringify([loadedOptions[0], { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]) : "";
+        }
+        setDefaultValue(defaultAttendanceValue);
         result = <>
           {getValueSelect(options)}
           <Stack direction="row" spacing={2} sx={{ marginTop: "16px", marginBottom: "8px" }}>
@@ -163,7 +170,7 @@ export function EditCondition(props: Props) {
           setLoadingOptions(false);
         })
       }
-      if (condition.field === "campus") {
+      if (condition.field === "memberAttendance") {
         setLoadingOptions(true);
         ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => {
           const options: any[] = [];
@@ -176,7 +183,7 @@ export function EditCondition(props: Props) {
   }, [condition?.field.toString()]); //eslint-disable-line
 
   const getValueSelect = (options: JSX.Element[]) => {
-    const parsedValue = (condition.field === "campus" || condition.field === "memberDonations") && condition.value !== "" && JSON.parse(condition.value);
+    const parsedValue = (condition.field === "memberAttendance" || condition.field === "memberDonations") && condition.value !== "" && JSON.parse(condition.value);
     const selectValue = (parsedValue && Array.isArray(parsedValue)) ? JSON.stringify(parsedValue[0]) : condition.value;
     return (<FormControl fullWidth>
       <InputLabel>Value</InputLabel>
@@ -218,14 +225,15 @@ export function EditCondition(props: Props) {
           <MenuItem key="/donatedTo" value="donatedTo">has donated to</MenuItem>
         ];
         break;
-      case "campus":
-        if (condition.operator !== "attenedCampus") {
+      case "memberAttendance":
+        if (condition.operator !== "attenedCampus" && condition.operator !== "attenedAny") {
           const c = { ...condition };
           c.operator = "attenedCampus";
           setCondition(c);
         }
         result = [
-          <MenuItem key="/attenedCampus" value="attenedCampus">has attended</MenuItem>
+          <MenuItem key="/attenedAny" value="attenedAny">has attended (in general)</MenuItem>,
+          <MenuItem key="/attenedCampus" value="attenedCampus">has attended (campus)</MenuItem>
         ]
         break;
       default:
@@ -276,8 +284,7 @@ export function EditCondition(props: Props) {
         {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">Group Member</MenuItem>}
         <MenuItem key="/activity" value="activity" disabled>Activity</MenuItem>
         {(Permissions.givingApi.donations) && <MenuItem key="/memberDonations" value="memberDonations">Member Donations</MenuItem>}
-        <MenuItem key="/attendance" value="attendance" disabled>Attendance</MenuItem>
-        {(Permissions.attendanceApi.attendance) && <MenuItem key="/campus" value="campus">Campus</MenuItem>}
+        {(Permissions.attendanceApi.attendance) && <MenuItem key="/memberAttendance" value="memberAttendance">Member Attendance</MenuItem>}
       </Select>
     </FormControl>
     <FormControl fullWidth>

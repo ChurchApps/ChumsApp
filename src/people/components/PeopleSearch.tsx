@@ -50,10 +50,15 @@ export function PeopleSearch(props: Props) {
           const memberIds = ArrayHelper.getUniqueValues(memberDonations, "donation.personId").filter(f => f !== null);
           result.push({ field: "id", operator: c.operator, value: memberIds.join(",") });
           break;
-        case "campus":
+        case "memberAttendance":
           const campusVal = JSON.parse(c.value);
-          const campusAttendees = await ApiHelper.get(`/attendancerecords/search?campusId=${campusVal[0].value}&from=${campusVal[1].from}&to=${campusVal[1].to}`, "AttendanceApi");
-          const attendeeIds = ArrayHelper.getIds(campusAttendees, "personId");
+          let attendees;
+          if (c.operator === "attenedAny") {
+            attendees = await ApiHelper.get(`/attendancerecords/search?startDate=${campusVal[1].from}&endDate=${campusVal[1].to}`, "AttendanceApi");
+          } else {
+            attendees = await ApiHelper.get(`/attendancerecords/search?campusId=${campusVal[0].value}&startDate=${campusVal[1].from}&endDate=${campusVal[1].to}`, "AttendanceApi");
+          }
+          const attendeeIds = ArrayHelper.getIds(attendees, "personId");
           result.push({ field: "id", operator: c.operator, value: attendeeIds.join(",") });
           break;
         default:
@@ -99,10 +104,10 @@ export function PeopleSearch(props: Props) {
     let idx = 0;
     for (let c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedToAny", "made to").replace("donatedTo", "made to").replace("attenedCampus", "attendees at");
+      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedToAny", "made to").replace("donatedTo", "made to").replace("attenedCampus", "for").replace("attenedAny", "for");
       const index = idx;
       let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
-      if (c.field === "campus" || c.field === "memberDonations") {
+      if (c.field === "memberAttendance" || c.field === "memberDonations") {
         const parsedValue = JSON.parse(c.value);
         displayValue = `${parsedValue[0]?.text} [${parsedValue[1]?.from} - ${parsedValue[1]?.to}]`;
       }
