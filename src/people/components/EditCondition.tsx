@@ -1,6 +1,6 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface, CampusInterface } from "@churchapps/apphelper";
+import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface, CampusInterface, DateHelper } from "@churchapps/apphelper";
 
 interface Props {
   conditionAdded: (condition: any) => void
@@ -24,9 +24,12 @@ export function EditCondition(props: Props) {
         break;
       case "operator":
         c.operator = e.target.value;
+        if (c.field === "memberDonations" || c.field === "memberAttendance") {
+          c.value = "";
+        }
         break;
       case "value":
-        const parsedValue = c.field === "campus" && JSON.parse(c?.value);
+        const parsedValue = (c.field === "memberAttendance" || c.field === "memberDonations") && JSON.parse(c?.value);
         c.value = e.target.value;
         if (parsedValue && Array.isArray(parsedValue)) {
           const newValue = [JSON.parse(e.target.value), parsedValue[1]];
@@ -103,14 +106,34 @@ export function EditCondition(props: Props) {
       case "yearsMarried":
         result = <TextField fullWidth label="Value" type="number" style={{ marginBottom: 5 }} name="value" placeholder="Value" value={condition.value} onChange={handleChange} />
         break;
-      case "donationMember":
-        loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
-        setDefaultValue((loadedOptions?.length > 0) ? JSON.stringify(loadedOptions[0]) : "");
-        result = getValueSelect(options);
+      case "memberDonations":
+        let defaultDonationValue;
+        if (condition.operator === "donatedToAny") {
+          options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>Any</MenuItem>);
+          defaultDonationValue = JSON.stringify([{ value: "any", text: "Any" }, { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]);
+        } else  {
+          loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          defaultDonationValue = (loadedOptions?.length > 0) ? JSON.stringify([loadedOptions[0], { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]) : "";
+        }
+        setDefaultValue(defaultDonationValue);
+        result = <>
+          {getValueSelect(options)}
+          <Stack direction="row" spacing={2} sx={{ marginTop: "16px", marginBottom: "8px" }}>
+            <TextField fullWidth label="From" name="from" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
+            <TextField fullWidth label="To" name="to" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
+          </Stack>
+        </>;
         break;
-      case "campus":
-        loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
-        setDefaultValue((loadedOptions?.length > 0) ? JSON.stringify(loadedOptions[0]) : "");
+      case "memberAttendance":
+        let defaultAttendanceValue;
+        if (condition.operator === "attenedAny") {
+          options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>Any</MenuItem>);
+          defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]);
+        } else {
+          loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          defaultAttendanceValue = (loadedOptions?.length > 0) ? JSON.stringify([loadedOptions[0], { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]) : "";
+        }
+        setDefaultValue(defaultAttendanceValue);
         result = <>
           {getValueSelect(options)}
           <Stack direction="row" spacing={2} sx={{ marginTop: "16px", marginBottom: "8px" }}>
@@ -138,7 +161,7 @@ export function EditCondition(props: Props) {
           setLoadingOptions(false);
         });
       }
-      if (condition.field === "donationMember") {
+      if (condition.field === "memberDonations") {
         setLoadingOptions(true);
         ApiHelper.get("/funds", "GivingApi").then((funds: FundInterface[]) => {
           const options: any[] = [];
@@ -147,7 +170,7 @@ export function EditCondition(props: Props) {
           setLoadingOptions(false);
         })
       }
-      if (condition.field === "campus") {
+      if (condition.field === "memberAttendance") {
         setLoadingOptions(true);
         ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => {
           const options: any[] = [];
@@ -160,7 +183,7 @@ export function EditCondition(props: Props) {
   }, [condition?.field.toString()]); //eslint-disable-line
 
   const getValueSelect = (options: JSX.Element[]) => {
-    const parsedValue = condition.field === "campus" && condition.value !== "" && JSON.parse(condition.value);
+    const parsedValue = (condition.field === "memberAttendance" || condition.field === "memberDonations") && condition.value !== "" && JSON.parse(condition.value);
     const selectValue = (parsedValue && Array.isArray(parsedValue)) ? JSON.stringify(parsedValue[0]) : condition.value;
     return (<FormControl fullWidth>
       <InputLabel>Value</InputLabel>
@@ -191,24 +214,26 @@ export function EditCondition(props: Props) {
           <MenuItem key="/notIn" value="notIn">is not member of</MenuItem>
         ]
         break;
-      case "donationMember":
-        if (condition.operator !== "donatedTo") {
+      case "memberDonations":
+        if (condition.operator !== "donatedTo" && condition.operator !== "donatedToAny") {
           const c = { ...condition };
           c.operator = "donatedTo";
           setCondition(c);
         }
         result = [
+          <MenuItem key="/donatedToAny" value="donatedToAny">has donated (in general)</MenuItem>,
           <MenuItem key="/donatedTo" value="donatedTo">has donated to</MenuItem>
         ];
         break;
-      case "campus":
-        if (condition.operator !== "attenedCampus") {
+      case "memberAttendance":
+        if (condition.operator !== "attenedCampus" && condition.operator !== "attenedAny") {
           const c = { ...condition };
           c.operator = "attenedCampus";
           setCondition(c);
         }
         result = [
-          <MenuItem key="/attenedCampus" value="attenedCampus">has attended</MenuItem>
+          <MenuItem key="/attenedAny" value="attenedAny">has attended (in general)</MenuItem>,
+          <MenuItem key="/attenedCampus" value="attenedCampus">has attended (campus)</MenuItem>
         ]
         break;
       default:
@@ -257,10 +282,9 @@ export function EditCondition(props: Props) {
         <MenuItem key="/membership" value="membership" disabled>Membership</MenuItem>
         <MenuItem key="/membershipStatus" value="membershipStatus">Membership Status</MenuItem>
         {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">Group Member</MenuItem>}
-        <MenuItem key="/donation" value="donation" disabled>Donation</MenuItem>
-        {(Permissions.givingApi.donations) && <MenuItem key="/donationMember" value="donationMember">Member</MenuItem>}
-        <MenuItem key="/attendance" value="attendance" disabled>Attendance</MenuItem>
-        {(Permissions.attendanceApi.attendance) && <MenuItem key="/campus" value="campus">Campus</MenuItem>}
+        <MenuItem key="/activity" value="activity" disabled>Activity</MenuItem>
+        {(Permissions.givingApi.donations) && <MenuItem key="/memberDonations" value="memberDonations">Member Donations</MenuItem>}
+        {(Permissions.attendanceApi.attendance) && <MenuItem key="/memberAttendance" value="memberAttendance">Member Attendance</MenuItem>}
       </Select>
     </FormControl>
     <FormControl fullWidth>
