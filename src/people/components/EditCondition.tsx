@@ -126,12 +126,18 @@ export function EditCondition(props: Props) {
         break;
       case "memberAttendance":
         let defaultAttendanceValue;
+        const defaultDateObj = { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) };
         if (condition.operator === "attenedAny") {
           options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>Any</MenuItem>);
-          defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]);
+          defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, defaultDateObj]);
+        } else if (condition.operator === "attenedService") {
+          const serviceOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'service' in item)[0]?.service;
+          serviceOptions && serviceOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          defaultAttendanceValue = (serviceOptions?.length > 0) ? JSON.stringify([serviceOptions[0], defaultDateObj]) : "";
         } else {
-          loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
-          defaultAttendanceValue = (loadedOptions?.length > 0) ? JSON.stringify([loadedOptions[0], { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]) : "";
+          const campusOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'campus' in item)[0]?.campus;
+          campusOptions && campusOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          defaultAttendanceValue = (campusOptions?.length > 0) ? JSON.stringify([campusOptions[0], defaultDateObj]) : "";
         }
         setDefaultValue(defaultAttendanceValue);
         result = <>
@@ -171,13 +177,20 @@ export function EditCondition(props: Props) {
         })
       }
       if (condition.field === "memberAttendance") {
+        const optionsArray: any[] = [];
         setLoadingOptions(true);
         ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => {
           const options: any[] = [];
           data.forEach(c => { options.push({ value: c.id, text: c.name }); });
-          setLoadedOptions(options);
+          optionsArray.push({ campus: options });
+        });
+        ApiHelper.get("/services", "AttendanceApi").then((data: any[]) => {
+          const options: any[] = [];
+          data.forEach(s => { options.push({ value: s.id, text: `${s.campus.name} - ${s.name}` }); });
+          optionsArray.push({ service: options });
           setLoadingOptions(false);
         });
+        setLoadedOptions(optionsArray);
       }
     }
   }, [condition?.field.toString()]); //eslint-disable-line
@@ -226,14 +239,15 @@ export function EditCondition(props: Props) {
         ];
         break;
       case "memberAttendance":
-        if (condition.operator !== "attenedCampus" && condition.operator !== "attenedAny") {
+        if (condition.operator !== "attenedCampus" && condition.operator !== "attenedAny" && condition.operator !== "attenedService") {
           const c = { ...condition };
           c.operator = "attenedCampus";
           setCondition(c);
         }
         result = [
           <MenuItem key="/attenedAny" value="attenedAny">has attended (in general)</MenuItem>,
-          <MenuItem key="/attenedCampus" value="attenedCampus">has attended (campus)</MenuItem>
+          <MenuItem key="/attenedCampus" value="attenedCampus">has attended (campus)</MenuItem>,
+          <MenuItem key="/attenedService" value="attenedService">has attended (service)</MenuItem>
         ]
         break;
       default:
