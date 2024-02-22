@@ -127,10 +127,10 @@ export function EditCondition(props: Props) {
       case "memberAttendance":
         let defaultAttendanceValue;
         const defaultDateObj = { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) };
-        if (condition.operator === "attenedAny") {
+        if (condition.operator === "attendedAny") {
           options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>Any</MenuItem>);
           defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, defaultDateObj]);
-        } else if (condition.operator === "attenedService") {
+        } else if (condition.operator === "attendedService") {
           const serviceOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'service' in item)[0]?.service;
           serviceOptions && serviceOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (serviceOptions?.length > 0) ? JSON.stringify([serviceOptions[0], defaultDateObj]) : "";
@@ -239,15 +239,15 @@ export function EditCondition(props: Props) {
         ];
         break;
       case "memberAttendance":
-        if (condition.operator !== "attenedCampus" && condition.operator !== "attenedAny" && condition.operator !== "attenedService") {
+        if (condition.operator !== "attendedCampus" && condition.operator !== "attendedAny" && condition.operator !== "attendedService") {
           const c = { ...condition };
-          c.operator = "attenedCampus";
+          c.operator = "attendedCampus";
           setCondition(c);
         }
         result = [
-          <MenuItem key="/attenedAny" value="attenedAny">has attended (in general)</MenuItem>,
-          <MenuItem key="/attenedCampus" value="attenedCampus">has attended (campus)</MenuItem>,
-          <MenuItem key="/attenedService" value="attenedService">has attended (service)</MenuItem>
+          <MenuItem key="/attendedAny" value="attendedAny">has attended (in general)</MenuItem>,
+          <MenuItem key="/attendedCampus" value="attendedCampus">has attended (campus)</MenuItem>,
+          <MenuItem key="/attendedService" value="attendedService">has attended (service)</MenuItem>
         ]
         break;
       default:

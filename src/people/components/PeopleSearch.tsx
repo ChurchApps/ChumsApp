@@ -53,9 +53,9 @@ export function PeopleSearch(props: Props) {
         case "memberAttendance":
           const attendanceValue = JSON.parse(c.value);
           let attendees;
-          if (c.operator === "attenedCampus") {
+          if (c.operator === "attendedCampus") {
             attendees = await ApiHelper.get(`/attendancerecords/search?campusId=${attendanceValue[0].value}&startDate=${attendanceValue[1].from}&endDate=${attendanceValue[1].to}`, "AttendanceApi");
-          } else if (c.operator === "attenedService") {
+          } else if (c.operator === "attendedService") {
             attendees = await ApiHelper.get(`/attendancerecords/search?serviceId=${attendanceValue[0].value}&startDate=${attendanceValue[1].from}&endDate=${attendanceValue[1].to}`, "AttendanceApi");
           } else {
             attendees = await ApiHelper.get(`/attendancerecords/search?startDate=${attendanceValue[1].from}&endDate=${attendanceValue[1].to}`, "AttendanceApi");
@@ -106,7 +106,7 @@ export function PeopleSearch(props: Props) {
     let idx = 0;
     for (let c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedToAny", "made to").replace("donatedTo", "made to").replace("attenedCampus", "for").replace("attenedAny", "for").replace("attenedService", "for");
+      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedToAny", "made to").replace("donatedTo", "made to").replace("attendedCampus", "for").replace("attendedAny", "for").replace("attendedService", "for");
       const index = idx;
       let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
       if (c.field === "memberAttendance" || c.field === "memberDonations") {
