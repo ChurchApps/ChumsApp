@@ -130,11 +130,18 @@ export function EditCondition(props: Props) {
         if (condition.operator === "attendedAny") {
           options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>Any</MenuItem>);
           defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, defaultDateObj]);
-        } else if (condition.operator === "attendedService") {
+        }
+        else if (condition.operator === "attendedService") {
           const serviceOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'service' in item)[0]?.service;
           serviceOptions && serviceOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (serviceOptions?.length > 0) ? JSON.stringify([serviceOptions[0], defaultDateObj]) : "";
-        } else {
+        }
+        else if (condition.operator === "attendedServiceTime") {
+          const serviceTimeOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'serviceTime' in item)[0]?.serviceTime;
+          serviceTimeOptions && serviceTimeOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          defaultAttendanceValue = (serviceTimeOptions?.length > 0) ? JSON.stringify([serviceTimeOptions[0], defaultDateObj]) : "";
+        }
+        else {
           const campusOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'campus' in item)[0]?.campus;
           campusOptions && campusOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (campusOptions?.length > 0) ? JSON.stringify([campusOptions[0], defaultDateObj]) : "";
@@ -188,6 +195,11 @@ export function EditCondition(props: Props) {
           const options: any[] = [];
           data.forEach(s => { options.push({ value: s.id, text: `${s.campus.name} - ${s.name}` }); });
           optionsArray.push({ service: options });
+        });
+        ApiHelper.get("/serviceTimes", "AttendanceApi").then((data: any[]) => {
+          const options: any[] = [];
+          data.forEach(st => { options.push({ value: st.id, text: st.longName }); });
+          optionsArray.push({ serviceTime: options });
           setLoadingOptions(false);
         });
         setLoadedOptions(optionsArray);
@@ -239,7 +251,7 @@ export function EditCondition(props: Props) {
         ];
         break;
       case "memberAttendance":
-        if (condition.operator !== "attendedCampus" && condition.operator !== "attendedAny" && condition.operator !== "attendedService") {
+        if (condition.operator !== "attendedCampus" && condition.operator !== "attendedAny" && condition.operator !== "attendedService" && condition.operator !== "attendedServiceTime") {
           const c = { ...condition };
           c.operator = "attendedCampus";
           setCondition(c);
@@ -247,7 +259,8 @@ export function EditCondition(props: Props) {
         result = [
           <MenuItem key="/attendedAny" value="attendedAny">has attended (in general)</MenuItem>,
           <MenuItem key="/attendedCampus" value="attendedCampus">has attended (campus)</MenuItem>,
-          <MenuItem key="/attendedService" value="attendedService">has attended (service)</MenuItem>
+          <MenuItem key="/attendedService" value="attendedService">has attended (service)</MenuItem>,
+          <MenuItem key="/attendedServiceTime" value="attendedServiceTime">has attended (service Time)</MenuItem>
         ]
         break;
       default:
