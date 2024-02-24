@@ -1,6 +1,6 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface, CampusInterface, DateHelper } from "@churchapps/apphelper";
+import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface, CampusInterface, DateHelper, ServiceInterface, ServiceTimeInterface } from "@churchapps/apphelper";
 
 interface Props {
   conditionAdded: (condition: any) => void
@@ -132,17 +132,22 @@ export function EditCondition(props: Props) {
           defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, defaultDateObj]);
         }
         else if (condition.operator === "attendedService") {
-          const serviceOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'service' in item)[0]?.service;
+          const serviceOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'services' in item)[0]?.services;
           serviceOptions && serviceOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (serviceOptions?.length > 0) ? JSON.stringify([serviceOptions[0], defaultDateObj]) : "";
         }
         else if (condition.operator === "attendedServiceTime") {
-          const serviceTimeOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'serviceTime' in item)[0]?.serviceTime;
+          const serviceTimeOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'serviceTimes' in item)[0]?.serviceTimes;
           serviceTimeOptions && serviceTimeOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (serviceTimeOptions?.length > 0) ? JSON.stringify([serviceTimeOptions[0], defaultDateObj]) : "";
         }
+        else if (condition.operator === "attendedGroup") {
+          const groupOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'groups' in item)[0]?.groups;
+          groupOptions && groupOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          defaultAttendanceValue = (groupOptions?.length > 0) ? JSON.stringify([groupOptions[0], defaultDateObj]) : "";
+        }
         else {
-          const campusOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'campus' in item)[0]?.campus;
+          const campusOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'campuses' in item)[0]?.campuses;
           campusOptions && campusOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (campusOptions?.length > 0) ? JSON.stringify([campusOptions[0], defaultDateObj]) : "";
         }
@@ -186,20 +191,25 @@ export function EditCondition(props: Props) {
       if (condition.field === "memberAttendance") {
         const optionsArray: any[] = [];
         setLoadingOptions(true);
-        ApiHelper.get("/campuses", "AttendanceApi").then((data: CampusInterface[]) => {
+        ApiHelper.get("/campuses", "AttendanceApi").then((campuses: CampusInterface[]) => {
           const options: any[] = [];
-          data.forEach(c => { options.push({ value: c.id, text: c.name }); });
-          optionsArray.push({ campus: options });
+          campuses.forEach(c => { options.push({ value: c.id, text: c.name }); });
+          optionsArray.push({ campuses: options });
         });
-        ApiHelper.get("/services", "AttendanceApi").then((data: any[]) => {
+        ApiHelper.get("/services", "AttendanceApi").then((services: ServiceInterface[]) => {
           const options: any[] = [];
-          data.forEach(s => { options.push({ value: s.id, text: `${s.campus.name} - ${s.name}` }); });
-          optionsArray.push({ service: options });
+          services.forEach(s => { options.push({ value: s.id, text: `${s.campus.name} - ${s.name}` }); });
+          optionsArray.push({ services: options });
         });
-        ApiHelper.get("/serviceTimes", "AttendanceApi").then((data: any[]) => {
+        ApiHelper.get("/serviceTimes", "AttendanceApi").then((serviceTimes: ServiceTimeInterface[]) => {
           const options: any[] = [];
-          data.forEach(st => { options.push({ value: st.id, text: st.longName }); });
-          optionsArray.push({ serviceTime: options });
+          serviceTimes.forEach(st => { options.push({ value: st.id, text: st.longName }); });
+          optionsArray.push({ serviceTimes: options });
+        });
+        ApiHelper.get("/groups", "MembershipApi").then((groups: GroupInterface[]) => {
+          const options: any[] = [];
+          groups.forEach(g => { options.push({ value: g.id, text: g.name }); });
+          optionsArray.push({ groups: options });
           setLoadingOptions(false);
         });
         setLoadedOptions(optionsArray);
@@ -251,7 +261,7 @@ export function EditCondition(props: Props) {
         ];
         break;
       case "memberAttendance":
-        if (condition.operator !== "attendedCampus" && condition.operator !== "attendedAny" && condition.operator !== "attendedService" && condition.operator !== "attendedServiceTime") {
+        if (condition.operator !== "attendedCampus" && condition.operator !== "attendedAny" && condition.operator !== "attendedService" && condition.operator !== "attendedServiceTime" && condition.operator !== "attendedGroup") {
           const c = { ...condition };
           c.operator = "attendedCampus";
           setCondition(c);
@@ -260,7 +270,8 @@ export function EditCondition(props: Props) {
           <MenuItem key="/attendedAny" value="attendedAny">has attended (in general)</MenuItem>,
           <MenuItem key="/attendedCampus" value="attendedCampus">has attended (campus)</MenuItem>,
           <MenuItem key="/attendedService" value="attendedService">has attended (service)</MenuItem>,
-          <MenuItem key="/attendedServiceTime" value="attendedServiceTime">has attended (service Time)</MenuItem>
+          <MenuItem key="/attendedServiceTime" value="attendedServiceTime">has attended (service Time)</MenuItem>,
+          <MenuItem key="/attendedGroup" value="attendedGroup">has attended (group)</MenuItem>
         ]
         break;
       default:

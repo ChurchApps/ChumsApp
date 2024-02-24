@@ -63,6 +63,9 @@ export function PeopleSearch(props: Props) {
           else if (c.operator === "attendedServiceTime") {
             attendees = await ApiHelper.get(`/attendancerecords/search?serviceTimeId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
           }
+          else if (c.operator === "attendedGroup") {
+            attendees = await ApiHelper.get(`/attendancerecords/search?groupId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
+          }
           else {
             attendees = await ApiHelper.get(`/attendancerecords/search?${dateParams}`, "AttendanceApi");
           }
@@ -112,7 +115,7 @@ export function PeopleSearch(props: Props) {
     let idx = 0;
     for (let c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedToAny", "made to").replace("donatedTo", "made to").replace("attendedCampus", "for").replace("attendedAny", "for").replace("attendedServiceTime", "for").replace("attendedService", "for");
+      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedToAny", "made to").replace("donatedTo", "made to").replace("attendedCampus", "for").replace("attendedAny", "for").replace("attendedServiceTime", "for").replace("attendedService", "for").replace("attendedGroup", "for");
       const index = idx;
       let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
       if (c.field === "memberAttendance" || c.field === "memberDonations") {
