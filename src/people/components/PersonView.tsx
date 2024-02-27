@@ -34,7 +34,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
           homeLabel = "";
         }
         if (p.contactInfo.homePhone) {
-          contactMethods.push(<TableRow key="homePhone"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.homePhone.split('x')[0])}</b></TableCell></TableRow>);
+          contactMethods.push(<TableRow key="homePhone"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.homePhone)}</b></TableCell></TableRow>);
           homeLabel = "";
         }
 
@@ -46,8 +46,8 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
 
           contactMethods.push(<TableRow key="address"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>home_pin</Icon></TableCell><TableCell>{lines}</TableCell></TableRow>);
         }
-        if (p.contactInfo.mobilePhone) contactMethods.push(<TableRow key="mobilePHone"><TableCell><label>Mobile</label></TableCell><TableCell><Icon>phone_iphone</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.mobilePhone.split('x')[0])}</b></TableCell></TableRow>);
-        if (p.contactInfo.workPhone) contactMethods.push(<TableRow key="workPhone"><TableCell><label>Work</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.workPhone.split('x')[0])}</b></TableCell></TableRow>);
+        if (p.contactInfo.mobilePhone) contactMethods.push(<TableRow key="mobilePHone"><TableCell><label>Mobile</label></TableCell><TableCell><Icon>phone_iphone</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.mobilePhone)}</b></TableCell></TableRow>);
+        if (p.contactInfo.workPhone) contactMethods.push(<TableRow key="workPhone"><TableCell><label>Work</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.workPhone)}</b></TableCell></TableRow>);
       }
 
       return (<Grid container spacing={3}>

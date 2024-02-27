@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { ChumsPersonHelper, UpdateHouseHold } from "."
 import { PersonHelper, DateHelper, InputBox, ApiHelper, PersonInterface, Loading, ErrorMessages } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
@@ -15,16 +16,8 @@ interface Props {
 
 export function formattedPhoneNumber(value: string) {
   if (!value) return "";
-  value = value.replace(/[^+0-9-]/g, "");
-  value = value.replaceAll("-", "");
-  let length = value.length - 10;
-  if (value.length > 3 && value.length <= 6)
-    value = value.slice(0, 3) + "-" + value.slice(3);
-  else if (value.length > 6 && value.length < 11)
-    value = value.slice(0, 3) + "-" + value.slice(3, 6) + "-" + value.slice(6);
-  else if (value.length > 10)
-    value = value.slice(0, length) + "-" + value.slice(length, length + 3) + "-" + value.slice(length + 3, length + 6) + "-" + value.slice(length + 6);
-
+  value = value.split("x")[0];
+  value = value.replaceAll(" ", "-")
   return value;
 }
 
@@ -36,6 +29,7 @@ export function PersonEdit(props: Props) {
   const [members, setMembers] = useState<PersonInterface[]>(null);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [phoneHasError, setPhoneHasError] = React.useState({ homePhone: false, workPhone: false, mobilePhone: false });
 
   const [person, setPerson] = React.useState<PersonInterface>({
     name: { first: "", last: "", middle: "", nick: "", display: "" },
@@ -59,9 +53,6 @@ export function PersonEdit(props: Props) {
       case "contactInfo.city": p.contactInfo.city = value; break;
       case "contactInfo.state": p.contactInfo.state = value; break;
       case "contactInfo.zip": p.contactInfo.zip = value; break;
-      case "contactInfo.homePhone": p.contactInfo.homePhone = (value + 'x' + p.contactInfo.homePhone?.split('x')[1]); break;
-      case "contactInfo.workPhone": p.contactInfo.workPhone = (value + 'x' + p.contactInfo.workPhone?.split('x')[1]); break;
-      case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = (value + 'x' + p.contactInfo.mobilePhone?.split('x')[1]); break;
       case "membershipStatus": p.membershipStatus = value; break;
       case "gender": p.gender = value; break;
       case "maritalStatus": p.maritalStatus = value; break;
@@ -73,22 +64,25 @@ export function PersonEdit(props: Props) {
     setPerson(p);
   }
 
+  const handlePhoneChange = (value: string, field: "homePhone" | "workPhone" | "mobilePhone") => {
+    setPhoneHasError((prevState) => ({...prevState, [field]: !matchIsValidTel(value)}));
+    const p: PersonInterface = {...person};
+    p.contactInfo[field] = value;
+    setPerson(p);
+  }
+
   function handleDelete() {
     if (window.confirm("Are you sure you wish to permanently delete this person record?"))
       ApiHelper.delete("/people/" + person.id.toString(), "MembershipApi").then(() => setRedirect("/people"));
   }
 
   const validateEmail = (email: string) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email))
-  const validatePhone = (phone: string) => (/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phone)); //eslint-disable-line
 
   const validate = () => {
     const result = [];
     if (!person.name.first) result.push("First name is required");
     if (!person.name.last) result.push("Last name is required");
     if (person.contactInfo.email && !validateEmail(person.contactInfo.email)) result.push("Please enter a valid email address.");
-    if (person.contactInfo.homePhone?.split('x')[0] && !validatePhone(person.contactInfo.homePhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid home phone.");
-    if (person.contactInfo.workPhone?.split('x')[0] && !validatePhone(person.contactInfo.workPhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid work phone.");
-    if (person.contactInfo.mobilePhone?.split('x')[0] && !validatePhone(person.contactInfo.mobilePhone?.split('x')[0].replaceAll("-", ""))) result.push("Please enter a valid mobile phone.");
     setErrors(result);
     return result.length === 0;
   }
@@ -97,9 +91,9 @@ export function PersonEdit(props: Props) {
     if (validate()) {
       setIsSubmitting(true)
       const p = JSON.parse(JSON.stringify({ ...person }));
-      p.contactInfo.homePhone = p.contactInfo.homePhone?.split('x')[0] ? (p.contactInfo.homePhone.replaceAll("-", "").replace(/[^+0-9-x]/g, "")) : null;
-      p.contactInfo.workPhone = p.contactInfo.workPhone?.split('x')[0] ? (p.contactInfo.workPhone.replaceAll("-", "").replace(/[^+0-9-x]/g, "")) : null;
-      p.contactInfo.mobilePhone = p.contactInfo.mobilePhone?.split('x')[0] ? (p.contactInfo.mobilePhone.replaceAll("-", "").replace(/[^+0-9-x]/g, "")) : null;
+      p.contactInfo.homePhone = (p.contactInfo.homePhone?.length <= 4) ? null : p.contactInfo.homePhone;
+      p.contactInfo.workPhone = (p.contactInfo.workPhone?.length <= 4) ? null : p.contactInfo.workPhone;
+      p.contactInfo.mobilePhone = (p.contactInfo.mobilePhone?.length <= 4) ? null : p.contactInfo.mobilePhone;
       if (ChumsPersonHelper.getExpandedPersonObject(person).id === context.person?.id) context.setPerson(person);
 
       const { contactInfo: contactFromProps } = props.person
@@ -168,15 +162,8 @@ export function PersonEdit(props: Props) {
   }
 
   React.useEffect(() => {
-    const { homePhone, workPhone, mobilePhone } = props.person.contactInfo;
     setPerson({
-      ...props.person, contactInfo:
-      {
-        ...props.person.contactInfo,
-        homePhone: formattedPhoneNumber(homePhone?.split('x')[0]) + 'x' + (homePhone?.split('x')[1] ?? ''),
-        workPhone: formattedPhoneNumber(workPhone?.split('x')[0]) + 'x' + (workPhone?.split('x')[1] ?? ''),
-        mobilePhone: formattedPhoneNumber(mobilePhone?.split('x')[0]) + 'x' + (mobilePhone?.split('x')[1] ?? '')
-      }
+      ...props.person
     });
     return () => {
       setPerson(null);
@@ -184,6 +171,15 @@ export function PersonEdit(props: Props) {
   }, [props.person]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchMembers, [props.person]);
+
+  const ariaLabel = {
+    "aria-label" : "phone-number"
+  }
+
+  const ariaDesc = {
+    "aria-describedby": "errorMsg",
+    "aria-labelledby": "tel-label errorMsg"
+  }
 
   const editForm = (
     !person
@@ -287,9 +283,15 @@ export function PersonEdit(props: Props) {
             </Grid>
             <Grid item md={3}>
               <div className="section">Phone</div>
-              <TextField fullWidth name="contactInfo.homePhone" id="homePhone" label="Home" value={person.contactInfo?.homePhone?.split('x')[0] || ""} onChange={handleChange} InputProps={{ inputProps: { maxLength: 15 } }} />
-              <TextField fullWidth name="contactInfo.workPhone" id="workPhone" label="Work" value={person.contactInfo?.workPhone?.split('x')[0] || ""} onChange={handleChange} InputProps={{ inputProps: { maxLength: 15 } }} />
-              <TextField fullWidth name="contactInfo.mobilePhone" id="mobilePhone" label="Mobile" value={person.contactInfo?.mobilePhone?.split('x')[0] || ""} onChange={handleChange} InputProps={{ inputProps: { maxLength: 15 } }} />
+              <MuiTelInput fullWidth name="contactInfo.homePhone" id="homePhone" label="Home" value={person.contactInfo?.homePhone} onChange={(value) => handlePhoneChange(value, "homePhone")}
+                defaultCountry="US" focusOnSelectCountry inputProps={ariaDesc} error={phoneHasError.homePhone} MenuProps={ariaLabel} helperText={<div id="errorMsg">{phoneHasError.homePhone && <p style={{ margin: 0, color: "#d32f2f" }}>Invalid format</p>}</div>}
+              />
+              <MuiTelInput fullWidth name="contactInfo.workPhone" id="workPhone" label="Work" value={person.contactInfo?.workPhone} onChange={(value) => handlePhoneChange(value, "workPhone")}
+                defaultCountry="US" focusOnSelectCountry inputProps={ariaDesc} error={phoneHasError.workPhone} MenuProps={ariaLabel} helperText={<div id="errorMsg">{phoneHasError.workPhone && <p style={{ margin: 0, color: "#d32f2f" }}>Invalid format</p>}</div>}
+              />
+              <MuiTelInput fullWidth name="contactInfo.mobilePhone" id="mobilePhone" label="Mobile" value={person.contactInfo?.mobilePhone} onChange={(value) => handlePhoneChange(value, "mobilePhone")}
+                defaultCountry="US" focusOnSelectCountry inputProps={ariaDesc} error={phoneHasError.mobilePhone} MenuProps={ariaLabel} helperText={<div id="errorMsg">{phoneHasError.mobilePhone && <p style={{ margin: 0, color: "#d32f2f" }}>Invalid format</p>}</div>}
+              />
             </Grid>
             <Grid item md={1}>
               <div className="section">Extention</div>
