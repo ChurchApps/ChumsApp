@@ -51,12 +51,23 @@ export function PeopleSearch(props: Props) {
           result.push({ field: "id", operator: c.operator, value: memberIds.join(",") });
           break;
         case "memberAttendance":
-          const campusVal = JSON.parse(c.value);
+          const attendanceValue = JSON.parse(c.value);
           let attendees;
-          if (c.operator === "attenedAny") {
-            attendees = await ApiHelper.get(`/attendancerecords/search?startDate=${campusVal[1].from}&endDate=${campusVal[1].to}`, "AttendanceApi");
-          } else {
-            attendees = await ApiHelper.get(`/attendancerecords/search?campusId=${campusVal[0].value}&startDate=${campusVal[1].from}&endDate=${campusVal[1].to}`, "AttendanceApi");
+          const dateParams = `startDate=${attendanceValue[1].from}&endDate=${attendanceValue[1].to}`;
+          if (c.operator === "attendedCampus") {
+            attendees = await ApiHelper.get(`/attendancerecords/search?campusId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
+          }
+          else if (c.operator === "attendedService") {
+            attendees = await ApiHelper.get(`/attendancerecords/search?serviceId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
+          }
+          else if (c.operator === "attendedServiceTime") {
+            attendees = await ApiHelper.get(`/attendancerecords/search?serviceTimeId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
+          }
+          else if (c.operator === "attendedGroup") {
+            attendees = await ApiHelper.get(`/attendancerecords/search?groupId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
+          }
+          else {
+            attendees = await ApiHelper.get(`/attendancerecords/search?${dateParams}`, "AttendanceApi");
           }
           const attendeeIds = ArrayHelper.getIds(attendees, "personId");
           result.push({ field: "id", operator: c.operator, value: attendeeIds.join(",") });
@@ -104,7 +115,7 @@ export function PeopleSearch(props: Props) {
     let idx = 0;
     for (let c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedToAny", "made to").replace("donatedTo", "made to").replace("attenedCampus", "for").replace("attenedAny", "for");
+      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedToAny", "made to").replace("donatedTo", "made to").replace("attendedCampus", "for").replace("attendedAny", "for").replace("attendedServiceTime", "for").replace("attendedService", "for").replace("attendedGroup", "for");
       const index = idx;
       let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
       if (c.field === "memberAttendance" || c.field === "memberDonations") {
