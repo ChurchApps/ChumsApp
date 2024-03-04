@@ -13,7 +13,7 @@ export const BatchEdit: React.FC<Props> = (props) => {
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to permanently delete this batch?")) {
+    if (window.confirm("Are you sure you wish to permanently delete this batch and all donations within it?")) {
       ApiHelper.delete("/donationbatches/" + batch.id, "GivingApi").then(() => props.updatedFunction());
     }
   }
