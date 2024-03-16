@@ -88,9 +88,20 @@ export const DonationsPage = () => {
       let b = batches[i];
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch}><Icon>edit</Icon></a>) : null;
       const batchLink = (canViewBatcht) ? (<Link to={"/donations/" + b.id}>{b.name}</Link>) : <>{b.name}</>;
+      
+      const dateObj = new Date(b.batchDate);
+      let tz = dateObj.getTimezoneOffset() * 60 * 1000; //get timeZoneOffset in ms
+      const getDateTime = dateObj.getTime();
+      let calcDate;
+      if (tz > 0) {
+        calcDate = new Date(getDateTime - tz);
+      } else {
+        calcDate = new Date(getDateTime + tz);
+      }
+
       result.push(<TableRow key={i}>
         <TableCell>{batchLink}</TableCell>
-        <TableCell>{DateHelper.prettyDate(new Date(b.batchDate))}</TableCell>
+        <TableCell>{DateHelper.prettyDate(calcDate)}</TableCell>
         <TableCell>{b.donationCount}</TableCell>
         <TableCell>{CurrencyHelper.formatCurrency(b.totalAmount)}</TableCell>
         <TableCell>{editLink}</TableCell>
