@@ -88,7 +88,7 @@ export const DonationsPage = () => {
       let b = batches[i];
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch}><Icon>edit</Icon></a>) : null;
       const batchLink = (canViewBatcht) ? (<Link to={"/donations/" + b.id}>{b.name}</Link>) : <>{b.name}</>;
-      
+
       const dateObj = new Date(b.batchDate);
       let tz = dateObj.getTimezoneOffset() * 60 * 1000; //get timeZoneOffset in ms
       const getDateTime = dateObj.getTime();
