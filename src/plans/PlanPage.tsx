@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
-import { DisplayBox, PersonHelper, PersonInterface, SmallButton } from "@churchapps/apphelper";
+import { DisplayBox, PersonAdd, PersonHelper, PersonInterface, SmallButton } from "@churchapps/apphelper";
 
 export const PlanPage = () => {
   const person:PersonInterface = {
@@ -27,6 +27,8 @@ export const PlanPage = () => {
       <Icon color="primary">add</Icon>
     </IconButton>
   );
+
+  const addPerson = (p: PersonInterface) => {}
 
   return (<>
     <h1><Icon>assignment</Icon> Service Plan for 4/27/2024</h1>
@@ -104,6 +106,9 @@ export const PlanPage = () => {
         </DisplayBox>
       </Grid>
       <Grid item md={4} xs={12}>
+        <DisplayBox key="displayBox" id="personAddBox" headerIcon="person" headerText="Add Person">
+          <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} />
+        </DisplayBox>
         <DisplayBox headerText="Times" headerIcon="schedule" editContent={getAddTimeLink()}>
           <table style={{width:"100%"}}>
             <tr>
