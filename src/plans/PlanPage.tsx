@@ -1,9 +1,15 @@
 import React from "react";
 import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { Link } from "react-router-dom";
-import { DisplayBox, PersonAdd, PersonHelper, PersonInterface, SmallButton } from "@churchapps/apphelper";
+import { Link, useParams } from "react-router-dom";
+import { ApiHelper, DisplayBox, PersonAdd, PersonHelper, PersonInterface, SmallButton } from "@churchapps/apphelper";
+import { PositionEdit } from "./components/PositionEdit";
+import { PositionInterface } from "../helpers";
 
 export const PlanPage = () => {
+  const params = useParams();
+  const [positions, setPositions] = React.useState<PositionInterface[]>([]);
+  const [position, setPosition] = React.useState<PositionInterface>(null);
+
   const person:PersonInterface = {
     id: "bTrK6d0kvF6", photoUpdated: new Date(1649905513000), name: { display: "John Doe" },
     contactInfo: undefined
@@ -16,8 +22,8 @@ export const PlanPage = () => {
     </a>
   )
 
-  const getAddAssignmentLink = () => (
-    <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button">
+  const getAddPositionLink = () => (
+    <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={() => { setPosition({categoryName:(positions?.length>0) ? positions[0].categoryName : "Band", name:"", planId:params.id}) }}>
       <Icon color="primary">add</Icon>
     </IconButton>
   );
@@ -30,11 +36,26 @@ export const PlanPage = () => {
 
   const addPerson = (p: PersonInterface) => {}
 
+  const loadData = () => {
+    setPosition(null);
+    ApiHelper.get("/positions/plan/" + params.id, "DoingApi").then(data => { console.log("POSITIONS", data); setPositions(data); });
+  }
+
+  const getPositionRow = (position:PositionInterface) => (
+    <TableRow style={{backgroundColor: "#FFF8E7"}}>
+      <TableCell style={{paddingLeft:10, fontWeight:"bold"}}>{position.categoryName}</TableCell>
+      <TableCell><a href="about:blank">{position.name}</a></TableCell>
+      <TableCell>{getPersonLink()}</TableCell>
+    </TableRow>
+  )
+
+  React.useEffect(() => { loadData(); }, []);
+
   return (<>
     <h1><Icon>assignment</Icon> Service Plan for 4/27/2024</h1>
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
-        <DisplayBox headerText="Assignments" headerIcon="assignment" editContent={getAddAssignmentLink()}>
+        <DisplayBox headerText="Assignments" headerIcon="assignment" editContent={getAddPositionLink()}>
           <Table size="small">
             <TableHead>
               <TableRow>
@@ -101,11 +122,13 @@ export const PlanPage = () => {
                   <div>{getPersonLink()}</div>
                 </TableCell>
               </TableRow>
+              {positions.map(p => getPositionRow(p))}
             </TableBody>
           </Table>
         </DisplayBox>
       </Grid>
       <Grid item md={4} xs={12}>
+        {position && <PositionEdit position={position} updatedFunction={loadData} /> }
         <DisplayBox key="displayBox" id="personAddBox" headerIcon="person" headerText="Add Person">
           <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} />
         </DisplayBox>

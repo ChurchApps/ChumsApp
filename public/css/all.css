@@ -680,6 +680,8 @@ label .description {
 
 #smallPeopleTable img { max-height: 50px; }
 
+.comboBox>div>div:first-child { padding:10px }
+
 @media print {
   .form-submission-summary {
     margin: 20px;
