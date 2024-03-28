@@ -5,7 +5,7 @@ import { PositionInterface } from "../../helpers";
 import ReactSelect from "react-select";
 
 
-interface Props { position: PositionInterface, updatedFunction: () => void }
+interface Props { position: PositionInterface, categoryNames:string[], updatedFunction: () => void }
 
 type OptionType = {
   value: string;
@@ -15,10 +15,13 @@ type OptionType = {
 
 export const PositionEdit = (props:Props) => {
 
+  const options: OptionType[] = [];
+  props.categoryNames.forEach(categoryName => options.push({ value: categoryName, label: categoryName }));
+
   const [position, setPosition] = React.useState<PositionInterface>(props.position);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [categoryInput, setCategoryInput] = React.useState("");
-  const [categoryOptions, setCategoryOptions] = React.useState<OptionType[]>([{ value: "Test", label: "Test" }]);
+  const [categoryOptions, setCategoryOptions] = React.useState<OptionType[]>(options);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);
