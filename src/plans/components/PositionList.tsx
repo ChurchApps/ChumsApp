@@ -72,7 +72,7 @@ export const PositionList = (props:Props) => {
 
   return (<>
 
-    <Table size="small">
+    <Table size="small" className="positionsTable">
       <TableHead>
         <TableRow>
           <TableCell><b>Team</b></TableCell>

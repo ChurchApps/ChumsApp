@@ -3,7 +3,7 @@ import { Table, TableCell, TableRow } from "@mui/material";
 import { ApiHelper, GroupMemberInterface, InputBox, PersonHelper } from "@churchapps/apphelper";
 import { AssignmentInterface, PositionInterface } from "../../helpers";
 
-interface Props { assignment: AssignmentInterface, position:PositionInterface, updatedFunction: (done:boolean) => void }
+interface Props { assignment: AssignmentInterface, position:PositionInterface, peopleNeeded:number, updatedFunction: (done:boolean) => void }
 
 export const AssignmentEdit = (props:Props) => {
   const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([]);
@@ -23,7 +23,7 @@ export const AssignmentEdit = (props:Props) => {
   const selectPerson = (gm:GroupMemberInterface) => {
     const a = { ...props.assignment } as AssignmentInterface;
     a.personId = gm.personId;
-    ApiHelper.post("/assignments", [a], "DoingApi").then(() => { props.updatedFunction(props.position.count===1) });
+    ApiHelper.post("/assignments", [a], "DoingApi").then(() => { props.updatedFunction(props.peopleNeeded<=1) });
   }
 
   const getMembers = () => {

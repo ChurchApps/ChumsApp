@@ -682,6 +682,12 @@ label .description {
 
 .comboBox>div>div:first-child { padding:10px }
 
+.positionsTable TD { vertical-align: top;}
+.positionsTable div { padding-top:5px;padding-bottom: 5px; vertical-align: middle; }
+.positionsTable div img { float:left; margin-right: 10px; }
+
+
+
 @media print {
   .form-submission-summary {
     margin: 20px;
