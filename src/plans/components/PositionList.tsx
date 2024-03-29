@@ -4,7 +4,7 @@ import { PersonHelper, PersonInterface } from "@churchapps/apphelper";
 import { PositionInterface } from "../../helpers";
 
 
-interface Props { positions: PositionInterface[]}
+interface Props { positions: PositionInterface[], onSelect?: (position:PositionInterface) => void}
 
 
 
@@ -28,7 +28,7 @@ export const PositionList = (props:Props) => {
   const getPositionRow = (position:PositionInterface, color:string, first:boolean) => (
     <TableRow style={{backgroundColor: color}}>
       <TableCell style={{paddingLeft:10, fontWeight:"bold"}}>{(first) ? position.categoryName : ""}</TableCell>
-      <TableCell><a href="about:blank">{position.name}</a></TableCell>
+      <TableCell><a href="about:blank" onClick={(e) => { e.preventDefault(); props.onSelect(position); }}>{position.name}</a></TableCell>
       <TableCell>{getPersonLink()}</TableCell>
     </TableRow>
   )

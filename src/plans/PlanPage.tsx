@@ -12,7 +12,7 @@ export const PlanPage = () => {
   const [position, setPosition] = React.useState<PositionInterface>(null);
 
   const getAddPositionLink = () => (
-    <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={() => { setPosition({categoryName:(positions?.length>0) ? positions[0].categoryName : "Band", name:"", planId:params.id}) }}>
+    <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={() => { setPosition({categoryName:(positions?.length>0) ? positions[0].categoryName : "Band", name:"", planId:params.id, count:1}) }}>
       <Icon color="primary">add</Icon>
     </IconButton>
   );
@@ -27,7 +27,7 @@ export const PlanPage = () => {
 
   const loadData = () => {
     setPosition(null);
-    ApiHelper.get("/positions/plan/" + params.id, "DoingApi").then(data => { console.log("POSITIONS", data); setPositions(data); });
+    ApiHelper.get("/positions/plan/" + params.id, "DoingApi").then(data => { setPositions(data); });
   }
 
   React.useEffect(() => { loadData(); }, []);
@@ -37,7 +37,7 @@ export const PlanPage = () => {
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
         <DisplayBox headerText="Assignments" headerIcon="assignment" editContent={getAddPositionLink()}>
-          <PositionList positions={positions} />
+          <PositionList positions={positions} onSelect={p => setPosition(p)} />
         </DisplayBox>
       </Grid>
       <Grid item md={4} xs={12}>
