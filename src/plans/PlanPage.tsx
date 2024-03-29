@@ -3,13 +3,17 @@ import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRo
 import { Link, useParams } from "react-router-dom";
 import { ApiHelper, ArrayHelper, DisplayBox, PersonAdd, PersonHelper, PersonInterface, SmallButton } from "@churchapps/apphelper";
 import { PositionEdit } from "./components/PositionEdit";
-import { PositionInterface } from "../helpers";
+import { AssignmentInterface, PositionInterface } from "../helpers";
 import { PositionList } from "./components/PositionList";
+import { AssignmentEdit } from "./components/AssignmentEdit";
 
 export const PlanPage = () => {
   const params = useParams();
   const [positions, setPositions] = React.useState<PositionInterface[]>([]);
+  const [assignments, setAssignments] = React.useState<AssignmentInterface[]>([]);
+  const [people, setPeople] = React.useState<PersonInterface[]>([]);
   const [position, setPosition] = React.useState<PositionInterface>(null);
+  const [assignment, setAssignment] = React.useState<AssignmentInterface>(null);
 
   const getAddPositionLink = () => (
     <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={() => { setPosition({categoryName:(positions?.length>0) ? positions[0].categoryName : "Band", name:"", planId:params.id, count:1}) }}>
@@ -23,28 +27,43 @@ export const PlanPage = () => {
     </IconButton>
   );
 
+  const handleAssignmentSelect = (p: PositionInterface, a: AssignmentInterface) => {
+    setAssignment(a);
+    setPosition(p);
+  }
+
+  const handleAssignmentUpdate = (done:boolean) => {
+    if (done) {
+      setAssignment(null);
+      setPosition(null);
+    }
+    loadData();
+  }
+
   const addPerson = (p: PersonInterface) => {}
 
-  const loadData = () => {
-    setPosition(null);
+  const loadData = async () => {
     ApiHelper.get("/positions/plan/" + params.id, "DoingApi").then(data => { setPositions(data); });
+    const d = await ApiHelper.get("/assignments/plan/" + params.id, "DoingApi");
+    setAssignments(d);
+    const peopleIds = ArrayHelper.getUniqueValues(d, "personId");
+    if (peopleIds.length > 0) ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi").then((data: PersonInterface[]) => { setPeople(data); });
   }
 
   React.useEffect(() => { loadData(); }, []);
+  console.log("Position", position, "Assignment", assignment)
 
   return (<>
     <h1><Icon>assignment</Icon> Service Plan for 4/27/2024</h1>
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
         <DisplayBox headerText="Assignments" headerIcon="assignment" editContent={getAddPositionLink()}>
-          <PositionList positions={positions} onSelect={p => setPosition(p)} />
+          <PositionList positions={positions} assignments={assignments} people={people} onSelect={p => setPosition(p)} onAssignmentSelect={handleAssignmentSelect} />
         </DisplayBox>
       </Grid>
       <Grid item md={4} xs={12}>
-        {position && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : ["Band"] } updatedFunction={loadData} /> }
-        <DisplayBox key="displayBox" id="personAddBox" headerIcon="person" headerText="Add Person">
-          <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} />
-        </DisplayBox>
+        {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : ["Band"] } updatedFunction={() => {setPosition(null); loadData() }} /> }
+        {assignment && position && <AssignmentEdit position={position} assignment={assignment} updatedFunction={ handleAssignmentUpdate } />}
         <DisplayBox headerText="Times" headerIcon="schedule" editContent={getAddTimeLink()}>
           <table style={{width:"100%"}}>
             <tr>
