@@ -16,19 +16,14 @@ interface Props {
 export const PositionList = (props:Props) => {
   const colorList = ["#FFF8E7", "#E7F2FA", "#E7F4E7", "#F7E7F4", "#F7F4E7", "#E7F7F4", "#F4E7F7", "#F4F7E7", "#E7F7F7", "#F7E7F7", "#F7F7E7", "#E7E7F7", "#F4F4F7", "#F7F4F4", "#F4F7F4", "#F4F4F4"];
 
-
-  const defaultPerson:PersonInterface = {
-    id: "bTrK6d0kvF6", photoUpdated: new Date(1649905513000), name: { display: "John Doe" },
-    contactInfo: undefined
-  };
-
-
   const getPersonLink = (assignment: AssignmentInterface, position:PositionInterface) => {
-    const person = ArrayHelper.getOne(props.people, "id", assignment.personId) || defaultPerson;
-    return (<a href="about:blank" onClick={(e) => {e.preventDefault(); props.onAssignmentSelect(position, assignment || {positionId:position.id} )}}>
-      <img src={PersonHelper.getPhotoUrl(person)} alt="avatar" style={{height:25}} />
-      {person.name.display}
-    </a>);
+    const person = ArrayHelper.getOne(props.people, "id", assignment.personId)
+    if (person) {
+      return (<a href="about:blank" onClick={(e) => {e.preventDefault(); props.onAssignmentSelect(position, assignment || {positionId:position.id} )}}>
+        <img src={PersonHelper.getPhotoUrl(person)} alt="avatar" style={{height:25}} />
+        {person.name.display}
+      </a>);
+    } else return "Loading..."
   }
 
   const getPeopleLinks = (position:PositionInterface) => {

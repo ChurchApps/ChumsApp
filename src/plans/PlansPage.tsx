@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Grid, Icon, IconButton } from "@mui/material";
+import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ApiHelper, DateHelper, DisplayBox } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, DisplayBox, SmallButton } from "@churchapps/apphelper";
 import { PlanInterface } from "../helpers";
-import { PlanAdd } from "./components/PlanAdd";
+import { PlanEdit } from "./components/PlanEdit";
 
 export const PlansPage = () => {
 
@@ -12,7 +12,8 @@ export const PlansPage = () => {
 
   const addPlan = () => {
     const date = DateHelper.getLastSunday();
-    const name = date.getMonth().toString() + "/" + date.getDate().toString() + "/" + date.getFullYear().toString() + " Plan";
+    date.setDate(date.getDate() + 7);
+    const name = (date.getMonth()+1).toString() + "/" + date.getDate().toString() + "/" + date.getFullYear().toString() + " Plan";
     setPlan({serviceDate:date, name, notes:""});
   }
 
@@ -28,8 +29,11 @@ export const PlansPage = () => {
   }
 
   const getPlans = () => {
-    if (plans.length === 0) return <p>No plans have been added yet.</p>;
-    return plans.map((p, i) => (<li key={i}><Link to={"/plans/" + p.id}>{p.name}</Link></li>));
+    if (plans.length === 0) return <TableRow><TableCell>No plans have been added yet.</TableCell></TableRow>;
+    return plans.map((p, i) => (<TableRow key={i}>
+      <TableCell><Link to={"/plans/" + p.id}>{p.name}</Link></TableCell>
+      <TableCell style={{textAlign:"right"}}><SmallButton icon="edit" onClick={(e) => {setPlan(p); }} /></TableCell>
+    </TableRow>));
   }
 
   useEffect(() => { loadData(); }, []);
@@ -39,13 +43,15 @@ export const PlansPage = () => {
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
         <DisplayBox headerText="Plans" headerIcon="assignment" editContent={getAddPlanLink()}>
-          <ul>
-            {getPlans()}
-          </ul>
+          <Table size="small">
+            <TableBody>
+              {getPlans()}
+            </TableBody>
+          </Table>
         </DisplayBox>
       </Grid>
       <Grid item md={4} xs={12}>
-        {plan && (<PlanAdd plan={plan} updatedFunction={loadData} />)}
+        {plan && (<PlanEdit plan={plan} plans={plans} updatedFunction={loadData} />)}
 
       </Grid>
     </Grid>
