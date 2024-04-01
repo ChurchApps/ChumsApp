@@ -19,11 +19,13 @@ export const GroupDetails: React.FC<Props> = (props) => {
         <Grid item md={6} xs={12}><label>Category:</label> {props.group.categoryName}</Grid>
         <Grid item md={6} xs={12}><label>Name:</label> {props.group.name}</Grid>
       </Grid>
-      <Grid container spacing={3}>
-        <Grid item md={6} xs={12}><label>Track Attendance:</label> {(props.group.trackAttendance?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
-        <Grid item md={6} xs={12}><label>Parent Pickup:</label> {(props.group.parentPickup?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
-      </Grid>
-      <ServiceTimes group={props.group} />
+      {props.group?.tags?.indexOf("standard")>-1 && <>
+        <Grid container spacing={3}>
+          <Grid item md={6} xs={12}><label>Track Attendance:</label> {(props.group.trackAttendance?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
+          <Grid item md={6} xs={12}><label>Parent Pickup:</label> {(props.group.parentPickup?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
+        </Grid>
+        <ServiceTimes group={props.group} />
+      </>}
     </>);
 
   }

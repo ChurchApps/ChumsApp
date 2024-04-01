@@ -76,7 +76,7 @@ export const PositionEdit = (props:Props) => {
   }
 
   const loadData = () => {
-    ApiHelper.get("/groups", "MembershipApi").then(data => setGroups(data));
+    ApiHelper.get("/groups/tag/team", "MembershipApi").then(data => setGroups(data));
   }
 
   useEffect(() => { loadData(); }, []);

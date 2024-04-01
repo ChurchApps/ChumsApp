@@ -7,6 +7,7 @@ import { AssignmentInterface, PlanInterface, PositionInterface, TimeInterface } 
 import { PositionList } from "./components/PositionList";
 import { AssignmentEdit } from "./components/AssignmentEdit";
 import { TimeList } from "./components/TimeList";
+import { PlanValidation } from "./components/PlanValidation";
 
 export const PlanPage = () => {
   const params = useParams();
@@ -52,7 +53,7 @@ export const PlanPage = () => {
   console.log("Position", position, "Assignment", assignment)
 
   return (<>
-    <h1><Icon>assignment</Icon> Service Plan for 4/27/2024</h1>
+    <h1><Icon>assignment</Icon> { (plan?.name) ? plan.name : "Service Plan"}</h1>
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
         <DisplayBox headerText="Assignments" headerIcon="assignment" editContent={getAddPositionLink()}>
@@ -63,6 +64,7 @@ export const PlanPage = () => {
         {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : ["Band"] } updatedFunction={() => {setPosition(null); loadData() }} /> }
         {assignment && position && <AssignmentEdit position={position} assignment={assignment} peopleNeeded={position.count - ArrayHelper.getAll(assignments, "positionId", position.id).length } updatedFunction={ handleAssignmentUpdate } />}
         <TimeList times={times} positions={positions} plan={plan} onUpdate={loadData} />
+        <PlanValidation plan={plan} positions={positions} assignments={assignments} people={people} times={times} />
       </Grid>
     </Grid>
   </>)
