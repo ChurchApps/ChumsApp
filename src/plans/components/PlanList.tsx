@@ -40,7 +40,7 @@ export const PlanList = (props:Props) => {
   useEffect(() => { loadData(); }, []);
 
   return (<>
-    <h1><Icon>assignment</Icon> {props.ministry.name} Service Plans</h1>
+    <h1><Icon>assignment</Icon> {props.ministry.name} Plans</h1>
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
         <DisplayBox headerText="Plans" headerIcon="assignment" editContent={getAddPlanLink()}>

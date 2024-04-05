@@ -1,9 +1,10 @@
 import React from "react";
 import { Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, PlanInterface, PositionInterface, SmallButton, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, GroupMemberInterface, PlanInterface, PositionInterface, SmallButton, TimeInterface } from "@churchapps/apphelper";
 import { TimeEdit } from "./TimeEdit";
 import { Link } from "react-router-dom";
 import { GroupAdd } from "../../groups/components";
+import UserContext from "../../UserContext";
 
 interface Props {
 }
@@ -11,11 +12,15 @@ interface Props {
 export const MinistryList = (props:Props) => {
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
   const [showAdd, setShowAdd] = React.useState<boolean>(false);
+  const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([]);
   const handleAdd = () => { setShowAdd(true); }
   const handleAddUpdated = () => { setShowAdd(false); loadData(); };
+  const context = React.useContext(UserContext);
 
-  const loadData = () => {
-    ApiHelper.get("/groups/tag/ministry", "MembershipApi").then((data) => { setGroups(data); })
+  const loadData = async () => {
+    const groups:GroupInterface[] = await ApiHelper.get("/groups/tag/ministry", "MembershipApi");
+    setGroups(groups)
+    if (groups.length>0) ApiHelper.get("/groupMembers?groupIds=" + ArrayHelper.getIds(groups, "id"), "MembershipApi").then((data) => { setGroupMembers(data); })
   };
 
   const getAddLink = () => (
@@ -34,19 +39,22 @@ export const MinistryList = (props:Props) => {
 
     for (let i = 0; i < groups.length; i++) {
       let g = groups[i];
+      const members = ArrayHelper.getAll(groupMembers, "groupId", g.id);
+      const hasAccess = members.length===0 || ArrayHelper.getOne(members, "personId", context.person?.id) !== null;
+
       rows.push(<TableRow key={g.id}>
         <TableCell>
-          <Link to={"/plans/ministries/" + g.id.toString()}>{g.name}</Link>
+          {hasAccess ? (<Link to={"/plans/ministries/" + g.id.toString()}>{g.name}</Link>) : g.name}
         </TableCell>
         <TableCell align="right">
-          <Link to={"/groups/" + g.id.toString() + "?tag=ministry"}><Icon>edit</Icon></Link>
+          {hasAccess && <Link to={"/groups/" + g.id.toString() + "?tag=ministry"}><Icon>edit</Icon></Link>}
         </TableCell>
       </TableRow>);
     }
     return rows;
   };
 
-  React.useEffect(loadData, []);
+  React.useEffect(() => {loadData()}, []);
 
 
   if (showAdd) return (<GroupAdd updatedFunction={handleAddUpdated} tags="ministry" categoryName="Ministry" />)
