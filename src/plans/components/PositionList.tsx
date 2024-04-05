@@ -1,5 +1,5 @@
 import React from "react";
-import {  Table, TableBody, TableCell, TableHead, TableRow,  } from "@mui/material";
+import {  Badge, Table, TableBody, TableCell, TableHead, TableRow,  } from "@mui/material";
 import { ArrayHelper, AssignmentInterface, PersonHelper, PersonInterface, PositionInterface } from "@churchapps/apphelper";
 
 interface Props {
@@ -16,8 +16,12 @@ export const PositionList = (props:Props) => {
   const getPersonLink = (assignment: AssignmentInterface, position:PositionInterface) => {
     const person = ArrayHelper.getOne(props.people, "id", assignment.personId)
     if (person) {
+      const image = <span><img src={PersonHelper.getPhotoUrl(person)} alt="avatar" className={assignment.status?.toLowerCase()} /></span>
+      let wrappedImage = image;
+      if (assignment.status === "Accepted") wrappedImage = (<Badge color="success" variant="dot">{image}</Badge>);
+      else if (assignment.status === "Declined") wrappedImage = (<Badge color="error" variant="dot">{image}</Badge>);
       return (<a href="about:blank" onClick={(e) => {e.preventDefault(); props.onAssignmentSelect(position, assignment || {positionId:position.id} )}}>
-        <img src={PersonHelper.getPhotoUrl(person)} alt="avatar" style={{height:25}} />
+        {wrappedImage}
         {person.name.display}
       </a>);
     } else return "Loading..."
@@ -25,7 +29,6 @@ export const PositionList = (props:Props) => {
 
   const getPeopleLinks = (position:PositionInterface) => {
     const assignments = ArrayHelper.getAll(props.assignments || [], "positionId", position.id);
-    console.log("Assignments", assignments, "Position ID", position.id, "All", props.assignments)
     let result:JSX.Element[] = [];
     assignments.forEach(assignment => result.push(<div key={assignment.id}>{getPersonLink(assignment, position)}</div>));
     const remaining = position.count - assignments.length;
