@@ -1,8 +1,6 @@
 import React from "react";
 import { Checkbox, SelectChangeEvent, TextField } from "@mui/material";
-import { ApiHelper, DateHelper, ErrorMessages, InputBox } from "@churchapps/apphelper";
-import { TimeInterface } from "../../helpers";
-import { Label } from "@mui/icons-material";
+import { ApiHelper, DateHelper, ErrorMessages, InputBox, TimeInterface } from "@churchapps/apphelper";
 
 interface Props { time: TimeInterface, categories:string[], onUpdate: () => void }
 

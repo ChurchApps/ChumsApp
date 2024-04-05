@@ -1,13 +1,13 @@
 import React from "react";
-import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Grid, Icon, IconButton } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import { ApiHelper, ArrayHelper, DisplayBox, PersonAdd, PersonHelper, PersonInterface, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, AssignmentInterface, DisplayBox, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
 import { PositionEdit } from "./components/PositionEdit";
-import { AssignmentInterface, PlanInterface, PositionInterface, TimeInterface } from "../helpers";
 import { PositionList } from "./components/PositionList";
 import { AssignmentEdit } from "./components/AssignmentEdit";
 import { TimeList } from "./components/TimeList";
 import { PlanValidation } from "./components/PlanValidation";
+import { BlockoutDateInterface } from "../helpers";
 
 export const PlanPage = () => {
   const params = useParams();
@@ -18,6 +18,7 @@ export const PlanPage = () => {
   const [position, setPosition] = React.useState<PositionInterface>(null);
   const [assignment, setAssignment] = React.useState<AssignmentInterface>(null);
   const [times, setTimes] = React.useState<TimeInterface[]>([]);
+  const [blockoutDates, setBlockoutDates] = React.useState<BlockoutDateInterface[]>([]);
 
 
   const getAddPositionLink = () => (
@@ -43,6 +44,7 @@ export const PlanPage = () => {
     ApiHelper.get("/plans/" + params.id, "DoingApi").then(data => { setPlan(data); });
     ApiHelper.get("/positions/plan/" + params.id, "DoingApi").then(data => { setPositions(data); });
     ApiHelper.get("/times/plan/" + params.id, "DoingApi").then(data => { setTimes(data); });
+    ApiHelper.get("/blockoutDates/upcoming", "DoingApi").then(data => { setBlockoutDates(data); });
     const d = await ApiHelper.get("/assignments/plan/" + params.id, "DoingApi");
     setAssignments(d);
     const peopleIds = ArrayHelper.getUniqueValues(d, "personId");
@@ -64,7 +66,7 @@ export const PlanPage = () => {
         {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : ["Band"] } updatedFunction={() => {setPosition(null); loadData() }} /> }
         {assignment && position && <AssignmentEdit position={position} assignment={assignment} peopleNeeded={position.count - ArrayHelper.getAll(assignments, "positionId", position.id).length } updatedFunction={ handleAssignmentUpdate } />}
         <TimeList times={times} positions={positions} plan={plan} onUpdate={loadData} />
-        <PlanValidation plan={plan} positions={positions} assignments={assignments} people={people} times={times} />
+        <PlanValidation plan={plan} positions={positions} assignments={assignments} people={people} times={times} blockoutDates={blockoutDates} />
       </Grid>
     </Grid>
   </>)

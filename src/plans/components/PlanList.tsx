@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ApiHelper, DateHelper, DisplayBox, SmallButton } from "@churchapps/apphelper";
-import { PlanInterface } from "../../helpers";
+import { ApiHelper, DateHelper, DisplayBox, PlanInterface, SmallButton } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
 
 export const PlanList = () => {

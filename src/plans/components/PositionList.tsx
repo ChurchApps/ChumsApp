@@ -1,8 +1,6 @@
 import React from "react";
 import {  Table, TableBody, TableCell, TableHead, TableRow,  } from "@mui/material";
-import { ArrayHelper, PersonHelper, PersonInterface } from "@churchapps/apphelper";
-import { AssignmentInterface, PositionInterface } from "../../helpers";
-
+import { ArrayHelper, AssignmentInterface, PersonHelper, PersonInterface, PositionInterface } from "@churchapps/apphelper";
 
 interface Props {
   positions: PositionInterface[],
@@ -11,7 +9,6 @@ interface Props {
   onSelect?: (position:PositionInterface) => void
   onAssignmentSelect?: (position:PositionInterface, assignment: AssignmentInterface) => void
 }
-
 
 export const PositionList = (props:Props) => {
   const colorList = ["#FFF8E7", "#E7F2FA", "#E7F4E7", "#F7E7F4", "#F7F4E7", "#E7F7F4", "#F4E7F7", "#F4F7E7", "#E7F7F7", "#F7E7F7", "#F7F7E7", "#E7E7F7", "#F4F4F7", "#F7F4F4", "#F4F7F4", "#F4F4F4"];

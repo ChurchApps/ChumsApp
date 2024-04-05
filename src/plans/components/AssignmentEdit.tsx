@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Table, TableCell, TableRow } from "@mui/material";
-import { ApiHelper, GroupMemberInterface, InputBox, PersonHelper } from "@churchapps/apphelper";
-import { AssignmentInterface, PositionInterface } from "../../helpers";
+import { ApiHelper, AssignmentInterface, GroupMemberInterface, InputBox, PersonHelper, PositionInterface } from "@churchapps/apphelper";
 
 interface Props { assignment: AssignmentInterface, position:PositionInterface, peopleNeeded:number, updatedFunction: (done:boolean) => void }
 

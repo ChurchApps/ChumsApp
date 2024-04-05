@@ -1,7 +1,6 @@
 import React from "react";
 import { Icon, IconButton } from "@mui/material";
-import { ArrayHelper, DateHelper, DisplayBox } from "@churchapps/apphelper";
-import { PlanInterface, PositionInterface, TimeInterface } from "../../helpers";
+import { ArrayHelper, DateHelper, DisplayBox, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
 import { TimeEdit } from "./TimeEdit";
 
 interface Props {

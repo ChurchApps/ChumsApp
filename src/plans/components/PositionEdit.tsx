@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
-import { ApiHelper, ErrorMessages, GroupInterface, InputBox } from "@churchapps/apphelper";
-import { PositionInterface } from "../../helpers";
+import { ApiHelper, ErrorMessages, GroupInterface, InputBox, PositionInterface } from "@churchapps/apphelper";
 import ReactSelect from "react-select";
-
 
 interface Props { position: PositionInterface, categoryNames:string[], updatedFunction: () => void }
 
