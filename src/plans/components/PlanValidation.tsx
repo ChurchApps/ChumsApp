@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { ArrayHelper, AssignmentInterface, DateHelper, DisplayBox, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
-import { BlockoutDateInterface } from "../../helpers";
+import { ArrayHelper, AssignmentInterface, BlockoutDateInterface, DateHelper, DisplayBox, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
 
 interface Props {
   plan: PlanInterface,

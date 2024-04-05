@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { ApiHelper, DisplayBox, UserHelper, Loading } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, UserHelper, Loading, ArrayHelper } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
 import { useMountedState, GroupInterface, Permissions } from "@churchapps/apphelper";
 import { GroupAdd } from "../../groups/components";
 
-export const TeamList = () => {
+interface Props { ministry: GroupInterface }
+
+export const TeamList = (props:Props) => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
   const [showAdd, setShowAdd] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const isMounted = useMountedState();
+
 
   const getEditContent = () => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) return null;
@@ -29,7 +32,7 @@ export const TeamList = () => {
     setIsLoading(true)
     ApiHelper.get("/groups/tag/team", "MembershipApi")
       .then((data) => {
-        if(isMounted()) setGroups(data);
+        if(isMounted()) setGroups(ArrayHelper.getAll(data, "categoryName", props.ministry.id));
       })
       .finally(() => {
         if(isMounted()) setIsLoading(false);
@@ -71,7 +74,7 @@ export const TeamList = () => {
     return rows;
   }
 
-  let addBox = (showAdd) ? <GroupAdd updatedFunction={handleAddUpdated} tags="team" /> : <></>
+  let addBox = (showAdd) ? <GroupAdd updatedFunction={handleAddUpdated} tags="team" categoryName={props.ministry.id} /> : <></>
 
   const getTable = () => {
     if (isLoading) return <Loading />
@@ -85,7 +88,7 @@ export const TeamList = () => {
 
   return (
     <>
-      <h1><Icon>people</Icon> Teams</h1>
+      <h1><Icon>people</Icon> {props.ministry.name} Teams</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <DisplayBox id="groupsBox" headerIcon="group" headerText="Teams" editContent={getEditContent()}>

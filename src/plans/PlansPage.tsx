@@ -1,42 +1,23 @@
 import React, { useEffect } from "react";
-import { Icon, Tabs as MaterialTabs, Tab } from "@mui/material";
+import { Grid, Icon, Tabs as MaterialTabs, Tab } from "@mui/material";
 import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
+import { MinistryList } from "./components/MinistryList";
 
 export const PlansPage = () => {
 
-  const [selectedTab, setSelectedTab] = React.useState("plans");
-  const [tabIndex, setTabIndex] = React.useState(0);
-
-  const getCurrentTab = () => {
-
-    let currentTab = null;
-    switch (selectedTab) {
-      case "plans": currentTab = <PlanList />; break;
-      case "teams": currentTab = <TeamList />; break;
-      default: currentTab = <div>Not implemented</div>; break;
-    }
-    return currentTab
-  }
-
-  const getTab = (index: number, keyName: string, text: string) => (
-    <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
-  )
-
-  const getTabs = () => {
-    let tabs = [];
-    tabs.push(getTab(0, "plans", "Plans"));
-    tabs.push(getTab(1, "teams", "Teams"));
-    return tabs;
-  }
+  const a=true;
 
   return (<>
+    <h1><Icon>assignment</Icon>Select a Ministry</h1>
+    <Grid container spacing={3}>
+      <Grid item md={8} xs={12}>
+        <MinistryList />
+      </Grid>
+      <Grid item md={4} xs={12}>
 
-    <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
-      {getTabs()}
-    </MaterialTabs>
-
-    {getCurrentTab()}
+      </Grid>
+    </Grid>
 
   </>);
 }

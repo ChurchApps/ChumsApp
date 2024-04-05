@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ApiHelper, DateHelper, DisplayBox, PlanInterface, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, PlanInterface, SmallButton } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
+import { MinistryList } from "./MinistryList";
 
-export const PlanList = () => {
+interface Props { ministry: GroupInterface }
 
+export const PlanList = (props:Props) => {
   const [plan, setPlan] = React.useState<PlanInterface>(null);
   const [plans, setPlans] = React.useState<PlanInterface[]>([]);
 
@@ -13,7 +15,7 @@ export const PlanList = () => {
     const date = DateHelper.getLastSunday();
     date.setDate(date.getDate() + 7);
     const name = (date.getMonth()+1).toString() + "/" + date.getDate().toString() + "/" + date.getFullYear().toString() + " Plan";
-    setPlan({serviceDate:date, name, notes:""});
+    setPlan({ ministryId:props.ministry.id, serviceDate:date, name, notes:""});
   }
 
   const getAddPlanLink = () => (
@@ -24,7 +26,7 @@ export const PlanList = () => {
 
   const loadData = () => {
     setPlan(null);
-    ApiHelper.get("/plans", "DoingApi").then(data => { setPlans(data); });
+    ApiHelper.get("/plans", "DoingApi").then((data:any[]) => { setPlans(ArrayHelper.getAll(data, "ministryId", props.ministry.id)); });
   }
 
   const getPlans = () => {
@@ -38,7 +40,7 @@ export const PlanList = () => {
   useEffect(() => { loadData(); }, []);
 
   return (<>
-    <h1><Icon>assignment</Icon> Service Plans</h1>
+    <h1><Icon>assignment</Icon> {props.ministry.name} Service Plans</h1>
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
         <DisplayBox headerText="Plans" headerIcon="assignment" editContent={getAddPlanLink()}>
@@ -51,6 +53,8 @@ export const PlanList = () => {
       </Grid>
       <Grid item md={4} xs={12}>
         {plan && (<PlanEdit plan={plan} plans={plans} updatedFunction={loadData} />)}
+
+        <MinistryList />
 
       </Grid>
     </Grid>

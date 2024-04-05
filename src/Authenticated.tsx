@@ -26,6 +26,7 @@ import { AdminPage } from "./serverAdmin/AdminPage";
 import { ProfilePage } from "./profile/ProfilePage";
 import { PlansPage } from "./plans/PlansPage";
 import { PlanPage } from "./plans/PlanPage";
+import { MinistryPage } from "./plans/MinistryPage";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
@@ -64,6 +65,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/tasks/:id" element={<TaskPage />} />
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/plans/ministries/:id" element={<MinistryPage />} />
           <Route path="/plans/:id" element={<PlanPage />} />
           <Route path="/plans" element={<PlansPage />} />
           <Route path="/" element={<DashboardPage />} />

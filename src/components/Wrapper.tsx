@@ -31,7 +31,7 @@ export const Wrapper: React.FC<Props> = props => {
     else if (path.startsWith("/attendance")) result = "attendance";
     else if (path.startsWith("/donations")) result = "donations";
     else if (path.startsWith("/forms")) result = "forms";
-    else if (path.startsWith("/plans") || window.location.search.indexOf("tag=team")>-1) result = "plans";
+    else if (path.startsWith("/plans") || window.location.search.indexOf("tag=")>-1) result = "plans";
     else if (path.startsWith("/groups")) result = "groups";
     else if (path.startsWith("/settings")) result = "settings";
     else if (path.startsWith("/tasks")) result = "tasks";
