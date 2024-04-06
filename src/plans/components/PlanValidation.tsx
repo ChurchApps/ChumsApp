@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ArrayHelper, AssignmentInterface, BlockoutDateInterface, DateHelper, DisplayBox, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DateHelper, DisplayBox, NotificationInterface, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
 
 interface Props {
   plan: PlanInterface,
@@ -7,7 +7,8 @@ interface Props {
   assignments: AssignmentInterface[],
   people: PersonInterface[],
   times: TimeInterface[],
-  blockoutDates: BlockoutDateInterface[]
+  blockoutDates: BlockoutDateInterface[],
+  onUpdate: () => void
 }
 
 export const PlanValidation = (props:Props) => {
@@ -108,10 +109,39 @@ export const PlanValidation = (props:Props) => {
     }
   }
 
+  const getPendingNotifications = () => {
+    const pending:AssignmentInterface[] = [];
+    props.assignments.forEach(a => { if (!a.notified) pending.push(a); });
+    return pending;
+  }
+
+  const notify = () => {
+    const pending = getPendingNotifications();
+    const promises:Promise<any>[] = []
+    pending.forEach(a => {
+      const position:PositionInterface = ArrayHelper.getOne(props.positions, "id", a.positionId);
+      a.notified = new Date();
+      const data:any = { peopleIds:["bTrK6d0kvF6"], contentType:"assignment", contentId:props.plan.id, message:"Volunteer request: " + props.plan.name + " - " + position.name };
+      promises.push(ApiHelper.post("/notifications/create", data, "MessagingApi"));
+    });
+    promises.push(ApiHelper.post("/assignments", pending, "DoingApi"));
+    Promise.all(promises).then(props.onUpdate);
+  }
+
+
+
+  const getNotificationLink = () => {
+    const pending = getPendingNotifications();
+
+    if (pending.length === 0) return <p>All volunteers notified.</p>;
+    else return <p><a href="about:blank" onClick={(e) => { e.preventDefault(); notify(); }}>Notify {pending.length} volunteer(s)</a></p>;
+  }
+
 
   return (<>
     <DisplayBox headerText="Validation" headerIcon="assignment">
       {getErrorList()}
+      {getNotificationLink()}
     </DisplayBox>
   </>);
 }

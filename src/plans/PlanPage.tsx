@@ -65,7 +65,7 @@ export const PlanPage = () => {
         {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : ["Band"] } updatedFunction={() => {setPosition(null); loadData() }} /> }
         {assignment && position && <AssignmentEdit position={position} assignment={assignment} peopleNeeded={position.count - ArrayHelper.getAll(assignments, "positionId", position.id).length } updatedFunction={ handleAssignmentUpdate } />}
         <TimeList times={times} positions={positions} plan={plan} onUpdate={loadData} />
-        <PlanValidation plan={plan} positions={positions} assignments={assignments} people={people} times={times} blockoutDates={blockoutDates} />
+        <PlanValidation plan={plan} positions={positions} assignments={assignments} people={people} times={times} blockoutDates={blockoutDates} onUpdate={loadData} />
       </Grid>
     </Grid>
   </>)

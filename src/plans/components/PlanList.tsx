@@ -14,7 +14,7 @@ export const PlanList = (props:Props) => {
   const addPlan = () => {
     const date = DateHelper.getLastSunday();
     date.setDate(date.getDate() + 7);
-    const name = (date.getMonth()+1).toString() + "/" + date.getDate().toString() + "/" + date.getFullYear().toString() + " Plan";
+    const name = DateHelper.prettyDate(date);
     setPlan({ ministryId:props.ministry.id, serviceDate:date, name, notes:""});
   }
 
