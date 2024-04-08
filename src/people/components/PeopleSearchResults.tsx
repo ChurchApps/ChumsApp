@@ -56,6 +56,7 @@ export function PeopleSearchResults(props: Props) {
       case "membershipStatus": result = (<>{p.membershipStatus}</>); break;
       case "maritalStatus": result = (<>{p.maritalStatus}</>); break;
       case "anniversary": result = (<>{(p.anniversary === null) ? "" : ChumsPersonHelper.getDateStringFromDate(p.anniversary)}</>); break;
+      case "nametagNotes": result = (<>{p.nametagNotes}</>); break;
 
     }
 
@@ -69,15 +70,15 @@ export function PeopleSearchResults(props: Props) {
     people = people.sort(function (a: any, b: any) {
       if (a[key] === null) return Infinity; // if value is null push to the end of array
 
-      if (typeof a[key].getMonth === "function") {
+      if (typeof a[key]?.getMonth === "function") {
         return asc ? (a[key]?.getTime() - b[key]?.getTime()) : (b[key]?.getTime() - a[key]?.getTime());
       }
 
       const parsedNum = parseInt(a[key]);
       if (!isNaN(parsedNum)) { return asc ? (a[key] - b[key]) : (b[key] - a[key]); }
 
-      const valA = a[key].toUpperCase();
-      const valB = b[key].toUpperCase();
+      const valA = a[key]?.toUpperCase();
+      const valB = b[key]?.toUpperCase();
       if (valA < valB) {
         return asc ? 1 : -1;
       }
