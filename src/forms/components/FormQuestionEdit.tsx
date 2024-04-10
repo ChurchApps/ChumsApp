@@ -81,6 +81,7 @@ export function FormQuestionEdit(props: Props) {
           <MenuItem value="Phone Number">Phone Number</MenuItem>
           <MenuItem value="Text Area">Text Area</MenuItem>
           <MenuItem value="Multiple Choice">Multiple Choice</MenuItem>
+          <MenuItem value="Checkbox">Checkbox</MenuItem>
         </Select>
       </FormControl>
 
@@ -88,7 +89,7 @@ export function FormQuestionEdit(props: Props) {
       <TextField fullWidth label="Description" id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} />
 
       {
-        question.fieldType === "Multiple Choice"
+        (question.fieldType === "Multiple Choice" || question.fieldType === "Checkbox")
           ? <ChoicesEdit question={question} updatedFunction={setQuestion} />
           : <TextField fullWidth label="Placeholder (optional)" id="placeholder" type="text" name="placeholder" value={question.placeholder || ""} onChange={handleChange} />
       }
