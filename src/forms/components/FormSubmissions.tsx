@@ -54,7 +54,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
         const key: string = Object.keys(resultValue)[0];
         if (question.fieldType === "Checkbox") {
           const splitAnswer = answer?.value?.split(",");
-          if (splitAnswer.indexOf(key) > -1) resultValue[key] = resultValue[key] + 1;
+          if (splitAnswer?.indexOf(key) > -1) resultValue[key] = resultValue[key] + 1;
         } else {
           if (key === answer?.value) resultValue[key] = resultValue[key] + 1;
         }
