@@ -37,7 +37,7 @@ export const PlanList = (props:Props) => {
     </TableRow>));
   }
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => { loadData(); }, [props.ministry]);
 
   return (<>
     <h1><Icon>assignment</Icon> {props.ministry.name} Plans</h1>

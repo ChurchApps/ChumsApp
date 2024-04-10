@@ -1,8 +1,7 @@
 import React from "react";
 import { Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, GroupMemberInterface, PlanInterface, PositionInterface, SmallButton, TimeInterface } from "@churchapps/apphelper";
-import { TimeEdit } from "./TimeEdit";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { GroupAdd } from "../../groups/components";
 import UserContext from "../../UserContext";
 
@@ -10,6 +9,7 @@ interface Props {
 }
 
 export const MinistryList = (props:Props) => {
+  const [redirect, setRedirect] = React.useState("");
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
   const [showAdd, setShowAdd] = React.useState<boolean>(false);
   const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([]);
@@ -41,6 +41,7 @@ export const MinistryList = (props:Props) => {
       let g = groups[i];
       const members = ArrayHelper.getAll(groupMembers, "groupId", g.id);
       const hasAccess = members.length===0 || ArrayHelper.getOne(members, "personId", context.person?.id) !== null;
+      if (hasAccess && window.location.pathname==="/plans") setRedirect("/plans/ministries/" + g.id.toString());
 
       rows.push(<TableRow key={g.id}>
         <TableCell>
@@ -56,9 +57,9 @@ export const MinistryList = (props:Props) => {
 
   React.useEffect(() => {loadData()}, []);
 
-
-  if (showAdd) return (<GroupAdd updatedFunction={handleAddUpdated} tags="ministry" categoryName="Ministry" />)
-  return (<DisplayBox headerText="Ministries" headerIcon="assignment" editContent={getAddLink()}>
+  if (redirect !== "") return <Navigate to={redirect} />;
+  else if (showAdd) return (<GroupAdd updatedFunction={handleAddUpdated} tags="ministry" categoryName="Ministry" />)
+  else return (<DisplayBox headerText="Ministries" headerIcon="assignment" editContent={getAddLink()}>
     <Table size="small">
       <TableBody>
         {getRows()}

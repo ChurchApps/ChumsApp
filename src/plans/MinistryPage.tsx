@@ -39,7 +39,7 @@ export const MinistryPage = () => {
     ApiHelper.get("/groups/" + params.id, "MembershipApi").then((data) => { setMinistry(data); });
   };
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, [params.id]);
 
   return (<>
 
