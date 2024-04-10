@@ -33,7 +33,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
         if (question.fieldType === "Yes/No" && answer?.value) answer.value = yesNoMap[answer.value];
         csvData[question.title] = answerValue;
         formSubmission.csvData.push({ [question.title]: answerValue });
-        if (question.fieldType === "Multiple Choice" || question.fieldType === "Yes/No") {
+        if (question.fieldType === "Multiple Choice" || question.fieldType === "Yes/No" || question.fieldType === "Checkbox") {
           if (!summaryData.length) summaryData.push(setSummaryResultDefault(question, answer));
           else setSummaryResultData(summaryData, question, answer);
         }
@@ -52,7 +52,12 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     if (match) {
       match.values.forEach((resultValue: any) => {
         const key: string = Object.keys(resultValue)[0];
-        if (key === answer?.value) resultValue[key] = resultValue[key] + 1;
+        if (question.fieldType === "Checkbox") {
+          const splitAnswer = answer?.value?.split(",");
+          if (splitAnswer.indexOf(key) > -1) resultValue[key] = resultValue[key] + 1;
+        } else {
+          if (key === answer?.value) resultValue[key] = resultValue[key] + 1;
+        }
       });
     }
     else summaryData.push(setSummaryResultDefault(question, answer));
@@ -79,7 +84,14 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     const questionChoices = question.choices || yesNoDefault;
     questionChoices.forEach((choice: any) => {
       let choiceCount = { [choice.value]: 0, text: choice.text };
-      if (answer && answer?.value && choice.value === answer.value) choiceCount[choice.value] = 1;
+      if (question.fieldType === "Checkbox") {
+        if (answer && answer?.value) {
+          const splitAnswer = answer.value?.split(",");
+          if (splitAnswer.indexOf(choice.value) > -1) choiceCount[choice.value] = 1;
+        }
+      } else {
+        if (answer && answer?.value && choice.value === answer.value) choiceCount[choice.value] = 1;
+      }
       choices.push(choiceCount);
     });
     return { title: question.title, values: choices };
