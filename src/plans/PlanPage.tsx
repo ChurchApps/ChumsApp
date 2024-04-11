@@ -1,7 +1,7 @@
 import React from "react";
-import { Grid, Icon, IconButton } from "@mui/material";
+import { Grid, Icon, IconButton, TextField } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DisplayBox, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DisplayBox, InputBox, Notes, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
 import { PositionEdit } from "./components/PositionEdit";
 import { PositionList } from "./components/PositionList";
 import { AssignmentEdit } from "./components/AssignmentEdit";
@@ -50,6 +50,12 @@ export const PlanPage = () => {
     if (peopleIds.length > 0) ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi").then((data: PersonInterface[]) => { setPeople(data); });
   }
 
+  const handleSave = () => {
+    ApiHelper.post("/plans", [plan], "DoingApi");
+    alert("Notes saved.");
+
+  }
+
   React.useEffect(() => { loadData(); }, []);
   console.log("Position", position, "Assignment", assignment)
 
@@ -60,6 +66,9 @@ export const PlanPage = () => {
         <DisplayBox headerText="Assignments" headerIcon="assignment" editContent={getAddPositionLink()}>
           <PositionList positions={positions} assignments={assignments} people={people} onSelect={p => setPosition(p)} onAssignmentSelect={handleAssignmentSelect} />
         </DisplayBox>
+        <InputBox headerIcon="sticky_note_2" headerText="Notes" saveFunction={handleSave}>
+          <TextField fullWidth multiline rows={4} value={plan?.notes} onChange={(e) => { setPlan({ ...plan, notes: e.target.value }) }} />
+        </InputBox>
       </Grid>
       <Grid item md={4} xs={12}>
         {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : ["Band"] } updatedFunction={() => {setPosition(null); loadData() }} /> }

@@ -34,6 +34,7 @@ export const PlanValidation = (props:Props) => {
 
       const blockouts:BlockoutDateInterface[] = ArrayHelper.getAll(props.blockoutDates, "personId", person.id);
       blockouts.forEach(b => {
+        b.endDate = new Date(b.endDate);
         b.endDate.setHours(23, 59, 59, 999);
         console.log("CHECKING BLOCKOUT", b, times)
         let conflict = false;
