@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
-import { PersonHelper, PersonInterface, Loading, CreatePerson, DateHelper } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip } from "@mui/material"
+import { PersonHelper, PersonInterface, Loading, CreatePerson, DateHelper, ApiHelper, ArrayHelper } from "@churchapps/apphelper";
+import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton } from "@mui/material"
 
 interface Props {
   people: PersonInterface[],
   columns: { key: string, label: string, shortName: string }[],
   selectedColumns: string[],
+  updateSearchResults?: (people: PersonInterface[]) => void,
 }
 
 export function PeopleSearchResults(props: Props) {
@@ -35,6 +36,17 @@ export function PeopleSearchResults(props: Props) {
     }
   }
 
+  const handleDelete = (personId: string) => {
+    const peopleArray = [...people];
+    ApiHelper.delete("/people/" + personId, "MembershipApi").then(() => {
+      const idx = ArrayHelper.getIndex(peopleArray, "id", personId);
+      if (idx > -1) {
+        peopleArray.splice(idx, 1);
+        props?.updateSearchResults(peopleArray);
+      }
+    });
+  }
+
   const getColumn = (p: PersonInterface, key: string) => {
     let result = <></>;
     switch (key) {
@@ -56,6 +68,8 @@ export function PeopleSearchResults(props: Props) {
       case "membershipStatus": result = (<>{p.membershipStatus}</>); break;
       case "maritalStatus": result = (<>{p.maritalStatus}</>); break;
       case "anniversary": result = (<>{(p.anniversary === null) ? "" : ChumsPersonHelper.getDateStringFromDate(p.anniversary)}</>); break;
+      case "nametagNotes": result = (<>{p.nametagNotes}</>); break;
+      case "deleteOption": result = (<Tooltip title={`Delete ${p.name.display}`} arrow placement="left-start"><IconButton sx={{ color: "#c84545" }} onClick={() => { handleDelete(p.id.toString()); }}><Icon>delete</Icon></IconButton></Tooltip>); break;
 
     }
 
@@ -69,15 +83,15 @@ export function PeopleSearchResults(props: Props) {
     people = people.sort(function (a: any, b: any) {
       if (a[key] === null) return Infinity; // if value is null push to the end of array
 
-      if (typeof a[key].getMonth === "function") {
+      if (typeof a[key]?.getMonth === "function") {
         return asc ? (a[key]?.getTime() - b[key]?.getTime()) : (b[key]?.getTime() - a[key]?.getTime());
       }
 
       const parsedNum = parseInt(a[key]);
       if (!isNaN(parsedNum)) { return asc ? (a[key] - b[key]) : (b[key] - a[key]); }
 
-      const valA = a[key].toUpperCase();
-      const valB = b[key].toUpperCase();
+      const valA = a[key]?.toUpperCase();
+      const valB = b[key]?.toUpperCase();
       if (valA < valB) {
         return asc ? 1 : -1;
       }
@@ -105,7 +119,7 @@ export function PeopleSearchResults(props: Props) {
         result.push(
           <th key={c.key} onClick={() => sortTableByKey(c.key, sortDirection)}>
             <span style={{ float: "left" }}>{c.shortName}</span>
-            {c.key !== "photo"
+            {(c.key !== "photo" && c.key !== "deleteOption")
               && <div style={{ display: "flex" }}>
                 <div style={{ marginTop: "5px" }} className={`${sortDirection && currentSortedCol === c.key ? "sortAscActive" : "sortAsc"}`}></div>
                 <div style={{ marginTop: "14px" }} className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div>

@@ -32,7 +32,8 @@ export const PeoplePage = () => {
     { key: "membershipStatus", label: "Membership Status", shortName: "Membership" },
     { key: "maritalStatus", label: "Marital Status", shortName: "Married" },
     { key: "anniversary", label: "Anniversary", shortName: "Anniversary" },
-    { key: "nametagNotes", label: "Name Tag Notes", shortName: "Notes" }
+    { key: "nametagNotes", label: "Name Tag Notes", shortName: "Notes" },
+    { key: "deleteOption", label: "Delete Option", shortName: "Delete" }
   ];
 
   const loadData = () => {
@@ -68,7 +69,7 @@ export const PeoplePage = () => {
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <DisplayBox id="peopleBox" headerIcon="person" headerText="People" editContent={getEditContent()} help="chums/adding-people">
-            <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} />
+            <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} />
           </DisplayBox>
         </Grid>
         <Grid item md={4} xs={12}>
