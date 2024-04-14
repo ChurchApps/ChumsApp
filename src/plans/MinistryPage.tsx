@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Icon, Tabs as MaterialTabs, Tab } from "@mui/material";
+import React from "react";
+import { Tabs as MaterialTabs, Tab } from "@mui/material";
 import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
 import { useParams } from "react-router-dom";

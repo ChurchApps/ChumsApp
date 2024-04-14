@@ -51,7 +51,7 @@ export const Wrapper: React.FC<Props> = props => {
   if (formPermission || isFormMember) tabs.push(<NavItem url="/forms" label="Form" icon="description" key="/forms" selected={selectedTab === "forms"} />);
 
   tabs.push(<NavItem url="/tasks" key="/tasks" label="Tasks" icon="list_alt" selected={selectedTab === "tasks"} />);
-  tabs.push(<NavItem url="/plans" key="/plans" label="Plans" icon="assignment" selected={selectedTab === "plans"} />);
+  if (UserHelper.checkAccess(Permissions.membershipApi.plans.edit)) tabs.push(<NavItem url="/plans" key="/plans" label="Plans" icon="assignment" selected={selectedTab === "plans"} />);
   if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) tabs.push(<NavItem url="/settings" key="/settings" label="Settings" icon="settings" selected={selectedTab === "settings"} />);
   if (UserHelper.checkAccess(Permissions.membershipApi.server.admin)) tabs.push(<NavItem key="/admin" url="/admin" label="Server Admin" icon="admin_panel_settings" selected={selectedTab === "admin"} />);
 

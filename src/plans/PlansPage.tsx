@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { Grid, Icon, Tabs as MaterialTabs, Tab } from "@mui/material";
-import { PlanList } from "./components/PlanList";
-import { TeamList } from "./components/TeamList";
+import React from "react";
+import { Grid, Icon } from "@mui/material";
 import { MinistryList } from "./components/MinistryList";
 
 export const PlansPage = () => {
