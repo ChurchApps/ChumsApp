@@ -101,7 +101,7 @@ export const PlanValidation = (props:Props) => {
     return result.length === 0;
   }
 
-  useEffect(() => { validate(); }, [props.assignments, props.positions, props.people]);
+  useEffect(() => { validate(); }, [props.assignments, props.positions, props.people]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const getErrorList = () => {
     if (errors.length === 0) return <p>Plan is valid.</p>;

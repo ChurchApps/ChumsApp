@@ -56,7 +56,7 @@ export const PlanPage = () => {
 
   }
 
-  React.useEffect(() => { loadData(); }, []);
+  React.useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
   console.log("Position", position, "Assignment", assignment)
 
   return (<>

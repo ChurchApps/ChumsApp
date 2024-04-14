@@ -44,7 +44,7 @@ export const AssignmentEdit = (props:Props) => {
     return rows;
   }
 
-  useEffect(() => { loadData(); }, [props.position?.groupId]);
+  useEffect(() => { loadData(); }, [props.position?.groupId]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (<>
     <InputBox headerText={(props.assignment?.id) ? "Edit Assignment" : "Assign Position"} headerIcon="assignment" saveFunction={handleSave} cancelFunction={() => props.updatedFunction(true)} deleteFunction={(props.assignment.id) ? handleDelete : null } saveText={"Done"}>

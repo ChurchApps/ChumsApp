@@ -37,7 +37,7 @@ export const PlanList = (props:Props) => {
     </TableRow>));
   }
 
-  useEffect(() => { loadData(); }, [props.ministry]);
+  useEffect(() => { loadData(); }, [props.ministry]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (<>
     <h1><Icon>assignment</Icon> {props.ministry.name} Plans</h1>

@@ -13,7 +13,6 @@ export const TeamList = (props:Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const isMounted = useMountedState();
 
-
   const getEditContent = () => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) return null;
     else
@@ -39,7 +38,7 @@ export const TeamList = (props:Props) => {
       })
   };
 
-  React.useEffect(loadData, [isMounted]);
+  React.useEffect(loadData, [isMounted]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const getRows = () => {
     let rows: JSX.Element[] = [];
