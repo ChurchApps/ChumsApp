@@ -45,6 +45,8 @@ export const GroupPage = () => {
     loadData();
   }
 
+  console.log("GROUP", group)
+
   return (
     <>
       <h1><Icon>people</Icon> {group?.name}</h1>

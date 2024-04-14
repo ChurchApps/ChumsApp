@@ -680,6 +680,17 @@ label .description {
 
 #smallPeopleTable img { max-height: 50px; }
 
+.comboBox>div>div:first-child { padding:10px }
+
+.positionsTable TD { vertical-align: top;}
+.positionsTable div { padding-top:5px;padding-bottom: 5px; vertical-align: middle; }
+.positionsTable div>a>span { float:left; margin-right: 10px; }
+.positionsTable div img { height:25px; }
+
+
+
+
+
 @media print {
   .form-submission-summary {
     margin: 20px;

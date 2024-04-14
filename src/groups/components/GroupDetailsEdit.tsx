@@ -79,6 +79,8 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     if (isMounted()) { setGroup(props.group); }
   }, [props.group, isMounted]);
 
+  const teamMode = group?.tags?.indexOf("team") !== -1;
+
   if (redirect !== "") return <Navigate to={redirect} />;
   else
     return (
@@ -86,53 +88,54 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
         <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} help="chums/groups">
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
-              <TextField fullWidth type="text" name="categoryName" label="Category Name" value={group.categoryName || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-            </Grid>
+            {!teamMode && (
+              <Grid item md={6} xs={12}>
+                <TextField fullWidth type="text" name="categoryName" label="Category Name" value={group.categoryName || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              </Grid>
+            )}
             <Grid item md={6} xs={12}>
               <TextField fullWidth label="Group Name" type="text" name="name" value={group.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
           </Grid>
-          <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>Track Attendance</InputLabel>
-                <Select label="Track Attendance" id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                  <MenuItem value="false">No</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                </Select>
-              </FormControl>
+          {!teamMode && <>
+            <Grid container spacing={3}>
+              <Grid item md={6} xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel>Track Attendance</InputLabel>
+                  <Select label="Track Attendance" id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value="true">Yes</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel>Parent Pickup</InputLabel>
+                  <Select label="Parent Pickup" name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value="true">Yes</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid item md={6} xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>Parent Pickup</InputLabel>
-                <Select label="Parent Pickup" name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                  <MenuItem value="false">No</MenuItem>
-                  <MenuItem value="true">Yes</MenuItem>
-                </Select>
-              </FormControl>
+            <Grid container spacing={3}>
+              <Grid item md={6} xs={12}>
+                <MarkdownEditor value={group.about || ""} onChange={(val) => handleMarkdownChange(val)} style={{ maxHeight: 200, overflowY: "scroll" }} placeholder="Group Description" />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                {group.photoUrl && (<>
+                  <img src={group.photoUrl} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="group" />
+                  <br />
+                </>)}
+                {!group.photoUrl && <InputLabel>Group Photo</InputLabel>}
+                <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>Select photo</Button>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
-              <MarkdownEditor value={group.about || ""} onChange={(val) => handleMarkdownChange(val)} style={{ maxHeight: 200, overflowY: "scroll" }} placeholder="Group Description" />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              {group.photoUrl && (<>
-                <img src={group.photoUrl} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="group" />
-                <br />
-              </>)}
-              {!group.photoUrl && <InputLabel>Group Photo</InputLabel>}
-              <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>Select photo</Button>
-            </Grid>
-          </Grid>
-          <ServiceTimesEdit group={group} />
+            <ServiceTimesEdit group={group} />
+          </>
+          }
         </InputBox>
-        <MarkdownEditor
-          value={group.about || ""}
-          onChange={(val) => handleMarkdownChange(val)}
-          style={{ maxHeight: 200, overflowY: "scroll" }}
-        />
+
         {selectPhotoField && (
           <GalleryModal
             onClose={() => setSelectPhotoField(null)}
