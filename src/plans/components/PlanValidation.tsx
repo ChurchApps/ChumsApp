@@ -123,7 +123,7 @@ export const PlanValidation = (props:Props) => {
     pending.forEach(a => {
       const position:PositionInterface = ArrayHelper.getOne(props.positions, "id", a.positionId);
       a.notified = new Date();
-      const data:any = { peopleIds:["bTrK6d0kvF6"], contentType:"assignment", contentId:props.plan.id, message:"Volunteer request: " + props.plan.name + " - " + position.name };
+      const data:any = { peopleIds:[a.personId], contentType:"assignment", contentId:props.plan.id, message:"Volunteer request: " + props.plan.name + " - " + position.name };
       promises.push(ApiHelper.post("/notifications/create", data, "MessagingApi"));
     });
     promises.push(ApiHelper.post("/assignments", pending, "DoingApi"));
