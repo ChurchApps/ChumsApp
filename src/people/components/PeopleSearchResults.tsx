@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
 import { PersonHelper, PersonInterface, Loading, CreatePerson, DateHelper, ApiHelper, ArrayHelper } from "@churchapps/apphelper";
@@ -16,6 +16,8 @@ export function PeopleSearchResults(props: Props) {
 
   const [sortDirection, setSortDirection] = useState<boolean | null>(null)
   const [currentSortedCol, setCurrentSortedCol] = useState<string>("")
+  const [optionalColumns, setOptionalColumns] = React.useState<any[]>([]);
+  const [formSubmissions, setFormSubmissions] = React.useState<any[]>([]);
 
   const getColumns = (p: PersonInterface) => {
     const result: JSX.Element[] = [];
@@ -24,6 +26,13 @@ export function PeopleSearchResults(props: Props) {
         result.push(<TableCell key={c.key}>{getColumn(p, c.key)}</TableCell>);
       }
     })
+    if (optionalColumns.length > 0) {
+      optionalColumns.forEach((c) => {
+        if (selectedColumns.indexOf(c.id) > -1) {
+          result.push(<TableCell key={c.id}>{getColumn(p, c.id)}</TableCell>)
+        }
+      })
+    }
     return result;
   }
 
@@ -36,6 +45,19 @@ export function PeopleSearchResults(props: Props) {
     }
   }
 
+  const getAnswer = (p: PersonInterface, key: string) => {
+    let result = <></>;
+    formSubmissions.forEach((fs) => {
+      if (fs.submittedBy === p.id) {
+        const answer = ArrayHelper.getOne(fs.answers, "questionId", key);
+        if (answer) {
+          return result = <>{answer.value}</>
+        }
+      }
+    });
+    return result;
+  }
+
   const handleDelete = (personId: string) => {
     const peopleArray = [...people];
     ApiHelper.delete("/people/" + personId, "MembershipApi").then(() => {
@@ -46,6 +68,20 @@ export function PeopleSearchResults(props: Props) {
       }
     });
   }
+
+  useEffect(() => {
+    ApiHelper.get("/forms?contentType=person", "MembershipApi").then((data) => {
+      if (data.length > 0) {
+        const personForms = data.filter((f: any) => f.contentType === "person");
+        if (personForms.length > 0) {
+          personForms.forEach((f: any) => {
+            ApiHelper.get("/questions?formId=" + f.id, "MembershipApi").then((q) => setOptionalColumns((prevState) => ([ ...prevState, ...q ])));
+            ApiHelper.get(`/formsubmissions/formId/${f.id}/?include=questions,answers`, "MembershipApi").then((fs) => setFormSubmissions((prevState) => ([ ...prevState, ...fs ])));
+          });
+        }
+      } else setOptionalColumns([]);
+    });
+  }, [])
 
   const getColumn = (p: PersonInterface, key: string) => {
     let result = <></>;
@@ -70,7 +106,7 @@ export function PeopleSearchResults(props: Props) {
       case "anniversary": result = (<>{(p.anniversary === null) ? "" : ChumsPersonHelper.getDateStringFromDate(p.anniversary)}</>); break;
       case "nametagNotes": result = (<>{p.nametagNotes}</>); break;
       case "deleteOption": result = (<Tooltip title={`Delete ${p.name.display}`} arrow placement="left-start"><IconButton sx={{ color: "#c84545" }} onClick={() => { handleDelete(p.id.toString()); }}><Icon>delete</Icon></IconButton></Tooltip>); break;
-
+      case key: result = (getAnswer(p, key)); break;
     }
 
     return result;
@@ -128,6 +164,23 @@ export function PeopleSearchResults(props: Props) {
           </th>)
       }
     })
+
+    if (optionalColumns.length > 0) {
+      optionalColumns.forEach((c) => {
+        const key = c.id;
+        if (selectedColumns.indexOf(key) > -1) {
+          result.push(
+            <th key={key} onClick={() => sortTableByKey(key, sortDirection)}>
+              <span style={{ float: "left" }}>{c.title}</span>
+              <div style={{ display: "flex" }}>
+                {/* <div style={{ marginTop: "5px" }} className={`${sortDirection && currentSortedCol === key ? "sortAscActive" : "sortAsc"}`}></div>
+                <div style={{ marginTop: "14px" }} className={`${!sortDirection && currentSortedCol === key ? "sortDescActive" : "sortDesc"}`}></div> */}
+              </div>
+            </th>
+          );
+        }
+      });
+    }
 
     return <TableHead><TableRow>{result}</TableRow></TableHead>;
   }

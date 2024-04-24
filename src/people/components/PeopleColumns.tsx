@@ -1,6 +1,6 @@
-import { Grid, Menu, MenuItem, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import React from "react";
-import { SmallButton } from "@churchapps/apphelper";
+import { Grid, FormControlLabel, Checkbox, Dialog, DialogTitle, DialogActions, Button, DialogContent, Tabs, Tab, Box } from "@mui/material";
+import { SmallButton, ApiHelper } from "@churchapps/apphelper";
 
 interface Props {
   columns: { key: string, label: string, shortName: string }[],
@@ -9,15 +9,17 @@ interface Props {
 }
 
 export function PeopleColumns(props: Props) {
-  const [anchorEl, setAnchorEl] = React.useState<null | Element>(null);
+  const [open, setOpen] = React.useState(false);
+  const [tabValue, setTabValue] = React.useState('basic');
+  const [optionalColumns, setOptionalColumns] = React.useState<any[]>([]);
 
   const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
     e.preventDefault();
-    setAnchorEl(e.currentTarget);
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   };
 
   const getItems = () => {
@@ -25,22 +27,65 @@ export function PeopleColumns(props: Props) {
     props.columns.forEach((o, i) => {
       const option = o;
       const selectedClass = (props.selectedColumns.indexOf(o.key) > -1) ? "checked" : "";
-      result.push(<Grid key={i} item md={6} xs={12}>
-        <MenuItem key={i} dense><FormControlLabel control={<Checkbox size="small" checked={selectedClass === "checked"} onChange={(e) => { props.toggleColumn(e.target.name); }} name={option.key} />} label={option.label} /></MenuItem>
+      result.push(<Grid key={i} item md={4} sm={6} xs={12}>
+        <FormControlLabel control={<Checkbox size="small" checked={selectedClass === "checked"} onChange={(e) => { props.toggleColumn(e.target.name); }} name={option.key} />} label={option.label} />
       </Grid>);
     });
     return result;
   }
+
+  const getOptionalItems = () => {
+    const result: JSX.Element[] = [];
+    optionalColumns.forEach((oc, i) => {
+      const optionalColumn = oc;
+      const selectedClass = (props.selectedColumns.indexOf(optionalColumn.id) > -1) ? "checked" : "";
+      result.push(<Grid key={i} item md={4} sm={6} xs={12}>
+        <FormControlLabel control={<Checkbox size="small" checked={selectedClass === "checked"} onChange={(e) => { props.toggleColumn(e.target.name); }} name={optionalColumn.id} />} label={optionalColumn.title} />
+      </Grid>)
+    });
+    return result;
+  }
+
+  let currentTab = null;
+  switch(tabValue) {
+    case "basic": currentTab = <Grid container spacing={0.5}>{getItems()}</Grid>; break;
+    //Currently the optional tab only has fields from Forms tied to people
+    case "optional": currentTab = <Grid container spacing={0.5} sx={{ minHeight: 323 }}>{optionalColumns.length > 0 ? <>{getOptionalItems()}</> : <div>No filters available.</div>}</Grid>; break;
+  }
+
+  React.useEffect(() => {
+    ApiHelper.get("/forms?contentType=person", "MembershipApi").then((data) => {
+      if (data.length > 0) {
+        const personForms = data.filter((f: any) => f.contentType === "person");
+        if (personForms.length > 0) {
+          personForms.forEach((f: any) => {
+            ApiHelper.get("/questions?formId=" + f.id, "MembershipApi").then((q) => setOptionalColumns((prevState) => ([ ...prevState, ...q ])));
+          })
+        }
+      }
+      else setOptionalColumns([]);
+    });
+  }, [])
+
   return (
     <>
       <SmallButton icon="view_column" onClick={handleClick} />
-      <Menu id="fieldsMenu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <FormGroup>
-          <Grid container spacing={0.5} style={{ maxWidth: 400 }}>
-            {getItems()}
-          </Grid>
-        </FormGroup>
-      </Menu>
+      <Dialog id="fieldsMenu" open={open} onClose={handleClose} fullWidth maxWidth="md">
+        <DialogTitle>Filters</DialogTitle>
+        <DialogContent>
+          <Tabs value={tabValue} onChange={(event: React.SyntheticEvent, newValue: string) => setTabValue(newValue)}>
+            <Tab value="basic" label="Basic" />
+            <Tab value="optional" label="Optional" />
+          </Tabs>
+          <Box sx={{ marginTop: 1 }}>
+            {currentTab}
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose} variant="contained">Apply Filters</Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }
