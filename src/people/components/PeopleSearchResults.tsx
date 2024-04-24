@@ -170,12 +170,8 @@ export function PeopleSearchResults(props: Props) {
         const key = c.id;
         if (selectedColumns.indexOf(key) > -1) {
           result.push(
-            <th key={key} onClick={() => sortTableByKey(key, sortDirection)}>
+            <th key={key}>
               <span style={{ float: "left" }}>{c.title}</span>
-              <div style={{ display: "flex" }}>
-                {/* <div style={{ marginTop: "5px" }} className={`${sortDirection && currentSortedCol === key ? "sortAscActive" : "sortAsc"}`}></div>
-                <div style={{ marginTop: "14px" }} className={`${!sortDirection && currentSortedCol === key ? "sortDescActive" : "sortDesc"}`}></div> */}
-              </div>
             </th>
           );
         }
