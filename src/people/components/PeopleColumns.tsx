@@ -10,7 +10,7 @@ interface Props {
 
 export function PeopleColumns(props: Props) {
   const [open, setOpen] = React.useState(false);
-  const [tabValue, setTabValue] = React.useState('basic');
+  const [tabValue, setTabValue] = React.useState('standard');
   const [optionalColumns, setOptionalColumns] = React.useState<any[]>([]);
 
   const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
@@ -48,9 +48,9 @@ export function PeopleColumns(props: Props) {
 
   let currentTab = null;
   switch(tabValue) {
-    case "basic": currentTab = <Grid container spacing={0.5}>{getItems()}</Grid>; break;
-    //Currently the optional tab only has fields from Forms tied to people
-    case "optional": currentTab = <Grid container spacing={0.5} sx={{ minHeight: 323 }}>{optionalColumns.length > 0 ? <>{getOptionalItems()}</> : <div>No filters available.</div>}</Grid>; break;
+    case "standard": currentTab = <Grid container spacing={0.5}>{getItems()}</Grid>; break;
+    //Currently the custom tab only has fields from Forms tied to people
+    case "custom": currentTab = <Grid container spacing={0.5} sx={{ minHeight: 323 }}>{optionalColumns.length > 0 ? <>{getOptionalItems()}</> : <div>No filters available.</div>}</Grid>; break;
   }
 
   React.useEffect(() => {
@@ -74,8 +74,8 @@ export function PeopleColumns(props: Props) {
         <DialogTitle>Filters</DialogTitle>
         <DialogContent>
           <Tabs value={tabValue} onChange={(event: React.SyntheticEvent, newValue: string) => setTabValue(newValue)}>
-            <Tab value="basic" label="Basic" />
-            <Tab value="optional" label="Optional" />
+            <Tab value="standard" label="Standard" />
+            <Tab value="custom" label="Custom" />
           </Tabs>
           <Box sx={{ marginTop: 1 }}>
             {currentTab}
