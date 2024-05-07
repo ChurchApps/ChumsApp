@@ -48,7 +48,7 @@ export const NewTask = (props: Props) => {
 
         message.conversationId = t.conversationId;
         //message.contentId = tasks[0].id;
-        await ApiHelper.post("/messages", [message], "DoingApi");
+        await ApiHelper.post("/messages", [message], "MessagingApi");
         props.onSave();
       }
     }
