@@ -21,9 +21,14 @@ export const PlanPage = () => {
 
 
   const getAddPositionLink = () => (
-    <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={() => { setPosition({categoryName:(positions?.length>0) ? positions[0].categoryName : "Band", name:"", planId:params.id, count:1}) }}>
-      <Icon color="primary">add</Icon>
-    </IconButton>
+    <>
+      <IconButton aria-label="Auto Assign" id="aautoBtnGroup" onClick={handleAutoAssign}>
+        <Icon color="primary">published_with_changes</Icon>
+      </IconButton>
+      <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={() => { setPosition({categoryName:(positions?.length>0) ? positions[0].categoryName : "Band", name:"", planId:params.id, count:1}) }}>
+        <Icon color="primary">add</Icon>
+      </IconButton>
+    </>
   );
 
   const handleAssignmentSelect = (p: PositionInterface, a: AssignmentInterface) => {
@@ -53,7 +58,17 @@ export const PlanPage = () => {
   const handleSave = () => {
     ApiHelper.post("/plans", [plan], "DoingApi");
     alert("Notes saved.");
+  }
 
+  const handleAutoAssign = async () => {
+    const groupIds = ArrayHelper.getUniqueValues(positions, "groupId");
+    const groupMembers = await ApiHelper.get("/groupMembers/?groupIds=" + groupIds.join(","), "MembershipApi");
+    const teams:{positionId:string, personIds:string[]}[] = [];
+    positions.forEach(p => {
+      const filteredMembers = ArrayHelper.getAll(groupMembers, "groupId", p.groupId);
+      teams.push({positionId:p.id, personIds:filteredMembers.map(m => m.personId) || []});
+    });
+    ApiHelper.post("/plans/autofill/" + params.id, { teams }, "DoingApi").then(() => { loadData(); });
   }
 
   React.useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
