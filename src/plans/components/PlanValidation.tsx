@@ -14,6 +14,10 @@ interface Props {
 export const PlanValidation = (props:Props) => {
 
   const [errors, setErrors] = React.useState<JSX.Element[]>([]);
+  const [plans, setPlans] = React.useState<PlanInterface[]>([]);
+  const [planTimeConflicts, setPlanTimeConflicts] = React.useState<{time: TimeInterface, overlapingTimes: TimeInterface[]}[]>([]);
+  const [externalPositions, setExternalPositions] = React.useState<PositionInterface[]>();
+  const [externalAssignments, setExternalAssignments] = React.useState<AssignmentInterface[]>();
 
 
   const validateBlockout = (issues:JSX.Element[]) => {
@@ -86,9 +90,36 @@ export const PlanValidation = (props:Props) => {
     }
   }
 
+  const checkPlanTimeConflicts = (person: PersonInterface, issues: JSX.Element[]) => {
+    if (props.assignments.length > 0) {
+      const assignments = externalAssignments?.filter(ea => ea.personId === person.id);
+      const duties: {position:PositionInterface}[] = [];
+      assignments?.forEach(a => {
+        const position = externalPositions.find(p => p.id === a.positionId);
+        if (position) duties.push({position});
+      });
+
+      for (let i = 0; i < duties.length; i++) {
+        const a = duties[i];
+        const plan = plans.find(p => p.id === a.position.planId);
+        issues.push(<><hr /><b style={{ display: "flex", justifyContent: "center", alignItems: "center", fontStyle: "italic" }}>{plan.name} Conflicts</b></>);
+        planTimeConflicts.forEach(tc => {
+          //get overlaping times from planTimeConflicts based on current duty.
+          const filtered = tc.overlapingTimes.filter(ot => a.position.planId === ot.planId && ot.teams.indexOf(a.position.categoryName) > -1);
+          if (filtered.length > 0) {
+            filtered.forEach(f => {
+              issues.push(<><b>{person.name.display}:</b> Time conflict at {a.position.name} between {tc.time.displayName} and {f.displayName}</>);
+            })
+          }
+        });
+      }
+    }
+  }
+
   const validateTimeConflicts = (issues:JSX.Element[]) => {
     props.people.forEach(person => {
       checkPersonTimeConflicts(person, issues);
+      checkPlanTimeConflicts(person, issues);
     });
   }
 
@@ -101,7 +132,47 @@ export const PlanValidation = (props:Props) => {
     return result.length === 0;
   }
 
-  useEffect(() => { validate(); }, [props.assignments, props.positions, props.people]);  // eslint-disable-line react-hooks/exhaustive-deps
+  const getAll = async () => {
+    if (props.assignments.length > 0) {
+      const data = await ApiHelper.get(`/times/all`, "DoingApi");
+      if (data.length > 0) {
+        let filteredTimes: any[] = [];
+        let timeConflicts: any[] = [];
+        const removeDuplicates = () => function (c: any) {
+          return !filteredTimes.includes(c);
+        }
+        for (const t of props.times) {
+          //filter the ones that overlap.
+          const overlapingTimes = data.filter((d: TimeInterface) => d.startTime < t.endTime && d.endTime > t.startTime);
+          //remove the ones that are in the current plan, cause they are getting validated in validateTimeConflicts().
+          const removedcurrentPlan = overlapingTimes.filter((ot: TimeInterface) => ot.planId !== props.plan.id);
+          filteredTimes = [...filteredTimes, ...removedcurrentPlan.filter(removeDuplicates())];
+          //an array with current time and it's overlaping times from other plans.
+          timeConflicts = [ ...timeConflicts, { time: t, overlapingTimes: [...removedcurrentPlan] }];
+        };
+        setPlanTimeConflicts(timeConflicts);
+        // load positions/assignments, if overlap.
+        if (filteredTimes.length > 0) {
+          const allPlans: PlanInterface[] = await ApiHelper.get("/plans", "DoingApi");
+          setPlans(allPlans);
+          const planIds = ArrayHelper.getIds(filteredTimes, "planId");
+          const allPositions: PositionInterface[] = await ApiHelper.get("/positions/plan/ids?planIds=" + planIds, "DoingApi");
+          setExternalPositions(allPositions);
+          const allAssignments: AssignmentInterface[] = await ApiHelper.get("/assignments/plan/ids?planIds=" + planIds, "DoingApi");
+          setExternalAssignments(allAssignments);
+        }
+      }
+    } else {
+      setPlans([]);
+      setPlanTimeConflicts([]);
+      setExternalAssignments([]);
+      setExternalPositions([]);
+    }
+  }
+
+  useEffect(() => { if (externalPositions?.length > 0 && externalAssignments?.length > 0) { validate(); } }, [externalPositions, externalAssignments]);  // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => { getAll(); validate(); }, [props.assignments, props.positions, props.people]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const getErrorList = () => {
     if (errors.length === 0) return <p>Plan is valid.</p>;
