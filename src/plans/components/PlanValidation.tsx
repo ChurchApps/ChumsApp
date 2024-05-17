@@ -102,11 +102,11 @@ export const PlanValidation = (props:Props) => {
       for (let i = 0; i < duties.length; i++) {
         const a = duties[i];
         const plan = plans.find(p => p.id === a.position.planId);
-        issues.push(<><hr /><b style={{ display: "flex", justifyContent: "center", alignItems: "center", fontStyle: "italic" }}>{plan.name} Conflicts</b></>);
         planTimeConflicts.forEach(tc => {
           //get overlaping times from planTimeConflicts based on current duty.
-          const filtered = tc.overlapingTimes.filter(ot => a.position.planId === ot.planId && ot.teams.indexOf(a.position.categoryName) > -1);
+          const filtered = tc.overlapingTimes.filter(ot => a.position.planId === ot.planId && ot.teams?.indexOf(a.position.categoryName) > -1);
           if (filtered.length > 0) {
+            issues.push(<><hr /><b style={{ display: "flex", justifyContent: "center", alignItems: "center", fontStyle: "italic" }}>{plan.name} Conflicts</b></>);
             filtered.forEach(f => {
               issues.push(<><b>{person.name.display}:</b> Time conflict at {a.position.name} between {tc.time.displayName} and {f.displayName}</>);
             })
