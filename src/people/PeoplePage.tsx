@@ -68,6 +68,7 @@ export const PeoplePage = () => {
     } else {
       sessionStorage.setItem("selectedColumns", JSON.stringify(selectedColumns));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(loadData, [isMounted]);
