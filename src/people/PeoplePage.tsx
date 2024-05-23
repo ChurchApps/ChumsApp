@@ -50,6 +50,7 @@ export const PeoplePage = () => {
     const index = sc.indexOf(key);
     if (index === -1) sc.push(key);
     else sc.splice(index, 1);
+    sessionStorage.setItem("selectedColumns", JSON.stringify(sc));
     setSelectedColumns(sc);
   }
 
@@ -60,6 +61,14 @@ export const PeoplePage = () => {
       <PeopleColumns selectedColumns={selectedColumns} toggleColumn={handleToggleColumn} columns={columns} />
     </>);
   }
+
+  React.useEffect(() => {
+    if (sessionStorage.getItem("selectedColumns")) {
+      setSelectedColumns(JSON.parse(sessionStorage.getItem("selectedColumns")));
+    } else {
+      sessionStorage.setItem("selectedColumns", JSON.stringify(selectedColumns));
+    }
+  }, []);
 
   React.useEffect(loadData, [isMounted]);
 
