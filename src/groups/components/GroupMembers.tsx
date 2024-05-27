@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading } from "@churchapps/apphelper";
+import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading, ArrayHelper } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Button, Icon, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
@@ -13,6 +13,9 @@ interface Props {
 export const GroupMembers: React.FC<Props> = (props) => {
   const [groupMembers, setGroupMembers] = useState<GroupMemberInterface[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [show, setShow] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [count, setCount] = useState<number>(0);
   //const isSubscribed = useRef(true);
 
   const loadData = React.useCallback(() => {
@@ -95,7 +98,17 @@ export const GroupMembers: React.FC<Props> = (props) => {
     return rows;
   }
 
-  const getEditContent = () => (<ExportLink data={groupMembers} spaceAfter={true} filename="groupmembers.csv" />)
+  const getEditContent = () => (<>
+    {UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit) && <SmallButton icon="edit_square" toolTip="Send a message to members" onClick={() => { setCount(0); setShow(!show) }}></SmallButton>}
+    <ExportLink data={groupMembers} spaceAfter={true} filename="groupmembers.csv" />
+  </>);
+
+  const handleSend = async () => {
+    const peopleIds = ArrayHelper.getIds(groupMembers, "personId");
+    const ids = peopleIds.filter(id => id !== UserHelper.person.id); //remove the one that is sending the message.
+    const data: any = { peopleIds: ids, contentType: "groupMessage", contentId: props.group.id, message: `Message from ${UserHelper.person.name.first}: ${message}` };
+    await ApiHelper.post("/notifications/create", data, "MessagingApi");
+  }
 
   React.useEffect(() => {
     if (props.group.id !== undefined) { loadData() }; return () => {
@@ -117,6 +130,14 @@ export const GroupMembers: React.FC<Props> = (props) => {
 
   return (
     <DisplayBox id="groupMembersBox" data-cy="group-members-tab" headerText="Group Members" headerIcon="group" editContent={getEditContent()} help="chums/groups">
+      {show === true && (
+        <div style={{ marginTop: "18px", marginBottom: "18px" }}>
+          <TextField fullWidth multiline helperText={count + "/140"} inputProps={{ maxLength: 140 }} onChange={(e) => { setCount(e.target.value.length); setMessage(e.target.value); }} sx={{ margin: 0 }} />
+          <div style={{ display: "flex", justifyContent: "end", alignItems: "center" }}>
+            <Button size="small" variant="contained" endIcon={<Icon fontSize="small">send</Icon>} onClick={() => { setShow(false); handleSend(); }}>Send</Button>
+          </div>
+        </div>)
+      }
       {getTable()}
     </DisplayBox>
   );
