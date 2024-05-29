@@ -134,7 +134,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
         <div style={{ marginTop: "18px", marginBottom: "18px" }}>
           <TextField fullWidth multiline helperText={count + "/140"} inputProps={{ maxLength: 140 }} onChange={(e) => { setCount(e.target.value.length); setMessage(e.target.value); }} sx={{ margin: 0 }} />
           <div style={{ display: "flex", justifyContent: "end", alignItems: "center" }}>
-            <Button size="small" variant="contained" endIcon={<Icon fontSize="small">send</Icon>} onClick={() => { setShow(false); handleSend(); }}>Send</Button>
+            <Button size="small" variant="contained" endIcon={<Icon fontSize="small">send</Icon>} onClick={() => { handleSend(); setShow(false); }}>Send</Button>
           </div>
         </div>)
       }
