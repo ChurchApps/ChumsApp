@@ -67,11 +67,8 @@ export const AdminPage = () => {
     if (idx > -1) UserHelper.userChurches.splice(idx, 1);
 
     UserHelper.userChurches.push(...result.userChurches);
-
-    UserHelper.selectChurch(context, result.userChurches[0].id, null)
-
+    UserHelper.selectChurch(context, result.userChurches[0].church.id, null)
     setRedirectUrl(`/settings`);
-
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.currentTarget.value);
