@@ -5,6 +5,7 @@ import { SmallButton } from "@churchapps/apphelper";
 import { Link, useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
 import UserContext from "../UserContext";
+import { RequestedChanges } from "./components/RequestedChanges";
 
 export const TaskPage = () => {
   const params = useParams();
@@ -80,6 +81,7 @@ export const TaskPage = () => {
 
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
+          {task.taskType === "directoryUpdate" && <RequestedChanges task={task} />}
           <Notes context={context} conversationId={task?.conversationId} createConversation={handleCreateConversation} />
         </Grid>
         <Grid item md={4} xs={12}>
