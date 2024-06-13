@@ -38,7 +38,7 @@ export const NewTask = (props: Props) => {
   const handleSave = async () => {
     if (validate()) {
       const tasks = await ApiHelper.post("/tasks", [task], "DoingApi");
-      if (message.content?.trim() !== "") {
+      if (message.content && (message.content?.trim() !== undefined || message.content?.trim() !== "")) {
 
         const conv: ConversationInterface = { allowAnonymousPosts: false, contentType: "task", contentId: task.id, title: "Task #" + tasks[0].id + " Notes", visibility: "hidden" }
         const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
@@ -49,8 +49,8 @@ export const NewTask = (props: Props) => {
         message.conversationId = t.conversationId;
         //message.contentId = tasks[0].id;
         await ApiHelper.post("/messages", [message], "MessagingApi");
-        props.onSave();
       }
+      props.onSave();
     }
   }
 
