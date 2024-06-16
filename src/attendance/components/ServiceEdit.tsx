@@ -1,6 +1,7 @@
 import React from "react";
 import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem } from "@mui/material";
 import { useMountedState, ServiceInterface, CampusInterface, InputBox, ApiHelper, UniqueIdHelper, ErrorMessages } from "@churchapps/apphelper";
+import { Locale } from "@churchapps/apphelper";
 
 interface Props {
   service: ServiceInterface,
@@ -27,8 +28,8 @@ export const ServiceEdit: React.FC<Props> = (props) => {
 
   const validate = () => {
     const result = [];
-    if (!service.name) result.push("Service name is required.");
-    if (!service.campusId) result.push("Please select a campus.");
+    if (!service.name) result.push(Locale.label("attendance.serviceEdit.validate.name"));
+    if (!service.campusId) result.push(Locale.label("attendance.serviceEdit.validate.campus"));
     setErrors(result);
     return result.length === 0;
   }
@@ -40,10 +41,10 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         .finally(() => { setIsSubmitting(false) });
     }
   }
-  const handleDelete = () => { if (window.confirm("Are you sure you wish to permanently delete this service?")) ApiHelper.delete("/services/" + service.id, "AttendanceApi").then(props.updatedFunction); }
+  const handleDelete = () => { if (window.confirm(Locale.label("attendance.serviceEdit.validate.name"))) ApiHelper.delete("/services/" + service.id, "AttendanceApi").then(props.updatedFunction); }
 
   const loadData = React.useCallback(() => {
-    ApiHelper.get("/campuses", "AttendanceApi").then(data => {
+    ApiHelper.get("/campuses", "AttendanceApi").then((data:any) => {
       if(isMounted()) {
         setCampuses(data);
       }
@@ -77,12 +78,12 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     <InputBox id="serviceBox" data-cy="service-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.service?.id ? handleDelete : null} headerText={service.name} headerIcon="calendar_month" isSubmitting={isSubmitting} help="chums/attendance">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
-        <InputLabel id="campus">Campus</InputLabel>
-        <Select name="campus" labelId="campus" label="Campus" value={service.campusId} onChange={handleChange}>
+        <InputLabel id="campus">{Locale.label("attendance.serviceEdit.campus")}</InputLabel>
+        <Select name="campus" labelId="campus" label={Locale.label("attendance.serviceEdit.campus")} value={service.campusId} onChange={handleChange}>
           {getCampusOptions()}
         </Select>
       </FormControl>
-      <TextField fullWidth label="Service Name" id="name" name="name" type="text" value={service.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("attendance.serviceEdit.name")} id="name" name="name" type="text" value={service.name} onChange={handleChange} />
     </InputBox>
   );
 }

@@ -21,7 +21,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
 
   const validate = () => {
     const result = [];
-    if (!campus.name) result.push(Locale.label("attendance.campusEdit.campusRequired"));
+    if (!campus.name) result.push(Locale.label("attendance.campusEdit.validate.name"));
     setErrors(result);
     return result.length === 0;
   }
@@ -32,7 +32,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
     }
   }
 
-  const handleDelete = () => { if (window.confirm(Locale.label("attendance.campusEdit.sureDelete"))) ApiHelper.delete("/campuses/" + campus.id, "AttendanceApi").then(props.updatedFunction); }
+  const handleDelete = () => { if (window.confirm(Locale.label("attendance.campusEdit.confirmDelete"))) ApiHelper.delete("/campuses/" + campus.id, "AttendanceApi").then(props.updatedFunction); }
 
   React.useEffect(() => setCampus(props.campus), [props.campus]);
 
@@ -41,7 +41,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
   return (
     <InputBox id="campusBox" data-cy="campus-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.campus?.id ? handleDelete : null} headerText={campus.name} headerIcon="church" isSubmitting={isSubmitting} help="chums/attendance">
       <ErrorMessages errors={errors} />
-      <TextField fullWidth label={Locale.label("attendance.campusEdit.campusName")} id="name" name="name" type="text" value={campus.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("attendance.campusEdit.name")} id="name" name="name" type="text" value={campus.name} onChange={handleChange} />
     </InputBox>
   );
 }

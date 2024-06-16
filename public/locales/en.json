@@ -9,9 +9,20 @@
     },
     "attendance": {
       "campusEdit": {
-        "campusName": "Campus Name",
-        "sureDelete": "Are you sure you want to delete this campus?",
-        "campusRequired": "Campus Name is required."
+        "name": "Campus Name",
+        "confirmDelete": "Are you sure you want to delete this campus?",
+        "validate": {
+          "name": "Campus Name is required."
+        }
+      },
+      "serviceEdit": {
+        "campus": "Campus",
+        "name": "Service Name",
+        "confirmDelete": "Are you sure you wish to permanently delete this service?",
+        "validate": {
+          "campus": "Please select a campus.",
+          "name": "Service name is required."
+        }
       }
     }
 
