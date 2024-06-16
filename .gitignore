@@ -1,5 +1,6 @@
 *.bat
 /build
+/public/apphelper
 
 # Logs
 logs

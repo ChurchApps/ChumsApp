@@ -1,11 +1,12 @@
-import { CommonEnvironmentHelper, ApiHelper } from "@churchapps/apphelper";
+import { CommonEnvironmentHelper, ApiHelper, LocalHelper } from "@churchapps/apphelper";
+
 
 export class EnvironmentHelper {
   static B1Url = "";
   static ChurchAppsUrl = "";
   static Common = CommonEnvironmentHelper;
 
-  static init = () => {
+  static init = async () => {
     let stage = process.env.REACT_APP_STAGE;
 
     switch (stage) {
@@ -24,7 +25,17 @@ export class EnvironmentHelper {
       { keyName: "MessagingApi", url: EnvironmentHelper.Common.MessagingApi, jwt: "", permisssions: [] },
       { keyName: "ContentApi", url: EnvironmentHelper.Common.ContentApi, jwt: "", permisssions: [] }
     ];
+
+    //await LocalHelper.init([`/locales/{{lng}}.json`, 'node_modules/@churchapps/apphelper/locales/{{lng}}.json'])
+    //await LocalHelper.init([`/locales/{{lng}}.json`])
+    //await LocalHelper.init([`/locales/{{lng}}.json`, `/apphelper/locales/{{lng}}.json`])
+    await LocalHelper.init([`/apphelper/locales/{{lng}}.json`, `/locales/{{lng}}.json`])
   }
+
+  static initLocal = async () => {
+
+  }
+
 
   static initDev = () => {
   }

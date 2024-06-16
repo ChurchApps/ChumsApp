@@ -1,0 +1,10 @@
+{
+    "common": {
+        "search": "Search"
+    },
+    "dashboard": {
+        "my_groups": "My Groups",
+        "people": "People",
+        "tasks": "Tasks"
+    }
+}

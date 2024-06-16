@@ -1,0 +1,10 @@
+{
+    "common": {
+        "search": "Buscar"
+    },
+    "dashboard": {
+        "my_groups": "Mis Grupos",
+        "people": "Gente",
+        "tasks": "Tareas"
+    }
+}

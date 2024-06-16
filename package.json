@@ -8,11 +8,14 @@
     "@mui/material": "^5.14.7",
     "@types/react-cropper": "^1.3.2",
     "@types/react-router-dom": "^5.3.3",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-http-backend": "^2.5.2",
     "mui-tel-input": "^5.1.2",
     "react": "^18.2.0",
     "react-cookie": "^6.1.0",
     "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",
+    "react-i18next": "^14.1.2",
     "react-router-dom": "^6.15.0",
     "react-scripts": "^5.0.1",
     "react-select": "^5.8.0",
@@ -22,6 +25,7 @@
   "devDependencies": {
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "copyfiles": "^2.4.1",
     "lint-staged": "^14.0.1"
   },
   "scripts": {
@@ -38,7 +42,8 @@
     "predeploy-prod": "export REACT_APP_STAGE=prod&& npm run build",
     "exec-deploy-prod": "aws s3 sync build/ s3://chums-app",
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3FB2K4FSP7ZUB --paths \"/*\"",
-    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod"
+    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod",
+    "postinstall": "copyfiles -a -f node_modules/@churchapps/apphelper/public/locales/** public/apphelper/locales"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,js}": [
