@@ -1,4 +1,4 @@
-import { CommonEnvironmentHelper, ApiHelper, LocalHelper } from "@churchapps/apphelper";
+import { CommonEnvironmentHelper, ApiHelper, Locale } from "@churchapps/apphelper";
 
 
 export class EnvironmentHelper {
@@ -26,10 +26,10 @@ export class EnvironmentHelper {
       { keyName: "ContentApi", url: EnvironmentHelper.Common.ContentApi, jwt: "", permisssions: [] }
     ];
 
-    //await LocalHelper.init([`/locales/{{lng}}.json`, 'node_modules/@churchapps/apphelper/locales/{{lng}}.json'])
-    //await LocalHelper.init([`/locales/{{lng}}.json`])
-    await LocalHelper.init([`/locales/{{lng}}.json`, `/apphelper/locales/{{lng}}.json`])
-    //await LocalHelper.init([`/apphelper/locales/{{lng}}.json`, `/locales/{{lng}}.json`])
+    //await Locale.init([`/locales/{{lng}}.json`, 'node_modules/@churchapps/apphelper/locales/{{lng}}.json'])
+    //await Locale.init([`/locales/{{lng}}.json`])
+    await Locale.init([`/locales/{{lng}}.json`, `/apphelper/locales/{{lng}}.json`])
+    //await Locale.init([`/apphelper/locales/{{lng}}.json`, `/locales/{{lng}}.json`])
   }
 
   static initLocal = async () => {
