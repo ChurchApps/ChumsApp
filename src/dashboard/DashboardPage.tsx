@@ -11,7 +11,7 @@ export const DashboardPage = () => (<>
   <Grid container spacing={3}>
     <Grid item md={8} xs={12}>
       <PeopleSearch />
-      <Groups personId={UserHelper.person?.id} title={LocalHelper.label("dashboard.my_groups")} />
+      <Groups personId={UserHelper.person?.id} title={LocalHelper.label("dashboard.myGroups")} />
     </Grid>
     <Grid item md={4} xs={12}>
       <TaskList compact={true} status="Open" />

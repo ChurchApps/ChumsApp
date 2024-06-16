@@ -28,8 +28,8 @@ export class EnvironmentHelper {
 
     //await LocalHelper.init([`/locales/{{lng}}.json`, 'node_modules/@churchapps/apphelper/locales/{{lng}}.json'])
     //await LocalHelper.init([`/locales/{{lng}}.json`])
-    //await LocalHelper.init([`/locales/{{lng}}.json`, `/apphelper/locales/{{lng}}.json`])
-    await LocalHelper.init([`/apphelper/locales/{{lng}}.json`, `/locales/{{lng}}.json`])
+    await LocalHelper.init([`/locales/{{lng}}.json`, `/apphelper/locales/{{lng}}.json`])
+    //await LocalHelper.init([`/apphelper/locales/{{lng}}.json`, `/locales/{{lng}}.json`])
   }
 
   static initLocal = async () => {

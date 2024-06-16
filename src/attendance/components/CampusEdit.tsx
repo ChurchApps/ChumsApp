@@ -1,6 +1,6 @@
 import React from "react";
 import { SelectChangeEvent, TextField } from "@mui/material";
-import { CampusInterface, InputBox, ApiHelper, ErrorMessages } from "@churchapps/apphelper";
+import { CampusInterface, InputBox, ApiHelper, ErrorMessages, LocalHelper } from "@churchapps/apphelper";
 
 interface Props { campus: CampusInterface, updatedFunction: () => void }
 
@@ -21,7 +21,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
 
   const validate = () => {
     const result = [];
-    if (!campus.name) result.push("Campus name is required.");
+    if (!campus.name) result.push(LocalHelper.label("attendance.campusEdit.campusRequired"));
     setErrors(result);
     return result.length === 0;
   }
@@ -32,7 +32,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
     }
   }
 
-  const handleDelete = () => { if (window.confirm("Are you sure you wish to permanently delete this campus?")) ApiHelper.delete("/campuses/" + campus.id, "AttendanceApi").then(props.updatedFunction); }
+  const handleDelete = () => { if (window.confirm(LocalHelper.label("attendance.campusEdit.sureDelete"))) ApiHelper.delete("/campuses/" + campus.id, "AttendanceApi").then(props.updatedFunction); }
 
   React.useEffect(() => setCampus(props.campus), [props.campus]);
 
@@ -41,7 +41,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
   return (
     <InputBox id="campusBox" data-cy="campus-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.campus?.id ? handleDelete : null} headerText={campus.name} headerIcon="church" isSubmitting={isSubmitting} help="chums/attendance">
       <ErrorMessages errors={errors} />
-      <TextField fullWidth label="Campus Name" id="name" name="name" type="text" value={campus.name} onChange={handleChange} />
+      <TextField fullWidth label={LocalHelper.label("attendance.campusEdit.campusName")} id="name" name="name" type="text" value={campus.name} onChange={handleChange} />
     </InputBox>
   );
 }

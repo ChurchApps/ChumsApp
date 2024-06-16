@@ -3,8 +3,16 @@
         "search": "Search"
     },
     "dashboard": {
-        "my_groups": "My Groups",
+        "myGroups": "My Groups",
         "people": "People",
         "tasks": "Tasks"
+    },
+    "attendance": {
+      "campusEdit": {
+        "campusName": "Campus Name",
+        "sureDelete": "Are you sure you want to delete this campus?",
+        "campusRequired": "Campus Name is required."
+      }
     }
+
 }
