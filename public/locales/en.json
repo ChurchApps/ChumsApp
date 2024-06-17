@@ -105,6 +105,10 @@
         "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
         "edit": "Edit Fund",
         "name": "Name"
+      },
+      "funds": {
+        "noFund": "No funds found.",
+        "fund": "Funds"
       }
     }
 

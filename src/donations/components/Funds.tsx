@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, UserHelper, Loading, useMountedState, FundInterface, Permissions, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, UserHelper, Loading, useMountedState, FundInterface, Permissions, SmallButton, Locale } from "@churchapps/apphelper";
 import { FundEdit } from ".";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
@@ -32,7 +32,7 @@ export const Funds: React.FC = () => {
     const result: JSX.Element[] = [];
 
     if (funds.length === 0) {
-      result.push(<TableRow key="0">No funds found.</TableRow>);
+      result.push(<TableRow key="0">{Locale.label("donations.funds.noFund")}</TableRow>);
       return result;
     }
 
@@ -58,7 +58,7 @@ export const Funds: React.FC = () => {
     let contents = <Loading />
     if (funds) contents = <Table size="small">{getRows()}</Table>
     return (
-      <DisplayBox id="fundsBox" headerIcon="volunteer_activism" data-cy="funds-box" headerText="Funds" editContent={getEditSection()} help="chums/giving">
+      <DisplayBox id="fundsBox" headerIcon="volunteer_activism" data-cy="funds-box" headerText={Locale.label("donations.funds.fund")} editContent={getEditSection()} help="chums/giving">
         {contents}
       </DisplayBox>
     );
