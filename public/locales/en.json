@@ -2,11 +2,6 @@
     "common": {
         "search": "Search"
     },
-    "dashboard": {
-        "myGroups": "My Groups",
-        "people": "People",
-        "tasks": "Tasks"
-    },
     "attendance": {
       "campusEdit": {
         "name": "Campus Name",
@@ -51,6 +46,11 @@
         "groups": "Groups",
         "att": "Attendance"
       }
+    },
+    "dashboard": {
+      "myGroups": "My Groups",
+      "people": "People",
+      "tasks": "Tasks"
     }
 
 }
