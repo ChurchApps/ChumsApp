@@ -68,6 +68,18 @@
         "edit": "Edit Batch",
         "opName": "Name (optional)",
         "date": "Date"
+      },
+      "donationEdit": {
+        "checkNum": "Check #",
+        "lastDig": "Last 4 digits",
+        "anon": "Anonymous",
+        "donEdit": "Edit Donation",
+        "person": "Person",
+        "method": "Method",
+        "check": "Check",
+        "cash": "Cash",
+        "card": "Card",
+        "notes": "Notes"
       }
     }
 
