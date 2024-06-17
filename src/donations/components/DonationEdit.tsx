@@ -116,7 +116,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
         <label>{Locale.label("donations.donationEdit.person")}</label>
         {getPersonSection()}
       </Box>
-      <TextField fullWidth label="Date" type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth label={Locale.label("donations.donationEdit.date")} type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
       <FormControl fullWidth>
         <InputLabel id="method">{Locale.label("donations.donationEdit.method")}</InputLabel>
         <Select name="method" labelId="method" label={Locale.label("donations.donationEdit.method")} value={donation.method || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
