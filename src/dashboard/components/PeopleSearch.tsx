@@ -21,16 +21,16 @@ export const PeopleSearch = () => {
   }
 
   const columns = [
-    { key: "photo", label: Locale.label("attendance.peopleSearch.photo"), shortName: "" },
-    { key: "displayName", label: Locale.label("attendance.peopleSearch.display"), shortName: Locale.label("attendance.peopleSearch.name") }
+    { key: "photo", label: Locale.label("dashboard.peopleSearch.photo"), shortName: "" },
+    { key: "displayName", label: Locale.label("dashboard.peopleSearch.display"), shortName: Locale.label("dashboard.peopleSearch.name") }
   ];
 
   return (<>
-    <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("attendance.peopleSearch.ppl")}>
+    <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("dashboard.peopleSearch.ppl")}>
       <FormControl fullWidth variant="outlined">
-        <InputLabel htmlFor="searchText">{Locale.label("attendance.peopleSearch.name")}</InputLabel>
-        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("attendance.peopleSearch.name")} value={searchText} onChange={handleChange}
-          endAdornment={<Button variant="contained" onClick={handleSubmit}>{Locale.label("attendance.peopleSearch.search")}</Button>}
+        <InputLabel htmlFor="searchText">{Locale.label("dashboard.peopleSearch.name")}</InputLabel>
+        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("dashboard.peopleSearch.name")} value={searchText} onChange={handleChange}
+          endAdornment={<Button variant="contained" onClick={handleSubmit}>{Locale.label("dashboard.peopleSearch.search")}</Button>}
         />
       </FormControl>
       {searchResults && <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} />}

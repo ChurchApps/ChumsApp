@@ -7,7 +7,7 @@ import { UserHelper } from "@churchapps/apphelper";
 import { Locale } from "@churchapps/apphelper";
 
 export const DashboardPage = () => (<>
-  <h1><Icon>home</Icon> Chums {Locale.label("attendance.dashboardPage.dash")}</h1>
+  <h1><Icon>home</Icon> Chums {Locale.label("dashboard.dashboardPage.dash")}</h1>
   <Grid container spacing={3}>
     <Grid item md={8} xs={12}>
       <PeopleSearch />
