@@ -50,7 +50,14 @@
     "dashboard": {
       "myGroups": "My Groups",
       "people": "People",
-      "tasks": "Tasks"
+      "tasks": "Tasks",
+      "peopleSearch": {
+        "photo": "Photo",
+        "display": "Display Name",
+        "ppl": "People",
+        "name": "Name",
+        "search": "Search"
+      }
     }
 
 }
