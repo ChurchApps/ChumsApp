@@ -99,6 +99,12 @@
         "anon": "Anonymous",
         "total": "Total",
         "don": "Donations"
+      },
+      "fundEdit": {
+        "errBlank": "Enter a fund name",
+        "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
+        "edit": "Edit Fund",
+        "name": "Name"
       }
     }
 
