@@ -109,6 +109,15 @@
       "funds": {
         "noFund": "No funds found.",
         "fund": "Funds"
+      },
+      "donationsPage": {
+        "noBatch": "No batches found.",
+        "batch": "Batch",
+        "name": "Name",
+        "date": "Date",
+        "don": "Donations",
+        "total": "Total",
+        "edit": "Edit"
       }
     }
 
