@@ -85,7 +85,9 @@
         "person": "Person: ",
         "event": "Event: ",
         "msg": "Message: ",
-        "mark": "Mark as "
+        "mark": "Mark as ",
+        "failed": "Failed Donations - ",
+        "unres": " unresolved"
       },
       "donations": {
         "errMsg": "No fund found. Please create a fund before making a donation",
