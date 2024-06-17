@@ -86,6 +86,17 @@
         "event": "Event: ",
         "msg": "Message: ",
         "mark": "Mark as "
+      },
+      "donations": {
+        "errMsg": "No fund found. Please create a fund before making a donation",
+        "noDonMsg": "No donations have been tracked. Once donations are entered they will show up here.",
+        "tableIdent": "Id",
+        "name": "Name",
+        "date": "Date",
+        "amt": "Amount",
+        "anon": "Anonymous",
+        "total": "Total",
+        "don": "Donations"
       }
     }
 

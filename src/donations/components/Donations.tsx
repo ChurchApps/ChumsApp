@@ -1,5 +1,5 @@
 import React from "react";
-import { SmallButton, ArrayHelper, ApiHelper, UserHelper, DonationInterface, DateHelper, CurrencyHelper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading } from "@churchapps/apphelper";
+import { SmallButton, ArrayHelper, ApiHelper, UserHelper, DonationInterface, DateHelper, CurrencyHelper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 interface Props { batch: DonationBatchInterface, funds: FundInterface[], addFunction: () => void, editFunction: (id: string) => void }
@@ -33,14 +33,14 @@ export const Donations: React.FC<Props> = (props) => {
     let rows: React.ReactNode[] = [];
     let total = 0;
     if (props.funds.length === 0) {
-      rows.push(<TableRow key="0" data-cy="error-message">No fund found. Please create a fund before making a donation</TableRow>)
+      rows.push(<TableRow key="0" data-cy="error-message">{Locale.label("donations.donations.errMsg")}</TableRow>)
       return rows;
     }
     if (donations.length === 0) {
-      rows.push(<TableRow key="0">No donations have been tracked. Once donations are entered they will show up here.</TableRow>)
+      rows.push(<TableRow key="0">{Locale.label("donations.donations.noDonMsg")}</TableRow>)
       return rows;
     }
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>Id</th><th>Name</th><th>Date</th><th>Amount</th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("donations.donations.tableIdent")}</th><th>{Locale.label("donations.donations.name")}</th><th>{Locale.label("donations.donations.date")}</th><th>{Locale.label("donations.donations.amt")}</th></TableRow>);
     let canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
     for (let i = 0; i < donations.length; i++) {
       let d = donations[i];
@@ -48,13 +48,13 @@ export const Donations: React.FC<Props> = (props) => {
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-link-${i}`} onClick={showEditDonation} data-id={d.id}>{d.id}</a>) : (<>{d.id}</>);
       rows.push(<TableRow key={i}>
         <TableCell>{editLink}</TableCell>
-        <TableCell>{d.person?.name.display || "Anonymous"}</TableCell>
+        <TableCell>{d.person?.name.display || Locale.label("donations.donations.anon")}</TableCell>
         <TableCell>{DateHelper.formatHtml5Date(d.donationDate)}</TableCell>
         <TableCell>{CurrencyHelper.formatCurrency(d.amount)}</TableCell>
       </TableRow>);
     }
     rows.push(<TableRow sx={{ borderTop: 2 }}>
-      <TableCell sx={{ fontWeight: "bold", fontSize: 15 }}>Total</TableCell>
+      <TableCell sx={{ fontWeight: "bold", fontSize: 15 }}>{Locale.label("donations.donations.total")}</TableCell>
       <TableCell></TableCell>
       <TableCell></TableCell>
       <TableCell sx={{ fontWeight: "bold", fontSize: 15 }}>{CurrencyHelper.formatCurrency(total)}</TableCell>
@@ -74,7 +74,7 @@ export const Donations: React.FC<Props> = (props) => {
   }
 
   return (
-    <DisplayBox id="donationsBox" headerIcon="volunteer_activism" headerText="Donations" editContent={getEditContent()} help="chums/manual-input">
+    <DisplayBox id="donationsBox" headerIcon="volunteer_activism" headerText={Locale.label("donations.donations.don")} editContent={getEditContent()} help="chums/manual-input">
       {content}
     </DisplayBox>
   );
