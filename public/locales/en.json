@@ -48,6 +48,7 @@
         "time": "Time",
         "category": "Category",
         "group": "Group",
+        "groups": "Groups",
         "att": "Attendance"
       }
     }

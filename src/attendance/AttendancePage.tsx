@@ -153,7 +153,7 @@ export const AttendancePage = () => {
       <h1><Icon>calendar_month</Icon> {Locale.label("attendance.attendancePage.att")}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="group" headerText="Groups" editContent={getEditLinks()} help="chums/attendance">
+          <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="group" headerText={Locale.label("attendance.attendancePage.groups")} editContent={getEditLinks()} help="chums/attendance">
             {getTable()}
           </DisplayBox>
         </Grid>
