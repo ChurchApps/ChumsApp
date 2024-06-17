@@ -118,6 +118,18 @@
         "don": "Donations",
         "total": "Total",
         "edit": "Edit"
+      },
+      "fundsPage": {
+        "noDon": "No donations yet",
+        "don": "Donations",
+        "donFilt": "Donation Filter",
+        "anon": "Anonymous",
+        "date": "Date",
+        "dateStart": "Start Date",
+        "dateEnd": "End Date",
+        "batch": "Batch",
+        "donor": "Donor",
+        "amt": "Amount"
       }
     }
 

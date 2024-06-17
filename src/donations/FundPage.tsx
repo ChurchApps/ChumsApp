@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper, Locale } from "@churchapps/apphelper";
 import { useParams, Link } from "react-router-dom";
 import { Table, TableBody, TableRow, TableCell, TableHead, Grid, TextField, Icon } from "@mui/material"
 
@@ -56,15 +56,15 @@ export const FundPage = () => {
     let result: JSX.Element[] = [];
 
     if (fundDonations.length === 0) {
-      result.push(<TableRow key="0"><TableCell>No donations yet</TableCell></TableRow>);
+      result.push(<TableRow key="0"><TableCell>{Locale.label("donations.fundsPage.noDon")}</TableCell></TableRow>);
       return result;
     }
 
     for (let i = 0; i < fundDonations.length; i++) {
       let fd = fundDonations[i];
       let personCol = (UniqueIdHelper.isMissing(fd.donation?.personId))
-        ? (<TableCell>Anonymous</TableCell>)
-        : (<TableCell><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || "Anonymous"}</Link></TableCell>);
+        ? (<TableCell>{Locale.label("donations.fundsPage.anon")}</TableCell>)
+        : (<TableCell><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || Locale.label("donations.fundsPage.anon")}</Link></TableCell>);
       result.push(<TableRow key={i}>
         <TableCell>{DateHelper.formatHtml5Date(fd.donation.donationDate)}</TableCell>
         <TableCell><Link data-cy={`batchId-${fd.donation.batchId}-${i}`} to={"/donations/" + fd.donation.batchId}>{fd.donation.batchId}</Link></TableCell>
@@ -83,7 +83,7 @@ export const FundPage = () => {
       return rows;
     }
 
-    rows.push(<TableRow key="header"><th>Date</th><th>Batch</th><th>Donor</th><th>Amount</th></TableRow>);
+    rows.push(<TableRow key="header"><th>{Locale.label("donations.fundsPage.date")}</th><th>{Locale.label("donations.fundsPage.batch")}</th><th>{Locale.label("donations.fundsPage.donor")}</th><th>{Locale.label("donations.fundsPage.amt")}</th></TableRow>);
     return rows;
   }
 
@@ -101,17 +101,17 @@ export const FundPage = () => {
 
     return (
       <>
-        <h1><Icon>volunteer_activism</Icon> {fund.name} Donations</h1>
+        <h1><Icon>volunteer_activism</Icon> {fund.name} {Locale.label("donations.fundsPage.don")}</h1>
         <Grid container spacing={3}>
           <Grid item md={8} xs={12}>
-            <DisplayBox headerIcon="volunteer_activism" headerText="Donations" editContent={getEditContent()} help="chums/giving">
+            <DisplayBox headerIcon="volunteer_activism" headerText={Locale.label("donations.fundsPage.don")} editContent={getEditContent()} help="chums/giving">
               {contents}
             </DisplayBox>
           </Grid>
           <Grid item md={4} xs={12}>
-            <InputBox headerIcon="filter_alt" headerText="Donation Filter" saveFunction={loadDonations} saveText="Filter">
-              <TextField fullWidth label="Start Date" name="startDate" type="date" data-cy="start-date" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} />
-              <TextField fullWidth label="End Date" name="endDate" type="date" data-cy="end-date" value={DateHelper.formatHtml5Date(endDate)} onChange={handleChange} />
+            <InputBox headerIcon="filter_alt" headerText={Locale.label("donations.fundsPage.donFilt")} saveFunction={loadDonations} saveText="Filter">
+              <TextField fullWidth label={Locale.label("donations.fundsPage.dateStart")} name="startDate" type="date" data-cy="start-date" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} />
+              <TextField fullWidth label={Locale.label("donations.fundsPage.dateEnd")} name="endDate" type="date" data-cy="end-date" value={DateHelper.formatHtml5Date(endDate)} onChange={handleChange} />
             </InputBox>
           </Grid>
         </Grid>
