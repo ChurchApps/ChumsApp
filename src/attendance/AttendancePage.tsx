@@ -2,7 +2,7 @@ import React from "react";
 import { CampusEdit, ServiceEdit, ServiceTimeEdit, Tabs } from "./components";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box } from "@mui/material"
-import { useMountedState, AttendanceInterface, CampusInterface, ServiceInterface, ServiceTimeInterface, GroupServiceTimeInterface, GroupInterface, ApiHelper, DisplayBox, ArrayHelper, Loading } from "@churchapps/apphelper";
+import { useMountedState, AttendanceInterface, CampusInterface, ServiceInterface, ServiceTimeInterface, GroupServiceTimeInterface, GroupInterface, ApiHelper, DisplayBox, ArrayHelper, Loading, Locale } from "@churchapps/apphelper";
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
@@ -61,7 +61,7 @@ export const AttendancePage = () => {
     const rows: JSX.Element[] = [];
 
     if (attendance.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>Group attendance will show up once sessions have been added to a group and people have attended those sessions.</TableCell></TableRow>);
+      rows.push(<TableRow key="0"><TableCell>{Locale.label("attendance.attendancePage.groupAttMsg")}</TableCell></TableRow>);
       return rows;
     }
 
@@ -119,13 +119,13 @@ export const AttendancePage = () => {
       </IconButton>
       <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem data-cy="add-campus" onClick={() => {handleClose(); selectCampus({ id: "", name: "New Campus" }); }}>
-          <Icon sx={{mr: "3px"}}>church</Icon> Add Campus
+          <Icon sx={{mr: "3px"}}>church</Icon> {Locale.label("attendance.attendancePage.addCampus")}
         </MenuItem>
         <MenuItem aria-label="addService" data-cy="add-service" onClick={() => {handleClose(); selectService({ id: "", campusId: "", name: "New Service" }); }}>
-          <Icon sx={{mr: "3px"}}>calendar_month</Icon> Add Service
+          <Icon sx={{mr: "3px"}}>calendar_month</Icon> {Locale.label("attendance.attendancePage.addService")}
         </MenuItem>
         <MenuItem data-cy="add-service-time" onClick={() => {handleClose(); selectServiceTime({ id: "", serviceId: "", name: "New Service Time" }); }}>
-          <Icon sx={{mr: "3px"}}>more_time</Icon> Add Service Time
+          <Icon sx={{mr: "3px"}}>more_time</Icon> {Locale.label("attendance.attendancePage.addServiceTime")}
         </MenuItem>
       </Menu>
     </>
@@ -134,7 +134,7 @@ export const AttendancePage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (attendance.length === 0) return rows;
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Campus</th><th>Service</th><th>Time</th><th>Category</th><th>Group</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("attendance.attendancePage.campus")}</th><th>{Locale.label("attendance.attendancePage.service")}</th><th>{Locale.label("attendance.attendancePage.time")}</th><th>{Locale.label("attendance.attendancePage.category")}</th><th>{Locale.label("attendance.attendancePage.group")}</th></TableRow>);
     return rows;
   }
 
@@ -150,7 +150,7 @@ export const AttendancePage = () => {
 
   return (
     <>
-      <h1><Icon>calendar_month</Icon> Attendance</h1>
+      <h1><Icon>calendar_month</Icon> {Locale.label("attendance.attendancePage.att")}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="group" headerText="Groups" editContent={getEditLinks()} help="chums/attendance">

@@ -37,6 +37,18 @@
         "noImplement": "Not Implemented",
         "attTrend": "Attendance Trend",
         "groupAtt": "Group Attendance"
+      },
+      "attendancePage": {
+        "groupAttMsg": "Group attendance will show up once sessions have been added to a group and people have attended those sessions.",
+        "addCampus": "Add Campus",
+        "addService": "Add Service",
+        "addServiceTime": "Add Service Time",
+        "campus": "Campus",
+        "service": "Service",
+        "time": "Time",
+        "category": "Category",
+        "group": "Group",
+        "att": "Attendance"
       }
     }
 
