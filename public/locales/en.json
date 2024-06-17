@@ -61,6 +61,14 @@
       "dashboardPage": {
         "dash": "Dashboard"
       }
+    },
+    "donations": {
+      "batchEdit": {
+        "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
+        "edit": "Edit Batch",
+        "opName": "Name (optional)",
+        "date": "Date"
+      }
     }
 
 }

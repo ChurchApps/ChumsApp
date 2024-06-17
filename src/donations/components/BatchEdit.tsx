@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, InputBox, DateHelper, DonationBatchInterface, UniqueIdHelper } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, DateHelper, DonationBatchInterface, UniqueIdHelper, Locale } from "@churchapps/apphelper";
 import { TextField } from "@mui/material";
 
 interface Props { batchId: string, updatedFunction: () => void }
@@ -13,7 +13,7 @@ export const BatchEdit: React.FC<Props> = (props) => {
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to permanently delete this batch and all donations within it?")) {
+    if (window.confirm(Locale.label("donations.batchEdit.confirmMsg"))) {
       ApiHelper.delete("/donationbatches/" + batch.id, "GivingApi").then(() => props.updatedFunction());
     }
   }
@@ -38,9 +38,9 @@ export const BatchEdit: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.batchId]);
 
   return (
-    <InputBox id="batchBox" headerIcon="volunteer_activism" headerText="Edit Batch" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
-      <TextField fullWidth name="name" data-cy="batch-name" label="Name (optional)" value={batch.name} onChange={handleChange} onKeyDown={handleKeyDown} />
-      <TextField fullWidth type="date" data-cy="batch-date" name="date" InputLabelProps={{shrink: true}} label="Date" value={DateHelper.formatHtml5Date(batch.batchDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
+    <InputBox id="batchBox" headerIcon="volunteer_activism" headerText={Locale.label("donations.batchEdit.edit")} cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
+      <TextField fullWidth name="name" data-cy="batch-name" label={Locale.label("donations.batchEdit.opName")} value={batch.name} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth type="date" data-cy="batch-date" name="date" InputLabelProps={{shrink: true}} label={Locale.label("donations.batchEdit.date")} value={DateHelper.formatHtml5Date(batch.batchDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
     </InputBox>
   );
 }
