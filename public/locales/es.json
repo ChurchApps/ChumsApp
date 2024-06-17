@@ -1,17 +1,135 @@
 {
-  "common": {
-      "search": "Buscar"
-  },
-  "dashboard": {
+    "common": {
+        "search": "Buscar"
+    },
+    "attendance": {
+      "campusEdit": {
+        "name": "Nombre del Campus",
+        "confirmDelete": "¿Estás seguro de que deseas eliminar este campus?",
+        "validate": {
+          "name": "El nombre del campus es obligatorio."
+        }
+      },
+      "serviceEdit": {
+        "campus": "Campus",
+        "name": "Nombre del Servicio",
+        "confirmDelete": "¿Estás seguro de que deseas eliminar permanentemente este servicio?",
+        "validate": {
+          "campus": "Por favor, selecciona un campus.",
+          "name": "El nombre del servicio es obligatorio."
+        }
+      },
+      "serviceTimeEdit": {
+        "service": "Servicio",
+        "name": "Hora del Servicio",
+        "confirmDelete": "¿Estás seguro de que deseas eliminar permanentemente este horario de servicio?",
+        "validate": {
+          "name": "El nombre del horario de servicio es obligatorio.",
+          "service": "Por favor, selecciona un servicio."
+        }
+      },
+      "tabs": {
+        "noImplement": "No Implementado",
+        "attTrend": "Tendencia de Asistencia",
+        "groupAtt": "Asistencia de Grupo"
+      },
+      "attendancePage": {
+        "groupAttMsg": "La asistencia de grupo aparecerá una vez que se hayan agregado sesiones a un grupo y las personas hayan asistido a esas sesiones.",
+        "addCampus": "Agregar Campus",
+        "addService": "Agregar Servicio",
+        "addServiceTime": "Agregar Hora de Servicio",
+        "campus": "Campus",
+        "service": "Servicio",
+        "time": "Hora",
+        "category": "Categoría",
+        "group": "Grupo",
+        "groups": "Grupos",
+        "att": "Asistencia"
+      }
+    },
+    "dashboard": {
       "myGroups": "Mis Grupos",
       "people": "Personas",
-      "tasks": "Tareas"
-  },
-  "attendance": {
-    "campusEdit": {
-      "campusName": "Nombre del Campus",
-      "sureDelete": "¿Está seguro de que desea eliminar este campus?",
-      "campusRequired": "El nombre del campus es obligatorio."
+      "tasks": "Tareas",
+      "peopleSearch": {
+        "photo": "Foto",
+        "display": "Nombre para Mostrar",
+        "ppl": "Personas",
+        "name": "Nombre",
+        "search": "Buscar"
+      },
+      "dashboardPage": {
+        "dash": "Tablero"
+      }
+    },
+    "donations": {
+      "batchEdit": {
+        "confirmMsg": "¿Estás seguro de que deseas eliminar permanentemente este lote y todas las donaciones dentro de él?",
+        "edit": "Editar Lote",
+        "opName": "Nombre (opcional)",
+        "date": "Fecha"
+      },
+      "donationEdit": {
+        "checkNum": "Cheque #",
+        "lastDig": "Últimos 4 dígitos",
+        "anon": "Anónimo",
+        "donEdit": "Editar Donación",
+        "person": "Persona",
+        "method": "Método",
+        "check": "Cheque",
+        "cash": "Efectivo",
+        "card": "Tarjeta",
+        "notes": "Notas"
+      },
+      "donationEvents": {
+        "person": "Persona: ",
+        "event": "Evento: ",
+        "msg": "Mensaje: ",
+        "mark": "Marcar como ",
+        "failed": "Donaciones Fallidas - ",
+        "unres": " no resueltas"
+      },
+      "donations": {
+        "errMsg": "No se encontró ningún fondo. Por favor, crea un fondo antes de hacer una donación.",
+        "noDonMsg": "No se han registrado donaciones. Una vez que se ingresen las donaciones, aparecerán aquí.",
+        "tableIdent": "Id",
+        "name": "Nombre",
+        "date": "Fecha",
+        "amt": "Monto",
+        "anon": "Anónimo",
+        "total": "Total",
+        "don": "Donaciones"
+      },
+      "fundEdit": {
+        "errBlank": "Introduce un nombre de fondo",
+        "confirmMsg": "¿Estás seguro de que deseas eliminar permanentemente este lote y todas las donaciones dentro de él?",
+        "edit": "Editar Fondo",
+        "name": "Nombre"
+      },
+      "funds": {
+        "noFund": "No se encontraron fondos.",
+        "fund": "Fondos"
+      },
+      "donationsPage": {
+        "noBatch": "No se encontraron lotes.",
+        "batch": "Lote",
+        "name": "Nombre",
+        "date": "Fecha",
+        "don": "Donaciones",
+        "total": "Total",
+        "edit": "Editar"
+      },
+      "fundsPage": {
+        "noDon": "Aún no hay donaciones",
+        "don": "Donaciones",
+        "donFilt": "Filtro de Donaciones",
+        "anon": "Anónimo",
+        "date": "Fecha",
+        "dateStart": "Fecha de Inicio",
+        "dateEnd": "Fecha de Fin",
+        "batch": "Lote",
+        "donor": "Donante",
+        "amt": "Monto"
+      }
     }
-  }
 }
