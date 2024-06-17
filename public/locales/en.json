@@ -80,6 +80,12 @@
         "cash": "Cash",
         "card": "Card",
         "notes": "Notes"
+      },
+      "donationEvents": {
+        "person": "Person: ",
+        "event": "Event: ",
+        "msg": "Message: ",
+        "mark": "Mark as "
       }
     }
 
