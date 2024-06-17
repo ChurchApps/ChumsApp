@@ -1,0 +1,17 @@
+{
+  "common": {
+      "search": "Buscar"
+  },
+  "dashboard": {
+      "myGroups": "Mis Grupos",
+      "people": "Personas",
+      "tasks": "Tareas"
+  },
+  "attendance": {
+    "campusEdit": {
+      "campusName": "Nombre del Campus",
+      "sureDelete": "¿Está seguro de que desea eliminar este campus?",
+      "campusRequired": "El nombre del campus es obligatorio."
+    }
+  }
+}
