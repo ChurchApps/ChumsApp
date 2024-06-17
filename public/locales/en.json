@@ -23,6 +23,15 @@
           "campus": "Please select a campus.",
           "name": "Service name is required."
         }
+      },
+      "serviceTimeEdit": {
+        "service": "Service",
+        "name": "Service Time",
+        "confirmDelete": "Are you sure you wish to permanently delete this service time?",
+        "validate": {
+          "name": "Service time name is required.",
+          "service": "Please select a service."
+        }
       }
     }
 
