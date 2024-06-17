@@ -79,7 +79,8 @@
         "check": "Check",
         "cash": "Cash",
         "card": "Card",
-        "notes": "Notes"
+        "notes": "Notes",
+        "date": "Date"
       },
       "donationEvents": {
         "person": "Person: ",
