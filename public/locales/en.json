@@ -57,6 +57,9 @@
         "ppl": "People",
         "name": "Name",
         "search": "Search"
+      },
+      "dashboardPage": {
+        "dash": "Dashboard"
       }
     }
 
