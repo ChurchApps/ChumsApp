@@ -32,6 +32,11 @@
           "name": "Service time name is required.",
           "service": "Please select a service."
         }
+      },
+      "tabs": {
+        "noImplement": "Not Implemented",
+        "attTrend": "Attendance Trend",
+        "groupAtt": "Group Attendance"
       }
     }
 

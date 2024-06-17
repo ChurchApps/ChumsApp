@@ -1,5 +1,5 @@
 import React from "react";
-import { ReportWithFilter, Permissions, UserHelper } from "@churchapps/apphelper";
+import { ReportWithFilter, Permissions, UserHelper, Locale } from "@churchapps/apphelper";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 export const Tabs: React.FC = () => {
@@ -13,14 +13,14 @@ export const Tabs: React.FC = () => {
   let tabs = [];
   let defaultTab = "";
   let currentTab = null;
-  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(0, "attendance", "calendar_month", "Attendance Trend")); if (defaultTab === "") defaultTab = "attendance"; }
-  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "groups", "person", "Group Attendance")); if (defaultTab === "") defaultTab = "groups"; }
+  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(0, "attendance", "calendar_month", Locale.label("attendance.tabs.attTrend"))); if (defaultTab === "") defaultTab = "attendance"; }
+  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "groups", "person", Locale.label("attendance.tabs.groupAtt"))); if (defaultTab === "") defaultTab = "groups"; }
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
     case "attendance": currentTab = <ReportWithFilter keyName="attendanceTrend" autoRun={true} />; break;
     case "groups": currentTab = <ReportWithFilter keyName="groupAttendance" autoRun={true} />; break;
-    default: currentTab = <div>Not implemented</div>; break;
+    default: currentTab = <div>{Locale.label("attendance.tabs.noImplement")}</div>; break;
   }
 
   return (<Paper>
