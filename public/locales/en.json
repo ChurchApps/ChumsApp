@@ -182,6 +182,27 @@
         "emailNotifMsg": "Whenever the form is submitted, you'll get notified via mail.",
         "formMem": "Form Members",
         "addPpl": "Add Person"
+      },
+      "formQuestionEdit": {
+        "questionReq": "Question is required.",
+        "fieldReq": "Field type is required.",
+        "confirmMsg": "Are you sure you wish to permanently delete this question?",
+        "questionEdit": "Edit Question",
+        "prov": "Provider",
+        "textBox": "Textbox",
+        "wholeNum": "Whole Number",
+        "decNum": "Decimal",
+        "date": "Date",
+        "yesNo": "Yes/No",
+        "email": "Email",
+        "phoneNum": "Phone Number",
+        "textArea": "Text Area",
+        "multiChoice": "Multiple Choice",
+        "checkBox": "Checkbox",
+        "title": "Title",
+        "desc": "Description",
+        "plcOp": "Placeholder (optional)",
+        "ansReq": "Require an answer for this question"
       }
     }
 
