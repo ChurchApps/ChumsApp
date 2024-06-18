@@ -141,6 +141,16 @@
         "txt": "Text",
         "act": "Action",
         "add": "Add"
+      },
+      "form": {
+        "noCustomMsg": "No custom questions have been created yet. Questions will be listed here.",
+        "yes": "Yes",
+        "no": "No",
+        "question": "Question",
+        "questions": "Questions",
+        "type": "Type",
+        "act": "Action",
+        "req": "Required"
       }
     }
 

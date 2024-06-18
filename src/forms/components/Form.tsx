@@ -1,6 +1,6 @@
 import React from "react";
 import { FormQuestionEdit } from ".";
-import { ApiHelper, DisplayBox, FormInterface, QuestionInterface, Permissions, Loading, UserHelper } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, FormInterface, QuestionInterface, Permissions, Loading, UserHelper, Locale } from "@churchapps/apphelper";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 interface Props { id: string }
@@ -46,7 +46,7 @@ export const Form: React.FC<Props> = (props) => {
   const getRows = () => {
     const rows: JSX.Element[] = [];
     if (questions.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>No custom questions have been created yet. Questions will be listed here.</TableCell></TableRow>);
+      rows.push(<TableRow key="0"><TableCell>{Locale.label("forms.form.noCustomMsg")}</TableCell></TableRow>);
       return rows;
     }
     for (let i = 0; i < questions.length; i++) {
@@ -57,7 +57,7 @@ export const Form: React.FC<Props> = (props) => {
           <TableCell><a href="about:blank" onClick={handleClick}>{questions[i].title}</a></TableCell>
           <TableCell>{questions[i].fieldType}</TableCell>
           <TableCell style={{ textAlign: "left" }}>{upArrow}{downArrow}</TableCell>
-          <TableCell>{questions[i].required ? "Yes" : "No"}</TableCell>
+          <TableCell>{questions[i].required ? Locale.label("forms.form.yes") : Locale.label("forms.form.no")}</TableCell>
         </TableRow>
       );
     }
@@ -68,7 +68,7 @@ export const Form: React.FC<Props> = (props) => {
     if (questions.length === 0) {
       return rows;
     }
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Question</th><th>Type</th><th>Action</th><th>Required</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("forms.form.question")}</th><th>{Locale.label("forms.form.type")}</th><th>{Locale.label("forms.form.act")}</th><th>{Locale.label("forms.form.req")}</th></TableRow>);
     return rows;
   }
   const getSidebarModules = () => {
@@ -92,7 +92,7 @@ export const Form: React.FC<Props> = (props) => {
       <>
         <Grid container spacing={3}>
           <Grid item md={8} xs={12}>
-            <DisplayBox id="questionsBox" headerText="Questions" headerIcon="help" editContent={getEditContent()} help="chums/forms">
+            <DisplayBox id="questionsBox" headerText={Locale.label("forms.form.questions")} headerIcon="help" editContent={getEditContent()} help="chums/forms">
               {contents}
             </DisplayBox>
           </Grid>
