@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { FormEdit, EnvironmentHelper } from "./components"
-import { ApiHelper, DisplayBox, FormInterface, UserHelper, Permissions, Loading } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, FormInterface, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom"
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Paper, Tabs, Tab } from "@mui/material"
 import { SmallButton } from "@churchapps/apphelper";
@@ -22,7 +22,7 @@ export const FormsPage = () => {
   const getRows = () => {
     let result: JSX.Element[] = [];
     if (!forms.length) {
-      result.push(<TableRow key="0"><TableCell>No custom forms have been created yet. They will appear here when added.</TableCell></TableRow>);
+      result.push(<TableRow key="0"><TableCell>{Locale.label("forms.formsPage.noCustomMsg")}</TableCell></TableRow>);
       return result;
     }
 
@@ -48,7 +48,7 @@ export const FormsPage = () => {
   }
 
   const handleArchiveChange = (form: FormInterface, archive: boolean) => {
-    const conf = archive ? window.confirm("Are you sure you want to archive this form?") : window.confirm("Are you sure you want to restore this form?");
+    const conf = archive ? window.confirm(Locale.label("forms.formsPage.confirmMsg1")) : window.confirm(Locale.label("forms.formsPage.confirmMsg2"));
     if (!conf) return;
     form.archived = archive;
     ApiHelper.post("/forms", [form], "MembershipApi").then(data => loadData());
@@ -57,7 +57,7 @@ export const FormsPage = () => {
   const getArchivedRows = () => {
     let result: JSX.Element[] = [];
     if (!archivedForms.length) {
-      result.push(<TableRow key="0"><TableCell>No archived forms.</TableCell></TableRow>);
+      result.push(<TableRow key="0"><TableCell>{Locale.label("forms.formsPage.noArch")}</TableCell></TableRow>);
       return result;
     }
     return getRows();
@@ -68,7 +68,7 @@ export const FormsPage = () => {
     if (forms.length === 0) {
       return rows;
     }
-    rows.push(<TableRow key="header"><th colSpan={3}>Name</th></TableRow>);
+    rows.push(<TableRow key="header"><th colSpan={3}>{Locale.label("forms.formsPage.name")}</th></TableRow>);
     return rows;
   }
 
@@ -88,7 +88,7 @@ export const FormsPage = () => {
 
   if (!forms && !archivedForms) return (<></>);
   else {
-    let title = (selectedTab === "forms") ? "Forms" : "Archived Forms";
+    let title = (selectedTab === "forms") ? Locale.label("forms.formsPage.forms") : Locale.label("forms.formsPage.archForms");
     let icon = (selectedTab === "forms") ? "format_align_left" : "archive";
     let contents = <Loading />
     if (forms && archivedForms) {

@@ -214,6 +214,15 @@
       },
       "tabs": {
         "unAuth": "Unauthorized"
+      },
+      "formsPage": {
+        "noCustomMsg": "No custom forms have been created yet. They will appear here when added.",
+        "confirmMsg1": "Are you sure you want to archive this form?",
+        "confirmMsg2": "Are you sure you want to restore this form?",
+        "noArch": "No archived forms.",
+        "name": "Name",
+        "forms": "Forms",
+        "archForms": "Archived Forms"
       }
     }
 
