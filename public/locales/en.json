@@ -151,6 +151,25 @@
         "type": "Type",
         "act": "Action",
         "req": "Required"
+      },
+      "formEdit": {
+        "nameReqMsg": "Form name is required.",
+        "startReqMsg": "Start date is required.",
+        "endReqMsg": "End date is required.",
+        "confirmMsg": "Are you sure you wish to permanently delete this form?",
+        "editForm": "Edit Form",
+        "name": "Form Name",
+        "associate": "Associate With",
+        "ppl": "People",
+        "alone": "Stand Alone",
+        "access": "Form Access",
+        "public": "Public",
+        "restrict": "Restricted",
+        "available": "Set Form Availability Timeframe",
+        "availableStart": "Availability Start Date",
+        "availableEnd": "Availability End Date",
+        "yes": "Yes",
+        "no": "No"
       }
     }
 

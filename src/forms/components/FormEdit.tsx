@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { useMountedState, FormInterface,ApiHelper, InputBox, DateHelper, ErrorMessages } from "@churchapps/apphelper";
+import { useMountedState, FormInterface,ApiHelper, InputBox, DateHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 
 interface Props { formId: string, updatedFunction: () => void }
 
@@ -44,10 +44,10 @@ export function FormEdit(props: Props) {
 
   const validate = () => {
     const result = [];
-    if (!form.name) result.push("Form name is required.");
+    if (!form.name) result.push(Locale.label("forms.formEdit.nameReqMsg"));
     if (showDates) {
-      if (!form.accessStartTime) result.push("Start date is required.");
-      if (!form.accessEndTime) result.push("End date is required.");
+      if (!form.accessStartTime) result.push(Locale.label("forms.formEdit.startReqMsg"));
+      if (!form.accessEndTime) result.push(Locale.label("forms.formEdit.endReqMsg"));
     }
     setErrors(result);
     return result.length === 0;
@@ -69,7 +69,7 @@ export function FormEdit(props: Props) {
   }
 
   function handleDelete() {
-    if (window.confirm("Are you sure you wish to permanently delete this form?")) {
+    if (window.confirm(Locale.label("forms.formEdit.confirmMsg"))) {
       ApiHelper.delete("/forms/" + form.id, "MembershipApi")
         .then(() => props.updatedFunction());
     }
@@ -78,42 +78,42 @@ export function FormEdit(props: Props) {
   React.useEffect(loadData, [props.formId, isMounted]);
 
   return (
-    <InputBox id="formBox" headerIcon="format_align_left" headerText="Edit Form" saveFunction={handleSave} isSubmitting={isSubmitting} cancelFunction={props.updatedFunction} deleteFunction={(props.formId) ? handleDelete : undefined}>
+    <InputBox id="formBox" headerIcon="format_align_left" headerText={Locale.label("forms.formEdit.editForm")} saveFunction={handleSave} isSubmitting={isSubmitting} cancelFunction={props.updatedFunction} deleteFunction={(props.formId) ? handleDelete : undefined}>
       <ErrorMessages errors={errors} />
-      <TextField fullWidth={true} label="Form Name" type="text" name="name" value={form.name} onChange={handleChange} />
+      <TextField fullWidth={true} label={Locale.label("forms.formEdit.name")} type="text" name="name" value={form.name} onChange={handleChange} />
       {!props.formId
         && <FormControl fullWidth>
-          <InputLabel id="associate">Associate With</InputLabel>
-          <Select name="contentType" labelId="associate" label="Associate With" value={form.contentType} onChange={e => { handleChange(e); if (e.target.value === "form") setStandAloneForm(true); }}>
-            <MenuItem value="person">People</MenuItem>
-            <MenuItem value="form">Stand Alone</MenuItem>
+          <InputLabel id="associate">{Locale.label("forms.formEdit.associate")}</InputLabel>
+          <Select name="contentType" labelId="associate" label={Locale.label("forms.formEdit.associate")} value={form.contentType} onChange={e => { handleChange(e); if (e.target.value === "form") setStandAloneForm(true); }}>
+            <MenuItem value="person">{Locale.label("forms.formEdit.ppl")}</MenuItem>
+            <MenuItem value="form">{Locale.label("forms.formEdit.alone")}</MenuItem>
           </Select>
         </FormControl>
       }
       {standAloneForm
         && <>
           <FormControl fullWidth>
-            <InputLabel>Form Access</InputLabel>
-            <Select label="Form Access" name="restricted" value={form?.restricted?.toString()} onChange={handleChange}>
-              <MenuItem value="false">Public</MenuItem>
-              <MenuItem value="true">Restricted</MenuItem>
+            <InputLabel>{Locale.label("forms.formEdit.access")}</InputLabel>
+            <Select label={Locale.label("forms.formEdit.access")} name="restricted" value={form?.restricted?.toString()} onChange={handleChange}>
+              <MenuItem value="false">{Locale.label("forms.formEdit.public")}</MenuItem>
+              <MenuItem value="true">{Locale.label("forms.formEdit.restrict")}</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel>Set Form Availability Timeframe</InputLabel>
-            <Select label="Set Form Availability Timeframe" name="limit" value={showDates.toString()} onChange={e => { setShowDates(e.target.value === "true") }}>
-              <MenuItem value="false">No</MenuItem>
-              <MenuItem value="true">Yes</MenuItem>
+            <InputLabel>{Locale.label("forms.formEdit.available")}</InputLabel>
+            <Select label={Locale.label("forms.formEdit.available")} name="limit" value={showDates.toString()} onChange={e => { setShowDates(e.target.value === "true") }}>
+              <MenuItem value="false">{Locale.label("forms.formEdit.no")}</MenuItem>
+              <MenuItem value="true">{Locale.label("forms.formEdit.yes")}</MenuItem>
             </Select>
           </FormControl>
         </>
       }
       {showDates
         && <>
-          <TextField fullWidth={true} type="date" label="Availability Start Date" InputLabelProps={{shrink: true}} name="accessStartTime" value={DateHelper.formatHtml5Date(form.accessStartTime)} onChange={handleChange}
+          <TextField fullWidth={true} type="date" label={Locale.label("forms.formEdit.availableStart")} InputLabelProps={{shrink: true}} name="accessStartTime" value={DateHelper.formatHtml5Date(form.accessStartTime)} onChange={handleChange}
             InputProps={{ inputProps: { max: DateHelper.formatHtml5Date(form.accessEndTime) } }}
           />
-          <TextField fullWidth={true} type="date" label="Availability End Date" InputLabelProps={{shrink: true}} name="accessEndTime" value={DateHelper.formatHtml5Date(form.accessEndTime)} onChange={handleChange}
+          <TextField fullWidth={true} type="date" label={Locale.label("forms.formEdit.availableEnd")} InputLabelProps={{shrink: true}} name="accessEndTime" value={DateHelper.formatHtml5Date(form.accessEndTime)} onChange={handleChange}
             InputProps={{ inputProps: { min: DateHelper.formatHtml5Date(form.accessStartTime) } }}
           />
         </>
