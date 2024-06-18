@@ -242,6 +242,21 @@
         "attTrack": "Track Attendance:",
         "parPick": "Parent Pickup:",
         "groupDet": "Group Details"
+      },
+      "groupDetailsEdit": {
+        "catNameMsg": "Please enter a category name.",
+        "groupNameMsg": "Please enter a group name.",
+        "confirmMsg": "Are you sure you wish to permanently delete this group?",
+        "groupDet": "Group Details",
+        "catName": "Category Name",
+        "groupName": "Group Name",
+        "attTrack": "Track Attendance",
+        "no": "No",
+        "yes": "Yes",
+        "parPick": "Parent Pickup",
+        "groupDesc": "Group Description",
+        "groupImg": "Group Photo",
+        "selImg": "Select Photo"
       }
     }
 
