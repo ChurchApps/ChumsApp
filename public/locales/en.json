@@ -235,6 +235,13 @@
         "new": "New ",
         "catName": "Category Name",
         "name": "Name"
+      },
+      "groupDetails": {
+        "cat": "Category",
+        "name": "Name",
+        "attTrack": "Track Attendance:",
+        "parPick": "Parent Pickup:",
+        "groupDet": "Group Details"
       }
     }
 
