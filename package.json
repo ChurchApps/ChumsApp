@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@churchapps/apphelper": "0.2.30",
+    "@churchapps/apphelper": "0.2.31",
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.7",
     "@types/react-cropper": "^1.3.2",
@@ -22,6 +22,7 @@
   "devDependencies": {
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "copyfiles": "^2.4.1",
     "lint-staged": "^14.0.1"
   },
   "scripts": {
@@ -31,14 +32,15 @@
     "eject": "react-scripts eject",
     "lint:only": "eslint --ext ts,tsx,js",
     "lint:fix": "npm run lint:only -- --fix",
-    "predeploy-staging": "export REACT_APP_STAGE=staging&& npm run build",
+    "predeploy-staging": "export REACT_APP_STAGE=staging && npm run postinstall && npm run build",
     "exec-deploy-staging": "aws s3 sync build/ s3://staging-chums-app",
     "postdeploy-staging": "aws cloudfront create-invalidation --distribution-id E2SBDXIK2UVHM9 --paths \"/*\"",
     "deploy-staging": "npm run predeploy-staging && npm run exec-deploy-staging && npm run postdeploy-staging",
-    "predeploy-prod": "export REACT_APP_STAGE=prod&& npm run build",
+    "predeploy-prod": "export REACT_APP_STAGE=prod && npm run postinstall && npm run build",
     "exec-deploy-prod": "aws s3 sync build/ s3://chums-app",
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3FB2K4FSP7ZUB --paths \"/*\"",
-    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod"
+    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod",
+    "postinstall": "copyfiles -a -f node_modules/@churchapps/apphelper/public/locales/** public/apphelper/locales"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,js}": [
