@@ -211,6 +211,9 @@
         "subDate": "Submission Date",
         "subSum": "Form Submission Summary",
         "subRes": "Form Submission Results"
+      },
+      "tabs": {
+        "unAuth": "Unauthorized"
       }
     }
 

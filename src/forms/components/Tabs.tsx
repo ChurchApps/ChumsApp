@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import React from "react";
 import { FormMembers, Form, FormSubmissions } from ".";
-import { UserHelper, Permissions, MemberPermissionInterface, FormInterface } from "@churchapps/apphelper";
+import { UserHelper, Permissions, MemberPermissionInterface, FormInterface, Locale } from "@churchapps/apphelper";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 interface Props { form: FormInterface, memberPermission: MemberPermissionInterface }
@@ -35,7 +35,7 @@ export const Tabs: React.FC<Props> = (props) => {
     case "questions": currentTab = <Form id={props.form.id} />; break;
     case "members": currentTab = <FormMembers formId={props.form.id} />; break;
     case "submissions": currentTab = <FormSubmissions formId={props.form.id} memberPermissions={props.memberPermission} />; break;
-    default: currentTab = <div>Unauthorized</div>; break;
+    default: currentTab = <div>{Locale.label("forms.tabs.unAuth")}</div>; break;
   }
 
   return (<>
