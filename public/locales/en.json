@@ -132,6 +132,16 @@
         "donor": "Donor",
         "amt": "Amount"
       }
+    },
+    "forms": {
+      "choicesEdit": {
+        "rmv": "Remove",
+        "choices": "Choices",
+        "value": "Value",
+        "txt": "Text",
+        "act": "Action",
+        "add": "Add"
+      }
     }
 
 }
