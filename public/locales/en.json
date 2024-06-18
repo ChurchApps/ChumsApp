@@ -170,6 +170,18 @@
         "availableEnd": "Availability End Date",
         "yes": "Yes",
         "no": "No"
+      },
+      "formMembers": {
+        "admin": "Admin",
+        "view": "View Only",
+        "rmv": "Remove",
+        "name": "Name",
+        "perm": "Permission",
+        "act": "Action",
+        "emailNotif": "Email Notification",
+        "emailNotifMsg": "Whenever the form is submitted, you'll get notified via mail.",
+        "formMem": "Form Members",
+        "addPpl": "Add Person"
       }
     }
 
