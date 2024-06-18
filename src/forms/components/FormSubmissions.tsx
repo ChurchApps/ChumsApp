@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { AnswerInterface, ApiHelper, DateHelper, DisplayBox, ExportLink, FormSubmissionInterface, MemberPermissionInterface, PersonInterface, QuestionInterface } from "@churchapps/apphelper";
+import { AnswerInterface, ApiHelper, DateHelper, DisplayBox, ExportLink, FormSubmissionInterface, Locale, MemberPermissionInterface, PersonInterface, QuestionInterface } from "@churchapps/apphelper";
 import { useReactToPrint } from "react-to-print";
 import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 
@@ -25,7 +25,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     formSubmissions.forEach((formSubmission: any) => {
       let submittedBy = getPerson(people, formSubmission);
       let csvData: any = {};
-      csvData["For"] = submittedBy?.name?.display || "Anonymous";
+      csvData["For"] = submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon");
       formSubmission = setFormSubmissionData(people, formSubmission);
       formSubmission.questions.forEach((question: QuestionInterface) => {
         const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id) || null;
@@ -72,7 +72,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   const setFormSubmissionData = (people: PersonInterface[], formSubmission: any) => {
     let submittedBy = getPerson(people, formSubmission);
 
-    formSubmission.person = { name: submittedBy?.name?.display || "Anonymous", id: submittedBy?.id || null };
+    formSubmission.person = { name: submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon"), id: submittedBy?.id || null };
     formSubmission.mappedQA = [];
     formSubmission.csvData = [];
     formSubmission.questions = formSubmission.questions.sort((a: QuestionInterface, b: QuestionInterface) => (a.title > b.title ? 1 : -1));
@@ -122,8 +122,8 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     let result: JSX.Element[] = [];
     if (formSubmissions.length) {
-      result.push(<TableCell key="submittedBy">{(formSubmissions[0].contentType==="person") ? "Submitted For" : "Submitted By" }</TableCell>);
-      result.push(<TableCell key="submissionDate">Submission Date</TableCell>);
+      result.push(<TableCell key="submittedBy">{(formSubmissions[0].contentType==="person") ? Locale.label("forms.formSubmissions.subFor") : Locale.label("forms.formSubmissions.subBy") }</TableCell>);
+      result.push(<TableCell key="submissionDate">{Locale.label("forms.formSubmissions.subDate")}</TableCell>);
       formSubmissions[0].questions.forEach((question: QuestionInterface) => result.push(<TableCell key={question.id}>{question.title}</TableCell>));
     }
     return result;
@@ -175,10 +175,10 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     <Grid container spacing={3}>
       <Grid item md={8} xs={12} className="form-submission-summary">
         <div ref={contentRef} className="form-submission-summary">
-          <DisplayBox headerText="Form Submission Summary" headerIcon="group" editContent={getEditLinks()}>
+          <DisplayBox headerText={Locale.label("forms.formSubmissions.subSum")} headerIcon="group" editContent={getEditLinks()}>
             <Grid container spacing={3}>{getSummary()}</Grid>
           </DisplayBox>
-          <DisplayBox headerText="Form Submission Results" headerIcon="group" help="chums/forms">
+          <DisplayBox headerText={Locale.label("forms.formSubmissions.subRes")} headerIcon="group" help="chums/forms">
             {getFormSubmissions()}
           </DisplayBox>
         </div>

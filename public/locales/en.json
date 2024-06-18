@@ -203,6 +203,14 @@
         "desc": "Description",
         "plcOp": "Placeholder (optional)",
         "ansReq": "Require an answer for this question"
+      },
+      "formSubmissions": {
+        "anon": "Anonymous",
+        "subFor": "Submitted For",
+        "subBy": "Submitted By",
+        "subDate": "Submission Date",
+        "subSum": "Form Submission Summary",
+        "subRes": "Form Submission Results"
       }
     }
 
