@@ -224,6 +224,18 @@
         "forms": "Forms",
         "archForms": "Archived Forms"
       }
+    },
+    "groups": {
+      "groupAdd": {
+        "catReq": "Category name is required.",
+        "groupReq": "Group name is required.",
+        "group": "Group",
+        "team": "Team",
+        "ministry": "Ministry",
+        "new": "New ",
+        "catName": "Category Name",
+        "name": "Name"
+      }
     }
 
 }
