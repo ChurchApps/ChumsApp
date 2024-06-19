@@ -401,6 +401,19 @@
       },
       "household": {
         "house": " Household"
+      },
+      "householdEdit": {
+        "updQuestion": "Would you like to update",
+        "addMatch": "address to match",
+        "blankMsg": "Please provide a household name.",
+        "head": "Head",
+        "spouse": "Spouse",
+        "child": "Child",
+        "other": "Other",
+        "rmv": "Remove",
+        "house": " Household",
+        "houseName": "Household Name",
+        "add": "Add"
       }
     }
 
