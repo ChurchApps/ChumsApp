@@ -281,6 +281,12 @@
       },
       "serviceTimes": {
         "services": "Service(s):"
+      },
+      "serviceTimesEdit": {
+        "rmv": "Remove",
+        "srvTimeOp": "Service Times (optional)",
+        "srvTimeAdd": "Add Service Time",
+        "add": "Add"
       }
     }
 
