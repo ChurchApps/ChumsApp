@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading, ArrayHelper } from "@churchapps/apphelper";
+import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Button, Icon, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
@@ -63,7 +63,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
 
     if (groupMembers.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>No group members found.</TableCell></TableRow>)
+      rows.push(<TableRow key="0"><TableCell>{Locale.label("groups.groupMembers.noMem")}</TableCell></TableRow>)
       return rows;
     }
 
@@ -94,7 +94,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
       return rows;
     }
 
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th></th><th>Name</th><th></th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th></th><th>{Locale.label("groups.groupMembers.name")}</th><th></th></TableRow>);
     return rows;
   }
 
@@ -129,12 +129,12 @@ export const GroupMembers: React.FC<Props> = (props) => {
   }
 
   return (
-    <DisplayBox id="groupMembersBox" data-cy="group-members-tab" headerText="Group Members" headerIcon="group" editContent={getEditContent()} help="chums/groups">
+    <DisplayBox id="groupMembersBox" data-cy="group-members-tab" headerText={Locale.label("groups.groupMembers.groupMem")} headerIcon="group" editContent={getEditContent()} help="chums/groups">
       {show === true && (
         <div style={{ marginTop: "18px", marginBottom: "18px" }}>
           <TextField fullWidth multiline helperText={count + "/140"} inputProps={{ maxLength: 140 }} onChange={(e) => { setCount(e.target.value.length); setMessage(e.target.value); }} sx={{ margin: 0 }} />
           <div style={{ display: "flex", justifyContent: "end", alignItems: "center" }}>
-            <Button size="small" variant="contained" endIcon={<Icon fontSize="small">send</Icon>} onClick={() => { handleSend(); setShow(false); }}>Send</Button>
+            <Button size="small" variant="contained" endIcon={<Icon fontSize="small">send</Icon>} onClick={() => { handleSend(); setShow(false); }}>{Locale.label("groups.groupMembers.send")}</Button>
           </div>
         </div>)
       }

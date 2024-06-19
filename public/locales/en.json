@@ -257,6 +257,12 @@
         "groupDesc": "Group Description",
         "groupImg": "Group Photo",
         "selImg": "Select Photo"
+      },
+      "groupMembers": {
+        "noMem": "No group members found.",
+        "name": "Name",
+        "groupMem": "Group Members",
+        "send": "Send"
       }
     }
 
