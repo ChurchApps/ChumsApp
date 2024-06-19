@@ -287,6 +287,12 @@
         "srvTimeOp": "Service Times (optional)",
         "srvTimeAdd": "Add Service Time",
         "add": "Add"
+      },
+      "sessionAdd": {
+        "invDate": "Invalid Date",
+        "srvTime": "Service Time",
+        "sesAdd": "Add a Session",
+        "sesDate": "Session Date"
       }
     }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, GroupInterface, GroupServiceTimeInterface, InputBox, ErrorMessages, SessionInterface, DateHelper, UniqueIdHelper } from "@churchapps/apphelper";
+import { ApiHelper, GroupInterface, GroupServiceTimeInterface, InputBox, ErrorMessages, SessionInterface, DateHelper, UniqueIdHelper, Locale } from "@churchapps/apphelper";
 import { TextField, FormControl, Select, InputLabel, SelectChangeEvent, MenuItem } from "@mui/material"
 
 interface Props { group: GroupInterface, updatedFunction: (session: SessionInterface) => void }
@@ -32,7 +32,7 @@ export const SessionAdd: React.FC<Props> = (props) => {
 
   const validate = () => {
     let errors: string[] = [];
-    if (sessionDate === null || sessionDate < new Date(2000, 1, 1)) errors.push("Invalid date");
+    if (sessionDate === null || sessionDate < new Date(2000, 1, 1)) errors.push(Locale.label("groups.sessionAdd.invDate"));
     setErrors(errors);
     return errors.length === 0;
   }
@@ -47,8 +47,8 @@ export const SessionAdd: React.FC<Props> = (props) => {
       }
 
       return (<FormControl>
-        <InputLabel id="service-time">Service Time</InputLabel>
-        <Select label="Service Time" labelId="service-time" value={serviceTimeId} onChange={(e: SelectChangeEvent<string>) => { setServiceTimeId(e.target.value) }} onKeyDown={handleKeyDown}>
+        <InputLabel id="service-time">{Locale.label("groups.sessionAdd.srvTime")}</InputLabel>
+        <Select label={Locale.label("groups.sessionAdd.srvTime")} labelId="service-time" value={serviceTimeId} onChange={(e: SelectChangeEvent<string>) => { setServiceTimeId(e.target.value) }} onKeyDown={handleKeyDown}>
           {options}
         </Select>
       </FormControl>);
@@ -58,11 +58,11 @@ export const SessionAdd: React.FC<Props> = (props) => {
   React.useEffect(() => { if (props.group.id !== undefined) loadData(); }, [props.group, loadData]);
 
   return (
-    <InputBox data-cy="add-session-box" headerIcon="calendar_month" headerText="Add a Session" saveFunction={handleSave} cancelFunction={handleCancel} help="chums/attendance">
+    <InputBox data-cy="add-session-box" headerIcon="calendar_month" headerText={Locale.label("groups.sessionAdd.sesAdd")} saveFunction={handleSave} cancelFunction={handleCancel} help="chums/attendance">
       <ErrorMessages errors={errors} />
       {getServiceTimes()}
 
-      <TextField fullWidth type="date" InputLabelProps={{shrink: true}} label="Session Date" value={DateHelper.formatHtml5Date(sessionDate)} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSessionDate(new Date(e.currentTarget.value))} onKeyDown={handleKeyDown} />
+      <TextField fullWidth type="date" InputLabelProps={{shrink: true}} label={Locale.label("groups.sessionAdd.sesDate")} value={DateHelper.formatHtml5Date(sessionDate)} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSessionDate(new Date(e.currentTarget.value))} onKeyDown={handleKeyDown} />
 
     </InputBox>
 
