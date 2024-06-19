@@ -272,6 +272,12 @@
         "addSesMsg": "Please add a new session to continue.",
         "attFor": "Attendance for",
         "name": "Name"
+      },
+      "membersAdd": {
+        "noMem": "No group members available.",
+        "add": "Add",
+        "name": "Name",
+        "availableMem": "Available Group Members"
       }
     }
 

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ApiHelper, GroupInterface, DisplayBox, GroupMemberInterface, PersonHelper, PersonInterface, Loading } from "@churchapps/apphelper";
+import { ApiHelper, GroupInterface, DisplayBox, GroupMemberInterface, PersonHelper, PersonInterface, Loading, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
@@ -22,7 +22,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const getRows = () => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>No group members available.</TableCell></TableRow>);
+      rows.push(<TableRow key="0"><TableCell>{Locale.label("groups.membersAdd.noMem")}</TableCell></TableRow>);
       return rows;
     }
     for (let i = 0; i < groupMembers.length; i++) {
@@ -31,7 +31,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
         <TableRow key={i}>
           <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
-          <TableCell><SmallButton icon="person_add" text="Add" onClick={() => addMember(gm)} color="success" /></TableCell>
+          <TableCell><SmallButton icon="person_add" text={Locale.label("groups.membersAdd.add")} onClick={() => addMember(gm)} color="success" /></TableCell>
         </TableRow>
       );
     }
@@ -41,7 +41,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) return rows;
-    rows.push(<TableRow key="0"><th></th><th>Name</th><th></th></TableRow>);
+    rows.push(<TableRow key="0"><th></th><th>{Locale.label("groups.membersAdd.name")}</th><th></th></TableRow>);
     return rows;
   }
 
@@ -56,7 +56,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
   }
 
   return (
-    <DisplayBox headerIcon="person" headerText="Available Group Members" data-cy="available-group-members">
+    <DisplayBox headerIcon="person" headerText={Locale.label("groups.membersAdd.availableMem")} data-cy="available-group-members">
       {content}
     </DisplayBox>
   );
