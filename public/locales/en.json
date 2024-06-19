@@ -278,6 +278,9 @@
         "add": "Add",
         "name": "Name",
         "availableMem": "Available Group Members"
+      },
+      "serviceTimes": {
+        "services": "Service(s):"
       }
     }
 
