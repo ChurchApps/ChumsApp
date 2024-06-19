@@ -1,6 +1,6 @@
 import React from "react";
 import { HouseholdEdit } from ".";
-import { DisplayBox, ApiHelper, UserHelper, PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper } from "@churchapps/apphelper";
+import { DisplayBox, ApiHelper, UserHelper, PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Table, TableBody, TableRow, TableCell } from "@mui/material"
 
@@ -66,7 +66,7 @@ export const Household: React.FC<Props> = (props) => {
 
   if (mode === "display") {
     return (
-      <DisplayBox id="householdBox" headerIcon="group" headerText={(household?.name || "") + " Household"} editFunction={getEditFunction()} ariaLabel="editHousehold">
+      <DisplayBox id="householdBox" headerIcon="group" headerText={(household?.name || "") + Locale.label("people.household.house")} editFunction={getEditFunction()} ariaLabel="editHousehold">
         {getTable()}
       </DisplayBox>
     );

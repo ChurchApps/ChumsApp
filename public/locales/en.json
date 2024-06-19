@@ -398,6 +398,9 @@
       "groups": {
         "notMemMsg": "Not currently a member of any groups.",
         "groups": "Groups"
+      },
+      "household": {
+        "house": " Household"
       }
     }
 
