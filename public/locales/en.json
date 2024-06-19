@@ -263,6 +263,15 @@
         "name": "Name",
         "groupMem": "Group Members",
         "send": "Send"
+      },
+      "groupSessions": {
+        "session": "Session",
+        "sessions": "Sessions",
+        "new": "New",
+        "noSesMsg": "There are no sessions.",
+        "addSesMsg": "Please add a new session to continue.",
+        "attFor": "Attendance for",
+        "name": "Name"
       }
     }
 

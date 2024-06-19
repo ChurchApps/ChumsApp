@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, ArrayHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading, SmallButton, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, Grid, MenuItem } from "@mui/material"
 
 interface Props {
@@ -74,14 +74,14 @@ export const GroupSessions: React.FC<Props> = (props) => {
       <Grid container columnSpacing={2}>
         <Grid item>
           <FormControl style={{ width: 140, marginTop: 0 }} size="small">
-            <InputLabel id="sessions">Session</InputLabel>
-            <Select fullWidth labelId="sessions" label="Session" value={session?.id} onChange={selectSession}>
+            <InputLabel id="sessions">{Locale.label("groups.groupSessions.session")}</InputLabel>
+            <Select fullWidth labelId="sessions" label={Locale.label("groups.groupSessions.session")} value={session?.id} onChange={selectSession}>
               {getSessionOptions()}
             </Select>
           </FormControl>
         </Grid>
         <Grid item>
-          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>calendar_month</Icon> New</Button>
+          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>calendar_month</Icon> {Locale.label("groups.groupSessions.new")}</Button>
         </Grid>
       </Grid>
     );
@@ -114,17 +114,17 @@ export const GroupSessions: React.FC<Props> = (props) => {
 
   let content = <Loading />;
   if (sessions) {
-    if (sessions.length === 0) content = <div className="alert alert-warning" role="alert" data-cy="no-session-msg"><b>There are no sessions.</b>  Please add a new session to continue.</div>
+    if (sessions.length === 0) content = <div className="alert alert-warning" role="alert" data-cy="no-session-msg"><b>{Locale.label("groups.groupSessions.noSesMsg")}</b>  {Locale.label("groups.groupSessions.addSesMsg")}</div>
     else content = (<>
       <span className="float-right"><ExportLink data={visitSessions} spaceAfter={true} filename="visits.csv" /></span>
-      <b data-cy="session-present-msg">Attendance for {props.group.name}</b>
+      <b data-cy="session-present-msg">{Locale.label("groups.groupSessions.attFor")} {props.group.name}</b>
       <Table id="groupMemberTable">
-        <TableHead><TableRow><th></th><th>Name</th><th></th></TableRow></TableHead>
+        <TableHead><TableRow><th></th><th>{Locale.label("groups.groupSessions.name")}</th><th></th></TableRow></TableHead>
         <TableBody>{getRows()}</TableBody>
       </Table>
     </>);
   }
 
-  return (<DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText="Sessions" headerIcon="calendar_month" editContent={getHeaderSection()}>{content}</DisplayBox>);
+  return (<DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText={Locale.label("groups.groupSessions.sessions")} headerIcon="calendar_month" editContent={getHeaderSection()}>{content}</DisplayBox>);
 }
 
