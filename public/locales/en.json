@@ -293,6 +293,9 @@
         "srvTime": "Service Time",
         "sesAdd": "Add a Session",
         "sesDate": "Session Date"
+      },
+      "tabs": {
+        "noImplement": "Not Implemented"
       }
     }
 
