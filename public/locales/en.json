@@ -299,6 +299,13 @@
       },
       "groupPage": {
         "addPpl": "Add Person"
+      },
+      "groupsPage": {
+        "noGroupMsg": "No groups found. Please create a group.",
+        "cat": "Category",
+        "name": "Name",
+        "ppl": "People",
+        "groups": "Groups"
       }
     }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GroupAdd } from "./components";
-import { ApiHelper, DisplayBox, UserHelper, ExportLink, Loading } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
 import { useMountedState, GroupInterface, Permissions } from "@churchapps/apphelper";
@@ -46,7 +46,7 @@ export const GroupsPage = () => {
     let rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>No groups found. Please create a group.</TableCell></TableRow>);
+      rows.push(<TableRow key="0"><TableCell>{Locale.label("groups.groupsPage.noGroupMsg")}</TableCell></TableRow>);
       return rows;
     }
 
@@ -75,7 +75,7 @@ export const GroupsPage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Category</th><th>Name</th><th>People</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("groups.groupsPage.cat")}</th><th>{Locale.label("groups.groupsPage.name")}</th><th>{Locale.label("groups.groupsPage.ppl")}</th></TableRow>);
     return rows;
   }
 
@@ -93,10 +93,10 @@ export const GroupsPage = () => {
 
   return (
     <>
-      <h1><Icon>people</Icon> Groups</h1>
+      <h1><Icon>people</Icon> {Locale.label("groups.groupsPage.groups")}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="groupsBox" headerIcon="group" headerText="Groups" editContent={getEditContent()} help="chums/groups">
+          <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("groups.groupsPage.groups")} editContent={getEditContent()} help="chums/groups">
             {getTable()}
           </DisplayBox>
         </Grid>
