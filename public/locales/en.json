@@ -317,6 +317,11 @@
         "merge": "Merging records...",
         "cancel": "Cancel",
         "confirm": "Confirm"
+      },
+      "updateHouseHold": {
+        "update": "Update Address",
+        "no": "No",
+        "yes": "Yes"
       }
     }
 
