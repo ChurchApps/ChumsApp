@@ -296,6 +296,9 @@
       },
       "tabs": {
         "noImplement": "Not Implemented"
+      },
+      "groupPage": {
+        "addPpl": "Add Person"
       }
     }
 

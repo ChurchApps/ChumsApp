@@ -1,6 +1,6 @@
 import React from "react";
 import { MembersAdd, GroupDetails, Tabs, SessionAdd } from "./components";
-import { ApiHelper, DisplayBox, GroupInterface, PersonAdd, PersonInterface, SessionInterface, PersonHelper } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, GroupInterface, PersonAdd, PersonInterface, SessionInterface, PersonHelper, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Grid, Icon } from "@mui/material"
 
@@ -29,7 +29,7 @@ export const GroupPage = () => {
   const getSidebarModules = () => {
     const result = [] as JSX.Element[];
     if (addSessionVisible) result.push(<SessionAdd key="sessionAdd" group={group} updatedFunction={handleSessionAdd} />);
-    if (addPersonVisible) result.push(<DisplayBox key="displayBox" id="personAddBox" headerIcon="person" headerText="Add Person"><PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} showCreatePersonOnNotFound /></DisplayBox>);
+    if (addPersonVisible) result.push(<DisplayBox key="displayBox" id="personAddBox" headerIcon="person" headerText={Locale.label("groups.groupPage.addPpl")}><PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} showCreatePersonOnNotFound /></DisplayBox>);
     if (addMemberVisible) result.push(<MembersAdd key="membersAdd" group={group} addFunction={addPerson} />);
     return result;
   }
