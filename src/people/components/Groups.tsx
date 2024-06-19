@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox, ApiHelper, UniqueIdHelper, Loading } from "@churchapps/apphelper"
+import { DisplayBox, ApiHelper, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper"
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableRow, TableCell, Box } from "@mui/material";
 import { useMountedState } from "@churchapps/apphelper";
@@ -20,7 +20,7 @@ export const Groups: React.FC<Props> = (props) => {
 
   const getRecords = () => {
     if (!groupMembers) return <Loading size="sm" />
-    else if (groupMembers.length === 0) return (<p>Not currently a member of any groups.</p>)
+    else if (groupMembers.length === 0) return (<p>{Locale.label("people.groups.notMemMsg")}</p>)
     else {
       const items = [];
       for (let i = 0; i < groupMembers.length; i++) {
@@ -31,5 +31,5 @@ export const Groups: React.FC<Props> = (props) => {
     }
   }
 
-  return <DisplayBox headerIcon="group" headerText={props.title || "Groups"} help="chums/groups">{getRecords()}</DisplayBox>
+  return <DisplayBox headerIcon="group" headerText={props.title || Locale.label("people.groups.groups")} help="chums/groups">{getRecords()}</DisplayBox>
 }

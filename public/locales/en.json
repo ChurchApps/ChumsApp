@@ -394,6 +394,10 @@
         "memAtt": "Member Attendance",
         "operator": "Operator",
         "saveCon": "Save Condition"
+      },
+      "groups": {
+        "notMemMsg": "Not currently a member of any groups.",
+        "groups": "Groups"
       }
     }
 
