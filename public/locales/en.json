@@ -307,6 +307,17 @@
         "ppl": "People",
         "groups": "Groups"
       }
+    },
+    "people": {
+      "mergeModal": {
+        "selMsg": "Please select atleast 1 value for each field",
+        "mergeQuestion": "Would you like to merge",
+        "with": "with",
+        "fieldCon": "Here are some fields conflicting fields:",
+        "merge": "Merging records...",
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+      }
     }
 
 }
