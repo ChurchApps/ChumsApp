@@ -99,7 +99,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
   }
 
   const getEditContent = () => (<>
-    {UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit) && <SmallButton icon="edit_square" toolTip="Send a message to members" onClick={() => { setCount(0); setShow(!show) }}></SmallButton>}
+    {UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit) && <SmallButton icon="edit_square" toolTip={Locale.label("groups.groupMembers.sendMemMsg")} onClick={() => { setCount(0); setShow(!show) }}></SmallButton>}
     <ExportLink data={groupMembers} spaceAfter={true} filename="groupmembers.csv" />
   </>);
 

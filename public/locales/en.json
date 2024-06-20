@@ -269,7 +269,8 @@
         "noMem": "No group members found.",
         "name": "Name",
         "groupMem": "Group Members",
-        "send": "Send"
+        "send": "Send",
+        "sendMemMsg": "Send a message to members"
       },
       "groupSessions": {
         "session": "Session",
