@@ -447,7 +447,10 @@
         "name": "Name",
         "search": "Search",
         "addCon": "Add Condition",
-        "allPeeps": "All people where:"
+        "allPeeps": "All people where:",
+        "notIn": "Not In",
+        "madeTo": "made to",
+        "for": "for"
       },
       "peopleSearchResults": {
         "noResMsg": "No results found.  Please search for a different name or add a new person"
