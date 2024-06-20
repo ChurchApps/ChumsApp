@@ -246,7 +246,9 @@
         "name": "Name",
         "attTrack": "Track Attendance:",
         "parPick": "Parent Pickup:",
-        "groupDet": "Group Details"
+        "groupDet": "Group Details",
+        "yes": "Yes",
+        "no": "No"
       },
       "groupDetailsEdit": {
         "catNameMsg": "Please enter a category name.",

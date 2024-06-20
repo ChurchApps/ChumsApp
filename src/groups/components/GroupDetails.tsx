@@ -23,8 +23,8 @@ export const GroupDetails: React.FC<Props> = (props) => {
       </Grid>
       {isStandard && <>
         <Grid container spacing={3}>
-          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.attTrack")}</label> {(props.group.trackAttendance?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
-          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.parPick")}</label> {(props.group.parentPickup?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
+          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.attTrack")}</label> {(props.group.trackAttendance?.toString().replace("false", Locale.label("groups.groupDetails.no")).replace("true", Locale.label("groups.groupDetails.yes")) || "")}</Grid>
+          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.parPick")}</label> {(props.group.parentPickup?.toString().replace("false", Locale.label("groups.groupDetails.no")).replace("true", Locale.label("groups.groupDetails.yes")) || "")}</Grid>
         </Grid>
         <ServiceTimes group={props.group} />
       </>}
