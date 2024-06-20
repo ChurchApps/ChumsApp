@@ -501,6 +501,15 @@
         "work": "Work",
         "mobile": "Mobile",
         "exten": "Extension"
+      },
+      "personView": {
+        "gender": "Gender",
+        "age": "Age",
+        "marStat": "Marital Status:",
+        "memShip": "Membership:",
+        "mobile": "Mobile",
+        "work": "Work",
+        "persDet": "Personal Details"
       }
     }
 
