@@ -426,6 +426,10 @@
         "house": " Household",
         "houseName": "Household Name",
         "add": "Add"
+      },
+      "merge": {
+        "mergeRec": "Merge Records",
+        "merge": "merge"
       }
     }
 

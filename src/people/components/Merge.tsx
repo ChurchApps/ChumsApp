@@ -1,6 +1,6 @@
 import React from "react"
 import { Search, MergeModal } from "."
-import { InputBox, PersonInterface, ApiHelper, GroupMemberInterface, VisitInterface, DonationInterface, FormSubmissionInterface } from "@churchapps/apphelper"
+import { InputBox, PersonInterface, ApiHelper, GroupMemberInterface, VisitInterface, DonationInterface, FormSubmissionInterface, Locale } from "@churchapps/apphelper"
 import { useNavigate } from "react-router-dom"
 import { useMountedState } from "@churchapps/apphelper";
 
@@ -152,8 +152,8 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
   return (
     <>
       <MergeModal show={showMergeModal} onHide={() => setShowMergeModal(false)} person1={person1} person2={personToMerge} merge={merge} mergeInProgress={mergeInProgress} />
-      <InputBox id="mergeBox" headerIcon="person_add" headerText="Merge Records" saveFunction={handleSave} cancelFunction={props.hideMergeBox}>
-        <Search handleSearch={search} searchResults={searchResults} buttonText="merge" handleClickAction={handleMerge} />
+      <InputBox id="mergeBox" headerIcon="person_add" headerText={Locale.label("people.merge.mergeRec")} saveFunction={handleSave} cancelFunction={props.hideMergeBox}>
+        <Search handleSearch={search} searchResults={searchResults} buttonText={Locale.label("people.merge.merge")} handleClickAction={handleMerge} />
       </InputBox>
     </>
   )
