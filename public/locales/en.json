@@ -215,7 +215,10 @@
         "no": "No"
       },
       "tabs": {
-        "unAuth": "Unauthorized"
+        "unAuth": "Unauthorized",
+        "questions": "Questions",
+        "formMem": "Form Members",
+        "formSub": "Form Submissions"
       },
       "formsPage": {
         "noCustomMsg": "No custom forms have been created yet. They will appear here when added.",
