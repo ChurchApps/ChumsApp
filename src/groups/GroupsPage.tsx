@@ -54,7 +54,7 @@ export const GroupsPage = () => {
     for (let i = 0; i < groups.length; i++) {
       let g = groups[i];
       let cat = (g.categoryName !== lastCat) ? <Box sx={{display: "flex", alignItems: "center"}}><Icon>folder</Icon> {g.categoryName}</Box> : <></>
-      let memberCount = g.memberCount === 1 ? "1 person" : g.memberCount.toString() + " people";
+      let memberCount = g.memberCount === 1 ? Locale.label("groups.groupsPage.pers") : g.memberCount.toString() + Locale.label("groups.groupsPage.spPpl");
       rows.push(
         <TableRow sx={{whiteSpace: "nowrap"}} key={g.id}>
           <TableCell>{cat}</TableCell>

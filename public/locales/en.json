@@ -315,7 +315,9 @@
         "cat": "Category",
         "name": "Name",
         "ppl": "People",
-        "groups": "Groups"
+        "groups": "Groups",
+        "pers": "1 person",
+        "spPpl": " people"
       }
     },
     "people": {
