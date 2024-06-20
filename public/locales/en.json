@@ -303,7 +303,9 @@
         "sesDate": "Session Date"
       },
       "tabs": {
-        "noImplement": "Not Implemented"
+        "noImplement": "Not Implemented",
+        "mem": "Members",
+        "ses": "Sessions"
       },
       "groupPage": {
         "addPpl": "Add Person"
