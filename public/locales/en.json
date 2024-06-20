@@ -510,6 +510,12 @@
         "mobile": "Mobile",
         "work": "Work",
         "persDet": "Personal Details"
+      },
+      "tabs": {
+        "notes": "Notes",
+        "att": "Attendance",
+        "don": "Donations",
+        "noImplement": "Not Implemented"
       }
     }
 
