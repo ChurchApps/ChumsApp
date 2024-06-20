@@ -430,6 +430,14 @@
       "merge": {
         "mergeRec": "Merge Records",
         "merge": "merge"
+      },
+      "peopleColumns": {
+        "noFilt": "No filters available.",
+        "filt": "Filters",
+        "appFilt": "Apply Filters",
+        "stand": "Standard",
+        "cust": "Custom",
+        "close": "Close"
       }
     }
 
