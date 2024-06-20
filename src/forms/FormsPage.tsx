@@ -104,8 +104,8 @@ export const FormsPage = () => {
 
     let tabs = [];
     let defaultTab = "";
-    tabs.push(getTab(0, "forms", "format_align_left", "Forms")); if (defaultTab === "") defaultTab = "forms";
-    if (archivedForms?.length > 0) { tabs.push(getTab(1, "archived", "archive", "Archived Forms")); if (defaultTab === "") defaultTab = "archived"; }
+    tabs.push(getTab(0, "forms", "format_align_left", Locale.label("forms.formsPage.forms"))); if (defaultTab === "") defaultTab = "forms";
+    if (archivedForms?.length > 0) { tabs.push(getTab(1, "archived", "archive", Locale.label("forms.formsPage.archForms"))); if (defaultTab === "") defaultTab = "archived"; }
     if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
     return (
