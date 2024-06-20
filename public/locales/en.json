@@ -438,6 +438,16 @@
         "stand": "Standard",
         "cust": "Custom",
         "close": "Close"
+      },
+      "peopleSearch": {
+        "simpSearch": "Simple Search",
+        "advSearch": "Advanced Search",
+        "simp": "Simple",
+        "adv": "Advanced",
+        "name": "Name",
+        "search": "Search",
+        "addCon": "Add Condition",
+        "allPeeps": "All people where:"
       }
     }
 
