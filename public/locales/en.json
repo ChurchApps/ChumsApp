@@ -210,7 +210,9 @@
         "subBy": "Submitted By",
         "subDate": "Submission Date",
         "subSum": "Form Submission Summary",
-        "subRes": "Form Submission Results"
+        "subRes": "Form Submission Results",
+        "yes": "Yes",
+        "no": "No"
       },
       "tabs": {
         "unAuth": "Unauthorized"

@@ -9,8 +9,8 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   const [formSubmissions, setFormSubmissions] = useState<any[]>([]);
   const [summary, setSummary] = useState<any>([]);
   const [summaryCsv, setSummaryCsv] = useState<any>([]);
-  const yesNoMap: any = { True: "Yes", False: "No" };
-  const yesNoDefault = [{ value: "Yes", text: "Yes" }, { value: "No", text: "No" }];
+  const yesNoMap: any = { True: Locale.label("forms.formSubmissions.yes"), False: Locale.label("forms.formSubmissions.no") };
+  const yesNoDefault = [{ value: "Yes", text: Locale.label("forms.formSubmissions.yes") }, { value: "No", text: Locale.label("forms.formSubmissions.no") }];
   const contentRef: any = useRef<HTMLDivElement>(null);
   const handleSummaryPrint = useReactToPrint({
     content: () => contentRef.current
