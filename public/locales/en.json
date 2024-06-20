@@ -509,7 +509,8 @@
         "memShip": "Membership:",
         "mobile": "Mobile",
         "work": "Work",
-        "persDet": "Personal Details"
+        "persDet": "Personal Details",
+        "home": "Home"
       },
       "tabs": {
         "notes": "Notes",

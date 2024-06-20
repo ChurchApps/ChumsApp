@@ -28,7 +28,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
         }
         if (p.membershipStatus) leftAttributes.push(<div key="membership"><label>{Locale.label("people.personView.memShip")}</label> <b>{p.membershipStatus}</b></div>);
 
-        let homeLabel = "Home";
+        let homeLabel = Locale.label("people.personView.home");
         if (p.contactInfo.email) {
           contactMethods.push(<TableRow key="email"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>mail</Icon></TableCell><TableCell><a href={"mailto:" + p.contactInfo.email}><b>{p.contactInfo.email}</b></a></TableCell></TableRow>);
           homeLabel = "";
