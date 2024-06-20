@@ -448,6 +448,9 @@
         "search": "Search",
         "addCon": "Add Condition",
         "allPeeps": "All people where:"
+      },
+      "peopleSearchResults": {
+        "noResMsg": "No results found.  Please search for a different name or add a new person"
       }
     }
 

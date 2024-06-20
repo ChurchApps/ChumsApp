@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
-import { PersonHelper, PersonInterface, Loading, CreatePerson, DateHelper, ApiHelper, ArrayHelper } from "@churchapps/apphelper";
+import { PersonHelper, PersonInterface, Loading, CreatePerson, DateHelper, ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton } from "@mui/material"
 
 interface Props {
@@ -182,7 +182,7 @@ export function PeopleSearchResults(props: Props) {
   }
 
   const getResults = () => {
-    if (people.length === 0) return <p>No results found.  Please search for a different name or add a new person</p>
+    if (people.length === 0) return <p>{Locale.label("people.peopleSearchResults.noResMsg")}</p>
     else return (<Table id="peopleTable">
       {getHeaders()}
       <TableBody>{getRows()}</TableBody>
