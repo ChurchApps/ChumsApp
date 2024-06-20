@@ -451,6 +451,10 @@
       },
       "peopleSearchResults": {
         "noResMsg": "No results found.  Please search for a different name or add a new person"
+      },
+      "personAttendance": {
+        "noAttMsg": "No attendance records. Attendance will appear once attendance has been tracked for a group session.",
+        "att": "Attendance"
       }
     }
 
