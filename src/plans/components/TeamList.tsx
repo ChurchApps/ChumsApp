@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ApiHelper, DisplayBox, UserHelper, Loading, ArrayHelper } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, UserHelper, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
 import { useMountedState, GroupInterface, Permissions } from "@churchapps/apphelper";
@@ -44,13 +44,13 @@ export const TeamList = (props:Props) => {
     let rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>No teams found. Please create a team.</TableCell></TableRow>);
+      rows.push(<TableRow key="0"><TableCell>{Locale.label("plans.teamList.noTeam")}</TableCell></TableRow>);
       return rows;
     }
 
     for (let i = 0; i < groups.length; i++) {
       let g = groups[i];
-      let memberCount = g.memberCount === 1 ? "1 person" : g.memberCount?.toString() + " people";
+      let memberCount = g.memberCount === 1 ? Locale.label("plans.teamList.pers") : g.memberCount?.toString() + Locale.label("plans.teamList.peeps");
       rows.push(
         <TableRow sx={{whiteSpace: "nowrap"}} key={g.id}>
           <TableCell>
@@ -69,7 +69,7 @@ export const TeamList = (props:Props) => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>Name</th><th>People</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("plans.teamList.name")}</th><th>{Locale.label("plans.teamList.ppl")}</th></TableRow>);
     return rows;
   }
 
@@ -87,10 +87,10 @@ export const TeamList = (props:Props) => {
 
   return (
     <>
-      <h1><Icon>people</Icon> {props.ministry.name} Teams</h1>
+      <h1><Icon>people</Icon> {props.ministry.name} {Locale.label("plans.teamList.teams")}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="groupsBox" headerIcon="group" headerText="Teams" editContent={getEditContent()}>
+          <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("plans.teamList.teams")} editContent={getEditContent()}>
             {getTable()}
           </DisplayBox>
         </Grid>

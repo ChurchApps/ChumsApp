@@ -619,6 +619,14 @@
         "team": "Team",
         "pos": "Position",
         "ppl": "People"
+      },
+      "teamList": {
+        "noTeam": "No teams found. Please create a team.",
+        "pers": "1 person",
+        "ppl": "People",
+        "peeps": " people",
+        "name": "Name",
+        "teams": "Teams"
       }
     }
 
