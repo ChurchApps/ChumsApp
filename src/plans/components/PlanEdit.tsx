@@ -1,6 +1,6 @@
 import React from "react";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
-import { ApiHelper, DateHelper, ErrorMessages, InputBox, PlanInterface } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, ErrorMessages, InputBox, Locale, PlanInterface } from "@churchapps/apphelper";
 
 interface Props { plan: PlanInterface, plans:PlanInterface[], updatedFunction: () => void }
 
@@ -24,8 +24,8 @@ export const PlanEdit = (props:Props) => {
 
   const validate = () => {
     const result = [];
-    if (!plan.name) result.push("Plan name is required.");
-    if (!plan.serviceDate) result.push("Service date is required.");
+    if (!plan.name) result.push(Locale.label("plans.planEdit.planReq"));
+    if (!plan.serviceDate) result.push(Locale.label("plans.planEdit.servReq"));
     setErrors(result);
     return result.length === 0;
   }
@@ -49,13 +49,13 @@ export const PlanEdit = (props:Props) => {
 
   return (<>
     <ErrorMessages errors={errors} />
-    <InputBox headerText={(plan.id) ? "Edit Plan" : "Add a Plan"} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={(plan.id) ? handleDelete : null }>
-      <TextField fullWidth label="Name" id="name" name="name" type="text" value={plan.name} onChange={handleChange} />
-      <TextField fullWidth label="Service Date" id="serviceDate" name="serviceDate" type="date" value={DateHelper.formatHtml5Date(plan.serviceDate)} onChange={handleChange} />
+    <InputBox headerText={(plan.id) ? Locale.label("plans.planEdit.planEdit") : Locale.label("plans.planEdit.planAdd")} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={(plan.id) ? handleDelete : null }>
+      <TextField fullWidth label={Locale.label("plans.planEdit.name")} id="name" name="name" type="text" value={plan.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("plans.planEdit.servDate")} id="serviceDate" name="serviceDate" type="date" value={DateHelper.formatHtml5Date(plan.serviceDate)} onChange={handleChange} />
       <FormControl fullWidth>
-        <InputLabel id="copyFrom">Copy From:</InputLabel>
-        <Select name="copyFrom" labelId="copyFrom" label="Copy From" value={copyFromId} onChange={handleChange}>
-          <MenuItem value="none">None</MenuItem>
+        <InputLabel id="copyFrom">{Locale.label("plans.planEdit.copy")}:</InputLabel>
+        <Select name="copyFrom" labelId="copyFrom" label={Locale.label("plans.planEdit.copy")} value={copyFromId} onChange={handleChange}>
+          <MenuItem value="none">{Locale.label("plans.planEdit.none")}</MenuItem>
           {getCopyOptions()}
         </Select>
       </FormControl>

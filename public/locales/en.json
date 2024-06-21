@@ -567,6 +567,16 @@
       "ministryList": {
         "noMinMsg": "No ministries found. Please create a ministry.",
         "mins": "Ministires"
+      },
+      "planEdit": {
+        "planReq": "Plan name is required.",
+        "servReq": "Service date is required.",
+        "planEdit": "Edit Plan",
+        "planAdd": "Add a Plan",
+        "name": "Name",
+        "servDate": "Service Date",
+        "copy": "Copy From",
+        "none": "None"
       }
     }
 
