@@ -627,6 +627,17 @@
         "peeps": " people",
         "name": "Name",
         "teams": "Teams"
+      },
+      "timeEdit": {
+        "disNameReq": "Display name is required.",
+        "startReq": "Start time is required",
+        "endReq": "End time is required",
+        "timeEdit": "Edit Time",
+        "timeAdd": "Add a Time",
+        "disName": "Display Name",
+        "timeStart": "Start Time",
+        "timeEnd": "End Time",
+        "teamNeed": "Needed Teams"
       }
     }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Checkbox, SelectChangeEvent, TextField } from "@mui/material";
-import { ApiHelper, DateHelper, ErrorMessages, InputBox, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, ErrorMessages, InputBox, Locale, TimeInterface } from "@churchapps/apphelper";
 
 interface Props { time: TimeInterface, categories:string[], onUpdate: () => void }
 
@@ -23,9 +23,9 @@ export const TimeEdit = (props:Props) => {
 
   const handleSave = () => {
     const errors:string[] = [];
-    if (!time.displayName) errors.push("Display name is required");
-    if (!time.startTime) errors.push("Start time is required");
-    if (!time.endTime) errors.push("End time is required");
+    if (!time.displayName) errors.push(Locale.label("plans.timeEdit.disNameReq"));
+    if (!time.startTime) errors.push(Locale.label("plans.timeEdit.startReq"));
+    if (!time.endTime) errors.push(Locale.label("plans.timeEdit.endReq"));
     setErrors(errors);
     if (errors.length === 0) ApiHelper.post("/times", [time], "DoingApi").then(props.onUpdate);
   }
@@ -61,11 +61,11 @@ export const TimeEdit = (props:Props) => {
 
   return (<>
     <ErrorMessages errors={errors} />
-    <InputBox headerText={(props.time?.id) ? "Edit Time" : "Add a Time"} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.onUpdate} deleteFunction={(time.id) ? handleDelete : null }>
-      <TextField fullWidth label="Display Name" id="displayName" name="displayName" type="text" value={time.displayName} onChange={handleChange} />
-      <TextField fullWidth label="Start Time" id="startTime" name="startTime" type="datetime-local" value={DateHelper.formatHtml5DateTime(time.startTime)} onChange={handleChange} />
-      <TextField fullWidth label="End Time" id="endTime" name="endTime" type="datetime-local" value={DateHelper.formatHtml5DateTime(time.endTime)} onChange={handleChange} />
-      <div style={{marginTop:10}}><b>Needed Teams</b></div>
+    <InputBox headerText={(props.time?.id) ? Locale.label("plans.timeEdit.timeEdit") : Locale.label("plans.timeEdit.timeAdd")} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.onUpdate} deleteFunction={(time.id) ? handleDelete : null }>
+      <TextField fullWidth label={Locale.label("plans.timeEdit.disName")} id="displayName" name="displayName" type="text" value={time.displayName} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("plans.timeEdit.timeStart")} id="startTime" name="startTime" type="datetime-local" value={DateHelper.formatHtml5DateTime(time.startTime)} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("plans.timeEdit.timeEnd")} id="endTime" name="endTime" type="datetime-local" value={DateHelper.formatHtml5DateTime(time.endTime)} onChange={handleChange} />
+      <div style={{marginTop:10}}><b>{Locale.label("plans.timeEdit.teamNeed")}</b></div>
       {getTeams()}
     </InputBox>
   </>);
