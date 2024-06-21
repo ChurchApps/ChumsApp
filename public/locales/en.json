@@ -646,6 +646,10 @@
       "ministryPage": {
         "plans": "Plans",
         "teams": "Teams"
+      },
+      "planPage": {
+        "assign": "Assignments",
+        "notes": "Notes"
       }
     }
 
