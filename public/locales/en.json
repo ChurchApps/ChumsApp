@@ -611,6 +611,14 @@
         "name": "Name",
         "volCount": "Volunteer Count",
         "volGroup": "Volunteer Group"
+      },
+      "positionList": {
+        "load": "Loading...",
+        "persNeed": "1 Person Needed",
+        "pplNeed": " People Needed",
+        "team": "Team",
+        "pos": "Position",
+        "ppl": "People"
       }
     }
 
