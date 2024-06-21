@@ -3,7 +3,7 @@ import { Tabs as MaterialTabs, Tab } from "@mui/material";
 import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
 import { useParams } from "react-router-dom";
-import { ApiHelper, GroupInterface } from "@churchapps/apphelper";
+import { ApiHelper, GroupInterface, Locale } from "@churchapps/apphelper";
 
 export const MinistryPage = () => {
 
@@ -30,8 +30,8 @@ export const MinistryPage = () => {
 
   const getTabs = () => {
     let tabs = [];
-    tabs.push(getTab(0, "plans", "Plans"));
-    tabs.push(getTab(1, "teams", "Teams"));
+    tabs.push(getTab(0, "plans", Locale.label("plans.ministryPage.plans")));
+    tabs.push(getTab(1, "teams", Locale.label("plans.ministryPage.teams")));
     return tabs;
   }
 

@@ -642,6 +642,10 @@
       "timeList": {
         "noTime": "No times have been added yet",
         "times": "Times"
+      },
+      "ministryPage": {
+        "plans": "Plans",
+        "teams": "Teams"
       }
     }
 
