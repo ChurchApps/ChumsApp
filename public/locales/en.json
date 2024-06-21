@@ -556,6 +556,14 @@
         "searchPpl": "Search People",
         "ppl": "People"
       }
+    },
+    "plans": {
+      "assignmentEdit": {
+        "noMem": "No group members found.",
+        "editAssign": "Edit Assignment",
+        "assignPos": "Assign Position",
+        "done": "Done"
+      }
     }
 
 }
