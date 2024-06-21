@@ -689,6 +689,14 @@
     "reports": {
       "reportPage": {
         "report": "Report"
+      },
+      "reportsPage": {
+        "reports": "Reports",
+        "bDays": "Birthdays",
+        "attTrend": "Attendance Trend",
+        "groupAtt": "Group Attendance",
+        "dailyGroupAtt": "Daily Group Attendance",
+        "donSum": "Donation Summary"
       }
     }
 
