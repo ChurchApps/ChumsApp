@@ -685,6 +685,11 @@
         "permWarn": "Careful, these actions are permanent",
         "delAcc": "Delete my account"
       }
+    },
+    "reports": {
+      "reportPage": {
+        "report": "Report"
+      }
     }
 
 }
