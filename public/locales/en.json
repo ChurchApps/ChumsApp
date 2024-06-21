@@ -563,6 +563,10 @@
         "editAssign": "Edit Assignment",
         "assignPos": "Assign Position",
         "done": "Done"
+      },
+      "ministryList": {
+        "noMinMsg": "No ministries found. Please create a ministry.",
+        "mins": "Ministires"
       }
     }
 
