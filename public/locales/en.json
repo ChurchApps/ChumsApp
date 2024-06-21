@@ -601,6 +601,16 @@
         "notify": "Notify",
         "vol": "volunteer(s)",
         "val": "Validation"
+      },
+      "positionEdit": {
+        "catNameReq": "Category Name is required.",
+        "nameReq": "Name is required",
+        "posEdit": "Edit Position",
+        "posAdd": "Add a Position",
+        "catName": "Category Name",
+        "name": "Name",
+        "volCount": "Volunteer Count",
+        "volGroup": "Volunteer Group"
       }
     }
 

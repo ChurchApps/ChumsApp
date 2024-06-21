@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
-import { ApiHelper, ErrorMessages, GroupInterface, InputBox, PositionInterface } from "@churchapps/apphelper";
+import { ApiHelper, ErrorMessages, GroupInterface, InputBox, Locale, PositionInterface } from "@churchapps/apphelper";
 import ReactSelect from "react-select";
 
 interface Props { position: PositionInterface, categoryNames:string[], updatedFunction: () => void }
@@ -37,8 +37,8 @@ export const PositionEdit = (props:Props) => {
 
   const handleSave = () => {
     const errors:string[] = [];
-    if (!position.categoryName) errors.push("Category Name is required");
-    if (!position.name) errors.push("Name is required");
+    if (!position.categoryName) errors.push(Locale.label("plans.positionEdit.catNameReq"));
+    if (!position.name) errors.push(Locale.label("plans.positionEdit.nameReq"));
     setErrors(errors);
     if (errors.length === 0) ApiHelper.post("/positions", [position], "DoingApi").then(props.updatedFunction);
   }
@@ -81,9 +81,9 @@ export const PositionEdit = (props:Props) => {
 
   return (<>
     <ErrorMessages errors={errors} />
-    <InputBox headerText={(props.position?.id) ? "Edit Position" : "Add a Position"} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={(position.id) ? handleDelete : null }>
+    <InputBox headerText={(props.position?.id) ? Locale.label("plans.positionEdit.posEdit") : Locale.label("plans.positionEdit.posAdd")} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={(position.id) ? handleDelete : null }>
       <FormControl fullWidth>
-        <div style={{fontSize:12, color:"#999", position:"absolute", top:-8, left:10, backgroundColor:"#FFF", zIndex:999}}>Category Name</div>
+        <div style={{fontSize:12, color:"#999", position:"absolute", top:-8, left:10, backgroundColor:"#FFF", zIndex:999}}>{Locale.label("plans.positionEdit.catName")}</div>
         <ReactSelect onInputChange={(newValue: string) => { setCategoryInput(newValue) }}
           value={categoryOption}
           onChange={handleCategoryChange}
@@ -92,11 +92,11 @@ export const PositionEdit = (props:Props) => {
           className="comboBox"
         />
       </FormControl>
-      <TextField fullWidth label="Name" id="name" name="name" type="text" value={position.name} onChange={handleChange} />
-      <TextField fullWidth label="Volunteer Count" id="count" name="count" type="number" value={position.count} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("plans.positionEdit.name")} id="name" name="name" type="text" value={position.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("plans.positionEdit.volCount")} id="count" name="count" type="number" value={position.count} onChange={handleChange} />
       <FormControl fullWidth>
-        <InputLabel>Volunteer Group</InputLabel>
-        <Select name="groupId" label="Volunteer Group" value={position.groupId} onChange={handleChange}>
+        <InputLabel>{Locale.label("plans.positionEdit.volGroup")}</InputLabel>
+        <Select name="groupId" label={Locale.label("plans.positionEdit.volGroup")} value={position.groupId} onChange={handleChange}>
           {getGroupOptions()}
         </Select>
       </FormControl>
