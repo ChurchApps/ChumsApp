@@ -581,6 +581,26 @@
       "planList": {
         "noPlan": "No plans have been added yet.",
         "plans": "Plans"
+      },
+      "planValidation": {
+        "blockCon": "Blockout date conflict of",
+        "to": "to",
+        "more": "more",
+        "person": "person",
+        "ppl": "people",
+        "needed": "needed.",
+        "timeCon": "Time conflict between",
+        "and": "and",
+        "during": "during",
+        "cons": "Conflicts",
+        "timeCon2": "Time conflict at",
+        "between": "between",
+        "valPlan": "Plan is valid.",
+        "volReq": "Volunteer Requests: ",
+        "volNotif": "All volunteers notified.",
+        "notify": "Notify",
+        "vol": "volunteer(s)",
+        "val": "Validation"
       }
     }
 

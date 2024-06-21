@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DateHelper, DisplayBox, NotificationInterface, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DateHelper, DisplayBox, Locale, NotificationInterface, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
 
 interface Props {
   plan: PlanInterface,
@@ -50,7 +50,7 @@ export const PlanValidation = (props:Props) => {
     });
 
     conflicts.forEach(c => {
-      issues.push(<><b>{c.person.name.display}:</b> Blockout date conflict of {DateHelper.prettyDate(new Date(c.blockout.startDate))} to {DateHelper.prettyDate(new Date(c.blockout.endDate))}.</>);
+      issues.push(<><b>{c.person.name.display}:</b> {Locale.label("plans.planValidation.blockCon")} {DateHelper.prettyDate(new Date(c.blockout.startDate))} {Locale.label("plans.planValidation.to")} {DateHelper.prettyDate(new Date(c.blockout.endDate))}.</>);
     });
   }
 
@@ -59,7 +59,7 @@ export const PlanValidation = (props:Props) => {
       const assignments = props.assignments.filter(a => a.positionId === p.id);
       if (assignments.length < p.count) {
         const needed = p.count - assignments.length;
-        issues.push(<><b>{p.name}:</b> {needed} more {(needed===1) ? "person" : "people"} needed.</>);
+        issues.push(<><b>{p.name}:</b> {needed} {Locale.label("plans.planValidation.more")} {(needed===1) ? Locale.label("plans.planValidation.person") : Locale.label("plans.planValidation.ppl")} {Locale.label("plans.planValidation.needed")}</>);
       }
     });
   }
@@ -82,7 +82,7 @@ export const PlanValidation = (props:Props) => {
         a.times.forEach(at => {
           b.times.forEach(bt => {
             if (at.startTime < bt.endTime && at.endTime > bt.startTime) {
-              issues.push(<><b>{person.name.display}:</b> Time conflict between {a.position.name} and {b.position.name} during {at.displayName}.</>);
+              issues.push(<><b>{person.name.display}:</b> {Locale.label("plans.planValidation.timeCon")} {a.position.name} {Locale.label("plans.planValidation.and")} {b.position.name} {Locale.label("plans.planValidation.during")} {at.displayName}.</>);
             }
           });
         });
@@ -106,9 +106,9 @@ export const PlanValidation = (props:Props) => {
           //get overlaping times from planTimeConflicts based on current duty.
           const filtered = tc.overlapingTimes.filter(ot => a.position.planId === ot.planId && ot.teams?.indexOf(a.position.categoryName) > -1);
           if (filtered.length > 0) {
-            issues.push(<><hr /><b style={{ display: "flex", justifyContent: "center", alignItems: "center", fontStyle: "italic" }}>{plan.name} Conflicts</b></>);
+            issues.push(<><hr /><b style={{ display: "flex", justifyContent: "center", alignItems: "center", fontStyle: "italic" }}>{plan.name} {Locale.label("plans.planValidation.cons")}</b></>);
             filtered.forEach(f => {
-              issues.push(<><b>{person.name.display}:</b> Time conflict at {a.position.name} between {tc.time.displayName} and {f.displayName}</>);
+              issues.push(<><b>{person.name.display}:</b> {Locale.label("plans.planValidation.timeCon2")} {a.position.name} {Locale.label("plans.planValidation.between")} {tc.time.displayName} {Locale.label("plans.planValidation.and")} {f.displayName}</>);
             })
           }
         });
@@ -175,7 +175,7 @@ export const PlanValidation = (props:Props) => {
   useEffect(() => { getAll(); validate(); }, [props.assignments, props.positions, props.people]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const getErrorList = () => {
-    if (errors.length === 0) return <p>Plan is valid.</p>;
+    if (errors.length === 0) return <p>{Locale.label("plans.planValidation.valPlan")}</p>;
     else {
       const lines = errors.map((e, i) => (<li key={i}>{e}</li>));
       return <ul>{lines}</ul>;
@@ -194,7 +194,7 @@ export const PlanValidation = (props:Props) => {
     pending.forEach(a => {
       const position:PositionInterface = ArrayHelper.getOne(props.positions, "id", a.positionId);
       a.notified = new Date();
-      const data:any = { peopleIds:[a.personId], contentType:"assignment", contentId:props.plan.id, message:"Volunteer request: " + props.plan.name + " - " + position.name };
+      const data:any = { peopleIds:[a.personId], contentType:"assignment", contentId:props.plan.id, message:Locale.label("plans.planValidation.volReq") + props.plan.name + " - " + position.name };
       promises.push(ApiHelper.post("/notifications/create", data, "MessagingApi"));
     });
     promises.push(ApiHelper.post("/assignments", pending, "DoingApi"));
@@ -206,13 +206,13 @@ export const PlanValidation = (props:Props) => {
   const getNotificationLink = () => {
     const pending = getPendingNotifications();
 
-    if (pending.length === 0) return <p>All volunteers notified.</p>;
-    else return <p><a href="about:blank" onClick={(e) => { e.preventDefault(); notify(); }}>Notify {pending.length} volunteer(s)</a></p>;
+    if (pending.length === 0) return <p>{Locale.label("plans.planValidation.volNotif")}</p>;
+    else return <p><a href="about:blank" onClick={(e) => { e.preventDefault(); notify(); }}>{Locale.label("plans.planValidation.notify")} {pending.length} {Locale.label("plans.planValidation.vol")}</a></p>;
   }
 
 
   return (<>
-    <DisplayBox headerText="Validation" headerIcon="assignment">
+    <DisplayBox headerText={Locale.label("plans.planValidation.val")} headerIcon="assignment">
       {getErrorList()}
       {getNotificationLink()}
     </DisplayBox>
