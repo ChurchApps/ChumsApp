@@ -654,6 +654,37 @@
       "plansPage": {
         "selMin": "Select a Ministry"
       }
+    },
+    "profile": {
+      "profilePage": {
+        "saveChange": "Changes saved.",
+        "firstMsg": "Please enter firstname",
+        "lastMsg": "Please enter lastname",
+        "emailMsg": "Please enter an email address.",
+        "valEmail": "Please enter a valid email address.",
+        "passMatch": "Passwords do not match.",
+        "passLong": "Please enter a password that is at least 8 characters long.",
+        "confirmMsg": "Are you sure you wish to permanently delete your account?",
+        "profEdit": "Edit Profile",
+        "email": "Email",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "passNew": "New password",
+        "passVer": "Verify password",
+        "noDirect": "Directory opt-out",
+        "notifPref": "Notification Preferences",
+        "notifMsg": "Choose how you would like to receive updates about private messages, conversations, forms and other notifications.",
+        "notifPush": "Allow Push Notifications",
+        "yes": "Yes",
+        "no": "No",
+        "freqEmail": "Email Frequency",
+        "never": "Never",
+        "indiv": "Individual",
+        "daily": "Daily",
+        "accDel": "Account Deletion",
+        "permWarn": "Careful, these actions are permanent",
+        "delAcc": "Delete my account"
+      }
     }
 
 }
