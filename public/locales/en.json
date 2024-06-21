@@ -650,6 +650,9 @@
       "planPage": {
         "assign": "Assignments",
         "notes": "Notes"
+      },
+      "plansPage": {
+        "selMin": "Select a Ministry"
       }
     }
 
