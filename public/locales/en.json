@@ -638,6 +638,10 @@
         "timeStart": "Start Time",
         "timeEnd": "End Time",
         "teamNeed": "Needed Teams"
+      },
+      "timeList": {
+        "noTime": "No times have been added yet",
+        "times": "Times"
       }
     }
 

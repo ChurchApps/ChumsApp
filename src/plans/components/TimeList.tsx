@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon, IconButton } from "@mui/material";
-import { ArrayHelper, DateHelper, DisplayBox, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
+import { ArrayHelper, DateHelper, DisplayBox, Locale, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
 import { TimeEdit } from "./TimeEdit";
 
 interface Props {
@@ -59,7 +59,7 @@ export const TimeList = (props:Props) => {
         </td>
       </tr>);
     });
-    if (props.times.length===0) result.push(<tr><td colSpan={2}>No times have been added yet</td></tr>);
+    if (props.times.length===0) result.push(<tr><td colSpan={2}>{Locale.label("plans.timeList.noTime")}</td></tr>);
     return result;
   }
 
@@ -67,7 +67,7 @@ export const TimeList = (props:Props) => {
     const categories = ArrayHelper.getUniqueValues(props.positions, "categoryName").sort();
     return <TimeEdit time={time} categories={categories} onUpdate={() => { setTime(null); props.onUpdate(); }} />
   }
-  else return (<DisplayBox headerText="Times" headerIcon="schedule" editContent={getAddTimeLink()}>
+  else return (<DisplayBox headerText={Locale.label("plans.timeList.times")} headerIcon="schedule" editContent={getAddTimeLink()}>
     <table style={{width:"100%"}}>
       {getRows()}
     </table>
