@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, PlanInterface, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, Locale, PlanInterface, SmallButton } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
 import { MinistryList } from "./MinistryList";
 
@@ -30,7 +30,7 @@ export const PlanList = (props:Props) => {
   }
 
   const getPlans = () => {
-    if (plans.length === 0) return <TableRow><TableCell>No plans have been added yet.</TableCell></TableRow>;
+    if (plans.length === 0) return <TableRow><TableCell>{Locale.label("plans.planList.noPlan")}</TableCell></TableRow>;
     return plans.map((p, i) => (<TableRow key={i}>
       <TableCell><Link to={"/plans/" + p.id}>{p.name}</Link></TableCell>
       <TableCell style={{textAlign:"right"}}><SmallButton icon="edit" onClick={(e) => {setPlan(p); }} /></TableCell>
@@ -40,10 +40,10 @@ export const PlanList = (props:Props) => {
   useEffect(() => { loadData(); }, [props.ministry]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (<>
-    <h1><Icon>assignment</Icon> {props.ministry.name} Plans</h1>
+    <h1><Icon>assignment</Icon> {props.ministry.name} {Locale.label("plans.planList.plans")}</h1>
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
-        <DisplayBox headerText="Plans" headerIcon="assignment" editContent={getAddPlanLink()}>
+        <DisplayBox headerText={Locale.label("plans.planList.plans")} headerIcon="assignment" editContent={getAddPlanLink()}>
           <Table size="small">
             <TableBody>
               {getPlans()}

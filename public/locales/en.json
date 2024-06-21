@@ -577,6 +577,10 @@
         "servDate": "Service Date",
         "copy": "Copy From",
         "none": "None"
+      },
+      "planList": {
+        "noPlan": "No plans have been added yet.",
+        "plans": "Plans"
       }
     }
 
