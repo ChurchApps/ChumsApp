@@ -749,6 +749,12 @@
     "settings": {
       "associatePerson": {
         "change": "Change"
+      },
+      "churchSettings": {
+        "churchSet": "Church Settings",
+        "name": "Name",
+        "subdom": "Subdomain",
+        "address": "Address"
       }
     }
 

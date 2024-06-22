@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import React from "react";
 import { ChurchSettingsEdit } from "./";
-import { ChurchInterface, DisplayBox, UserHelper, Permissions } from "@churchapps/apphelper";
+import { ChurchInterface, DisplayBox, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 
 interface Props { church: ChurchInterface, updatedFunction: () => void }
 
@@ -34,18 +34,18 @@ export const ChurchSettings: React.FC<Props> = (props) => {
 
   if (mode === "display") {
     return (
-      <DisplayBox headerIcon="church" headerText="Church Settings" editFunction={getEditFunction()}>
+      <DisplayBox headerIcon="church" headerText={Locale.label("settings.churchSettings.churchSet")} editFunction={getEditFunction()}>
         <Grid container>
           <Grid item xs={6}>
-            <label>Name</label><br />
+            <label>{Locale.label("settings.churchSettings.name")}</label><br />
             {props.church?.name}<br /><br />
           </Grid>
           <Grid item xs={6}>
-            <label>Subdomain</label><br />
+            <label>{Locale.label("settings.churchSettings.subdom")}</label><br />
             {props.church?.subDomain}
           </Grid>
         </Grid>
-        <label>Address</label><br />
+        <label>{Locale.label("settings.churchSettings.address")}</label><br />
         {getDisplayAddress()}<br /><br />
       </DisplayBox>
     );
