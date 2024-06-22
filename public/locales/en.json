@@ -745,6 +745,11 @@
       "reportPage": {
         "report": "Report"
       }
+    },
+    "settings": {
+      "associatePerson": {
+        "change": "Change"
+      }
     }
 
 }
