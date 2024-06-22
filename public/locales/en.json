@@ -784,6 +784,10 @@
         "prov": "Provider",
         "none": "None",
         "stripe": "Stripe"
+      },
+      "imageEditor": {
+        "upload": "Upload",
+        "crop": "Crop"
       }
     }
 
