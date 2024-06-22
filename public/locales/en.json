@@ -47,6 +47,12 @@
         "att": "Attendance"
       }
     },
+    "components": {
+      "footer": {
+        "phone": "Phone",
+        "rights": "All rights reserved."
+      }
+    },
     "dashboard": {
       "myGroups": "My Groups",
       "people": "People",
