@@ -797,6 +797,14 @@
         "confirmMsg": "Are you sure you wish to permanently delete this role?",
         "roleEdit": "Edit Role",
         "roleName": "Role Name"
+      },
+      "roleMembers": {
+        "add": "Add",
+        "confirmMsg": "Are you sure you wish to delete this user from",
+        "roleAppMsg": "This role applies to all the members of the church.",
+        "name": "Name",
+        "email": "Email",
+        "mem": "Members"
       }
     }
 
