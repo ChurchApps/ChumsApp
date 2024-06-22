@@ -51,6 +51,10 @@
       "footer": {
         "phone": "Phone",
         "rights": "All rights reserved."
+      },
+      "question": {
+        "no": "No",
+        "yes": "Yes"
       }
     },
     "dashboard": {

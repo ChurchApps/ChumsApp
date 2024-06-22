@@ -1,5 +1,5 @@
 import React from "react";
-import { DateHelper, QuestionInterface, AnswerInterface } from "@churchapps/apphelper";
+import { DateHelper, QuestionInterface, AnswerInterface, Locale } from "@churchapps/apphelper";
 
 interface Props { question: QuestionInterface, answer: AnswerInterface }
 
@@ -16,7 +16,7 @@ export const Question: React.FC<Props> = (props) => {
         displayValue = (a.value === null || a.value === "") ? "" : DateHelper.getShortDate(new Date(a.value));
         break;
       case "Yes/No":
-        displayValue = (a.value === null || a.value === "") ? "" : a.value.replace("False", "No").replace("True", "Yes");
+        displayValue = (a.value === null || a.value === "") ? "" : a.value.replace("False", Locale.label("components.question.no")).replace("True", Locale.label("components.question.yes"));
         break;
       default:
         displayValue = a.value;
