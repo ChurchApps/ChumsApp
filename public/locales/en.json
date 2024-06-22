@@ -767,6 +767,14 @@
         "state": "State/Province",
         "zip": "Zip/Postal",
         "country": "Country"
+      },
+      "domainSettingsEdit": {
+        "delete": "Delete",
+        "domains": "Domains",
+        "domain": "Domain",
+        "domMsg": "You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS:",
+        "act": "Action",
+        "add": "Add"
       }
     }
 
