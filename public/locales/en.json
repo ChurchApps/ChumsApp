@@ -858,6 +858,14 @@
         "name": "Name",
         "rep": "Repeats",
         "acts": "Actions"
+      },
+      "automationEdit": {
+        "autoEdit": "Edit Automation",
+        "title": "Title",
+        "rep": "Repeat",
+        "never": "Never",
+        "yearly": "Yearly",
+        "monthly": "Monthly"
       }
     }
 
