@@ -851,6 +851,13 @@
         "assignTo": "Assign to",
         "taskTitle": "Task Title",
         "taskNote": "Task Note"
+      },
+      "automationDetails": {
+        "task": "Task",
+        "auto": "Automation Details",
+        "name": "Name",
+        "rep": "Repeats",
+        "acts": "Actions"
       }
     }
 
