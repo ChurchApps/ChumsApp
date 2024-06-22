@@ -788,6 +788,9 @@
       "imageEditor": {
         "upload": "Upload",
         "crop": "Crop"
+      },
+      "preview": {
+        "preview": "Preview"
       }
     }
 
