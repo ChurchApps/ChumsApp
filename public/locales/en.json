@@ -755,6 +755,18 @@
         "name": "Name",
         "subdom": "Subdomain",
         "address": "Address"
+      },
+      "churchSettingsEdit": {
+        "noNameMsg": "Church name cannot be blank.",
+        "noSubMsg": "Subdomain cannot be blank.",
+        "churchName": "Church Name",
+        "subdom": "Subdomain",
+        "address1": "Address Line 1",
+        "address2": "Address Line 2",
+        "city": "City",
+        "state": "State/Province",
+        "zip": "Zip/Postal",
+        "country": "Country"
       }
     }
 

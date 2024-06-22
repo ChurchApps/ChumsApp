@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, ChurchInterface, InputBox, ErrorMessages, UserHelper, Permissions } from "@churchapps/apphelper";
+import { ApiHelper, ChurchInterface, InputBox, ErrorMessages, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import { GivingSettingsEdit } from "./GivingSettingsEdit";
 import { TextField, Grid } from "@mui/material";
 import { DomainSettingsEdit } from "./DomainSettingsEdit";
@@ -23,8 +23,8 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
   const validate = () => {
     let errors = [];
-    if (church.name === "") errors.push("Church name cannot be blank.");
-    if (church.subDomain === "") errors.push("Subdomain cannot be blank.");
+    if (church.name === "") errors.push(Locale.label("settings.churchSettingsEdit.noNameMsg"));
+    if (church.subDomain === "") errors.push(Locale.label("settings.churchSettingsEdit.noSubMsg"));
     setErrors(errors);
     return errors.length === 0;
   }
@@ -60,34 +60,34 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={6}>
-          <TextField fullWidth name="churchName" label="Church Name" value={church?.name || ""} onChange={(handleChange)} />
+          <TextField fullWidth name="churchName" label={Locale.label("settings.churchSettingsEdit.churchName")} value={church?.name || ""} onChange={(handleChange)} />
         </Grid>
         <Grid item xs={6}>
-          <TextField fullWidth name="subDomain" label="Subdomain" value={church?.subDomain || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          <TextField fullWidth name="subDomain" label={Locale.label("settings.churchSettingsEdit.subdom")} value={church?.subDomain || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
       </Grid>
 
       <Grid container spacing={3}>
         <Grid item xs={6}>
-          <TextField fullWidth name="address1" label="Adress Line 1" value={church?.address1 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          <TextField fullWidth name="address1" label={Locale.label("settings.churchSettingsEdit.address1")} value={church?.address1 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
         <Grid item xs={6}>
-          <TextField fullWidth name="address2" label="Adress Line 2" value={church?.address2 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          <TextField fullWidth name="address2" label={Locale.label("settings.churchSettingsEdit.address2")} value={church?.address2 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
       </Grid>
 
       <Grid container spacing={3}>
         <Grid item xs={6}>
-          <TextField fullWidth name="city" label="City" value={church?.city || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          <TextField fullWidth name="city" label={Locale.label("settings.churchSettingsEdit.city")} value={church?.city || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
         <Grid item xs={3}>
-          <TextField fullWidth name="state" label="State/Province" value={church?.state || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          <TextField fullWidth name="state" label={Locale.label("settings.churchSettingsEdit.state")} value={church?.state || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
         <Grid item xs={3}>
-          <TextField fullWidth name="zip" label="Zip/Postal" value={church?.zip || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+          <TextField fullWidth name="zip" label={Locale.label("settings.churchSettingsEdit.zip")} value={church?.zip || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
       </Grid>
-      <TextField fullWidth name="country" label="Country" value={church?.country || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth name="country" label={Locale.label("settings.churchSettingsEdit.country")} value={church?.country || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
       {giveSection()}
       <DomainSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger} />
 
