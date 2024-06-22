@@ -1,6 +1,6 @@
 import { Icon, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, ActionInterface, ApiHelper } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, ActionInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { ContentPicker } from "../../components/ContentPicker";
 
 interface Props {
@@ -89,14 +89,14 @@ export const ActionEdit = (props: Props) => {
 
   if (!action) return <></>
   return (
-    <InputBox headerIcon="settings_suggest" headerText="Edit Action" saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
+    <InputBox headerIcon="settings_suggest" headerText={Locale.label("settings.actionEdit.editAct")} saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
       <ErrorMessages errors={errors} />
-      <Select fullWidth label="Action Type" value={action?.actionType} onChange={handleChange}>
-        <MenuItem value="task">Assign a Task</MenuItem>
+      <Select fullWidth label={Locale.label("settings.actionEdit.actType")} value={action?.actionType} onChange={handleChange}>
+        <MenuItem value="task">{Locale.label("settings.actionEdit.taskAssign")}</MenuItem>
       </Select>
-      <TextField fullWidth label="Assign to" value={taskDetails.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
-      <TextField fullWidth label="Task Title" value={taskDetails?.title || ""} name="title" onChange={handleDetailsChange} />
-      <TextField fullWidth label="Task Note" value={taskDetails?.note || ""} name="note" onChange={handleDetailsChange} multiline={true} />
+      <TextField fullWidth label={Locale.label("settings.actionEdit.assignTo")} value={taskDetails.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
+      <TextField fullWidth label={Locale.label("settings.actionEdit.taskTitle")} value={taskDetails?.title || ""} name="title" onChange={handleDetailsChange} />
+      <TextField fullWidth label={Locale.label("settings.actionEdit.taskNote")} value={taskDetails?.note || ""} name="note" onChange={handleDetailsChange} multiline={true} />
       {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
     </InputBox>
   );

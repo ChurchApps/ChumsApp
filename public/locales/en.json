@@ -842,6 +842,16 @@
         "noEditMsg": "Permissions cannot be edited for the Domain Admins role.  Domain Admins have full access.",
         "roleEdit": "Edit Role:"
       }
+    },
+    "tasks": {
+      "actionEdit": {
+        "editAct": "Action Edit",
+        "actType": "Action Type",
+        "taskAssign": "Assign a Task",
+        "assignTo": "Assign to",
+        "taskTitle": "Task Title",
+        "taskNote": "Task Note"
+      }
     }
 
 }
