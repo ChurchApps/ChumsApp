@@ -55,6 +55,10 @@
       "question": {
         "no": "No",
         "yes": "Yes"
+      },
+      "search": {
+        "person": "Person",
+        "search": "Search"
       }
     },
     "dashboard": {
