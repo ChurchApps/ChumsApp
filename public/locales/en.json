@@ -831,6 +831,11 @@
         "lastName": "Last Name",
         "email": "Email",
         "addTo": "Add To "
+      },
+      "manageChurch": {
+        "tools": "Tools",
+        "imEx": "Import/Export",
+        "manage": "Manage"
       }
     }
 
