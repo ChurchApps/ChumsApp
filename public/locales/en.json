@@ -59,6 +59,18 @@
       "search": {
         "person": "Person",
         "search": "Search"
+      },
+      "wrapper": {
+        "dash": "Dashboard",
+        "ppl": "People",
+        "groups": "Groups",
+        "att": "Attendance",
+        "don": "Donations",
+        "form": "Form",
+        "tasks": "Tasks",
+        "plans": "Plans",
+        "set": "Settings",
+        "servAdmin": "Server Admin"
       }
     },
     "dashboard": {
