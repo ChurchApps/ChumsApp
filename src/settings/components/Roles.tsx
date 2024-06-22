@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { DisplayBox, UserHelper, ApiHelper, Permissions, ChurchInterface, RoleInterface, RolePermissionInterface } from "@churchapps/apphelper"
+import { DisplayBox, UserHelper, ApiHelper, Permissions, ChurchInterface, RoleInterface, RolePermissionInterface, Locale } from "@churchapps/apphelper"
 import { Divider, Icon, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper"
 
@@ -63,7 +63,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     console.log("made it")
     console.log(role);
     handleClose();
-    if (window.confirm("Do you wish to create a new role of " + role.name + "?  It " + role.description.toLowerCase() )) {
+    if (window.confirm(Locale.label("settings.roles.roleCreate") + role.name + Locale.label("settings.roles.itMsg") + role.description.toLowerCase() )) {
 
       const roles = await ApiHelper.post("/roles", [{ name: role.name  }], "MembershipApi");
       const r = roles[0];
@@ -85,12 +85,12 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
         </IconButton>
         <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
           <MenuItem data-cy="add-campus" onClick={() => {handleClose(); selectRoleId(""); }}>
-            <Icon sx={{mr: "3px"}}>lock</Icon> Add Custom Role
+            <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("settings.roles.custAdd")}
           </MenuItem>
           <Divider />
           {predefined.map((role, i) => (
             <MenuItem key={role.name} onClick={() => {addRole(role); }} title={role.description}>
-              <Icon sx={{mr: "3px"}}>lock</Icon> Add "<b>{role.name}</b>" Role
+              <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("settings.roles.add")} "<b>{role.name}</b>" {Locale.label("settings.roles.role")}
             </MenuItem>
           ))}
         </Menu>
@@ -131,9 +131,9 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
   useEffect(loadData, [selectedRoleId, church]); //eslint-disable-line
 
   return (
-    <DisplayBox id="rolesBox" headerText="Roles" headerIcon="lock" editContent={getEditContent()} help="chums/assigning-roles">
+    <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={getEditContent()} help="chums/assigning-roles">
       <Table id="roleMemberTable">
-        <TableHead><TableRow><TableCell>Name</TableCell><TableCell></TableCell></TableRow></TableHead>
+        <TableHead><TableRow><TableCell>{Locale.label("settings.roles.name")}</TableCell><TableCell></TableCell></TableRow></TableHead>
         <TableBody>{getRows()}</TableBody>
       </Table>
     </DisplayBox>

@@ -808,6 +808,15 @@
       },
       "rolePermissions": {
         "permEdit": "Edit Permissions"
+      },
+      "roles": {
+        "roleCreate": "Do you wish to create a new role of ",
+        "itMsg": "? It ",
+        "custAdd": "Add Custom Role",
+        "add": "Add",
+        "role": "Role",
+        "roles": "Roles",
+        "name": "Name"
       }
     }
 
