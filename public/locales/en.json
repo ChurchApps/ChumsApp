@@ -836,6 +836,11 @@
         "tools": "Tools",
         "imEx": "Import/Export",
         "manage": "Manage"
+      },
+      "rolePage": {
+        "permEdit": "Edit Permissions",
+        "noEditMsg": "Permissions cannot be edited for the Domain Admins role.  Domain Admins have full access.",
+        "roleEdit": "Edit Role:"
       }
     }
 

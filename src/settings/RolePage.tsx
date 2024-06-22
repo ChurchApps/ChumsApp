@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { UserAdd, RolePermissions, RoleMembers } from "./components";
-import { ApiHelper, RoleInterface, UserHelper, Permissions, RoleMemberInterface, DisplayBox } from "@churchapps/apphelper";
+import { ApiHelper, RoleInterface, UserHelper, Permissions, RoleMemberInterface, DisplayBox, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom"
 import { Icon, Grid } from "@mui/material";
 
@@ -35,7 +35,7 @@ export const RolePage = () => {
     else {
       if (role.name==="Domain Admins") return (<>
         {getAddUser()}
-        <DisplayBox id="rolePermissionsBox" headerText="Edit Permissions" headerIcon="lock"><p>Permissions cannot be edited for the Domain Admins role.  Domain Admins have full access.</p></DisplayBox>
+        <DisplayBox id="rolePermissionsBox" headerText={Locale.label("settings.rolePage.editPerm")} headerIcon="lock"><p>{Locale.label("settings.rolePage.noEditMsg")}</p></DisplayBox>
       </>)
       else return (<>
         {getAddUser()}
@@ -51,7 +51,7 @@ export const RolePage = () => {
   else {
     return (
       <>
-        <h1><Icon>lock</Icon> Edit Role: {role?.name}</h1>
+        <h1><Icon>lock</Icon> {Locale.label("settings.rolePage.roleEdit")} {role?.name}</h1>
         <Grid container spacing={3}>
           <Grid item md={8} xs={12}>
             <RoleMembers
