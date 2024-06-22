@@ -775,6 +775,15 @@
         "domMsg": "You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS:",
         "act": "Action",
         "add": "Add"
+      },
+      "givingSettingsEdit": {
+        "pubKey": "Public Key",
+        "secKey": "Secret Key",
+        "transFee": "Transaction Fee",
+        "giving": "Giving",
+        "prov": "Provider",
+        "none": "None",
+        "stripe": "Stripe"
       }
     }
 

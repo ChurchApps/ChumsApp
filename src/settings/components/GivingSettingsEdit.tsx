@@ -1,7 +1,7 @@
 import React from "react";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton } from "@mui/material";
 import HelpIcon from '@mui/icons-material/Help';
-import { ApiHelper, UniqueIdHelper } from "@churchapps/apphelper";
+import { ApiHelper, Locale, UniqueIdHelper } from "@churchapps/apphelper";
 import { PaymentGatewaysInterface } from "../../helpers";
 
 interface Props { churchId: string, saveTrigger: Date | null }
@@ -26,14 +26,14 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
     if (provider === "") return null;
     else return (<>
       <Grid item md={4} xs={12}>
-        <TextField fullWidth name="publicKey" label="Public Key" value={publicKey} onChange={handleChange} />
+        <TextField fullWidth name="publicKey" label={Locale.label("settings.givingSettingsEdit.pubKey")} value={publicKey} onChange={handleChange} />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextField fullWidth name="privateKey" label="Secret Key" value={privateKey} placeholder="********" type="password" onChange={handleChange} />
+        <TextField fullWidth name="privateKey" label={Locale.label("settings.givingSettingsEdit.secKey")} value={privateKey} placeholder="********" type="password" onChange={handleChange} />
       </Grid>
       <Grid item xs={12}>
         <Stack direction="row" alignItems="center">
-          <Typography>Transaction Fees</Typography>
+          <Typography>{Locale.label("settings.givingSettingsEdit.transFee")}</Typography>
           <Tooltip title="Automatically forces users to cover the transaction fees" arrow>
             <IconButton>
               <HelpIcon />
@@ -94,14 +94,14 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
 
   return (
     <>
-      <div className="subHead">Giving</div>
+      <div className="subHead">{Locale.label("settings.givingSettingsEdit.giving")}</div>
       <Grid container spacing={3} marginBottom={2}>
         <Grid item md={4} xs={12}>
           <FormControl fullWidth>
-            <InputLabel>Provider</InputLabel>
-            <Select name="provider" label="Provider" value={provider} onChange={handleChange}>
-              <MenuItem value="">None</MenuItem>
-              <MenuItem value="Stripe">Stripe</MenuItem>
+            <InputLabel>{Locale.label("settings.givingSettingsEdit.prov")}</InputLabel>
+            <Select name="provider" label={Locale.label("settings.givingSettingsEdit.prov")} value={provider} onChange={handleChange}>
+              <MenuItem value="">{Locale.label("settings.givingSettingsEdit.none")}</MenuItem>
+              <MenuItem value="Stripe">{Locale.label("settings.givingSettingsEdit.stripe")}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
