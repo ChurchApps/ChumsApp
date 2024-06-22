@@ -817,6 +817,20 @@
         "role": "Role",
         "roles": "Roles",
         "name": "Name"
+      },
+      "userAdd": {
+        "errAnother": "Cannot save. Another user already exists for this email address.",
+        "valEmail": "Please enter a valid Email",
+        "errDiff": "The user account for this email is associated with a different person.",
+        "firstMsg": "Please enter firstname",
+        "lastMsg": "Please enter lastname",
+        "valEmailMsg": "Enter a valid Email",
+        "noAcc": "Don't have a user account?",
+        "createNew": "Create New User",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "addTo": "Add To "
       }
     }
 
