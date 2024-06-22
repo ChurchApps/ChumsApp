@@ -791,6 +791,12 @@
       },
       "preview": {
         "preview": "Preview"
+      },
+      "roleEdit": {
+        "valMsg": "Please enter a valid role name.",
+        "confirmMsg": "Are you sure you wish to permanently delete this role?",
+        "roleEdit": "Edit Role",
+        "roleName": "Role Name"
       }
     }
 

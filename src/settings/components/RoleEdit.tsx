@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import React, { useState } from "react";
-import { ApiHelper, InputBox, RoleInterface, UniqueIdHelper, ErrorMessages } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, RoleInterface, UniqueIdHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 
 interface Props {
   roleId: string,
@@ -26,7 +26,7 @@ export const RoleEdit: React.FC<Props> = (props) => {
 
   const handleSave = () => {
     if (!role.name?.trim()) {
-      setErrors(["Please enter a valid role name."])
+      setErrors([Locale.label("settings.roleEdit.valMsg")])
       return;
     }
 
@@ -39,7 +39,7 @@ export const RoleEdit: React.FC<Props> = (props) => {
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
   const handleCancel = () => props.updatedFunction();
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to permanently delete this role?")) {
+    if (window.confirm(Locale.label("settings.roleEdit.confirmMsg"))) {
       ApiHelper.delete("/roles/" + role.id, "MembershipApi").then(() => props.updatedFunction());
     }
   }
@@ -47,9 +47,9 @@ export const RoleEdit: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.roleId]);
 
   return (
-    <InputBox id="roleBox" headerIcon="lock" headerText="Edit Role" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(!UniqueIdHelper.isMissing(props.roleId)) ? handleDelete : undefined}>
+    <InputBox id="roleBox" headerIcon="lock" headerText={Locale.label("settings.roleEdit.roleEdit")} saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(!UniqueIdHelper.isMissing(props.roleId)) ? handleDelete : undefined}>
       <ErrorMessages errors={errors} />
-      <TextField fullWidth name="roleName" label="Role Name" value={role?.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth name="roleName" label={Locale.label("settings.roleEdit.roleName")} value={role?.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
     </InputBox>
   );
 }
