@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { RoleCheck } from "./";
-import { ApiHelper, DisplayBox, RoleInterface, RolePermissionInterface, PermissionInterface } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, RoleInterface, RolePermissionInterface, PermissionInterface, Locale } from "@churchapps/apphelper";
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Icon } from "@mui/material";
 
 interface Props { role: RoleInterface }
@@ -59,7 +59,7 @@ export const RolePermissions: React.FC<Props> = (props) => {
   React.useEffect(() => { if (props.role?.id !== undefined) loadPermissions() }, [props.role, loadPermissions]);
 
   return (
-    <DisplayBox id="rolePermissionsBox" headerText="Edit Permissions" headerIcon="lock" help="chums/assigning-roles">
+    <DisplayBox id="rolePermissionsBox" headerText={Locale.label("settings.rolePermissions.permEdit")} headerIcon="lock" help="chums/assigning-roles">
       <div>
         {getSections()}
       </div>

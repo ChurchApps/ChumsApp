@@ -805,6 +805,9 @@
         "name": "Name",
         "email": "Email",
         "mem": "Members"
+      },
+      "rolePermissions": {
+        "permEdit": "Edit Permissions"
       }
     }
 
