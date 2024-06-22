@@ -866,6 +866,17 @@
         "never": "Never",
         "yearly": "Yearly",
         "monthly": "Monthly"
+      },
+      "conditionAttendance": {
+        "op": "Operator",
+        "hasAtt": "has attended",
+        "hasNoAtt": "has not attended",
+        "eventType": "Event Type",
+        "anywhere": "Anywhere",
+        "campus": "Campus",
+        "serv": "Service",
+        "servTime": "Service Time",
+        "group": "Group"
       }
     }
 

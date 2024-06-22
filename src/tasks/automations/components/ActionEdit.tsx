@@ -89,14 +89,14 @@ export const ActionEdit = (props: Props) => {
 
   if (!action) return <></>
   return (
-    <InputBox headerIcon="settings_suggest" headerText={Locale.label("settings.actionEdit.editAct")} saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
+    <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.actionEdit.editAct")} saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
       <ErrorMessages errors={errors} />
-      <Select fullWidth label={Locale.label("settings.actionEdit.actType")} value={action?.actionType} onChange={handleChange}>
-        <MenuItem value="task">{Locale.label("settings.actionEdit.taskAssign")}</MenuItem>
+      <Select fullWidth label={Locale.label("tasks.actionEdit.actType")} value={action?.actionType} onChange={handleChange}>
+        <MenuItem value="task">{Locale.label("tasks.actionEdit.taskAssign")}</MenuItem>
       </Select>
-      <TextField fullWidth label={Locale.label("settings.actionEdit.assignTo")} value={taskDetails.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
-      <TextField fullWidth label={Locale.label("settings.actionEdit.taskTitle")} value={taskDetails?.title || ""} name="title" onChange={handleDetailsChange} />
-      <TextField fullWidth label={Locale.label("settings.actionEdit.taskNote")} value={taskDetails?.note || ""} name="note" onChange={handleDetailsChange} multiline={true} />
+      <TextField fullWidth label={Locale.label("tasks.actionEdit.assignTo")} value={taskDetails.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
+      <TextField fullWidth label={Locale.label("tasks.actionEdit.taskTitle")} value={taskDetails?.title || ""} name="title" onChange={handleDetailsChange} />
+      <TextField fullWidth label={Locale.label("tasks.actionEdit.taskNote")} value={taskDetails?.note || ""} name="note" onChange={handleDetailsChange} multiline={true} />
       {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
     </InputBox>
   );

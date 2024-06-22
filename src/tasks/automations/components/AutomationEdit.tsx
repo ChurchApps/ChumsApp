@@ -50,17 +50,17 @@ export const AutomationEdit = (props: Props) => {
   }
 
   return (
-    <InputBox headerIcon="settings_suggest" headerText={Locale.label("settings.automationEdit.autoEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={checkDelete} help="chums/automations">
+    <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationEdit.autoEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={checkDelete} help="chums/automations">
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <TextField fullWidth label={Locale.label("settings.automationEdit.title")} value={automation?.title || ""} name="title" onChange={handleChange} />
+          <TextField fullWidth label={Locale.label("tasks.automationEdit.title")} value={automation?.title || ""} name="title" onChange={handleChange} />
           <FormControl fullWidth>
-            <InputLabel>{Locale.label("settings.automationEdit.rep")}</InputLabel>
-            <Select fullWidth label={Locale.label("settings.automationEdit.rep")} value={automation?.recurs || ""} name="recurs" onChange={handleChange}>
-              <MenuItem value="never">{Locale.label("settings.automationEdit.never")}</MenuItem>
-              <MenuItem value="yearly">{Locale.label("settings.automationEdit.yearly")}</MenuItem>
-              <MenuItem value="monthly">{Locale.label("settings.automationEdit.monthly")}</MenuItem>
+            <InputLabel>{Locale.label("tasks.automationEdit.rep")}</InputLabel>
+            <Select fullWidth label={Locale.label("tasks.automationEdit.rep")} value={automation?.recurs || ""} name="recurs" onChange={handleChange}>
+              <MenuItem value="never">{Locale.label("tasks.automationEdit.never")}</MenuItem>
+              <MenuItem value="yearly">{Locale.label("tasks.automationEdit.yearly")}</MenuItem>
+              <MenuItem value="monthly">{Locale.label("tasks.automationEdit.monthly")}</MenuItem>
             </Select>
           </FormControl>
 
