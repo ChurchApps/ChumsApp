@@ -44,7 +44,7 @@ export const ContentPicker: React.FC<Props> = (props) => {
           <Tab label={Locale.label("tasks.contentPicker.group")} />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} actionLabel="Select" />
+          <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} actionLabel={Locale.label("tasks.contentPicker.sel")} />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <SelectGroup addFunction={handleGroupAdd} />

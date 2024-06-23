@@ -1001,7 +1001,8 @@
         "selPers": "Select a Person or Group",
         "pers": "Person",
         "group": "Group",
-        "close": "Close"
+        "close": "Close",
+        "sel": "Select"
       },
       "newTask": {
         "associatePers": "Please associate this task with a person.",
