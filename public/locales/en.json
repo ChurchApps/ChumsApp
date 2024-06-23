@@ -925,7 +925,9 @@
         "weekDay": "Day of Week",
         "monthDay": "Day of Month",
         "yearsE": "Years Elapsed",
-        "op": "Operator"
+        "op": "Operator",
+        "absolute": "Absolute Values",
+        "relative": "Relative Values"
       },
       "conditionDetails": {
         "addConj": "Add Conjunction",
