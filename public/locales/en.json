@@ -822,7 +822,18 @@
         "add": "Add",
         "role": "Role",
         "roles": "Roles",
-        "name": "Name"
+        "name": "Name",
+        "acc": "Accounting",
+        "accDesc": "Has access to view and manage donations.",
+        "churchStaff": "Church Staff",
+        "canEdit": "Can edit most data in ",
+        "churchDesc": " including people, groups, attendance and forms.",
+        "contAdmin": "Content Admin",
+        "contAdminDesc": "Can edit website content, mobile content and sermons.",
+        "lesAdmin": "Lessons Admin",
+        "lesAdminDesc": "Can set up classrooms and schedule lessons on ",
+        "everyone": "Everyone",
+        "edit": "Edit"
       },
       "userAdd": {
         "errAnother": "Cannot save. Another user already exists for this email address.",
