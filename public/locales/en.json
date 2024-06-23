@@ -961,6 +961,12 @@
         "op": "Operator",
         "is": "is",
         "isNot": "is not"
+      },
+      "conditionText": {
+        "op": "Operator",
+        "contains": "contains",
+        "startW": "starts with",
+        "endW": "ends with"
       }
     }
 

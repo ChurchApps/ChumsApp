@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
 import { ConditionHelper } from "../../components";
-import { ConditionInterface } from "@churchapps/apphelper";
+import { ConditionInterface, Locale } from "@churchapps/apphelper";
 
 interface Props {
   condition: ConditionInterface,
@@ -43,12 +43,12 @@ export const ConditionText = (props: Props) => {
 
   return <>
     <FormControl fullWidth>
-      <InputLabel>Operator</InputLabel>
-      <Select fullWidth label="Operator" value={props.condition.operator || ""} name="operator" onChange={handleChange}>
+      <InputLabel>{Locale.label("tasks.conditionText.op")}</InputLabel>
+      <Select fullWidth label={Locale.label("tasks.conditionText.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
         <MenuItem key="/equals" value="=">=</MenuItem>
-        <MenuItem key="/contains" value="contains">contains</MenuItem>
-        <MenuItem key="/startsWith" value="startsWith">starts with</MenuItem>
-        <MenuItem key="/endsWith" value="endsWith">ends with</MenuItem>
+        <MenuItem key="/contains" value="contains">{Locale.label("tasks.conditionText.contains")}</MenuItem>
+        <MenuItem key="/startsWith" value="startsWith">{Locale.label("tasks.conditionText.startW")}</MenuItem>
+        <MenuItem key="/endsWith" value="endsWith">{Locale.label("tasks.conditionText.endW")}</MenuItem>
         <MenuItem key="/greaterThan" value=">">&gt;</MenuItem>
         <MenuItem key="/greaterThanEqual" value=">=">&gt;=</MenuItem>
         <MenuItem key="/lessThan" value="<">&lt;</MenuItem>
