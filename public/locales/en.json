@@ -983,6 +983,16 @@
         "pers": "Person",
         "group": "Group",
         "close": "Close"
+      },
+      "newTask": {
+        "associatePers": "Please associate this task with a person.",
+        "assignPers": "Please assign this task to a person.",
+        "titleTask": "Please enter a title for this task.",
+        "taskNew": "New Task",
+        "associateW": "Associate with",
+        "assignTo": "Assign to",
+        "title": "Title",
+        "notes": "Notes"
       }
     }
 
