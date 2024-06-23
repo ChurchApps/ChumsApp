@@ -1036,7 +1036,8 @@
         "closed": "Closed",
         "createdBy": "Created By",
         "associateW": "Associated With",
-        "assignTo": "Assigned to"
+        "assignTo": "Assigned to",
+        "change": "Change"
       },
       "tasksPage": {
         "tasks": "Tasks"

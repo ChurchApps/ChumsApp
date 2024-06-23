@@ -101,13 +101,13 @@ export const TaskPage = () => {
             <div><Typography variant="caption">{getContentLink(task.createdByType, task.createdById, task.createdByLabel)}</Typography></div>
             <hr />
             <div>
-              <span style={{ float: "right", paddingTop: 17 }}><SmallButton text="Change" icon="search" onClick={() => { setModalField("associatedWith") }} /></span>
+              <span style={{ float: "right", paddingTop: 17 }}><SmallButton text={Locale.label("tasks.taskPage.change")} icon="search" onClick={() => { setModalField("associatedWith") }} /></span>
               <Typography variant="subtitle1">{Locale.label("tasks.taskPage.associateW")}</Typography>
             </div>
             <div><Typography variant="caption">{getContentLink(task.associatedWithType, task.associatedWithId, task.associatedWithLabel)}</Typography></div>
             <hr />
             <div>
-              <span style={{ float: "right", paddingTop: 17 }}><SmallButton text="Change" icon="search" onClick={() => { setModalField("assignedTo") }} /></span>
+              <span style={{ float: "right", paddingTop: 17 }}><SmallButton text={Locale.label("tasks.taskPage.change")} icon="search" onClick={() => { setModalField("assignedTo") }} /></span>
               <Typography variant="subtitle1">{Locale.label("tasks.taskPage.assignTo")}</Typography>
             </div>
             <div><Typography variant="caption">{getContentLink(task.assignedToType, task.assignedToId, task.assignedToLabel)}</Typography></div>
