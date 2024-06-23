@@ -808,7 +808,9 @@
         "roleAppMsg": "This role applies to all the members of the church.",
         "name": "Name",
         "email": "Email",
-        "mem": "Members"
+        "mem": "Members",
+        "edit": "Edit",
+        "delete": "Delete"
       },
       "rolePermissions": {
         "permEdit": "Edit Permissions"
