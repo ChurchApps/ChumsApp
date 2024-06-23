@@ -1040,7 +1040,10 @@
         "change": "Change"
       },
       "tasksPage": {
-        "tasks": "Tasks"
+        "tasks": "Tasks",
+        "auto": "Automations",
+        "showClosed": "Show Closed",
+        "showOpen": "Show Open"
       }
     }
 
