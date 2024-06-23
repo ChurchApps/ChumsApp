@@ -1016,6 +1016,9 @@
         "createdBy": "Created By",
         "associateW": "Associated With",
         "assignTo": "Assigned to"
+      },
+      "tasksPage": {
+        "tasks": "Tasks"
       }
     }
 
