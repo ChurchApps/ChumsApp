@@ -973,6 +973,10 @@
         "conjType": "Conjunction Type",
         "and": "AND - All of the conditions are true",
         "or": "OR - Any of the conditions are true"
+      },
+      "automationsPage": {
+        "manageAuto": "Managed Automated Tasks",
+        "auto": "Automated Tasks"
       }
     }
 

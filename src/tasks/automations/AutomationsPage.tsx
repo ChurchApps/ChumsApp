@@ -1,6 +1,6 @@
 import { Grid, Icon, Table, TableCell, TableRow } from "@mui/material";
 import React from "react";
-import { SmallButton } from "@churchapps/apphelper";
+import { Locale, SmallButton } from "@churchapps/apphelper";
 import { useMountedState } from "@churchapps/apphelper";
 import { ApiHelper, AutomationInterface, DisplayBox } from "@churchapps/apphelper";
 import { AutomationDetails } from "./components/AutomationDetails";
@@ -51,11 +51,11 @@ export const AutomationsPage = () => {
   const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true); setEditAutomation(null); }} />
 
   return (<>
-    <h1><Icon>settings_suggest</Icon> Managed Automated Tasks</h1>
+    <h1><Icon>settings_suggest</Icon> {Locale.label("tasks.automationsPage.manageAuto")}</h1>
 
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
-        <DisplayBox headerIcon="settings_suggest" headerText="Automated Tasks" editContent={editContent} help="chums/automations">
+        <DisplayBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationsPage.auto")} editContent={editContent} help="chums/automations">
           {getRows()}
 
         </DisplayBox>
