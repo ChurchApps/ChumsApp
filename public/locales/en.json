@@ -786,7 +786,8 @@
         "giving": "Giving",
         "prov": "Provider",
         "none": "None",
-        "stripe": "Stripe"
+        "stripe": "Stripe",
+        "forceMsg": "Automatically forces users to cover the transaction fees"
       },
       "imageEditor": {
         "upload": "Upload",

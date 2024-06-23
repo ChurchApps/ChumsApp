@@ -34,7 +34,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
       <Grid item xs={12}>
         <Stack direction="row" alignItems="center">
           <Typography>{Locale.label("settings.givingSettingsEdit.transFee")}</Typography>
-          <Tooltip title="Automatically forces users to cover the transaction fees" arrow>
+          <Tooltip title={Locale.label("settings.givingSettingsEdit.forceMsg")} arrow>
             <IconButton>
               <HelpIcon />
             </IconButton>
