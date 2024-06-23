@@ -39,7 +39,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
       <TableRow key={sr.id}>
         <TableCell>{sr.name}</TableCell>
         <TableCell style={{ textAlign: "right" }}>
-          <SmallButton color="success" icon="people" text={"Select"} ariaLabel="addGroup" onClick={() => handleAdd(sr)} />
+          <SmallButton color="success" icon="people" text={Locale.label("tasks.selectGroup.sel")} ariaLabel="addGroup" onClick={() => handleAdd(sr)} />
         </TableCell>
       </TableRow>
     );

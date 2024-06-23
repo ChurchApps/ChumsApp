@@ -1016,7 +1016,8 @@
       },
       "selectGroup": {
         "group": "Group",
-        "search": "Search"
+        "search": "Search",
+        "sel": "Select"
       },
       "taskList": {
         "title": "Title",
