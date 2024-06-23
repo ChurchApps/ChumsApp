@@ -21,7 +21,7 @@ export const TimeList = (props:Props) => {
     endTime.setHours(10);
     endTime.setMinutes(30);
 
-    setTime({planId:props.plan.id, displayName: "Sunday Service", startTime, endTime });
+    setTime({planId:props.plan.id, displayName: Locale.label("plans.timeList.sunServ"), startTime, endTime });
   }
 
   const handleSelect = (t:TimeInterface) => {
