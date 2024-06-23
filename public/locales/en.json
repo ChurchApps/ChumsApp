@@ -943,6 +943,24 @@
         "city": "City",
         "state": "State/Province",
         "zip": "Zip/Postal"
+      },
+      "conditionSelect": {
+        "gender": "Gender",
+        "unknown": "Unknown",
+        "male": "Male",
+        "female": "Female",
+        "marStat": "Marital Status",
+        "single": "Single",
+        "married": "Married",
+        "divorced": "Divorced",
+        "widowed": "Widowed",
+        "memShipStat": "Membership Status",
+        "mem": "Member",
+        "visitor": "Visitor",
+        "staff": "Staff",
+        "op": "Operator",
+        "is": "is",
+        "isNot": "is not"
       }
     }
 
