@@ -977,6 +977,12 @@
       "automationsPage": {
         "manageAuto": "Managed Automated Tasks",
         "auto": "Automated Tasks"
+      },
+      "contentPicker": {
+        "selPers": "Select a Person or Group",
+        "pers": "Person",
+        "group": "Group",
+        "close": "Close"
       }
     }
 

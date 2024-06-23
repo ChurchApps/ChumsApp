@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs } from "@mui/material";
 import React from "react";
 import { SelectGroup } from ".";
-import { GroupInterface, PersonHelper, PersonInterface } from "@churchapps/apphelper";
+import { GroupInterface, Locale, PersonHelper, PersonInterface } from "@churchapps/apphelper";
 import { PersonAdd } from "@churchapps/apphelper";
 
 interface Props {
@@ -36,12 +36,12 @@ export const ContentPicker: React.FC<Props> = (props) => {
 
   return (<>
     <Dialog open={true} onClose={props.onClose}>
-      <DialogTitle>Select a Person or Group</DialogTitle>
+      <DialogTitle>{Locale.label("tasks.contentPicker.selPers")}</DialogTitle>
       <DialogContent>
 
         <Tabs value={value} onChange={handleChange} style={{ minWidth: 400 }}>
-          <Tab label="Person" />
-          <Tab label="Group" />
+          <Tab label={Locale.label("tasks.contentPicker.pers")} />
+          <Tab label={Locale.label("tasks.contentPicker.group")} />
         </Tabs>
         <TabPanel value={value} index={0}>
           <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} actionLabel="Select" />
@@ -51,7 +51,7 @@ export const ContentPicker: React.FC<Props> = (props) => {
         </TabPanel>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={props.onClose}>Close</Button>
+        <Button variant="outlined" onClick={props.onClose}>{Locale.label("tasks.contentPicker.close")}</Button>
       </DialogActions>
     </Dialog>
   </>);
