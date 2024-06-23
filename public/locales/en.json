@@ -997,6 +997,15 @@
       "selectGroup": {
         "group": "Group",
         "search": "Search"
+      },
+      "taskList": {
+        "title": "Title",
+        "associateW": "Associated with",
+        "assignTo": "Assigned to",
+        "assignGroup": "Assigned to My Groups",
+        "assignMe": "Assigned to Me",
+        "reqMe": "Requested by Me",
+        "tasks": "Tasks"
       }
     }
 
