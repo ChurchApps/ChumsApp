@@ -967,6 +967,12 @@
         "contains": "contains",
         "startW": "starts with",
         "endW": "ends with"
+      },
+      "conjunctionEdit": {
+        "conjEdit": "Edit Conjunction",
+        "conjType": "Conjunction Type",
+        "and": "AND - All of the conditions are true",
+        "or": "OR - Any of the conditions are true"
       }
     }
 
