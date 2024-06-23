@@ -993,6 +993,10 @@
         "assignTo": "Assign to",
         "title": "Title",
         "notes": "Notes"
+      },
+      "selectGroup": {
+        "group": "Group",
+        "search": "Search"
       }
     }
 
