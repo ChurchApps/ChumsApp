@@ -676,7 +676,9 @@
       },
       "planPage": {
         "assign": "Assignments",
-        "notes": "Notes"
+        "notes": "Notes",
+        "band": "Band",
+        "noteSave": "Notes Saved."
       },
       "plansPage": {
         "selMin": "Select a Ministry"

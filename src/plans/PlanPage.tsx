@@ -57,7 +57,7 @@ export const PlanPage = () => {
 
   const handleSave = () => {
     ApiHelper.post("/plans", [plan], "DoingApi");
-    alert("Notes saved.");
+    alert(Locale.label("plans.planPage.noteSave"));
   }
 
   const handleAutoAssign = async () => {
@@ -86,7 +86,7 @@ export const PlanPage = () => {
         </InputBox>
       </Grid>
       <Grid item md={4} xs={12}>
-        {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : ["Band"] } updatedFunction={() => {setPosition(null); loadData() }} /> }
+        {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : [Locale.label("plans.planPage.band")] } updatedFunction={() => {setPosition(null); loadData() }} /> }
         {assignment && position && <AssignmentEdit position={position} assignment={assignment} peopleNeeded={position.count - ArrayHelper.getAll(assignments, "positionId", position.id).length } updatedFunction={ handleAssignmentUpdate } />}
         <TimeList times={times} positions={positions} plan={plan} onUpdate={loadData} />
         <PlanValidation plan={plan} positions={positions} assignments={assignments} people={people} times={times} blockoutDates={blockoutDates} onUpdate={loadData} />
