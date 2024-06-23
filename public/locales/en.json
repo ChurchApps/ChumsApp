@@ -877,6 +877,38 @@
         "serv": "Service",
         "servTime": "Service Time",
         "group": "Group"
+      },
+      "conditionDate": {
+        "dayOf": "Day of Week",
+        "sun": "Sunday",
+        "mon": "Monday",
+        "tues": "Tuesday",
+        "wed": "Wednesday",
+        "thurs": "Thursday",
+        "fri": "Friday",
+        "sat": "Saturday",
+        "month": "Month",
+        "jan": "January",
+        "feb": "February",
+        "mar": "March",
+        "apr": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "aug": "August",
+        "sep": "September",
+        "oct": "October",
+        "nov": "November",
+        "dec": "December",
+        "prevMonth": "Previous Month",
+        "curMonth": "Current Month",
+        "nextMonth": "Next Month",
+        "datePart": "Date Part",
+        "dateFull": "Full Date",
+        "weekDay": "Day of Week",
+        "monthDay": "Day of Month",
+        "yearsE": "Years Elapsed",
+        "op": "Operator"
       }
     }
 
