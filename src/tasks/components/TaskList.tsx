@@ -73,7 +73,7 @@ export const TaskList = (props: Props) => {
     else return (<div style={{ paddingBottom: 10 }}>
       <Grid container spacing={3}>
         <Grid item xs={6}>
-        {Locale.label("tasks.taskList.title")}
+          {Locale.label("tasks.taskList.title")}
         </Grid>
         <Grid item xs={3}>{Locale.label("tasks.taskList.associateW")}</Grid>
         <Grid item xs={3}>{Locale.label("tasks.taskList.assignTo")}</Grid>
