@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Grid, Icon, Menu, MenuItem, Typography } from "@mui/material";
-import { ApiHelper, DisplayBox, TaskInterface, Notes, DateHelper, ConversationInterface } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, TaskInterface, Notes, DateHelper, ConversationInterface, Locale } from "@churchapps/apphelper";
 import { SmallButton } from "@churchapps/apphelper";
 import { Link, useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
@@ -57,7 +57,7 @@ export const TaskPage = () => {
 
   const getDateClosed = () => {
     if (task?.dateClosed) return (<>
-      <div><Typography variant="subtitle1">Date Created</Typography></div>
+      <div><Typography variant="subtitle1">{Locale.label("tasks.taskPage.dateCreated")}</Typography></div>
       <div><Typography variant="caption">{DateHelper.prettyDate(DateHelper.convertToDate(task?.dateCreated))}</Typography></div>
       <hr />
     </>);
@@ -85,32 +85,32 @@ export const TaskPage = () => {
           <Notes context={context} conversationId={task?.conversationId} createConversation={handleCreateConversation} />
         </Grid>
         <Grid item md={4} xs={12}>
-          <DisplayBox headerIcon="list_alt" headerText="Task Details" help="chums/tasks">
-            <div><Typography variant="subtitle1">Date Created</Typography></div>
+          <DisplayBox headerIcon="list_alt" headerText={Locale.label("tasks.taskPage.taskDet")} help="chums/tasks">
+            <div><Typography variant="subtitle1">{Locale.label("tasks.taskPage.dateCreated")}</Typography></div>
             <div><Typography variant="caption">{DateHelper.prettyDate(DateHelper.convertToDate(task?.dateCreated))}</Typography></div>
             <hr />
             {getDateClosed()}
-            <div><Typography variant="subtitle1">Status</Typography></div>
+            <div><Typography variant="subtitle1">{Locale.label("tasks.taskPage.stat")}</Typography></div>
             <div>
               <Typography variant="caption"><a href="about:blank" onClick={(e) => { e.preventDefault(); setAnchorEl(e.currentTarget); }}>{task.status}</a></Typography>
               <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closeStatusMenu}>
-                <MenuItem onClick={() => { handleStatusChange("Open"); closeStatusMenu() }}>Open</MenuItem>
-                <MenuItem onClick={() => { handleStatusChange("Closed"); closeStatusMenu() }}>Closed</MenuItem>
+                <MenuItem onClick={() => { handleStatusChange("Open"); closeStatusMenu() }}>{Locale.label("tasks.taskPage.open")}</MenuItem>
+                <MenuItem onClick={() => { handleStatusChange("Closed"); closeStatusMenu() }}>{Locale.label("tasks.taskPage.closed")}</MenuItem>
               </Menu>
             </div>
             <hr />
-            <div><Typography variant="subtitle1">Created By</Typography></div>
+            <div><Typography variant="subtitle1">{Locale.label("tasks.taskPage.createdBy")}</Typography></div>
             <div><Typography variant="caption">{getContentLink(task.createdByType, task.createdById, task.createdByLabel)}</Typography></div>
             <hr />
             <div>
-              <span style={{ float: "right", paddingTop: 17 }}><SmallButton text="Change" icon="search" onClick={() => { setModalField("associatedWith") }} /></span>
-              <Typography variant="subtitle1">Associated With</Typography>
+              <span style={{ float: "right", paddingTop: 17 }}><SmallButton text={Locale.label("tasks.taskPage.change")} icon="search" onClick={() => { setModalField("associatedWith") }} /></span>
+              <Typography variant="subtitle1">{Locale.label("tasks.taskPage.associateW")}</Typography>
             </div>
             <div><Typography variant="caption">{getContentLink(task.associatedWithType, task.associatedWithId, task.associatedWithLabel)}</Typography></div>
             <hr />
             <div>
-              <span style={{ float: "right", paddingTop: 17 }}><SmallButton text="Change" icon="search" onClick={() => { setModalField("assignedTo") }} /></span>
-              <Typography variant="subtitle1">Assigned to</Typography>
+              <span style={{ float: "right", paddingTop: 17 }}><SmallButton text={Locale.label("tasks.taskPage.change")} icon="search" onClick={() => { setModalField("assignedTo") }} /></span>
+              <Typography variant="subtitle1">{Locale.label("tasks.taskPage.assignTo")}</Typography>
             </div>
             <div><Typography variant="caption">{getContentLink(task.assignedToType, task.assignedToId, task.assignedToLabel)}</Typography></div>
           </DisplayBox>

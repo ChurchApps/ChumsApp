@@ -1,6 +1,6 @@
 import React from "react";
 import {  Badge, Table, TableBody, TableCell, TableHead, TableRow,  } from "@mui/material";
-import { ArrayHelper, AssignmentInterface, PersonHelper, PersonInterface, PositionInterface } from "@churchapps/apphelper";
+import { ArrayHelper, AssignmentInterface, Locale, PersonHelper, PersonInterface, PositionInterface } from "@churchapps/apphelper";
 
 interface Props {
   positions: PositionInterface[],
@@ -24,7 +24,7 @@ export const PositionList = (props:Props) => {
         {wrappedImage}
         {person.name.display}
       </a>);
-    } else return "Loading..."
+    } else return Locale.label("plans.positionList.load")
   }
 
   const getPeopleLinks = (position:PositionInterface) => {
@@ -34,7 +34,7 @@ export const PositionList = (props:Props) => {
     const remaining = position.count - assignments.length;
     if (remaining > 0)
     {
-      const label = (remaining === 1) ? "1 Person Needed" : remaining.toString() + " People Needed";
+      const label = (remaining === 1) ? Locale.label("plans.positionList.persNeed") : remaining.toString() + Locale.label("plans.positionList.pplNeed");
       result.push (<a href="about:blank" onClick={(e) => {e.preventDefault(); props.onAssignmentSelect(position, {positionId:position.id} )}}>{label}</a>);
     }
     return result;
@@ -70,9 +70,9 @@ export const PositionList = (props:Props) => {
     <Table size="small" className="positionsTable">
       <TableHead>
         <TableRow>
-          <TableCell><b>Team</b></TableCell>
-          <TableCell><b>Position</b></TableCell>
-          <TableCell><b>People</b></TableCell>
+          <TableCell><b>{Locale.label("plans.positionList.team")}</b></TableCell>
+          <TableCell><b>{Locale.label("plans.positionList.pos")}</b></TableCell>
+          <TableCell><b>{Locale.label("plans.positionList.ppl")}</b></TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

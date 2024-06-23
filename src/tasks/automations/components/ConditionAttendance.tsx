@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ConditionInterface } from "@churchapps/apphelper";
+import { ConditionInterface, Locale } from "@churchapps/apphelper";
 
 interface Props {
   condition: ConditionInterface,
@@ -67,20 +67,20 @@ export const ConditionAttendance = (props: Props) => {
   */
   return <>
     <FormControl fullWidth>
-      <InputLabel>Operator</InputLabel>
-      <Select fullWidth label="Operator" value={props.condition.operator || ""} name="operator" onChange={handleChange}>
-        <MenuItem value=">">has attended</MenuItem>
-        <MenuItem value="=">has not attended</MenuItem>
+      <InputLabel>{Locale.label("tasks.conditionAttendance.op")}</InputLabel>
+      <Select fullWidth label={Locale.label("tasks.conditionAttendance.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
+        <MenuItem value=">">{Locale.label("tasks.conditionAttendance.hasAtt")}</MenuItem>
+        <MenuItem value="=">{Locale.label("tasks.conditionAttendance.hasNoAtt")}</MenuItem>
       </Select>
     </FormControl>
     <FormControl fullWidth>
-      <InputLabel>Event Type</InputLabel>
-      <Select fullWidth label="Event Type" value={fieldData.eventType || ""} name="eventType" onChange={handleFieldDataChange}>
-        <MenuItem value="any">Anywhere</MenuItem>
-        <MenuItem value="campus">Campus</MenuItem>
-        <MenuItem value="service">Service</MenuItem>
-        <MenuItem value="serviceTime">Service Time</MenuItem>
-        <MenuItem value="group">Group</MenuItem>
+      <InputLabel>{Locale.label("tasks.conditionAttendance.eventType")}</InputLabel>
+      <Select fullWidth label={Locale.label("tasks.conditionAttendance.eventType")} value={fieldData.eventType || ""} name="eventType" onChange={handleFieldDataChange}>
+        <MenuItem value="any">{Locale.label("tasks.conditionAttendance.anywhere")}</MenuItem>
+        <MenuItem value="campus">{Locale.label("tasks.conditionAttendance.campus")}</MenuItem>
+        <MenuItem value="service">{Locale.label("tasks.conditionAttendance.serv")}</MenuItem>
+        <MenuItem value="serviceTime">{Locale.label("tasks.conditionAttendance.servTime")}</MenuItem>
+        <MenuItem value="group">{Locale.label("tasks.conditionAttendance.group")}</MenuItem>
       </Select>
     </FormControl>
   </>

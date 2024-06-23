@@ -1,6 +1,6 @@
 import React from "react";
 import { ServiceTimesEdit } from ".";
-import { ApiHelper, InputBox, ErrorMessages } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { useMountedState, GalleryModal, GroupInterface } from "@churchapps/apphelper";
@@ -54,8 +54,8 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
 
   const validate = () => {
     let errors = [];
-    if (group.categoryName === "") errors.push("Please enter a category name.");
-    if (group.name === "") errors.push("Please enter a group name.");
+    if (group.categoryName === "") errors.push(Locale.label("groups.groupDetailsEdit.catNameMsg"));
+    if (group.name === "") errors.push(Locale.label("groups.groupDetailsEdit.groupNameMsg"));
     setErrors(errors);
     return errors.length === 0;
   };
@@ -70,7 +70,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   };
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to permanently delete this group?")) {
+    if (window.confirm(Locale.label("groups.groupDetailsEdit.confirmMsg"))) {
       ApiHelper.delete("/groups/" + group.id.toString(), "MembershipApi").then(() => setRedirect("/groups"));
     }
   };
@@ -85,50 +85,50 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   else
     return (
       <>
-        <InputBox id="groupDetailsBox" headerText="Group Details" headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} help="chums/groups">
+        <InputBox id="groupDetailsBox" headerText={Locale.label("groups.groupDetailsEdit.groupDet")} headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} help="chums/groups">
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             {!teamMode && (
               <Grid item md={6} xs={12}>
-                <TextField fullWidth type="text" name="categoryName" label="Category Name" value={group.categoryName || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <TextField fullWidth type="text" name="categoryName" label={Locale.label("groups.groupDetailsEdit.catName")} value={group.categoryName || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
               </Grid>
             )}
             <Grid item md={6} xs={12}>
-              <TextField fullWidth label="Group Name" type="text" name="name" value={group.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              <TextField fullWidth label={Locale.label("groups.groupDetailsEdit.groupName")} type="text" name="name" value={group.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
           </Grid>
           {!teamMode && <>
             <Grid container spacing={3}>
               <Grid item md={6} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel>Track Attendance</InputLabel>
-                  <Select label="Track Attendance" id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                    <MenuItem value="false">No</MenuItem>
-                    <MenuItem value="true">Yes</MenuItem>
+                  <InputLabel>{Locale.label("groups.groupDetailsEdit.attTrack")}</InputLabel>
+                  <Select label={Locale.label("groups.groupDetailsEdit.attTrack")} id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+                    <MenuItem value="false">{Locale.label("groups.groupDetailsEdit.no")}</MenuItem>
+                    <MenuItem value="true">{Locale.label("groups.groupDetailsEdit.yes")}</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item md={6} xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel>Parent Pickup</InputLabel>
-                  <Select label="Parent Pickup" name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                    <MenuItem value="false">No</MenuItem>
-                    <MenuItem value="true">Yes</MenuItem>
+                  <InputLabel>{Locale.label("groups.groupDetailsEdit.parPick")}</InputLabel>
+                  <Select label={Locale.label("groups.groupDetailsEdit.parPick")} name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+                    <MenuItem value="false">{Locale.label("groups.groupDetailsEdit.no")}</MenuItem>
+                    <MenuItem value="true">{Locale.label("groups.groupDetailsEdit.yes")}</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
             </Grid>
             <Grid container spacing={3}>
               <Grid item md={6} xs={12}>
-                <MarkdownEditor value={group.about || ""} onChange={(val) => handleMarkdownChange(val)} style={{ maxHeight: 200, overflowY: "scroll" }} placeholder="Group Description" />
+                <MarkdownEditor value={group.about || ""} onChange={(val) => handleMarkdownChange(val)} style={{ maxHeight: 200, overflowY: "scroll" }} placeholder={Locale.label("groups.groupDetailsEdit.groupDesc")} />
               </Grid>
               <Grid item md={6} xs={12}>
                 {group.photoUrl && (<>
                   <img src={group.photoUrl} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="group" />
                   <br />
                 </>)}
-                {!group.photoUrl && <InputLabel>Group Photo</InputLabel>}
-                <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>Select photo</Button>
+                {!group.photoUrl && <InputLabel>{Locale.label("groups.groupDetailsEdit.groupImg")}</InputLabel>}
+                <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>{Locale.label("groups.groupDetailsEdit.selImg")}</Button>
               </Grid>
             </Grid>
             <ServiceTimesEdit group={group} />

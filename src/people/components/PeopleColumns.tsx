@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, FormControlLabel, Checkbox, Dialog, DialogTitle, DialogActions, Button, DialogContent, Tabs, Tab, Box } from "@mui/material";
-import { SmallButton, ApiHelper } from "@churchapps/apphelper";
+import { SmallButton, ApiHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   columns: { key: string, label: string, shortName: string }[],
@@ -50,7 +50,7 @@ export function PeopleColumns(props: Props) {
   switch(tabValue) {
     case "standard": currentTab = <Grid container spacing={0.5}>{getItems()}</Grid>; break;
     //Currently the custom tab only has fields from Forms tied to people
-    case "custom": currentTab = <Grid container spacing={0.5} sx={{ minHeight: 323 }}>{optionalColumns.length > 0 ? <>{getOptionalItems()}</> : <div>No filters available.</div>}</Grid>; break;
+    case "custom": currentTab = <Grid container spacing={0.5} sx={{ minHeight: 323 }}>{optionalColumns.length > 0 ? <>{getOptionalItems()}</> : <div>{Locale.label("people.peopleColumns.noFilt")}</div>}</Grid>; break;
   }
 
   React.useEffect(() => {
@@ -71,19 +71,19 @@ export function PeopleColumns(props: Props) {
     <>
       <SmallButton icon="view_column" onClick={handleClick} />
       <Dialog id="fieldsMenu" open={open} onClose={handleClose} fullWidth maxWidth="md">
-        <DialogTitle>Filters</DialogTitle>
+        <DialogTitle>{Locale.label("people.peopleColumns.filt")}</DialogTitle>
         <DialogContent>
           <Tabs value={tabValue} onChange={(event: React.SyntheticEvent, newValue: string) => setTabValue(newValue)}>
-            <Tab value="standard" label="Standard" />
-            <Tab value="custom" label="Custom" />
+            <Tab value="standard" label={Locale.label("people.peopleColumns.stand")} />
+            <Tab value="custom" label={Locale.label("people.peopleColumns.cust")} />
           </Tabs>
           <Box sx={{ marginTop: 1 }}>
             {currentTab}
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-          <Button onClick={handleClose} variant="contained">Apply Filters</Button>
+          <Button onClick={handleClose}>{Locale.label("people.peopleColumns.close")}</Button>
+          <Button onClick={handleClose} variant="contained">{Locale.label("people.peopleColumns.appFilt")}</Button>
         </DialogActions>
       </Dialog>
     </>

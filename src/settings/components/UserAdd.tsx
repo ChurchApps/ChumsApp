@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { InputBox, RoleInterface, ApiHelper, RoleMemberInterface, UserHelper, LoadCreateUserRequestInterface, PersonInterface, HouseholdInterface, ErrorMessages, UserInterface, UserChurchInterface } from "@churchapps/apphelper"
+import { InputBox, RoleInterface, ApiHelper, RoleMemberInterface, UserHelper, LoadCreateUserRequestInterface, PersonInterface, HouseholdInterface, ErrorMessages, UserInterface, UserChurchInterface, Locale } from "@churchapps/apphelper"
 import { AssociatePerson } from "./";
 import { TextField } from "@mui/material";
 
@@ -37,7 +37,7 @@ export const UserAdd = (props: Props) => {
         await ApiHelper.post("/people", [person], "MembershipApi");
         props.updatedFunction();
       } catch {
-        setErrors(["Cannot save. Another user already exists for this email address."])
+        setErrors([Locale.label("settings.userAdd.errAnother")])
       }
     }
   }
@@ -53,7 +53,7 @@ export const UserAdd = (props: Props) => {
 
   const saveUserFromPerson = async () => {
     if (showEmailField && !validateEmail(email)) {
-      setErrors(["Please enter a valid Email"]);
+      setErrors([Locale.label("settings.userAdd.valEmail")]);
       return;
     }
     if (!selectedPerson) return;
@@ -69,7 +69,7 @@ export const UserAdd = (props: Props) => {
         await ApiHelper.post("/people", [person], "MembershipApi");
       }
     } catch {
-      setErrors(["The user account for this email is associated with a different person."]);
+      setErrors([Locale.label("settings.userAdd.errDiff")]);
     }
 
     props.updatedFunction();
@@ -83,9 +83,9 @@ export const UserAdd = (props: Props) => {
 
   const validate = () => {
     const warnings: string[] = [];
-    if (!firstName) warnings.push("Please enter firstname");
-    if (!lastName) warnings.push("Please enter lastname");
-    if (!validateEmail(email)) warnings.push("Enter a valid Email");
+    if (!firstName) warnings.push(Locale.label("settings.userAdd.firstMsg"));
+    if (!lastName) warnings.push(Locale.label("settings.userAdd.lastMsg"));
+    if (!validateEmail(email)) warnings.push(Locale.label("settings.userAdd.valEmailMsg"));
     setErrors(warnings);
     return warnings.length === 0;
   }
@@ -166,19 +166,19 @@ export const UserAdd = (props: Props) => {
     })()
   }, [props.selectedUser]);
 
-  const message = (!showNameFields && !editMode && hasSearched) && (<span>Don't have a user account? <a href="about:blank" onClick={CreateNewUser}>Create New User</a></span>);
+  const message = (!showNameFields && !editMode && hasSearched) && (<span>{Locale.label("settings.userAdd.noAcc")} <a href="about:blank" onClick={CreateNewUser}>{Locale.label("settings.userAdd.createNew")}</a></span>);
   const nameField = (showNameFields || editMode) && (
     <>
-      <TextField fullWidth name="firstName" label="First Name" value={firstName} onChange={handleChange} />
-      <TextField fullWidth name="lastName" label="Last Name" value={lastName} onChange={handleChange} />
+      <TextField fullWidth name="firstName" label={Locale.label("settings.userAdd.firstName")} value={firstName} onChange={handleChange} />
+      <TextField fullWidth name="lastName" label={Locale.label("settings.userAdd.lastName")} value={lastName} onChange={handleChange} />
     </>
   )
   const emailField = (showEmailField || editMode) && (
-    <TextField type="email" fullWidth name="email" label="Email" value={email} onChange={handleChange} />
+    <TextField type="email" fullWidth name="email" label={Locale.label("settings.userAdd.email")} value={email} onChange={handleChange} />
   )
 
   return (
-    <InputBox headerIcon="lock" headerText={"Add to " + props.role.name} saveFunction={handleSave} cancelFunction={props.updatedFunction}>
+    <InputBox headerIcon="lock" headerText={Locale.label("settings.userAdd.addTo") + props.role.name} saveFunction={handleSave} cancelFunction={props.updatedFunction}>
       <ErrorMessages errors={errors} />
       {
         (!showNameFields || editMode) && (

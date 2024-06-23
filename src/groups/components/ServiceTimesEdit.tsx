@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, GroupInterface, GroupServiceTimeInterface, ServiceTimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, GroupInterface, GroupServiceTimeInterface, Locale, ServiceTimeInterface } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, MenuItem } from "@mui/material"
 
 interface Props {
@@ -26,7 +26,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     let result: JSX.Element[] = [];
     for (let i = 0; i < groupServiceTimes.length; i++) {
       let gst = groupServiceTimes[i];
-      result.push(<TableRow key={gst.id}><TableCell><Icon>schedule</Icon> {gst.serviceTime.name}</TableCell><TableCell><a href="about:blank" style={{color: "#dc3545"}} data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> Remove</a></TableCell></TableRow>);
+      result.push(<TableRow key={gst.id}><TableCell><Icon>schedule</Icon> {gst.serviceTime.name}</TableCell><TableCell><a href="about:blank" style={{color: "#dc3545"}} data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> {Locale.label("groups.serviceTimesEdit.rmv")}</a></TableCell></TableRow>);
     }
     return result;
   }
@@ -56,13 +56,13 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <label>Service Times (optional)</label>
+      <label>{Locale.label("groups.serviceTimesEdit.srvTimeOp")}</label>
       <Table><TableBody>{getRows()}</TableBody></Table>
       <FormControl fullWidth>
-        <InputLabel>Add Service Time</InputLabel>
-        <Select fullWidth label="Add Service Time" aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange} endAdornment={<>
+        <InputLabel>{Locale.label("groups.serviceTimesEdit.srvTimeAdd")}</InputLabel>
+        <Select fullWidth label={Locale.label("groups.serviceTimesEdit.srvTimeAdd")} aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange} endAdornment={<>
           <Icon>arrow_drop_down</Icon>
-          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> Add</Button>
+          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> {Locale.label("groups.serviceTimesEdit.add")}</Button>
         </>
         }>
           {getOptions()}

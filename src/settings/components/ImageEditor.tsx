@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { SmallButton, InputBox, GenericSettingInterface, ArrayHelper } from "@churchapps/apphelper";
+import { SmallButton, InputBox, GenericSettingInterface, ArrayHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   settings: GenericSettingInterface[],
@@ -30,7 +30,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
 
   const getHeaderButton = () => (<div>
     <input type="file" onChange={handleUpload} id="fileUpload" accept="image/*" style={{ display: "none" }} />
-    <SmallButton onClick={() => { document.getElementById("fileUpload").click(); }} text="Upload" icon="upload" />
+    <SmallButton onClick={() => { document.getElementById("fileUpload").click(); }} text={Locale.label("settings.imageEditor.upload")} icon="upload" />
   </div>)
 
   const cropper = React.useRef(null);
@@ -68,7 +68,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
   React.useEffect(init, []); //eslint-disable-line
 
   return (
-    <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} saveText={"Update"} cancelFunction={handleCancel} headerActionContent={getHeaderButton()}>
+    <InputBox id="cropperBox" headerIcon="" headerText={Locale.label("settings.imageEditor.crop")} saveFunction={handleSave} saveText={"Update"} cancelFunction={handleCancel} headerActionContent={getHeaderButton()}>
       <Cropper
         onInitialized={onCropperInit}
         src={currentUrl}

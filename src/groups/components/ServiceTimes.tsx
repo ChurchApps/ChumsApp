@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, GroupInterface, GroupServiceTimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, GroupInterface, GroupServiceTimeInterface, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell } from "@mui/material";
 interface Props { group: GroupInterface }
 
@@ -24,7 +24,7 @@ export const ServiceTimes: React.FC<Props> = (props) => {
     <Table>
       <TableBody>
         <TableRow>
-          <TableCell><label>Service(s):</label></TableCell>
+          <TableCell><label>{Locale.label("groups.serviceTimes.services")}</label></TableCell>
           <TableCell>{getRows()}</TableCell>
         </TableRow>
       </TableBody>

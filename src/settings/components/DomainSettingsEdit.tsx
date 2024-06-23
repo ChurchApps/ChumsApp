@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrayHelper, DomainInterface, ApiHelper } from "@churchapps/apphelper";
+import { ArrayHelper, DomainInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { SelectChangeEvent, TextField, Grid, TableCell, TableBody, TableRow, Table, TableHead } from "@mui/material";
 
 interface Props { churchId: string, saveTrigger: Date | null }
@@ -62,7 +62,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
           {d.domainName}
         </TableCell>
         <TableCell>
-          <a href="about:blank" onClick={(e) => { e.preventDefault(); handleDelete(index) }}>Delete</a>
+          <a href="about:blank" onClick={(e) => { e.preventDefault(); handleDelete(index) }}>{Locale.label("settings.domainSettingsEdit.delete")}</a>
         </TableCell>
       </TableRow>);
       idx++
@@ -75,15 +75,15 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
 
   return (
     <>
-      <div className="subHead">Domains</div>
-      <p>You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS: <i style={{ fontSize: 12 }}>CNAME: proxy.b1.church</i></p>
+      <div className="subHead">{Locale.label("settings.domainSettingsEdit.domains")}</div>
+      <p>{Locale.label("settings.domainSettingsEdit.domMsg")} <i style={{ fontSize: 12 }}>CNAME: proxy.b1.church</i></p>
       <Grid container spacing={3}>
         <Grid item md={6} xs={12}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Domain</TableCell>
-                <TableCell>Action</TableCell>
+                <TableCell>{Locale.label("settings.domainSettingsEdit.domain")}</TableCell>
+                <TableCell>{Locale.label("settings.domainSettingsEdit.act")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -93,7 +93,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
                   <TextField fullWidth name="domainName" size="small" value={addDomainName} onChange={handleChange} placeholder="yoursite.com" />
                 </TableCell>
                 <TableCell>
-                  <a href="about:blank" onClick={handleAdd}>Add</a>
+                  <a href="about:blank" onClick={handleAdd}>{Locale.label("settings.domainSettingsEdit.add")}</a>
                 </TableCell>
               </TableRow>
             </TableBody>

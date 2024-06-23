@@ -1,6 +1,6 @@
 import React from "react";
 import { BatchEdit, Funds, DonationEvents } from "./components";
-import { ApiHelper, DisplayBox, DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, SmallButton, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { ReportWithFilter, useMountedState, DonationBatchInterface, Permissions } from "@churchapps/apphelper";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
@@ -78,7 +78,7 @@ export const DonationsPage = () => {
     const result: JSX.Element[] = [];
 
     if (batches.length === 0) {
-      result.push(<TableRow key="0">No batches found.</TableRow>)
+      result.push(<TableRow key="0">{Locale.label("donations.donationsPage.noBatch")}</TableRow>)
       return result;
     }
 
@@ -120,16 +120,16 @@ export const DonationsPage = () => {
     rows.push(
       <TableRow sx={{textAlign: "left"}} key="header">
         <th onClick={() => sortTable("name", sortDirection)}>
-          <span style={{ float: "left", paddingRight: "5px", cursor: "default" }}>Name</span>
+          <span style={{ float: "left", paddingRight: "5px", cursor: "default" }}>{Locale.label("donations.donationsPage.name")}</span>
           {getSortArrows("name")}
         </th>
         <th onClick={() => sortTable("batchDate", sortDirection)}>
-          <span style={{ float: "left", paddingRight: "5px", cursor: "default" }}>Date</span>
+          <span style={{ float: "left", paddingRight: "5px", cursor: "default" }}>{Locale.label("donations.donationsPage.date")}</span>
           {getSortArrows("batchDate")}
         </th>
-        <th>Donations</th>
-        <th>Total</th>
-        <th>Edit</th>
+        <th>{Locale.label("donations.donationsPage.don")}</th>
+        <th>{Locale.label("donations.donationsPage.total")}</th>
+        <th>{Locale.label("donations.donationsPage.edit")}</th>
       </TableRow>
     );
     return rows;
@@ -150,11 +150,11 @@ export const DonationsPage = () => {
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
   else return (
     <>
-      <h1><Icon>volunteer_activism</Icon> Donations</h1>
+      <h1><Icon>volunteer_activism</Icon> {Locale.label("donations.donationsPage.don")}</h1>
       <ReportWithFilter keyName="donationSummary" autoRun={true} />
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="volunteer_activism" headerText="Batches" editContent={getEditContent()} help="chums/manual-input">
+          <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="volunteer_activism" headerText={Locale.label("donations.donationsPage.batch")} editContent={getEditContent()} help="chums/manual-input">
             {getTable()}
           </DisplayBox>
           <DonationEvents />

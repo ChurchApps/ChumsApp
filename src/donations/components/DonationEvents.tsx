@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Icon } from "@mui/material";
-import { useMountedState, DateHelper, ApiHelper, DisplayBox } from "@churchapps/apphelper";
+import { useMountedState, DateHelper, ApiHelper, DisplayBox, Locale } from "@churchapps/apphelper";
 
 export const DonationEvents: React.FC = () => {
   const [headerIcon, setHeaderIcon] = React.useState<string>("error");
@@ -55,12 +55,12 @@ export const DonationEvents: React.FC = () => {
           </AccordionSummary>
           <AccordionDetails>
             <ul>
-              <li>Person: <Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link></li>
-              <li className="capitalize">Event: <a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
-              <li>Message: {log.message}</li>
+              <li>{Locale.label("donations.donationEvents.person")}<Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link></li>
+              <li className="capitalize">{Locale.label("donations.donationEvents.event")}<a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
+              <li>{Locale.label("donations.donationEvents.msg")}{log.message}</li>
               <li style={{ float: "right" }}>
                 <Button aria-label="resolve-button" variant={log.resolved ? "outlined" : "contained"} onClick={() => handleClick(log.id, log.resolved)}>
-                  Mark as {log.resolved ? "Unresolved" : "Resolved"}
+                {Locale.label("donations.donationEvents.mark")}{log.resolved ? "Unresolved" : "Resolved"}
                 </Button>
               </li>
             </ul>
@@ -76,7 +76,7 @@ export const DonationEvents: React.FC = () => {
   if (!errorLogs.length) return null;
 
   return (
-    <DisplayBox data-cy="eventLogs" headerIcon={headerIcon} headerText={"Failed Donations - " + unresolvedErrorCount + " unresolved"}>
+    <DisplayBox data-cy="eventLogs" headerIcon={headerIcon} headerText={Locale.label("donations.donationEvents.failed") + unresolvedErrorCount + Locale.label("donations.donationEvents.unres")}>
       {getErrorLogs()}
     </DisplayBox>
   );

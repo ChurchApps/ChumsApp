@@ -1,0 +1,1049 @@
+{
+  "common": {
+    "search": "찾다"
+  },
+  "attendance": {
+    "campusEdit": {
+      "name": "캠퍼스 이름",
+      "confirmDelete": "정말로 이 캠퍼스를 삭제하시겠습니까?",
+      "validate": {
+        "name": "캠퍼스 이름이 필요합니다."
+      }
+    },
+    "serviceEdit": {
+      "campus": "교정",
+      "name": "서비스 이름",
+      "confirmDelete": "이 서비스를 영구적으로 삭제하시겠습니까?",
+      "validate": {
+        "campus": "캠퍼스를 선택해주세요.",
+        "name": "서비스 이름이 필요합니다."
+      }
+    },
+    "serviceTimeEdit": {
+      "service": "서비스",
+      "name": "서비스 시간",
+      "confirmDelete": "이 서비스 시간을 영구적으로 삭제하시겠습니까?",
+      "validate": {
+        "name": "서비스 시간 이름이 필요합니다.",
+        "service": "서비스를 선택해주세요."
+      }
+    },
+    "tabs": {
+      "noImplement": "구현되지 않음",
+      "attTrend": "출석 추세",
+      "groupAtt": "단체 출석"
+    },
+    "attendancePage": {
+      "groupAttMsg": "세션이 그룹에 추가되고 사람들이 해당 세션에 참석하면 그룹 출석이 표시됩니다.",
+      "addCampus": "캠퍼스 추가",
+      "addService": "서비스 추가",
+      "addServiceTime": "서비스 시간 추가",
+      "campus": "교정",
+      "service": "서비스",
+      "time": "시간",
+      "category": "범주",
+      "group": "그룹",
+      "groups": "여러 떼",
+      "att": "출석"
+    }
+  },
+  "components": {
+    "footer": {
+      "phone": "핸드폰",
+      "rights": "판권 소유."
+    },
+    "question": {
+      "no": "아니요",
+      "yes": "예"
+    },
+    "search": {
+      "person": "사람",
+      "search": "찾다"
+    },
+    "wrapper": {
+      "dash": "계기반",
+      "ppl": "사람들",
+      "groups": "여러 떼",
+      "att": "출석",
+      "don": "기부",
+      "form": "형태",
+      "tasks": "작업",
+      "plans": "계획",
+      "set": "설정",
+      "servAdmin": "서버 관리자"
+    }
+  },
+  "dashboard": {
+    "myGroups": "내 그룹",
+    "people": "사람들",
+    "tasks": "작업",
+    "peopleSearch": {
+      "photo": "사진",
+      "display": "이름 표시하기",
+      "ppl": "사람들",
+      "name": "이름",
+      "search": "찾다"
+    },
+    "dashboardPage": {
+      "dash": "계기반"
+    }
+  },
+  "donations": {
+    "batchEdit": {
+      "confirmMsg": "이 배치와 그 안에 포함된 모든 기부를 영구적으로 삭제하시겠습니까?",
+      "edit": "배치 편집",
+      "opName": "이름(선택사항)",
+      "date": "날짜"
+    },
+    "donationEdit": {
+      "checkNum": "확인하다 #",
+      "lastDig": "마지막 4자리",
+      "anon": "익명의",
+      "donEdit": "기부 수정",
+      "person": "사람",
+      "method": "방법",
+      "check": "확인하다",
+      "cash": "현금",
+      "card": "카드",
+      "notes": "노트",
+      "date": "날짜"
+    },
+    "donationEvents": {
+      "person": "사람: ",
+      "event": "이벤트: ",
+      "msg": "메시지: ",
+      "mark": "다음으로 표시 ",
+      "failed": "기부 실패 - ",
+      "unres": " 해결되지 않은"
+    },
+    "donations": {
+      "errMsg": "펀드를 찾을 수 없습니다. ",
+      "noDonMsg": "추적된 기부금이 없습니다. ",
+      "tableIdent": "ID",
+      "name": "이름",
+      "date": "날짜",
+      "amt": "양",
+      "anon": "익명의",
+      "total": "총",
+      "don": "기부"
+    },
+    "fundEdit": {
+      "errBlank": "펀드명을 입력하세요",
+      "confirmMsg": "이 배치와 그 안에 포함된 모든 기부를 영구적으로 삭제하시겠습니까?",
+      "edit": "기금 편집",
+      "name": "이름"
+    },
+    "funds": {
+      "noFund": "자금을 찾을 수 없습니다.",
+      "fund": "자금"
+    },
+    "donationsPage": {
+      "noBatch": "배치를 찾을 수 없습니다.",
+      "batch": "일괄",
+      "name": "이름",
+      "date": "날짜",
+      "don": "기부",
+      "total": "총",
+      "edit": "편집하다"
+    },
+    "fundsPage": {
+      "noDon": "아직 기부금이 없습니다",
+      "don": "기부",
+      "donFilt": "기부 필터",
+      "anon": "익명의",
+      "date": "날짜",
+      "dateStart": "시작일",
+      "dateEnd": "종료일",
+      "batch": "일괄",
+      "donor": "기증자",
+      "amt": "양"
+    }
+  },
+  "forms": {
+    "choicesEdit": {
+      "rmv": "제거하다",
+      "choices": "선택",
+      "value": "값",
+      "txt": "텍스트",
+      "act": "행동",
+      "add": "추가하다"
+    },
+    "form": {
+      "noCustomMsg": "아직 생성된 맞춤 질문이 없습니다. ",
+      "yes": "예",
+      "no": "아니요",
+      "question": "질문",
+      "questions": "질문",
+      "type": "유형",
+      "act": "행동",
+      "req": "필수의"
+    },
+    "formEdit": {
+      "nameReqMsg": "양식 이름이 필요합니다.",
+      "startReqMsg": "시작일은 필수입니다.",
+      "endReqMsg": "종료일을 입력하세요.",
+      "confirmMsg": "이 양식을 영구적으로 삭제하시겠습니까?",
+      "editForm": "양식 편집",
+      "name": "양식 이름",
+      "associate": "와 연결",
+      "ppl": "사람들",
+      "alone": "독립형",
+      "access": "양식 액세스",
+      "public": "공공의",
+      "restrict": "제한된",
+      "available": "양식 가용성 기간 설정",
+      "availableStart": "가용성 시작 날짜",
+      "availableEnd": "가용성 종료 날짜",
+      "yes": "예",
+      "no": "아니요"
+    },
+    "formMembers": {
+      "admin": "관리자",
+      "view": "보기 전용",
+      "rmv": "제거하다",
+      "name": "이름",
+      "perm": "허가",
+      "act": "행동",
+      "emailNotif": "이메일 알림",
+      "emailNotifMsg": "양식이 제출될 때마다 메일을 통해 알림을 받게 됩니다.",
+      "formMem": "양식 회원",
+      "addPpl": "사람 추가"
+    },
+    "formQuestionEdit": {
+      "questionReq": "질문이 필요합니다.",
+      "fieldReq": "필드 유형은 필수입니다.",
+      "confirmMsg": "이 질문을 영구적으로 삭제하시겠습니까?",
+      "questionEdit": "질문 수정",
+      "prov": "공급자",
+      "textBox": "텍스트 상자",
+      "wholeNum": "정수",
+      "decNum": "소수",
+      "date": "날짜",
+      "yesNo": "예 아니오",
+      "email": "이메일",
+      "phoneNum": "전화 번호",
+      "textArea": "텍스트 영역",
+      "multiChoice": "다중 선택",
+      "checkBox": "체크박스",
+      "title": "제목",
+      "desc": "설명",
+      "plcOp": "자리표시자(선택사항)",
+      "ansReq": "이 질문에 대한 답변이 필요합니다"
+    },
+    "formSubmissions": {
+      "anon": "익명의",
+      "subFor": "제출 대상",
+      "subBy": "에 의해 제출 된",
+      "subDate": "제출 날짜",
+      "subSum": "양식 제출 요약",
+      "subRes": "양식 제출 결과",
+      "yes": "예",
+      "no": "아니요"
+    },
+    "tabs": {
+      "unAuth": "승인되지 않은",
+      "questions": "질문",
+      "formMem": "양식 회원",
+      "formSub": "양식 제출"
+    },
+    "formsPage": {
+      "noCustomMsg": "아직 사용자 정의 양식이 생성되지 않았습니다. ",
+      "confirmMsg1": "이 양식을 보관하시겠습니까?",
+      "confirmMsg2": "이 양식을 복원하시겠습니까?",
+      "noArch": "보관된 양식이 없습니다.",
+      "name": "이름",
+      "forms": "양식",
+      "archForms": "보관된 양식"
+    }
+  },
+  "groups": {
+    "groupAdd": {
+      "catReq": "카테고리 이름이 필요합니다.",
+      "groupReq": "그룹 이름이 필요합니다.",
+      "group": "그룹",
+      "team": "팀",
+      "ministry": "내각",
+      "new": "새로운 ",
+      "catName": "카테고리 이름",
+      "name": "이름"
+    },
+    "groupDetails": {
+      "cat": "범주",
+      "name": "이름",
+      "attTrack": "출석 추적:",
+      "parPick": "학부모 픽업:",
+      "groupDet": "그룹 세부정보",
+      "yes": "예",
+      "no": "아니요"
+    },
+    "groupDetailsEdit": {
+      "catNameMsg": "카테고리 이름을 입력하세요.",
+      "groupNameMsg": "그룹 이름을 입력하세요.",
+      "confirmMsg": "이 그룹을 영구적으로 삭제하시겠습니까?",
+      "groupDet": "그룹 세부정보",
+      "catName": "카테고리 이름",
+      "groupName": "그룹 이름",
+      "attTrack": "출석 추적",
+      "no": "아니요",
+      "yes": "예",
+      "parPick": "학부모 픽업",
+      "groupDesc": "그룹 설명",
+      "groupImg": "단체사진",
+      "selImg": "사진 선택"
+    },
+    "groupMembers": {
+      "noMem": "그룹 회원을 찾을 수 없습니다.",
+      "name": "이름",
+      "groupMem": "그룹 구성원",
+      "send": "보내다",
+      "sendMemMsg": "회원들에게 메시지 보내기"
+    },
+    "groupSessions": {
+      "session": "세션",
+      "sessions": "세션",
+      "new": "새로운",
+      "noSesMsg": "세션이 없습니다.",
+      "addSesMsg": "계속하려면 새 세션을 추가하세요.",
+      "attFor": "출석",
+      "name": "이름"
+    },
+    "membersAdd": {
+      "noMem": "사용 가능한 그룹 구성원이 없습니다.",
+      "add": "추가하다",
+      "name": "이름",
+      "availableMem": "사용 가능한 그룹 구성원"
+    },
+    "serviceTimes": {
+      "services": "서비스):"
+    },
+    "serviceTimesEdit": {
+      "rmv": "제거하다",
+      "srvTimeOp": "서비스 시간(선택 사항)",
+      "srvTimeAdd": "서비스 시간 추가",
+      "add": "추가하다"
+    },
+    "sessionAdd": {
+      "invDate": "잘못된 날짜",
+      "srvTime": "서비스 시간",
+      "sesAdd": "세션 추가",
+      "sesDate": "세션 날짜"
+    },
+    "tabs": {
+      "noImplement": "구현되지 않음",
+      "mem": "회원",
+      "ses": "세션"
+    },
+    "groupPage": {
+      "addPpl": "사람 추가"
+    },
+    "groupsPage": {
+      "noGroupMsg": "그룹을 찾을 수 없습니다. ",
+      "cat": "범주",
+      "name": "이름",
+      "ppl": "사람들",
+      "groups": "여러 떼",
+      "pers": "1명",
+      "spPpl": " 사람들"
+    }
+  },
+  "people": {
+    "mergeModal": {
+      "selMsg": "각 필드에 대해 하나 이상의 값을 선택하십시오.",
+      "mergeQuestion": "병합하시겠습니까?",
+      "with": "~와 함께",
+      "fieldCon": "다음은 일부 필드가 충돌하는 필드입니다.",
+      "merge": "레코드 병합 중...",
+      "cancel": "취소",
+      "confirm": "확인하다"
+    },
+    "updateHouseHold": {
+      "update": "주소 업데이트",
+      "no": "아니요",
+      "yes": "예"
+    },
+    "editCondition": {
+      "unspec": "지정되지 않음",
+      "male": "남성",
+      "female": "여성",
+      "unknown": "알려지지 않은",
+      "single": "하나의",
+      "married": "기혼",
+      "divorced": "이혼",
+      "widowed": "사별",
+      "visitor": "방문객",
+      "mem": "회원",
+      "staff": "직원",
+      "jan": "1월",
+      "feb": "2월",
+      "mar": "3월",
+      "apr": "4월",
+      "may": "5월",
+      "june": "6월",
+      "july": "칠월",
+      "aug": "팔월",
+      "sep": "구월",
+      "oct": "십월",
+      "nov": "십일월",
+      "dec": "12월",
+      "any": "어느",
+      "from": "에서",
+      "to": "에게",
+      "value": "값",
+      "isMem": "의 회원입니다",
+      "notMem": "의 회원이 아닙니다",
+      "hasDon": "(일반적으로) 기부했습니다",
+      "donTo": "에 기부했습니다",
+      "attGen": "(일반적으로) 참석했습니다",
+      "attCamp": "(캠퍼스)에 다녔다",
+      "attServ": "(봉사) 참석했습니다",
+      "attServTime": "참석했습니다 (봉사 시간)",
+      "attGroup": "(그룹) 참석했습니다",
+      "contains": "포함",
+      "startW": "다음으로 시작",
+      "endW": "로 끝나다",
+      "field": "필드",
+      "person": "사람",
+      "disName": "이름 표시하기",
+      "firstName": "이름",
+      "lastName": "성",
+      "middleName": "중간 이름",
+      "nickName": "닉네임",
+      "pre": "접두사",
+      "suf": "접미사",
+      "bDate": "생일",
+      "bMonth": "태어난 달",
+      "age": "나이",
+      "gender": "성별",
+      "marStat": "결혼 여부",
+      "anni": "기념일",
+      "anniMonth": "기념일의 달",
+      "marYears": "결혼 년수",
+      "phone": "핸드폰",
+      "email": "이메일",
+      "address": "주소",
+      "city": "도시",
+      "state": "주/도",
+      "zip": "우편번호/우편번호",
+      "memShip": "회원",
+      "memShipStat": "회원상태",
+      "groupMem": "그룹 멤버",
+      "act": "활동",
+      "memDon": "회원 기부",
+      "memAtt": "회원 출석",
+      "operator": "운영자",
+      "saveCon": "조건 저장"
+    },
+    "groups": {
+      "notMemMsg": "현재 어떤 그룹의 회원도 아닙니다.",
+      "groups": "여러 떼"
+    },
+    "household": {
+      "house": " 가정"
+    },
+    "householdEdit": {
+      "updQuestion": "업데이트하고 싶나요",
+      "addMatch": "일치하는 주소",
+      "blankMsg": "세대 이름을 입력하세요.",
+      "head": "머리",
+      "spouse": "배우자",
+      "child": "어린이",
+      "other": "다른",
+      "rmv": "제거하다",
+      "house": " 가정",
+      "houseName": "세대 이름",
+      "add": "추가하다"
+    },
+    "merge": {
+      "mergeRec": "레코드 병합",
+      "merge": "병합"
+    },
+    "peopleColumns": {
+      "noFilt": "사용 가능한 필터가 없습니다.",
+      "filt": "필터",
+      "appFilt": "필터 적용",
+      "stand": "기준",
+      "cust": "관습",
+      "close": "닫다"
+    },
+    "peopleSearch": {
+      "simpSearch": "단순 검색",
+      "advSearch": "고급 검색",
+      "simp": "단순한",
+      "adv": "고급의",
+      "name": "이름",
+      "search": "찾다",
+      "addCon": "조건 추가",
+      "allPeeps": "모든 사람:",
+      "notIn": "없음",
+      "madeTo": "하게 된",
+      "for": "~을 위한"
+    },
+    "peopleSearchResults": {
+      "noResMsg": "검색 결과가 없습니다.  "
+    },
+    "personAttendance": {
+      "noAttMsg": "출석기록이 ​​없습니다. ",
+      "att": "출석"
+    },
+    "personEdit": {
+      "confirmMsg": "이 개인 기록을 영구적으로 삭제하시겠습니까?",
+      "firstReq": "이름은 필수 항목입니다.",
+      "lastReq": "성은 필수 항목입니다.",
+      "valEmail": "유효한 이메일 주소를 입력하세요.",
+      "upAddress": "주소를 다음으로 업데이트했습니다.",
+      "for": "~을 위한",
+      "applyQuestion": "전체에 적용하시겠습니까?",
+      "family": "가족",
+      "persDet": "개인정보",
+      "merge": "병합",
+      "firstName": "이름",
+      "middleName": "중간 이름",
+      "lastName": "성",
+      "email": "이메일",
+      "nameNote": "이름표 메모",
+      "nickName": "별명",
+      "memShipStat": "회원상태",
+      "mem": "회원",
+      "visitor": "방문객",
+      "staff": "직원",
+      "bDate": "생일",
+      "gender": "성별",
+      "unspec": "지정되지 않음",
+      "male": "남성",
+      "female": "여성",
+      "marStat": "결혼 여부",
+      "unknown": "알려지지 않은",
+      "single": "하나의",
+      "married": "기혼",
+      "divorced": "이혼",
+      "widowed": "사별",
+      "anni": "기념일",
+      "address": "주소",
+      "firstLine": "1호선",
+      "secondLine": "2호선",
+      "city": "도시",
+      "state": "상태",
+      "zip": "지퍼",
+      "phone": "핸드폰",
+      "home": "집",
+      "invalForm": "잘못된 형식",
+      "work": "일하다",
+      "mobile": "이동하는",
+      "exten": "확대"
+    },
+    "personView": {
+      "gender": "성별",
+      "age": "나이",
+      "marStat": "결혼 상태:",
+      "memShip": "회원:",
+      "mobile": "이동하는",
+      "work": "일하다",
+      "persDet": "개인정보",
+      "home": "집"
+    },
+    "tabs": {
+      "notes": "노트",
+      "att": "출석",
+      "don": "기부",
+      "noImplement": "구현되지 않음"
+    },
+    "peoplePage": {
+      "photo": "사진",
+      "disName": "이름 표시하기",
+      "name": "이름",
+      "lastName": "성",
+      "last": "마지막",
+      "firstName": "이름",
+      "first": "첫 번째",
+      "middleName": "중간 이름",
+      "middle": "가운데",
+      "address": "주소",
+      "city": "도시",
+      "state": "상태",
+      "zip": "지퍼",
+      "primEmail": "기본 이메일",
+      "email": "이메일",
+      "primPhone": "기본 전화",
+      "phone": "핸드폰",
+      "bDate": "생일",
+      "bDayNo": "생일(연도 없음)",
+      "bDay": "생일",
+      "age": "나이",
+      "gender": "성별",
+      "memShipStat": "회원상태",
+      "memShip": "회원",
+      "marStat": "결혼 여부",
+      "married": "기혼",
+      "anni": "기념일",
+      "nameNote": "Nmae 태그 노트",
+      "notes": "노트",
+      "deleteOp": "삭제 옵션",
+      "delete": "삭제",
+      "searchPpl": "사람 검색",
+      "ppl": "사람들"
+    }
+  },
+  "plans": {
+    "assignmentEdit": {
+      "noMem": "그룹 회원을 찾을 수 없습니다.",
+      "editAssign": "과제 수정",
+      "assignPos": "직위 할당",
+      "done": "완료"
+    },
+    "ministryList": {
+      "noMinMsg": "사역을 찾을 수 없습니다. ",
+      "mins": "사역자"
+    },
+    "planEdit": {
+      "planReq": "계획 이름이 필요합니다.",
+      "servReq": "서비스 날짜가 필요합니다.",
+      "planEdit": "계획 편집",
+      "planAdd": "계획 추가",
+      "name": "이름",
+      "servDate": "서비스 날짜",
+      "copy": "복사 원본",
+      "none": "없음"
+    },
+    "planList": {
+      "noPlan": "아직 추가된 계획이 없습니다.",
+      "plans": "계획"
+    },
+    "planValidation": {
+      "blockCon": "차단 날짜 충돌",
+      "to": "에게",
+      "more": "더",
+      "person": "사람",
+      "ppl": "사람들",
+      "needed": "필요합니다.",
+      "timeCon": "사이의 시간 충돌",
+      "and": "그리고",
+      "during": "~ 동안",
+      "cons": "충돌",
+      "timeCon2": "시간 충돌",
+      "between": "~ 사이",
+      "valPlan": "계획이 유효합니다.",
+      "volReq": "자원봉사 요청: ",
+      "volNotif": "모든 자원봉사자에게 알렸습니다.",
+      "notify": "알림",
+      "vol": "자원봉사자",
+      "val": "확인"
+    },
+    "positionEdit": {
+      "catNameReq": "카테고리 이름이 필요합니다.",
+      "nameReq": "이름은 필수입니다",
+      "posEdit": "위치 편집",
+      "posAdd": "직위 추가",
+      "catName": "카테고리 이름",
+      "name": "이름",
+      "volCount": "자원봉사자 수",
+      "volGroup": "자원봉사단"
+    },
+    "positionList": {
+      "load": "로드 중...",
+      "persNeed": "1명 필요",
+      "pplNeed": " 필요한 사람",
+      "team": "팀",
+      "pos": "위치",
+      "ppl": "사람들"
+    },
+    "teamList": {
+      "noTeam": "팀을 찾을 수 없습니다. ",
+      "pers": "1명",
+      "ppl": "사람들",
+      "peeps": " 사람들",
+      "name": "이름",
+      "teams": "팀"
+    },
+    "timeEdit": {
+      "disNameReq": "표시 이름이 필요합니다.",
+      "startReq": "시작 시간은 필수 항목입니다.",
+      "endReq": "종료 시간은 필수 항목입니다.",
+      "timeEdit": "시간 편집",
+      "timeAdd": "시간 추가",
+      "disName": "이름 표시하기",
+      "timeStart": "시작 시간",
+      "timeEnd": "종료 시간",
+      "teamNeed": "필요한 팀"
+    },
+    "timeList": {
+      "noTime": "아직 추가된 시간이 없습니다.",
+      "times": "타임스",
+      "sunServ": "일요일 예배"
+    },
+    "ministryPage": {
+      "plans": "계획",
+      "teams": "팀"
+    },
+    "planPage": {
+      "assign": "과제",
+      "notes": "노트",
+      "band": "밴드",
+      "noteSave": "메모가 저장되었습니다."
+    },
+    "plansPage": {
+      "selMin": "사역을 선택하세요"
+    }
+  },
+  "profile": {
+    "profilePage": {
+      "saveChange": "변경사항이 저장되었습니다.",
+      "firstMsg": "이름을 입력하세요",
+      "lastMsg": "성을 입력하세요",
+      "emailMsg": "이메일 주소를 입력 해주세요.",
+      "valEmail": "유효한 이메일 주소를 입력하세요.",
+      "passMatch": "비밀번호가 일치하지 않습니다.",
+      "passLong": "비밀번호는 8자 이상으로 입력해주세요.",
+      "confirmMsg": "계정을 영구적으로 삭제하시겠습니까?",
+      "profEdit": "프로필 수정",
+      "email": "이메일",
+      "firstName": "이름",
+      "lastName": "성",
+      "passNew": "새 비밀번호",
+      "passVer": "비밀번호 확인",
+      "noDirect": "디렉터리 수신 거부",
+      "notifPref": "알림 환경설정",
+      "notifMsg": "비공개 메시지, 대화, 양식 및 기타 알림에 대한 업데이트를 받을 방법을 선택하세요.",
+      "notifPush": "푸시 알림 허용",
+      "yes": "예",
+      "no": "아니요",
+      "freqEmail": "이메일 빈도",
+      "never": "절대",
+      "indiv": "개인",
+      "daily": "일일",
+      "accDel": "계정 삭제",
+      "permWarn": "주의하세요. 이러한 작업은 영구적입니다.",
+      "delAcc": "계정을 삭제하다"
+    }
+  },
+  "reports": {
+    "reportPage": {
+      "report": "보고서"
+    },
+    "reportsPage": {
+      "reports": "보고서",
+      "bDays": "생일",
+      "attTrend": "출석 추세",
+      "groupAtt": "단체 출석",
+      "dailyGroupAtt": "일일 그룹 출석",
+      "donSum": "기부 요약"
+    }
+  },
+  "serverAdmin": {
+    "adminPage": {
+      "arch": "보관됨",
+      "act": "활동적인",
+      "church": "교회",
+      "regist": "등기",
+      "servAdmin": "서버 관리자",
+      "churches": "교회",
+      "churchName": "교회 이름",
+      "search": "찾다",
+      "noChurch": "교회를 찾을 수 없습니다.  ",
+      "valueNotes": "값 계산 방법에 대한 참고 사항",
+      "noteOne": "유사한 소프트웨어는 Breeze입니다.  ",
+      "noteTwo": "유사한 소프트웨어는 SubSplash입니다.  ",
+      "noteThree": "비교 가능한 콘텐츠는 주황색입니다.  ",
+      "noteFour": "유사한 소프트웨어는 ProPresenter입니다.  "
+    },
+    "reportPage": {
+      "report": "보고서"
+    }
+  },
+  "settings": {
+    "associatePerson": {
+      "change": "변화"
+    },
+    "churchSettings": {
+      "churchSet": "교회 환경",
+      "name": "이름",
+      "subdom": "하위 도메인",
+      "address": "주소"
+    },
+    "churchSettingsEdit": {
+      "noNameMsg": "교회 이름은 비워둘 수 없습니다.",
+      "noSubMsg": "하위 도메인은 비워둘 수 없습니다.",
+      "churchName": "교회 이름",
+      "subdom": "하위 도메인",
+      "address1": "주소 라인 1",
+      "address2": "주소 2",
+      "city": "도시",
+      "state": "주/도",
+      "zip": "우편번호/우편번호",
+      "country": "국가"
+    },
+    "domainSettingsEdit": {
+      "delete": "삭제",
+      "domains": "도메인",
+      "domain": "도메인",
+      "domMsg": "원하는 사용자 정의 도메인에 대해 B1 웹사이트 응답을 만들 수 있습니다.  ",
+      "act": "행동",
+      "add": "추가하다"
+    },
+    "givingSettingsEdit": {
+      "pubKey": "공개 키",
+      "secKey": "비밀키",
+      "transFee": "거래 수수료",
+      "giving": "기부",
+      "prov": "공급자",
+      "none": "없음",
+      "stripe": "줄무늬",
+      "forceMsg": "자동으로 사용자가 거래 수수료를 부담하도록 강제합니다."
+    },
+    "imageEditor": {
+      "upload": "업로드",
+      "crop": "수확고"
+    },
+    "preview": {
+      "preview": "시사"
+    },
+    "roleEdit": {
+      "valMsg": "유효한 역할 이름을 입력하세요.",
+      "confirmMsg": "이 역할을 영구적으로 삭제하시겠습니까?",
+      "roleEdit": "역할 편집",
+      "roleName": "역할 이름"
+    },
+    "roleMembers": {
+      "add": "추가하다",
+      "confirmMsg": "정말로 이 사용자를 다음에서 삭제하시겠습니까?",
+      "roleAppMsg": "이 역할은 교회의 모든 구성원에게 적용됩니다.",
+      "name": "이름",
+      "email": "이메일",
+      "mem": "회원",
+      "edit": "편집하다",
+      "delete": "삭제"
+    },
+    "rolePermissions": {
+      "permEdit": "권한 편집"
+    },
+    "roles": {
+      "roleCreate": "새로운 역할을 만들고 싶습니까? ",
+      "itMsg": "?  ",
+      "custAdd": "맞춤 역할 추가",
+      "add": "추가하다",
+      "role": "역할",
+      "roles": "역할",
+      "name": "이름",
+      "acc": "회계",
+      "accDesc": "기부금을 확인하고 관리할 수 있습니다.",
+      "churchStaff": "교회 직원",
+      "canEdit": "대부분의 데이터를 편집할 수 있습니다. ",
+      "churchDesc": " 사람, 그룹, 참석 및 양식을 포함합니다.",
+      "contAdmin": "콘텐츠 관리자",
+      "contAdminDesc": "웹사이트 콘텐츠, 모바일 콘텐츠, 설교 편집이 가능합니다.",
+      "lesAdmin": "수업 관리자",
+      "lesAdminDesc": "교실을 설정하고 수업을 예약할 수 있습니다. ",
+      "everyone": "모든 사람",
+      "edit": "편집하다"
+    },
+    "userAdd": {
+      "errAnother": "저장할 수 없습니다. ",
+      "valEmail": "유효한 이메일을 입력하세요",
+      "errDiff": "이 이메일의 사용자 계정은 다른 사람과 연결되어 있습니다.",
+      "firstMsg": "이름을 입력하세요",
+      "lastMsg": "성을 입력하세요",
+      "valEmailMsg": "유효한 이메일을 입력하세요",
+      "noAcc": "사용자 계정이 없나요?",
+      "createNew": "새 사용자 만들기",
+      "firstName": "이름",
+      "lastName": "성",
+      "email": "이메일",
+      "addTo": "다음에 추가 "
+    },
+    "manageChurch": {
+      "tools": "도구",
+      "imEx": "수입 수출",
+      "manage": "관리하다"
+    },
+    "rolePage": {
+      "permEdit": "권한 편집",
+      "noEditMsg": "도메인 관리자 역할에 대한 권한은 편집할 수 없습니다.  ",
+      "roleEdit": "역할 편집:"
+    }
+  },
+  "tasks": {
+    "actionEdit": {
+      "editAct": "액션 편집",
+      "actType": "작업 유형",
+      "taskAssign": "작업 할당",
+      "assignTo": "할당 대상",
+      "taskTitle": "작업 제목",
+      "taskNote": "작업 노트"
+    },
+    "automationDetails": {
+      "task": "일",
+      "auto": "자동화 세부정보",
+      "name": "이름",
+      "rep": "반복",
+      "acts": "행위"
+    },
+    "automationEdit": {
+      "autoEdit": "자동화 편집",
+      "title": "제목",
+      "rep": "반복하다",
+      "never": "절대",
+      "yearly": "매년",
+      "monthly": "월간 간행물"
+    },
+    "conditionAttendance": {
+      "op": "운영자",
+      "hasAtt": "참석했다",
+      "hasNoAtt": "참석하지 않았다",
+      "eventType": "이벤트 유형",
+      "anywhere": "어딘가에",
+      "campus": "교정",
+      "serv": "서비스",
+      "servTime": "서비스 시간",
+      "group": "그룹"
+    },
+    "conditionDate": {
+      "dayOf": "요일",
+      "sun": "일요일",
+      "mon": "월요일",
+      "tues": "화요일",
+      "wed": "수요일",
+      "thurs": "목요일",
+      "fri": "금요일",
+      "sat": "토요일",
+      "month": "월",
+      "jan": "1월",
+      "feb": "2월",
+      "mar": "3월",
+      "apr": "4월",
+      "may": "5월",
+      "june": "6월",
+      "july": "칠월",
+      "aug": "팔월",
+      "sep": "구월",
+      "oct": "십월",
+      "nov": "십일월",
+      "dec": "12월",
+      "prevMonth": "지난달",
+      "curMonth": "이번 달",
+      "nextMonth": "다음 달",
+      "datePart": "날짜 부분",
+      "dateFull": "전체 날짜",
+      "weekDay": "요일",
+      "monthDay": "날짜",
+      "yearsE": "경과 연수",
+      "op": "운영자",
+      "absolute": "절대값",
+      "relative": "상대값"
+    },
+    "conditionDetails": {
+      "addConj": "접속사 추가",
+      "addCon": "조건 추가",
+      "any": "어느",
+      "trueCon": "이 조건 중 하나가 참임",
+      "all": "모두",
+      "con": "정황:"
+    },
+    "conditionEdit": {
+      "confirmMsg": "이 조건을 삭제하시겠습니까?",
+      "conEdit": "조건 편집",
+      "conType": "조건 유형",
+      "gen": "일반적인",
+      "today": "오늘 날짜",
+      "name": "이름",
+      "disName": "이름 표시하기",
+      "firstName": "이름",
+      "lastName": "성",
+      "middleName": "중간 이름",
+      "nickName": "닉네임",
+      "persAtt": "개인 속성",
+      "bDate": "생일",
+      "gender": "성별",
+      "marStat": "결혼 여부",
+      "anni": "기념일",
+      "memShipStat": "회원상태",
+      "conInfo": "연락처 정보",
+      "phone": "핸드폰",
+      "email": "이메일",
+      "address": "주소",
+      "city": "도시",
+      "state": "주/도",
+      "zip": "우편번호/우편번호"
+    },
+    "conditionSelect": {
+      "gender": "성별",
+      "unknown": "알려지지 않은",
+      "male": "남성",
+      "female": "여성",
+      "marStat": "결혼 여부",
+      "single": "하나의",
+      "married": "기혼",
+      "divorced": "이혼",
+      "widowed": "사별",
+      "memShipStat": "회원상태",
+      "mem": "회원",
+      "visitor": "방문객",
+      "staff": "직원",
+      "op": "운영자",
+      "is": "~이다",
+      "isNot": "아니다"
+    },
+    "conditionText": {
+      "op": "운영자",
+      "contains": "포함",
+      "startW": "다음으로 시작",
+      "endW": "로 끝나다"
+    },
+    "conjunctionEdit": {
+      "conjEdit": "접속사 편집",
+      "conjType": "결합 유형",
+      "and": "AND - 모든 조건이 참입니다.",
+      "or": "OR - 조건 중 하나라도 참입니다."
+    },
+    "automationsPage": {
+      "manageAuto": "관리형 자동화 작업",
+      "auto": "자동화된 작업"
+    },
+    "contentPicker": {
+      "selPers": "개인 또는 그룹 선택",
+      "pers": "사람",
+      "group": "그룹",
+      "close": "닫다",
+      "sel": "선택하다"
+    },
+    "newTask": {
+      "associatePers": "이 작업을 사람과 연결하세요.",
+      "assignPers": "이 작업을 다른 사람에게 할당하십시오.",
+      "titleTask": "이 작업의 제목을 입력하세요.",
+      "taskNew": "새 작업",
+      "associateW": "와 연결",
+      "assignTo": "할당 대상",
+      "title": "제목",
+      "notes": "노트"
+    },
+    "selectGroup": {
+      "group": "그룹",
+      "search": "찾다",
+      "sel": "선택하다"
+    },
+    "taskList": {
+      "title": "제목",
+      "associateW": "와 관련된",
+      "assignTo": "할당",
+      "assignGroup": "내 그룹에 할당됨",
+      "assignMe": "나에게 할당됨",
+      "reqMe": "내가 요청한 것",
+      "tasks": "작업"
+    },
+    "taskPage": {
+      "dateCreated": "생성 일자",
+      "taskDet": "작업 세부정보",
+      "stat": "상태",
+      "open": "열려 있는",
+      "closed": "닫은",
+      "createdBy": "작성자",
+      "associateW": "와 관련된",
+      "assignTo": "할당",
+      "change": "변화"
+    },
+    "tasksPage": {
+      "tasks": "작업",
+      "auto": "자동화",
+      "showClosed": "종료된 표시",
+      "showOpen": "공개 표시"
+    }
+  }
+}

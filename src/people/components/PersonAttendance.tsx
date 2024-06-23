@@ -1,5 +1,5 @@
 import React from "react";
-import { useMountedState, DisplayBox, ArrayHelper, ApiHelper, AttendanceRecordInterface, DateHelper, GroupInterface, UniqueIdHelper, Loading } from "@churchapps/apphelper";
+import { useMountedState, DisplayBox, ArrayHelper, ApiHelper, AttendanceRecordInterface, DateHelper, GroupInterface, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
 
@@ -27,7 +27,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
     let rows: JSX.Element[] = [];
 
     if (records.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>No attendance records. Attendance will appear once attendance has been tracked for a group session.</TableCell></TableRow>);
+      rows.push(<TableRow key="0"><TableCell>{Locale.label("people.personAttendance.noAttMsg")}</TableCell></TableRow>);
       return rows;
     }
 
@@ -76,7 +76,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
   }
 
   return (
-    <DisplayBox headerIcon="calendar_month" headerText="Attendance">
+    <DisplayBox headerIcon="calendar_month" headerText={Locale.label("people.personAttendance.att")}>
       {getTable()}
     </DisplayBox>
   );

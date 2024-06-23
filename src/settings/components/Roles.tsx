@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { DisplayBox, UserHelper, ApiHelper, Permissions, ChurchInterface, RoleInterface, RolePermissionInterface } from "@churchapps/apphelper"
+import { DisplayBox, UserHelper, ApiHelper, Permissions, ChurchInterface, RoleInterface, RolePermissionInterface, Locale } from "@churchapps/apphelper"
 import { Divider, Icon, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper"
 
@@ -23,7 +23,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
   };
 
   const predefined = [
-    { name: "Accounting", description: "Has access to view and manage donations.", permissions: [
+    { name: Locale.label("settings.roles.acc"), description: Locale.label("settings.roles.accDesc"), permissions: [
       Permissions.membershipApi.people.view,
       Permissions.membershipApi.people.edit,
       Permissions.givingApi.donations.edit,
@@ -31,7 +31,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
       Permissions.givingApi.donations.viewSummary,
       Permissions.givingApi.settings.edit
     ]},
-    { name: "Church Staff", description: "Can edit most data in Chums.org, including people, groups, attendance and forms.", permissions: [
+    { name: Locale.label("settings.roles.churchStaff"), description: Locale.label("settings.roles.canEdit") + "Chums.org," + Locale.label("settings.roles.churchDesc"), permissions: [
       Permissions.membershipApi.people.view,
       Permissions.membershipApi.people.edit,
       Permissions.membershipApi.groups.edit,
@@ -43,12 +43,12 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
       Permissions.attendanceApi.attendance.view,
       Permissions.attendanceApi.services.edit,
     ]},
-    { name: "Content Admin", description: "Can edit website content, mobile content and sermons.", permissions: [
+    { name: Locale.label("settings.roles.contAdmin"), description: Locale.label("settings.roles.contAdminDesc"), permissions: [
       Permissions.contentApi.chat.host,
       Permissions.contentApi.content.edit,
       Permissions.contentApi.streamingServices.edit
     ]},
-    { name: "Lessons Admin", description: "Can set up classrooms and schedule lessons on Lessons.church.", permissions: [
+    { name: Locale.label("settings.roles.lesAdmin"), description: Locale.label("settings.roles.lesAdminDesc") + "Lessons.church.", permissions: [
       { api: "LessonsApi", contentType:"Schedules", permission: "Edit" }
     ]}
   ]
@@ -63,7 +63,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     console.log("made it")
     console.log(role);
     handleClose();
-    if (window.confirm("Do you wish to create a new role of " + role.name + "?  It " + role.description.toLowerCase() )) {
+    if (window.confirm(Locale.label("settings.roles.roleCreate") + role.name + Locale.label("settings.roles.itMsg") + role.description.toLowerCase() )) {
 
       const roles = await ApiHelper.post("/roles", [{ name: role.name  }], "MembershipApi");
       const r = roles[0];
@@ -85,12 +85,12 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
         </IconButton>
         <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
           <MenuItem data-cy="add-campus" onClick={() => {handleClose(); selectRoleId(""); }}>
-            <Icon sx={{mr: "3px"}}>lock</Icon> Add Custom Role
+            <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("settings.roles.custAdd")}
           </MenuItem>
           <Divider />
           {predefined.map((role, i) => (
             <MenuItem key={role.name} onClick={() => {addRole(role); }} title={role.description}>
-              <Icon sx={{mr: "3px"}}>lock</Icon> Add "<b>{role.name}</b>" Role
+              <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("settings.roles.add")} "<b>{role.name}</b>" {Locale.label("settings.roles.role")}
             </MenuItem>
           ))}
         </Menu>
@@ -111,14 +111,14 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.edit)) {
       result.push(
         <TableRow key="everyone">
-          <TableCell><i className="groups" /> <Link to={`/settings/role/everyone`}>(Everyone)</Link></TableCell>
+          <TableCell><i className="groups" /> <Link to={`/settings/role/everyone`}>({Locale.label("settings.roles.everyone")})</Link></TableCell>
           <TableCell></TableCell>
         </TableRow>
       );
     }
 
     sortedRoles.forEach(role => {
-      const editLink = (canEdit) ? <SmallButton icon="edit" toolTip="Edit" onClick={() => { selectRoleId(role.id) }} /> : null;
+      const editLink = (canEdit) ? <SmallButton icon="edit" toolTip={Locale.label("settings.roles.edit")} onClick={() => { selectRoleId(role.id) }} /> : null;
       result.push(<TableRow key={role.id}>
         <TableCell><i className="lock" /> <Link to={`/settings/role/${role.id}`}>{role.name}</Link></TableCell>
         <TableCell align="right">{editLink}</TableCell>
@@ -131,9 +131,9 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
   useEffect(loadData, [selectedRoleId, church]); //eslint-disable-line
 
   return (
-    <DisplayBox id="rolesBox" headerText="Roles" headerIcon="lock" editContent={getEditContent()} help="chums/assigning-roles">
+    <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={getEditContent()} help="chums/assigning-roles">
       <Table id="roleMemberTable">
-        <TableHead><TableRow><TableCell>Name</TableCell><TableCell></TableCell></TableRow></TableHead>
+        <TableHead><TableRow><TableCell>{Locale.label("settings.roles.name")}</TableCell><TableCell></TableCell></TableRow></TableHead>
         <TableBody>{getRows()}</TableBody>
       </Table>
     </DisplayBox>

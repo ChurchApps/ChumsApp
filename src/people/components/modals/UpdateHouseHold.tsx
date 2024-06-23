@@ -1,5 +1,6 @@
 import React from "react";
 import { Dialog, Button, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Locale } from "@churchapps/apphelper";
 
 interface Props {
   show: boolean;
@@ -11,13 +12,13 @@ interface Props {
 
 export const UpdateHouseHold: React.FC<Props> = (props) => (
   <Dialog open={props.show} aria-labelledby="contained-modal-title-vcenter" data-cy="update-household-modal">
-    <DialogTitle>Update Address</DialogTitle>
+    <DialogTitle>{Locale.label("people.updateHouseHold.update")}</DialogTitle>
     <DialogContent>
       <p>{props.text}</p>
     </DialogContent>
     <DialogActions>
-      <Button onClick={props.handleNo} data-cy="no-button">No</Button>
-      <Button onClick={props.handleYes} data-cy="yes-button">Yes</Button>
+      <Button onClick={props.handleNo} data-cy="no-button">{Locale.label("people.updateHouseHold.no")}</Button>
+      <Button onClick={props.handleYes} data-cy="yes-button">{Locale.label("people.updateHouseHold.yes")}</Button>
     </DialogActions>
   </Dialog>
 );

@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Box } from "@mui/material";
 import React from "react";
-import { ApiHelper, InputBox, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
 import { FundDonations, DonationInterface, FundDonationInterface, FundInterface, PersonInterface } from "@churchapps/apphelper";
 
 interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
@@ -63,7 +63,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
 
   const getMethodDetails = () => {
     if (donation.method === "Cash") return null;
-    let label = (donation.method === "Check") ? "Check #" : "Last 4 digits";
+    let label = (donation.method === "Check") ? Locale.label("donations.donationEdit.checkNum") : Locale.label("donations.donationEdit.lastDig");
     return (
       <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails || ""} onChange={handleChange} />
     );
@@ -97,11 +97,11 @@ export const DonationEdit: React.FC<Props> = (props) => {
     if (showSelectPerson) return (<>
       <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} />
       <hr />
-      <a href="about:blank" className="text-decoration" onClick={(e: React.MouseEvent) => { e.preventDefault(); handlePersonAdd(null); }}>Anonymous</a>
+      <a href="about:blank" className="text-decoration" onClick={(e: React.MouseEvent) => { e.preventDefault(); handlePersonAdd(null); }}>{Locale.label("donations.donationEdit.anon")}</a>
     </>
     );
     else {
-      let personText = (donation.person === undefined || donation.person === null) ? ("Anonymous") : donation.person.name.display;
+      let personText = (donation.person === undefined || donation.person === null) ? (Locale.label("donations.donationEdit.anon")) : donation.person.name.display;
       return (<div>
         <a href="about:blank" className="text-decoration" data-cy="donating-person" onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowSelectPerson(true); }}>{personText}</a>
       </div>);
@@ -111,23 +111,23 @@ export const DonationEdit: React.FC<Props> = (props) => {
   React.useEffect(loadData, [props.donationId]); //eslint-disable-line
 
   return (
-    <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText="Edit Donation" cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
+    <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText={Locale.label("donations.donationEdit.donEdit")} cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
       <Box mb={2}>
-        <label>Person</label>
+        <label>{Locale.label("donations.donationEdit.person")}</label>
         {getPersonSection()}
       </Box>
-      <TextField fullWidth label="Date" type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth label={Locale.label("donations.donationEdit.date")} type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
       <FormControl fullWidth>
-        <InputLabel id="method">Method</InputLabel>
-        <Select name="method" labelId="method" label="Method" value={donation.method || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
-          <MenuItem value="Check">Check</MenuItem>
-          <MenuItem value="Cash">Cash</MenuItem>
-          <MenuItem value="Card">Card</MenuItem>
+        <InputLabel id="method">{Locale.label("donations.donationEdit.method")}</InputLabel>
+        <Select name="method" labelId="method" label={Locale.label("donations.donationEdit.method")} value={donation.method || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+          <MenuItem value="Check">{Locale.label("donations.donationEdit.check")}</MenuItem>
+          <MenuItem value="Cash">{Locale.label("donations.donationEdit.cash")}</MenuItem>
+          <MenuItem value="Card">{Locale.label("donations.donationEdit.card")}</MenuItem>
         </Select>
       </FormControl>
       {getMethodDetails()}
       <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
-      <TextField fullWidth label="Notes" data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline />
+      <TextField fullWidth label={Locale.label("donations.donationEdit.notes")} data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline />
     </InputBox>
   );
 }

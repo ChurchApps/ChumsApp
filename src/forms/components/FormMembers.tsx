@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton } from "@mui/material";
 import { Info } from "@mui/icons-material";
-import { DisplayBox, PersonAdd, PersonInterface, ApiHelper, MemberPermissionInterface, PersonHelper } from "@churchapps/apphelper";
+import { DisplayBox, PersonAdd, PersonInterface, ApiHelper, MemberPermissionInterface, PersonHelper, Locale } from "@churchapps/apphelper";
 
 interface Props { formId: string }
 
@@ -66,11 +66,11 @@ export const FormMembers: React.FC<Props> = (props) => {
           <TableCell><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></TableCell>
           <TableCell>
             <Stack direction="row" spacing={1}>
-              <Button variant={fm.action === "admin" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, {action: "admin"}) }}>Admin</Button>
-              <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, {action: "view"}) }}>View Only</Button>
+              <Button variant={fm.action === "admin" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, {action: "admin"}) }}>{Locale.label("forms.formMembers.admin")}</Button>
+              <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, {action: "view"}) }}>{Locale.label("forms.formMembers.view")}</Button>
             </Stack>
           </TableCell>
-          <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} style={{display: "flex", alignItems: "center", color: "#dc3545"}}><Icon sx={{marginRight: "5px"}}>person_remove</Icon> Remove</a>}</TableCell>
+          <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} style={{display: "flex", alignItems: "center", color: "#dc3545"}}><Icon sx={{marginRight: "5px"}}>person_remove</Icon> {Locale.label("forms.formMembers.rmv")}</a>}</TableCell>
           <TableCell><Switch checked={fm.emailNotification === true} onChange={(e) => { handleActionChange(fm.memberId, {emailNotification: e.target.checked}) }} /></TableCell>
         </TableRow>
       );
@@ -80,7 +80,7 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>Name</th><th>Permission</th><th>Action</th><th>Email Notification<Tooltip title="Whenever the form is submitted, you'll get notified via mail." arrow><IconButton><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("forms.formMembers.name")}</th><th>{Locale.label("forms.formMembers.perm")}</th><th>{Locale.label("forms.formMembers.act")}</th><th>{Locale.label("forms.formMembers.emailNotif")}<Tooltip title={Locale.label("forms.formMembers.emailNotifMsg")} arrow><IconButton><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
     return rows;
   }
 
@@ -104,12 +104,12 @@ export const FormMembers: React.FC<Props> = (props) => {
   return (
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
-        <DisplayBox headerText="Form Members" headerIcon="group" help="chums/forms">
+        <DisplayBox headerText={Locale.label("forms.formMembers.formMem")} headerIcon="group" help="chums/forms">
           {getTable()}
         </DisplayBox>
       </Grid>
       <Grid item md={4} xs={12}>
-        <DisplayBox headerText="Add Person" headerIcon="person_add">
+        <DisplayBox headerText={Locale.label("forms.formMembers.addPpl")} headerIcon="person_add">
           <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} filterList={filterList} />
         </DisplayBox>
       </Grid>

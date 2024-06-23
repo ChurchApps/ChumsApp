@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Table, TableCell, TableRow } from "@mui/material";
-import { ApiHelper, AssignmentInterface, GroupMemberInterface, InputBox, PersonHelper, PositionInterface } from "@churchapps/apphelper";
+import { ApiHelper, AssignmentInterface, GroupMemberInterface, InputBox, Locale, PersonHelper, PositionInterface } from "@churchapps/apphelper";
 
 interface Props { assignment: AssignmentInterface, position:PositionInterface, peopleNeeded:number, updatedFunction: (done:boolean) => void }
 
@@ -28,7 +28,7 @@ export const AssignmentEdit = (props:Props) => {
   const getMembers = () => {
     let rows: JSX.Element[] = [];
     if (groupMembers.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>No group members found.</TableCell></TableRow>)
+      rows.push(<TableRow key="0"><TableCell>{Locale.label("plans.assignmentEdit.noMem")}</TableCell></TableRow>)
       return rows;
     }
 
@@ -47,7 +47,7 @@ export const AssignmentEdit = (props:Props) => {
   useEffect(() => { loadData(); }, [props.position?.groupId]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (<>
-    <InputBox headerText={(props.assignment?.id) ? "Edit Assignment" : "Assign Position"} headerIcon="assignment" saveFunction={handleSave} cancelFunction={() => props.updatedFunction(true)} deleteFunction={(props.assignment.id) ? handleDelete : null } saveText={"Done"}>
+    <InputBox headerText={(props.assignment?.id) ? Locale.label("plans.assignmentEdit.editAssign") : Locale.label("plans.assignmentEdit.assignPos")} headerIcon="assignment" saveFunction={handleSave} cancelFunction={() => props.updatedFunction(true)} deleteFunction={(props.assignment.id) ? handleDelete : null } saveText={Locale.label("plans.assignmentEdit.done")}>
       <Table size="small">
         {getMembers()}
       </Table>

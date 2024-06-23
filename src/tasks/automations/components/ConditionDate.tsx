@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
-import { ConditionInterface } from "@churchapps/apphelper";
+import { ConditionInterface, Locale } from "@churchapps/apphelper";
 import { ConditionHelper } from "../../../helpers"
 
 interface Props {
@@ -59,40 +59,40 @@ export const ConditionDate = (props: Props) => {
 
   const getDayOfWeek = () => (
     <FormControl fullWidth>
-      <InputLabel>Day of Week</InputLabel>
-      <Select fullWidth label="Day of Week" value={props.condition.value || ""} name="value" onChange={handleChange}>
-        <MenuItem value="1">Sunday</MenuItem>
-        <MenuItem value="2">Monday</MenuItem>
-        <MenuItem value="3">Tuesday</MenuItem>
-        <MenuItem value="4">Wednesday</MenuItem>
-        <MenuItem value="5">Thursday</MenuItem>
-        <MenuItem value="6">Friday</MenuItem>
-        <MenuItem value="7">Saturday</MenuItem>
+      <InputLabel>{Locale.label("tasks.conditionDate.dayOf")}</InputLabel>
+      <Select fullWidth label={Locale.label("tasks.conditionDate.dayOf")} value={props.condition.value || ""} name="value" onChange={handleChange}>
+        <MenuItem value="1">{Locale.label("tasks.conditionDate.sun")}</MenuItem>
+        <MenuItem value="2">{Locale.label("tasks.conditionDate.mon")}</MenuItem>
+        <MenuItem value="3">{Locale.label("tasks.conditionDate.tues")}</MenuItem>
+        <MenuItem value="4">{Locale.label("tasks.conditionDate.wed")}</MenuItem>
+        <MenuItem value="5">{Locale.label("tasks.conditionDate.thurs")}</MenuItem>
+        <MenuItem value="6">{Locale.label("tasks.conditionDate.fri")}</MenuItem>
+        <MenuItem value="7">{Locale.label("tasks.conditionDate.sat")}</MenuItem>
       </Select>
     </FormControl>
   )
 
   const getMonth = () => (
     <FormControl fullWidth>
-      <InputLabel>Month</InputLabel>
-      <Select fullWidth label="Month" value={props.condition.value || ""} name="value" onChange={handleChange}>
-        <ListSubheader>Absolute Values</ListSubheader>
-        <MenuItem value="1">January</MenuItem>
-        <MenuItem value="2">February</MenuItem>
-        <MenuItem value="3">March</MenuItem>
-        <MenuItem value="4">April</MenuItem>
-        <MenuItem value="5">May</MenuItem>
-        <MenuItem value="6">June</MenuItem>
-        <MenuItem value="7">July</MenuItem>
-        <MenuItem value="8">August</MenuItem>
-        <MenuItem value="9">September</MenuItem>
-        <MenuItem value="10">October</MenuItem>
-        <MenuItem value="11">November</MenuItem>
-        <MenuItem value="12">December</MenuItem>
-        <ListSubheader>Relative Values</ListSubheader>
-        <MenuItem value="{previousMonth}">Previous Month</MenuItem>
-        <MenuItem value="{currentMonth}">Current Month</MenuItem>
-        <MenuItem value="{nextMonth}">Next Month</MenuItem>
+      <InputLabel>{Locale.label("tasks.conditionDate.month")}</InputLabel>
+      <Select fullWidth label={Locale.label("tasks.conditionDate.month")} value={props.condition.value || ""} name="value" onChange={handleChange}>
+        <ListSubheader>{Locale.label("tasks.conditionDate.absolute")}</ListSubheader>
+        <MenuItem value="1">{Locale.label("tasks.conditionDate.jan")}</MenuItem>
+        <MenuItem value="2">{Locale.label("tasks.conditionDate.feb")}</MenuItem>
+        <MenuItem value="3">{Locale.label("tasks.conditionDate.mar")}</MenuItem>
+        <MenuItem value="4">{Locale.label("tasks.conditionDate.apr")}</MenuItem>
+        <MenuItem value="5">{Locale.label("tasks.conditionDate.may")}</MenuItem>
+        <MenuItem value="6">{Locale.label("tasks.conditionDate.june")}</MenuItem>
+        <MenuItem value="7">{Locale.label("tasks.conditionDate.july")}</MenuItem>
+        <MenuItem value="8">{Locale.label("tasks.conditionDate.aug")}</MenuItem>
+        <MenuItem value="9">{Locale.label("tasks.conditionDate.sep")}</MenuItem>
+        <MenuItem value="10">{Locale.label("tasks.conditionDate.oct")}</MenuItem>
+        <MenuItem value="11">{Locale.label("tasks.conditionDate.nov")}</MenuItem>
+        <MenuItem value="12">{Locale.label("tasks.conditionDate.dec")}</MenuItem>
+        <ListSubheader>{Locale.label("tasks.conditionDate.relative")}</ListSubheader>
+        <MenuItem value="{previousMonth}">{Locale.label("tasks.conditionDate.prevMonth")}</MenuItem>
+        <MenuItem value="{currentMonth}">{Locale.label("tasks.conditionDate.curMonth")}</MenuItem>
+        <MenuItem value="{nextMonth}">{Locale.label("tasks.conditionDate.nextMonth")}</MenuItem>
       </Select>
     </FormControl>
   )
@@ -115,18 +115,18 @@ export const ConditionDate = (props: Props) => {
 
   return <>
     <FormControl fullWidth>
-      <InputLabel>Date Part</InputLabel>
-      <Select fullWidth label="Date Part" value={fieldData.datePart || ""} name="datePart" onChange={handleChange}>
-        <MenuItem key="/full" value="full">Full Date</MenuItem>
-        <MenuItem key="/dayOfWeek" value="dayOfWeek">Day of Week</MenuItem>
-        <MenuItem key="/dayOfMonth" value="dayOfMonth">Day of Month</MenuItem>
-        <MenuItem key="/month" value="month">Month</MenuItem>
-        <MenuItem key="/years" value="years">Years Elapsed</MenuItem>
+      <InputLabel>{Locale.label("tasks.conditionDate.datePart")}</InputLabel>
+      <Select fullWidth label={Locale.label("tasks.conditionDate.datePart")} value={fieldData.datePart || ""} name="datePart" onChange={handleChange}>
+        <MenuItem key="/full" value="full">{Locale.label("tasks.conditionDate.dateFull")}</MenuItem>
+        <MenuItem key="/dayOfWeek" value="dayOfWeek">{Locale.label("tasks.conditionDate.weekDay")}</MenuItem>
+        <MenuItem key="/dayOfMonth" value="dayOfMonth">{Locale.label("tasks.conditionDate.monthDay")}</MenuItem>
+        <MenuItem key="/month" value="month">{Locale.label("tasks.conditionDate.month")}</MenuItem>
+        <MenuItem key="/years" value="years">{Locale.label("tasks.conditionDate.yearsE")}</MenuItem>
       </Select>
     </FormControl>
     <FormControl fullWidth>
-      <InputLabel>Operator</InputLabel>
-      <Select fullWidth label="Operator" value={props.condition.operator || ""} name="operator" onChange={handleChange}>
+      <InputLabel>{Locale.label("tasks.conditionDate.op")}</InputLabel>
+      <Select fullWidth label={Locale.label("tasks.conditionDate.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
         <MenuItem key="/equals" value="=">=</MenuItem>
         <MenuItem key="/greaterThan" value=">">&gt;</MenuItem>
         <MenuItem key="/greaterThanEqual" value=">=">&gt;=</MenuItem>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, GroupMemberInterface, PlanInterface, PositionInterface, SmallButton, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, GroupMemberInterface, Locale, PlanInterface, PositionInterface, SmallButton, TimeInterface } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
 import { GroupAdd } from "../../groups/components";
 import UserContext from "../../UserContext";
@@ -33,7 +33,7 @@ export const MinistryList = (props:Props) => {
     let rows: JSX.Element[] = [];
 
     if (!groups || groups.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>No ministries found. Please create a ministry.</TableCell></TableRow>);
+      rows.push(<TableRow key="0"><TableCell>{Locale.label("plans.ministryList.noMinMsg")}</TableCell></TableRow>);
       return rows;
     }
 
@@ -59,7 +59,7 @@ export const MinistryList = (props:Props) => {
 
   if (redirect !== "") return <Navigate to={redirect} />;
   else if (showAdd) return (<GroupAdd updatedFunction={handleAddUpdated} tags="ministry" categoryName="Ministry" />)
-  else return (<DisplayBox headerText="Ministries" headerIcon="assignment" editContent={getAddLink()}>
+  else return (<DisplayBox headerText={Locale.label("plans.ministryList.mins")} headerIcon="assignment" editContent={getAddLink()}>
     <Table size="small">
       <TableBody>
         {getRows()}

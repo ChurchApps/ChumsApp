@@ -1,6 +1,6 @@
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, ConjunctionInterface, ApiHelper } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, ConjunctionInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   conjunction: ConjunctionInterface,
@@ -46,11 +46,11 @@ export const ConjunctionEdit = (props: Props) => {
 
   if (!conjunction) return <></>
   return (
-    <InputBox headerIcon="settings_suggest" headerText="Edit Conjunction" saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
+    <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.conjunctionEdit.conjEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
       <ErrorMessages errors={errors} />
-      <Select fullWidth label="Conjunction Type" value={conjunction?.groupType} name="groupType" onChange={handleChange}>
-        <MenuItem value="and">AND - All of the conditions are true</MenuItem>
-        <MenuItem value="or">OR - Any of the conditions are true</MenuItem>
+      <Select fullWidth label={Locale.label("tasks.conjunctionEdit.conjType")} value={conjunction?.groupType} name="groupType" onChange={handleChange}>
+        <MenuItem value="and">{Locale.label("tasks.conjunctionEdit.add")}</MenuItem>
+        <MenuItem value="or">{Locale.label("tasks.conjunctionEdit.or")}</MenuItem>
       </Select>
     </InputBox>
   );

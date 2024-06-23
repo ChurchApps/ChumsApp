@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox } from "@churchapps/apphelper";
+import { DisplayBox, Locale } from "@churchapps/apphelper";
 import { Grid, Icon } from "@mui/material"
 import { Link } from "react-router-dom";
 
@@ -7,16 +7,16 @@ export const ReportsPage = () => {
   console.log("report page")
   return (
     <>
-      <h1><Icon>summarize</Icon> Reports</h1>
+      <h1><Icon>summarize</Icon> {Locale.label("reports.reportsPage.reports")}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="reportsBox" headerIcon="summarize" headerText="Reports">
+          <DisplayBox id="reportsBox" headerIcon="summarize" headerText={Locale.label("reports.reportsPage.reports")}>
             <ul>
-              <li><Link to="/reports/birthdays">Birthdays</Link></li>
-              <li><Link to="/reports/attendanceTrend">Attendance Trend</Link></li>
-              <li><Link to="/reports/groupAttendance">Group Attendance</Link></li>
-              <li><Link to="/reports/dailyGroupAttendance">Daily Group Attendance</Link></li>
-              <li><Link to="/reports/donationSummary">Donation Summary</Link></li>
+              <li><Link to="/reports/birthdays">{Locale.label("reports.reportsPage.bDays")}</Link></li>
+              <li><Link to="/reports/attendanceTrend">{Locale.label("reports.reportsPage.attTrend")}</Link></li>
+              <li><Link to="/reports/groupAttendance">{Locale.label("reports.reportsPage.groupAtt")}</Link></li>
+              <li><Link to="/reports/dailyGroupAttendance">{Locale.label("reports.reportsPage.dailyGroupAtt")}</Link></li>
+              <li><Link to="/reports/donationSummary">{Locale.label("reports.reportsPage.donSum")}</Link></li>
             </ul>
 
           </DisplayBox>

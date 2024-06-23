@@ -1,5 +1,5 @@
 import React from "react";
-import { PersonInterface } from "@churchapps/apphelper";
+import { Locale, PersonInterface } from "@churchapps/apphelper";
 import { PeopleSearchResults, PeopleColumns } from "./components";
 import { ApiHelper, DisplayBox, ExportLink } from "@churchapps/apphelper";
 import { Grid, Icon } from "@mui/material"
@@ -14,26 +14,26 @@ export const PeoplePage = () => {
   const isMounted = useMountedState();
 
   const columns = [
-    { key: "photo", label: "Photo", shortName: "" },
-    { key: "displayName", label: "Display Name", shortName: "Name" },
-    { key: "lastName", label: "Last Name", shortName: "Last" },
-    { key: "firstName", label: "First Name", shortName: "First" },
-    { key: "middleName", label: "Middle Name", shortName: "Middle" },
-    { key: "address", label: "Address", shortName: "Address" },
-    { key: "city", label: "City", shortName: "City" },
-    { key: "state", label: "State", shortName: "State" },
-    { key: "zip", label: "Zip", shortName: "Zip" },
-    { key: "email", label: "Primary Email", shortName: "Email" },
-    { key: "phone", label: "Primary Phone", shortName: "Phone" },
-    { key: "birthDate", label: "Birthdate", shortName: "Birthdate" },
-    { key: "birthDay", label: "Birthday (No Year)", shortName: "Birthday" },
-    { key: "age", label: "Age", shortName: "Age" },
-    { key: "gender", label: "Gender", shortName: "Gender" },
-    { key: "membershipStatus", label: "Membership Status", shortName: "Membership" },
-    { key: "maritalStatus", label: "Marital Status", shortName: "Married" },
-    { key: "anniversary", label: "Anniversary", shortName: "Anniversary" },
-    { key: "nametagNotes", label: "Name Tag Notes", shortName: "Notes" },
-    { key: "deleteOption", label: "Delete Option", shortName: "Delete" }
+    { key: "photo", label: Locale.label("people.peoplePage.photo"), shortName: "" },
+    { key: "displayName", label: Locale.label("people.peoplePage.disName"), shortName: Locale.label("people.peoplePage.name") },
+    { key: "lastName", label: Locale.label("people.peoplePage.lastName"), shortName: Locale.label("people.peoplePage.last") },
+    { key: "firstName", label: Locale.label("people.peoplePage.firstName"), shortName: Locale.label("people.peoplePage.first") },
+    { key: "middleName", label: Locale.label("people.peoplePage.middleName"), shortName: Locale.label("people.peoplePage.middle") },
+    { key: "address", label: Locale.label("people.peoplePage.address"), shortName: Locale.label("people.peoplePage.address") },
+    { key: "city", label: Locale.label("people.peoplePage.city"), shortName: Locale.label("people.peoplePage.city") },
+    { key: "state", label: Locale.label("people.peoplePage.state"), shortName: Locale.label("people.peoplePage.state") },
+    { key: "zip", label: Locale.label("people.peoplePage.zip"), shortName: Locale.label("people.peoplePage.zip") },
+    { key: "email", label: Locale.label("people.peoplePage.primEmail"), shortName: Locale.label("people.peoplePage.email") },
+    { key: "phone", label: Locale.label("people.peoplePage.primPhone"), shortName: Locale.label("people.peoplePage.phone") },
+    { key: "birthDate", label: Locale.label("people.peoplePage.bDate"), shortName: Locale.label("people.peoplePage.bDate") },
+    { key: "birthDay", label: Locale.label("people.peoplePage.bDayNo"), shortName: Locale.label("people.peoplePage.bDay") },
+    { key: "age", label: Locale.label("people.peoplePage.age"), shortName: Locale.label("people.peoplePage.age") },
+    { key: "gender", label: Locale.label("people.peoplePage.gender"), shortName: Locale.label("people.peoplePage.gender") },
+    { key: "membershipStatus", label: Locale.label("people.peoplePage.memShipStat"), shortName: Locale.label("people.peoplePage.memShip") },
+    { key: "maritalStatus", label: Locale.label("people.peoplePage.marStat"), shortName: Locale.label("people.peoplePage.married") },
+    { key: "anniversary", label: Locale.label("people.peoplePage.anni"), shortName: Locale.label("people.peoplePage.anni") },
+    { key: "nametagNotes", label: Locale.label("people.peoplePage.nameNote"), shortName: Locale.label("people.peoplePage.notes") },
+    { key: "deleteOption", label: Locale.label("people.peoplePage.deleteOp"), shortName: Locale.label("people.peoplePage.delete") }
   ];
 
   const loadData = () => {
@@ -75,10 +75,10 @@ export const PeoplePage = () => {
 
   return (
     <>
-      <h1><Icon>person</Icon> Search People</h1>
+      <h1><Icon>person</Icon> {Locale.label("people.peoplePage.searchPpl")}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox id="peopleBox" headerIcon="person" headerText="People" editContent={getEditContent()} help="chums/adding-people">
+          <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("people.peoplePage.ppl")} editContent={getEditContent()} help="chums/adding-people">
             <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} />
           </DisplayBox>
         </Grid>

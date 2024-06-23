@@ -1,7 +1,7 @@
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { ChoicesEdit } from ".";
-import { useMountedState, QuestionInterface, ApiHelper, InputBox, UniqueIdHelper, ErrorMessages } from "@churchapps/apphelper";
+import { useMountedState, QuestionInterface, ApiHelper, InputBox, UniqueIdHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 
 interface Props {
   questionId: string,
@@ -45,8 +45,8 @@ export function FormQuestionEdit(props: Props) {
 
   const validate = () => {
     const result = [];
-    if (!question.title) result.push("Question is required.");
-    if (!question.fieldType) result.push("Field type is required.");
+    if (!question.title) result.push(Locale.label("forms.formQuestionEdit.questionReq"));
+    if (!question.fieldType) result.push(Locale.label("forms.formQuestionEdit.fieldReq"));
     setErrors(result);
     return result.length === 0;
   }
@@ -59,7 +59,7 @@ export function FormQuestionEdit(props: Props) {
   }
 
   function handleDelete() {
-    if (window.confirm("Are you sure you wish to permanently delete this question?")) {
+    if (window.confirm(Locale.label("forms.formQuestionEdit.confirmMsg"))) {
       ApiHelper.delete("/questions/" + question.id + "/?formId=" + props.formId, "MembershipApi").then(props.updatedFunction);
     }
   }
@@ -67,33 +67,33 @@ export function FormQuestionEdit(props: Props) {
   React.useEffect(loadData, [props.questionId || props.formId]); //eslint-disable-line
 
   return (
-    <InputBox id="questionBox" headerIcon="help" headerText="Edit Question" saveFunction={handleSave} cancelFunction={props.updatedFunction} isSubmitting={isSubmitting} deleteFunction={(!UniqueIdHelper.isMissing(question.id)) ? handleDelete : undefined} help="chums/forms">
+    <InputBox id="questionBox" headerIcon="help" headerText={Locale.label("forms.formQuestionEdit.questionEdit")} saveFunction={handleSave} cancelFunction={props.updatedFunction} isSubmitting={isSubmitting} deleteFunction={(!UniqueIdHelper.isMissing(question.id)) ? handleDelete : undefined} help="chums/forms">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
-        <InputLabel id="provider">Provider</InputLabel>
-        <Select name="fieldType" labelId="provider" label="Provider" value={question.fieldType} onChange={handleChange}>
-          <MenuItem value="Textbox">Textbox</MenuItem>
-          <MenuItem value="Whole Number">Whole Number</MenuItem>
-          <MenuItem value="Decimal">Decimal</MenuItem>
-          <MenuItem value="Date">Date</MenuItem>
-          <MenuItem value="Yes/No">Yes/No</MenuItem>
-          <MenuItem value="Email">Email</MenuItem>
-          <MenuItem value="Phone Number">Phone Number</MenuItem>
-          <MenuItem value="Text Area">Text Area</MenuItem>
-          <MenuItem value="Multiple Choice">Multiple Choice</MenuItem>
-          <MenuItem value="Checkbox">Checkbox</MenuItem>
+        <InputLabel id="provider">{Locale.label("forms.formQuestionEdit.prov")}</InputLabel>
+        <Select name="fieldType" labelId="provider" label={Locale.label("forms.formQuestionEdit.prov")} value={question.fieldType} onChange={handleChange}>
+          <MenuItem value="Textbox">{Locale.label("forms.formQuestionEdit.textBox")}</MenuItem>
+          <MenuItem value="Whole Number">{Locale.label("forms.formQuestionEdit.wholeNum")}</MenuItem>
+          <MenuItem value="Decimal">{Locale.label("forms.formQuestionEdit.decNum")}</MenuItem>
+          <MenuItem value="Date">{Locale.label("forms.formQuestionEdit.date")}</MenuItem>
+          <MenuItem value="Yes/No">{Locale.label("forms.formQuestionEdit.yesNo")}</MenuItem>
+          <MenuItem value="Email">{Locale.label("forms.formQuestionEdit.email")}</MenuItem>
+          <MenuItem value="Phone Number">{Locale.label("forms.formQuestionEdit.phoneNum")}</MenuItem>
+          <MenuItem value="Text Area">{Locale.label("forms.formQuestionEdit.textArea")}</MenuItem>
+          <MenuItem value="Multiple Choice">{Locale.label("forms.formQuestionEdit.multiChoice")}</MenuItem>
+          <MenuItem value="Checkbox">{Locale.label("forms.formQuestionEdit.checkBox")}</MenuItem>
         </Select>
       </FormControl>
 
-      <TextField fullWidth label="Title" id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} />
-      <TextField fullWidth label="Description" id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("forms.formQuestionEdit.title")} id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("forms.formQuestionEdit.desc")} id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} />
 
       {
         (question.fieldType === "Multiple Choice" || question.fieldType === "Checkbox")
           ? <ChoicesEdit question={question} updatedFunction={setQuestion} />
-          : <TextField fullWidth label="Placeholder (optional)" id="placeholder" type="text" name="placeholder" value={question.placeholder || ""} onChange={handleChange} />
+          : <TextField fullWidth label={Locale.label("forms.formQuestionEdit.plcOp")} id="placeholder" type="text" name="placeholder" value={question.placeholder || ""} onChange={handleChange} />
       }
-      <FormControlLabel control={<Checkbox />} label="Require an answer for this question" name="required" checked={!!question.required} onChange={handleCheckChange} />
+      <FormControlLabel control={<Checkbox />} label={Locale.label("forms.formQuestionEdit.ansReq")} name="required" checked={!!question.required} onChange={handleCheckChange} />
     </InputBox>
   );
 }

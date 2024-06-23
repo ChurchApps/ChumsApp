@@ -1,6 +1,6 @@
 import React from "react";
 import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem } from "@mui/material";
-import { useMountedState, ServiceTimeInterface, ServiceInterface, InputBox, ApiHelper, ErrorMessages } from "@churchapps/apphelper";
+import { useMountedState, ServiceTimeInterface, ServiceInterface, InputBox, ApiHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 
 interface Props {
   serviceTime: ServiceTimeInterface,
@@ -27,8 +27,8 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
 
   const validate = () => {
     const result = [];
-    if (!serviceTime.name) result.push("Service time name is required.");
-    if (!serviceTime.serviceId) result.push("Please select a servie");
+    if (!serviceTime.name) result.push(Locale.label("attendance.serviceTimeEdit.validate.name"));
+    if (!serviceTime.serviceId) result.push(Locale.label("attendance.serviceTimeEdit.validate.service"));
     setErrors(result);
     return result.length === 0;
   }
@@ -41,7 +41,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
         .finally(() => { setIsSubmitting(false) });
     }
   }
-  const handleDelete = () => { if (window.confirm("Are you sure you wish to permanently delete this service time?")) ApiHelper.delete("/servicetimes/" + serviceTime.id, "AttendanceApi").then(props.updatedFunction); }
+  const handleDelete = () => { if (window.confirm(Locale.label("attendance.serviceTimeEdit.confirmDelete"))) ApiHelper.delete("/servicetimes/" + serviceTime.id, "AttendanceApi").then(props.updatedFunction); }
 
   const loadData = React.useCallback(() => {
     ApiHelper.get("/services", "AttendanceApi").then(data => {
@@ -74,12 +74,12 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
     <InputBox id="serviceTimeBox" data-cy="service-time-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.serviceTime?.id ? handleDelete : null} headerText={serviceTime.name} isSubmitting={isSubmitting} headerIcon="schedule" help="chums/attendance">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
-        <InputLabel id="service">Service</InputLabel>
-        <Select name="service" labelId="service" label="Service" value={serviceTime.serviceId} onChange={handleChange}>
+        <InputLabel id="service">{Locale.label("attendance.serviceTimeEdit.service")}</InputLabel>
+        <Select name="service" labelId="service" label={Locale.label("attendance.serviceTimeEdit.service")} value={serviceTime.serviceId} onChange={handleChange}>
           {getServiceOptions()}
         </Select>
       </FormControl>
-      <TextField fullWidth label="Service Time Name" id="name" name="name" type="text" value={serviceTime.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("attendance.serviceTimeEdit.name")} id="name" name="name" type="text" value={serviceTime.name} onChange={handleChange} />
     </InputBox>
   );
 }

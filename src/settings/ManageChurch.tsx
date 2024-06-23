@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ChurchSettings, Roles, RoleEdit } from "./components"
-import { ChurchInterface, ApiHelper, UserHelper, Permissions, DisplayBox } from "@churchapps/apphelper"
+import { ChurchInterface, ApiHelper, UserHelper, Permissions, DisplayBox, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import { Grid, Icon } from "@mui/material";
 
@@ -23,11 +23,11 @@ export const ManageChurch = () => {
     if (selectedRoleId !== "notset") {
       modules.splice(1, 0, <RoleEdit key="roleEdit" roleId={selectedRoleId} updatedFunction={() => { setSelectedRoleId("notset") }} />);
     }
-    modules.push(<DisplayBox headerIcon="link" headerText="Tools" editContent={false}>
+    modules.push(<DisplayBox headerIcon="link" headerText={Locale.label("settings.manageChurch.tools")} editContent={false}>
       <table className="table">
         <tbody>
           <tr><td>
-            <a href={`https://transfer.chums.org/login?jwt=${jwt}&churchId=${churchId}`} target="_blank" rel="noreferrer noopener" style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>Import/Export</a>
+            <a href={`https://transfer.chums.org/login?jwt=${jwt}&churchId=${churchId}`} target="_blank" rel="noreferrer noopener" style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>{Locale.label("settings.manageChurch.imEx")}</a>
           </td></tr>
         </tbody>
       </table>
@@ -40,7 +40,7 @@ export const ManageChurch = () => {
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (
     <>
-      <h1><Icon>church</Icon> Manage {church?.name}</h1>
+      <h1><Icon>church</Icon> {Locale.label("settings.manageChurch.manage")} {church?.name}</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <ChurchSettings church={church} updatedFunction={loadData} />

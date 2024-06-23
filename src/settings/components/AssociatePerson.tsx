@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 import React, { useState, useEffect } from "react"
-import { SmallButton, PersonInterface, PersonAdd, PersonHelper } from "@churchapps/apphelper";
+import { SmallButton, PersonInterface, PersonAdd, PersonHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   person: PersonInterface,
@@ -40,7 +40,7 @@ export const AssociatePerson = ({ person, handleAssociatePerson, searchStatus, f
         <TableRow>
           <TableCell><img src={PersonHelper.getPhotoUrl(person)} width="60px" height="45px" style={{ borderRadius: "5px" }} alt="avatar" /></TableCell>
           <TableCell className="border-0">{person?.name?.display}</TableCell>
-          {showChangeOption && <TableCell className="border-0"><SmallButton data-cy="change-person" onClick={handleChangeClick} text="Change" icon="person" /></TableCell>}
+          {showChangeOption && <TableCell className="border-0"><SmallButton data-cy="change-person" onClick={handleChangeClick} text={Locale.label("settings.associatePerson.change")} icon="person" /></TableCell>}
         </TableRow>
       </TableBody>
     </Table>

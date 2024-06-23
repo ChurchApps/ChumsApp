@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { GroupMembers, GroupSessions } from ".";
-import { UserHelper, GroupInterface, SessionInterface, PersonInterface, Permissions } from "@churchapps/apphelper";
+import { UserHelper, GroupInterface, SessionInterface, PersonInterface, Permissions, Locale } from "@churchapps/apphelper";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 interface Props {
@@ -33,7 +33,7 @@ export const Tabs: React.FC<Props> = (props) => {
     switch (selectedTab) {
       case "members": currentTab = <GroupMembers group={props.group} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />; break;
       case "sessions": currentTab = <GroupSessions group={props.group} sidebarVisibilityFunction={props.sidebarVisibilityFunction} addedSession={props.addedSession} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />; break;
-      default: currentTab = <div>Not implemented</div>; break;
+      default: currentTab = <div>{Locale.label("groups.tabs.noImplement")}</div>; break;
     }
     return currentTab
   }
@@ -43,8 +43,8 @@ export const Tabs: React.FC<Props> = (props) => {
     let tabs = [];
     let defaultTab = ""
 
-    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) { tabs.push(getTab(0, "members", "people", "Members")); defaultTab = "members"; }
-    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && props.group?.trackAttendance) { tabs.push(getTab(1, "sessions", "calendar_month", "Sessions")); if (defaultTab === "") defaultTab = "sessions"; }
+    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) { tabs.push(getTab(0, "members", "people", Locale.label("groups.tabs.mem"))); defaultTab = "members"; }
+    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && props.group?.trackAttendance) { tabs.push(getTab(1, "sessions", "calendar_month", Locale.label("groups.tabs.ses"))); if (defaultTab === "") defaultTab = "sessions"; }
     if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
     return tabs;
   }

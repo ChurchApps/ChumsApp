@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Icon, IconButton, TextField } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DisplayBox, InputBox, Notes, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DisplayBox, InputBox, Locale, Notes, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
 import { PositionEdit } from "./components/PositionEdit";
 import { PositionList } from "./components/PositionList";
 import { AssignmentEdit } from "./components/AssignmentEdit";
@@ -57,7 +57,7 @@ export const PlanPage = () => {
 
   const handleSave = () => {
     ApiHelper.post("/plans", [plan], "DoingApi");
-    alert("Notes saved.");
+    alert(Locale.label("plans.planPage.noteSave"));
   }
 
   const handleAutoAssign = async () => {
@@ -78,15 +78,15 @@ export const PlanPage = () => {
     <h1><Icon>assignment</Icon> { (plan?.name) ? plan.name : "Service Plan"}</h1>
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
-        <DisplayBox headerText="Assignments" headerIcon="assignment" editContent={getAddPositionLink()}>
+        <DisplayBox headerText={Locale.label("plans.planPage.assign")} headerIcon="assignment" editContent={getAddPositionLink()}>
           <PositionList positions={positions} assignments={assignments} people={people} onSelect={p => setPosition(p)} onAssignmentSelect={handleAssignmentSelect} />
         </DisplayBox>
-        <InputBox headerIcon="sticky_note_2" headerText="Notes" saveFunction={handleSave}>
+        <InputBox headerIcon="sticky_note_2" headerText={Locale.label("plans.planPage.notes")} saveFunction={handleSave}>
           <TextField fullWidth multiline rows={4} value={plan?.notes} onChange={(e) => { setPlan({ ...plan, notes: e.target.value }) }} />
         </InputBox>
       </Grid>
       <Grid item md={4} xs={12}>
-        {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : ["Band"] } updatedFunction={() => {setPosition(null); loadData() }} /> }
+        {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : [Locale.label("plans.planPage.band")] } updatedFunction={() => {setPosition(null); loadData() }} /> }
         {assignment && position && <AssignmentEdit position={position} assignment={assignment} peopleNeeded={position.count - ArrayHelper.getAll(assignments, "positionId", position.id).length } updatedFunction={ handleAssignmentUpdate } />}
         <TimeList times={times} positions={positions} plan={plan} onUpdate={loadData} />
         <PlanValidation plan={plan} positions={positions} assignments={assignments} people={people} times={times} blockoutDates={blockoutDates} onUpdate={loadData} />

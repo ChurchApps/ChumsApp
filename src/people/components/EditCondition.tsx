@@ -1,6 +1,6 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface, CampusInterface, DateHelper, ServiceInterface, ServiceTimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface, CampusInterface, DateHelper, ServiceInterface, ServiceTimeInterface, Locale } from "@churchapps/apphelper";
 
 interface Props {
   conditionAdded: (condition: any) => void
@@ -73,17 +73,17 @@ export function EditCondition(props: Props) {
     let result: JSX.Element = null;
     switch (condition.field) {
       case "gender":
-        options = [<MenuItem key="/Unspecified" value="Unspecified">Unspecified</MenuItem>, <MenuItem value="Male">Male</MenuItem>, <MenuItem value="Female">Female</MenuItem>]
+        options = [<MenuItem key="/Unspecified" value="Unspecified">{Locale.label("people.editCondition.unspec")}</MenuItem>, <MenuItem value="Male">{Locale.label("people.editCondition.male")}</MenuItem>, <MenuItem value="Female">{Locale.label("people.editCondition.female")}</MenuItem>]
         setDefaultValue("Unspecified");
         result = getValueSelect(options);
         break;
       case "maritalStatus":
-        options = [<MenuItem key="/Unknown" value="Unknown">Unknown</MenuItem>, <MenuItem value="Single">Single</MenuItem>, <MenuItem value="Married">Married</MenuItem>, <MenuItem value="Divorced">Divorced</MenuItem>, <MenuItem value="Widowed">Widowed</MenuItem>]
+        options = [<MenuItem key="/Unknown" value="Unknown">{Locale.label("people.editCondition.unknown")}</MenuItem>, <MenuItem value="Single">{Locale.label("people.editCondition.single")}</MenuItem>, <MenuItem value="Married">{Locale.label("people.editCondition.married")}</MenuItem>, <MenuItem value="Divorced">{Locale.label("people.editCondition.divorced")}</MenuItem>, <MenuItem value="Widowed">{Locale.label("people.editCondition.widowed")}</MenuItem>]
         setDefaultValue("Unknown");
         result = getValueSelect(options);
         break;
       case "membershipStatus":
-        options = [<MenuItem key="/Visitor" value="Visitor">Visitor</MenuItem>, <MenuItem value="Member">Member</MenuItem>, <MenuItem value="Staff">Staff</MenuItem>]
+        options = [<MenuItem key="/Visitor" value="Visitor">{Locale.label("people.editCondition.visitor")}</MenuItem>, <MenuItem value="Member">{Locale.label("people.editCondition.mem")}</MenuItem>, <MenuItem value="Staff">{Locale.label("people.editCondition.staff")}</MenuItem>]
         setDefaultValue("Visitor");
         result = getValueSelect(options);
         break;
@@ -94,7 +94,7 @@ export function EditCondition(props: Props) {
         break;
       case "birthMonth":
       case "anniversaryMonth":
-        options = [<MenuItem key="January" value="1">January</MenuItem>, <MenuItem key="February" value="2">February</MenuItem>, <MenuItem key="March" value="3">March</MenuItem>, <MenuItem key="April" value="4">April</MenuItem>, <MenuItem key="May" value="5">May</MenuItem>, <MenuItem key="June" value="6">June</MenuItem>, <MenuItem key="July" value="7">July</MenuItem>, <MenuItem key="August" value="8">August</MenuItem>, <MenuItem key="September" value="9">September</MenuItem>, <MenuItem key="October" value="10">October</MenuItem>, <MenuItem key="November" value="11">November</MenuItem>, <MenuItem key="December" value="12">December</MenuItem>]
+        options = [<MenuItem key="January" value="1">{Locale.label("people.editCondition.jan")}</MenuItem>, <MenuItem key="February" value="2">{Locale.label("people.editCondition.feb")}</MenuItem>, <MenuItem key="March" value="3">{Locale.label("people.editCondition.mar")}</MenuItem>, <MenuItem key="April" value="4">{Locale.label("people.editCondition.apr")}</MenuItem>, <MenuItem key="May" value="5">{Locale.label("people.editCondition.may")}</MenuItem>, <MenuItem key="June" value="6">{Locale.label("people.editCondition.june")}</MenuItem>, <MenuItem key="July" value="7">{Locale.label("people.editCondition.july")}</MenuItem>, <MenuItem key="August" value="8">{Locale.label("people.editCondition.aug")}</MenuItem>, <MenuItem key="September" value="9">{Locale.label("people.editCondition.sep")}</MenuItem>, <MenuItem key="October" value="10">{Locale.label("people.editCondition.oct")}</MenuItem>, <MenuItem key="November" value="11">{Locale.label("people.editCondition.nov")}</MenuItem>, <MenuItem key="December" value="12">{Locale.label("people.editCondition.dec")}</MenuItem>]
         setDefaultValue("1");
         result = getValueSelect(options);
         break;
@@ -109,7 +109,7 @@ export function EditCondition(props: Props) {
       case "memberDonations":
         let defaultDonationValue;
         if (condition.operator === "donatedToAny") {
-          options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>Any</MenuItem>);
+          options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>{Locale.label("people.editCondition.any")}</MenuItem>);
           defaultDonationValue = JSON.stringify([{ value: "any", text: "Any" }, { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]);
         } else  {
           loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
@@ -119,8 +119,8 @@ export function EditCondition(props: Props) {
         result = <>
           {getValueSelect(options)}
           <Stack direction="row" spacing={2} sx={{ marginTop: "16px", marginBottom: "8px" }}>
-            <TextField fullWidth label="From" name="from" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
-            <TextField fullWidth label="To" name="to" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
+            <TextField fullWidth label={Locale.label("people.editCondition.from")} name="from" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
+            <TextField fullWidth label={Locale.label("people.editCondition.to")} name="to" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
           </Stack>
         </>;
         break;
@@ -128,7 +128,7 @@ export function EditCondition(props: Props) {
         let defaultAttendanceValue;
         const defaultDateObj = { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) };
         if (condition.operator === "attendedAny") {
-          options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>Any</MenuItem>);
+          options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>{Locale.label("people.editCondition.any")}</MenuItem>);
           defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, defaultDateObj]);
         }
         else if (condition.operator === "attendedService") {
@@ -155,8 +155,8 @@ export function EditCondition(props: Props) {
         result = <>
           {getValueSelect(options)}
           <Stack direction="row" spacing={2} sx={{ marginTop: "16px", marginBottom: "8px" }}>
-            <TextField fullWidth label="From" name="from" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
-            <TextField fullWidth label="To" name="to" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
+            <TextField fullWidth label={Locale.label("people.editCondition.from")} name="from" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
+            <TextField fullWidth label={Locale.label("people.editCondition.to")} name="to" type="date" InputLabelProps={{ shrink: true }} onChange={handleChange} />
           </Stack>
         </>;
         break;
@@ -221,8 +221,8 @@ export function EditCondition(props: Props) {
     const parsedValue = (condition.field === "memberAttendance" || condition.field === "memberDonations") && condition.value !== "" && JSON.parse(condition.value);
     const selectValue = (parsedValue && Array.isArray(parsedValue)) ? JSON.stringify(parsedValue[0]) : condition.value;
     return (<FormControl fullWidth>
-      <InputLabel>Value</InputLabel>
-      <Select name="value" label="Value" type="text" placeholder="Value" value={selectValue} onChange={handleChange}>
+      <InputLabel>{Locale.label("people.editCondition.value")}</InputLabel>
+      <Select name="value" label={Locale.label("people.editCondition.value")} type="text" placeholder="Value" value={selectValue} onChange={handleChange}>
         {options}
       </Select>
     </FormControl>)
@@ -245,8 +245,8 @@ export function EditCondition(props: Props) {
           setCondition(c);
         }
         result = [
-          <MenuItem key="/in" value="in">is member of</MenuItem>,
-          <MenuItem key="/notIn" value="notIn">is not member of</MenuItem>
+          <MenuItem key="/in" value="in">{Locale.label("people.editCondition.isMem")}</MenuItem>,
+          <MenuItem key="/notIn" value="notIn">{Locale.label("people.editCondition.notMem")}</MenuItem>
         ]
         break;
       case "memberDonations":
@@ -256,8 +256,8 @@ export function EditCondition(props: Props) {
           setCondition(c);
         }
         result = [
-          <MenuItem key="/donatedToAny" value="donatedToAny">has donated (in general)</MenuItem>,
-          <MenuItem key="/donatedTo" value="donatedTo">has donated to</MenuItem>
+          <MenuItem key="/donatedToAny" value="donatedToAny">{Locale.label("people.editCondition.hasDon")}</MenuItem>,
+          <MenuItem key="/donatedTo" value="donatedTo">{Locale.label("people.editCondition.donTo")}</MenuItem>
         ];
         break;
       case "memberAttendance":
@@ -267,19 +267,19 @@ export function EditCondition(props: Props) {
           setCondition(c);
         }
         result = [
-          <MenuItem key="/attendedAny" value="attendedAny">has attended (in general)</MenuItem>,
-          <MenuItem key="/attendedCampus" value="attendedCampus">has attended (campus)</MenuItem>,
-          <MenuItem key="/attendedService" value="attendedService">has attended (service)</MenuItem>,
-          <MenuItem key="/attendedServiceTime" value="attendedServiceTime">has attended (service Time)</MenuItem>,
-          <MenuItem key="/attendedGroup" value="attendedGroup">has attended (group)</MenuItem>
+          <MenuItem key="/attendedAny" value="attendedAny">{Locale.label("people.editCondition.attGen")}</MenuItem>,
+          <MenuItem key="/attendedCampus" value="attendedCampus">{Locale.label("people.editCondition.attCamp")}</MenuItem>,
+          <MenuItem key="/attendedService" value="attendedService">{Locale.label("people.editCondition.attServ")}</MenuItem>,
+          <MenuItem key="/attendedServiceTime" value="attendedServiceTime">{Locale.label("people.editCondition.attServTime")}</MenuItem>,
+          <MenuItem key="/attendedGroup" value="attendedGroup">{Locale.label("people.editCondition.attGroup")}</MenuItem>
         ]
         break;
       default:
         result = [
           <MenuItem key="/equals" value="equals">=</MenuItem>,
-          <MenuItem key="/contains" value="contains">contains</MenuItem>,
-          <MenuItem key="/startsWith" value="startsWith">starts with</MenuItem>,
-          <MenuItem key="/endsWith" value="endsWith">ends with</MenuItem>,
+          <MenuItem key="/contains" value="contains">{Locale.label("people.editCondition.contains")}</MenuItem>,
+          <MenuItem key="/startsWith" value="startsWith">{Locale.label("people.editCondition.startW")}</MenuItem>,
+          <MenuItem key="/endsWith" value="endsWith">{Locale.label("people.editCondition.endW")}</MenuItem>,
           <MenuItem key="/greaterThan" value="greaterThan">&gt;</MenuItem>,
           <MenuItem key="/greaterThanEqual" value="greaterThanEqual">&gt;=</MenuItem>,
           <MenuItem key="/lessThan" value="lessThan">&lt;</MenuItem>,
@@ -293,47 +293,47 @@ export function EditCondition(props: Props) {
 
   return <>
     <FormControl fullWidth>
-      <InputLabel>Field</InputLabel>
-      <Select name="field" label="Field" type="text" value={condition.field} onChange={handleChange}>
-        <MenuItem key="/person" value="person" disabled>Person</MenuItem>
-        <MenuItem key="/displayName" value="displayName">Display Name</MenuItem>
-        <MenuItem key="/firstName" value="firstName">First Name</MenuItem>
-        <MenuItem key="/lastName" value="lastName">Last Name</MenuItem>
-        <MenuItem key="/middleName" value="middleName">Middle Name</MenuItem>
-        <MenuItem key="/nickName" value="nickName">Nick Name</MenuItem>
-        <MenuItem key="/prefix" value="prefix">Prefix</MenuItem>
-        <MenuItem key="/suffix" value="suffix">Suffix</MenuItem>
-        <MenuItem key="/birthDate" value="birthDate">Birth Date</MenuItem>
-        <MenuItem key="/birthMonth" value="birthMonth">Birth Month</MenuItem>
-        <MenuItem key="/age" value="age">Age</MenuItem>
-        <MenuItem key="/gender64" value="gender">Gender</MenuItem>
-        <MenuItem key="/maritalStatus" value="maritalStatus">Marital Status</MenuItem>
-        <MenuItem key="/anniversary" value="anniversary">Anniversary</MenuItem>
-        <MenuItem key="/anniversaryMonth" value="anniversaryMonth">Anniversary Month</MenuItem>
-        <MenuItem key="/yearsMarried" value="yearsMarried">Years Married</MenuItem>
-        <MenuItem key="/phone" value="phone">Phone</MenuItem>
-        <MenuItem key="/email" value="email">Email</MenuItem>
-        <MenuItem key="/address" value="address">Address</MenuItem>
-        <MenuItem key="/city" value="city">City</MenuItem>
-        <MenuItem key="/state" value="state">State/Province</MenuItem>
-        <MenuItem key="/zip" value="zip">Zip/Postal</MenuItem>
-        <MenuItem key="/membership" value="membership" disabled>Membership</MenuItem>
-        <MenuItem key="/membershipStatus" value="membershipStatus">Membership Status</MenuItem>
-        {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">Group Member</MenuItem>}
-        <MenuItem key="/activity" value="activity" disabled>Activity</MenuItem>
-        {(Permissions.givingApi.donations) && <MenuItem key="/memberDonations" value="memberDonations">Member Donations</MenuItem>}
-        {(Permissions.attendanceApi.attendance) && <MenuItem key="/memberAttendance" value="memberAttendance">Member Attendance</MenuItem>}
+      <InputLabel>{Locale.label("people.editCondition.field")}</InputLabel>
+      <Select name="field" label={Locale.label("people.editCondition.field")} type="text" value={condition.field} onChange={handleChange}>
+        <MenuItem key="/person" value="person" disabled>{Locale.label("people.editCondition.person")}</MenuItem>
+        <MenuItem key="/displayName" value="displayName">{Locale.label("people.editCondition.disName")}</MenuItem>
+        <MenuItem key="/firstName" value="firstName">{Locale.label("people.editCondition.firstName")}</MenuItem>
+        <MenuItem key="/lastName" value="lastName">{Locale.label("people.editCondition.lastName")}</MenuItem>
+        <MenuItem key="/middleName" value="middleName">{Locale.label("people.editCondition.middleName")}</MenuItem>
+        <MenuItem key="/nickName" value="nickName">{Locale.label("people.editCondition.nickName")}</MenuItem>
+        <MenuItem key="/prefix" value="prefix">{Locale.label("people.editCondition.pre")}</MenuItem>
+        <MenuItem key="/suffix" value="suffix">{Locale.label("people.editCondition.suf")}</MenuItem>
+        <MenuItem key="/birthDate" value="birthDate">{Locale.label("people.editCondition.bDate")}</MenuItem>
+        <MenuItem key="/birthMonth" value="birthMonth">{Locale.label("people.editCondition.bMonth")}</MenuItem>
+        <MenuItem key="/age" value="age">{Locale.label("people.editCondition.age")}</MenuItem>
+        <MenuItem key="/gender64" value="gender">{Locale.label("people.editCondition.gender")}</MenuItem>
+        <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("people.editCondition.marStat")}</MenuItem>
+        <MenuItem key="/anniversary" value="anniversary">{Locale.label("people.editCondition.anni")}</MenuItem>
+        <MenuItem key="/anniversaryMonth" value="anniversaryMonth">{Locale.label("people.editCondition.anniMonth")}</MenuItem>
+        <MenuItem key="/yearsMarried" value="yearsMarried">{Locale.label("people.editCondition.marYears")}</MenuItem>
+        <MenuItem key="/phone" value="phone">{Locale.label("people.editCondition.phone")}</MenuItem>
+        <MenuItem key="/email" value="email">{Locale.label("people.editCondition.email")}</MenuItem>
+        <MenuItem key="/address" value="address">{Locale.label("people.editCondition.address")}</MenuItem>
+        <MenuItem key="/city" value="city">{Locale.label("people.editCondition.city")}</MenuItem>
+        <MenuItem key="/state" value="state">{Locale.label("people.editCondition.state")}</MenuItem>
+        <MenuItem key="/zip" value="zip">{Locale.label("people.editCondition.zip")}</MenuItem>
+        <MenuItem key="/membership" value="membership" disabled>{Locale.label("people.editCondition.memShip")}</MenuItem>
+        <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("people.editCondition.memShipStat")}</MenuItem>
+        {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">{Locale.label("people.editCondition.groupMem")}</MenuItem>}
+        <MenuItem key="/activity" value="activity" disabled>{Locale.label("people.editCondition.act")}</MenuItem>
+        {(Permissions.givingApi.donations) && <MenuItem key="/memberDonations" value="memberDonations">{Locale.label("people.editCondition.memDon")}</MenuItem>}
+        {(Permissions.attendanceApi.attendance) && <MenuItem key="/memberAttendance" value="memberAttendance">{Locale.label("people.editCondition.memAtt")}</MenuItem>}
       </Select>
     </FormControl>
     <FormControl fullWidth>
-      <InputLabel>Operator</InputLabel>
-      <Select name="operator" label="Operator" type="text" placeholder="Value" value={condition.operator} onChange={handleChange}>
+      <InputLabel>{Locale.label("people.editCondition.operator")}</InputLabel>
+      <Select name="operator" label={Locale.label("people.editCondition.operator")} type="text" placeholder="Value" value={condition.operator} onChange={handleChange}>
         {getOperatorOptions()}
       </Select>
     </FormControl>
 
     {loadingOptions ? <Loading /> : <>{getValueField()}</>}
-    <Button variant="outlined" fullWidth onClick={() => { props.conditionAdded(condition) }}>Save Condition</Button>
+    <Button variant="outlined" fullWidth onClick={() => { props.conditionAdded(condition) }}>{Locale.label("people.editCondition.saveCon")}</Button>
   </>
 }
 

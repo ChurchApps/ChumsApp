@@ -1,6 +1,6 @@
 import { FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, AutomationInterface, ApiHelper } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, AutomationInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   automation: AutomationInterface,
@@ -50,17 +50,17 @@ export const AutomationEdit = (props: Props) => {
   }
 
   return (
-    <InputBox headerIcon="settings_suggest" headerText="Edit Automation" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={checkDelete} help="chums/automations">
+    <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationEdit.autoEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={checkDelete} help="chums/automations">
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <TextField fullWidth label="Title" value={automation?.title || ""} name="title" onChange={handleChange} />
+          <TextField fullWidth label={Locale.label("tasks.automationEdit.title")} value={automation?.title || ""} name="title" onChange={handleChange} />
           <FormControl fullWidth>
-            <InputLabel>Repeat</InputLabel>
-            <Select fullWidth label="Repeat" value={automation?.recurs || ""} name="recurs" onChange={handleChange}>
-              <MenuItem value="never">Never</MenuItem>
-              <MenuItem value="yearly">Yearly</MenuItem>
-              <MenuItem value="monthly">Monthly</MenuItem>
+            <InputLabel>{Locale.label("tasks.automationEdit.rep")}</InputLabel>
+            <Select fullWidth label={Locale.label("tasks.automationEdit.rep")} value={automation?.recurs || ""} name="recurs" onChange={handleChange}>
+              <MenuItem value="never">{Locale.label("tasks.automationEdit.never")}</MenuItem>
+              <MenuItem value="yearly">{Locale.label("tasks.automationEdit.yearly")}</MenuItem>
+              <MenuItem value="monthly">{Locale.label("tasks.automationEdit.monthly")}</MenuItem>
             </Select>
           </FormControl>
 

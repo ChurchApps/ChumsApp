@@ -1,5 +1,5 @@
 import React from "react";
-import { PersonInterface, PersonHelper } from "@churchapps/apphelper";
+import { PersonInterface, PersonHelper, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box } from "@mui/material"
 
 interface Props {
@@ -50,8 +50,8 @@ export const Search: React.FC<Props> = (props) => {
 
   return (
     <>
-      <TextField fullWidth name="personAddText" label="Person" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => props.handleSearch(searchText)}>Search</Button> }}
+      <TextField fullWidth name="personAddText" label={Locale.label("components.search.person")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
+        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => props.handleSearch(searchText)}>{Locale.label("components.search.search")}</Button> }}
       />
       <Table size="small" id="searchResults">
         <TableBody>{rows}</TableBody>

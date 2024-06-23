@@ -1,6 +1,6 @@
 import React from "react";
 import { ChumsPersonHelper } from ".";
-import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition, PersonInterface, DisplayBox, ApiHelper, FundDonationInterface } from "@churchapps/apphelper";
+import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition, PersonInterface, DisplayBox, ApiHelper, FundDonationInterface, Locale } from "@churchapps/apphelper";
 import { EditCondition } from "./EditCondition";
 import { Button, Icon, OutlinedInput, FormControl, InputLabel, Box } from "@mui/material";
 
@@ -89,11 +89,11 @@ export function PeopleSearch(props: Props) {
   }
 
   const getSimpleSearch = () => (
-    <DisplayBox headerIcon="person" headerText="Simple Search" help="chums/advanced-search" editContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Advanced</Button>}>
+    <DisplayBox headerIcon="person" headerText={Locale.label("people.peopleSearch.simpSearch")} help="chums/advanced-search" editContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>{Locale.label("people.peopleSearch.adv")}</Button>}>
       <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
-        <InputLabel htmlFor="searchText">Name</InputLabel>
-        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label="Name" value={searchText} onChange={handleChange}
-          endAdornment={<Button variant="contained" onClick={handleSubmit}>Search</Button>}
+        <InputLabel htmlFor="searchText">{Locale.label("people.peopleSearch.name")}</InputLabel>
+        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("people.peopleSearch.name")} value={searchText} onChange={handleChange}
+          endAdornment={<Button variant="contained" onClick={handleSubmit}>{Locale.label("people.peopleSearch.search")}</Button>}
         />
       </FormControl>
     </DisplayBox>
@@ -101,7 +101,7 @@ export function PeopleSearch(props: Props) {
 
   const getAddCondition = () => {
     if (showAddCondition) return <EditCondition conditionAdded={(condition) => { const c = [...conditions]; c.push(condition); setConditions(c); setShowAddCondition(false) }} />
-    else return <a href="about:blank" style={{display: "flex", alignItems: "center", marginBottom: "10px", justifyContent: "flex-end"}} onClick={(e) => { e.preventDefault(); setShowAddCondition(true); }}><Icon>add</Icon> Add Condition</a>
+    else return <a href="about:blank" style={{display: "flex", alignItems: "center", marginBottom: "10px", justifyContent: "flex-end"}} onClick={(e) => { e.preventDefault(); setShowAddCondition(true); }}><Icon>add</Icon> {Locale.label("people.peopleSearch.addCon")}</a>
   }
 
   const removeCondition = (index: number) => {
@@ -115,7 +115,7 @@ export function PeopleSearch(props: Props) {
     let idx = 0;
     for (let c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", "not in").replace("donatedToAny", "made to").replace("donatedTo", "made to").replace("attendedCampus", "for").replace("attendedAny", "for").replace("attendedServiceTime", "for").replace("attendedService", "for").replace("attendedGroup", "for");
+      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", Locale.label("people.peopleSearch.notIn")).replace("donatedToAny", Locale.label("people.peopleSearch.madeTo")).replace("donatedTo", Locale.label("people.peopleSearch.madeTo")).replace("attendedCampus", Locale.label("people.peopleSearch.for")).replace("attendedAny", Locale.label("people.peopleSearch.for")).replace("attendedServiceTime", Locale.label("people.peopleSearch.for")).replace("attendedService", Locale.label("people.peopleSearch.for")).replace("attendedGroup", Locale.label("people.peopleSearch.for"));
       const index = idx;
       let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
       if (c.field === "memberAttendance" || c.field === "memberDonations") {
@@ -131,8 +131,8 @@ export function PeopleSearch(props: Props) {
     return result;
   }
 
-  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText="Advanced Search" headerActionContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>Simple</Button>} saveFunction={handleAdvancedSearch} saveText="Search" isSubmitting={conditions.length < 1} help="chums/advanced-search">
-    <p>All people where:</p>
+  const getAdvancedSearch = () => (<InputBox id="advancedSearch" headerIcon="person" headerText={Locale.label("people.peopleSearch.advSearch")} headerActionContent={<Button onClick={toggleAdvanced} sx={{ textTransform: "none" }}>{Locale.label("people.peopleSearch.simp")}</Button>} saveFunction={handleAdvancedSearch} saveText="Search" isSubmitting={conditions.length < 1} help="chums/advanced-search">
+    <p>{Locale.label("people.peopleSearch.allPeeps")}</p>
     {getDisplayConditions()}
     {getAddCondition()}
   </InputBox>)

@@ -1,6 +1,6 @@
 import React from "react";
 import { GroupDetailsEdit, ServiceTimes } from ".";
-import { GroupInterface, DisplayBox, UserHelper, Permissions, Loading } from "@churchapps/apphelper";
+import { GroupInterface, DisplayBox, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
 import { Grid } from "@mui/material"
 
 interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }
@@ -18,13 +18,13 @@ export const GroupDetails: React.FC<Props> = (props) => {
     if (!props.group) return <Loading />
     else return (<>
       <Grid container spacing={3}>
-        {isStandard && <Grid item md={6} xs={12}><label>Category:</label> {props.group.categoryName}</Grid>}
-        <Grid item md={6} xs={12}><label>Name:</label> {props.group.name}</Grid>
+        {isStandard && <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.cat")}</label> {props.group.categoryName}</Grid>}
+        <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.name")}</label> {props.group.name}</Grid>
       </Grid>
       {isStandard && <>
         <Grid container spacing={3}>
-          <Grid item md={6} xs={12}><label>Track Attendance:</label> {(props.group.trackAttendance?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
-          <Grid item md={6} xs={12}><label>Parent Pickup:</label> {(props.group.parentPickup?.toString().replace("false", "No").replace("true", "Yes") || "")}</Grid>
+          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.attTrack")}</label> {(props.group.trackAttendance?.toString().replace("false", Locale.label("groups.groupDetails.no")).replace("true", Locale.label("groups.groupDetails.yes")) || "")}</Grid>
+          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.parPick")}</label> {(props.group.parentPickup?.toString().replace("false", Locale.label("groups.groupDetails.no")).replace("true", Locale.label("groups.groupDetails.yes")) || "")}</Grid>
         </Grid>
         <ServiceTimes group={props.group} />
       </>}
@@ -34,7 +34,7 @@ export const GroupDetails: React.FC<Props> = (props) => {
 
   if (mode === "edit") return <GroupDetailsEdit group={props.group} updatedFunction={handleUpdated} />
   else return (
-    <DisplayBox id="groupDetailsBox" data-cy="group-details-box" headerText="Group Details" headerIcon="group" editFunction={getEditFunction()} help="chums/groups">
+    <DisplayBox id="groupDetailsBox" data-cy="group-details-box" headerText={Locale.label("groups.groupDetails.groupDet")} headerIcon="group" editFunction={getEditFunction()} help="chums/groups">
       {getRows()}
     </DisplayBox>
   );

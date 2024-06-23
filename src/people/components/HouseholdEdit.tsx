@@ -1,6 +1,6 @@
 import React from "react";
 import { UpdateHouseHold } from ".";
-import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, ErrorMessages } from "@churchapps/apphelper";
+import { InputBox, PersonAdd, PersonHelper, ApiHelper, HouseholdInterface, PersonInterface, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableCell, TableRow, TextField, FormControl, SelectChangeEvent, Select, MenuItem, InputLabel } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
@@ -44,7 +44,7 @@ export function HouseholdEdit(props: Props) {
       addPerson(person);
       return;
     }
-    setText(`Would you like to update ${person.name.first}"s address to match ${props.currentPerson.name.first}"s (${PersonHelper.addressToString(props.currentPerson.contactInfo)})?`);
+    setText(`${Locale.label("people.household.updQuestion")} ${person.name.first}"s ${Locale.label("people.household.addMatch")} ${props.currentPerson.name.first}"s (${PersonHelper.addressToString(props.currentPerson.contactInfo)})?`);
     setShowUpdateAddressModal(true);
   }
 
@@ -59,7 +59,7 @@ export function HouseholdEdit(props: Props) {
 
   const validate = () => {
     const result = [];
-    if (!household.name) result.push("Please provide a household name.");
+    if (!household.name) result.push(Locale.label("people.household.blankMsg"));
     setErrors(result);
     return result.length === 0;
   }
@@ -97,15 +97,15 @@ export function HouseholdEdit(props: Props) {
         <FormControl fullWidth style={{ marginTop: 0 }}>
           <InputLabel id="household-role">{m.name.display}</InputLabel>
           <Select aria-label="role" value={m.householdRole || ""} size="small" label={m.name.display} labelId="household-role" onChange={(e: SelectChangeEvent<string>) => handleChangeRole(e, index)}>
-            <MenuItem value="Head">Head</MenuItem>
-            <MenuItem value="Spouse">Spouse</MenuItem>
-            <MenuItem value="Child">Child</MenuItem>
-            <MenuItem value="Other">Other</MenuItem>
+            <MenuItem value="Head">{Locale.label("people.household.head")}</MenuItem>
+            <MenuItem value="Spouse">{Locale.label("people.household.spouse")}</MenuItem>
+            <MenuItem value="Child">{Locale.label("people.household.child")}</MenuItem>
+            <MenuItem value="Other">{Locale.label("people.household.other")}</MenuItem>
           </Select>
         </FormControl>
       </TableCell>
       <TableCell>
-        <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(index)} />
+        <SmallButton icon="person_remove" text={Locale.label("people.household.rmv")} onClick={() => handleRemove(index)} />
       </TableCell>
     </TableRow>
   ))
@@ -121,9 +121,9 @@ export function HouseholdEdit(props: Props) {
   return (
     <>
       <UpdateHouseHold show={showUpdateAddressModal} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} text={text} />
-      <InputBox id="householdBox" headerIcon="group" headerText={household?.name + " Household"} isSubmitting={isSubmitting} saveFunction={handleSave} cancelFunction={props.updatedFunction}>
+      <InputBox id="householdBox" headerIcon="group" headerText={household?.name + Locale.label("people.household.house")} isSubmitting={isSubmitting} saveFunction={handleSave} cancelFunction={props.updatedFunction}>
         <ErrorMessages errors={errors} />
-        <TextField fullWidth name="name" id="name" type="text" value={household?.name} onChange={handleChange} label="Household Name" />
+        <TextField fullWidth name="name" id="name" type="text" value={household?.name} onChange={handleChange} label={Locale.label("people.household.houseName")} />
         <Table size="small" id="householdMemberTable">
           <TableBody>
             {rows}
@@ -131,7 +131,7 @@ export function HouseholdEdit(props: Props) {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell>
-                <SmallButton icon="person_add" text="Add" onClick={() => setShowAdd(true)} />
+                <SmallButton icon="person_add" text={Locale.label("people.household.add")} onClick={() => setShowAdd(true)} />
               </TableCell>
             </TableRow>
           </TableBody>

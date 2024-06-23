@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, FormControl, InputLabel, OutlinedInput } from "@mui/material";
 import { ChumsPersonHelper } from "../components";
-import { ApiHelper, DisplayBox, PersonInterface, SearchCondition } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, Locale, PersonInterface, SearchCondition } from "@churchapps/apphelper";
 import { PeopleSearchResults } from "../../people/components";
 
 export const PeopleSearch = () => {
@@ -21,16 +21,16 @@ export const PeopleSearch = () => {
   }
 
   const columns = [
-    { key: "photo", label: "Photo", shortName: "" },
-    { key: "displayName", label: "Display Name", shortName: "Name" }
+    { key: "photo", label: Locale.label("dashboard.peopleSearch.photo"), shortName: "" },
+    { key: "displayName", label: Locale.label("dashboard.peopleSearch.display"), shortName: Locale.label("dashboard.peopleSearch.name") }
   ];
 
   return (<>
-    <DisplayBox id="peopleBox" headerIcon="person" headerText="People">
+    <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("dashboard.peopleSearch.ppl")}>
       <FormControl fullWidth variant="outlined">
-        <InputLabel htmlFor="searchText">Name</InputLabel>
-        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label="Name" value={searchText} onChange={handleChange}
-          endAdornment={<Button variant="contained" onClick={handleSubmit}>Search</Button>}
+        <InputLabel htmlFor="searchText">{Locale.label("dashboard.peopleSearch.name")}</InputLabel>
+        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("dashboard.peopleSearch.name")} value={searchText} onChange={handleChange}
+          endAdornment={<Button variant="contained" onClick={handleSubmit}>{Locale.label("dashboard.peopleSearch.search")}</Button>}
         />
       </FormControl>
       {searchResults && <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} />}

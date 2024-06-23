@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, UserHelper, DateHelper, ArrayHelper } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, UserHelper, DateHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { Grid, TextField, Button, Icon } from "@mui/material";
 import UserContext from "../UserContext";
@@ -36,8 +36,8 @@ export const AdminPage = () => {
 
       const currentChurch = c;
       let activeLink = (c.archivedDate)
-        ? <a href="about:blank" className="text-danger" onClick={(e) => { e.preventDefault(); handleArchive(currentChurch); }}>Archived</a>
-        : <a href="about:blank" className="text-success" onClick={(e) => { e.preventDefault(); handleArchive(currentChurch); }}>Active</a>
+        ? <a href="about:blank" className="text-danger" onClick={(e) => { e.preventDefault(); handleArchive(currentChurch); }}>{Locale.label("serverAdmin.adminPage.arch")}</a>
+        : <a href="about:blank" className="text-success" onClick={(e) => { e.preventDefault(); handleArchive(currentChurch); }}>{Locale.label("serverAdmin.adminPage.act")}</a>
 
       result.push(<tr key={index}>
         <td>{getManageAccessLink(c)}</td>
@@ -45,7 +45,7 @@ export const AdminPage = () => {
         <td>{activeLink}</td>
       </tr>);
     });
-    result.unshift(<tr><th>Church</th><th>Registered</th><th>Active</th></tr>)
+    result.unshift(<tr><th>{Locale.label("serverAdmin.adminPage.church")}</th><th>{Locale.label("serverAdmin.adminPage.regist")}</th><th>{Locale.label("serverAdmin.adminPage.act")}</th></tr>)
     return result;
 
   }
@@ -80,18 +80,18 @@ export const AdminPage = () => {
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (
     <>
-      <h1><Icon>admin_panel_settings</Icon> Server Admin</h1>
+      <h1><Icon>admin_panel_settings</Icon> {Locale.label("serverAdmin.adminPage.servAdmin")}</h1>
 
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox headerIcon="church" headerText="Churches">
-            <TextField fullWidth variant="outlined" name="searchText" label="Church Name" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-              InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" disableElevation onClick={loadData}>Search</Button> }}
+          <DisplayBox headerIcon="church" headerText={Locale.label("serverAdmin.adminPage.churches")}>
+            <TextField fullWidth variant="outlined" name="searchText" label={Locale.label("serverAdmin.adminPage.churchName")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
+              InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" disableElevation onClick={loadData}>{Locale.label("serverAdmin.adminPage.search")}</Button> }}
             />
             <br />
             {
               churches.length === 0
-                ? <>No church found.  Please search for a different name.</>
+                ? <>{Locale.label("serverAdmin.adminPage.noChurch")}</>
                 : (
                   <table className="table table-sm" id="adminChurchesTable">
                     {getChurchRows()}
@@ -107,12 +107,12 @@ export const AdminPage = () => {
       <ReportWithFilter keyName="usageTrends" autoRun={true} />
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
-          <DisplayBox headerIcon="summarize" headerText="Notes on How Values are Calculated">
+          <DisplayBox headerIcon="summarize" headerText={Locale.label("serverAdmin.adminPage.valueNotes")}>
             <ul>
-              <li><b>Chums</b> - Comparable software is Breeze.  They charge $72/mo or $864/year.</li>
-              <li><b>B1</b> - Comparable software is SubSplash.  They start at $99/mo or $1200/year.  This does not include the cut they take on donations.</li>
-              <li><b>Lessons</b> - Comparable content is Orange.  They charge $1023/year for churches with 26-50 viewers for 252 Basic.</li>
-              <li><b>FreeShow</b> - Comparable software is ProPresenter.  It's $399 for a site license.  I made assumptions that the average church installs the software on 3 computers and divided our total installs by 3 to get the number of churches.  I also made the assumption that churches will upgrade to a newer version every 5 years on average.  So $399 / 5 years / 3 computers = $26.60 annual cost per computer.  If we can quantify these assumptions we should update this number.</li>
+              <li><b>Chums</b> - {Locale.label("serverAdmin.adminPage.noteOne")}</li>
+              <li><b>B1</b> - {Locale.label("serverAdmin.adminPage.noteTwo")}</li>
+              <li><b>Lessons</b> - {Locale.label("serverAdmin.adminPage.noteThree")}</li>
+              <li><b>FreeShow</b> - {Locale.label("serverAdmin.adminPage.noteFour")}</li>
             </ul>
           </DisplayBox>
 

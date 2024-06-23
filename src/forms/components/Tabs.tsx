@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import React from "react";
 import { FormMembers, Form, FormSubmissions } from ".";
-import { UserHelper, Permissions, MemberPermissionInterface, FormInterface } from "@churchapps/apphelper";
+import { UserHelper, Permissions, MemberPermissionInterface, FormInterface, Locale } from "@churchapps/apphelper";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 interface Props { form: FormInterface, memberPermission: MemberPermissionInterface }
@@ -25,9 +25,9 @@ export const Tabs: React.FC<Props> = (props) => {
   const formMemberAdmin = formMemberAction === "admin" && formType !== undefined && formType === "form";
   const formMemberView = formMemberAction === "view" && formType !== undefined && formType === "form";
 
-  if (formAdmin || formEdit || formMemberAdmin) { tabs.push(getTab(0, "questions", "notes", "Questions")); defaultTab = "questions"; }
-  if ((formAdmin || formMemberAdmin) && formType === "form") { tabs.push(getTab(1, "members", "calendar_month", "Form Members")); }
-  if ((formAdmin || formMemberAdmin || formMemberView)) { tabs.push(getTab(2, "submissions", "calendar_month", "Form Submissions")); if (defaultTab !== "questions") defaultTab = "submissions" }
+  if (formAdmin || formEdit || formMemberAdmin) { tabs.push(getTab(0, "questions", "notes", Locale.label("forms.tabs.questions"))); defaultTab = "questions"; }
+  if ((formAdmin || formMemberAdmin) && formType === "form") { tabs.push(getTab(1, "members", "calendar_month", Locale.label("forms.tabs.formMem"))); }
+  if ((formAdmin || formMemberAdmin || formMemberView)) { tabs.push(getTab(2, "submissions", "calendar_month", Locale.label("forms.tabs.formSub"))); if (defaultTab !== "questions") defaultTab = "submissions" }
 
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
@@ -35,7 +35,7 @@ export const Tabs: React.FC<Props> = (props) => {
     case "questions": currentTab = <Form id={props.form.id} />; break;
     case "members": currentTab = <FormMembers formId={props.form.id} />; break;
     case "submissions": currentTab = <FormSubmissions formId={props.form.id} memberPermissions={props.memberPermission} />; break;
-    default: currentTab = <div>Unauthorized</div>; break;
+    default: currentTab = <div>{Locale.label("forms.tabs.unAuth")}</div>; break;
   }
 
   return (<>

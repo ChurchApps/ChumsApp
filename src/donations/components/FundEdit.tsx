@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ApiHelper, InputBox, FundInterface, ErrorMessages } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, FundInterface, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { TextField } from "@mui/material";
 
 interface Props { fund: FundInterface, updatedFunction: () => void }
@@ -11,7 +11,7 @@ export const FundEdit: React.FC<Props> = (props) => {
   const handleSave = () => {
     let errors: string[] = [];
 
-    if (!fund.name.trim()) errors.push("Enter a fund name");
+    if (!fund.name.trim()) errors.push(Locale.label("donations.fundEdit.errBlank"));
 
     if (errors.length > 0) {
       setErrors(errors);
@@ -23,7 +23,7 @@ export const FundEdit: React.FC<Props> = (props) => {
     ApiHelper.post("/funds", [fund], "GivingApi").then(() => props.updatedFunction());
   }
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to permanently delete this fund?")) {
+    if (window.confirm(Locale.label("donations.fundEdit.confirmMsg"))) {
       ApiHelper.delete("/funds/" + fund.id, "GivingApi").then(() => props.updatedFunction());
     }
   };
@@ -38,9 +38,9 @@ export const FundEdit: React.FC<Props> = (props) => {
   React.useEffect(() => { setFund(props.fund); }, [props.fund]);
 
   return (
-    <InputBox id="fundsBox" headerIcon="volunteer_activism" headerText="Edit Fund" cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete} help="chums/giving">
+    <InputBox id="fundsBox" headerIcon="volunteer_activism" headerText={Locale.label("donations.fundEdit.edit")} cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete} help="chums/giving">
       <ErrorMessages errors={errors} />
-      <TextField fullWidth name="fundName" label="Name" value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth name="fundName" label={Locale.label("donations.fundEdit.name")} value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />
     </InputBox>
 
   );

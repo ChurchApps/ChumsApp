@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 import { PersonAttendance } from ".";
-import { DonationPage, Permissions, PersonInterface, ConversationInterface, UserHelper, Notes, ApiHelper } from "@churchapps/apphelper";
+import { DonationPage, Permissions, PersonInterface, ConversationInterface, UserHelper, Notes, ApiHelper, Locale } from "@churchapps/apphelper";
 import UserContext from "../../UserContext";
 interface Props { person: PersonInterface }
 
@@ -31,16 +31,16 @@ export const Tabs: React.FC<Props> = (props) => {
   let tabs = [];
   let defaultTab = ""
   let currentTab = null;
-  if (UserHelper.checkAccess(Permissions.membershipApi.people.edit)) { tabs.push(getTab(0, "notes", "notes", "Notes")); defaultTab = "notes"; }
-  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "attendance", "calendar_month", "Attendance")); if (defaultTab === "") defaultTab = "attendance"; }
-  if (UserHelper.checkAccess(Permissions.givingApi.donations.view)) { tabs.push(getTab(2, "donations", "volunteer_activism", "Donations")); if (defaultTab === "") defaultTab = "donations"; }
+  if (UserHelper.checkAccess(Permissions.membershipApi.people.edit)) { tabs.push(getTab(0, "notes", "notes", Locale.label("people.tabs.notes"))); defaultTab = "notes"; }
+  if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "attendance", "calendar_month", Locale.label("people.tabs.att"))); if (defaultTab === "") defaultTab = "attendance"; }
+  if (UserHelper.checkAccess(Permissions.givingApi.donations.view)) { tabs.push(getTab(2, "donations", "volunteer_activism", Locale.label("people.tabs.don"))); if (defaultTab === "") defaultTab = "donations"; }
   if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
   switch (selectedTab) {
     case "notes": currentTab = <Notes context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />; break;
     case "attendance": currentTab = <PersonAttendance personId={person.id} />; break;
     case "donations": currentTab = <DonationPage personId={person.id} church={UserHelper.currentUserChurch.church} />; break;
-    default: currentTab = <div>Not implemented</div>; break;
+    default: currentTab = <div>{Locale.label("people.tabs.noImplement")}</div>; break;
   }
 
   return (<Paper>

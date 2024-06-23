@@ -1,5 +1,5 @@
 import React from "react";
-import { PersonInterface, ContactInfoInterface, NameInterface } from "@churchapps/apphelper";
+import { PersonInterface, ContactInfoInterface, NameInterface, Locale } from "@churchapps/apphelper";
 import { EnvironmentHelper } from "../../../helpers"
 import { Dialog, Button, Container, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 
@@ -127,7 +127,7 @@ export const MergeModal: React.FC<Props> = (props) => {
     const test = conflicts.some((e) => e.selected === "");
     setError(null);
     if (test) {
-      setError("Please select atleast 1 value for each field");
+      setError(Locale.label("people.mergeModal.selMsg"));
       return;
     }
     let person: PersonInterface = { ...aggregatePerson };
@@ -179,20 +179,20 @@ export const MergeModal: React.FC<Props> = (props) => {
 
   return (
     <Dialog open={props.show} aria-labelledby="contained-modal-title-vcenter" data-cy="merge-modal">
-      <DialogTitle>Would you like to merge {person1?.name.display} with {person2?.name.display}?</DialogTitle>
+      <DialogTitle>{Locale.label("people.mergeModal.mergeQuestion")} {person1?.name.display} {Locale.label("people.mergeModal.with")} {person2?.name.display}?</DialogTitle>
       <DialogContent>
         {conflicts.length > 0 && (
           <>
-            <p>Here are some fields conflicting fields: </p>
+            <p>{Locale.label("people.mergeModal.fieldCon")} </p>
             <Container>{createConflictRows()}</Container>
             <span style={{color: "#dc3545", fontStyle: "italic"}}>{error}</span>
           </>
         )}
-        {mergeInProgress && <p style={{textAlign: "center", fontStyle: "italic", marginBottom: 0}}>Merging records...</p>}
+        {mergeInProgress && <p style={{textAlign: "center", fontStyle: "italic", marginBottom: 0}}>{Locale.label("people.mergeModal.merge")}</p>}
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.onHide} data-cy="cancel-merge">Cancel</Button>
-        <Button onClick={handleConfirm} data-cy="confirm-merge">Confirm</Button>
+        <Button onClick={props.onHide} data-cy="cancel-merge">{Locale.label("people.mergeModal.cancel")}</Button>
+        <Button onClick={handleConfirm} data-cy="confirm-merge">{Locale.label("people.mergeModal.confirm")}</Button>
       </DialogActions>
     </Dialog>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { SmallButton, ActionInterface, AutomationInterface, ConditionInterface, ConjunctionInterface } from "@churchapps/apphelper";
+import { SmallButton, ActionInterface, AutomationInterface, ConditionInterface, ConjunctionInterface, Locale } from "@churchapps/apphelper";
 import { ApiHelper, DisplayBox } from "@churchapps/apphelper";
 import { ActionEdit } from "./ActionEdit";
 import { AutomationEdit } from "./AutomationEdit";
@@ -42,7 +42,7 @@ export const AutomationDetails = (props: Props) => {
         const action = a;
         result.push(<li>
           <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditAction(action); }} /></span>
-          <b>Task:</b> {d.title} - <i>{d.assignedToLabel}</i></li>);
+          <b>{Locale.label("tasks.automationDetails.task")}:</b> {d.title} - <i>{d.assignedToLabel}</i></li>);
       }
     });
     return result;
@@ -60,13 +60,13 @@ export const AutomationDetails = (props: Props) => {
     return <ConditionEdit condition={editCondition} onCancel={() => setEditCondition(null)} onSave={(c: ConditionInterface) => { setEditCondition(null); loadData(); }} />
   }
   else return (
-    <DisplayBox headerIcon="settings_suggest" headerText="Automation Details" help="chums/automations">
-      <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditDetails(true); }} /></span><b>Automation Details:</b>
+    <DisplayBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationDetails.auto")} help="chums/automations">
+      <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditDetails(true); }} /></span><b>{Locale.label("tasks.automationDetails.auto")}:</b>
       <hr />
-      <div><b>Name:</b> {automation?.title}</div>
-      <div><b>Repeats:</b> {automation?.recurs}</div>
+      <div><b>{Locale.label("tasks.automationDetails.name")}:</b> {automation?.title}</div>
+      <div><b>{Locale.label("tasks.automationDetails.rep")}:</b> {automation?.recurs}</div>
       <br />
-      <span style={{ float: "right" }}><SmallButton icon="add" onClick={() => { setEditAction({ automationId: automation.id, actionType: "task" }) }} /></span><b>Actions:</b>
+      <span style={{ float: "right" }}><SmallButton icon="add" onClick={() => { setEditAction({ automationId: automation.id, actionType: "task" }) }} /></span><b>{Locale.label("tasks.automationDetails.act")}:</b>
       <hr />
       <ul>
         {getActions()}
