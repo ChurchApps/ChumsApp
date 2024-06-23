@@ -909,6 +909,14 @@
         "monthDay": "Day of Month",
         "yearsE": "Years Elapsed",
         "op": "Operator"
+      },
+      "conditionDetails": {
+        "addConj": "Add Conjunction",
+        "addCon": "Add Condition",
+        "any": "Any",
+        "trueCon": "of these conditions are true",
+        "all": "All",
+        "con": "Conditions:"
       }
     }
 

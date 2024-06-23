@@ -1,6 +1,6 @@
 import { Icon, Menu, MenuItem } from "@mui/material";
 import React from "react";
-import { SmallButton, AutomationInterface, ConditionInterface, ConjunctionInterface } from "@churchapps/apphelper";
+import { SmallButton, AutomationInterface, ConditionInterface, ConjunctionInterface, Locale } from "@churchapps/apphelper";
 import { ArrayHelper  } from "@churchapps/apphelper";
 
 interface Props {
@@ -28,8 +28,8 @@ export const ConditionDetails = (props: Props) => {
 
   const getConditionMenu = () => (
     <Menu id="addMenu" anchorEl={menuAnchor} open={Boolean(menuAnchor)} onClose={() => { setMenuAnchor(null) }} MenuListProps={{ "aria-labelledby": "addMenuButton" }}>
-      <MenuItem onClick={() => { props.setEditConjunction({ automationId: props.automation.id, groupType: "and", parentId: parentId }) }}><Icon>account_tree</Icon> &nbsp; Add Conjunction</MenuItem>
-      <MenuItem onClick={() => { props.setEditCondition({ conjunctionId: parentId, field: "dayOfWeek" }) }}><Icon>done</Icon> &nbsp; Add Condition</MenuItem>
+      <MenuItem onClick={() => { props.setEditConjunction({ automationId: props.automation.id, groupType: "and", parentId: parentId }) }}><Icon>account_tree</Icon> &nbsp; {Locale.label("tasks.conditionDetails.addConj")}</MenuItem>
+      <MenuItem onClick={() => { props.setEditCondition({ conjunctionId: parentId, field: "dayOfWeek" }) }}><Icon>done</Icon> &nbsp; {Locale.label("tasks.conditionDetails.addCon")}</MenuItem>
     </Menu>
   );
 
@@ -44,7 +44,7 @@ export const ConditionDetails = (props: Props) => {
     });
     conjunctions?.forEach(cj => {
       const conj = cj;
-      const text = (cj.groupType === "or") ? (<i><u>Any</u> of these conditions are true</i>) : (<i><u>All</u> of these conditions are true</i>);
+      const text = (cj.groupType === "or") ? (<i><u>{Locale.label("tasks.conditionDetails.any")}</u> {Locale.label("tasks.conditionDetails.trueCon")}</i>) : (<i><u>{Locale.label("tasks.conditionDetails.all")}</u> {Locale.label("tasks.conditionDetails.trueCon")}</i>);
       result.push(<li>
         <span style={{ float: "right" }}>
           <SmallButton icon="add" onClick={(e) => { setMenuAnchor(e.currentTarget); setParentId(conj.id); console.log(conj.id) }} />
@@ -65,7 +65,7 @@ export const ConditionDetails = (props: Props) => {
   return (
     <>
       <br />
-      <span style={{ float: "right" }}><SmallButton icon="add" onClick={() => { props.setEditConjunction({ automationId: props.automation.id, groupType: "and" }) }} /></span><b>Conditions:</b>
+      <span style={{ float: "right" }}><SmallButton icon="add" onClick={() => { props.setEditConjunction({ automationId: props.automation.id, groupType: "and" }) }} /></span><b>{Locale.label("tasks.conditionDetails.con")}</b>
       <hr />
       {getLevel(tree, [], 0)}
     </>
