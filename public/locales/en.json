@@ -1006,6 +1006,16 @@
         "assignMe": "Assigned to Me",
         "reqMe": "Requested by Me",
         "tasks": "Tasks"
+      },
+      "taskPage": {
+        "dateCreated": "Date Created",
+        "taskDet": "Task Details",
+        "stat": "Status",
+        "open": "Open",
+        "closed": "Closed",
+        "createdBy": "Created By",
+        "associateW": "Associated With",
+        "assignTo": "Assigned to"
       }
     }
 
