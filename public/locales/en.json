@@ -917,6 +917,32 @@
         "trueCon": "of these conditions are true",
         "all": "All",
         "con": "Conditions:"
+      },
+      "conditionEdit": {
+        "confirmMsg": "Are you sure you want to delete this condition?",
+        "conEdit": "Edit Condition",
+        "conType": "Condition Type",
+        "gen": "General",
+        "today": "Today's Date",
+        "name": "Name",
+        "disName": "Display Name",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "middleName": "Middle Name",
+        "nickName": "Nick Name",
+        "persAtt": "Personal Attributes",
+        "bDate": "Birth Date",
+        "gender": "Gender",
+        "marStat": "Marital Status",
+        "anni": "Anniversary",
+        "memShipStat": "Membership Status",
+        "conInfo": "Contact Info",
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Address",
+        "city": "City",
+        "state": "State/Province",
+        "zip": "Zip/Postal"
       }
     }
 
