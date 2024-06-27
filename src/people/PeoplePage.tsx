@@ -15,7 +15,7 @@ export const PeoplePage = () => {
 
   const columns = [
     { key: "photo", label: Locale.label("people.peoplePage.photo"), shortName: "" },
-    { key: "displayName", label: Locale.label("people.peoplePage.disName"), shortName: Locale.label("people.peoplePage.name") },
+    { key: "displayName", label: Locale.label("people.peoplePage.disName"), shortName: Locale.label("common.name") },
     { key: "lastName", label: Locale.label("people.peoplePage.lastName"), shortName: Locale.label("people.peoplePage.last") },
     { key: "firstName", label: Locale.label("people.peoplePage.firstName"), shortName: Locale.label("people.peoplePage.first") },
     { key: "middleName", label: Locale.label("people.peoplePage.middleName"), shortName: Locale.label("people.peoplePage.middle") },

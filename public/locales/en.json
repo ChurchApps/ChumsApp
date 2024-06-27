@@ -1,6 +1,9 @@
 {
     "common": {
-        "search": "Search"
+        "search": "Search",
+        "yes": "Yes",
+        "no": "No",
+        "name": "Name"
     },
     "attendance": {
       "campusEdit": {
@@ -52,13 +55,8 @@
         "phone": "Phone",
         "rights": "All rights reserved."
       },
-      "question": {
-        "no": "No",
-        "yes": "Yes"
-      },
       "search": {
-        "person": "Person",
-        "search": "Search"
+        "person": "Person"
       },
       "wrapper": {
         "dash": "Dashboard",
@@ -80,9 +78,7 @@
       "peopleSearch": {
         "photo": "Photo",
         "display": "Display Name",
-        "ppl": "People",
-        "name": "Name",
-        "search": "Search"
+        "ppl": "People"
       },
       "dashboardPage": {
         "dash": "Dashboard"
@@ -120,7 +116,6 @@
         "errMsg": "No fund found. Please create a fund before making a donation",
         "noDonMsg": "No donations have been tracked. Once donations are entered they will show up here.",
         "tableIdent": "Id",
-        "name": "Name",
         "date": "Date",
         "amt": "Amount",
         "anon": "Anonymous",
@@ -130,8 +125,7 @@
       "fundEdit": {
         "errBlank": "Enter a fund name",
         "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
-        "edit": "Edit Fund",
-        "name": "Name"
+        "edit": "Edit Fund"
       },
       "funds": {
         "noFund": "No funds found.",
@@ -140,7 +134,6 @@
       "donationsPage": {
         "noBatch": "No batches found.",
         "batch": "Batch",
-        "name": "Name",
         "date": "Date",
         "don": "Donations",
         "total": "Total",
@@ -170,8 +163,6 @@
       },
       "form": {
         "noCustomMsg": "No custom questions have been created yet. Questions will be listed here.",
-        "yes": "Yes",
-        "no": "No",
         "question": "Question",
         "questions": "Questions",
         "type": "Type",
@@ -193,15 +184,12 @@
         "restrict": "Restricted",
         "available": "Set Form Availability Timeframe",
         "availableStart": "Availability Start Date",
-        "availableEnd": "Availability End Date",
-        "yes": "Yes",
-        "no": "No"
+        "availableEnd": "Availability End Date"
       },
       "formMembers": {
         "admin": "Admin",
         "view": "View Only",
         "rmv": "Remove",
-        "name": "Name",
         "perm": "Permission",
         "act": "Action",
         "emailNotif": "Email Notification",
@@ -236,9 +224,7 @@
         "subBy": "Submitted By",
         "subDate": "Submission Date",
         "subSum": "Form Submission Summary",
-        "subRes": "Form Submission Results",
-        "yes": "Yes",
-        "no": "No"
+        "subRes": "Form Submission Results"
       },
       "tabs": {
         "unAuth": "Unauthorized",
@@ -251,7 +237,6 @@
         "confirmMsg1": "Are you sure you want to archive this form?",
         "confirmMsg2": "Are you sure you want to restore this form?",
         "noArch": "No archived forms.",
-        "name": "Name",
         "forms": "Forms",
         "archForms": "Archived Forms"
       }
@@ -264,17 +249,13 @@
         "team": "Team",
         "ministry": "Ministry",
         "new": "New ",
-        "catName": "Category Name",
-        "name": "Name"
+        "catName": "Category Name"
       },
       "groupDetails": {
         "cat": "Category",
-        "name": "Name",
         "attTrack": "Track Attendance:",
         "parPick": "Parent Pickup:",
-        "groupDet": "Group Details",
-        "yes": "Yes",
-        "no": "No"
+        "groupDet": "Group Details"
       },
       "groupDetailsEdit": {
         "catNameMsg": "Please enter a category name.",
@@ -284,8 +265,6 @@
         "catName": "Category Name",
         "groupName": "Group Name",
         "attTrack": "Track Attendance",
-        "no": "No",
-        "yes": "Yes",
         "parPick": "Parent Pickup",
         "groupDesc": "Group Description",
         "groupImg": "Group Photo",
@@ -293,7 +272,6 @@
       },
       "groupMembers": {
         "noMem": "No group members found.",
-        "name": "Name",
         "groupMem": "Group Members",
         "send": "Send",
         "sendMemMsg": "Send a message to members"
@@ -304,13 +282,11 @@
         "new": "New",
         "noSesMsg": "There are no sessions.",
         "addSesMsg": "Please add a new session to continue.",
-        "attFor": "Attendance for",
-        "name": "Name"
+        "attFor": "Attendance for"
       },
       "membersAdd": {
         "noMem": "No group members available.",
         "add": "Add",
-        "name": "Name",
         "availableMem": "Available Group Members"
       },
       "serviceTimes": {
@@ -339,7 +315,6 @@
       "groupsPage": {
         "noGroupMsg": "No groups found. Please create a group.",
         "cat": "Category",
-        "name": "Name",
         "ppl": "People",
         "groups": "Groups",
         "pers": "1 person",
@@ -357,9 +332,7 @@
         "confirm": "Confirm"
       },
       "updateHouseHold": {
-        "update": "Update Address",
-        "no": "No",
-        "yes": "Yes"
+        "update": "Update Address"
       },
       "editCondition": {
         "unspec": "Unspecified",
@@ -470,8 +443,6 @@
         "advSearch": "Advanced Search",
         "simp": "Simple",
         "adv": "Advanced",
-        "name": "Name",
-        "search": "Search",
         "addCon": "Add Condition",
         "allPeeps": "All people where:",
         "notIn": "Not In",
@@ -550,7 +521,6 @@
       "peoplePage": {
         "photo": "Photo",
         "disName": "Display Name",
-        "name": "Name",
         "lastName": "Last Name",
         "last": "Last",
         "firstName": "First Name",
@@ -599,7 +569,6 @@
         "servReq": "Service date is required.",
         "planEdit": "Edit Plan",
         "planAdd": "Add a Plan",
-        "name": "Name",
         "servDate": "Service Date",
         "copy": "Copy From",
         "none": "None"
@@ -634,7 +603,6 @@
         "posEdit": "Edit Position",
         "posAdd": "Add a Position",
         "catName": "Category Name",
-        "name": "Name",
         "volCount": "Volunteer Count",
         "volGroup": "Volunteer Group"
       },
@@ -651,7 +619,6 @@
         "pers": "1 person",
         "ppl": "People",
         "peeps": " people",
-        "name": "Name",
         "teams": "Teams"
       },
       "timeEdit": {
@@ -704,8 +671,6 @@
         "notifPref": "Notification Preferences",
         "notifMsg": "Choose how you would like to receive updates about private messages, conversations, forms and other notifications.",
         "notifPush": "Allow Push Notifications",
-        "yes": "Yes",
-        "no": "No",
         "freqEmail": "Email Frequency",
         "never": "Never",
         "indiv": "Individual",
@@ -737,7 +702,6 @@
         "servAdmin": "Server Admin",
         "churches": "Churches",
         "churchName": "Church Name",
-        "search": "Search",
         "noChurch": "No churches found.  Please search for a different name.",
         "valueNotes": "Notes on How Values are Calculated",
         "noteOne": "Comparable software is Breeze.  They charge $72/mo or $864/year.",
@@ -755,7 +719,6 @@
       },
       "churchSettings": {
         "churchSet": "Church Settings",
-        "name": "Name",
         "subdom": "Subdomain",
         "address": "Address"
       },
@@ -806,7 +769,6 @@
         "add": "Add",
         "confirmMsg": "Are you sure you wish to delete this user from",
         "roleAppMsg": "This role applies to all the members of the church.",
-        "name": "Name",
         "email": "Email",
         "mem": "Members",
         "edit": "Edit",
@@ -822,7 +784,6 @@
         "add": "Add",
         "role": "Role",
         "roles": "Roles",
-        "name": "Name",
         "acc": "Accounting",
         "accDesc": "Has access to view and manage donations.",
         "churchStaff": "Church Staff",
@@ -872,7 +833,6 @@
       "automationDetails": {
         "task": "Task",
         "auto": "Automation Details",
-        "name": "Name",
         "rep": "Repeats",
         "acts": "Actions"
       },
@@ -943,7 +903,6 @@
         "conType": "Condition Type",
         "gen": "General",
         "today": "Today's Date",
-        "name": "Name",
         "disName": "Display Name",
         "firstName": "First Name",
         "lastName": "Last Name",
@@ -1016,7 +975,6 @@
       },
       "selectGroup": {
         "group": "Group",
-        "search": "Search",
         "sel": "Select"
       },
       "taskList": {

@@ -75,7 +75,7 @@ export const GroupsPage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("groups.groupsPage.cat")}</th><th>{Locale.label("groups.groupsPage.name")}</th><th>{Locale.label("groups.groupsPage.ppl")}</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("groups.groupsPage.cat")}</th><th>{Locale.label("common.name")}</th><th>{Locale.label("groups.groupsPage.ppl")}</th></TableRow>);
     return rows;
   }
 

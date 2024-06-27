@@ -80,7 +80,7 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("forms.formMembers.name")}</th><th>{Locale.label("forms.formMembers.perm")}</th><th>{Locale.label("forms.formMembers.act")}</th><th>{Locale.label("forms.formMembers.emailNotif")}<Tooltip title={Locale.label("forms.formMembers.emailNotifMsg")} arrow><IconButton><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("common.name")}</th><th>{Locale.label("forms.formMembers.perm")}</th><th>{Locale.label("forms.formMembers.act")}</th><th>{Locale.label("forms.formMembers.emailNotif")}<Tooltip title={Locale.label("forms.formMembers.emailNotifMsg")} arrow><IconButton><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
     return rows;
   }
 

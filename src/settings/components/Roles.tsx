@@ -133,7 +133,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
   return (
     <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={getEditContent()} help="chums/assigning-roles">
       <Table id="roleMemberTable">
-        <TableHead><TableRow><TableCell>{Locale.label("settings.roles.name")}</TableCell><TableCell></TableCell></TableRow></TableHead>
+        <TableHead><TableRow><TableCell>{Locale.label("common.name")}</TableCell><TableCell></TableCell></TableRow></TableHead>
         <TableBody>{getRows()}</TableBody>
       </Table>
     </DisplayBox>

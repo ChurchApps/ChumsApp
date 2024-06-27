@@ -85,7 +85,7 @@ export const ConditionEdit = (props: Props) => {
           <ListSubheader>{Locale.label("tasks.conditionEdit.gen")}</ListSubheader>
           <MenuItem value="today">{Locale.label("tasks.conditionEdit.today")}</MenuItem>
 
-          <ListSubheader>{Locale.label("tasks.conditionEdit.name")}</ListSubheader>
+          <ListSubheader>{Locale.label("common.name")}</ListSubheader>
           <MenuItem key="/displayName" value="displayName">{Locale.label("tasks.conditionEdit.disName")}</MenuItem>
           <MenuItem key="/firstName" value="firstName">{Locale.label("tasks.conditionEdit.firstName")}</MenuItem>
           <MenuItem key="/lastName" value="lastName">{Locale.label("tasks.conditionEdit.lastName")}</MenuItem>

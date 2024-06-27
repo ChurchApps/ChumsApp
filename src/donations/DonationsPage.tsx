@@ -120,7 +120,7 @@ export const DonationsPage = () => {
     rows.push(
       <TableRow sx={{textAlign: "left"}} key="header">
         <th onClick={() => sortTable("name", sortDirection)}>
-          <span style={{ float: "left", paddingRight: "5px", cursor: "default" }}>{Locale.label("donations.donationsPage.name")}</span>
+          <span style={{ float: "left", paddingRight: "5px", cursor: "default" }}>{Locale.label("common.name")}</span>
           {getSortArrows("name")}
         </th>
         <th onClick={() => sortTable("batchDate", sortDirection)}>

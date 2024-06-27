@@ -57,7 +57,7 @@ export const Form: React.FC<Props> = (props) => {
           <TableCell><a href="about:blank" onClick={handleClick}>{questions[i].title}</a></TableCell>
           <TableCell>{questions[i].fieldType}</TableCell>
           <TableCell style={{ textAlign: "left" }}>{upArrow}{downArrow}</TableCell>
-          <TableCell>{questions[i].required ? Locale.label("forms.form.yes") : Locale.label("forms.form.no")}</TableCell>
+          <TableCell>{questions[i].required ? Locale.label("common.yes") : Locale.label("common.no")}</TableCell>
         </TableRow>
       );
     }

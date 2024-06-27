@@ -103,8 +103,8 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                 <FormControl fullWidth>
                   <InputLabel>{Locale.label("groups.groupDetailsEdit.attTrack")}</InputLabel>
                   <Select label={Locale.label("groups.groupDetailsEdit.attTrack")} id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                    <MenuItem value="false">{Locale.label("groups.groupDetailsEdit.no")}</MenuItem>
-                    <MenuItem value="true">{Locale.label("groups.groupDetailsEdit.yes")}</MenuItem>
+                    <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
+                    <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -112,8 +112,8 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                 <FormControl fullWidth>
                   <InputLabel>{Locale.label("groups.groupDetailsEdit.parPick")}</InputLabel>
                   <Select label={Locale.label("groups.groupDetailsEdit.parPick")} name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                    <MenuItem value="false">{Locale.label("groups.groupDetailsEdit.no")}</MenuItem>
-                    <MenuItem value="true">{Locale.label("groups.groupDetailsEdit.yes")}</MenuItem>
+                    <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
+                    <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

@@ -51,7 +51,7 @@ export const Search: React.FC<Props> = (props) => {
   return (
     <>
       <TextField fullWidth name="personAddText" label={Locale.label("components.search.person")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => props.handleSearch(searchText)}>{Locale.label("components.search.search")}</Button> }}
+        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => props.handleSearch(searchText)}>{Locale.label("common.search")}</Button> }}
       />
       <Table size="small" id="searchResults">
         <TableBody>{rows}</TableBody>

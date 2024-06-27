@@ -145,8 +145,8 @@ export const ProfilePage = () => {
             <FormControl fullWidth>
               <InputLabel id="push">{Locale.label("profile.profilePage.notifPush")}</InputLabel>
               <Select fullWidth name="push" labelId="push" label={Locale.label("profile.profilePage.notifPush")} value={pref.allowPush?.toString() || "true"} onChange={handlePrefChange}>
-                <MenuItem value="true">{Locale.label("profile.profilePage.yes")}</MenuItem>
-                <MenuItem value="false">{Locale.label("profile.profilePage.no")}</MenuItem>
+                <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
+                <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
               </Select>
             </FormControl>
           </Grid>

@@ -68,7 +68,7 @@ export const FormsPage = () => {
     if (forms.length === 0) {
       return rows;
     }
-    rows.push(<TableRow key="header"><th colSpan={3}>{Locale.label("forms.formsPage.name")}</th></TableRow>);
+    rows.push(<TableRow key="header"><th colSpan={3}>{Locale.label("common.name")}</th></TableRow>);
     return rows;
   }
 

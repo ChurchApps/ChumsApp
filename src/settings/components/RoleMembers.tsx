@@ -61,7 +61,7 @@ export const RoleMembers: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     if (isRoleEveryone) return null;
 
-    return (<TableRow><TableCell>{Locale.label("settings.roleMembers.name")}</TableCell><TableCell>{Locale.label("settings.roleMembers.email")}</TableCell><TableCell></TableCell></TableRow>);
+    return (<TableRow><TableCell>{Locale.label("common.name")}</TableCell><TableCell>{Locale.label("settings.roleMembers.email")}</TableCell><TableCell></TableCell></TableRow>);
   }
 
   return (

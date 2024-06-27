@@ -41,7 +41,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) return rows;
-    rows.push(<TableRow key="0"><th></th><th>{Locale.label("groups.membersAdd.name")}</th><th></th></TableRow>);
+    rows.push(<TableRow key="0"><th></th><th>{Locale.label("common.name")}</th><th></th></TableRow>);
     return rows;
   }
 

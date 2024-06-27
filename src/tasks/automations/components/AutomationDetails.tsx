@@ -63,7 +63,7 @@ export const AutomationDetails = (props: Props) => {
     <DisplayBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationDetails.auto")} help="chums/automations">
       <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditDetails(true); }} /></span><b>{Locale.label("tasks.automationDetails.auto")}:</b>
       <hr />
-      <div><b>{Locale.label("tasks.automationDetails.name")}:</b> {automation?.title}</div>
+      <div><b>{Locale.label("common.name")}:</b> {automation?.title}</div>
       <div><b>{Locale.label("tasks.automationDetails.rep")}:</b> {automation?.recurs}</div>
       <br />
       <span style={{ float: "right" }}><SmallButton icon="add" onClick={() => { setEditAction({ automationId: automation.id, actionType: "task" }) }} /></span><b>{Locale.label("tasks.automationDetails.act")}:</b>

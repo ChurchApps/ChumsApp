@@ -94,7 +94,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
       return rows;
     }
 
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th></th><th>{Locale.label("groups.groupMembers.name")}</th><th></th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th></th><th>{Locale.label("common.name")}</th><th></th></TableRow>);
     return rows;
   }
 

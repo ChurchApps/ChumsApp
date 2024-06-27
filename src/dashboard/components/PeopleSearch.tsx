@@ -22,15 +22,15 @@ export const PeopleSearch = () => {
 
   const columns = [
     { key: "photo", label: Locale.label("dashboard.peopleSearch.photo"), shortName: "" },
-    { key: "displayName", label: Locale.label("dashboard.peopleSearch.display"), shortName: Locale.label("dashboard.peopleSearch.name") }
+    { key: "displayName", label: Locale.label("dashboard.peopleSearch.display"), shortName: Locale.label("common.name") }
   ];
 
   return (<>
     <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("dashboard.peopleSearch.ppl")}>
       <FormControl fullWidth variant="outlined">
-        <InputLabel htmlFor="searchText">{Locale.label("dashboard.peopleSearch.name")}</InputLabel>
-        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("dashboard.peopleSearch.name")} value={searchText} onChange={handleChange}
-          endAdornment={<Button variant="contained" onClick={handleSubmit}>{Locale.label("dashboard.peopleSearch.search")}</Button>}
+        <InputLabel htmlFor="searchText">{Locale.label("common.name")}</InputLabel>
+        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("common.name")} value={searchText} onChange={handleChange}
+          endAdornment={<Button variant="contained" onClick={handleSubmit}>{Locale.label("common.search")}</Button>}
         />
       </FormControl>
       {searchResults && <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} />}

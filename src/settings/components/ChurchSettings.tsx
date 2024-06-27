@@ -37,7 +37,7 @@ export const ChurchSettings: React.FC<Props> = (props) => {
       <DisplayBox headerIcon="church" headerText={Locale.label("settings.churchSettings.churchSet")} editFunction={getEditFunction()}>
         <Grid container>
           <Grid item xs={6}>
-            <label>{Locale.label("settings.churchSettings.name")}</label><br />
+            <label>{Locale.label("common.name")}</label><br />
             {props.church?.name}<br /><br />
           </Grid>
           <Grid item xs={6}>

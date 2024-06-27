@@ -17,8 +17,8 @@ export const UpdateHouseHold: React.FC<Props> = (props) => (
       <p>{props.text}</p>
     </DialogContent>
     <DialogActions>
-      <Button onClick={props.handleNo} data-cy="no-button">{Locale.label("people.updateHouseHold.no")}</Button>
-      <Button onClick={props.handleYes} data-cy="yes-button">{Locale.label("people.updateHouseHold.yes")}</Button>
+      <Button onClick={props.handleNo} data-cy="no-button">{Locale.label("common.no")}</Button>
+      <Button onClick={props.handleYes} data-cy="yes-button">{Locale.label("common.yes")}</Button>
     </DialogActions>
   </Dialog>
 );
