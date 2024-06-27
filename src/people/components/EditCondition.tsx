@@ -296,13 +296,13 @@ export function EditCondition(props: Props) {
       <InputLabel>{Locale.label("people.editCondition.field")}</InputLabel>
       <Select name="field" label={Locale.label("people.editCondition.field")} type="text" value={condition.field} onChange={handleChange}>
         <MenuItem key="/person" value="person" disabled>{Locale.label("people.editCondition.person")}</MenuItem>
-        <MenuItem key="/displayName" value="displayName">{Locale.label("people.editCondition.disName")}</MenuItem>
-        <MenuItem key="/firstName" value="firstName">{Locale.label("people.editCondition.firstName")}</MenuItem>
-        <MenuItem key="/lastName" value="lastName">{Locale.label("people.editCondition.lastName")}</MenuItem>
-        <MenuItem key="/middleName" value="middleName">{Locale.label("people.editCondition.middleName")}</MenuItem>
-        <MenuItem key="/nickName" value="nickName">{Locale.label("people.editCondition.nickName")}</MenuItem>
-        <MenuItem key="/prefix" value="prefix">{Locale.label("people.editCondition.pre")}</MenuItem>
-        <MenuItem key="/suffix" value="suffix">{Locale.label("people.editCondition.suf")}</MenuItem>
+        <MenuItem key="/displayName" value="displayName">{Locale.label("person.displayName")}</MenuItem>
+        <MenuItem key="/firstName" value="firstName">{Locale.label("person.firstName")}</MenuItem>
+        <MenuItem key="/lastName" value="lastName">{Locale.label("person.lastName")}</MenuItem>
+        <MenuItem key="/middleName" value="middleName">{Locale.label("person.middleName")}</MenuItem>
+        <MenuItem key="/nickName" value="nickName">{Locale.label("person.nickName")}</MenuItem>
+        <MenuItem key="/prefix" value="prefix">{Locale.label("person.prefix")}</MenuItem>
+        <MenuItem key="/suffix" value="suffix">{Locale.label("person.suffix")}</MenuItem>
         <MenuItem key="/birthDate" value="birthDate">{Locale.label("people.editCondition.bDate")}</MenuItem>
         <MenuItem key="/birthMonth" value="birthMonth">{Locale.label("people.editCondition.bMonth")}</MenuItem>
         <MenuItem key="/age" value="age">{Locale.label("people.editCondition.age")}</MenuItem>
@@ -311,12 +311,12 @@ export function EditCondition(props: Props) {
         <MenuItem key="/anniversary" value="anniversary">{Locale.label("people.editCondition.anni")}</MenuItem>
         <MenuItem key="/anniversaryMonth" value="anniversaryMonth">{Locale.label("people.editCondition.anniMonth")}</MenuItem>
         <MenuItem key="/yearsMarried" value="yearsMarried">{Locale.label("people.editCondition.marYears")}</MenuItem>
-        <MenuItem key="/phone" value="phone">{Locale.label("people.editCondition.phone")}</MenuItem>
-        <MenuItem key="/email" value="email">{Locale.label("people.editCondition.email")}</MenuItem>
-        <MenuItem key="/address" value="address">{Locale.label("people.editCondition.address")}</MenuItem>
-        <MenuItem key="/city" value="city">{Locale.label("people.editCondition.city")}</MenuItem>
-        <MenuItem key="/state" value="state">{Locale.label("people.editCondition.state")}</MenuItem>
-        <MenuItem key="/zip" value="zip">{Locale.label("people.editCondition.zip")}</MenuItem>
+        <MenuItem key="/phone" value="phone">{Locale.label("person.phone")}</MenuItem>
+        <MenuItem key="/email" value="email">{Locale.label("person.email")}</MenuItem>
+        <MenuItem key="/address" value="address">{Locale.label("person.address")}</MenuItem>
+        <MenuItem key="/city" value="city">{Locale.label("person.city")}</MenuItem>
+        <MenuItem key="/state" value="state">{Locale.label("person.state")}</MenuItem>
+        <MenuItem key="/zip" value="zip">{Locale.label("person.zip")}</MenuItem>
         <MenuItem key="/membership" value="membership" disabled>{Locale.label("people.editCondition.memShip")}</MenuItem>
         <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("people.editCondition.memShipStat")}</MenuItem>
         {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">{Locale.label("people.editCondition.groupMem")}</MenuItem>}

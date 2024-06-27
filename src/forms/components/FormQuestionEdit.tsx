@@ -77,7 +77,7 @@ export function FormQuestionEdit(props: Props) {
           <MenuItem value="Decimal">{Locale.label("forms.formQuestionEdit.decNum")}</MenuItem>
           <MenuItem value="Date">{Locale.label("forms.formQuestionEdit.date")}</MenuItem>
           <MenuItem value="Yes/No">{Locale.label("forms.formQuestionEdit.yesNo")}</MenuItem>
-          <MenuItem value="Email">{Locale.label("forms.formQuestionEdit.email")}</MenuItem>
+          <MenuItem value="Email">{Locale.label("person.email")}</MenuItem>
           <MenuItem value="Phone Number">{Locale.label("forms.formQuestionEdit.phoneNum")}</MenuItem>
           <MenuItem value="Text Area">{Locale.label("forms.formQuestionEdit.textArea")}</MenuItem>
           <MenuItem value="Multiple Choice">{Locale.label("forms.formQuestionEdit.multiChoice")}</MenuItem>

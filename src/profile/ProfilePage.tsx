@@ -125,9 +125,9 @@ export const ProfilePage = () => {
       <InputBox headerText={Locale.label("profile.profilePage.profEdit")} saveFunction={handleSave}>
         <Grid container spacing={3}>
           <Grid item>
-            <TextField fullWidth type="email" name="email" label={Locale.label("profile.profilePage.email")} value={email} onChange={handleChange} />
-            <TextField fullWidth name="firstName" label={Locale.label("profile.profilePage.firstName")} value={firstName} onChange={handleChange} />
-            <TextField fullWidth name="lastName" label={Locale.label("profile.profilePage.lastName")} value={lastName} onChange={handleChange} />
+            <TextField fullWidth type="email" name="email" label={Locale.label("person.email")} value={email} onChange={handleChange} />
+            <TextField fullWidth name="firstName" label={Locale.label("person.firstName")} value={firstName} onChange={handleChange} />
+            <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} />
           </Grid>
           <Grid item>
             <TextField type="password" fullWidth name="password" label={Locale.label("profile.profilePage.passNew")} value={password} onChange={handleChange} />

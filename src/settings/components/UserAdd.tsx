@@ -169,12 +169,12 @@ export const UserAdd = (props: Props) => {
   const message = (!showNameFields && !editMode && hasSearched) && (<span>{Locale.label("settings.userAdd.noAcc")} <a href="about:blank" onClick={CreateNewUser}>{Locale.label("settings.userAdd.createNew")}</a></span>);
   const nameField = (showNameFields || editMode) && (
     <>
-      <TextField fullWidth name="firstName" label={Locale.label("settings.userAdd.firstName")} value={firstName} onChange={handleChange} />
-      <TextField fullWidth name="lastName" label={Locale.label("settings.userAdd.lastName")} value={lastName} onChange={handleChange} />
+      <TextField fullWidth name="firstName" label={Locale.label("person.firstName")} value={firstName} onChange={handleChange} />
+      <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} />
     </>
   )
   const emailField = (showEmailField || editMode) && (
-    <TextField type="email" fullWidth name="email" label={Locale.label("settings.userAdd.email")} value={email} onChange={handleChange} />
+    <TextField type="email" fullWidth name="email" label={Locale.label("person.email")} value={email} onChange={handleChange} />
   )
 
   return (

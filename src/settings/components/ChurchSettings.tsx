@@ -45,7 +45,7 @@ export const ChurchSettings: React.FC<Props> = (props) => {
             {props.church?.subDomain}
           </Grid>
         </Grid>
-        <label>{Locale.label("settings.churchSettings.address")}</label><br />
+        <label>{Locale.label("person.address")}</label><br />
         {getDisplayAddress()}<br /><br />
       </DisplayBox>
     );
