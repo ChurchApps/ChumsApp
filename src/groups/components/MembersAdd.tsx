@@ -31,7 +31,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
         <TableRow key={i}>
           <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
-          <TableCell><SmallButton icon="person_add" text={Locale.label("groups.membersAdd.add")} onClick={() => addMember(gm)} color="success" /></TableCell>
+          <TableCell><SmallButton icon="person_add" text={Locale.label("common.add")} onClick={() => addMember(gm)} color="success" /></TableCell>
         </TableRow>
       );
     }

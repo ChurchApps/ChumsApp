@@ -59,7 +59,7 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
           <TableRow>
             <TableCell><TextField label={Locale.label("forms.choicesEdit.value")} fullWidth size="small" name="choiceValue" data-cy="value" value={choiceValue} onChange={handleChange} /></TableCell>
             <TableCell><TextField label={Locale.label("forms.choicesEdit.txt")} fullWidth size="small" name="choiceText" data-cy="text" value={choiceText} onChange={handleChange} /></TableCell>
-            <TableCell><Button id="addQuestionChoiceButton" data-cy="add-button" variant="contained" size="small" onClick={handleAdd}>{Locale.label("forms.choicesEdit.add")}</Button></TableCell>
+            <TableCell><Button id="addQuestionChoiceButton" data-cy="add-button" variant="contained" size="small" onClick={handleAdd}>{Locale.label("common.add")}</Button></TableCell>
           </TableRow>
         </TableBody>
       </Table>

@@ -93,7 +93,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
                   <TextField fullWidth name="domainName" size="small" value={addDomainName} onChange={handleChange} placeholder="yoursite.com" />
                 </TableCell>
                 <TableCell>
-                  <a href="about:blank" onClick={handleAdd}>{Locale.label("settings.domainSettingsEdit.add")}</a>
+                  <a href="about:blank" onClick={handleAdd}>{Locale.label("common.add")}</a>
                 </TableCell>
               </TableRow>
             </TableBody>

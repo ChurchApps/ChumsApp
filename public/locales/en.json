@@ -1,9 +1,24 @@
 {
     "common": {
-        "search": "Search",
-        "yes": "Yes",
-        "no": "No",
-        "name": "Name"
+      "search": "Search",
+      "yes": "Yes",
+      "no": "No",
+      "name": "Name",
+      "add": "Add"
+    },
+    "month": {
+      "jan": "January",
+      "feb": "February",
+      "mar": "March",
+      "apr": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "aug": "August",
+      "sep": "September",
+      "oct": "October",
+      "nov": "November",
+      "dec": "December"
     },
     "attendance": {
       "campusEdit": {
@@ -158,8 +173,7 @@
         "choices": "Choices",
         "value": "Value",
         "txt": "Text",
-        "act": "Action",
-        "add": "Add"
+        "act": "Action"
       },
       "form": {
         "noCustomMsg": "No custom questions have been created yet. Questions will be listed here.",
@@ -286,7 +300,6 @@
       },
       "membersAdd": {
         "noMem": "No group members available.",
-        "add": "Add",
         "availableMem": "Available Group Members"
       },
       "serviceTimes": {
@@ -295,8 +308,7 @@
       "serviceTimesEdit": {
         "rmv": "Remove",
         "srvTimeOp": "Service Times (optional)",
-        "srvTimeAdd": "Add Service Time",
-        "add": "Add"
+        "srvTimeAdd": "Add Service Time"
       },
       "sessionAdd": {
         "invDate": "Invalid Date",
@@ -346,18 +358,6 @@
         "visitor": "Visitor",
         "mem": "Member",
         "staff": "Staff",
-        "jan": "January",
-        "feb": "February",
-        "mar": "March",
-        "apr": "April",
-        "may": "May",
-        "june": "June",
-        "july": "July",
-        "aug": "August",
-        "sep": "September",
-        "oct": "October",
-        "nov": "November",
-        "dec": "December",
         "any": "Any",
         "from": "From",
         "to": "To",
@@ -423,8 +423,7 @@
         "other": "Other",
         "rmv": "Remove",
         "house": " Household",
-        "houseName": "Household Name",
-        "add": "Add"
+        "houseName": "Household Name"
       },
       "merge": {
         "mergeRec": "Merge Records",
@@ -739,8 +738,7 @@
         "domains": "Domains",
         "domain": "Domain",
         "domMsg": "You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS:",
-        "act": "Action",
-        "add": "Add"
+        "act": "Action"
       },
       "givingSettingsEdit": {
         "pubKey": "Public Key",
@@ -766,7 +764,6 @@
         "roleName": "Role Name"
       },
       "roleMembers": {
-        "add": "Add",
         "confirmMsg": "Are you sure you wish to delete this user from",
         "roleAppMsg": "This role applies to all the members of the church.",
         "email": "Email",
@@ -781,7 +778,6 @@
         "roleCreate": "Do you wish to create a new role of ",
         "itMsg": "? It ",
         "custAdd": "Add Custom Role",
-        "add": "Add",
         "role": "Role",
         "roles": "Roles",
         "acc": "Accounting",
@@ -865,18 +861,6 @@
         "fri": "Friday",
         "sat": "Saturday",
         "month": "Month",
-        "jan": "January",
-        "feb": "February",
-        "mar": "March",
-        "apr": "April",
-        "may": "May",
-        "june": "June",
-        "july": "July",
-        "aug": "August",
-        "sep": "September",
-        "oct": "October",
-        "nov": "November",
-        "dec": "December",
         "prevMonth": "Previous Month",
         "curMonth": "Current Month",
         "nextMonth": "Next Month",

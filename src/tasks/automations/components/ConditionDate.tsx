@@ -77,18 +77,18 @@ export const ConditionDate = (props: Props) => {
       <InputLabel>{Locale.label("tasks.conditionDate.month")}</InputLabel>
       <Select fullWidth label={Locale.label("tasks.conditionDate.month")} value={props.condition.value || ""} name="value" onChange={handleChange}>
         <ListSubheader>{Locale.label("tasks.conditionDate.absolute")}</ListSubheader>
-        <MenuItem value="1">{Locale.label("tasks.conditionDate.jan")}</MenuItem>
-        <MenuItem value="2">{Locale.label("tasks.conditionDate.feb")}</MenuItem>
-        <MenuItem value="3">{Locale.label("tasks.conditionDate.mar")}</MenuItem>
-        <MenuItem value="4">{Locale.label("tasks.conditionDate.apr")}</MenuItem>
-        <MenuItem value="5">{Locale.label("tasks.conditionDate.may")}</MenuItem>
-        <MenuItem value="6">{Locale.label("tasks.conditionDate.june")}</MenuItem>
-        <MenuItem value="7">{Locale.label("tasks.conditionDate.july")}</MenuItem>
-        <MenuItem value="8">{Locale.label("tasks.conditionDate.aug")}</MenuItem>
-        <MenuItem value="9">{Locale.label("tasks.conditionDate.sep")}</MenuItem>
-        <MenuItem value="10">{Locale.label("tasks.conditionDate.oct")}</MenuItem>
-        <MenuItem value="11">{Locale.label("tasks.conditionDate.nov")}</MenuItem>
-        <MenuItem value="12">{Locale.label("tasks.conditionDate.dec")}</MenuItem>
+        <MenuItem value="1">{Locale.label("month.jan")}</MenuItem>
+        <MenuItem value="2">{Locale.label("month.feb")}</MenuItem>
+        <MenuItem value="3">{Locale.label("month.mar")}</MenuItem>
+        <MenuItem value="4">{Locale.label("month.apr")}</MenuItem>
+        <MenuItem value="5">{Locale.label("month.may")}</MenuItem>
+        <MenuItem value="6">{Locale.label("month.june")}</MenuItem>
+        <MenuItem value="7">{Locale.label("month.july")}</MenuItem>
+        <MenuItem value="8">{Locale.label("month.aug")}</MenuItem>
+        <MenuItem value="9">{Locale.label("month.sep")}</MenuItem>
+        <MenuItem value="10">{Locale.label("month.oct")}</MenuItem>
+        <MenuItem value="11">{Locale.label("month.nov")}</MenuItem>
+        <MenuItem value="12">{Locale.label("month.dec")}</MenuItem>
         <ListSubheader>{Locale.label("tasks.conditionDate.relative")}</ListSubheader>
         <MenuItem value="{previousMonth}">{Locale.label("tasks.conditionDate.prevMonth")}</MenuItem>
         <MenuItem value="{currentMonth}">{Locale.label("tasks.conditionDate.curMonth")}</MenuItem>

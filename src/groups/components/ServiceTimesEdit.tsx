@@ -62,7 +62,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
         <InputLabel>{Locale.label("groups.serviceTimesEdit.srvTimeAdd")}</InputLabel>
         <Select fullWidth label={Locale.label("groups.serviceTimesEdit.srvTimeAdd")} aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange} endAdornment={<>
           <Icon>arrow_drop_down</Icon>
-          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> {Locale.label("groups.serviceTimesEdit.add")}</Button>
+          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> {Locale.label("common.add")}</Button>
         </>
         }>
           {getOptions()}

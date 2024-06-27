@@ -15,7 +15,7 @@ export const RoleMembers: React.FC<Props> = (props) => {
   const isRoleEveryone = props.role.id === null;
   const getEditContent = () => {
     if (isRoleEveryone) return null;
-    return <SmallButton onClick={handleAdd} icon="add" text={Locale.label("settings.roleMembers.add")} />
+    return <SmallButton onClick={handleAdd} icon="add" text={Locale.label("common.add")} />
   }
 
   const handleAdd = (e: React.MouseEvent) => {

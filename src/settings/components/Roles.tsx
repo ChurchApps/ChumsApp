@@ -90,7 +90,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
           <Divider />
           {predefined.map((role, i) => (
             <MenuItem key={role.name} onClick={() => {addRole(role); }} title={role.description}>
-              <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("settings.roles.add")} "<b>{role.name}</b>" {Locale.label("settings.roles.role")}
+              <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("common.add")} "<b>{role.name}</b>" {Locale.label("settings.roles.role")}
             </MenuItem>
           ))}
         </Menu>
