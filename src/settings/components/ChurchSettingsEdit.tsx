@@ -3,6 +3,7 @@ import { ApiHelper, ChurchInterface, InputBox, ErrorMessages, UserHelper, Permis
 import { GivingSettingsEdit } from "./GivingSettingsEdit";
 import { TextField, Grid } from "@mui/material";
 import { DomainSettingsEdit } from "./DomainSettingsEdit";
+import { DirectoryApproveSettingsEdit } from "./DirectoryApproveSettingsEdit";
 
 interface Props { church: ChurchInterface, updatedFunction: () => void }
 
@@ -88,6 +89,7 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
         </Grid>
       </Grid>
       <TextField fullWidth name="country" label={Locale.label("settings.churchSettingsEdit.country")} value={church?.country || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <DirectoryApproveSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger}  />
       {giveSection()}
       <DomainSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger} />
 
