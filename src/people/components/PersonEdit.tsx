@@ -223,16 +223,16 @@ export function PersonEdit(props: Props) {
             </Grid>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="membershipStatus-label">{Locale.label("people.personEdit.memShipStat")}</InputLabel>
-                <Select name="membershipStatus" id="membershipStatus" labelId="membershipStatus-label" label={Locale.label("people.personEdit.memShipStat")} value={person.membershipStatus || ""} onChange={handleChange}>
-                  <MenuItem value="Member">{Locale.label("people.personEdit.mem")}</MenuItem>
-                  <MenuItem value="Visitor">{Locale.label("people.personEdit.visitor")}</MenuItem>
-                  <MenuItem value="Staff">{Locale.label("people.personEdit.staff")}</MenuItem>
+                <InputLabel id="membershipStatus-label">{Locale.label("person.membershipStatus")}</InputLabel>
+                <Select name="membershipStatus" id="membershipStatus" labelId="membershipStatus-label" label={Locale.label("person.membershipStatus")} value={person.membershipStatus || ""} onChange={handleChange}>
+                  <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>
+                  <MenuItem value="Visitor">{Locale.label("person.visitor")}</MenuItem>
+                  <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{ shrink: true }} label={Locale.label("people.personEdit.bDate")} value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{ shrink: true }} label={Locale.label("person.birthDate")} value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} />
             </Grid>
           </Grid>
 
@@ -260,7 +260,7 @@ export function PersonEdit(props: Props) {
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{ shrink: true }} label={Locale.label("people.personEdit.anni")} value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{ shrink: true }} label={Locale.label("person.anniversary")} value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} />
             </Grid>
           </Grid>
 

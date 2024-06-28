@@ -52,10 +52,14 @@
       "married": "Married",
       "divorced": "Divorced",
       "widowed": "Widowed",
+      "membership": "Membership",
       "membershipStatus": "Membership Status",
       "visitor": "Visitor",
       "member": "Member",
-      "staff": "Staff"
+      "staff": "Staff",
+      "birthDate": "Birth Date",
+      "age": "Age",
+      "anniversary": "Anniversary"
     },
     "attendance": {
       "campusEdit": {
@@ -389,14 +393,9 @@
         "startW": "starts with",
         "endW": "ends with",
         "field": "Field",
-        "bDate": "Birth Date",
         "bMonth": "Birth Month",
-        "age": "Age",
-        "anni": "Anniversary",
         "anniMonth": "Anniversary Month",
         "marYears": "Years Married",
-        "memShip": "Membership",
-        "memShipStat": "Membership Status",
         "groupMem": "Group Member",
         "act": "Activity",
         "memDon": "Member Donations",
@@ -464,8 +463,6 @@
         "merge": "Merge",
         "nameNote": "Name Tag Notes",
         "nickName": "Nickname",
-        "bDate": "Birthdate",
-        "anni": "Anniversary",
         "home": "Home",
         "invalForm": "Invalid Format",
         "work": "Work",
@@ -473,7 +470,6 @@
         "exten": "Extension"
       },
       "personView": {
-        "age": "Age",
         "memShip": "Membership:",
         "mobile": "Mobile",
         "work": "Work",
@@ -492,11 +488,8 @@
         "middle": "Middle",
         "primEmail": "Primary Email",
         "primPhone": "Primary Phone",
-        "bDate": "Birthdate",
         "bDayNo": "Birthday (No Year)",
         "bDay": "Birthday",
-        "age": "Age",
-        "anni": "Anniversary",
         "nameNote": "Name Tag Notes",
         "deleteOp": "Delete Option",
         "delete": "Delete",
@@ -824,9 +817,6 @@
         "gen": "General",
         "today": "Today's Date",
         "persAtt": "Personal Attributes",
-        "bDate": "Birth Date",
-        "anni": "Anniversary",
-        "memShipStat": "Membership Status",
         "conInfo": "Contact Info"
       },
       "conditionSelect": {

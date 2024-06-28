@@ -303,12 +303,12 @@ export function EditCondition(props: Props) {
         <MenuItem key="/nickName" value="nickName">{Locale.label("person.nickName")}</MenuItem>
         <MenuItem key="/prefix" value="prefix">{Locale.label("person.prefix")}</MenuItem>
         <MenuItem key="/suffix" value="suffix">{Locale.label("person.suffix")}</MenuItem>
-        <MenuItem key="/birthDate" value="birthDate">{Locale.label("people.editCondition.bDate")}</MenuItem>
+        <MenuItem key="/birthDate" value="birthDate">{Locale.label("person.birthDate")}</MenuItem>
         <MenuItem key="/birthMonth" value="birthMonth">{Locale.label("people.editCondition.bMonth")}</MenuItem>
-        <MenuItem key="/age" value="age">{Locale.label("people.editCondition.age")}</MenuItem>
+        <MenuItem key="/age" value="age">{Locale.label("person.age")}</MenuItem>
         <MenuItem key="/gender64" value="gender">{Locale.label("person.gender")}</MenuItem>
         <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("person.maritalStatus")}</MenuItem>
-        <MenuItem key="/anniversary" value="anniversary">{Locale.label("people.editCondition.anni")}</MenuItem>
+        <MenuItem key="/anniversary" value="anniversary">{Locale.label("person.anniversary")}</MenuItem>
         <MenuItem key="/anniversaryMonth" value="anniversaryMonth">{Locale.label("people.editCondition.anniMonth")}</MenuItem>
         <MenuItem key="/yearsMarried" value="yearsMarried">{Locale.label("people.editCondition.marYears")}</MenuItem>
         <MenuItem key="/phone" value="phone">{Locale.label("person.phone")}</MenuItem>
@@ -317,8 +317,8 @@ export function EditCondition(props: Props) {
         <MenuItem key="/city" value="city">{Locale.label("person.city")}</MenuItem>
         <MenuItem key="/state" value="state">{Locale.label("person.state")}</MenuItem>
         <MenuItem key="/zip" value="zip">{Locale.label("person.zip")}</MenuItem>
-        <MenuItem key="/membership" value="membership" disabled>{Locale.label("people.editCondition.memShip")}</MenuItem>
-        <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("people.editCondition.memShipStat")}</MenuItem>
+        <MenuItem key="/membership" value="membership" disabled>{Locale.label("person.membershp")}</MenuItem>
+        <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("person.membershipStatus")}</MenuItem>
         {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">{Locale.label("people.editCondition.groupMem")}</MenuItem>}
         <MenuItem key="/activity" value="activity" disabled>{Locale.label("people.editCondition.act")}</MenuItem>
         {(Permissions.givingApi.donations) && <MenuItem key="/memberDonations" value="memberDonations">{Locale.label("people.editCondition.memDon")}</MenuItem>}
