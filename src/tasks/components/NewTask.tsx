@@ -103,11 +103,11 @@ export const NewTask = (props: Props) => {
           <TextField fullWidth label={Locale.label("tasks.newTask.assignTo")} value={task.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
         </Grid>
         <Grid item xs={12} md={(props.compact) ? 12 : 6}>
-          <TextField fullWidth label={Locale.label("tasks.newTask.title")} value={task.title || ""} name="title" onChange={handleChange} />
+          <TextField fullWidth label={Locale.label("common.title")} value={task.title || ""} name="title" onChange={handleChange} />
         </Grid>
       </Grid>
 
-      <TextField fullWidth label={Locale.label("tasks.newTask.notes")} value={message.content} name="note" onChange={handleChange} multiline />
+      <TextField fullWidth label={Locale.label("common.notes")} value={message.content} name="note" onChange={handleChange} multiline />
       {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
     </InputBox>
   );

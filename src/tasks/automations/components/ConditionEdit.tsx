@@ -94,8 +94,8 @@ export const ConditionEdit = (props: Props) => {
 
           <ListSubheader>{Locale.label("tasks.conditionEdit.persAtt")}</ListSubheader>
           <MenuItem key="/birthDate" value="birthDate">{Locale.label("tasks.conditionEdit.bDate")}</MenuItem>
-          <MenuItem key="/gender" value="gender">{Locale.label("tasks.conditionEdit.gender")}</MenuItem>
-          <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("tasks.conditionEdit.marStat")}</MenuItem>
+          <MenuItem key="/gender" value="gender">{Locale.label("person.gender")}</MenuItem>
+          <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("person.maritalStatus")}</MenuItem>
           <MenuItem key="/anniversary" value="anniversary">{Locale.label("tasks.conditionEdit.anni")}</MenuItem>
           <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("tasks.conditionEdit.memShipStat")}</MenuItem>
 

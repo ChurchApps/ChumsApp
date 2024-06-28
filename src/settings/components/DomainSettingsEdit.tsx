@@ -62,7 +62,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
           {d.domainName}
         </TableCell>
         <TableCell>
-          <a href="about:blank" onClick={(e) => { e.preventDefault(); handleDelete(index) }}>{Locale.label("settings.domainSettingsEdit.delete")}</a>
+          <a href="about:blank" onClick={(e) => { e.preventDefault(); handleDelete(index) }}>{Locale.label("common.delete")}</a>
         </TableCell>
       </TableRow>);
       idx++

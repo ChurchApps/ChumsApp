@@ -82,7 +82,7 @@ export function PeopleColumns(props: Props) {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>{Locale.label("people.peopleColumns.close")}</Button>
+          <Button onClick={handleClose}>{Locale.label("common.close")}</Button>
           <Button onClick={handleClose} variant="contained">{Locale.label("people.peopleColumns.appFilt")}</Button>
         </DialogActions>
       </Dialog>

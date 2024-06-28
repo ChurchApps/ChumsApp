@@ -4,7 +4,13 @@
       "yes": "Yes",
       "no": "No",
       "name": "Name",
-      "add": "Add"
+      "add": "Add",
+      "notes": "Notes",
+      "title": "Title",
+      "edit": "Edit",
+      "delete": "Delete",
+      "remove": "Remove",
+      "close": "Close"
     },
     "month": {
       "jan": "January",
@@ -21,6 +27,7 @@
       "dec": "December"
     },
     "person": {
+      "person": "Person",
       "displayName": "Display Name",
       "firstName": "First Name",
       "lastName": "Last Name",
@@ -39,7 +46,7 @@
       "unspecified": "Unspecified",
       "male": "Male",
       "female": "Female",
-      "maritalStat": "Marital Status",
+      "maritalStatus": "Marital Status",
       "unknown": "Unknown",
       "single": "Single",
       "married": "Married",
@@ -100,9 +107,6 @@
         "phone": "Phone",
         "rights": "All rights reserved."
       },
-      "search": {
-        "person": "Person"
-      },
       "wrapper": {
         "dash": "Dashboard",
         "ppl": "People",
@@ -140,12 +144,10 @@
         "lastDig": "Last 4 digits",
         "anon": "Anonymous",
         "donEdit": "Edit Donation",
-        "person": "Person",
         "method": "Method",
         "check": "Check",
         "cash": "Cash",
         "card": "Card",
-        "notes": "Notes",
         "date": "Date"
       },
       "donationEvents": {
@@ -180,8 +182,7 @@
         "batch": "Batch",
         "date": "Date",
         "don": "Donations",
-        "total": "Total",
-        "edit": "Edit"
+        "total": "Total"
       },
       "fundsPage": {
         "noDon": "No donations yet",
@@ -198,7 +199,6 @@
     },
     "forms": {
       "choicesEdit": {
-        "rmv": "Remove",
         "choices": "Choices",
         "value": "Value",
         "txt": "Text",
@@ -232,7 +232,6 @@
       "formMembers": {
         "admin": "Admin",
         "view": "View Only",
-        "rmv": "Remove",
         "perm": "Permission",
         "act": "Action",
         "emailNotif": "Email Notification",
@@ -255,7 +254,6 @@
         "textArea": "Text Area",
         "multiChoice": "Multiple Choice",
         "checkBox": "Checkbox",
-        "title": "Title",
         "desc": "Description",
         "plcOp": "Placeholder (optional)",
         "ansReq": "Require an answer for this question"
@@ -334,7 +332,6 @@
         "services": "Service(s):"
       },
       "serviceTimesEdit": {
-        "rmv": "Remove",
         "srvTimeOp": "Service Times (optional)",
         "srvTimeAdd": "Add Service Time"
       },
@@ -363,7 +360,7 @@
     },
     "people": {
       "mergeModal": {
-        "selMsg": "Please select atleast 1 value for each field",
+        "selMsg": "Please select at least 1 value for each field",
         "mergeQuestion": "Would you like to merge",
         "with": "with",
         "fieldCon": "Here are some fields conflicting fields:",
@@ -392,7 +389,6 @@
         "startW": "starts with",
         "endW": "ends with",
         "field": "Field",
-        "person": "Person",
         "bDate": "Birth Date",
         "bMonth": "Birth Month",
         "age": "Age",
@@ -423,7 +419,6 @@
         "spouse": "Spouse",
         "child": "Child",
         "other": "Other",
-        "rmv": "Remove",
         "house": " Household",
         "houseName": "Household Name"
       },
@@ -436,8 +431,7 @@
         "filt": "Filters",
         "appFilt": "Apply Filters",
         "stand": "Standard",
-        "cust": "Custom",
-        "close": "Close"
+        "cust": "Custom"
       },
       "peopleSearch": {
         "simpSearch": "Simple Search",
@@ -479,9 +473,7 @@
         "exten": "Extension"
       },
       "personView": {
-        "gender": "Gender",
         "age": "Age",
-        "marStat": "Marital Status:",
         "memShip": "Membership:",
         "mobile": "Mobile",
         "work": "Work",
@@ -489,7 +481,6 @@
         "home": "Home"
       },
       "tabs": {
-        "notes": "Notes",
         "att": "Attendance",
         "don": "Donations",
         "noImplement": "Not Implemented"
@@ -506,8 +497,7 @@
         "bDay": "Birthday",
         "age": "Age",
         "anni": "Anniversary",
-        "nameNote": "Nmae Tag Notes",
-        "notes": "Notes",
+        "nameNote": "Name Tag Notes",
         "deleteOp": "Delete Option",
         "delete": "Delete",
         "searchPpl": "Search People",
@@ -604,7 +594,6 @@
       },
       "planPage": {
         "assign": "Assignments",
-        "notes": "Notes",
         "band": "Band",
         "noteSave": "Notes Saved."
       },
@@ -721,7 +710,6 @@
         "confirmMsg": "Are you sure you wish to delete this user from",
         "roleAppMsg": "This role applies to all the members of the church.",
         "mem": "Members",
-        "edit": "Edit",
         "delete": "Delete"
       },
       "rolePermissions": {
@@ -742,8 +730,7 @@
         "contAdminDesc": "Can edit website content, mobile content and sermons.",
         "lesAdmin": "Lessons Admin",
         "lesAdminDesc": "Can set up classrooms and schedule lessons on ",
-        "everyone": "Everyone",
-        "edit": "Edit"
+        "everyone": "Everyone"
       },
       "userAdd": {
         "errAnother": "Cannot save. Another user already exists for this email address.",
@@ -784,7 +771,6 @@
       },
       "automationEdit": {
         "autoEdit": "Edit Automation",
-        "title": "Title",
         "rep": "Repeat",
         "never": "Never",
         "yearly": "Yearly",
@@ -839,8 +825,6 @@
         "today": "Today's Date",
         "persAtt": "Personal Attributes",
         "bDate": "Birth Date",
-        "gender": "Gender",
-        "marStat": "Marital Status",
         "anni": "Anniversary",
         "memShipStat": "Membership Status",
         "conInfo": "Contact Info"
@@ -868,9 +852,7 @@
       },
       "contentPicker": {
         "selPers": "Select a Person or Group",
-        "pers": "Person",
         "group": "Group",
-        "close": "Close",
         "sel": "Select"
       },
       "newTask": {
@@ -879,16 +861,13 @@
         "titleTask": "Please enter a title for this task.",
         "taskNew": "New Task",
         "associateW": "Associate with",
-        "assignTo": "Assign to",
-        "title": "Title",
-        "notes": "Notes"
+        "assignTo": "Assign to"
       },
       "selectGroup": {
         "group": "Group",
         "sel": "Select"
       },
       "taskList": {
-        "title": "Title",
         "associateW": "Associated with",
         "assignTo": "Assigned to",
         "assignGroup": "Assigned to My Groups",

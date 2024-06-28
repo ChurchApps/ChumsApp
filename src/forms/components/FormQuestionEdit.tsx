@@ -85,7 +85,7 @@ export function FormQuestionEdit(props: Props) {
         </Select>
       </FormControl>
 
-      <TextField fullWidth label={Locale.label("forms.formQuestionEdit.title")} id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("common.title")} id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} />
       <TextField fullWidth label={Locale.label("forms.formQuestionEdit.desc")} id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} />
 
       {

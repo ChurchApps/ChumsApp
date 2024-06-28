@@ -59,7 +59,7 @@ export const PlanValidation = (props:Props) => {
       const assignments = props.assignments.filter(a => a.positionId === p.id);
       if (assignments.length < p.count) {
         const needed = p.count - assignments.length;
-        issues.push(<><b>{p.name}:</b> {needed} {Locale.label("plans.planValidation.more")} {(needed===1) ? Locale.label("plans.planValidation.person") : Locale.label("plans.planValidation.ppl")} {Locale.label("plans.planValidation.needed")}</>);
+        issues.push(<><b>{p.name}:</b> {needed} {Locale.label("plans.planValidation.more")} {(needed===1) ? Locale.label("common.person") : Locale.label("plans.planValidation.ppl")} {Locale.label("plans.planValidation.needed")}</>);
       }
     });
   }

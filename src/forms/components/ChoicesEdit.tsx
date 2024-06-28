@@ -42,7 +42,7 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
         result.push(<TableRow key={i}>
           <TableCell>{c.value}</TableCell>
           <TableCell>{c.text}</TableCell>
-          <TableCell><Button variant="contained" size="small" onClick={handleRemove} data-index={i}>{Locale.label("forms.choicesEdit.rmv")}</Button></TableCell>
+          <TableCell><Button variant="contained" size="small" onClick={handleRemove} data-index={i}>{Locale.label("common.remove")}</Button></TableCell>
         </TableRow>);
       }
     }

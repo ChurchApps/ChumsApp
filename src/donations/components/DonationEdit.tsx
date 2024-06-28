@@ -113,7 +113,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
   return (
     <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText={Locale.label("donations.donationEdit.donEdit")} cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
       <Box mb={2}>
-        <label>{Locale.label("donations.donationEdit.person")}</label>
+        <label>{Locale.label("common.person")}</label>
         {getPersonSection()}
       </Box>
       <TextField fullWidth label={Locale.label("donations.donationEdit.date")} type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
@@ -127,7 +127,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
       </FormControl>
       {getMethodDetails()}
       <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
-      <TextField fullWidth label={Locale.label("donations.donationEdit.notes")} data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline />
+      <TextField fullWidth label={Locale.label("common.notes")} data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline />
     </InputBox>
   );
 }

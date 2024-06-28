@@ -54,7 +54,7 @@ export const AutomationEdit = (props: Props) => {
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <TextField fullWidth label={Locale.label("tasks.automationEdit.title")} value={automation?.title || ""} name="title" onChange={handleChange} />
+          <TextField fullWidth label={Locale.label("common.title")} value={automation?.title || ""} name="title" onChange={handleChange} />
           <FormControl fullWidth>
             <InputLabel>{Locale.label("tasks.automationEdit.rep")}</InputLabel>
             <Select fullWidth label={Locale.label("tasks.automationEdit.rep")} value={automation?.recurs || ""} name="recurs" onChange={handleChange}>

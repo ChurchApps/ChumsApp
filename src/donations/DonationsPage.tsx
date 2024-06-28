@@ -129,7 +129,7 @@ export const DonationsPage = () => {
         </th>
         <th>{Locale.label("donations.donationsPage.don")}</th>
         <th>{Locale.label("donations.donationsPage.total")}</th>
-        <th>{Locale.label("donations.donationsPage.edit")}</th>
+        <th>{Locale.label("common.edit")}</th>
       </TableRow>
     );
     return rows;

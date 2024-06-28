@@ -32,8 +32,8 @@ export const PeoplePage = () => {
     { key: "membershipStatus", label: Locale.label("person.membershipStatus"), shortName: Locale.label("person.membershipStatus") },
     { key: "maritalStatus", label: Locale.label("person.maritalStatus"), shortName: Locale.label("person.married") },
     { key: "anniversary", label: Locale.label("people.peoplePage.anni"), shortName: Locale.label("people.peoplePage.anni") },
-    { key: "nametagNotes", label: Locale.label("people.peoplePage.nameNote"), shortName: Locale.label("people.peoplePage.notes") },
-    { key: "deleteOption", label: Locale.label("people.peoplePage.deleteOp"), shortName: Locale.label("people.peoplePage.delete") }
+    { key: "nametagNotes", label: Locale.label("people.peoplePage.nameNote"), shortName: Locale.label("common.notes") },
+    { key: "deleteOption", label: Locale.label("people.peoplePage.deleteOp"), shortName: Locale.label("common.delete") }
   ];
 
   const loadData = () => {

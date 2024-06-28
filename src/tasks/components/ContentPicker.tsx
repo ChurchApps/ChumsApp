@@ -51,7 +51,7 @@ export const ContentPicker: React.FC<Props> = (props) => {
         </TabPanel>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={props.onClose}>{Locale.label("tasks.contentPicker.close")}</Button>
+        <Button variant="outlined" onClick={props.onClose}>{Locale.label("common.close")}</Button>
       </DialogActions>
     </Dialog>
   </>);

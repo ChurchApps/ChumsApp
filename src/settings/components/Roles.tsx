@@ -118,7 +118,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     }
 
     sortedRoles.forEach(role => {
-      const editLink = (canEdit) ? <SmallButton icon="edit" toolTip={Locale.label("settings.roles.edit")} onClick={() => { selectRoleId(role.id) }} /> : null;
+      const editLink = (canEdit) ? <SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { selectRoleId(role.id) }} /> : null;
       result.push(<TableRow key={role.id}>
         <TableCell><i className="lock" /> <Link to={`/settings/role/${role.id}`}>{role.name}</Link></TableCell>
         <TableCell align="right">{editLink}</TableCell>

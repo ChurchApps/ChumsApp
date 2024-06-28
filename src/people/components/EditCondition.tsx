@@ -295,7 +295,7 @@ export function EditCondition(props: Props) {
     <FormControl fullWidth>
       <InputLabel>{Locale.label("people.editCondition.field")}</InputLabel>
       <Select name="field" label={Locale.label("people.editCondition.field")} type="text" value={condition.field} onChange={handleChange}>
-        <MenuItem key="/person" value="person" disabled>{Locale.label("people.editCondition.person")}</MenuItem>
+        <MenuItem key="/person" value="person" disabled>{Locale.label("common.person")}</MenuItem>
         <MenuItem key="/displayName" value="displayName">{Locale.label("person.displayName")}</MenuItem>
         <MenuItem key="/firstName" value="firstName">{Locale.label("person.firstName")}</MenuItem>
         <MenuItem key="/lastName" value="lastName">{Locale.label("person.lastName")}</MenuItem>
@@ -306,8 +306,8 @@ export function EditCondition(props: Props) {
         <MenuItem key="/birthDate" value="birthDate">{Locale.label("people.editCondition.bDate")}</MenuItem>
         <MenuItem key="/birthMonth" value="birthMonth">{Locale.label("people.editCondition.bMonth")}</MenuItem>
         <MenuItem key="/age" value="age">{Locale.label("people.editCondition.age")}</MenuItem>
-        <MenuItem key="/gender64" value="gender">{Locale.label("people.editCondition.gender")}</MenuItem>
-        <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("people.editCondition.marStat")}</MenuItem>
+        <MenuItem key="/gender64" value="gender">{Locale.label("person.gender")}</MenuItem>
+        <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("person.maritalStatus")}</MenuItem>
         <MenuItem key="/anniversary" value="anniversary">{Locale.label("people.editCondition.anni")}</MenuItem>
         <MenuItem key="/anniversaryMonth" value="anniversaryMonth">{Locale.label("people.editCondition.anniMonth")}</MenuItem>
         <MenuItem key="/yearsMarried" value="yearsMarried">{Locale.label("people.editCondition.marYears")}</MenuItem>

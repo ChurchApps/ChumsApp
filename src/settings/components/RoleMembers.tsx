@@ -39,8 +39,8 @@ export const RoleMembers: React.FC<Props> = (props) => {
 
     for (let i = 0; i < roleMembers.length; i++) {
       const rm = roleMembers[i];
-      const removeLink = (canEdit) ? (<SmallButton icon="delete" color="error" toolTip={Locale.label("settings.roleMembers.delete")} onClick={() => { handleRemove(rm) }} />) : null;
-      const editLink = (canEdit) ? (<SmallButton icon="edit" toolTip={Locale.label("settings.roleMembers.edit")} onClick={() => { props.setSelectedRoleMember(rm.userId) }} />) : null;
+      const removeLink = (canEdit) ? (<SmallButton icon="delete" color="error" toolTip={Locale.label("common.delete")} onClick={() => { handleRemove(rm) }} />) : null;
+      const editLink = (canEdit) ? (<SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { props.setSelectedRoleMember(rm.userId) }} />) : null;
 
       const { firstName, lastName } = rm.user;
       rows.push(

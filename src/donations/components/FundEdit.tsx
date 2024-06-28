@@ -38,7 +38,7 @@ export const FundEdit: React.FC<Props> = (props) => {
   React.useEffect(() => { setFund(props.fund); }, [props.fund]);
 
   return (
-    <InputBox id="fundsBox" headerIcon="volunteer_activism" headerText={Locale.label("donations.fundEdit.edit")} cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete} help="chums/giving">
+    <InputBox id="fundsBox" headerIcon="volunteer_activism" headerText={Locale.label("common.edit")} cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete} help="chums/giving">
       <ErrorMessages errors={errors} />
       <TextField fullWidth name="fundName" label={Locale.label("common.name")} value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />
     </InputBox>
