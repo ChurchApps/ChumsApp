@@ -239,23 +239,23 @@ export function PersonEdit(props: Props) {
           <Grid container spacing={3}>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="gender-label">{Locale.label("people.personEdit.gender")}</InputLabel>
-                <Select name="gender" id="gender" labelId="gender-label" label={Locale.label("people.personEdit.gender")} value={person.gender || ""} onChange={handleChange}>
-                  <MenuItem value="Unspecified">{Locale.label("people.personEdit.unspec")}</MenuItem>
-                  <MenuItem value="Male">{Locale.label("people.personEdit.male")}</MenuItem>
-                  <MenuItem value="Female">{Locale.label("people.personEdit.female")}</MenuItem>
+                <InputLabel id="gender-label">{Locale.label("person.gender")}</InputLabel>
+                <Select name="gender" id="gender" labelId="gender-label" label={Locale.label("person.gender")} value={person.gender || ""} onChange={handleChange}>
+                  <MenuItem value="Unspecified">{Locale.label("person.unspecified")}</MenuItem>
+                  <MenuItem value="Male">{Locale.label("person.male")}</MenuItem>
+                  <MenuItem value="Female">{Locale.label("person.female")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="maritalStatus-label">{Locale.label("people.personEdit.marStat")}</InputLabel>
-                <Select name="maritalStatus" id="maritalStatus" label={Locale.label("people.personEdit.marStat")} labelId="maritalStatus-label" value={person.maritalStatus || ""} onChange={handleChange}>
-                  <MenuItem value="Unknown">{Locale.label("people.personEdit.unknown")}</MenuItem>
-                  <MenuItem value="Single">{Locale.label("people.personEdit.single")}</MenuItem>
-                  <MenuItem value="Married">{Locale.label("people.personEdit.married")}</MenuItem>
-                  <MenuItem value="Divorced">{Locale.label("people.personEdit.divorced")}</MenuItem>
-                  <MenuItem value="Widowed">{Locale.label("people.personEdit.widowed")}</MenuItem>
+                <InputLabel id="maritalStatus-label">{Locale.label("person.maritalStatus")}</InputLabel>
+                <Select name="maritalStatus" id="maritalStatus" label={Locale.label("people.personEdit.maritalStatus")} labelId="maritalStatus-label" value={person.maritalStatus || ""} onChange={handleChange}>
+                  <MenuItem value="Unknown">{Locale.label("person.unknown")}</MenuItem>
+                  <MenuItem value="Single">{Locale.label("person.single")}</MenuItem>
+                  <MenuItem value="Married">{Locale.label("person.married")}</MenuItem>
+                  <MenuItem value="Divorced">{Locale.label("person.divorced")}</MenuItem>
+                  <MenuItem value="Widowed">{Locale.label("person.widowed")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

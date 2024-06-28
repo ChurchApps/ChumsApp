@@ -73,17 +73,17 @@ export function EditCondition(props: Props) {
     let result: JSX.Element = null;
     switch (condition.field) {
       case "gender":
-        options = [<MenuItem key="/Unspecified" value="Unspecified">{Locale.label("people.editCondition.unspec")}</MenuItem>, <MenuItem value="Male">{Locale.label("people.editCondition.male")}</MenuItem>, <MenuItem value="Female">{Locale.label("people.editCondition.female")}</MenuItem>]
+        options = [<MenuItem key="/Unspecified" value="Unspecified">{Locale.label("person.unspecified")}</MenuItem>, <MenuItem value="Male">{Locale.label("person.male")}</MenuItem>, <MenuItem value="Female">{Locale.label("person.female")}</MenuItem>]
         setDefaultValue("Unspecified");
         result = getValueSelect(options);
         break;
       case "maritalStatus":
-        options = [<MenuItem key="/Unknown" value="Unknown">{Locale.label("people.editCondition.unknown")}</MenuItem>, <MenuItem value="Single">{Locale.label("people.editCondition.single")}</MenuItem>, <MenuItem value="Married">{Locale.label("people.editCondition.married")}</MenuItem>, <MenuItem value="Divorced">{Locale.label("people.editCondition.divorced")}</MenuItem>, <MenuItem value="Widowed">{Locale.label("people.editCondition.widowed")}</MenuItem>]
+        options = [<MenuItem key="/Unknown" value="Unknown">{Locale.label("person.unknown")}</MenuItem>, <MenuItem value="Single">{Locale.label("person.single")}</MenuItem>, <MenuItem value="Married">{Locale.label("person.married")}</MenuItem>, <MenuItem value="Divorced">{Locale.label("person.divorced")}</MenuItem>, <MenuItem value="Widowed">{Locale.label("person.widowed")}</MenuItem>]
         setDefaultValue("Unknown");
         result = getValueSelect(options);
         break;
       case "membershipStatus":
-        options = [<MenuItem key="/Visitor" value="Visitor">{Locale.label("people.editCondition.visitor")}</MenuItem>, <MenuItem value="Member">{Locale.label("people.editCondition.mem")}</MenuItem>, <MenuItem value="Staff">{Locale.label("people.editCondition.staff")}</MenuItem>]
+        options = [<MenuItem key="/Visitor" value="Visitor">{Locale.label("person.visitor")}</MenuItem>, <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>, <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>]
         setDefaultValue("Visitor");
         result = getValueSelect(options);
         break;

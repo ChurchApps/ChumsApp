@@ -28,9 +28,9 @@ export const PeoplePage = () => {
     { key: "birthDate", label: Locale.label("people.peoplePage.bDate"), shortName: Locale.label("people.peoplePage.bDate") },
     { key: "birthDay", label: Locale.label("people.peoplePage.bDayNo"), shortName: Locale.label("people.peoplePage.bDay") },
     { key: "age", label: Locale.label("people.peoplePage.age"), shortName: Locale.label("people.peoplePage.age") },
-    { key: "gender", label: Locale.label("people.peoplePage.gender"), shortName: Locale.label("people.peoplePage.gender") },
-    { key: "membershipStatus", label: Locale.label("people.peoplePage.memShipStat"), shortName: Locale.label("people.peoplePage.memShip") },
-    { key: "maritalStatus", label: Locale.label("people.peoplePage.marStat"), shortName: Locale.label("people.peoplePage.married") },
+    { key: "gender", label: Locale.label("person.gender"), shortName: Locale.label("person.gender") },
+    { key: "membershipStatus", label: Locale.label("person.membershipStatus"), shortName: Locale.label("person.membershipStatus") },
+    { key: "maritalStatus", label: Locale.label("person.maritalStatus"), shortName: Locale.label("person.married") },
     { key: "anniversary", label: Locale.label("people.peoplePage.anni"), shortName: Locale.label("people.peoplePage.anni") },
     { key: "nametagNotes", label: Locale.label("people.peoplePage.nameNote"), shortName: Locale.label("people.peoplePage.notes") },
     { key: "deleteOption", label: Locale.label("people.peoplePage.deleteOp"), shortName: Locale.label("people.peoplePage.delete") }
