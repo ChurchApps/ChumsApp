@@ -48,7 +48,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
   return (
     <>
       <TextField fullWidth name="groupSearchText" label={Locale.label("tasks.selectGroup.group")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={handleSearch}>{Locale.label("tasks.selectGroup.search")}</Button> }}
+        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={handleSearch}>{Locale.label("common.search")}</Button> }}
       />
       <Table size="small" id="householdMemberAddTable"><TableBody>{rows}</TableBody></Table>
     </>

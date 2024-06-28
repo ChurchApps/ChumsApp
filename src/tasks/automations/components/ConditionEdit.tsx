@@ -85,27 +85,27 @@ export const ConditionEdit = (props: Props) => {
           <ListSubheader>{Locale.label("tasks.conditionEdit.gen")}</ListSubheader>
           <MenuItem value="today">{Locale.label("tasks.conditionEdit.today")}</MenuItem>
 
-          <ListSubheader>{Locale.label("tasks.conditionEdit.name")}</ListSubheader>
-          <MenuItem key="/displayName" value="displayName">{Locale.label("tasks.conditionEdit.disName")}</MenuItem>
-          <MenuItem key="/firstName" value="firstName">{Locale.label("tasks.conditionEdit.firstName")}</MenuItem>
-          <MenuItem key="/lastName" value="lastName">{Locale.label("tasks.conditionEdit.lastName")}</MenuItem>
-          <MenuItem key="/middleName" value="middleName">{Locale.label("tasks.conditionEdit.middleName")}</MenuItem>
-          <MenuItem key="/nickName" value="nickName">{Locale.label("tasks.conditionEdit.nickName")}</MenuItem>
+          <ListSubheader>{Locale.label("common.name")}</ListSubheader>
+          <MenuItem key="/displayName" value="displayName">{Locale.label("person.displayName")}</MenuItem>
+          <MenuItem key="/firstName" value="firstName">{Locale.label("person.firstName")}</MenuItem>
+          <MenuItem key="/lastName" value="lastName">{Locale.label("person.lastName")}</MenuItem>
+          <MenuItem key="/middleName" value="middleName">{Locale.label("person.middleName")}</MenuItem>
+          <MenuItem key="/nickName" value="nickName">{Locale.label("person.nickName")}</MenuItem>
 
           <ListSubheader>{Locale.label("tasks.conditionEdit.persAtt")}</ListSubheader>
-          <MenuItem key="/birthDate" value="birthDate">{Locale.label("tasks.conditionEdit.bDate")}</MenuItem>
-          <MenuItem key="/gender" value="gender">{Locale.label("tasks.conditionEdit.gender")}</MenuItem>
-          <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("tasks.conditionEdit.marStat")}</MenuItem>
-          <MenuItem key="/anniversary" value="anniversary">{Locale.label("tasks.conditionEdit.anni")}</MenuItem>
-          <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("tasks.conditionEdit.memShipStat")}</MenuItem>
+          <MenuItem key="/birthDate" value="birthDate">{Locale.label("person.birthDate")}</MenuItem>
+          <MenuItem key="/gender" value="gender">{Locale.label("person.gender")}</MenuItem>
+          <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("person.maritalStatus")}</MenuItem>
+          <MenuItem key="/anniversary" value="anniversary">{Locale.label("person.anniversary")}</MenuItem>
+          <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("person.membershipStatus")}</MenuItem>
 
           <ListSubheader>{Locale.label("tasks.conditionEdit.conInfo")}</ListSubheader>
-          <MenuItem key="/phone" value="phone">{Locale.label("tasks.conditionEdit.phone")}</MenuItem>
-          <MenuItem key="/email" value="email">{Locale.label("tasks.conditionEdit.email")}</MenuItem>
-          <MenuItem key="/address" value="address">{Locale.label("tasks.conditionEdit.address")}</MenuItem>
-          <MenuItem key="/city" value="city">{Locale.label("tasks.conditionEdit.city")}</MenuItem>
-          <MenuItem key="/state" value="state">{Locale.label("tasks.conditionEdit.state")}</MenuItem>
-          <MenuItem key="/zip" value="zip">{Locale.label("tasks.conditionEdit.zip")}</MenuItem>
+          <MenuItem key="/phone" value="phone">{Locale.label("person.phone")}</MenuItem>
+          <MenuItem key="/email" value="email">{Locale.label("person.email")}</MenuItem>
+          <MenuItem key="/address" value="address">{Locale.label("person.address")}</MenuItem>
+          <MenuItem key="/city" value="city">{Locale.label("person.city")}</MenuItem>
+          <MenuItem key="/state" value="state">{Locale.label("person.state")}</MenuItem>
+          <MenuItem key="/zip" value="zip">{Locale.label("person.zip")}</MenuItem>
 
         </Select>
       </FormControl>

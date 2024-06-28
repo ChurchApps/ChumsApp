@@ -70,7 +70,7 @@ export const FormMembers: React.FC<Props> = (props) => {
               <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, {action: "view"}) }}>{Locale.label("forms.formMembers.view")}</Button>
             </Stack>
           </TableCell>
-          <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} style={{display: "flex", alignItems: "center", color: "#dc3545"}}><Icon sx={{marginRight: "5px"}}>person_remove</Icon> {Locale.label("forms.formMembers.rmv")}</a>}</TableCell>
+          <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} style={{display: "flex", alignItems: "center", color: "#dc3545"}}><Icon sx={{marginRight: "5px"}}>person_remove</Icon> {Locale.label("common.remove")}</a>}</TableCell>
           <TableCell><Switch checked={fm.emailNotification === true} onChange={(e) => { handleActionChange(fm.memberId, {emailNotification: e.target.checked}) }} /></TableCell>
         </TableRow>
       );
@@ -80,7 +80,7 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("forms.formMembers.name")}</th><th>{Locale.label("forms.formMembers.perm")}</th><th>{Locale.label("forms.formMembers.act")}</th><th>{Locale.label("forms.formMembers.emailNotif")}<Tooltip title={Locale.label("forms.formMembers.emailNotifMsg")} arrow><IconButton><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("common.name")}</th><th>{Locale.label("forms.formMembers.perm")}</th><th>{Locale.label("forms.formMembers.act")}</th><th>{Locale.label("forms.formMembers.emailNotif")}<Tooltip title={Locale.label("forms.formMembers.emailNotifMsg")} arrow><IconButton><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
     return rows;
   }
 

@@ -77,7 +77,7 @@ export function FormQuestionEdit(props: Props) {
           <MenuItem value="Decimal">{Locale.label("forms.formQuestionEdit.decNum")}</MenuItem>
           <MenuItem value="Date">{Locale.label("forms.formQuestionEdit.date")}</MenuItem>
           <MenuItem value="Yes/No">{Locale.label("forms.formQuestionEdit.yesNo")}</MenuItem>
-          <MenuItem value="Email">{Locale.label("forms.formQuestionEdit.email")}</MenuItem>
+          <MenuItem value="Email">{Locale.label("person.email")}</MenuItem>
           <MenuItem value="Phone Number">{Locale.label("forms.formQuestionEdit.phoneNum")}</MenuItem>
           <MenuItem value="Text Area">{Locale.label("forms.formQuestionEdit.textArea")}</MenuItem>
           <MenuItem value="Multiple Choice">{Locale.label("forms.formQuestionEdit.multiChoice")}</MenuItem>
@@ -85,7 +85,7 @@ export function FormQuestionEdit(props: Props) {
         </Select>
       </FormControl>
 
-      <TextField fullWidth label={Locale.label("forms.formQuestionEdit.title")} id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("common.title")} id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} />
       <TextField fullWidth label={Locale.label("forms.formQuestionEdit.desc")} id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} />
 
       {

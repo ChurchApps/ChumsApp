@@ -48,7 +48,7 @@ export const GroupAdd: React.FC<Props> = (props) => {
     <InputBox headerText={Locale.label("groups.groupAdd.new") + label} headerIcon="group" cancelFunction={handleCancel} saveFunction={handleAdd} saveText="Add" isSubmitting={isSubmitting}>
       <ErrorMessages errors={errors} />
       {(props.tags==="standard") && <TextField fullWidth={true} label={Locale.label("groups.groupAdd.catName")} type="text" id="categoryName" name="categoryName" value={group.categoryName} onChange={handleChange} />}
-      <TextField fullWidth={true} label={Locale.label("groups.groupAdd.name")} type="text" id="groupName" name="name" value={group.name} onChange={handleChange} />
+      <TextField fullWidth={true} label={Locale.label("common.name")} type="text" id="groupName" name="name" value={group.name} onChange={handleChange} />
     </InputBox>
   );
 }

@@ -69,7 +69,7 @@ export const TeamList = (props:Props) => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("plans.teamList.name")}</th><th>{Locale.label("plans.teamList.ppl")}</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("common.name")}</th><th>{Locale.label("plans.teamList.ppl")}</th></TableRow>);
     return rows;
   }
 

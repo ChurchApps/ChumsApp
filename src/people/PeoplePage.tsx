@@ -15,25 +15,25 @@ export const PeoplePage = () => {
 
   const columns = [
     { key: "photo", label: Locale.label("people.peoplePage.photo"), shortName: "" },
-    { key: "displayName", label: Locale.label("people.peoplePage.disName"), shortName: Locale.label("people.peoplePage.name") },
-    { key: "lastName", label: Locale.label("people.peoplePage.lastName"), shortName: Locale.label("people.peoplePage.last") },
-    { key: "firstName", label: Locale.label("people.peoplePage.firstName"), shortName: Locale.label("people.peoplePage.first") },
-    { key: "middleName", label: Locale.label("people.peoplePage.middleName"), shortName: Locale.label("people.peoplePage.middle") },
-    { key: "address", label: Locale.label("people.peoplePage.address"), shortName: Locale.label("people.peoplePage.address") },
-    { key: "city", label: Locale.label("people.peoplePage.city"), shortName: Locale.label("people.peoplePage.city") },
-    { key: "state", label: Locale.label("people.peoplePage.state"), shortName: Locale.label("people.peoplePage.state") },
-    { key: "zip", label: Locale.label("people.peoplePage.zip"), shortName: Locale.label("people.peoplePage.zip") },
-    { key: "email", label: Locale.label("people.peoplePage.primEmail"), shortName: Locale.label("people.peoplePage.email") },
-    { key: "phone", label: Locale.label("people.peoplePage.primPhone"), shortName: Locale.label("people.peoplePage.phone") },
-    { key: "birthDate", label: Locale.label("people.peoplePage.bDate"), shortName: Locale.label("people.peoplePage.bDate") },
+    { key: "displayName", label: Locale.label("person.displayName"), shortName: Locale.label("common.name") },
+    { key: "lastName", label: Locale.label("person.lastName"), shortName: Locale.label("people.peoplePage.last") },
+    { key: "firstName", label: Locale.label("person.firstName"), shortName: Locale.label("people.peoplePage.first") },
+    { key: "middleName", label: Locale.label("person.middleName"), shortName: Locale.label("people.peoplePage.middle") },
+    { key: "address", label: Locale.label("person.address"), shortName: Locale.label("person.address") },
+    { key: "city", label: Locale.label("person.city"), shortName: Locale.label("person.city") },
+    { key: "state", label: Locale.label("person.state"), shortName: Locale.label("person.state") },
+    { key: "zip", label: Locale.label("person.zip"), shortName: Locale.label("person.zip") },
+    { key: "email", label: Locale.label("people.peoplePage.primEmail"), shortName: Locale.label("person.email") },
+    { key: "phone", label: Locale.label("people.peoplePage.primPhone"), shortName: Locale.label("person.phone") },
+    { key: "birthDate", label: Locale.label("person.birthDate"), shortName: Locale.label("person.birthDate") },
     { key: "birthDay", label: Locale.label("people.peoplePage.bDayNo"), shortName: Locale.label("people.peoplePage.bDay") },
-    { key: "age", label: Locale.label("people.peoplePage.age"), shortName: Locale.label("people.peoplePage.age") },
-    { key: "gender", label: Locale.label("people.peoplePage.gender"), shortName: Locale.label("people.peoplePage.gender") },
-    { key: "membershipStatus", label: Locale.label("people.peoplePage.memShipStat"), shortName: Locale.label("people.peoplePage.memShip") },
-    { key: "maritalStatus", label: Locale.label("people.peoplePage.marStat"), shortName: Locale.label("people.peoplePage.married") },
-    { key: "anniversary", label: Locale.label("people.peoplePage.anni"), shortName: Locale.label("people.peoplePage.anni") },
-    { key: "nametagNotes", label: Locale.label("people.peoplePage.nameNote"), shortName: Locale.label("people.peoplePage.notes") },
-    { key: "deleteOption", label: Locale.label("people.peoplePage.deleteOp"), shortName: Locale.label("people.peoplePage.delete") }
+    { key: "age", label: Locale.label("person.age"), shortName: Locale.label("person.age") },
+    { key: "gender", label: Locale.label("person.gender"), shortName: Locale.label("person.gender") },
+    { key: "membershipStatus", label: Locale.label("person.membershipStatus"), shortName: Locale.label("person.membershipStatus") },
+    { key: "maritalStatus", label: Locale.label("person.maritalStatus"), shortName: Locale.label("person.married") },
+    { key: "anniversary", label: Locale.label("person.anniversary"), shortName: Locale.label("person.anniversary") },
+    { key: "nametagNotes", label: Locale.label("people.peoplePage.nameNote"), shortName: Locale.label("common.notes") },
+    { key: "deleteOption", label: Locale.label("people.peoplePage.deleteOp"), shortName: Locale.label("common.delete") }
   ];
 
   const loadData = () => {

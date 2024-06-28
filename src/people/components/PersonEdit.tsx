@@ -198,18 +198,18 @@ export function PersonEdit(props: Props) {
             <Grid item sm={8}>
               <Grid container spacing={3}>
                 <Grid item md={4} xs={12}>
-                  <TextField fullWidth name="name.first" label={Locale.label("people.personEdit.firstName")} id="first" value={person.name.first || ""} onChange={handleChange} />
+                  <TextField fullWidth name="name.first" label={Locale.label("person.firstName")} id="first" value={person.name.first || ""} onChange={handleChange} />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                  <TextField fullWidth name="name.middle" label={Locale.label("people.personEdit.middleName")} id="middle" value={person.name.middle || ""} onChange={handleChange} />
+                  <TextField fullWidth name="name.middle" label={Locale.label("person.middleName")} id="middle" value={person.name.middle || ""} onChange={handleChange} />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                  <TextField fullWidth name="name.last" label={Locale.label("people.personEdit.lastName")} id="last" value={person.name.last || ""} onChange={handleChange} />
+                  <TextField fullWidth name="name.last" label={Locale.label("person.lastName")} id="last" value={person.name.last || ""} onChange={handleChange} />
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={12}>
-                  <TextField fullWidth name="contactInfo.email" label={Locale.label("people.personEdit.email")} type="email" id="email" value={person.contactInfo.email || ""} onChange={handleChange} />
+                  <TextField fullWidth name="contactInfo.email" label={Locale.label("person.email")} type="email" id="email" value={person.contactInfo.email || ""} onChange={handleChange} />
                 </Grid>
                 <Grid item md={6} xs={12}>
                   <TextField inputProps={{ maxLength: 20 }} fullWidth name="nametagNotes" label={Locale.label("people.personEdit.nameNote")} id="nametagnotes" value={person.nametagNotes || ""} onChange={handleChange} />
@@ -219,70 +219,70 @@ export function PersonEdit(props: Props) {
           </Grid>
           <Grid container spacing={3}>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth name="name.nick" id="nick" label={Locale.label("people.personEdit.nickName")} value={person.name.nick || ""} onChange={handleChange} />
+              <TextField fullWidth name="name.nick" id="nick" label={Locale.label("person.nickName")} value={person.name.nick || ""} onChange={handleChange} />
             </Grid>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="membershipStatus-label">{Locale.label("people.personEdit.memShipStat")}</InputLabel>
-                <Select name="membershipStatus" id="membershipStatus" labelId="membershipStatus-label" label={Locale.label("people.personEdit.memShipStat")} value={person.membershipStatus || ""} onChange={handleChange}>
-                  <MenuItem value="Member">{Locale.label("people.personEdit.mem")}</MenuItem>
-                  <MenuItem value="Visitor">{Locale.label("people.personEdit.visitor")}</MenuItem>
-                  <MenuItem value="Staff">{Locale.label("people.personEdit.staff")}</MenuItem>
+                <InputLabel id="membershipStatus-label">{Locale.label("person.membershipStatus")}</InputLabel>
+                <Select name="membershipStatus" id="membershipStatus" labelId="membershipStatus-label" label={Locale.label("person.membershipStatus")} value={person.membershipStatus || ""} onChange={handleChange}>
+                  <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>
+                  <MenuItem value="Visitor">{Locale.label("person.visitor")}</MenuItem>
+                  <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{ shrink: true }} label={Locale.label("people.personEdit.bDate")} value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{ shrink: true }} label={Locale.label("person.birthDate")} value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} />
             </Grid>
           </Grid>
 
           <Grid container spacing={3}>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="gender-label">{Locale.label("people.personEdit.gender")}</InputLabel>
-                <Select name="gender" id="gender" labelId="gender-label" label={Locale.label("people.personEdit.gender")} value={person.gender || ""} onChange={handleChange}>
-                  <MenuItem value="Unspecified">{Locale.label("people.personEdit.unspec")}</MenuItem>
-                  <MenuItem value="Male">{Locale.label("people.personEdit.male")}</MenuItem>
-                  <MenuItem value="Female">{Locale.label("people.personEdit.female")}</MenuItem>
+                <InputLabel id="gender-label">{Locale.label("person.gender")}</InputLabel>
+                <Select name="gender" id="gender" labelId="gender-label" label={Locale.label("person.gender")} value={person.gender || ""} onChange={handleChange}>
+                  <MenuItem value="Unspecified">{Locale.label("person.unspecified")}</MenuItem>
+                  <MenuItem value="Male">{Locale.label("person.male")}</MenuItem>
+                  <MenuItem value="Female">{Locale.label("person.female")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="maritalStatus-label">{Locale.label("people.personEdit.marStat")}</InputLabel>
-                <Select name="maritalStatus" id="maritalStatus" label={Locale.label("people.personEdit.marStat")} labelId="maritalStatus-label" value={person.maritalStatus || ""} onChange={handleChange}>
-                  <MenuItem value="Unknown">{Locale.label("people.personEdit.unknown")}</MenuItem>
-                  <MenuItem value="Single">{Locale.label("people.personEdit.single")}</MenuItem>
-                  <MenuItem value="Married">{Locale.label("people.personEdit.married")}</MenuItem>
-                  <MenuItem value="Divorced">{Locale.label("people.personEdit.divorced")}</MenuItem>
-                  <MenuItem value="Widowed">{Locale.label("people.personEdit.widowed")}</MenuItem>
+                <InputLabel id="maritalStatus-label">{Locale.label("person.maritalStatus")}</InputLabel>
+                <Select name="maritalStatus" id="maritalStatus" label={Locale.label("people.personEdit.maritalStatus")} labelId="maritalStatus-label" value={person.maritalStatus || ""} onChange={handleChange}>
+                  <MenuItem value="Unknown">{Locale.label("person.unknown")}</MenuItem>
+                  <MenuItem value="Single">{Locale.label("person.single")}</MenuItem>
+                  <MenuItem value="Married">{Locale.label("person.married")}</MenuItem>
+                  <MenuItem value="Divorced">{Locale.label("person.divorced")}</MenuItem>
+                  <MenuItem value="Widowed">{Locale.label("person.widowed")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{ shrink: true }} label={Locale.label("people.personEdit.anni")} value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{ shrink: true }} label={Locale.label("person.anniversary")} value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} />
             </Grid>
           </Grid>
 
           <Grid container spacing={3}>
             <Grid item md={8}>
-              <div className="section">{Locale.label("people.personEdit.address")}</div>
-              <TextField name="contactInfo.address1" id="address1" fullWidth label={Locale.label("people.personEdit.firstLine")} value={person.contactInfo?.address1 || ""} onChange={handleChange} />
-              <TextField name="contactInfo.address2" id="address2" fullWidth label={Locale.label("people.personEdit.secondLine")} value={person.contactInfo?.address2 || ""} onChange={handleChange} />
+              <div className="section">{Locale.label("person.address")}</div>
+              <TextField name="contactInfo.address1" id="address1" fullWidth label={Locale.label("person.line1")} value={person.contactInfo?.address1 || ""} onChange={handleChange} />
+              <TextField name="contactInfo.address2" id="address2" fullWidth label={Locale.label("person.line2")} value={person.contactInfo?.address2 || ""} onChange={handleChange} />
               <Grid container spacing={3}>
                 <Grid item xs={6}>
-                  <TextField name="contactInfo.city" id="city" fullWidth label={Locale.label("people.personEdit.city")} value={person.contactInfo?.city || ""} onChange={handleChange} />
+                  <TextField name="contactInfo.city" id="city" fullWidth label={Locale.label("person.city")} value={person.contactInfo?.city || ""} onChange={handleChange} />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField name="contactInfo.state" id="state" fullWidth label={Locale.label("people.personEdit.state")} value={person.contactInfo?.state || ""} onChange={handleChange} />
+                  <TextField name="contactInfo.state" id="state" fullWidth label={Locale.label("person.state")} value={person.contactInfo?.state || ""} onChange={handleChange} />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField name="contactInfo.zip" id="zip" fullWidth label={Locale.label("people.personEdit.zip")} value={person.contactInfo?.zip || ""} onChange={handleChange} />
+                  <TextField name="contactInfo.zip" id="zip" fullWidth label={Locale.label("person.zip")} value={person.contactInfo?.zip || ""} onChange={handleChange} />
                 </Grid>
               </Grid>
             </Grid>
             <Grid item md={3}>
-              <div className="section">{Locale.label("people.personEdit.phone")}</div>
+              <div className="section">{Locale.label("person.phone")}</div>
               <MuiTelInput fullWidth name="contactInfo.homePhone" id="homePhone" label={Locale.label("people.personEdit.home")} value={person.contactInfo?.homePhone} onChange={(value) => handlePhoneChange(value, "homePhone")}
                 defaultCountry="US" focusOnSelectCountry inputProps={ariaDesc} error={phoneHasError.homePhone} MenuProps={ariaLabel} helperText={<div id="errorMsg">{phoneHasError.homePhone && <p style={{ margin: 0, color: "#d32f2f" }}>{Locale.label("people.personEdit.invalForm")}</p>}</div>}
               />

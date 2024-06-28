@@ -1,1049 +1,886 @@
 {
-  "common": {
-    "search": "Maghanap"
-  },
-  "attendance": {
-    "campusEdit": {
-      "name": "Pangalan ng Campus",
-      "confirmDelete": "Sigurado ka bang gusto mong tanggalin ang campus na ito?",
-      "validate": {
-        "name": "Pangalan ng Campus ay kinakailangan."
-      }
-    },
-    "serviceEdit": {
-      "campus": "Campus",
-      "name": "Pangalan ng Serbisyo",
-      "confirmDelete": "Sigurado ka bang gusto mong permanenteng tanggalin ang serbisyong ito?",
-      "validate": {
-        "campus": "Mangyaring pumili ng isang campus.",
-        "name": "Kinakailangan ang pangalan ng serbisyo."
-      }
-    },
-    "serviceTimeEdit": {
-      "service": "Serbisyo",
-      "name": "Oras ng Serbisyo",
-      "confirmDelete": "Sigurado ka bang gusto mong permanenteng tanggalin ang oras ng serbisyong ito?",
-      "validate": {
-        "name": "Kinakailangan ang pangalan ng oras ng serbisyo.",
-        "service": "Mangyaring pumili ng serbisyo."
-      }
-    },
-    "tabs": {
-      "noImplement": "Hindi Naipatupad",
-      "attTrend": "Trend ng Pagpasok",
-      "groupAtt": "Pagdalo ng Grupo"
-    },
-    "attendancePage": {
-      "groupAttMsg": "Lalabas ang pagdalo ng grupo kapag naidagdag na ang mga session sa isang grupo at nakadalo na ang mga tao sa mga session na iyon.",
-      "addCampus": "Magdagdag ng Campus",
-      "addService": "Magdagdag ng Serbisyo",
-      "addServiceTime": "Magdagdag ng Oras ng Serbisyo",
-      "campus": "Campus",
-      "service": "Serbisyo",
-      "time": "Oras",
-      "category": "Kategorya",
-      "group": "Grupo",
-      "groups": "Mga grupo",
-      "att": "Pagdalo"
-    }
-  },
-  "components": {
-    "footer": {
-      "phone": "Telepono",
-      "rights": "Lahat ng karapatan ay nakalaan."
-    },
-    "question": {
-      "no": "Hindi",
-      "yes": "Oo"
-    },
-    "search": {
-      "person": "Tao",
-      "search": "Maghanap"
-    },
-    "wrapper": {
-      "dash": "Dashboard",
-      "ppl": "Mga tao",
-      "groups": "Mga grupo",
-      "att": "Pagdalo",
-      "don": "Mga donasyon",
-      "form": "Form",
-      "tasks": "Mga gawain",
-      "plans": "Mga plano",
-      "set": "Mga setting",
-      "servAdmin": "Admin ng Server"
-    }
-  },
-  "dashboard": {
-    "myGroups": "Aking Mga Grupo",
-    "people": "Mga tao",
-    "tasks": "Mga gawain",
-    "peopleSearch": {
-      "photo": "Larawan",
-      "display": "Display Name",
-      "ppl": "Mga tao",
-      "name": "Pangalan",
-      "search": "Maghanap"
-    },
-    "dashboardPage": {
-      "dash": "Dashboard"
-    }
-  },
-  "donations": {
-    "batchEdit": {
-      "confirmMsg": "Sigurado ka bang gusto mong permanenteng tanggalin ang batch na ito at lahat ng donasyon sa loob nito?",
-      "edit": "I-edit ang Batch",
-      "opName": "Pangalan (opsyonal)",
-      "date": "Petsa"
-    },
-    "donationEdit": {
-      "checkNum": "Suriin ang #",
-      "lastDig": "Huling 4 na numero",
-      "anon": "Anonymous",
-      "donEdit": "I-edit ang Donasyon",
-      "person": "Tao",
-      "method": "Pamamaraan",
-      "check": "Suriin",
-      "cash": "Cash",
-      "card": "Card",
-      "notes": "Mga Tala",
-      "date": "Petsa"
-    },
-    "donationEvents": {
-      "person": "tao: ",
-      "event": "Kaganapan: ",
-      "msg": "Mensahe: ",
-      "mark": "Markahan bilang ",
-      "failed": "Mga Nabigong Donasyon - ",
-      "unres": " hindi nalutas"
-    },
-    "donations": {
-      "errMsg": "Walang nakitang pondo. ",
-      "noDonMsg": "Walang nasusubaybayang mga donasyon. ",
-      "tableIdent": "Id",
-      "name": "Pangalan",
-      "date": "Petsa",
-      "amt": "Halaga",
-      "anon": "Anonymous",
-      "total": "Kabuuan",
-      "don": "Mga donasyon"
-    },
-    "fundEdit": {
-      "errBlank": "Maglagay ng pangalan ng pondo",
-      "confirmMsg": "Sigurado ka bang gusto mong permanenteng tanggalin ang batch na ito at lahat ng donasyon sa loob nito?",
-      "edit": "I-edit ang Pondo",
-      "name": "Pangalan"
-    },
-    "funds": {
-      "noFund": "Walang nakitang pondo.",
-      "fund": "Mga pondo"
-    },
-    "donationsPage": {
-      "noBatch": "Walang nakitang mga batch.",
-      "batch": "Batch",
-      "name": "Pangalan",
-      "date": "Petsa",
-      "don": "Mga donasyon",
-      "total": "Kabuuan",
-      "edit": "I-edit"
-    },
-    "fundsPage": {
-      "noDon": "Wala pang donasyon",
-      "don": "Mga donasyon",
-      "donFilt": "Filter ng Donasyon",
-      "anon": "Anonymous",
-      "date": "Petsa",
-      "dateStart": "Petsa ng Pagsisimula",
-      "dateEnd": "Petsa ng Pagtatapos",
-      "batch": "Batch",
-      "donor": "Donor",
-      "amt": "Halaga"
-    }
-  },
-  "forms": {
-    "choicesEdit": {
-      "rmv": "Alisin",
-      "choices": "Mga pagpipilian",
-      "value": "Halaga",
-      "txt": "Text",
-      "act": "Aksyon",
-      "add": "Idagdag"
-    },
-    "form": {
-      "noCustomMsg": "Wala pang nagawang custom na tanong. ",
-      "yes": "Oo",
-      "no": "Hindi",
-      "question": "Tanong",
-      "questions": "Mga tanong",
-      "type": "Uri",
-      "act": "Aksyon",
-      "req": "Kailangan"
-    },
-    "formEdit": {
-      "nameReqMsg": "Kinakailangan ang pangalan ng form.",
-      "startReqMsg": "Kinakailangan ang petsa ng pagsisimula.",
-      "endReqMsg": "Kinakailangan ang petsa ng pagtatapos.",
-      "confirmMsg": "Sigurado ka bang gusto mong permanenteng tanggalin ang form na ito?",
-      "editForm": "I-edit ang Form",
-      "name": "Pangalan ng Form",
-      "associate": "Iugnay Kay",
-      "ppl": "Mga tao",
-      "alone": "Stand Alone",
-      "access": "Pag-access sa Form",
-      "public": "Pampubliko",
-      "restrict": "Pinaghihigpitan",
-      "available": "Itakda ang Timeframe ng Availability ng Form",
-      "availableStart": "Petsa ng Pagsisimula ng Availability",
-      "availableEnd": "Petsa ng Pagtatapos ng Availability",
-      "yes": "Oo",
-      "no": "Hindi"
-    },
-    "formMembers": {
-      "admin": "Admin",
-      "view": "Tingnan lamang",
-      "rmv": "Alisin",
-      "name": "Pangalan",
-      "perm": "Pahintulot",
-      "act": "Aksyon",
-      "emailNotif": "Notification sa Email",
-      "emailNotifMsg": "Sa tuwing isinumite ang form, aabisuhan ka sa pamamagitan ng koreo.",
-      "formMem": "Mga Miyembro ng Form",
-      "addPpl": "Magdagdag ng Tao"
-    },
-    "formQuestionEdit": {
-      "questionReq": "Kinakailangan ang tanong.",
-      "fieldReq": "Kinakailangan ang uri ng field.",
-      "confirmMsg": "Sigurado ka bang gusto mong permanenteng tanggalin ang tanong na ito?",
-      "questionEdit": "I-edit ang Tanong",
-      "prov": "Provider",
-      "textBox": "Textbox",
-      "wholeNum": "Buong Bilang",
-      "decNum": "Decimal",
-      "date": "Petsa",
-      "yesNo": "Oo hindi",
-      "email": "Email",
-      "phoneNum": "Numero ng telepono",
-      "textArea": "Lugar ng Teksto",
-      "multiChoice": "Maraming pagpipilian",
-      "checkBox": "Checkbox",
-      "title": "Pamagat",
-      "desc": "Paglalarawan",
-      "plcOp": "Placeholder (opsyonal)",
-      "ansReq": "Humingi ng sagot para sa tanong na ito"
-    },
-    "formSubmissions": {
-      "anon": "Anonymous",
-      "subFor": "Isinumite Para sa",
-      "subBy": "Ipinasa ni",
-      "subDate": "Petsa ng Pagsumite",
-      "subSum": "Buod ng Pagsusumite ng Form",
-      "subRes": "Mga Resulta ng Pagsusumite ng Form",
-      "yes": "Oo",
-      "no": "Hindi"
-    },
-    "tabs": {
-      "unAuth": "Hindi awtorisado",
-      "questions": "Mga tanong",
-      "formMem": "Mga Miyembro ng Form",
-      "formSub": "Mga Pagsusumite ng Form"
-    },
-    "formsPage": {
-      "noCustomMsg": "Wala pang nagawang custom na form. ",
-      "confirmMsg1": "Sigurado ka bang gusto mong i-archive ang form na ito?",
-      "confirmMsg2": "Sigurado ka bang gusto mong ibalik ang form na ito?",
-      "noArch": "Walang mga naka-archive na form.",
-      "name": "Pangalan",
-      "forms": "Mga porma",
-      "archForms": "Mga Naka-archive na Form"
-    }
-  },
-  "groups": {
-    "groupAdd": {
-      "catReq": "Pangalan ng kategorya ay kinakailangan.",
-      "groupReq": "Kailangan ang pangalan ng grupo.",
-      "group": "Grupo",
-      "team": "Koponan",
-      "ministry": "ministeryo",
-      "new": "Bago ",
-      "catName": "Pangalan ng Kategorya",
-      "name": "Pangalan"
-    },
-    "groupDetails": {
-      "cat": "Kategorya",
-      "name": "Pangalan",
-      "attTrack": "Subaybayan ang Attendance:",
-      "parPick": "Pagkuha ng Magulang:",
-      "groupDet": "Mga Detalye ng Grupo",
-      "yes": "Oo",
-      "no": "Hindi"
-    },
-    "groupDetailsEdit": {
-      "catNameMsg": "Mangyaring magpasok ng pangalan ng kategorya.",
-      "groupNameMsg": "Mangyaring magpasok ng pangalan ng pangkat.",
-      "confirmMsg": "Sigurado ka bang gusto mong permanenteng tanggalin ang pangkat na ito?",
-      "groupDet": "Mga Detalye ng Grupo",
-      "catName": "Pangalan ng Kategorya",
-      "groupName": "Pangalan ng grupo",
-      "attTrack": "Subaybayan ang Attendance",
-      "no": "Hindi",
-      "yes": "Oo",
-      "parPick": "Pickup ng Magulang",
-      "groupDesc": "Paglalarawan ng Grupo",
-      "groupImg": "Litratong panggrupo",
-      "selImg": "Piliin ang Larawan"
-    },
-    "groupMembers": {
-      "noMem": "Walang nakitang miyembro ng grupo.",
-      "name": "Pangalan",
-      "groupMem": "Mga Miyembro ng Grupo",
-      "send": "Ipadala",
-      "sendMemMsg": "Magpadala ng mensahe sa mga miyembro"
-    },
-    "groupSessions": {
-      "session": "Sesyon",
-      "sessions": "Mga session",
-      "new": "Bago",
-      "noSesMsg": "Walang session.",
-      "addSesMsg": "Mangyaring magdagdag ng bagong session upang magpatuloy.",
-      "attFor": "Pagdalo para sa",
-      "name": "Pangalan"
-    },
-    "membersAdd": {
-      "noMem": "Walang available na miyembro ng grupo.",
-      "add": "Idagdag",
-      "name": "Pangalan",
-      "availableMem": "Magagamit na Mga Miyembro ng Grupo"
-    },
-    "serviceTimes": {
-      "services": "(Mga) Serbisyo:"
-    },
-    "serviceTimesEdit": {
-      "rmv": "Alisin",
-      "srvTimeOp": "Mga Oras ng Serbisyo (opsyonal)",
-      "srvTimeAdd": "Magdagdag ng Oras ng Serbisyo",
-      "add": "Idagdag"
-    },
-    "sessionAdd": {
-      "invDate": "Maling petsa",
-      "srvTime": "Oras ng Serbisyo",
-      "sesAdd": "Magdagdag ng Session",
-      "sesDate": "Petsa ng Sesyon"
-    },
-    "tabs": {
-      "noImplement": "Hindi Naipatupad",
-      "mem": "Mga miyembro",
-      "ses": "Mga session"
-    },
-    "groupPage": {
-      "addPpl": "Magdagdag ng Tao"
-    },
-    "groupsPage": {
-      "noGroupMsg": "Walang nakitang grupo. ",
-      "cat": "Kategorya",
-      "name": "Pangalan",
-      "ppl": "Mga tao",
-      "groups": "Mga grupo",
-      "pers": "1 tao",
-      "spPpl": " mga tao"
-    }
-  },
-  "people": {
-    "mergeModal": {
-      "selMsg": "Mangyaring pumili ng hindi bababa sa 1 halaga para sa bawat field",
-      "mergeQuestion": "Gusto mo bang pagsamahin",
-      "with": "kasama",
-      "fieldCon": "Narito ang ilang field na magkasalungat na field:",
-      "merge": "Pinagsasama ang mga tala...",
-      "cancel": "Kanselahin",
-      "confirm": "Kumpirmahin"
-    },
-    "updateHouseHold": {
-      "update": "I-update ang Address",
-      "no": "Hindi",
-      "yes": "Oo"
-    },
-    "editCondition": {
-      "unspec": "Hindi natukoy",
-      "male": "Lalaki",
-      "female": "Babae",
-      "unknown": "Hindi alam",
-      "single": "Walang asawa",
-      "married": "Kasal",
-      "divorced": "Diborsiyado",
-      "widowed": "Nabiyuda",
-      "visitor": "Bisita",
-      "mem": "Miyembro",
-      "staff": "Mga tauhan",
-      "jan": "Enero",
-      "feb": "Pebrero",
-      "mar": "Marso",
-      "apr": "Abril",
-      "may": "May",
-      "june": "Hunyo",
-      "july": "Hulyo",
-      "aug": "Agosto",
-      "sep": "Setyembre",
-      "oct": "Oktubre",
-      "nov": "Nobyembre",
-      "dec": "Disyembre",
-      "any": "Anuman",
-      "from": "Mula sa",
-      "to": "Upang",
-      "value": "Halaga",
-      "isMem": "ay miyembro ng",
-      "notMem": "ay hindi miyembro ng",
-      "hasDon": "ay nag-donate (sa pangkalahatan)",
-      "donTo": "ay nag-donate sa",
-      "attGen": "ay dumalo (sa pangkalahatan)",
-      "attCamp": "ay nag-aral (campus)",
-      "attServ": "ay dumalo (serbisyo)",
-      "attServTime": "ay dumalo (oras ng serbisyo)",
-      "attGroup": "ay dumalo (grupo)",
-      "contains": "naglalaman ng",
-      "startW": "nagsisimula sa",
-      "endW": "nagtatapos sa",
-      "field": "Patlang",
-      "person": "Tao",
-      "disName": "Display Name",
-      "firstName": "Pangalan",
-      "lastName": "Huling pangalan",
-      "middleName": "Gitnang pangalan",
-      "nickName": "Palayaw",
-      "pre": "Prefix",
-      "suf": "Suffix",
-      "bDate": "Araw ng kapanganakan",
-      "bMonth": "Buwan ng Kapanganakan",
-      "age": "Edad",
-      "gender": "Kasarian",
-      "marStat": "Katayuan sa Pag-aasawa",
-      "anni": "Anibersaryo",
-      "anniMonth": "Buwan ng Anibersaryo",
-      "marYears": "Mga Taon ng Kasal",
-      "phone": "Telepono",
-      "email": "Email",
-      "address": "Address",
-      "city": "lungsod",
-      "state": "Estado/Lalawigan",
-      "zip": "Zip/Postal",
-      "memShip": "Membership",
-      "memShipStat": "Katayuan ng Membership",
-      "groupMem": "Miyembro ng Grupo",
-      "act": "Aktibidad",
-      "memDon": "Mga Donasyon ng Miyembro",
-      "memAtt": "Pagdalo ng Miyembro",
-      "operator": "Operator",
-      "saveCon": "I-save ang Kundisyon"
-    },
-    "groups": {
-      "notMemMsg": "Kasalukuyang hindi miyembro ng anumang grupo.",
-      "groups": "Mga grupo"
-    },
-    "household": {
-      "house": " Sambahayan"
-    },
-    "householdEdit": {
-      "updQuestion": "Gusto mo bang mag-update",
-      "addMatch": "address upang tumugma",
-      "blankMsg": "Mangyaring magbigay ng pangalan ng sambahayan.",
-      "head": "Ulo",
-      "spouse": "asawa",
-      "child": "bata",
-      "other": "Iba pa",
-      "rmv": "Alisin",
-      "house": " Sambahayan",
-      "houseName": "Pangalan ng Sambahayan",
-      "add": "Idagdag"
-    },
-    "merge": {
-      "mergeRec": "Pagsamahin ang Mga Tala",
-      "merge": "pagsamahin"
-    },
-    "peopleColumns": {
-      "noFilt": "Walang available na mga filter.",
-      "filt": "Mga filter",
-      "appFilt": "Ilapat ang Mga Filter",
-      "stand": "Pamantayan",
-      "cust": "Custom",
-      "close": "Isara"
-    },
-    "peopleSearch": {
-      "simpSearch": "Simpleng Paghahanap",
-      "advSearch": "Masusing Paghahanap",
-      "simp": "Simple",
-      "adv": "Advanced",
-      "name": "Pangalan",
-      "search": "Maghanap",
-      "addCon": "Magdagdag ng Kundisyon",
-      "allPeeps": "Lahat ng tao kung saan:",
-      "notIn": "Hindi Sa",
-      "madeTo": "Ginawa para",
-      "for": "para sa"
-    },
-    "peopleSearchResults": {
-      "noResMsg": "Walang nahanap na resulta.  "
-    },
-    "personAttendance": {
-      "noAttMsg": "Walang mga rekord ng pagdalo. ",
-      "att": "Pagdalo"
-    },
-    "personEdit": {
-      "confirmMsg": "Sigurado ka bang gusto mong permanenteng tanggalin ang rekord ng taong ito?",
-      "firstReq": "Kinakailangan ang pangalan",
-      "lastReq": "Kinakailangan ang apelyido",
-      "valEmail": "Mangyaring magpasok ng wastong email address.",
-      "upAddress": "In-update mo ang address sa",
-      "for": "para sa",
-      "applyQuestion": "Gusto mo bang ilapat iyon sa kabuuan",
-      "family": "pamilya",
-      "persDet": "Personal na detalye",
-      "merge": "Pagsamahin",
-      "firstName": "Pangalan",
-      "middleName": "Gitnang pangalan",
-      "lastName": "Huling pangalan",
-      "email": "Email",
-      "nameNote": "Mga Tala ng Name Tag",
-      "nickName": "Palayaw",
-      "memShipStat": "Katayuan ng Membership",
-      "mem": "Miyembro",
-      "visitor": "Bisita",
-      "staff": "Mga tauhan",
-      "bDate": "Araw ng kapanganakan",
-      "gender": "Kasarian",
-      "unspec": "Hindi natukoy",
-      "male": "Lalaki",
-      "female": "Babae",
-      "marStat": "Katayuan sa Pag-aasawa",
-      "unknown": "Hindi alam",
-      "single": "Walang asawa",
-      "married": "Kasal",
-      "divorced": "Diborsiyado",
-      "widowed": "Nabiyuda",
-      "anni": "Anibersaryo",
-      "address": "Address",
-      "firstLine": "Linya 1",
-      "secondLine": "Linya 2",
-      "city": "lungsod",
-      "state": "Estado",
-      "zip": "Zip",
-      "phone": "Telepono",
-      "home": "Bahay",
-      "invalForm": "Di-wastong Format",
-      "work": "Trabaho",
-      "mobile": "Mobile",
-      "exten": "Extension"
-    },
-    "personView": {
-      "gender": "Kasarian",
-      "age": "Edad",
-      "marStat": "Katayuan sa Pag-aasawa:",
-      "memShip": "Membership:",
-      "mobile": "Mobile",
-      "work": "Trabaho",
-      "persDet": "Personal na detalye",
-      "home": "Bahay"
-    },
-    "tabs": {
-      "notes": "Mga Tala",
-      "att": "Pagdalo",
-      "don": "Mga donasyon",
-      "noImplement": "Hindi Naipatupad"
-    },
-    "peoplePage": {
-      "photo": "Larawan",
-      "disName": "Display Name",
-      "name": "Pangalan",
-      "lastName": "Huling pangalan",
-      "last": "Huling",
-      "firstName": "Pangalan",
-      "first": "Una",
-      "middleName": "Gitnang pangalan",
-      "middle": "Gitna",
-      "address": "Address",
-      "city": "lungsod",
-      "state": "Estado",
-      "zip": "Zip",
-      "primEmail": "Pangunahing Email",
-      "email": "Email",
-      "primPhone": "pangunahing Telepono",
-      "phone": "Telepono",
-      "bDate": "Araw ng kapanganakan",
-      "bDayNo": "Kaarawan (Walang Taon)",
-      "bDay": "Birthday",
-      "age": "Edad",
-      "gender": "Kasarian",
-      "memShipStat": "Katayuan ng Membership",
-      "memShip": "Membership",
-      "marStat": "Katayuan sa Pag-aasawa",
-      "married": "Kasal",
-      "anni": "Anibersaryo",
-      "nameNote": "Nmae Tag Notes",
-      "notes": "Mga Tala",
-      "deleteOp": "Tanggalin ang Opsyon",
-      "delete": "Tanggalin",
-      "searchPpl": "Maghanap ng mga Tao",
-      "ppl": "Mga tao"
-    }
-  },
-  "plans": {
-    "assignmentEdit": {
-      "noMem": "Walang nakitang miyembro ng grupo.",
-      "editAssign": "I-edit ang Assignment",
-      "assignPos": "Magtalaga ng Posisyon",
-      "done": "Tapos na"
-    },
-    "ministryList": {
-      "noMinMsg": "Walang nakitang ministeryo. ",
-      "mins": "Ministires"
-    },
-    "planEdit": {
-      "planReq": "Kinakailangan ang pangalan ng plano.",
-      "servReq": "Kinakailangan ang petsa ng serbisyo.",
-      "planEdit": "I-edit ang Plano",
-      "planAdd": "Magdagdag ng Plano",
-      "name": "Pangalan",
-      "servDate": "Petsa ng Serbisyo",
-      "copy": "Kopyahin Mula sa",
-      "none": "wala"
-    },
-    "planList": {
-      "noPlan": "Wala pang mga planong naidagdag.",
-      "plans": "Mga plano"
-    },
-    "planValidation": {
-      "blockCon": "Salungat sa petsa ng blockout ng",
-      "to": "sa",
-      "more": "higit pa",
-      "person": "tao",
-      "ppl": "mga tao",
-      "needed": "kailangan.",
-      "timeCon": "Salungat sa oras sa pagitan",
-      "and": "at",
-      "during": "habang",
-      "cons": "Mga salungatan",
-      "timeCon2": "Salungatan sa oras sa",
-      "between": "sa pagitan",
-      "valPlan": "May bisa ang plano.",
-      "volReq": "Mga Kahilingan sa Pagboluntaryo: ",
-      "volNotif": "Naabisuhan ang lahat ng mga boluntaryo.",
-      "notify": "Abisuhan",
-      "vol": "(mga) boluntaryo",
-      "val": "Pagpapatunay"
-    },
-    "positionEdit": {
-      "catNameReq": "Pangalan ng Kategorya ay kinakailangan.",
-      "nameReq": "Pangalan ang kailangan",
-      "posEdit": "I-edit ang Posisyon",
-      "posAdd": "Magdagdag ng Posisyon",
-      "catName": "Pangalan ng Kategorya",
-      "name": "Pangalan",
-      "volCount": "Bilang ng boluntaryo",
-      "volGroup": "Volunteer Group"
-    },
-    "positionList": {
-      "load": "Naglo-load...",
-      "persNeed": "1 Tao ang Kailangan",
-      "pplNeed": " Kailangan ng mga Tao",
-      "team": "Koponan",
-      "pos": "Posisyon",
-      "ppl": "Mga tao"
-    },
-    "teamList": {
-      "noTeam": "Walang nakitang mga koponan. ",
-      "pers": "1 tao",
-      "ppl": "Mga tao",
-      "peeps": " mga tao",
-      "name": "Pangalan",
-      "teams": "Mga koponan"
-    },
-    "timeEdit": {
-      "disNameReq": "Kinakailangan ang display name.",
-      "startReq": "Ang oras ng pagsisimula ay kinakailangan",
-      "endReq": "Kinakailangan ang oras ng pagtatapos",
-      "timeEdit": "Oras ng Pag-edit",
-      "timeAdd": "Magdagdag ng Oras",
-      "disName": "Display Name",
-      "timeStart": "Oras ng simula",
-      "timeEnd": "Oras ng Pagtatapos",
-      "teamNeed": "Mga Kinakailangang Koponan"
-    },
-    "timeList": {
-      "noTime": "Wala pang oras na naidagdag",
-      "times": "Mga oras",
-      "sunServ": "Serbisyong Linggo"
-    },
-    "ministryPage": {
-      "plans": "Mga plano",
-      "teams": "Mga koponan"
-    },
-    "planPage": {
-      "assign": "Mga takdang-aralin",
-      "notes": "Mga Tala",
-      "band": "banda",
-      "noteSave": "Nai-save ang Mga Tala."
-    },
-    "plansPage": {
-      "selMin": "Pumili ng Ministeryo"
-    }
-  },
-  "profile": {
-    "profilePage": {
-      "saveChange": "Nai-save ang mga Pagbabago.",
-      "firstMsg": "Pakilagay ang firstname",
-      "lastMsg": "Pakilagay ang apelyido",
-      "emailMsg": "Mangyaring magpasok ng email address.",
-      "valEmail": "Mangyaring magpasok ng wastong email address.",
-      "passMatch": "Hindi tugma ang mga password.",
-      "passLong": "Mangyaring magpasok ng password na hindi bababa sa 8 character ang haba.",
-      "confirmMsg": "Sigurado ka bang gusto mong permanenteng tanggalin ang iyong account?",
-      "profEdit": "Ibahin ang profile",
-      "email": "Email",
-      "firstName": "Pangalan",
-      "lastName": "Huling pangalan",
-      "passNew": "Bagong password",
-      "passVer": "I-verify ang password",
-      "noDirect": "Directory opt-out",
-      "notifPref": "Mga Kagustuhan sa Notification",
-      "notifMsg": "Piliin kung paano mo gustong makatanggap ng mga update tungkol sa mga pribadong mensahe, pag-uusap, form at iba pang mga notification.",
-      "notifPush": "Payagan ang Mga Push Notification",
-      "yes": "Oo",
-      "no": "Hindi",
-      "freqEmail": "Dalas ng Email",
-      "never": "Hindi kailanman",
-      "indiv": "Indibidwal",
-      "daily": "Araw-araw",
-      "accDel": "Pagtanggal ng Account",
-      "permWarn": "Mag-ingat, ang mga pagkilos na ito ay permanente",
-      "delAcc": "Tanggalin ang aking account"
-    }
-  },
-  "reports": {
-    "reportPage": {
-      "report": "Ulat"
-    },
-    "reportsPage": {
-      "reports": "Mga ulat",
-      "bDays": "Mga kaarawan",
-      "attTrend": "Trend ng Pagpasok",
-      "groupAtt": "Pagdalo ng Grupo",
-      "dailyGroupAtt": "Pang-araw-araw na Pagdalo sa Grupo",
-      "donSum": "Buod ng Donasyon"
-    }
-  },
-  "serverAdmin": {
-    "adminPage": {
-      "arch": "Naka-archive",
-      "act": "Aktibo",
-      "church": "simbahan",
-      "regist": "Nakarehistro",
-      "servAdmin": "Admin ng Server",
-      "churches": "mga simbahan",
-      "churchName": "Pangalan ng Simbahan",
-      "search": "Maghanap",
-      "noChurch": "Walang nakitang mga simbahan.  ",
-      "valueNotes": "Mga Tala sa Paano Kinakalkula ang Mga Halaga",
-      "noteOne": "Ang maihahambing na software ay Breeze.  ",
-      "noteTwo": "Ang maihahambing na software ay SubSplash.  ",
-      "noteThree": "Ang maihahambing na nilalaman ay Orange.  ",
-      "noteFour": "Ang maihahambing na software ay ProPresenter.  "
-    },
-    "reportPage": {
-      "report": "Ulat"
-    }
-  },
-  "settings": {
-    "associatePerson": {
-      "change": "Baguhin"
-    },
-    "churchSettings": {
-      "churchSet": "Mga Setting ng Simbahan",
-      "name": "Pangalan",
-      "subdom": "Subdomain",
-      "address": "Address"
-    },
-    "churchSettingsEdit": {
-      "noNameMsg": "Hindi maaaring blangko ang pangalan ng simbahan.",
-      "noSubMsg": "Hindi maaaring blangko ang subdomain.",
-      "churchName": "Pangalan ng Simbahan",
-      "subdom": "Subdomain",
-      "address1": "Linya ng Address 1",
-      "address2": "Linya ng Address 2",
-      "city": "lungsod",
-      "state": "Estado/Lalawigan",
-      "zip": "Zip/Postal",
-      "country": "Bansa"
-    },
-    "domainSettingsEdit": {
-      "delete": "Tanggalin",
-      "domains": "Mga domain",
-      "domain": "Domain",
-      "domMsg": "Maaari mong gawing sagot ang iyong B1 website para sa anumang custom na domain na gusto mo.  ",
-      "act": "Aksyon",
-      "add": "Idagdag"
-    },
-    "givingSettingsEdit": {
-      "pubKey": "Pampublikong Susi",
-      "secKey": "Secret Key",
-      "transFee": "Bayad sa Transaksyon",
-      "giving": "Pagbibigay",
-      "prov": "Provider",
-      "none": "wala",
-      "stripe": "Guhit",
-      "forceMsg": "Awtomatikong pinipilit ang mga user na bayaran ang mga bayarin sa transaksyon"
-    },
-    "imageEditor": {
-      "upload": "Mag-upload",
-      "crop": "I-crop"
-    },
-    "preview": {
-      "preview": "Silipin"
-    },
-    "roleEdit": {
-      "valMsg": "Mangyaring magpasok ng wastong pangalan ng tungkulin.",
-      "confirmMsg": "Sigurado ka bang gusto mong permanenteng tanggalin ang tungkuling ito?",
-      "roleEdit": "I-edit ang Tungkulin",
-      "roleName": "Pangalan ng Tungkulin"
-    },
-    "roleMembers": {
-      "add": "Idagdag",
-      "confirmMsg": "Sigurado ka bang gusto mong tanggalin ang user na ito mula sa",
-      "roleAppMsg": "Ang tungkuling ito ay angkop sa lahat ng miyembro ng simbahan.",
-      "name": "Pangalan",
-      "email": "Email",
-      "mem": "Mga miyembro",
-      "edit": "I-edit",
-      "delete": "Tanggalin"
-    },
-    "rolePermissions": {
-      "permEdit": "I-edit ang Mga Pahintulot"
-    },
-    "roles": {
-      "roleCreate": "Nais mo bang lumikha ng bagong tungkulin ng ",
-      "itMsg": "?  ",
-      "custAdd": "Magdagdag ng Custom na Tungkulin",
-      "add": "Idagdag",
-      "role": "Tungkulin",
-      "roles": "Mga tungkulin",
-      "name": "Pangalan",
-      "acc": "Accounting",
-      "accDesc": "May access upang tingnan at pamahalaan ang mga donasyon.",
-      "churchStaff": "Mga tauhan ng Simbahan",
-      "canEdit": "Maaaring i-edit ang karamihan ng data sa ",
-      "churchDesc": " kabilang ang mga tao, grupo, pagdalo at mga form.",
-      "contAdmin": "Admin ng Nilalaman",
-      "contAdminDesc": "Maaaring mag-edit ng nilalaman ng website, nilalamang pang-mobile at mga sermon.",
-      "lesAdmin": "Admin ng mga Aralin",
-      "lesAdminDesc": "Maaaring mag-set up ng mga silid-aralan at mag-iskedyul ng mga aralin sa ",
-      "everyone": "lahat",
-      "edit": "I-edit"
-    },
-    "userAdd": {
-      "errAnother": "Hindi makapag-save. ",
-      "valEmail": "Mangyaring magpasok ng wastong Email",
-      "errDiff": "Ang user account para sa email na ito ay nauugnay sa ibang tao.",
-      "firstMsg": "Pakilagay ang firstname",
-      "lastMsg": "Pakilagay ang apelyido",
-      "valEmailMsg": "Maglagay ng wastong Email",
-      "noAcc": "Walang user account?",
-      "createNew": "Lumikha ng Bagong User",
-      "firstName": "Pangalan",
-      "lastName": "Huling pangalan",
-      "email": "Email",
-      "addTo": "Idagdag sa "
-    },
-    "manageChurch": {
-      "tools": "Mga gamit",
-      "imEx": "Import/Export",
-      "manage": "Pamahalaan"
-    },
-    "rolePage": {
-      "permEdit": "I-edit ang Mga Pahintulot",
-      "noEditMsg": "Hindi maaaring i-edit ang mga pahintulot para sa tungkulin ng Mga Admin ng Domain.  ",
-      "roleEdit": "I-edit ang Tungkulin:"
-    }
-  },
-  "tasks": {
-    "actionEdit": {
-      "editAct": "Pag-edit ng Aksyon",
-      "actType": "Uri ng Aksyon",
-      "taskAssign": "Magtalaga ng isang Gawain",
-      "assignTo": "Italaga sa",
-      "taskTitle": "Pamagat ng Gawain",
-      "taskNote": "Tala ng Gawain"
-    },
-    "automationDetails": {
-      "task": "Gawain",
-      "auto": "Mga Detalye ng Automation",
-      "name": "Pangalan",
-      "rep": "Inuulit",
-      "acts": "Mga aksyon"
-    },
-    "automationEdit": {
-      "autoEdit": "I-edit ang Automation",
-      "title": "Pamagat",
-      "rep": "Ulitin",
-      "never": "Hindi kailanman",
-      "yearly": "Taon-taon",
-      "monthly": "Buwan-buwan"
-    },
-    "conditionAttendance": {
-      "op": "Operator",
-      "hasAtt": "ay dumalo",
-      "hasNoAtt": "hindi nakadalo",
-      "eventType": "Uri ng kaganapan",
-      "anywhere": "Kahit saan",
-      "campus": "Campus",
-      "serv": "Serbisyo",
-      "servTime": "Oras ng Serbisyo",
-      "group": "Grupo"
-    },
-    "conditionDate": {
-      "dayOf": "Araw sa isang linggo",
-      "sun": "Linggo",
-      "mon": "Lunes",
-      "tues": "Martes",
-      "wed": "Miyerkules",
-      "thurs": "Huwebes",
-      "fri": "Biyernes",
-      "sat": "Sabado",
-      "month": "buwan",
-      "jan": "Enero",
-      "feb": "Pebrero",
-      "mar": "Marso",
-      "apr": "Abril",
-      "may": "May",
-      "june": "Hunyo",
-      "july": "Hulyo",
-      "aug": "Agosto",
-      "sep": "Setyembre",
-      "oct": "Oktubre",
-      "nov": "Nobyembre",
-      "dec": "Disyembre",
-      "prevMonth": "Nakaraang Buwan",
-      "curMonth": "Kasalukuyang Buwan",
-      "nextMonth": "Susunod na buwan",
-      "datePart": "Bahagi ng Petsa",
-      "dateFull": "Buong Petsa",
-      "weekDay": "Araw sa isang linggo",
-      "monthDay": "Araw ng Buwan",
-      "yearsE": "Lumipas ang mga Taon",
-      "op": "Operator",
-      "absolute": "Mga Ganap na Halaga",
-      "relative": "Mga Kamag-anak na Halaga"
-    },
-    "conditionDetails": {
-      "addConj": "Magdagdag ng Conjunction",
-      "addCon": "Magdagdag ng Kundisyon",
-      "any": "Anuman",
-      "trueCon": "sa mga kundisyong ito ay totoo",
-      "all": "Lahat",
-      "con": "Kundisyon:"
-    },
-    "conditionEdit": {
-      "confirmMsg": "Sigurado ka bang gusto mong tanggalin ang kundisyong ito?",
-      "conEdit": "I-edit ang Kundisyon",
-      "conType": "Uri ng Kundisyon",
-      "gen": "Heneral",
-      "today": "Petsa Ngayon",
-      "name": "Pangalan",
-      "disName": "Display Name",
-      "firstName": "Pangalan",
-      "lastName": "Huling pangalan",
-      "middleName": "Gitnang pangalan",
-      "nickName": "Palayaw",
-      "persAtt": "Mga Personal na Katangian",
-      "bDate": "Araw ng kapanganakan",
-      "gender": "Kasarian",
-      "marStat": "Katayuan sa Pag-aasawa",
-      "anni": "Anibersaryo",
-      "memShipStat": "Katayuan ng Membership",
-      "conInfo": "Impormasyon sa Pakikipag-ugnayan",
-      "phone": "Telepono",
-      "email": "Email",
-      "address": "Address",
-      "city": "lungsod",
-      "state": "Estado/Lalawigan",
-      "zip": "Zip/Postal"
-    },
-    "conditionSelect": {
-      "gender": "Kasarian",
-      "unknown": "Hindi alam",
-      "male": "Lalaki",
-      "female": "Babae",
-      "marStat": "Katayuan sa Pag-aasawa",
-      "single": "Walang asawa",
-      "married": "Kasal",
-      "divorced": "Diborsiyado",
-      "widowed": "Nabiyuda",
-      "memShipStat": "Katayuan ng Membership",
-      "mem": "Miyembro",
-      "visitor": "Bisita",
-      "staff": "Mga tauhan",
-      "op": "Operator",
-      "is": "ay",
-      "isNot": "ay hindi"
-    },
-    "conditionText": {
-      "op": "Operator",
-      "contains": "naglalaman ng",
-      "startW": "nagsisimula sa",
-      "endW": "nagtatapos sa"
-    },
-    "conjunctionEdit": {
-      "conjEdit": "I-edit ang Conjunction",
-      "conjType": "Uri ng Pang-ugnay",
-      "and": "AT - Lahat ng kundisyon ay totoo",
-      "or": "O - Ang alinman sa mga kundisyon ay totoo"
-    },
-    "automationsPage": {
-      "manageAuto": "Pinamamahalaang Automated Tasks",
-      "auto": "Mga Automated na Gawain"
-    },
-    "contentPicker": {
-      "selPers": "Pumili ng Tao o Grupo",
-      "pers": "Tao",
-      "group": "Grupo",
-      "close": "Isara",
-      "sel": "Pumili"
-    },
-    "newTask": {
-      "associatePers": "Mangyaring iugnay ang gawaing ito sa isang tao.",
-      "assignPers": "Mangyaring italaga ang gawaing ito sa isang tao.",
-      "titleTask": "Mangyaring maglagay ng pamagat para sa gawaing ito.",
-      "taskNew": "Bagong gawain",
-      "associateW": "Iugnay sa",
-      "assignTo": "Italaga sa",
-      "title": "Pamagat",
-      "notes": "Mga Tala"
-    },
-    "selectGroup": {
-      "group": "Grupo",
-      "search": "Maghanap",
-      "sel": "Pumili"
-    },
-    "taskList": {
-      "title": "Pamagat",
-      "associateW": "Na nauugnay sa",
-      "assignTo": "Nakatalaga sa",
-      "assignGroup": "Nakatalaga sa Aking Mga Grupo",
-      "assignMe": "Nakatalaga sa Akin",
-      "reqMe": "Hiniling Ko",
-      "tasks": "Mga gawain"
-    },
-    "taskPage": {
-      "dateCreated": "Petsa ng Paggawa",
-      "taskDet": "Mga Detalye ng Gawain",
-      "stat": "Katayuan",
-      "open": "Bukas",
-      "closed": "sarado",
-      "createdBy": "Ginawa ni",
-      "associateW": "Na nauugnay sa",
-      "assignTo": "Nakatalaga sa",
-      "change": "Baguhin"
-    },
-    "tasksPage": {
-      "tasks": "Mga gawain",
-      "auto": "Mga automation",
-      "showClosed": "Show Closed",
-      "showOpen": "Ipakita ang Bukas"
-    }
-  }
+	"attendance": {
+		"attendancePage": {
+			"addCampus": "Magdagdag ng Kampus",
+			"addService": "Magdagdag ng Serbisyo",
+			"addServiceTime": "Magdagdag ng Oras ng Serbisyo",
+			"att": "Pagdalo",
+			"campus": "Kampus",
+			"category": "Kategorya",
+			"group": "Grupo",
+			"groupAttMsg": "Ang pagdalo ng grupo ay makikita kapag nagdagdag na ng mga sesyon sa isang grupo at may mga taong dumalo sa mga sesyon.",
+			"groups": "Mga Grupo",
+			"service": "Serbisyo",
+			"time": "Oras"
+		},
+		"campusEdit": {
+			"confirmDelete": "Sigurado ka bang nais mong tanggalin ang kampus na ito?",
+			"name": "Pangalan ng Kampus",
+			"validate": {
+				"name": "Kinakailangan ang pangalan ng kampus."
+			}
+		},
+		"serviceEdit": {
+			"campus": "Kampus",
+			"confirmDelete": "Sigurado ka bang nais mong permanenteng tanggalin ang serbisyong ito?",
+			"name": "Pangalan ng Serbisyo",
+			"validate": {
+				"campus": "Mangyaring pumili ng kampus.",
+				"name": "Kinakailangan ang pangalan ng serbisyo."
+			}
+		},
+		"serviceTimeEdit": {
+			"confirmDelete": "Sigurado ka bang nais mong permanenteng tanggalin ang oras ng serbisyong ito?",
+			"name": "Oras ng Serbisyo",
+			"service": "Serbisyo",
+			"validate": {
+				"name": "Kinakailangan ang pangalan ng oras ng serbisyo.",
+				"service": "Mangyaring pumili ng serbisyo."
+			}
+		},
+		"tabs": {
+			"attTrend": "Trendo ng Pagdalo",
+			"groupAtt": "Pagdalo ng Grupo",
+			"noImplement": "Hindi Naipatupad"
+		}
+	},
+	"common": {
+		"add": "Magdagdag",
+		"close": "Isara",
+		"delete": "Tanggalin",
+		"edit": "I-edit",
+		"name": "Pangalan",
+		"no": "Hindi",
+		"notes": "Mga Tala",
+		"remove": "Alisin",
+		"search": "Maghanap",
+		"title": "Pamagat",
+		"yes": "Oo"
+	},
+	"components": {
+		"footer": {
+			"phone": "Telepono",
+			"rights": "Lahat ng karapatan ay nakalaan."
+		},
+		"wrapper": {
+			"att": "Pagdalo",
+			"dash": "Dashboard",
+			"don": "Donasyon",
+			"form": "Form",
+			"groups": "Mga Grupo",
+			"plans": "Mga Plano",
+			"ppl": "Mga Tao",
+			"servAdmin": "Admin ng Server",
+			"set": "Mga Setting",
+			"tasks": "Mga Gawain"
+		}
+	},
+	"dashboard": {
+		"dashboardPage": {
+			"dash": "Dashboard"
+		},
+		"myGroups": "Aking mga Grupo",
+		"people": "Mga Tao",
+		"peopleSearch": {
+			"photo": "Larawan",
+			"ppl": "Mga Tao"
+		},
+		"tasks": "Mga Gawain"
+	},
+	"donations": {
+		"batchEdit": {
+			"confirmMsg": "Sigurado ka bang nais mong permanenteng tanggalin ang batch na ito at lahat ng donasyon dito?",
+			"date": "Petsa",
+			"edit": "I-edit ang Batch",
+			"opName": "Pangalan (opsyonal)"
+		},
+		"donationEdit": {
+			"anon": "Hindi Kilala",
+			"card": "Kard",
+			"cash": "Pera",
+			"check": "Tseke",
+			"checkNum": "Tseke #",
+			"date": "Petsa",
+			"donEdit": "I-edit ang Donasyon",
+			"lastDig": "Huling 4 na numero",
+			"method": "Paraan"
+		},
+		"donationEvents": {
+			"event": "Kaganapan: ",
+			"failed": "Nabigong Donasyon - ",
+			"mark": "Markahan bilang ",
+			"msg": "Mensahe: ",
+			"person": "Tao: ",
+			"unres": " hindi nalutas"
+		},
+		"donations": {
+			"amt": "Halaga",
+			"anon": "Hindi Kilala",
+			"date": "Petsa",
+			"don": "Donasyon",
+			"errMsg": "Walang natagpuang pondo. Mangyaring gumawa ng pondo bago magbigay ng donasyon",
+			"noDonMsg": "Walang mga donasyon na naitala. Kapag ang mga donasyon ay naipasok, lalabas ang mga ito dito.",
+			"tableIdent": "Id",
+			"total": "Kabuuan"
+		},
+		"donationsPage": {
+			"batch": "Batch",
+			"date": "Petsa",
+			"don": "Donasyon",
+			"noBatch": "Walang natagpuang batch.",
+			"total": "Kabuuan"
+		},
+		"fundEdit": {
+			"confirmMsg": "Sigurado ka bang nais mong permanenteng tanggalin ang batch na ito at lahat ng donasyon dito?",
+			"edit": "I-edit ang Pondo",
+			"errBlank": "Ilagay ang pangalan ng pondo"
+		},
+		"funds": {
+			"fund": "Mga Pondo",
+			"noFund": "Walang natagpuang pondo."
+		},
+		"fundsPage": {
+			"amt": "Halaga",
+			"anon": "Hindi Kilala",
+			"batch": "Batch",
+			"date": "Petsa",
+			"dateEnd": "Petsa ng Pagtatapos",
+			"dateStart": "Petsa ng Pagsisimula",
+			"don": "Donasyon",
+			"donFilt": "Filter ng Donasyon",
+			"donor": "Donador",
+			"noDon": "Wala pang mga donasyon"
+		}
+	},
+	"forms": {
+		"choicesEdit": {
+			"act": "Aksyon",
+			"choices": "Mga Pagpipilian",
+			"txt": "Teksto",
+			"value": "Halaga"
+		},
+		"form": {
+			"act": "Aksyon",
+			"noCustomMsg": "Walang mga custom na tanong na nagawa pa. Ang mga tanong ay ililista dito.",
+			"question": "Tanong",
+			"questions": "Mga Tanong",
+			"req": "Kailangan",
+			"type": "Uri"
+		},
+		"formEdit": {
+			"access": "Pag-access ng Form",
+			"alone": "Nakatayo Mag-isa",
+			"associate": "Iugnay Sa",
+			"available": "Itakda ang Panahon ng Pagkakaroon ng Form",
+			"availableEnd": "Petsa ng Pagtatapos ng Pagkakaroon",
+			"availableStart": "Petsa ng Pagsisimula ng Pagkakaroon",
+			"confirmMsg": "Sigurado ka bang nais mong permanenteng tanggalin ang form na ito?",
+			"editForm": "I-edit ang Form",
+			"endReqMsg": "Kailangan ang petsa ng pagtatapos.",
+			"name": "Pangalan ng Form",
+			"nameReqMsg": "Kailangan ang pangalan ng form.",
+			"ppl": "Mga Tao",
+			"public": "Pampubliko",
+			"restrict": "Pinaghigpitan",
+			"startReqMsg": "Kailangan ang petsa ng pagsisimula."
+		},
+		"formMembers": {
+			"act": "Aksyon",
+			"addPpl": "Magdagdag ng Tao",
+			"admin": "Admin",
+			"emailNotif": "Abiso sa Email",
+			"emailNotifMsg": "Sa tuwing ipapadala ang form, ikaw ay maaabisuhan sa pamamagitan ng mail.",
+			"formMem": "Mga Miyembro ng Form",
+			"perm": "Pahintulot",
+			"view": "Tanging Pagtingin"
+		},
+		"formQuestionEdit": {
+			"ansReq": "Hilingin ang sagot para sa tanong na ito",
+			"checkBox": "Kahon ng tsek",
+			"confirmMsg": "Sigurado ka bang nais mong permanenteng tanggalin ang tanong na ito?",
+			"date": "Petsa",
+			"decNum": "Desimal",
+			"desc": "Paglalarawan",
+			"fieldReq": "Kailangan ang uri ng larangan.",
+			"multiChoice": "Maramihang Pagpipilian",
+			"phoneNum": "Numero ng Telepono",
+			"plcOp": "Pansamantalang Lagda (opsyonal)",
+			"prov": "Nagbibigay",
+			"questionEdit": "I-edit ang Tanong",
+			"questionReq": "Kailangan ang tanong.",
+			"textArea": "Lugar ng Teksto",
+			"textBox": "Kahon ng Teksto",
+			"wholeNum": "Buong Numero",
+			"yesNo": "Oo/Hindi"
+		},
+		"formsPage": {
+			"archForms": "Mga Na-archive na Form",
+			"confirmMsg1": "Sigurado ka bang nais mong i-archive ang form na ito?",
+			"confirmMsg2": "Sigurado ka bang nais mong ibalik ang form na ito?",
+			"forms": "Mga Form",
+			"noArch": "Walang na-archive na mga form.",
+			"noCustomMsg": "Walang mga custom na form na nagawa pa. Lalabas ang mga ito dito kapag idinagdag."
+		},
+		"formSubmissions": {
+			"anon": "Hindi Kilala",
+			"subBy": "Isinumite Ni",
+			"subDate": "Petsa ng Pagsumite",
+			"subFor": "Isinumite Para Sa",
+			"subRes": "Mga Resulta ng Pagsumite ng Form",
+			"subSum": "Buod ng Pagsumite ng Form"
+		},
+		"tabs": {
+			"formMem": "Mga Miyembro ng Form",
+			"formSub": "Mga Pagsumite ng Form",
+			"questions": "Mga Tanong",
+			"unAuth": "Hindi Awtorisado"
+		}
+	},
+	"groups": {
+		"groupAdd": {
+			"catName": "Pangalan ng Kategorya",
+			"catReq": "Kinakailangan ang pangalan ng kategorya.",
+			"group": "Grupo",
+			"groupReq": "Kinakailangan ang pangalan ng grupo.",
+			"ministry": "Ministri",
+			"new": "Bago ",
+			"team": "Koponan"
+		},
+		"groupDetails": {
+			"attTrack": "Pagsubaybay sa Pagdalo:",
+			"cat": "Kategorya",
+			"groupDet": "Mga Detalye ng Grupo",
+			"parPick": "Pagkuha ng Magulang:"
+		},
+		"groupDetailsEdit": {
+			"attTrack": "Pagsubaybay sa Pagdalo",
+			"catName": "Pangalan ng Kategorya",
+			"catNameMsg": "Mangyaring ilagay ang pangalan ng kategorya.",
+			"confirmMsg": "Sigurado ka bang nais mong permanenteng tanggalin ang grupong ito?",
+			"groupDesc": "Paglalarawan ng Grupo",
+			"groupDet": "Mga Detalye ng Grupo",
+			"groupImg": "Larawan ng Grupo",
+			"groupName": "Pangalan ng Grupo",
+			"groupNameMsg": "Mangyaring ilagay ang pangalan ng grupo.",
+			"parPick": "Pagkuha ng Magulang",
+			"selImg": "Piliin ang Larawan"
+		},
+		"groupMembers": {
+			"groupMem": "Mga Miyembro ng Grupo",
+			"noMem": "Walang natagpuang miyembro ng grupo.",
+			"send": "Ipadala",
+			"sendMemMsg": "Magpadala ng mensahe sa mga miyembro"
+		},
+		"groupPage": {
+			"addPpl": "Magdagdag ng Tao"
+		},
+		"groupSessions": {
+			"addSesMsg": "Mangyaring magdagdag ng bagong sesyon upang magpatuloy.",
+			"attFor": "Pagdalo para sa",
+			"new": "Bago",
+			"noSesMsg": "Walang mga sesyon.",
+			"session": "Sasyon",
+			"sessions": "Mga Sasyon"
+		},
+		"groupsPage": {
+			"cat": "Kategorya",
+			"groups": "Mga Grupo",
+			"noGroupMsg": "Walang natagpuang grupo. Mangyaring gumawa ng grupo.",
+			"pers": "1 tao",
+			"ppl": "Mga Tao",
+			"spPpl": " mga tao"
+		},
+		"membersAdd": {
+			"availableMem": "Magagamit na Mga Miyembro ng Grupo",
+			"noMem": "Walang magagamit na mga miyembro ng grupo."
+		},
+		"serviceTimes": {
+			"services": "Mga Serbisyo:"
+		},
+		"serviceTimesEdit": {
+			"srvTimeAdd": "Magdagdag ng Oras ng Serbisyo",
+			"srvTimeOp": "Mga Oras ng Serbisyo (opsyonal)"
+		},
+		"sessionAdd": {
+			"invDate": "Hindi Balidong Petsa",
+			"sesAdd": "Magdagdag ng Sasyon",
+			"sesDate": "Petsa ng Sasyon",
+			"srvTime": "Oras ng Serbisyo"
+		},
+		"tabs": {
+			"mem": "Mga Miyembro",
+			"noImplement": "Hindi Naipatupad",
+			"ses": "Mga Sasyon"
+		}
+	},
+	"month": {
+		"apr": "Abril",
+		"aug": "Agosto",
+		"dec": "Disyembre",
+		"feb": "Pebrero",
+		"jan": "Enero",
+		"july": "Hulyo",
+		"june": "Hunyo",
+		"mar": "Marso",
+		"may": "Mayo",
+		"nov": "Nobyembre",
+		"oct": "Oktubre",
+		"sep": "Setyembre"
+	},
+	"people": {
+		"editCondition": {
+			"act": "Aktibidad",
+			"anniMonth": "Buwan ng Anibersaryo",
+			"any": "Kahit Ano",
+			"attCamp": "dumalo (kampus)",
+			"attGen": "dumalo (sa pangkalahatan)",
+			"attGroup": "dumalo (grupo)",
+			"attServ": "dumalo (serbisyo)",
+			"attServTime": "dumalo (oras ng serbisyo)",
+			"bMonth": "Buwan ng Kapanganakan",
+			"contains": "naglalaman",
+			"donTo": "nagbigay sa",
+			"endW": "nagtatapos sa",
+			"field": "Larangan",
+			"from": "Mula",
+			"groupMem": "Miyembro ng Grupo",
+			"hasDon": "nagbigay (sa pangkalahatan)",
+			"isMem": "miyembro ng",
+			"marYears": "Taon ng Pag-aasawa",
+			"memAtt": "Pagdalo ng Miyembro",
+			"memDon": "Donasyon ng Miyembro",
+			"notMem": "hindi miyembro ng",
+			"operator": "Operator",
+			"saveCon": "I-save ang Kundisyon",
+			"startW": "nagsisimula sa",
+			"to": "Sa",
+			"value": "Halaga"
+		},
+		"groups": {
+			"groups": "Mga Grupo",
+			"notMemMsg": "Hindi kasalukuyang miyembro ng anumang grupo."
+		},
+		"household": {
+			"house": " Sambahayan"
+		},
+		"householdEdit": {
+			"addMatch": "address upang tumugma",
+			"blankMsg": "Mangyaring magbigay ng pangalan ng sambahayan.",
+			"child": "Bata",
+			"head": "Ulo",
+			"house": " Sambahayan",
+			"houseName": "Pangalan ng Sambahayan",
+			"other": "Iba Pa",
+			"spouse": "Asawa",
+			"updQuestion": "Nais mo bang i-update"
+		},
+		"merge": {
+			"merge": "pagsamahin",
+			"mergeRec": "Pagsamahin ang mga Rekord"
+		},
+		"mergeModal": {
+			"cancel": "Kanselahin",
+			"confirm": "Kumpirmahin",
+			"fieldCon": "Narito ang ilang mga magkasalungat na larangan:",
+			"merge": "Pinagsasama ang mga rekord...",
+			"mergeQuestion": "Nais mo bang pagsamahin",
+			"selMsg": "Mangyaring pumili ng hindi bababa sa 1 halaga para sa bawat larangan",
+			"with": "kasama"
+		},
+		"peopleColumns": {
+			"appFilt": "Ilapat ang Mga Filter",
+			"cust": "Naka-customize",
+			"filt": "Mga Filter",
+			"noFilt": "Walang magagamit na mga filter.",
+			"stand": "Karaniwan"
+		},
+		"peoplePage": {
+			"bDay": "Kaarawan",
+			"bDayNo": "Kaarawan (Walang Taon)",
+			"delete": "Tanggalin",
+			"deleteOp": "Pagpipilian sa Pagtanggal",
+			"first": "Unang Pangalan",
+			"last": "Huling Pangalan",
+			"middle": "Gitnang Pangalan",
+			"nameNote": "Mga Tala sa Pangalan",
+			"photo": "Larawan",
+			"ppl": "Mga Tao",
+			"primEmail": "Pangunahing Email",
+			"primPhone": "Pangunahing Telepono",
+			"searchPpl": "Maghanap ng Mga Tao"
+		},
+		"peopleSearch": {
+			"addCon": "Magdagdag ng Kundisyon",
+			"adv": "Advanced",
+			"advSearch": "Advanced na Paghahanap",
+			"allPeeps": "Lahat ng tao kung saan:",
+			"for": "para sa",
+			"madeTo": "ginawa sa",
+			"notIn": "Hindi sa",
+			"simp": "Simple",
+			"simpSearch": "Simpleng Paghahanap"
+		},
+		"peopleSearchResults": {
+			"noResMsg": "Walang natagpuang resulta. Mangyaring maghanap ng ibang pangalan o magdagdag ng bagong tao"
+		},
+		"personAttendance": {
+			"att": "Pagdalo",
+			"noAttMsg": "Walang rekord ng pagdalo. Ang pagdalo ay lilitaw sa sandaling ito ay nasubaybayan para sa isang sesyon ng grupo."
+		},
+		"personEdit": {
+			"applyQuestion": "Nais mo bang ilapat ito sa buong",
+			"confirmMsg": "Sigurado ka bang nais mong permanenteng tanggalin ang rekord ng tao na ito?",
+			"exten": "Extension",
+			"family": "pamilya",
+			"firstReq": "Kinakailangan ang unang pangalan",
+			"for": "para sa",
+			"home": "Bahay",
+			"invalForm": "Hindi Balidong Format",
+			"lastReq": "Kinakailangan ang huling pangalan",
+			"merge": "Pagsamahin",
+			"mobile": "Mobile",
+			"nameNote": "Mga Tala sa Pangalan",
+			"nickName": "Palayaw",
+			"persDet": "Mga Personal na Detalye",
+			"upAddress": "In-update mo ang address sa",
+			"valEmail": "Mangyaring magpasok ng balidong email address.",
+			"work": "Trabaho"
+		},
+		"personView": {
+			"home": "Bahay",
+			"memShip": "Pagiging Miyembro:",
+			"mobile": "Mobile",
+			"persDet": "Mga Personal na Detalye",
+			"work": "Trabaho"
+		},
+		"tabs": {
+			"att": "Pagdalo",
+			"don": "Donasyon",
+			"noImplement": "Hindi Naipatupad"
+		},
+		"updateHouseHold": {
+			"update": "I-update ang Address"
+		}
+	},
+	"person": {
+		"age": "Edad",
+		"anniversary": "Anibersaryo",
+		"birthDate": "Petsa ng Kapanganakan",
+		"country": "Bansa",
+		"displayName": "Ipakitang Pangalan",
+		"divorced": "Diborsyado",
+		"email": "Email",
+		"female": "Babae",
+		"firstName": "Unang Pangalan",
+		"gender": "Kasarian",
+		"lastName": "Huling Pangalan",
+		"line1": "Linya 1",
+		"line2": "Linya 2",
+		"male": "Lalaki",
+		"maritalStatus": "Katayuan sa Pag-aasawa",
+		"married": "May asawa",
+		"member": "Miyembro",
+		"membership": "Pagiging Miyembro",
+		"membershipStatus": "Katayuan ng Pagiging Miyembro",
+		"middleName": "Gitnang Pangalan",
+		"nickName": "Palayaw",
+		"person": "Tao",
+		"phone": "Telepono",
+		"prefix": "Prefix",
+		"single": "Walang asawa",
+		"staff": "Kawani",
+		"state": "Estado/Probinsya",
+		"suffix": "Suffix",
+		"unknown": "Hindi Alam",
+		"unspecified": "Hindi Tinukoy",
+		"visitor": "Bisita",
+		"widowed": "Byudo/Byuda",
+		"zip": "ZIP"
+	},
+	"plans": {
+		"assignmentEdit": {
+			"assignPos": "Italaga ang Posisyon",
+			"done": "Tapos na",
+			"editAssign": "I-edit ang Pagtatalaga",
+			"noMem": "Walang natagpuang miyembro ng grupo."
+		},
+		"ministryList": {
+			"mins": "Mga Ministro",
+			"noMinMsg": "Walang natagpuang ministro. Mangyaring gumawa ng ministro."
+		},
+		"ministryPage": {
+			"plans": "Mga Plano",
+			"teams": "Mga Koponan"
+		},
+		"planEdit": {
+			"copy": "Kopyahin mula sa",
+			"none": "Wala",
+			"planAdd": "Magdagdag ng Plano",
+			"planEdit": "I-edit ang Plano",
+			"planReq": "Kinakailangan ang pangalan ng plano.",
+			"servDate": "Petsa ng Serbisyo",
+			"servReq": "Kinakailangan ang petsa ng serbisyo."
+		},
+		"planList": {
+			"noPlan": "Walang idinagdag na plano pa.",
+			"plans": "Mga Plano"
+		},
+		"planPage": {
+			"assign": "Mga Pagtatalaga",
+			"band": "Banda",
+			"noteSave": "Nai-save ang mga tala."
+		},
+		"plansPage": {
+			"selMin": "Piliin ang Ministro"
+		},
+		"planValidation": {
+			"and": "at",
+			"between": "sa pagitan",
+			"blockCon": "Salungatan ng petsa ng pagbara mula sa",
+			"cons": "Mga Salungatan",
+			"during": "sa panahon ng",
+			"more": "higit pa",
+			"needed": "kailangan.",
+			"notify": "Abisuhan",
+			"person": "tao",
+			"ppl": "mga tao",
+			"timeCon": "Salungatan ng oras sa pagitan ng",
+			"timeCon2": "Salungatan ng oras sa",
+			"to": "sa",
+			"val": "Balidasyon",
+			"valPlan": "Balido ang plano.",
+			"vol": "boluntaryo/s",
+			"volNotif": "Naabisuhan ang lahat ng boluntaryo.",
+			"volReq": "Mga Kahilingan ng Boluntaryo: "
+		},
+		"positionEdit": {
+			"catName": "Pangalan ng Kategorya",
+			"catNameReq": "Kinakailangan ang pangalan ng kategorya.",
+			"nameReq": "Kinakailangan ang pangalan",
+			"posAdd": "Magdagdag ng Posisyon",
+			"posEdit": "I-edit ang Posisyon",
+			"volCount": "Bilang ng Boluntaryo",
+			"volGroup": "Grupo ng Boluntaryo"
+		},
+		"positionList": {
+			"load": "Naglo-load...",
+			"persNeed": "1 Tao ang Kailangan",
+			"pos": "Posisyon",
+			"ppl": "Mga Tao",
+			"pplNeed": " Mga Tao ang Kailangan",
+			"team": "Koponan"
+		},
+		"teamList": {
+			"noTeam": "Walang natagpuang koponan. Mangyaring gumawa ng koponan.",
+			"peeps": " mga tao",
+			"pers": "1 tao",
+			"ppl": "Mga Tao",
+			"teams": "Mga Koponan"
+		},
+		"timeEdit": {
+			"disName": "Ipakitang Pangalan",
+			"disNameReq": "Kinakailangan ang ipakitang pangalan.",
+			"endReq": "Kinakailangan ang oras ng pagtatapos",
+			"startReq": "Kinakailangan ang oras ng pagsisimula",
+			"teamNeed": "Mga Koponan ang Kailangan",
+			"timeAdd": "Magdagdag ng Oras",
+			"timeEdit": "I-edit ang Oras",
+			"timeEnd": "Oras ng Pagtatapos",
+			"timeStart": "Oras ng Pagsisimula"
+		},
+		"timeList": {
+			"noTime": "Walang idinagdag na oras pa",
+			"sunServ": "Serbisyo ng Linggo",
+			"times": "Mga Oras"
+		}
+	},
+	"profile": {
+		"profilePage": {
+			"accDel": "Pagtanggal ng Account",
+			"confirmMsg": "Sigurado ka bang nais mong permanenteng tanggalin ang iyong account?",
+			"daily": "Araw-araw",
+			"delAcc": "Tanggalin ang Aking Account",
+			"emailMsg": "Mangyaring magpasok ng email address.",
+			"firstMsg": "Mangyaring magpasok ng unang pangalan",
+			"freqEmail": "Dalas ng Email",
+			"indiv": "Indibidwal",
+			"lastMsg": "Mangyaring magpasok ng huling pangalan",
+			"never": "Hindi Kailanman",
+			"noDirect": "Piliing hindi isama sa direktoryo",
+			"notifMsg": "Piliin kung paano mo nais makatanggap ng mga update tungkol sa mga pribadong mensahe, pag-uusap, form, at iba pang mga abiso.",
+			"notifPref": "Mga Kagustuhan sa Abiso",
+			"notifPush": "Pahintulutan ang Mga Push na Abiso",
+			"passLong": "Mangyaring magpasok ng password na hindi bababa sa 8 karakter.",
+			"passMatch": "Hindi tumutugma ang mga password.",
+			"passNew": "Bagong Password",
+			"passVer": "I-verify ang Password",
+			"permWarn": "Mag-ingat, ang mga aksyon na ito ay permanente",
+			"profEdit": "I-edit ang Profile",
+			"saveChange": "Nai-save ang mga pagbabago.",
+			"valEmail": "Mangyaring magpasok ng balidong email address."
+		}
+	},
+	"reports": {
+		"reportPage": {
+			"report": "Ulat"
+		},
+		"reportsPage": {
+			"attTrend": "Trendo ng Pagdalo",
+			"bDays": "Mga Kaarawan",
+			"dailyGroupAtt": "Araw-araw na Pagdalo ng Grupo",
+			"donSum": "Buod ng Donasyon",
+			"groupAtt": "Pagdalo ng Grupo",
+			"reports": "Mga Ulat"
+		}
+	},
+	"serverAdmin": {
+		"adminPage": {
+			"act": "Aktibo",
+			"arch": "Na-archive",
+			"church": "Simbahan",
+			"churches": "Mga Simbahan",
+			"churchName": "Pangalan ng Simbahan",
+			"noChurch": "Walang natagpuang simbahan. Mangyaring maghanap ng ibang pangalan.",
+			"noteFour": "Ang maihahambing na software ay ProPresenter. Nagkakahalaga ito ng $399 para sa isang lisensya ng site. Inakala kong ang karaniwang simbahan ay nag-i-install ng software sa 3 computer at hinati ko ang kabuuang pag-install sa 3 upang makuha ang bilang ng mga simbahan. Inakala ko rin na mag-a-update ang mga simbahan sa isang bagong bersyon bawat 5 taon sa average. Kaya't $399 / 5 taon / 3 computer = $26.60 taunang gastos bawat computer. Kung maisasakatuparan natin ang mga palagay na ito, dapat nating i-update ang numerong ito.",
+			"noteOne": "Ang maihahambing na software ay Breeze. Sila ay naniningil ng $72/buwan o $864/taon.",
+			"noteThree": "Ang maihahambing na nilalaman ay Orange. Sila ay naniningil ng $1023/taon para sa mga simbahan na may 26-50 na manonood para sa 252 Basic.",
+			"noteTwo": "Ang maihahambing na software ay SubSplash. Nagsisimula sila sa $99/buwan o $1200/taon. Hindi kasama dito ang bahagi na kinukuha nila mula sa mga donasyon.",
+			"regist": "Nakarehistro",
+			"servAdmin": "Admin ng Server",
+			"valueNotes": "Mga Tala sa Paano Kinakalkula ang mga Halaga"
+		},
+		"reportPage": {
+			"report": "Ulat"
+		}
+	},
+	"settings": {
+		"associatePerson": {
+			"change": "Palitan"
+		},
+		"churchSettings": {
+			"churchSet": "Mga Setting ng Simbahan",
+			"subdom": "Subdomain"
+		},
+		"churchSettingsEdit": {
+			"address1": "Address Linya 1",
+			"address2": "Address Linya 2",
+			"churchName": "Pangalan ng Simbahan",
+			"noNameMsg": "Hindi maaaring walang laman ang pangalan ng simbahan.",
+			"noSubMsg": "Hindi maaaring walang laman ang subdomain.",
+			"subdom": "Subdomain"
+		},
+		"domainSettingsEdit": {
+			"act": "Aksyon",
+			"delete": "Tanggalin",
+			"domain": "Domain",
+			"domains": "Mga Domain",
+			"domMsg": "Maaari mong gawin ang iyong B1 na website na tumugon sa anumang custom na domain na nais mo. Ilagay dito ang kaugnay na pangalan ng domain at idagdag ang sumusunod na rekord sa iyong DNS:"
+		},
+		"givingSettingsEdit": {
+			"forceMsg": "Awtomatikong pinipilit ang mga gumagamit na bayaran ang mga bayarin sa transaksyon",
+			"giving": "Pagbibigay",
+			"none": "Wala",
+			"prov": "Provider",
+			"pubKey": "Publikong Susi",
+			"secKey": "Lihim na Susi",
+			"stripe": "Stripe",
+			"transFee": "Bayad sa Transaksyon"
+		},
+		"imageEditor": {
+			"crop": "I-crop",
+			"upload": "Mag-upload"
+		},
+		"manageChurch": {
+			"imEx": "I-import/I-export",
+			"manage": "Pamahalaan",
+			"tools": "Mga Tool"
+		},
+		"preview": {
+			"preview": "I-preview"
+		},
+		"roleEdit": {
+			"confirmMsg": "Sigurado ka bang nais mong permanenteng tanggalin ang papel na ito?",
+			"roleEdit": "I-edit ang Papel",
+			"roleName": "Pangalan ng Papel",
+			"valMsg": "Mangyaring magpasok ng balidong pangalan ng papel."
+		},
+		"roleMembers": {
+			"confirmMsg": "Sigurado ka bang nais mong tanggalin ang gumagamit na ito mula sa",
+			"delete": "Tanggalin",
+			"mem": "Mga Miyembro",
+			"roleAppMsg": "Nalalapat ang papel na ito sa lahat ng miyembro ng simbahan."
+		},
+		"rolePage": {
+			"noEditMsg": "Hindi maaaring i-edit ang mga pahintulot para sa papel ng Mga Administrator ng Domain. May buong access ang mga Administrator ng Domain.",
+			"permEdit": "I-edit ang Mga Pahintulot",
+			"roleEdit": "I-edit ang Papel:"
+		},
+		"rolePermissions": {
+			"permEdit": "I-edit ang Mga Pahintulot"
+		},
+		"roles": {
+			"acc": "Accounting",
+			"accDesc": "May access upang tingnan at pamahalaan ang mga donasyon.",
+			"canEdit": "Maaaring i-edit ang karamihan ng data sa ",
+			"churchDesc": " kasama ang mga tao, grupo, pagdalo, at mga form.",
+			"churchStaff": "Kawani ng Simbahan",
+			"contAdmin": "Admin ng Nilalaman",
+			"contAdminDesc": "Maaaring i-edit ang nilalaman ng website, nilalaman ng mobile, at mga sermon.",
+			"custAdd": "Magdagdag ng Custom na Papel",
+			"everyone": "Lahat",
+			"itMsg": "? Ito ",
+			"lesAdmin": "Admin ng mga Aral",
+			"lesAdminDesc": "Maaaring mag-set up ng mga silid-aralan at mag-iskedyul ng mga aral sa ",
+			"role": "Papel",
+			"roleCreate": "Nais mo bang lumikha ng bagong papel ng ",
+			"roles": "Mga Papel"
+			},
+		"userAdd": {
+			"addTo": "Magdagdag sa ",
+			"createNew": "Gumawa ng Bagong Gumagamit",
+			"errAnother": "Hindi masave. Mayroon nang ibang gumagamit para sa email address na ito.",
+			"errDiff": "Ang account ng gumagamit para sa email na ito ay nauugnay sa ibang tao.",
+			"firstMsg": "Mangyaring magpasok ng unang pangalan",
+			"lastMsg": "Mangyaring magpasok ng huling pangalan",
+			"noAcc": "Walang account ng gumagamit?",
+			"valEmail": "Mangyaring magpasok ng balidong email",
+			"valEmailMsg": "Magpasok ng balidong email"
+		}
+	},
+	"tasks": {
+		"actionEdit": {
+			"actType": "Uri ng Aksyon",
+			"assignTo": "Italaga Sa",
+			"editAct": "I-edit ang Aksyon",
+			"taskAssign": "Italaga ang Gawain",
+			"taskNote": "Nota ng Gawain",
+			"taskTitle": "Pamagat ng Gawain"
+		},
+		"automationDetails": {
+			"acts": "Mga Aksyon",
+			"auto": "Mga Detalye ng Awtomasyon",
+			"rep": "Ulitin",
+			"task": "Gawain"
+		},
+		"automationEdit": {
+			"autoEdit": "I-edit ang Awtomasyon",
+			"monthly": "Buwanang",
+			"never": "Kailanman",
+			"rep": "Ulitin",
+			"yearly": "Taun-taon"
+		},
+		"automationsPage": {
+			"auto": "Awtomatikong Mga Gawain",
+			"manageAuto": "Pamahalaan ang Awtomatikong Mga Gawain"
+		},
+		"conditionAttendance": {
+			"anywhere": "Kahit saan",
+			"campus": "Kampus",
+			"eventType": "Uri ng Kaganapan",
+			"group": "Grupo",
+			"hasAtt": "dumalo",
+			"hasNoAtt": "hindi dumalo",
+			"op": "Operator",
+			"serv": "Serbisyo",
+			"servTime": "Oras ng Serbisyo"
+		},
+		"conditionDate": {
+			"absolute": "Ganap na Halaga",
+			"curMonth": "Kasalukuyang Buwan",
+			"dateFull": "Buong Petsa",
+			"datePart": "Bahagi ng Petsa",
+			"dayOf": "Araw ng Linggo",
+			"fri": "Biyernes",
+			"mon": "Lunes",
+			"month": "Buwan",
+			"monthDay": "Araw ng Buwan",
+			"nextMonth": "Susunod na Buwan",
+			"op": "Operator",
+			"prevMonth": "Nakaraang Buwan",
+			"relative": "Kaugnay na Halaga",
+			"sat": "Sabado",
+			"sun": "Linggo",
+			"thurs": "Huwebes",
+			"tues": "Martes",
+			"wed": "Miyerkules",
+			"weekDay": "Araw ng Linggo",
+			"yearsE": "Mga Taon na Lumipas"
+		},
+		"conditionDetails": {
+			"addCon": "Magdagdag ng Kundisyon",
+			"addConj": "Magdagdag ng Pang-ugnay",
+			"all": "Lahat",
+			"any": "Kahit Ano",
+			"con": "Mga Kundisyon:",
+			"trueCon": "ng mga kundisyong ito ay totoo"
+		},
+		"conditionEdit": {
+			"conEdit": "I-edit ang Kundisyon",
+			"confirmMsg": "Sigurado ka bang nais mong tanggalin ang kundisyong ito?",
+			"conInfo": "Impormasyon sa Pakikipag-ugnay",
+			"conType": "Uri ng Kundisyon",
+			"gen": "Pangkalahatan",
+			"persAtt": "Mga Personal na Katangian",
+			"today": "Petsa Ngayon"
+		},
+		"conditionSelect": {
+			"is": "ay",
+			"isNot": "ay hindi",
+			"op": "Operator"
+		},
+		"conditionText": {
+			"contains": "naglalaman",
+			"endW": "nagtatapos sa",
+			"op": "Operator",
+			"startW": "nagsisimula sa"
+		},
+		"conjunctionEdit": {
+			"and": "AT - Lahat ng kundisyon ay totoo",
+			"conjEdit": "I-edit ang Pang-ugnay",
+			"conjType": "Uri ng Pang-ugnay",
+			"or": "O - Kahit anong kundisyon ay totoo"
+		},
+		"contentPicker": {
+			"group": "Grupo",
+			"sel": "Piliin",
+			"selPers": "Pumili ng Tao o Grupo"
+		},
+		"newTask": {
+			"assignPers": "Mangyaring italaga ang gawain na ito sa isang tao.",
+			"assignTo": "Italaga Sa",
+			"associatePers": "Mangyaring iugnay ang gawain na ito sa isang tao.",
+			"associateW": "Iugnay Sa",
+			"taskNew": "Bagong Gawain",
+			"titleTask": "Mangyaring magpasok ng pamagat para sa gawain na ito."
+		},
+		"selectGroup": {
+			"group": "Grupo",
+			"sel": "Piliin"
+		},
+		"taskList": {
+			"assignGroup": "Itinalaga sa Aking Mga Grupo",
+			"assignMe": "Itinalaga sa Akin",
+			"assignTo": "Itinalaga Sa",
+			"associateW": "Iugnay Sa",
+			"reqMe": "Hiniling Ni Akin",
+			"tasks": "Mga Gawain"
+		},
+		"taskPage": {
+			"assignTo": "Itinalaga Sa",
+			"associateW": "Iugnay Sa",
+			"change": "Palitan",
+			"closed": "Sarado",
+			"createdBy": "Ginawa Ni",
+			"dateCreated": "Petsa ng Pagkagawa",
+			"open": "Bukas",
+			"stat": "Katayuan",
+			"taskDet": "Mga Detalye ng Gawain"
+		},
+		"tasksPage": {
+			"auto": "Mga Awtomasyon",
+			"showClosed": "Ipakita ang Mga Nakasarado",
+			"showOpen": "Ipakita ang Mga Nakabukas",
+			"tasks": "Mga Gawain"
+		}
+	}
 }

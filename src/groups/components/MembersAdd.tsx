@@ -31,7 +31,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
         <TableRow key={i}>
           <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
-          <TableCell><SmallButton icon="person_add" text={Locale.label("groups.membersAdd.add")} onClick={() => addMember(gm)} color="success" /></TableCell>
+          <TableCell><SmallButton icon="person_add" text={Locale.label("common.add")} onClick={() => addMember(gm)} color="success" /></TableCell>
         </TableRow>
       );
     }
@@ -41,7 +41,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) return rows;
-    rows.push(<TableRow key="0"><th></th><th>{Locale.label("groups.membersAdd.name")}</th><th></th></TableRow>);
+    rows.push(<TableRow key="0"><th></th><th>{Locale.label("common.name")}</th><th></th></TableRow>);
     return rows;
   }
 

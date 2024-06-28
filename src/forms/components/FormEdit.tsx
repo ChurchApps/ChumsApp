@@ -102,8 +102,8 @@ export function FormEdit(props: Props) {
           <FormControl fullWidth>
             <InputLabel>{Locale.label("forms.formEdit.available")}</InputLabel>
             <Select label={Locale.label("forms.formEdit.available")} name="limit" value={showDates.toString()} onChange={e => { setShowDates(e.target.value === "true") }}>
-              <MenuItem value="false">{Locale.label("forms.formEdit.no")}</MenuItem>
-              <MenuItem value="true">{Locale.label("forms.formEdit.yes")}</MenuItem>
+              <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
+              <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
             </Select>
           </FormControl>
         </>

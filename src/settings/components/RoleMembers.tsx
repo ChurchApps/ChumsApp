@@ -15,7 +15,7 @@ export const RoleMembers: React.FC<Props> = (props) => {
   const isRoleEveryone = props.role.id === null;
   const getEditContent = () => {
     if (isRoleEveryone) return null;
-    return <SmallButton onClick={handleAdd} icon="add" text={Locale.label("settings.roleMembers.add")} />
+    return <SmallButton onClick={handleAdd} icon="add" text={Locale.label("common.add")} />
   }
 
   const handleAdd = (e: React.MouseEvent) => {
@@ -39,8 +39,8 @@ export const RoleMembers: React.FC<Props> = (props) => {
 
     for (let i = 0; i < roleMembers.length; i++) {
       const rm = roleMembers[i];
-      const removeLink = (canEdit) ? (<SmallButton icon="delete" color="error" toolTip={Locale.label("settings.roleMembers.delete")} onClick={() => { handleRemove(rm) }} />) : null;
-      const editLink = (canEdit) ? (<SmallButton icon="edit" toolTip={Locale.label("settings.roleMembers.edit")} onClick={() => { props.setSelectedRoleMember(rm.userId) }} />) : null;
+      const removeLink = (canEdit) ? (<SmallButton icon="delete" color="error" toolTip={Locale.label("common.delete")} onClick={() => { handleRemove(rm) }} />) : null;
+      const editLink = (canEdit) ? (<SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { props.setSelectedRoleMember(rm.userId) }} />) : null;
 
       const { firstName, lastName } = rm.user;
       rows.push(
@@ -61,7 +61,7 @@ export const RoleMembers: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     if (isRoleEveryone) return null;
 
-    return (<TableRow><TableCell>{Locale.label("settings.roleMembers.name")}</TableCell><TableCell>{Locale.label("settings.roleMembers.email")}</TableCell><TableCell></TableCell></TableRow>);
+    return (<TableRow><TableCell>{Locale.label("common.name")}</TableCell><TableCell>{Locale.label("person.email")}</TableCell><TableCell></TableCell></TableRow>);
   }
 
   return (

@@ -20,11 +20,11 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
       let contactMethods = [];
       if (person) {
         const p = { ...person };
-        if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>{Locale.label("people.personView.gender")}</label> <b>{p.gender}</b></div>);
-        if (p.birthDate) leftAttributes.push(<div key="age"><label>{Locale.label("people.personView.age")}</label> <b>{PersonHelper.getAge(p.birthDate)}</b></div>);
+        if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>{Locale.label("person.gender")}</label> <b>{p.gender}</b></div>);
+        if (p.birthDate) leftAttributes.push(<div key="age"><label>{Locale.label("person.age")}</label> <b>{PersonHelper.getAge(p.birthDate)}</b></div>);
         if (p.maritalStatus && p.maritalStatus !== "Single") {
-          if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>{Locale.label("people.personView.marStat")}</label> <b>{p.maritalStatus} ({DateHelper.getShortDate(DateHelper.toDate(p.anniversary))})</b></div>);
-          else leftAttributes.push(<div key="maritalStatus"><label>{Locale.label("people.personView.marStat")}</label> <b>{p.maritalStatus}</b></div>);
+          if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>{Locale.label("person.maritalStatus")}:</label> <b>{p.maritalStatus} ({DateHelper.getShortDate(DateHelper.toDate(p.anniversary))})</b></div>);
+          else leftAttributes.push(<div key="maritalStatus"><label>{Locale.label("person.maritalStatus")}:</label> <b>{p.maritalStatus}</b></div>);
         }
         if (p.membershipStatus) leftAttributes.push(<div key="membership"><label>{Locale.label("people.personView.memShip")}</label> <b>{p.membershipStatus}</b></div>);
 

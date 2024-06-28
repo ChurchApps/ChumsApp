@@ -26,7 +26,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     let result: JSX.Element[] = [];
     for (let i = 0; i < groupServiceTimes.length; i++) {
       let gst = groupServiceTimes[i];
-      result.push(<TableRow key={gst.id}><TableCell><Icon>schedule</Icon> {gst.serviceTime.name}</TableCell><TableCell><a href="about:blank" style={{color: "#dc3545"}} data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> {Locale.label("groups.serviceTimesEdit.rmv")}</a></TableCell></TableRow>);
+      result.push(<TableRow key={gst.id}><TableCell><Icon>schedule</Icon> {gst.serviceTime.name}</TableCell><TableCell><a href="about:blank" style={{color: "#dc3545"}} data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> {Locale.label("common.remove")}</a></TableCell></TableRow>);
     }
     return result;
   }
@@ -62,7 +62,7 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
         <InputLabel>{Locale.label("groups.serviceTimesEdit.srvTimeAdd")}</InputLabel>
         <Select fullWidth label={Locale.label("groups.serviceTimesEdit.srvTimeAdd")} aria-label="serviceTime" data-cy="choose-service-time" value={addServiceTimeId} onChange={handleChange} endAdornment={<>
           <Icon>arrow_drop_down</Icon>
-          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> {Locale.label("groups.serviceTimesEdit.add")}</Button>
+          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>add</Icon> {Locale.label("common.add")}</Button>
         </>
         }>
           {getOptions()}

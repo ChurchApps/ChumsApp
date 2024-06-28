@@ -42,35 +42,35 @@ export const ConditionSelect = (props: Props) => {
 
   const getGender = () => (
     <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionSelect.gender")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionSelect.gender")} value={props.condition.value || ""} name="value" onChange={handleChange}>
-        <MenuItem value="Unknown">{Locale.label("tasks.conditionSelect.unknown")}</MenuItem>
-        <MenuItem value="Male">{Locale.label("tasks.conditionSelect.male")}</MenuItem>
-        <MenuItem value="Female">{Locale.label("tasks.conditionSelect.female")}</MenuItem>
+      <InputLabel>{Locale.label("person.gender")}</InputLabel>
+      <Select fullWidth label={Locale.label("person.gender")} value={props.condition.value || ""} name="value" onChange={handleChange}>
+        <MenuItem value="Unknown">{Locale.label("person.unknown")}</MenuItem>
+        <MenuItem value="Male">{Locale.label("person.male")}</MenuItem>
+        <MenuItem value="Female">{Locale.label("person.female")}</MenuItem>
       </Select>
     </FormControl>
   )
 
   const getMaritalStatus = () => (
     <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionSelect.marStat")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionSelect.marStat")} value={props.condition.value || ""} name="value" onChange={handleChange}>
-        <MenuItem value="Unknown">{Locale.label("tasks.conditionSelect.unknown")}</MenuItem>
-        <MenuItem value="Single">{Locale.label("tasks.conditionSelect.single")}</MenuItem>
-        <MenuItem value="Married">{Locale.label("tasks.conditionSelect.married")}</MenuItem>
-        <MenuItem value="Divorced">{Locale.label("tasks.conditionSelect.divorced")}</MenuItem>
-        <MenuItem value="Widowed">{Locale.label("tasks.conditionSelect.widowed")}</MenuItem>
+      <InputLabel>{Locale.label("person.maritalStatus")}</InputLabel>
+      <Select fullWidth label={Locale.label("person.maritalStatus")} value={props.condition.value || ""} name="value" onChange={handleChange}>
+        <MenuItem value="Unknown">{Locale.label("person.unknown")}</MenuItem>
+        <MenuItem value="Single">{Locale.label("person.single")}</MenuItem>
+        <MenuItem value="Married">{Locale.label("person.married")}</MenuItem>
+        <MenuItem value="Divorced">{Locale.label("person.divorced")}</MenuItem>
+        <MenuItem value="Widowed">{Locale.label("person.widowed")}</MenuItem>
       </Select>
     </FormControl>
   )
 
   const getMembershipStatus = () => (
     <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionSelect.memShipStat")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionSelect.memShipStat")} value={props.condition.value || ""} name="value" onChange={handleChange}>
-        <MenuItem value="Member">{Locale.label("tasks.conditionSelect.mem")}</MenuItem>
-        <MenuItem value="Visitor">{Locale.label("tasks.conditionSelect.visitor")}</MenuItem>
-        <MenuItem value="Staff">{Locale.label("tasks.conditionSelect.staff")}</MenuItem>
+      <InputLabel>{Locale.label("person.membershipStatus")}</InputLabel>
+      <Select fullWidth label={Locale.label("person.membershipStatus")} value={props.condition.value || ""} name="value" onChange={handleChange}>
+        <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>
+        <MenuItem value="Visitor">{Locale.label("person.visitor")}</MenuItem>
+        <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>
       </Select>
     </FormControl>
   )

@@ -19,12 +19,12 @@ export const GroupDetails: React.FC<Props> = (props) => {
     else return (<>
       <Grid container spacing={3}>
         {isStandard && <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.cat")}</label> {props.group.categoryName}</Grid>}
-        <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.name")}</label> {props.group.name}</Grid>
+        <Grid item md={6} xs={12}><label>{Locale.label("common.name")}</label> {props.group.name}</Grid>
       </Grid>
       {isStandard && <>
         <Grid container spacing={3}>
-          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.attTrack")}</label> {(props.group.trackAttendance?.toString().replace("false", Locale.label("groups.groupDetails.no")).replace("true", Locale.label("groups.groupDetails.yes")) || "")}</Grid>
-          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.parPick")}</label> {(props.group.parentPickup?.toString().replace("false", Locale.label("groups.groupDetails.no")).replace("true", Locale.label("groups.groupDetails.yes")) || "")}</Grid>
+          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.attTrack")}</label> {(props.group.trackAttendance?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
+          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.parPick")}</label> {(props.group.parentPickup?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
         </Grid>
         <ServiceTimes group={props.group} />
       </>}

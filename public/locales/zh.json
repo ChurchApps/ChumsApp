@@ -1,718 +1,623 @@
 {
-  "common": {
-    "search": "搜索"
-  },
   "attendance": {
+    "attendancePage": {
+      "addCampus": "添加校区",
+      "addService": "添加服务",
+      "addServiceTime": "添加服务时间",
+      "att": "出席率",
+      "campus": "校园",
+      "category": "类别",
+      "group": "团体",
+      "groupAttMsg": "一旦会议被添加到小组并且人们参加了这些会议，小组出席情况就会显示出来。",
+      "groups": "团体",
+      "service": "服务",
+      "time": "时间"
+    },
     "campusEdit": {
-      "name": "校园名称",
       "confirmDelete": "您确定要删除该校园吗？",
+      "name": "校园名称",
       "validate": {
         "name": "校园名称为必填项。"
       }
     },
     "serviceEdit": {
       "campus": "校园",
-      "name": "服务名称",
       "confirmDelete": "您确定要永久删除此服务吗？",
+      "name": "服务名称",
       "validate": {
         "campus": "请选择一个校区。",
         "name": "服务名称为必填项。"
       }
     },
     "serviceTimeEdit": {
-      "service": "服务",
-      "name": "服务时间",
       "confirmDelete": "您确定要永久删除该服务时间吗？",
+      "name": "服务时间",
+      "service": "服务",
       "validate": {
         "name": "服务时间名称为必填项。",
         "service": "请选择一项服务。"
       }
     },
     "tabs": {
-      "noImplement": "未实现",
       "attTrend": "出席趋势",
-      "groupAtt": "团体出席"
-    },
-    "attendancePage": {
-      "groupAttMsg": "一旦会议被添加到小组并且人们参加了这些会议，小组出席情况就会显示出来。",
-      "addCampus": "添加校区",
-      "addService": "添加服务",
-      "addServiceTime": "添加服务时间",
-      "campus": "校园",
-      "service": "服务",
-      "time": "时间",
-      "category": "类别",
-      "group": "团体",
-      "groups": "团体",
-      "att": "出席率"
+      "groupAtt": "团体出席",
+      "noImplement": "未实现"
     }
+  },
+  "common": {
+    "add": "添加",
+    "close": "关闭",
+    "delete": "删除",
+    "edit": "编辑",
+    "name": "姓名",
+    "no": "不",
+    "notes": "笔记",
+    "remove": "消除",
+    "search": "搜索",
+    "title": "标题",
+    "yes": "是的"
   },
   "components": {
     "footer": {
       "phone": "电话",
       "rights": "版权所有。"
     },
-    "question": {
-      "no": "不",
-      "yes": "是的"
-    },
-    "search": {
-      "person": "人",
-      "search": "搜索"
-    },
     "wrapper": {
-      "dash": "仪表板",
-      "ppl": "人们",
-      "groups": "团体",
       "att": "出席率",
+      "dash": "仪表板",
       "don": "捐款",
       "form": "形式",
-      "tasks": "任务",
+      "groups": "团体",
       "plans": "计划",
+      "ppl": "人们",
+      "servAdmin": "服务器管理",
       "set": "设置",
-      "servAdmin": "服务器管理"
+      "tasks": "任务"
     }
   },
   "dashboard": {
-    "myGroups": "我的群组",
-    "people": "人们",
-    "tasks": "任务",
-    "peopleSearch": {
-      "photo": "照片",
-      "display": "显示名称",
-      "ppl": "人们",
-      "name": "姓名",
-      "search": "搜索"
-    },
     "dashboardPage": {
       "dash": "仪表板"
-    }
+    },
+    "myGroups": "我的群组",
+    "people": "人们",
+    "peopleSearch": {
+      "photo": "照片",
+      "ppl": "人们"
+    },
+    "tasks": "任务"
   },
   "donations": {
     "batchEdit": {
       "confirmMsg": "您确定要永久删除该批次以及其中的所有捐赠吗？",
+      "date": "日期",
       "edit": "编辑批次",
-      "opName": "姓名（可选）",
-      "date": "日期"
+      "opName": "姓名（可选）"
     },
     "donationEdit": {
-      "checkNum": "查看 ＃",
-      "lastDig": "最后 4 位数字",
       "anon": "匿名的",
-      "donEdit": "编辑捐赠",
-      "person": "人",
-      "method": "方法",
-      "check": "查看",
-      "cash": "现金",
       "card": "卡片",
-      "notes": "笔记",
-      "date": "日期"
+      "cash": "现金",
+      "check": "查看",
+      "checkNum": "查看 ＃",
+      "date": "日期",
+      "donEdit": "编辑捐赠",
+      "lastDig": "最后 4 位数字",
+      "method": "方法"
     },
     "donationEvents": {
-      "person": "人： ",
       "event": "事件： ",
-      "msg": "信息： ",
-      "mark": "标记为 ",
       "failed": "捐赠失败 - ",
+      "mark": "标记为 ",
+      "msg": "信息： ",
+      "person": "人： ",
       "unres": " 未解决的"
     },
     "donations": {
+      "amt": "数量",
+      "anon": "匿名的",
+      "date": "日期",
+      "don": "捐款",
       "errMsg": "没有找到资金。",
       "noDonMsg": "尚未追踪任何捐款。",
       "tableIdent": "ID",
-      "name": "姓名",
-      "date": "日期",
-      "amt": "数量",
-      "anon": "匿名的",
-      "total": "全部的",
-      "don": "捐款"
-    },
-    "fundEdit": {
-      "errBlank": "输入基金名称",
-      "confirmMsg": "您确定要永久删除该批次以及其中的所有捐赠吗？",
-      "edit": "编辑基金",
-      "name": "姓名"
-    },
-    "funds": {
-      "noFund": "没有找到资金。",
-      "fund": "资金"
+      "total": "全部的"
     },
     "donationsPage": {
-      "noBatch": "没有找到批次。",
       "batch": "批",
-      "name": "姓名",
       "date": "日期",
       "don": "捐款",
-      "total": "全部的",
-      "edit": "编辑"
+      "noBatch": "没有找到批次。",
+      "total": "全部的"
+    },
+    "fundEdit": {
+      "confirmMsg": "您确定要永久删除该批次以及其中的所有捐赠吗？",
+      "edit": "编辑基金",
+      "errBlank": "输入基金名称"
+    },
+    "funds": {
+      "fund": "资金",
+      "noFund": "没有找到资金。"
     },
     "fundsPage": {
-      "noDon": "还没有捐款",
+      "amt": "数量",
+      "anon": "匿名的",
+      "batch": "批",
+      "date": "日期",
+      "dateEnd": "结束日期",
+      "dateStart": "开始日期",
       "don": "捐款",
       "donFilt": "捐赠过滤器",
-      "anon": "匿名的",
-      "date": "日期",
-      "dateStart": "开始日期",
-      "dateEnd": "结束日期",
-      "batch": "批",
       "donor": "捐赠者",
-      "amt": "数量"
+      "noDon": "还没有捐款"
     }
   },
   "forms": {
     "choicesEdit": {
-      "rmv": "消除",
-      "choices": "选择",
-      "value": "价值",
-      "txt": "文本",
       "act": "行动",
-      "add": "添加"
+      "choices": "选择",
+      "txt": "文本",
+      "value": "价值"
     },
     "form": {
+      "act": "行动",
       "noCustomMsg": "尚未创建自定义问题。",
-      "yes": "是的",
-      "no": "不",
       "question": "问题",
       "questions": "问题",
-      "type": "类型",
-      "act": "行动",
-      "req": "必需的"
+      "req": "必需的",
+      "type": "类型"
     },
     "formEdit": {
-      "nameReqMsg": "表格名称为必填项。",
-      "startReqMsg": "开始日期是必需的。",
-      "endReqMsg": "需要结束日期。",
+      "access": "表格访问",
+      "alone": "独立",
+      "associate": "关联于",
+      "available": "设置表单可用时间范围",
+      "availableEnd": "可用性结束日期",
+      "availableStart": "可用开始日期",
       "confirmMsg": "您确定要永久删除此表单吗？",
       "editForm": "编辑表格",
+      "endReqMsg": "需要结束日期。",
       "name": "表格名称",
-      "associate": "关联于",
+      "nameReqMsg": "表格名称为必填项。",
       "ppl": "人们",
-      "alone": "独立",
-      "access": "表格访问",
       "public": "民众",
       "restrict": "受限制的",
-      "available": "设置表单可用时间范围",
-      "availableStart": "可用开始日期",
-      "availableEnd": "可用性结束日期",
-      "yes": "是的",
-      "no": "不"
+      "startReqMsg": "需要开始日期。"
     },
     "formMembers": {
-      "admin": "行政",
-      "view": "只读",
-      "rmv": "消除",
-      "name": "姓名",
-      "perm": "允许",
       "act": "行动",
+      "addPpl": "添加人员",
+      "admin": "行政",
       "emailNotif": "电子邮件通知",
       "emailNotifMsg": "每当提交表格时，您都会收到邮件通知。",
       "formMem": "表格成员",
-      "addPpl": "添加人员"
+      "perm": "允许",
+      "view": "只读"
     },
     "formQuestionEdit": {
-      "questionReq": "需要提问。",
-      "fieldReq": "字段类型为必填项。",
+      "ansReq": "需要这个问题的答案",
+      "checkBox": "复选框",
       "confirmMsg": "您确定要永久删除此问题吗？",
+      "date": "日期",
+      "decNum": "十进制",
+      "desc": "描述",
+      "fieldReq": "字段类型为必填项。",
+      "multiChoice": "多项选择",
+      "phoneNum": "电话号码",
+      "plcOp": "占位符（可选）",
+      "prov": "提供商",
       "questionEdit": "编辑问题",
-      "prov": "提供者",
+      "questionReq": "需要提问。",
+      "textArea": "文本区",
       "textBox": "文本框",
       "wholeNum": "完整的号码",
-      "decNum": "十进制",
-      "date": "日期",
-      "yesNo": "是/否",
-      "email": "电子邮件",
-      "phoneNum": "电话号码",
-      "textArea": "文本区",
-      "multiChoice": "多项选择",
-      "checkBox": "复选框",
-      "title": "标题",
-      "desc": "描述",
-      "plcOp": "占位符（可选）",
-      "ansReq": "需要这个问题的答案"
+      "yesNo": "是/否"
+    },
+    "formsPage": {
+      "archForms": "存档表格",
+      "confirmMsg1": "您确定要存档此表单吗？",
+      "confirmMsg2": "您确定要恢复此表单吗？",
+      "forms": "形式",
+      "noArch": "没有存档的表格。",
+      "noCustomMsg": "尚未创建任何自定义表单。"
     },
     "formSubmissions": {
       "anon": "匿名的",
-      "subFor": "提交给",
       "subBy": "由...所提交",
       "subDate": "提交日期",
-      "subSum": "表格提交摘要",
+      "subFor": "提交给",
       "subRes": "表格提交结果",
-      "yes": "是的",
-      "no": "不"
+      "subSum": "表格提交摘要"
     },
     "tabs": {
-      "unAuth": "未经授权",
-      "questions": "问题",
       "formMem": "表格成员",
-      "formSub": "表格提交"
-    },
-    "formsPage": {
-      "noCustomMsg": "尚未创建任何自定义表单。",
-      "confirmMsg1": "您确定要存档此表单吗？",
-      "confirmMsg2": "您确定要恢复此表单吗？",
-      "noArch": "没有存档的表格。",
-      "name": "姓名",
-      "forms": "形式",
-      "archForms": "存档表格"
+      "formSub": "表格提交",
+      "questions": "问题",
+      "unAuth": "未经授权"
     }
   },
   "groups": {
     "groupAdd": {
+      "catName": "分类名称",
       "catReq": "类别名称为必填项。",
-      "groupReq": "群组名称为必填项。",
       "group": "团体",
-      "team": "团队",
+      "groupReq": "群组名称为必填项。",
       "ministry": "部",
       "new": "新的 ",
-      "catName": "分类名称",
-      "name": "姓名"
+      "team": "团队"
     },
     "groupDetails": {
-      "cat": "类别",
-      "name": "姓名",
       "attTrack": "跟踪出勤情况：",
-      "parPick": "家长接送：",
+      "cat": "类别",
       "groupDet": "团体详情",
-      "yes": "是的",
-      "no": "不"
+      "parPick": "家长接送："
     },
     "groupDetailsEdit": {
-      "catNameMsg": "请输入类别名称。",
-      "groupNameMsg": "请输入群组名称。",
-      "confirmMsg": "您确定要永久删除该群组吗？",
-      "groupDet": "团体详情",
-      "catName": "分类名称",
-      "groupName": "团队名字",
       "attTrack": "跟踪出勤情况",
-      "no": "不",
-      "yes": "是的",
-      "parPick": "家长接送",
+      "catName": "分类名称",
+      "catNameMsg": "请输入类别名称。",
+      "confirmMsg": "您确定要永久删除该群组吗？",
       "groupDesc": "团体简介",
+      "groupDet": "团体详情",
       "groupImg": "合影",
+      "groupName": "团队名字",
+      "groupNameMsg": "请输入群组名称。",
+      "parPick": "家长接送",
       "selImg": "选择照片"
     },
     "groupMembers": {
-      "noMem": "未找到群组成员。",
-      "name": "姓名",
       "groupMem": "小组成员",
+      "noMem": "未找到群组成员。",
       "send": "发送",
       "sendMemMsg": "给会员留言"
     },
+    "groupPage": {
+      "addPpl": "添加人员"
+    },
     "groupSessions": {
-      "session": "会议",
-      "sessions": "会议",
-      "new": "新的",
-      "noSesMsg": "没有会议。",
       "addSesMsg": "请添加新会话以继续。",
       "attFor": "出席人数",
-      "name": "姓名"
+      "new": "新的",
+      "noSesMsg": "没有会议。",
+      "session": "会议",
+      "sessions": "会议"
+    },
+    "groupsPage": {
+      "cat": "类别",
+      "groups": "团体",
+      "noGroupMsg": "没有找到任何组。",
+      "pers": "1人",
+      "ppl": "人们",
+      "spPpl": " 人们"
     },
     "membersAdd": {
-      "noMem": "没有可用的组成员。",
-      "add": "添加",
-      "name": "姓名",
-      "availableMem": "可用的组成员"
+      "availableMem": "可用的组成员",
+      "noMem": "没有可用的群组成员。"
     },
     "serviceTimes": {
       "services": "服务）："
     },
     "serviceTimesEdit": {
-      "rmv": "消除",
-      "srvTimeOp": "服务时间（可选）",
       "srvTimeAdd": "添加服务时间",
-      "add": "添加"
+      "srvTimeOp": "服务时间（可选）"
     },
     "sessionAdd": {
       "invDate": "失效日期",
-      "srvTime": "服务时间",
       "sesAdd": "添加会话",
-      "sesDate": "会议日期"
+      "sesDate": "会议日期",
+      "srvTime": "服务时间"
     },
     "tabs": {
-      "noImplement": "未实现",
       "mem": "会员",
+      "noImplement": "未实现",
       "ses": "会议"
-    },
-    "groupPage": {
-      "addPpl": "添加人员"
-    },
-    "groupsPage": {
-      "noGroupMsg": "没有找到任何组。",
-      "cat": "类别",
-      "name": "姓名",
-      "ppl": "人们",
-      "groups": "团体",
-      "pers": "1人",
-      "spPpl": " 人们"
     }
   },
+  "month": {
+    "apr": "四月",
+    "aug": "八月",
+    "dec": "十二月",
+    "feb": "二月",
+    "jan": "一月",
+    "july": "七月",
+    "june": "六月",
+    "mar": "行进",
+    "may": "可能",
+    "nov": "十一月",
+    "oct": "十月",
+    "sep": "九月"
+  },
   "people": {
-    "mergeModal": {
-      "selMsg": "请为每个字段至少选择 1 个值",
-      "mergeQuestion": "你想合并吗",
-      "with": "和",
-      "fieldCon": "以下是一些字段冲突的字段：",
-      "merge": "合并记录...",
-      "cancel": "取消",
-      "confirm": "确认"
-    },
-    "updateHouseHold": {
-      "update": "更新地址",
-      "no": "不",
-      "yes": "是的"
-    },
     "editCondition": {
-      "unspec": "未指定",
-      "male": "男性",
-      "female": "女性",
-      "unknown": "未知",
-      "single": "单身的",
-      "married": "已婚",
-      "divorced": "离婚",
-      "widowed": "寡",
-      "visitor": "游客",
-      "mem": "成员",
-      "staff": "职员",
-      "jan": "一月",
-      "feb": "二月",
-      "mar": "行进",
-      "apr": "四月",
-      "may": "可能",
-      "june": "六月",
-      "july": "七月",
-      "aug": "八月",
-      "sep": "九月",
-      "oct": "十月",
-      "nov": "十一月",
-      "dec": "十二月",
+      "act": "活动",
+      "anniMonth": "周年纪念月",
       "any": "任何",
-      "from": "从",
-      "to": "到",
-      "value": "价值",
-      "isMem": "是成员",
-      "notMem": "不是以下成员",
-      "hasDon": "已捐赠（一般）",
-      "donTo": "已捐赠给",
-      "attGen": "已参加（一般）",
       "attCamp": "已参加（校园）",
+      "attGen": "参加过（一般）",
+      "attGroup": "曾参加（群）",
       "attServ": "已参加（服务）",
       "attServTime": "已出席（服务时间）",
-      "attGroup": "曾参加（群）",
+      "bMonth": "出生月",
       "contains": "包含",
-      "startW": "以。。开始",
+      "donTo": "已捐赠给",
       "endW": "以。。结束",
       "field": "场地",
-      "person": "人",
-      "disName": "显示名称",
-      "firstName": "名",
-      "lastName": "姓",
-      "middleName": "中间名字",
-      "nickName": "昵称",
-      "pre": "字首",
-      "suf": "后缀",
-      "bDate": "出生日期",
-      "bMonth": "出生月",
-      "age": "年龄",
-      "gender": "性别",
-      "marStat": "婚姻状况",
-      "anni": "周年纪念日",
-      "anniMonth": "周年纪念月",
-      "marYears": "结婚年数",
-      "phone": "电话",
-      "email": "电子邮件",
-      "address": "地址",
-      "city": "城市",
-      "state": "州/省",
-      "zip": "邮政/邮政",
-      "memShip": "会员资格",
-      "memShipStat": "会员资格",
+      "from": "从",
       "groupMem": "团体成员",
-      "act": "活动",
-      "memDon": "会员捐款",
+      "hasDon": "已捐赠（一般）",
+      "isMem": "是成员",
+      "marYears": "结婚年数",
       "memAtt": "会员出席",
+      "memDon": "会员捐款",
+      "notMem": "不是以下成员",
       "operator": "操作员",
-      "saveCon": "保存条件"
+      "saveCon": "保存条件",
+      "startW": "以。。开始",
+      "to": "到",
+      "value": "价值"
     },
     "groups": {
-      "notMemMsg": "目前不是任何团体的成员。",
-      "groups": "团体"
+      "groups": "团体",
+      "notMemMsg": "目前不是任何团体的成员。"
     },
     "household": {
       "house": " 家庭"
     },
     "householdEdit": {
-      "updQuestion": "你想更新吗",
       "addMatch": "要匹配的地址",
       "blankMsg": "请提供一个家喻户晓的名字。",
-      "head": "头",
-      "spouse": "配偶",
       "child": "孩子",
-      "other": "其他",
-      "rmv": "消除",
+      "head": "头",
       "house": " 家庭",
       "houseName": "家庭姓名",
-      "add": "添加"
+      "other": "其他",
+      "spouse": "配偶",
+      "updQuestion": "你想更新吗"
     },
     "merge": {
-      "mergeRec": "合并记录",
-      "merge": "合并"
+      "merge": "合并",
+      "mergeRec": "合并记录"
+    },
+    "mergeModal": {
+      "cancel": "取消",
+      "confirm": "确认",
+      "fieldCon": "以下是一些字段冲突的字段：",
+      "merge": "合并记录...",
+      "mergeQuestion": "你想合并吗",
+      "selMsg": "请为每个字段至少选择 1 个值",
+      "with": "和"
     },
     "peopleColumns": {
-      "noFilt": "没有可用的过滤器。",
-      "filt": "过滤器",
       "appFilt": "应用过滤器",
-      "stand": "标准",
       "cust": "风俗",
-      "close": "关闭"
+      "filt": "过滤器",
+      "noFilt": "没有可用的过滤器。",
+      "stand": "标准"
+    },
+    "peoplePage": {
+      "bDay": "生日",
+      "bDayNo": "生日（无年份）",
+      "delete": "删除",
+      "deleteOp": "删除选项",
+      "first": "第一的",
+      "last": "最后的",
+      "middle": "中间",
+      "nameNote": "姓名牌备注",
+      "photo": "照片",
+      "ppl": "人们",
+      "primEmail": "主要邮箱",
+      "primPhone": "常用电话",
+      "searchPpl": "搜索人物"
     },
     "peopleSearch": {
-      "simpSearch": "简单搜索",
-      "advSearch": "高级搜索",
-      "simp": "简单的",
-      "adv": "先进的",
-      "name": "姓名",
-      "search": "搜索",
       "addCon": "添加条件",
+      "adv": "先进的",
+      "advSearch": "高级搜索",
       "allPeeps": "所有位于以下地点的人：",
-      "notIn": "不在",
+      "for": "为了",
       "madeTo": "用作",
-      "for": "为了"
+      "notIn": "不在",
+      "simp": "简单的",
+      "simpSearch": "简单搜索"
     },
     "peopleSearchResults": {
       "noResMsg": "未找到结果。  "
     },
     "personAttendance": {
-      "noAttMsg": "无出勤记录。",
-      "att": "出席率"
+      "att": "出席率",
+      "noAttMsg": "无出勤记录。"
     },
     "personEdit": {
-      "confirmMsg": "您确定要永久删除此人记录吗？",
-      "firstReq": "名字为必填项",
-      "lastReq": "姓氏为必填项",
-      "valEmail": "请输入有效的电子邮件地址。",
-      "upAddress": "您已将地址更新为",
-      "for": "为了",
       "applyQuestion": "您想将其应用到整个",
+      "confirmMsg": "您确定要永久删除此人记录吗？",
+      "exten": "扩大",
       "family": "家庭",
-      "persDet": "个人资料",
-      "merge": "合并",
-      "firstName": "名",
-      "middleName": "中间名字",
-      "lastName": "姓",
-      "email": "电子邮件",
-      "nameNote": "姓名牌备注",
-      "nickName": "昵称",
-      "memShipStat": "会员资格",
-      "mem": "成员",
-      "visitor": "游客",
-      "staff": "职员",
-      "bDate": "出生日期",
-      "gender": "性别",
-      "unspec": "未指定",
-      "male": "男性",
-      "female": "女性",
-      "marStat": "婚姻状况",
-      "unknown": "未知",
-      "single": "单身的",
-      "married": "已婚",
-      "divorced": "离婚",
-      "widowed": "寡",
-      "anni": "周年纪念日",
-      "address": "地址",
-      "firstLine": "1号线",
-      "secondLine": "2号线",
-      "city": "城市",
-      "state": "状态",
-      "zip": "压缩",
-      "phone": "电话",
+      "firstReq": "名字为必填项",
+      "for": "为了",
       "home": "家",
       "invalForm": "无效的格式",
-      "work": "工作",
+      "lastReq": "姓氏为必填项",
+      "merge": "合并",
       "mobile": "移动的",
-      "exten": "扩大"
+      "nameNote": "姓名牌备注",
+      "nickName": "昵称",
+      "persDet": "个人资料",
+      "upAddress": "您已将地址更新为",
+      "valEmail": "请输入有效的电子邮件地址。",
+      "work": "工作"
     },
     "personView": {
-      "gender": "性别",
-      "age": "年龄",
-      "marStat": "婚姻状况：",
+      "home": "家",
       "memShip": "会员资格：",
       "mobile": "移动的",
-      "work": "工作",
       "persDet": "个人资料",
-      "home": "家"
+      "work": "工作"
     },
     "tabs": {
-      "notes": "笔记",
       "att": "出席率",
       "don": "捐款",
       "noImplement": "未实现"
     },
-    "peoplePage": {
-      "photo": "照片",
-      "disName": "显示名称",
-      "name": "姓名",
-      "lastName": "姓",
-      "last": "最后的",
-      "firstName": "名",
-      "first": "第一的",
-      "middleName": "中间名字",
-      "middle": "中间",
-      "address": "地址",
-      "city": "城市",
-      "state": "状态",
-      "zip": "压缩",
-      "primEmail": "主要邮箱",
-      "email": "电子邮件",
-      "primPhone": "常用电话",
-      "phone": "电话",
-      "bDate": "出生日期",
-      "bDayNo": "生日（无年份）",
-      "bDay": "生日",
-      "age": "年龄",
-      "gender": "性别",
-      "memShipStat": "会员资格",
-      "memShip": "会员资格",
-      "marStat": "婚姻状况",
-      "married": "已婚",
-      "anni": "周年纪念日",
-      "nameNote": "Nmae 标签注释",
-      "notes": "笔记",
-      "deleteOp": "删除选项",
-      "delete": "删除",
-      "searchPpl": "搜索人物",
-      "ppl": "人们"
+    "updateHouseHold": {
+      "update": "更新地址"
     }
+  },
+  "person": {
+    "age": "年龄",
+    "anniversary": "周年纪念日",
+    "birthDate": "出生日期",
+    "country": "国家",
+    "displayName": "显示名称",
+    "divorced": "离婚",
+    "email": "电子邮件",
+    "female": "女性",
+    "firstName": "名",
+    "gender": "性别",
+    "lastName": "姓",
+    "line1": "1号线",
+    "line2": "2号线",
+    "male": "男性",
+    "maritalStatus": "婚姻状况",
+    "married": "已婚",
+    "member": "成员",
+    "membership": "会员资格",
+    "membershipStatus": "会员资格",
+    "middleName": "中间名字",
+    "nickName": "昵称",
+    "person": "人",
+    "phone": "电话",
+    "prefix": "字首",
+    "single": "单身的",
+    "staff": "职员",
+    "state": "州/省",
+    "suffix": "后缀",
+    "unknown": "未知",
+    "unspecified": "未指定",
+    "visitor": "游客",
+    "widowed": "寡",
+    "zip": "邮政/邮政"
   },
   "plans": {
     "assignmentEdit": {
-      "noMem": "未找到群组成员。",
-      "editAssign": "编辑作业",
       "assignPos": "分配位置",
-      "done": "完毕"
+      "done": "完毕",
+      "editAssign": "编辑作业",
+      "noMem": "未找到群组成员。"
     },
     "ministryList": {
-      "noMinMsg": "没有找到任何部委。",
-      "mins": "部长"
+      "mins": "部长",
+      "noMinMsg": "没有找到任何部委。"
+    },
+    "ministryPage": {
+      "plans": "计划",
+      "teams": "团队"
     },
     "planEdit": {
-      "planReq": "计划名称为必填项。",
-      "servReq": "需要提供服务日期。",
-      "planEdit": "编辑计划",
-      "planAdd": "添加计划",
-      "name": "姓名",
-      "servDate": "服务日期",
       "copy": "复制自",
-      "none": "没有任何"
+      "none": "没有任何",
+      "planAdd": "添加计划",
+      "planEdit": "编辑计划",
+      "planReq": "计划名称为必填项。",
+      "servDate": "服务日期",
+      "servReq": "需要提供服务日期。"
     },
     "planList": {
       "noPlan": "尚未添加任何计划。",
       "plans": "计划"
     },
+    "planPage": {
+      "assign": "作业",
+      "band": "乐队",
+      "noteSave": "注释已保存。"
+    },
+    "plansPage": {
+      "selMin": "选择一个部门"
+    },
     "planValidation": {
+      "and": "和",
+      "between": "之间",
       "blockCon": "封锁日期冲突",
-      "to": "到",
+      "cons": "冲突",
+      "during": "期间",
       "more": "更多的",
+      "needed": "需要。",
+      "notify": "通知",
       "person": "人",
       "ppl": "人们",
-      "needed": "需要。",
       "timeCon": "之间的时间冲突",
-      "and": "和",
-      "during": "期间",
-      "cons": "冲突",
       "timeCon2": "时间冲突于",
-      "between": "之间",
+      "to": "到",
+      "val": "验证",
       "valPlan": "计划有效。",
-      "volReq": "志愿者要求： ",
-      "volNotif": "所有志愿者均已收到通知。",
-      "notify": "通知",
       "vol": "志愿者",
-      "val": "验证"
+      "volNotif": "所有志愿者均已收到通知。",
+      "volReq": "志愿者要求： "
     },
     "positionEdit": {
+      "catName": "分类名称",
       "catNameReq": "类别名称为必填项。",
       "nameReq": "姓名为必填项",
-      "posEdit": "编辑职位",
       "posAdd": "添加职位",
-      "catName": "分类名称",
-      "name": "姓名",
+      "posEdit": "编辑职位",
       "volCount": "志愿者人数",
       "volGroup": "志愿者小组"
     },
     "positionList": {
       "load": "加载中...",
       "persNeed": "需要 1 人",
-      "pplNeed": " 需要人才",
-      "team": "团队",
       "pos": "位置",
-      "ppl": "人们"
+      "ppl": "人们",
+      "pplNeed": " 需要人才",
+      "team": "团队"
     },
     "teamList": {
       "noTeam": "没有找到队伍。",
+      "peeps": " 人们",
       "pers": "1人",
       "ppl": "人们",
-      "peeps": " 人们",
-      "name": "姓名",
       "teams": "团队"
     },
     "timeEdit": {
-      "disNameReq": "显示名称为必填项。",
-      "startReq": "需要开始时间",
-      "endReq": "结束时间为必填项",
-      "timeEdit": "编辑时间",
-      "timeAdd": "添加时间",
       "disName": "显示名称",
-      "timeStart": "开始时间",
+      "disNameReq": "显示名称为必填项。",
+      "endReq": "结束时间为必填项",
+      "startReq": "需要开始时间",
+      "teamNeed": "需要团队",
+      "timeAdd": "添加时间",
+      "timeEdit": "编辑时间",
       "timeEnd": "时间结束",
-      "teamNeed": "需要的团队"
+      "timeStart": "开始时间"
     },
     "timeList": {
       "noTime": "尚未添加任何时间",
-      "times": "时代",
-      "sunServ": "周日服务"
-    },
-    "ministryPage": {
-      "plans": "计划",
-      "teams": "团队"
-    },
-    "planPage": {
-      "assign": "作业",
-      "notes": "笔记",
-      "band": "乐队",
-      "noteSave": "注释已保存。"
-    },
-    "plansPage": {
-      "selMin": "选择一个部门"
+      "sunServ": "周日服务",
+      "times": "时代"
     }
   },
   "profile": {
     "profilePage": {
-      "saveChange": "更改已保存。",
-      "firstMsg": "请输入名字",
-      "lastMsg": "请输入姓氏",
-      "emailMsg": "请输入电子邮件地址。",
-      "valEmail": "请输入有效的电子邮件地址。",
-      "passMatch": "密码不匹配。",
-      "passLong": "请输入长度至少为 8 个字符的密码。",
+      "accDel": "帐户删除",
       "confirmMsg": "您确定要永久删除您的帐户吗？",
-      "profEdit": "编辑个人资料",
-      "email": "电子邮件",
-      "firstName": "名",
-      "lastName": "姓",
+      "daily": "日常的",
+      "delAcc": "删除我的账户",
+      "emailMsg": "请输入电子邮件地址。",
+      "firstMsg": "请输入名字",
+      "freqEmail": "电子邮件频率",
+      "indiv": "个人",
+      "lastMsg": "请输入姓氏",
+      "never": "绝不",
+      "noDirect": "目录选择退出",
+      "notifMsg": "选择您希望如何接收有关私人消息、对话、表单和其他通知的更新。",
+      "notifPref": "通知首选项",
+      "notifPush": "允许推送通知",
+      "passLong": "请输入长度至少为 8 个字符的密码。",
+      "passMatch": "密码不匹配。",
       "passNew": "新密码",
       "passVer": "验证密码",
-      "noDirect": "目录选择退出",
-      "notifPref": "通知首选项",
-      "notifMsg": "选择您希望如何接收有关私人消息、对话、表单和其他通知的更新。",
-      "notifPush": "允许推送通知",
-      "yes": "是的",
-      "no": "不",
-      "freqEmail": "电子邮件频率",
-      "never": "绝不",
-      "indiv": "个人",
-      "daily": "日常的",
-      "accDel": "帐户删除",
       "permWarn": "小心，这些操作是永久性的",
-      "delAcc": "删除我的账户"
+      "profEdit": "编辑个人资料",
+      "saveChange": "更改已保存。",
+      "valEmail": "请输入有效的电子邮件地址。"
     }
   },
   "reports": {
@@ -720,30 +625,29 @@
       "report": "报告"
     },
     "reportsPage": {
-      "reports": "报告",
-      "bDays": "生日",
       "attTrend": "出席趋势",
-      "groupAtt": "团体出席",
+      "bDays": "生日",
       "dailyGroupAtt": "每日团体出席",
-      "donSum": "捐款概要"
+      "donSum": "捐款概要",
+      "groupAtt": "团体出席",
+      "reports": "报告"
     }
   },
   "serverAdmin": {
     "adminPage": {
-      "arch": "已存档",
       "act": "积极的",
+      "arch": "已存档",
       "church": "教会",
-      "regist": "挂号的",
-      "servAdmin": "服务器管理",
       "churches": "教堂",
       "churchName": "教会名称",
-      "search": "搜索",
       "noChurch": "没有找到教堂。  ",
-      "valueNotes": "关于如何计算值的注释",
+      "noteFour": "类似的软件是 ProPresenter。  ",
       "noteOne": "类似的软件是 Breeze。  ",
-      "noteTwo": "类似的软件是 SubSplash。  ",
       "noteThree": "类似的内容是橙色。  ",
-      "noteFour": "类似的软件是 ProPresenter。  "
+      "noteTwo": "类似的软件是 SubSplash。  ",
+      "regist": "挂号的",
+      "servAdmin": "服务器管理",
+      "valueNotes": "关于如何计算值的注释"
     },
     "reportPage": {
       "report": "报告"
@@ -755,295 +659,228 @@
     },
     "churchSettings": {
       "churchSet": "教堂设置",
-      "name": "姓名",
-      "subdom": "子域",
-      "address": "地址"
+      "subdom": "子域"
     },
     "churchSettingsEdit": {
-      "noNameMsg": "教会名称不能为空。",
-      "noSubMsg": "子域不能为空。",
-      "churchName": "教会名称",
-      "subdom": "子域",
       "address1": "地址第一行",
       "address2": "地址行 2",
-      "city": "城市",
-      "state": "州/省",
-      "zip": "邮政/邮政",
-      "country": "国家"
+      "churchName": "教会名称",
+      "noNameMsg": "教会名称不能为空。",
+      "noSubMsg": "子域不能为空。",
+      "subdom": "子域"
     },
     "domainSettingsEdit": {
-      "delete": "删除",
-      "domains": "域名",
-      "domain": "领域",
-      "domMsg": "您可以让您的 B1 网站响应您想要的任何自定义域。  ",
       "act": "行动",
-      "add": "添加"
+      "delete": "删除",
+      "domain": "领域",
+      "domains": "域名",
+      "domMsg": "您可以让您的 B1 网站响应您想要的任何自定义域。  "
     },
     "givingSettingsEdit": {
+      "forceMsg": "自动强制用户支付交易费用",
+      "giving": "给予",
+      "none": "没有任何",
+      "prov": "提供商",
       "pubKey": "公钥",
       "secKey": "密钥",
-      "transFee": "手续费",
-      "giving": "给予",
-      "prov": "提供者",
-      "none": "没有任何",
       "stripe": "条纹",
-      "forceMsg": "自动强制用户支付交易费用"
+      "transFee": "手续费"
     },
     "imageEditor": {
-      "upload": "上传",
-      "crop": "庄稼"
+      "crop": "庄稼",
+      "upload": "上传"
+    },
+    "manageChurch": {
+      "imEx": "进出口",
+      "manage": "管理",
+      "tools": "工具"
     },
     "preview": {
       "preview": "预览"
     },
     "roleEdit": {
-      "valMsg": "请输入有效的角色名称。",
       "confirmMsg": "您确定要永久删除该角色吗？",
       "roleEdit": "编辑角色",
-      "roleName": "角色名称"
+      "roleName": "角色名称",
+      "valMsg": "请输入有效的角色名称。"
     },
     "roleMembers": {
-      "add": "添加",
       "confirmMsg": "您确定要删除该用户吗",
-      "roleAppMsg": "这个角色适用于教会的所有成员。",
-      "name": "姓名",
-      "email": "电子邮件",
+      "delete": "删除",
       "mem": "会员",
-      "edit": "编辑",
-      "delete": "删除"
+      "roleAppMsg": "这个角色适用于教会的所有成员。"
+    },
+    "rolePage": {
+      "noEditMsg": "无法编辑域管理员角色的权限。  ",
+      "permEdit": "编辑权限",
+      "roleEdit": "编辑角色："
     },
     "rolePermissions": {
       "permEdit": "编辑权限"
     },
     "roles": {
-      "roleCreate": "您想创建一个新角色吗 ",
-      "itMsg": "？ ",
-      "custAdd": "添加自定义角色",
-      "add": "添加",
-      "role": "角色",
-      "roles": "角色",
-      "name": "姓名",
       "acc": "会计",
       "accDesc": "有权查看和管理捐赠。",
-      "churchStaff": "教会同工",
       "canEdit": "可以编辑大部分数据 ",
       "churchDesc": " 包括人员、团体、出席情况和形式。",
+      "churchStaff": "教会同工",
       "contAdmin": "内容管理员",
       "contAdminDesc": "可以编辑网站内容、移动内容和讲道。",
+      "custAdd": "添加自定义角色",
+      "everyone": "每个人",
+      "itMsg": "？ ",
       "lesAdmin": "课程管理",
       "lesAdminDesc": "可以设置教室并安排课程 ",
-      "everyone": "每个人",
-      "edit": "编辑"
+      "role": "角色",
+      "roleCreate": "您想创建一个新角色吗 ",
+      "roles": "角色"
     },
     "userAdd": {
+      "addTo": "添加 ",
+      "createNew": "创建新用户",
       "errAnother": "无法保存。",
-      "valEmail": "请输入有效电子邮件",
       "errDiff": "该电子邮件的用户帐户与其他人关联。",
       "firstMsg": "请输入名字",
       "lastMsg": "请输入姓氏",
-      "valEmailMsg": "输入有效的电子邮件",
       "noAcc": "没有用户帐户？",
-      "createNew": "创建新用户",
-      "firstName": "名",
-      "lastName": "姓",
-      "email": "电子邮件",
-      "addTo": "添加 "
-    },
-    "manageChurch": {
-      "tools": "工具",
-      "imEx": "进出口",
-      "manage": "管理"
-    },
-    "rolePage": {
-      "permEdit": "编辑权限",
-      "noEditMsg": "无法编辑域管理员角色的权限。  ",
-      "roleEdit": "编辑角色："
+      "valEmail": "请输入有效电子邮件",
+      "valEmailMsg": "输入有效的电子邮件"
     }
   },
   "tasks": {
     "actionEdit": {
-      "editAct": "动作 编辑",
       "actType": "动作类型",
-      "taskAssign": "分配任务",
       "assignTo": "分配给",
-      "taskTitle": "任务标题",
-      "taskNote": "任务说明"
+      "editAct": "动作 编辑",
+      "taskAssign": "分配任务",
+      "taskNote": "任务说明",
+      "taskTitle": "任务标题"
     },
     "automationDetails": {
-      "task": "任务",
+      "acts": "行动",
       "auto": "自动化详情",
-      "name": "姓名",
       "rep": "重复",
-      "acts": "行动"
+      "task": "任务"
     },
     "automationEdit": {
       "autoEdit": "编辑自动化",
-      "title": "标题",
-      "rep": "重复",
+      "monthly": "每月",
       "never": "绝不",
-      "yearly": "每年",
-      "monthly": "每月"
-    },
-    "conditionAttendance": {
-      "op": "操作员",
-      "hasAtt": "已参加",
-      "hasNoAtt": "没有参加过",
-      "eventType": "事件类型",
-      "anywhere": "任何地方",
-      "campus": "校园",
-      "serv": "服务",
-      "servTime": "服务时间",
-      "group": "团体"
-    },
-    "conditionDate": {
-      "dayOf": "星期几",
-      "sun": "星期日",
-      "mon": "周一",
-      "tues": "周二",
-      "wed": "周三",
-      "thurs": "周四",
-      "fri": "星期五",
-      "sat": "周六",
-      "month": "月",
-      "jan": "一月",
-      "feb": "二月",
-      "mar": "行进",
-      "apr": "四月",
-      "may": "可能",
-      "june": "六月",
-      "july": "七月",
-      "aug": "八月",
-      "sep": "九月",
-      "oct": "十月",
-      "nov": "十一月",
-      "dec": "十二月",
-      "prevMonth": "前一个月",
-      "curMonth": "这个月",
-      "nextMonth": "下个月",
-      "datePart": "日期部分",
-      "dateFull": "完整日期",
-      "weekDay": "星期几",
-      "monthDay": "每月的某一天",
-      "yearsE": "已过去的岁月",
-      "op": "操作员",
-      "absolute": "绝对值",
-      "relative": "相对值"
-    },
-    "conditionDetails": {
-      "addConj": "添加连词",
-      "addCon": "添加条件",
-      "any": "任何",
-      "trueCon": "这些条件中的一个为真",
-      "all": "全部",
-      "con": "状况："
-    },
-    "conditionEdit": {
-      "confirmMsg": "您确定要删除此条件吗？",
-      "conEdit": "编辑条件",
-      "conType": "条件类型",
-      "gen": "一般的",
-      "today": "今天的日期",
-      "name": "姓名",
-      "disName": "显示名称",
-      "firstName": "名",
-      "lastName": "姓",
-      "middleName": "中间名字",
-      "nickName": "昵称",
-      "persAtt": "个人属性",
-      "bDate": "出生日期",
-      "gender": "性别",
-      "marStat": "婚姻状况",
-      "anni": "周年纪念日",
-      "memShipStat": "会员资格",
-      "conInfo": "联系方式",
-      "phone": "电话",
-      "email": "电子邮件",
-      "address": "地址",
-      "city": "城市",
-      "state": "州/省",
-      "zip": "邮政/邮政"
-    },
-    "conditionSelect": {
-      "gender": "性别",
-      "unknown": "未知",
-      "male": "男性",
-      "female": "女性",
-      "marStat": "婚姻状况",
-      "single": "单身的",
-      "married": "已婚",
-      "divorced": "离婚",
-      "widowed": "寡",
-      "memShipStat": "会员资格",
-      "mem": "成员",
-      "visitor": "游客",
-      "staff": "职员",
-      "op": "操作员",
-      "is": "是",
-      "isNot": "不是"
-    },
-    "conditionText": {
-      "op": "操作员",
-      "contains": "包含",
-      "startW": "以。。开始",
-      "endW": "以。。结束"
-    },
-    "conjunctionEdit": {
-      "conjEdit": "编辑连词",
-      "conjType": "连接类型",
-      "and": "AND - 所有条件均成立",
-      "or": "OR - 任何条件为真"
+      "rep": "重复",
+      "yearly": "每年"
     },
     "automationsPage": {
-      "manageAuto": "托管自动化任务",
-      "auto": "自动化任务"
+      "auto": "自动化任务",
+      "manageAuto": "托管自动化任务"
+    },
+    "conditionAttendance": {
+      "anywhere": "任何地方",
+      "campus": "校园",
+      "eventType": "事件类型",
+      "group": "团体",
+      "hasAtt": "已参加",
+      "hasNoAtt": "没有参加过",
+      "op": "操作员",
+      "serv": "服务",
+      "servTime": "服务时间"
+    },
+    "conditionDate": {
+      "absolute": "绝对值",
+      "curMonth": "这个月",
+      "dateFull": "完整日期",
+      "datePart": "日期部分",
+      "dayOf": "星期几",
+      "fri": "星期五",
+      "mon": "周一",
+      "month": "月",
+      "monthDay": "每月的某一天",
+      "nextMonth": "下个月",
+      "op": "操作员",
+      "prevMonth": "前一个月",
+      "relative": "相对值",
+      "sat": "周六",
+      "sun": "星期日",
+      "thurs": "周四",
+      "tues": "周二",
+      "wed": "周三",
+      "weekDay": "星期几",
+      "yearsE": "已过去的岁月"
+    },
+    "conditionDetails": {
+      "addCon": "添加条件",
+      "addConj": "添加连词",
+      "all": "全部",
+      "any": "任何",
+      "con": "状况：",
+      "trueCon": "这些条件中的一个为真"
+    },
+    "conditionEdit": {
+      "conEdit": "编辑条件",
+      "confirmMsg": "您确定要删除此条件吗？",
+      "conInfo": "联系方式",
+      "conType": "条件类型",
+      "gen": "一般的",
+      "persAtt": "个人属性",
+      "today": "今天的日期"
+    },
+    "conditionSelect": {
+      "is": "是",
+      "isNot": "不是",
+      "op": "操作员"
+    },
+    "conditionText": {
+      "contains": "包含",
+      "endW": "以。。结束",
+      "op": "操作员",
+      "startW": "以。。开始"
+    },
+    "conjunctionEdit": {
+      "and": "AND - 所有条件均成立",
+      "conjEdit": "编辑连词",
+      "conjType": "连接类型",
+      "or": "OR - 任何条件为真"
     },
     "contentPicker": {
-      "selPers": "选择一个人或一个组",
-      "pers": "人",
       "group": "团体",
-      "close": "关闭",
-      "sel": "选择"
+      "sel": "选择",
+      "selPers": "选择一个人或组"
     },
     "newTask": {
-      "associatePers": "请将这个任务与一个人关联起来。",
       "assignPers": "请将此任务分配给一个人。",
-      "titleTask": "请输入此任务的标题。",
-      "taskNew": "新任务",
-      "associateW": "与 关联",
       "assignTo": "分配给",
-      "title": "标题",
-      "notes": "笔记"
+      "associatePers": "请将这个任务与一个人关联起来。",
+      "associateW": "与 关联",
+      "taskNew": "新任务",
+      "titleTask": "请输入此任务的标题。"
     },
     "selectGroup": {
       "group": "团体",
-      "search": "搜索",
       "sel": "选择"
     },
     "taskList": {
-      "title": "标题",
-      "associateW": "有关联",
-      "assignTo": "分配给",
       "assignGroup": "分配给我的组",
       "assignMe": "分配给我",
+      "assignTo": "分配给",
+      "associateW": "有关联",
       "reqMe": "我要求的",
       "tasks": "任务"
     },
     "taskPage": {
-      "dateCreated": "创建日期",
-      "taskDet": "任务详情",
-      "stat": "地位",
-      "open": "打开",
+      "assignTo": "分配给",
+      "associateW": "有关联",
+      "change": "改变",
       "closed": "关闭",
       "createdBy": "由...制作",
-      "associateW": "有关联",
-      "assignTo": "分配给",
-      "change": "改变"
+      "dateCreated": "创建日期",
+      "open": "打开",
+      "stat": "地位",
+      "taskDet": "任务详情"
     },
     "tasksPage": {
-      "tasks": "任务",
       "auto": "自动化",
       "showClosed": "显示已关闭",
-      "showOpen": "显示打开"
+      "showOpen": "显示打开",
+      "tasks": "任务"
     }
   }
 }

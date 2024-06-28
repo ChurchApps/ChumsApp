@@ -105,7 +105,7 @@ export function HouseholdEdit(props: Props) {
         </FormControl>
       </TableCell>
       <TableCell>
-        <SmallButton icon="person_remove" text={Locale.label("people.household.rmv")} onClick={() => handleRemove(index)} />
+        <SmallButton icon="person_remove" text={Locale.label("common.remove")} onClick={() => handleRemove(index)} />
       </TableCell>
     </TableRow>
   ))

@@ -55,7 +55,7 @@ export const DonationEvents: React.FC = () => {
           </AccordionSummary>
           <AccordionDetails>
             <ul>
-              <li>{Locale.label("donations.donationEvents.person")}<Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link></li>
+              <li>{Locale.label("common.person")}<Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link></li>
               <li className="capitalize">{Locale.label("donations.donationEvents.event")}<a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
               <li>{Locale.label("donations.donationEvents.msg")}{log.message}</li>
               <li style={{ float: "right" }}>

@@ -40,7 +40,7 @@ export const Donations: React.FC<Props> = (props) => {
       rows.push(<TableRow key="0">{Locale.label("donations.donations.noDonMsg")}</TableRow>)
       return rows;
     }
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("donations.donations.tableIdent")}</th><th>{Locale.label("donations.donations.name")}</th><th>{Locale.label("donations.donations.date")}</th><th>{Locale.label("donations.donations.amt")}</th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("donations.donations.tableIdent")}</th><th>{Locale.label("common.name")}</th><th>{Locale.label("donations.donations.date")}</th><th>{Locale.label("donations.donations.amt")}</th></TableRow>);
     let canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
     for (let i = 0; i < donations.length; i++) {
       let d = donations[i];

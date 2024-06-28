@@ -50,7 +50,7 @@ export const PlanEdit = (props:Props) => {
   return (<>
     <ErrorMessages errors={errors} />
     <InputBox headerText={(plan.id) ? Locale.label("plans.planEdit.planEdit") : Locale.label("plans.planEdit.planAdd")} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={(plan.id) ? handleDelete : null }>
-      <TextField fullWidth label={Locale.label("plans.planEdit.name")} id="name" name="name" type="text" value={plan.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("common.name")} id="name" name="name" type="text" value={plan.name} onChange={handleChange} />
       <TextField fullWidth label={Locale.label("plans.planEdit.servDate")} id="serviceDate" name="serviceDate" type="date" value={DateHelper.formatHtml5Date(plan.serviceDate)} onChange={handleChange} />
       <FormControl fullWidth>
         <InputLabel id="copyFrom">{Locale.label("plans.planEdit.copy")}:</InputLabel>

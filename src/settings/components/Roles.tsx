@@ -90,7 +90,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
           <Divider />
           {predefined.map((role, i) => (
             <MenuItem key={role.name} onClick={() => {addRole(role); }} title={role.description}>
-              <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("settings.roles.add")} "<b>{role.name}</b>" {Locale.label("settings.roles.role")}
+              <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("common.add")} "<b>{role.name}</b>" {Locale.label("settings.roles.role")}
             </MenuItem>
           ))}
         </Menu>
@@ -118,7 +118,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     }
 
     sortedRoles.forEach(role => {
-      const editLink = (canEdit) ? <SmallButton icon="edit" toolTip={Locale.label("settings.roles.edit")} onClick={() => { selectRoleId(role.id) }} /> : null;
+      const editLink = (canEdit) ? <SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { selectRoleId(role.id) }} /> : null;
       result.push(<TableRow key={role.id}>
         <TableCell><i className="lock" /> <Link to={`/settings/role/${role.id}`}>{role.name}</Link></TableCell>
         <TableCell align="right">{editLink}</TableCell>
@@ -133,7 +133,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
   return (
     <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={getEditContent()} help="chums/assigning-roles">
       <Table id="roleMemberTable">
-        <TableHead><TableRow><TableCell>{Locale.label("settings.roles.name")}</TableCell><TableCell></TableCell></TableRow></TableHead>
+        <TableHead><TableRow><TableCell>{Locale.label("common.name")}</TableCell><TableCell></TableCell></TableRow></TableHead>
         <TableBody>{getRows()}</TableBody>
       </Table>
     </DisplayBox>

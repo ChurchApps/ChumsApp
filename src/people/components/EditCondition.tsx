@@ -73,17 +73,17 @@ export function EditCondition(props: Props) {
     let result: JSX.Element = null;
     switch (condition.field) {
       case "gender":
-        options = [<MenuItem key="/Unspecified" value="Unspecified">{Locale.label("people.editCondition.unspec")}</MenuItem>, <MenuItem value="Male">{Locale.label("people.editCondition.male")}</MenuItem>, <MenuItem value="Female">{Locale.label("people.editCondition.female")}</MenuItem>]
+        options = [<MenuItem key="/Unspecified" value="Unspecified">{Locale.label("person.unspecified")}</MenuItem>, <MenuItem value="Male">{Locale.label("person.male")}</MenuItem>, <MenuItem value="Female">{Locale.label("person.female")}</MenuItem>]
         setDefaultValue("Unspecified");
         result = getValueSelect(options);
         break;
       case "maritalStatus":
-        options = [<MenuItem key="/Unknown" value="Unknown">{Locale.label("people.editCondition.unknown")}</MenuItem>, <MenuItem value="Single">{Locale.label("people.editCondition.single")}</MenuItem>, <MenuItem value="Married">{Locale.label("people.editCondition.married")}</MenuItem>, <MenuItem value="Divorced">{Locale.label("people.editCondition.divorced")}</MenuItem>, <MenuItem value="Widowed">{Locale.label("people.editCondition.widowed")}</MenuItem>]
+        options = [<MenuItem key="/Unknown" value="Unknown">{Locale.label("person.unknown")}</MenuItem>, <MenuItem value="Single">{Locale.label("person.single")}</MenuItem>, <MenuItem value="Married">{Locale.label("person.married")}</MenuItem>, <MenuItem value="Divorced">{Locale.label("person.divorced")}</MenuItem>, <MenuItem value="Widowed">{Locale.label("person.widowed")}</MenuItem>]
         setDefaultValue("Unknown");
         result = getValueSelect(options);
         break;
       case "membershipStatus":
-        options = [<MenuItem key="/Visitor" value="Visitor">{Locale.label("people.editCondition.visitor")}</MenuItem>, <MenuItem value="Member">{Locale.label("people.editCondition.mem")}</MenuItem>, <MenuItem value="Staff">{Locale.label("people.editCondition.staff")}</MenuItem>]
+        options = [<MenuItem key="/Visitor" value="Visitor">{Locale.label("person.visitor")}</MenuItem>, <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>, <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>]
         setDefaultValue("Visitor");
         result = getValueSelect(options);
         break;
@@ -94,7 +94,7 @@ export function EditCondition(props: Props) {
         break;
       case "birthMonth":
       case "anniversaryMonth":
-        options = [<MenuItem key="January" value="1">{Locale.label("people.editCondition.jan")}</MenuItem>, <MenuItem key="February" value="2">{Locale.label("people.editCondition.feb")}</MenuItem>, <MenuItem key="March" value="3">{Locale.label("people.editCondition.mar")}</MenuItem>, <MenuItem key="April" value="4">{Locale.label("people.editCondition.apr")}</MenuItem>, <MenuItem key="May" value="5">{Locale.label("people.editCondition.may")}</MenuItem>, <MenuItem key="June" value="6">{Locale.label("people.editCondition.june")}</MenuItem>, <MenuItem key="July" value="7">{Locale.label("people.editCondition.july")}</MenuItem>, <MenuItem key="August" value="8">{Locale.label("people.editCondition.aug")}</MenuItem>, <MenuItem key="September" value="9">{Locale.label("people.editCondition.sep")}</MenuItem>, <MenuItem key="October" value="10">{Locale.label("people.editCondition.oct")}</MenuItem>, <MenuItem key="November" value="11">{Locale.label("people.editCondition.nov")}</MenuItem>, <MenuItem key="December" value="12">{Locale.label("people.editCondition.dec")}</MenuItem>]
+        options = [<MenuItem key="January" value="1">{Locale.label("month.jan")}</MenuItem>, <MenuItem key="February" value="2">{Locale.label("month.feb")}</MenuItem>, <MenuItem key="March" value="3">{Locale.label("month.mar")}</MenuItem>, <MenuItem key="April" value="4">{Locale.label("month.apr")}</MenuItem>, <MenuItem key="May" value="5">{Locale.label("month.may")}</MenuItem>, <MenuItem key="June" value="6">{Locale.label("month.june")}</MenuItem>, <MenuItem key="July" value="7">{Locale.label("month.july")}</MenuItem>, <MenuItem key="August" value="8">{Locale.label("month.aug")}</MenuItem>, <MenuItem key="September" value="9">{Locale.label("month.sep")}</MenuItem>, <MenuItem key="October" value="10">{Locale.label("month.oct")}</MenuItem>, <MenuItem key="November" value="11">{Locale.label("month.nov")}</MenuItem>, <MenuItem key="December" value="12">{Locale.label("month.dec")}</MenuItem>]
         setDefaultValue("1");
         result = getValueSelect(options);
         break;
@@ -295,30 +295,30 @@ export function EditCondition(props: Props) {
     <FormControl fullWidth>
       <InputLabel>{Locale.label("people.editCondition.field")}</InputLabel>
       <Select name="field" label={Locale.label("people.editCondition.field")} type="text" value={condition.field} onChange={handleChange}>
-        <MenuItem key="/person" value="person" disabled>{Locale.label("people.editCondition.person")}</MenuItem>
-        <MenuItem key="/displayName" value="displayName">{Locale.label("people.editCondition.disName")}</MenuItem>
-        <MenuItem key="/firstName" value="firstName">{Locale.label("people.editCondition.firstName")}</MenuItem>
-        <MenuItem key="/lastName" value="lastName">{Locale.label("people.editCondition.lastName")}</MenuItem>
-        <MenuItem key="/middleName" value="middleName">{Locale.label("people.editCondition.middleName")}</MenuItem>
-        <MenuItem key="/nickName" value="nickName">{Locale.label("people.editCondition.nickName")}</MenuItem>
-        <MenuItem key="/prefix" value="prefix">{Locale.label("people.editCondition.pre")}</MenuItem>
-        <MenuItem key="/suffix" value="suffix">{Locale.label("people.editCondition.suf")}</MenuItem>
-        <MenuItem key="/birthDate" value="birthDate">{Locale.label("people.editCondition.bDate")}</MenuItem>
+        <MenuItem key="/person" value="person" disabled>{Locale.label("common.person")}</MenuItem>
+        <MenuItem key="/displayName" value="displayName">{Locale.label("person.displayName")}</MenuItem>
+        <MenuItem key="/firstName" value="firstName">{Locale.label("person.firstName")}</MenuItem>
+        <MenuItem key="/lastName" value="lastName">{Locale.label("person.lastName")}</MenuItem>
+        <MenuItem key="/middleName" value="middleName">{Locale.label("person.middleName")}</MenuItem>
+        <MenuItem key="/nickName" value="nickName">{Locale.label("person.nickName")}</MenuItem>
+        <MenuItem key="/prefix" value="prefix">{Locale.label("person.prefix")}</MenuItem>
+        <MenuItem key="/suffix" value="suffix">{Locale.label("person.suffix")}</MenuItem>
+        <MenuItem key="/birthDate" value="birthDate">{Locale.label("person.birthDate")}</MenuItem>
         <MenuItem key="/birthMonth" value="birthMonth">{Locale.label("people.editCondition.bMonth")}</MenuItem>
-        <MenuItem key="/age" value="age">{Locale.label("people.editCondition.age")}</MenuItem>
-        <MenuItem key="/gender64" value="gender">{Locale.label("people.editCondition.gender")}</MenuItem>
-        <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("people.editCondition.marStat")}</MenuItem>
-        <MenuItem key="/anniversary" value="anniversary">{Locale.label("people.editCondition.anni")}</MenuItem>
+        <MenuItem key="/age" value="age">{Locale.label("person.age")}</MenuItem>
+        <MenuItem key="/gender64" value="gender">{Locale.label("person.gender")}</MenuItem>
+        <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("person.maritalStatus")}</MenuItem>
+        <MenuItem key="/anniversary" value="anniversary">{Locale.label("person.anniversary")}</MenuItem>
         <MenuItem key="/anniversaryMonth" value="anniversaryMonth">{Locale.label("people.editCondition.anniMonth")}</MenuItem>
         <MenuItem key="/yearsMarried" value="yearsMarried">{Locale.label("people.editCondition.marYears")}</MenuItem>
-        <MenuItem key="/phone" value="phone">{Locale.label("people.editCondition.phone")}</MenuItem>
-        <MenuItem key="/email" value="email">{Locale.label("people.editCondition.email")}</MenuItem>
-        <MenuItem key="/address" value="address">{Locale.label("people.editCondition.address")}</MenuItem>
-        <MenuItem key="/city" value="city">{Locale.label("people.editCondition.city")}</MenuItem>
-        <MenuItem key="/state" value="state">{Locale.label("people.editCondition.state")}</MenuItem>
-        <MenuItem key="/zip" value="zip">{Locale.label("people.editCondition.zip")}</MenuItem>
-        <MenuItem key="/membership" value="membership" disabled>{Locale.label("people.editCondition.memShip")}</MenuItem>
-        <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("people.editCondition.memShipStat")}</MenuItem>
+        <MenuItem key="/phone" value="phone">{Locale.label("person.phone")}</MenuItem>
+        <MenuItem key="/email" value="email">{Locale.label("person.email")}</MenuItem>
+        <MenuItem key="/address" value="address">{Locale.label("person.address")}</MenuItem>
+        <MenuItem key="/city" value="city">{Locale.label("person.city")}</MenuItem>
+        <MenuItem key="/state" value="state">{Locale.label("person.state")}</MenuItem>
+        <MenuItem key="/zip" value="zip">{Locale.label("person.zip")}</MenuItem>
+        <MenuItem key="/membership" value="membership" disabled>{Locale.label("person.membershp")}</MenuItem>
+        <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("person.membershipStatus")}</MenuItem>
         {(Permissions.membershipApi.groupMembers) && <MenuItem key="/groupMember" value="groupMember">{Locale.label("people.editCondition.groupMem")}</MenuItem>}
         <MenuItem key="/activity" value="activity" disabled>{Locale.label("people.editCondition.act")}</MenuItem>
         {(Permissions.givingApi.donations) && <MenuItem key="/memberDonations" value="memberDonations">{Locale.label("people.editCondition.memDon")}</MenuItem>}

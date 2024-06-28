@@ -81,7 +81,7 @@ export const PlanPage = () => {
         <DisplayBox headerText={Locale.label("plans.planPage.assign")} headerIcon="assignment" editContent={getAddPositionLink()}>
           <PositionList positions={positions} assignments={assignments} people={people} onSelect={p => setPosition(p)} onAssignmentSelect={handleAssignmentSelect} />
         </DisplayBox>
-        <InputBox headerIcon="sticky_note_2" headerText={Locale.label("plans.planPage.notes")} saveFunction={handleSave}>
+        <InputBox headerIcon="sticky_note_2" headerText={Locale.label("common.notes")} saveFunction={handleSave}>
           <TextField fullWidth multiline rows={4} value={plan?.notes} onChange={(e) => { setPlan({ ...plan, notes: e.target.value }) }} />
         </InputBox>
       </Grid>

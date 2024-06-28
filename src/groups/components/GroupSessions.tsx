@@ -119,7 +119,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
       <span className="float-right"><ExportLink data={visitSessions} spaceAfter={true} filename="visits.csv" /></span>
       <b data-cy="session-present-msg">{Locale.label("groups.groupSessions.attFor")} {props.group.name}</b>
       <Table id="groupMemberTable">
-        <TableHead><TableRow><th></th><th>{Locale.label("groups.groupSessions.name")}</th><th></th></TableRow></TableHead>
+        <TableHead><TableRow><th></th><th>{Locale.label("common.name")}</th><th></th></TableRow></TableHead>
         <TableBody>{getRows()}</TableBody>
       </Table>
     </>);

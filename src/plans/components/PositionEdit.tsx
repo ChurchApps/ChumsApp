@@ -92,7 +92,7 @@ export const PositionEdit = (props:Props) => {
           className="comboBox"
         />
       </FormControl>
-      <TextField fullWidth label={Locale.label("plans.positionEdit.name")} id="name" name="name" type="text" value={position.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("common.name")} id="name" name="name" type="text" value={position.name} onChange={handleChange} />
       <TextField fullWidth label={Locale.label("plans.positionEdit.volCount")} id="count" name="count" type="number" value={position.count} onChange={handleChange} />
       <FormControl fullWidth>
         <InputLabel>{Locale.label("plans.positionEdit.volGroup")}</InputLabel>

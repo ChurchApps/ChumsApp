@@ -16,7 +16,7 @@ export const Question: React.FC<Props> = (props) => {
         displayValue = (a.value === null || a.value === "") ? "" : DateHelper.getShortDate(new Date(a.value));
         break;
       case "Yes/No":
-        displayValue = (a.value === null || a.value === "") ? "" : a.value.replace("False", Locale.label("components.question.no")).replace("True", Locale.label("components.question.yes"));
+        displayValue = (a.value === null || a.value === "") ? "" : a.value.replace("False", Locale.label("common.no")).replace("True", Locale.label("common.yes"));
         break;
       default:
         displayValue = a.value;

@@ -86,7 +86,7 @@ export const AdminPage = () => {
         <Grid item md={8} xs={12}>
           <DisplayBox headerIcon="church" headerText={Locale.label("serverAdmin.adminPage.churches")}>
             <TextField fullWidth variant="outlined" name="searchText" label={Locale.label("serverAdmin.adminPage.churchName")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-              InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" disableElevation onClick={loadData}>{Locale.label("serverAdmin.adminPage.search")}</Button> }}
+              InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" disableElevation onClick={loadData}>{Locale.label("common.search")}</Button> }}
             />
             <br />
             {
