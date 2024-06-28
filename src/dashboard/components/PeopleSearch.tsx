@@ -15,7 +15,7 @@ export const PeopleSearch = () => {
     if (e !== null) e.preventDefault();
     let term = searchText.trim();
     const condition: SearchCondition = { field: "displayName", operator: "contains", value: term }
-    ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi").then(data => {
+    ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi").then((data: PersonInterface[]) => {
       setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
     });
   }

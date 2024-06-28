@@ -1,886 +1,886 @@
 {
-    "common": {
-      "search": "Search",
-      "yes": "Yes",
-      "no": "No",
-      "name": "Name",
-      "add": "Add",
-      "notes": "Notes",
-      "title": "Title",
-      "edit": "Edit",
-      "delete": "Delete",
-      "remove": "Remove",
-      "close": "Close"
-    },
-    "month": {
-      "jan": "January",
-      "feb": "February",
-      "mar": "March",
-      "apr": "April",
-      "may": "May",
-      "june": "June",
-      "july": "July",
-      "aug": "August",
-      "sep": "September",
-      "oct": "October",
-      "nov": "November",
-      "dec": "December"
-    },
-    "person": {
-      "person": "Person",
-      "displayName": "Display Name",
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "middleName": "Middle Name",
-      "nickName": "Nick Name",
-      "prefix": "Prefix",
-      "suffix": "Suffix",
-      "email": "Email",
-      "phone": "Phone",
-      "line1": "Line 1",
-      "line2": "Line 2",
-      "state": "State/Province",
-      "zip": "Zip/Postal",
-      "country": "Country",
-      "gender": "Gender",
-      "unspecified": "Unspecified",
-      "male": "Male",
-      "female": "Female",
-      "maritalStatus": "Marital Status",
-      "unknown": "Unknown",
-      "single": "Single",
-      "married": "Married",
-      "divorced": "Divorced",
-      "widowed": "Widowed",
-      "membership": "Membership",
-      "membershipStatus": "Membership Status",
-      "visitor": "Visitor",
-      "member": "Member",
-      "staff": "Staff",
-      "birthDate": "Birth Date",
-      "age": "Age",
-      "anniversary": "Anniversary"
-    },
-    "attendance": {
-      "campusEdit": {
-        "name": "Campus Name",
-        "confirmDelete": "Are you sure you want to delete this campus?",
-        "validate": {
-          "name": "Campus Name is required."
-        }
-      },
-      "serviceEdit": {
-        "campus": "Campus",
-        "name": "Service Name",
-        "confirmDelete": "Are you sure you wish to permanently delete this service?",
-        "validate": {
-          "campus": "Please select a campus.",
-          "name": "Service name is required."
-        }
-      },
-      "serviceTimeEdit": {
-        "service": "Service",
-        "name": "Service Time",
-        "confirmDelete": "Are you sure you wish to permanently delete this service time?",
-        "validate": {
-          "name": "Service time name is required.",
-          "service": "Please select a service."
-        }
-      },
-      "tabs": {
-        "noImplement": "Not Implemented",
-        "attTrend": "Attendance Trend",
-        "groupAtt": "Group Attendance"
-      },
-      "attendancePage": {
-        "groupAttMsg": "Group attendance will show up once sessions have been added to a group and people have attended those sessions.",
-        "addCampus": "Add Campus",
-        "addService": "Add Service",
-        "addServiceTime": "Add Service Time",
-        "campus": "Campus",
-        "service": "Service",
-        "time": "Time",
-        "category": "Category",
-        "group": "Group",
-        "groups": "Groups",
-        "att": "Attendance"
-      }
-    },
-    "components": {
-      "footer": {
-        "phone": "Phone",
-        "rights": "All rights reserved."
-      },
-      "wrapper": {
-        "dash": "Dashboard",
-        "ppl": "People",
-        "groups": "Groups",
-        "att": "Attendance",
-        "don": "Donations",
-        "form": "Form",
-        "tasks": "Tasks",
-        "plans": "Plans",
-        "set": "Settings",
-        "servAdmin": "Server Admin"
-      }
-    },
-    "dashboard": {
-      "myGroups": "My Groups",
-      "people": "People",
-      "tasks": "Tasks",
-      "peopleSearch": {
-        "photo": "Photo",
-        "ppl": "People"
-      },
-      "dashboardPage": {
-        "dash": "Dashboard"
-      }
-    },
-    "donations": {
-      "batchEdit": {
-        "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
-        "edit": "Edit Batch",
-        "opName": "Name (optional)",
-        "date": "Date"
-      },
-      "donationEdit": {
-        "checkNum": "Check #",
-        "lastDig": "Last 4 digits",
-        "anon": "Anonymous",
-        "donEdit": "Edit Donation",
-        "method": "Method",
-        "check": "Check",
-        "cash": "Cash",
-        "card": "Card",
-        "date": "Date"
-      },
-      "donationEvents": {
-        "person": "Person: ",
-        "event": "Event: ",
-        "msg": "Message: ",
-        "mark": "Mark as ",
-        "failed": "Failed Donations - ",
-        "unres": " unresolved"
-      },
-      "donations": {
-        "errMsg": "No fund found. Please create a fund before making a donation",
-        "noDonMsg": "No donations have been tracked. Once donations are entered they will show up here.",
-        "tableIdent": "Id",
-        "date": "Date",
-        "amt": "Amount",
-        "anon": "Anonymous",
-        "total": "Total",
-        "don": "Donations"
-      },
-      "fundEdit": {
-        "errBlank": "Enter a fund name",
-        "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
-        "edit": "Edit Fund"
-      },
-      "funds": {
-        "noFund": "No funds found.",
-        "fund": "Funds"
-      },
-      "donationsPage": {
-        "noBatch": "No batches found.",
-        "batch": "Batch",
-        "date": "Date",
-        "don": "Donations",
-        "total": "Total"
-      },
-      "fundsPage": {
-        "noDon": "No donations yet",
-        "don": "Donations",
-        "donFilt": "Donation Filter",
-        "anon": "Anonymous",
-        "date": "Date",
-        "dateStart": "Start Date",
-        "dateEnd": "End Date",
-        "batch": "Batch",
-        "donor": "Donor",
-        "amt": "Amount"
-      }
-    },
-    "forms": {
-      "choicesEdit": {
-        "choices": "Choices",
-        "value": "Value",
-        "txt": "Text",
-        "act": "Action"
-      },
-      "form": {
-        "noCustomMsg": "No custom questions have been created yet. Questions will be listed here.",
-        "question": "Question",
-        "questions": "Questions",
-        "type": "Type",
-        "act": "Action",
-        "req": "Required"
-      },
-      "formEdit": {
-        "nameReqMsg": "Form name is required.",
-        "startReqMsg": "Start date is required.",
-        "endReqMsg": "End date is required.",
-        "confirmMsg": "Are you sure you wish to permanently delete this form?",
-        "editForm": "Edit Form",
-        "name": "Form Name",
-        "associate": "Associate With",
-        "ppl": "People",
-        "alone": "Stand Alone",
-        "access": "Form Access",
-        "public": "Public",
-        "restrict": "Restricted",
-        "available": "Set Form Availability Timeframe",
-        "availableStart": "Availability Start Date",
-        "availableEnd": "Availability End Date"
-      },
-      "formMembers": {
-        "admin": "Admin",
-        "view": "View Only",
-        "perm": "Permission",
-        "act": "Action",
-        "emailNotif": "Email Notification",
-        "emailNotifMsg": "Whenever the form is submitted, you'll get notified via mail.",
-        "formMem": "Form Members",
-        "addPpl": "Add Person"
-      },
-      "formQuestionEdit": {
-        "questionReq": "Question is required.",
-        "fieldReq": "Field type is required.",
-        "confirmMsg": "Are you sure you wish to permanently delete this question?",
-        "questionEdit": "Edit Question",
-        "prov": "Provider",
-        "textBox": "Textbox",
-        "wholeNum": "Whole Number",
-        "decNum": "Decimal",
-        "date": "Date",
-        "yesNo": "Yes/No",
-        "phoneNum": "Phone Number",
-        "textArea": "Text Area",
-        "multiChoice": "Multiple Choice",
-        "checkBox": "Checkbox",
-        "desc": "Description",
-        "plcOp": "Placeholder (optional)",
-        "ansReq": "Require an answer for this question"
-      },
-      "formSubmissions": {
-        "anon": "Anonymous",
-        "subFor": "Submitted For",
-        "subBy": "Submitted By",
-        "subDate": "Submission Date",
-        "subSum": "Form Submission Summary",
-        "subRes": "Form Submission Results"
-      },
-      "tabs": {
-        "unAuth": "Unauthorized",
-        "questions": "Questions",
-        "formMem": "Form Members",
-        "formSub": "Form Submissions"
-      },
-      "formsPage": {
-        "noCustomMsg": "No custom forms have been created yet. They will appear here when added.",
-        "confirmMsg1": "Are you sure you want to archive this form?",
-        "confirmMsg2": "Are you sure you want to restore this form?",
-        "noArch": "No archived forms.",
-        "forms": "Forms",
-        "archForms": "Archived Forms"
-      }
-    },
-    "groups": {
-      "groupAdd": {
-        "catReq": "Category name is required.",
-        "groupReq": "Group name is required.",
-        "group": "Group",
-        "team": "Team",
-        "ministry": "Ministry",
-        "new": "New ",
-        "catName": "Category Name"
-      },
-      "groupDetails": {
-        "cat": "Category",
-        "attTrack": "Track Attendance:",
-        "parPick": "Parent Pickup:",
-        "groupDet": "Group Details"
-      },
-      "groupDetailsEdit": {
-        "catNameMsg": "Please enter a category name.",
-        "groupNameMsg": "Please enter a group name.",
-        "confirmMsg": "Are you sure you wish to permanently delete this group?",
-        "groupDet": "Group Details",
-        "catName": "Category Name",
-        "groupName": "Group Name",
-        "attTrack": "Track Attendance",
-        "parPick": "Parent Pickup",
-        "groupDesc": "Group Description",
-        "groupImg": "Group Photo",
-        "selImg": "Select Photo"
-      },
-      "groupMembers": {
-        "noMem": "No group members found.",
-        "groupMem": "Group Members",
-        "send": "Send",
-        "sendMemMsg": "Send a message to members"
-      },
-      "groupSessions": {
-        "session": "Session",
-        "sessions": "Sessions",
-        "new": "New",
-        "noSesMsg": "There are no sessions.",
-        "addSesMsg": "Please add a new session to continue.",
-        "attFor": "Attendance for"
-      },
-      "membersAdd": {
-        "noMem": "No group members available.",
-        "availableMem": "Available Group Members"
-      },
-      "serviceTimes": {
-        "services": "Service(s):"
-      },
-      "serviceTimesEdit": {
-        "srvTimeOp": "Service Times (optional)",
-        "srvTimeAdd": "Add Service Time"
-      },
-      "sessionAdd": {
-        "invDate": "Invalid Date",
-        "srvTime": "Service Time",
-        "sesAdd": "Add a Session",
-        "sesDate": "Session Date"
-      },
-      "tabs": {
-        "noImplement": "Not Implemented",
-        "mem": "Members",
-        "ses": "Sessions"
-      },
-      "groupPage": {
-        "addPpl": "Add Person"
-      },
-      "groupsPage": {
-        "noGroupMsg": "No groups found. Please create a group.",
-        "cat": "Category",
-        "ppl": "People",
-        "groups": "Groups",
-        "pers": "1 person",
-        "spPpl": " people"
-      }
-    },
-    "people": {
-      "mergeModal": {
-        "selMsg": "Please select at least 1 value for each field",
-        "mergeQuestion": "Would you like to merge",
-        "with": "with",
-        "fieldCon": "Here are some fields conflicting fields:",
-        "merge": "Merging records...",
-        "cancel": "Cancel",
-        "confirm": "Confirm"
-      },
-      "updateHouseHold": {
-        "update": "Update Address"
-      },
-      "editCondition": {
-        "any": "Any",
-        "from": "From",
-        "to": "To",
-        "value": "Value",
-        "isMem": "is member of",
-        "notMem": "is not member of",
-        "hasDon": "has donated (in general)",
-        "donTo": "has donated to",
-        "attGen": "has attended (in general)",
-        "attCamp": "has attended (campus)",
-        "attServ": "has attended (service)",
-        "attServTime": "has attended (service time)",
-        "attGroup": "has attended (group)",
-        "contains": "contains",
-        "startW": "starts with",
-        "endW": "ends with",
-        "field": "Field",
-        "bMonth": "Birth Month",
-        "anniMonth": "Anniversary Month",
-        "marYears": "Years Married",
-        "groupMem": "Group Member",
-        "act": "Activity",
-        "memDon": "Member Donations",
-        "memAtt": "Member Attendance",
-        "operator": "Operator",
-        "saveCon": "Save Condition"
-      },
-      "groups": {
-        "notMemMsg": "Not currently a member of any groups.",
-        "groups": "Groups"
-      },
-      "household": {
-        "house": " Household"
-      },
-      "householdEdit": {
-        "updQuestion": "Would you like to update",
-        "addMatch": "address to match",
-        "blankMsg": "Please provide a household name.",
-        "head": "Head",
-        "spouse": "Spouse",
-        "child": "Child",
-        "other": "Other",
-        "house": " Household",
-        "houseName": "Household Name"
-      },
-      "merge": {
-        "mergeRec": "Merge Records",
-        "merge": "merge"
-      },
-      "peopleColumns": {
-        "noFilt": "No filters available.",
-        "filt": "Filters",
-        "appFilt": "Apply Filters",
-        "stand": "Standard",
-        "cust": "Custom"
-      },
-      "peopleSearch": {
-        "simpSearch": "Simple Search",
-        "advSearch": "Advanced Search",
-        "simp": "Simple",
-        "adv": "Advanced",
-        "addCon": "Add Condition",
-        "allPeeps": "All people where:",
-        "notIn": "Not In",
-        "madeTo": "made to",
-        "for": "for"
-      },
-      "peopleSearchResults": {
-        "noResMsg": "No results found.  Please search for a different name or add a new person"
-      },
-      "personAttendance": {
-        "noAttMsg": "No attendance records. Attendance will appear once attendance has been tracked for a group session.",
-        "att": "Attendance"
-      },
-      "personEdit": {
-        "confirmMsg": "Are you sure you wish to permanently delete this person record?",
-        "firstReq": "First name is required",
-        "lastReq": "Last name is required",
-        "valEmail": "Please enter a valid email address.",
-        "upAddress": "You updated the address to",
-        "for": "for",
-        "applyQuestion": "Would you like to apply that to the entire",
-        "family": "family",
-        "persDet": "Personal Details",
-        "merge": "Merge",
-        "nameNote": "Name Tag Notes",
-        "nickName": "Nickname",
-        "home": "Home",
-        "invalForm": "Invalid Format",
-        "work": "Work",
-        "mobile": "Mobile",
-        "exten": "Extension"
-      },
-      "personView": {
-        "memShip": "Membership:",
-        "mobile": "Mobile",
-        "work": "Work",
-        "persDet": "Personal Details",
-        "home": "Home"
-      },
-      "tabs": {
-        "att": "Attendance",
-        "don": "Donations",
-        "noImplement": "Not Implemented"
-      },
-      "peoplePage": {
-        "photo": "Photo",
-        "last": "Last",
-        "first": "First",
-        "middle": "Middle",
-        "primEmail": "Primary Email",
-        "primPhone": "Primary Phone",
-        "bDayNo": "Birthday (No Year)",
-        "bDay": "Birthday",
-        "nameNote": "Name Tag Notes",
-        "deleteOp": "Delete Option",
-        "delete": "Delete",
-        "searchPpl": "Search People",
-        "ppl": "People"
-      }
-    },
-    "plans": {
-      "assignmentEdit": {
-        "noMem": "No group members found.",
-        "editAssign": "Edit Assignment",
-        "assignPos": "Assign Position",
-        "done": "Done"
-      },
-      "ministryList": {
-        "noMinMsg": "No ministries found. Please create a ministry.",
-        "mins": "Ministires"
-      },
-      "planEdit": {
-        "planReq": "Plan name is required.",
-        "servReq": "Service date is required.",
-        "planEdit": "Edit Plan",
-        "planAdd": "Add a Plan",
-        "servDate": "Service Date",
-        "copy": "Copy From",
-        "none": "None"
-      },
-      "planList": {
-        "noPlan": "No plans have been added yet.",
-        "plans": "Plans"
-      },
-      "planValidation": {
-        "blockCon": "Blockout date conflict of",
-        "to": "to",
-        "more": "more",
-        "person": "person",
-        "ppl": "people",
-        "needed": "needed.",
-        "timeCon": "Time conflict between",
-        "and": "and",
-        "during": "during",
-        "cons": "Conflicts",
-        "timeCon2": "Time conflict at",
-        "between": "between",
-        "valPlan": "Plan is valid.",
-        "volReq": "Volunteer Requests: ",
-        "volNotif": "All volunteers notified.",
-        "notify": "Notify",
-        "vol": "volunteer(s)",
-        "val": "Validation"
-      },
-      "positionEdit": {
-        "catNameReq": "Category Name is required.",
-        "nameReq": "Name is required",
-        "posEdit": "Edit Position",
-        "posAdd": "Add a Position",
-        "catName": "Category Name",
-        "volCount": "Volunteer Count",
-        "volGroup": "Volunteer Group"
-      },
-      "positionList": {
-        "load": "Loading...",
-        "persNeed": "1 Person Needed",
-        "pplNeed": " People Needed",
-        "team": "Team",
-        "pos": "Position",
-        "ppl": "People"
-      },
-      "teamList": {
-        "noTeam": "No teams found. Please create a team.",
-        "pers": "1 person",
-        "ppl": "People",
-        "peeps": " people",
-        "teams": "Teams"
-      },
-      "timeEdit": {
-        "disNameReq": "Display name is required.",
-        "startReq": "Start time is required",
-        "endReq": "End time is required",
-        "timeEdit": "Edit Time",
-        "timeAdd": "Add a Time",
-        "disName": "Display Name",
-        "timeStart": "Start Time",
-        "timeEnd": "End Time",
-        "teamNeed": "Needed Teams"
-      },
-      "timeList": {
-        "noTime": "No times have been added yet",
-        "times": "Times",
-        "sunServ": "Sunday Service"
-      },
-      "ministryPage": {
-        "plans": "Plans",
-        "teams": "Teams"
-      },
-      "planPage": {
-        "assign": "Assignments",
-        "band": "Band",
-        "noteSave": "Notes Saved."
-      },
-      "plansPage": {
-        "selMin": "Select a Ministry"
-      }
-    },
-    "profile": {
-      "profilePage": {
-        "saveChange": "Changes saved.",
-        "firstMsg": "Please enter firstname",
-        "lastMsg": "Please enter lastname",
-        "emailMsg": "Please enter an email address.",
-        "valEmail": "Please enter a valid email address.",
-        "passMatch": "Passwords do not match.",
-        "passLong": "Please enter a password that is at least 8 characters long.",
-        "confirmMsg": "Are you sure you wish to permanently delete your account?",
-        "profEdit": "Edit Profile",
-        "passNew": "New password",
-        "passVer": "Verify password",
-        "noDirect": "Directory opt-out",
-        "notifPref": "Notification Preferences",
-        "notifMsg": "Choose how you would like to receive updates about private messages, conversations, forms and other notifications.",
-        "notifPush": "Allow Push Notifications",
-        "freqEmail": "Email Frequency",
-        "never": "Never",
-        "indiv": "Individual",
-        "daily": "Daily",
-        "accDel": "Account Deletion",
-        "permWarn": "Careful, these actions are permanent",
-        "delAcc": "Delete my account"
-      }
-    },
-    "reports": {
-      "reportPage": {
-        "report": "Report"
-      },
-      "reportsPage": {
-        "reports": "Reports",
-        "bDays": "Birthdays",
-        "attTrend": "Attendance Trend",
-        "groupAtt": "Group Attendance",
-        "dailyGroupAtt": "Daily Group Attendance",
-        "donSum": "Donation Summary"
-      }
-    },
-    "serverAdmin": {
-      "adminPage": {
-        "arch": "Archived",
-        "act": "Active",
-        "church": "Church",
-        "regist": "Registered",
-        "servAdmin": "Server Admin",
-        "churches": "Churches",
-        "churchName": "Church Name",
-        "noChurch": "No churches found.  Please search for a different name.",
-        "valueNotes": "Notes on How Values are Calculated",
-        "noteOne": "Comparable software is Breeze.  They charge $72/mo or $864/year.",
-        "noteTwo": "Comparable software is SubSplash.  They start at $99/mo or $1200/year.  This does not include the cut they take on donations.",
-        "noteThree": "Comparable content is Orange.  They charge $1023/year for churches with 26-50 viewers for 252 Basic.",
-        "noteFour": "Comparable software is ProPresenter.  It's $399 for a site license.  I made assumptions that the average church installs the software on 3 computers and divided our total installs by 3 to get the number of churches.  I also made the assumption that churches will upgrade to a newer version every 5 years on average.  So $399 / 5 years / 3 computers = $26.60 annual cost per computer.  If we can quantify these assumptions we should update this number."
-      },
-      "reportPage": {
-        "report": "Report"
-      }
-    },
-    "settings": {
-      "associatePerson": {
-        "change": "Change"
-      },
-      "churchSettings": {
-        "churchSet": "Church Settings",
-        "subdom": "Subdomain"
-      },
-      "churchSettingsEdit": {
-        "noNameMsg": "Church name cannot be blank.",
-        "noSubMsg": "Subdomain cannot be blank.",
-        "churchName": "Church Name",
-        "subdom": "Subdomain",
-        "address1": "Address Line 1",
-        "address2": "Address Line 2"
-      },
-      "domainSettingsEdit": {
-        "delete": "Delete",
-        "domains": "Domains",
-        "domain": "Domain",
-        "domMsg": "You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS:",
-        "act": "Action"
-      },
-      "givingSettingsEdit": {
-        "pubKey": "Public Key",
-        "secKey": "Secret Key",
-        "transFee": "Transaction Fee",
-        "giving": "Giving",
-        "prov": "Provider",
-        "none": "None",
-        "stripe": "Stripe",
-        "forceMsg": "Automatically forces users to cover the transaction fees"
-      },
-      "imageEditor": {
-        "upload": "Upload",
-        "crop": "Crop"
-      },
-      "preview": {
-        "preview": "Preview"
-      },
-      "roleEdit": {
-        "valMsg": "Please enter a valid role name.",
-        "confirmMsg": "Are you sure you wish to permanently delete this role?",
-        "roleEdit": "Edit Role",
-        "roleName": "Role Name"
-      },
-      "roleMembers": {
-        "confirmMsg": "Are you sure you wish to delete this user from",
-        "roleAppMsg": "This role applies to all the members of the church.",
-        "mem": "Members",
-        "delete": "Delete"
-      },
-      "rolePermissions": {
-        "permEdit": "Edit Permissions"
-      },
-      "roles": {
-        "roleCreate": "Do you wish to create a new role of ",
-        "itMsg": "? It ",
-        "custAdd": "Add Custom Role",
-        "role": "Role",
-        "roles": "Roles",
-        "acc": "Accounting",
-        "accDesc": "Has access to view and manage donations.",
-        "churchStaff": "Church Staff",
-        "canEdit": "Can edit most data in ",
-        "churchDesc": " including people, groups, attendance and forms.",
-        "contAdmin": "Content Admin",
-        "contAdminDesc": "Can edit website content, mobile content and sermons.",
-        "lesAdmin": "Lessons Admin",
-        "lesAdminDesc": "Can set up classrooms and schedule lessons on ",
-        "everyone": "Everyone"
-      },
-      "userAdd": {
-        "errAnother": "Cannot save. Another user already exists for this email address.",
-        "valEmail": "Please enter a valid Email",
-        "errDiff": "The user account for this email is associated with a different person.",
-        "firstMsg": "Please enter firstname",
-        "lastMsg": "Please enter lastname",
-        "valEmailMsg": "Enter a valid Email",
-        "noAcc": "Don't have a user account?",
-        "createNew": "Create New User",
-        "addTo": "Add To "
-      },
-      "manageChurch": {
-        "tools": "Tools",
-        "imEx": "Import/Export",
-        "manage": "Manage"
-      },
-      "rolePage": {
-        "permEdit": "Edit Permissions",
-        "noEditMsg": "Permissions cannot be edited for the Domain Admins role.  Domain Admins have full access.",
-        "roleEdit": "Edit Role:"
-      }
-    },
-    "tasks": {
-      "actionEdit": {
-        "editAct": "Action Edit",
-        "actType": "Action Type",
-        "taskAssign": "Assign a Task",
-        "assignTo": "Assign to",
-        "taskTitle": "Task Title",
-        "taskNote": "Task Note"
-      },
-      "automationDetails": {
-        "task": "Task",
-        "auto": "Automation Details",
-        "rep": "Repeats",
-        "acts": "Actions"
-      },
-      "automationEdit": {
-        "autoEdit": "Edit Automation",
-        "rep": "Repeat",
-        "never": "Never",
-        "yearly": "Yearly",
-        "monthly": "Monthly"
-      },
-      "conditionAttendance": {
-        "op": "Operator",
-        "hasAtt": "has attended",
-        "hasNoAtt": "has not attended",
-        "eventType": "Event Type",
-        "anywhere": "Anywhere",
-        "campus": "Campus",
-        "serv": "Service",
-        "servTime": "Service Time",
-        "group": "Group"
-      },
-      "conditionDate": {
-        "dayOf": "Day of Week",
-        "sun": "Sunday",
-        "mon": "Monday",
-        "tues": "Tuesday",
-        "wed": "Wednesday",
-        "thurs": "Thursday",
-        "fri": "Friday",
-        "sat": "Saturday",
-        "month": "Month",
-        "prevMonth": "Previous Month",
-        "curMonth": "Current Month",
-        "nextMonth": "Next Month",
-        "datePart": "Date Part",
-        "dateFull": "Full Date",
-        "weekDay": "Day of Week",
-        "monthDay": "Day of Month",
-        "yearsE": "Years Elapsed",
-        "op": "Operator",
-        "absolute": "Absolute Values",
-        "relative": "Relative Values"
-      },
-      "conditionDetails": {
-        "addConj": "Add Conjunction",
-        "addCon": "Add Condition",
-        "any": "Any",
-        "trueCon": "of these conditions are true",
-        "all": "All",
-        "con": "Conditions:"
-      },
-      "conditionEdit": {
-        "confirmMsg": "Are you sure you want to delete this condition?",
-        "conEdit": "Edit Condition",
-        "conType": "Condition Type",
-        "gen": "General",
-        "today": "Today's Date",
-        "persAtt": "Personal Attributes",
-        "conInfo": "Contact Info"
-      },
-      "conditionSelect": {
-        "op": "Operator",
-        "is": "is",
-        "isNot": "is not"
-      },
-      "conditionText": {
-        "op": "Operator",
-        "contains": "contains",
-        "startW": "starts with",
-        "endW": "ends with"
-      },
-      "conjunctionEdit": {
-        "conjEdit": "Edit Conjunction",
-        "conjType": "Conjunction Type",
-        "and": "AND - All of the conditions are true",
-        "or": "OR - Any of the conditions are true"
-      },
-      "automationsPage": {
-        "manageAuto": "Managed Automated Tasks",
-        "auto": "Automated Tasks"
-      },
-      "contentPicker": {
-        "selPers": "Select a Person or Group",
-        "group": "Group",
-        "sel": "Select"
-      },
-      "newTask": {
-        "associatePers": "Please associate this task with a person.",
-        "assignPers": "Please assign this task to a person.",
-        "titleTask": "Please enter a title for this task.",
-        "taskNew": "New Task",
-        "associateW": "Associate with",
-        "assignTo": "Assign to"
-      },
-      "selectGroup": {
-        "group": "Group",
-        "sel": "Select"
-      },
-      "taskList": {
-        "associateW": "Associated with",
-        "assignTo": "Assigned to",
-        "assignGroup": "Assigned to My Groups",
-        "assignMe": "Assigned to Me",
-        "reqMe": "Requested by Me",
-        "tasks": "Tasks"
-      },
-      "taskPage": {
-        "dateCreated": "Date Created",
-        "taskDet": "Task Details",
-        "stat": "Status",
-        "open": "Open",
-        "closed": "Closed",
-        "createdBy": "Created By",
-        "associateW": "Associated With",
-        "assignTo": "Assigned to",
-        "change": "Change"
-      },
-      "tasksPage": {
-        "tasks": "Tasks",
-        "auto": "Automations",
-        "showClosed": "Show Closed",
-        "showOpen": "Show Open"
-      }
-    }
+	"attendance": {
+		"attendancePage": {
+			"addCampus": "Add Campus",
+			"addService": "Add Service",
+			"addServiceTime": "Add Service Time",
+			"att": "Attendance",
+			"campus": "Campus",
+			"category": "Category",
+			"group": "Group",
+			"groupAttMsg": "Group attendance will show up once sessions have been added to a group and people have attended those sessions.",
+			"groups": "Groups",
+			"service": "Service",
+			"time": "Time"
+		},
+		"campusEdit": {
+			"confirmDelete": "Are you sure you want to delete this campus?",
+			"name": "Campus Name",
+			"validate": {
+				"name": "Campus Name is required."
+			}
+		},
+		"serviceEdit": {
+			"campus": "Campus",
+			"confirmDelete": "Are you sure you wish to permanently delete this service?",
+			"name": "Service Name",
+			"validate": {
+				"campus": "Please select a campus.",
+				"name": "Service name is required."
+			}
+		},
+		"serviceTimeEdit": {
+			"confirmDelete": "Are you sure you wish to permanently delete this service time?",
+			"name": "Service Time",
+			"service": "Service",
+			"validate": {
+				"name": "Service time name is required.",
+				"service": "Please select a service."
+			}
+		},
+		"tabs": {
+			"attTrend": "Attendance Trend",
+			"groupAtt": "Group Attendance",
+			"noImplement": "Not Implemented"
+		}
+	},
+	"common": {
+		"add": "Add",
+		"close": "Close",
+		"delete": "Delete",
+		"edit": "Edit",
+		"name": "Name",
+		"no": "No",
+		"notes": "Notes",
+		"remove": "Remove",
+		"search": "Search",
+		"title": "Title",
+		"yes": "Yes"
+	},
+	"components": {
+		"footer": {
+			"phone": "Phone",
+			"rights": "All rights reserved."
+		},
+		"wrapper": {
+			"att": "Attendance",
+			"dash": "Dashboard",
+			"don": "Donations",
+			"form": "Form",
+			"groups": "Groups",
+			"plans": "Plans",
+			"ppl": "People",
+			"servAdmin": "Server Admin",
+			"set": "Settings",
+			"tasks": "Tasks"
+		}
+	},
+	"dashboard": {
+		"dashboardPage": {
+			"dash": "Dashboard"
+		},
+		"myGroups": "My Groups",
+		"people": "People",
+		"peopleSearch": {
+			"photo": "Photo",
+			"ppl": "People"
+		},
+		"tasks": "Tasks"
+	},
+	"donations": {
+		"batchEdit": {
+			"confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
+			"date": "Date",
+			"edit": "Edit Batch",
+			"opName": "Name (optional)"
+		},
+		"donationEdit": {
+			"anon": "Anonymous",
+			"card": "Card",
+			"cash": "Cash",
+			"check": "Check",
+			"checkNum": "Check #",
+			"date": "Date",
+			"donEdit": "Edit Donation",
+			"lastDig": "Last 4 digits",
+			"method": "Method"
+		},
+		"donationEvents": {
+			"event": "Event: ",
+			"failed": "Failed Donations - ",
+			"mark": "Mark as ",
+			"msg": "Message: ",
+			"person": "Person: ",
+			"unres": " unresolved"
+		},
+		"donations": {
+			"amt": "Amount",
+			"anon": "Anonymous",
+			"date": "Date",
+			"don": "Donations",
+			"errMsg": "No fund found. Please create a fund before making a donation",
+			"noDonMsg": "No donations have been tracked. Once donations are entered they will show up here.",
+			"tableIdent": "Id",
+			"total": "Total"
+		},
+		"donationsPage": {
+			"batch": "Batch",
+			"date": "Date",
+			"don": "Donations",
+			"noBatch": "No batches found.",
+			"total": "Total"
+		},
+		"fundEdit": {
+			"confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
+			"edit": "Edit Fund",
+			"errBlank": "Enter a fund name"
+		},
+		"funds": {
+			"fund": "Funds",
+			"noFund": "No funds found."
+		},
+		"fundsPage": {
+			"amt": "Amount",
+			"anon": "Anonymous",
+			"batch": "Batch",
+			"date": "Date",
+			"dateEnd": "End Date",
+			"dateStart": "Start Date",
+			"don": "Donations",
+			"donFilt": "Donation Filter",
+			"donor": "Donor",
+			"noDon": "No donations yet"
+		}
+	},
+	"forms": {
+		"choicesEdit": {
+			"act": "Action",
+			"choices": "Choices",
+			"txt": "Text",
+			"value": "Value"
+		},
+		"form": {
+			"act": "Action",
+			"noCustomMsg": "No custom questions have been created yet. Questions will be listed here.",
+			"question": "Question",
+			"questions": "Questions",
+			"req": "Required",
+			"type": "Type"
+		},
+		"formEdit": {
+			"access": "Form Access",
+			"alone": "Stand Alone",
+			"associate": "Associate With",
+			"available": "Set Form Availability Timeframe",
+			"availableEnd": "Availability End Date",
+			"availableStart": "Availability Start Date",
+			"confirmMsg": "Are you sure you wish to permanently delete this form?",
+			"editForm": "Edit Form",
+			"endReqMsg": "End date is required.",
+			"name": "Form Name",
+			"nameReqMsg": "Form name is required.",
+			"ppl": "People",
+			"public": "Public",
+			"restrict": "Restricted",
+			"startReqMsg": "Start date is required."
+		},
+		"formMembers": {
+			"act": "Action",
+			"addPpl": "Add Person",
+			"admin": "Admin",
+			"emailNotif": "Email Notification",
+			"emailNotifMsg": "Whenever the form is submitted, you'll get notified via mail.",
+			"formMem": "Form Members",
+			"perm": "Permission",
+			"view": "View Only"
+		},
+		"formQuestionEdit": {
+			"ansReq": "Require an answer for this question",
+			"checkBox": "Checkbox",
+			"confirmMsg": "Are you sure you wish to permanently delete this question?",
+			"date": "Date",
+			"decNum": "Decimal",
+			"desc": "Description",
+			"fieldReq": "Field type is required.",
+			"multiChoice": "Multiple Choice",
+			"phoneNum": "Phone Number",
+			"plcOp": "Placeholder (optional)",
+			"prov": "Provider",
+			"questionEdit": "Edit Question",
+			"questionReq": "Question is required.",
+			"textArea": "Text Area",
+			"textBox": "Textbox",
+			"wholeNum": "Whole Number",
+			"yesNo": "Yes/No"
+		},
+		"formsPage": {
+			"archForms": "Archived Forms",
+			"confirmMsg1": "Are you sure you want to archive this form?",
+			"confirmMsg2": "Are you sure you want to restore this form?",
+			"forms": "Forms",
+			"noArch": "No archived forms.",
+			"noCustomMsg": "No custom forms have been created yet. They will appear here when added."
+		},
+		"formSubmissions": {
+			"anon": "Anonymous",
+			"subBy": "Submitted By",
+			"subDate": "Submission Date",
+			"subFor": "Submitted For",
+			"subRes": "Form Submission Results",
+			"subSum": "Form Submission Summary"
+		},
+		"tabs": {
+			"formMem": "Form Members",
+			"formSub": "Form Submissions",
+			"questions": "Questions",
+			"unAuth": "Unauthorized"
+		}
+	},
+	"groups": {
+		"groupAdd": {
+			"catName": "Category Name",
+			"catReq": "Category name is required.",
+			"group": "Group",
+			"groupReq": "Group name is required.",
+			"ministry": "Ministry",
+			"new": "New ",
+			"team": "Team"
+		},
+		"groupDetails": {
+			"attTrack": "Track Attendance:",
+			"cat": "Category",
+			"groupDet": "Group Details",
+			"parPick": "Parent Pickup:"
+		},
+		"groupDetailsEdit": {
+			"attTrack": "Track Attendance",
+			"catName": "Category Name",
+			"catNameMsg": "Please enter a category name.",
+			"confirmMsg": "Are you sure you wish to permanently delete this group?",
+			"groupDesc": "Group Description",
+			"groupDet": "Group Details",
+			"groupImg": "Group Photo",
+			"groupName": "Group Name",
+			"groupNameMsg": "Please enter a group name.",
+			"parPick": "Parent Pickup",
+			"selImg": "Select Photo"
+		},
+		"groupMembers": {
+			"groupMem": "Group Members",
+			"noMem": "No group members found.",
+			"send": "Send",
+			"sendMemMsg": "Send a message to members"
+		},
+		"groupPage": {
+			"addPpl": "Add Person"
+		},
+		"groupSessions": {
+			"addSesMsg": "Please add a new session to continue.",
+			"attFor": "Attendance for",
+			"new": "New",
+			"noSesMsg": "There are no sessions.",
+			"session": "Session",
+			"sessions": "Sessions"
+		},
+		"groupsPage": {
+			"cat": "Category",
+			"groups": "Groups",
+			"noGroupMsg": "No groups found. Please create a group.",
+			"pers": "1 person",
+			"ppl": "People",
+			"spPpl": " people"
+		},
+		"membersAdd": {
+			"availableMem": "Available Group Members",
+			"noMem": "No group members available."
+		},
+		"serviceTimes": {
+			"services": "Service(s):"
+		},
+		"serviceTimesEdit": {
+			"srvTimeAdd": "Add Service Time",
+			"srvTimeOp": "Service Times (optional)"
+		},
+		"sessionAdd": {
+			"invDate": "Invalid Date",
+			"sesAdd": "Add a Session",
+			"sesDate": "Session Date",
+			"srvTime": "Service Time"
+		},
+		"tabs": {
+			"mem": "Members",
+			"noImplement": "Not Implemented",
+			"ses": "Sessions"
+		}
+	},
+	"month": {
+		"apr": "April",
+		"aug": "August",
+		"dec": "December",
+		"feb": "February",
+		"jan": "January",
+		"july": "July",
+		"june": "June",
+		"mar": "March",
+		"may": "May",
+		"nov": "November",
+		"oct": "October",
+		"sep": "September"
+	},
+	"people": {
+		"editCondition": {
+			"act": "Activity",
+			"anniMonth": "Anniversary Month",
+			"any": "Any",
+			"attCamp": "has attended (campus)",
+			"attGen": "has attended (in general)",
+			"attGroup": "has attended (group)",
+			"attServ": "has attended (service)",
+			"attServTime": "has attended (service time)",
+			"bMonth": "Birth Month",
+			"contains": "contains",
+			"donTo": "has donated to",
+			"endW": "ends with",
+			"field": "Field",
+			"from": "From",
+			"groupMem": "Group Member",
+			"hasDon": "has donated (in general)",
+			"isMem": "is member of",
+			"marYears": "Years Married",
+			"memAtt": "Member Attendance",
+			"memDon": "Member Donations",
+			"notMem": "is not member of",
+			"operator": "Operator",
+			"saveCon": "Save Condition",
+			"startW": "starts with",
+			"to": "To",
+			"value": "Value"
+		},
+		"groups": {
+			"groups": "Groups",
+			"notMemMsg": "Not currently a member of any groups."
+		},
+		"household": {
+			"house": " Household"
+		},
+		"householdEdit": {
+			"addMatch": "address to match",
+			"blankMsg": "Please provide a household name.",
+			"child": "Child",
+			"head": "Head",
+			"house": " Household",
+			"houseName": "Household Name",
+			"other": "Other",
+			"spouse": "Spouse",
+			"updQuestion": "Would you like to update"
+		},
+		"merge": {
+			"merge": "merge",
+			"mergeRec": "Merge Records"
+		},
+		"mergeModal": {
+			"cancel": "Cancel",
+			"confirm": "Confirm",
+			"fieldCon": "Here are some fields conflicting fields:",
+			"merge": "Merging records...",
+			"mergeQuestion": "Would you like to merge",
+			"selMsg": "Please select at least 1 value for each field",
+			"with": "with"
+		},
+		"peopleColumns": {
+			"appFilt": "Apply Filters",
+			"cust": "Custom",
+			"filt": "Filters",
+			"noFilt": "No filters available.",
+			"stand": "Standard"
+		},
+		"peoplePage": {
+			"bDay": "Birthday",
+			"bDayNo": "Birthday (No Year)",
+			"delete": "Delete",
+			"deleteOp": "Delete Option",
+			"first": "First",
+			"last": "Last",
+			"middle": "Middle",
+			"nameNote": "Name Tag Notes",
+			"photo": "Photo",
+			"ppl": "People",
+			"primEmail": "Primary Email",
+			"primPhone": "Primary Phone",
+			"searchPpl": "Search People"
+		},
+		"peopleSearch": {
+			"addCon": "Add Condition",
+			"adv": "Advanced",
+			"advSearch": "Advanced Search",
+			"allPeeps": "All people where:",
+			"for": "for",
+			"madeTo": "made to",
+			"notIn": "Not In",
+			"simp": "Simple",
+			"simpSearch": "Simple Search"
+		},
+		"peopleSearchResults": {
+			"noResMsg": "No results found.  Please search for a different name or add a new person"
+		},
+		"personAttendance": {
+			"att": "Attendance",
+			"noAttMsg": "No attendance records. Attendance will appear once attendance has been tracked for a group session."
+		},
+		"personEdit": {
+			"applyQuestion": "Would you like to apply that to the entire",
+			"confirmMsg": "Are you sure you wish to permanently delete this person record?",
+			"exten": "Extension",
+			"family": "family",
+			"firstReq": "First name is required",
+			"for": "for",
+			"home": "Home",
+			"invalForm": "Invalid Format",
+			"lastReq": "Last name is required",
+			"merge": "Merge",
+			"mobile": "Mobile",
+			"nameNote": "Name Tag Notes",
+			"nickName": "Nickname",
+			"persDet": "Personal Details",
+			"upAddress": "You updated the address to",
+			"valEmail": "Please enter a valid email address.",
+			"work": "Work"
+		},
+		"personView": {
+			"home": "Home",
+			"memShip": "Membership:",
+			"mobile": "Mobile",
+			"persDet": "Personal Details",
+			"work": "Work"
+		},
+		"tabs": {
+			"att": "Attendance",
+			"don": "Donations",
+			"noImplement": "Not Implemented"
+		},
+		"updateHouseHold": {
+			"update": "Update Address"
+		}
+	},
+	"person": {
+		"age": "Age",
+		"anniversary": "Anniversary",
+		"birthDate": "Birth Date",
+		"country": "Country",
+		"displayName": "Display Name",
+		"divorced": "Divorced",
+		"email": "Email",
+		"female": "Female",
+		"firstName": "First Name",
+		"gender": "Gender",
+		"lastName": "Last Name",
+		"line1": "Line 1",
+		"line2": "Line 2",
+		"male": "Male",
+		"maritalStatus": "Marital Status",
+		"married": "Married",
+		"member": "Member",
+		"membership": "Membership",
+		"membershipStatus": "Membership Status",
+		"middleName": "Middle Name",
+		"nickName": "Nick Name",
+		"person": "Person",
+		"phone": "Phone",
+		"prefix": "Prefix",
+		"single": "Single",
+		"staff": "Staff",
+		"state": "State/Province",
+		"suffix": "Suffix",
+		"unknown": "Unknown",
+		"unspecified": "Unspecified",
+		"visitor": "Visitor",
+		"widowed": "Widowed",
+		"zip": "Zip/Postal"
+	},
+	"plans": {
+		"assignmentEdit": {
+			"assignPos": "Assign Position",
+			"done": "Done",
+			"editAssign": "Edit Assignment",
+			"noMem": "No group members found."
+		},
+		"ministryList": {
+			"mins": "Ministires",
+			"noMinMsg": "No ministries found. Please create a ministry."
+		},
+		"ministryPage": {
+			"plans": "Plans",
+			"teams": "Teams"
+		},
+		"planEdit": {
+			"copy": "Copy From",
+			"none": "None",
+			"planAdd": "Add a Plan",
+			"planEdit": "Edit Plan",
+			"planReq": "Plan name is required.",
+			"servDate": "Service Date",
+			"servReq": "Service date is required."
+		},
+		"planList": {
+			"noPlan": "No plans have been added yet.",
+			"plans": "Plans"
+		},
+		"planPage": {
+			"assign": "Assignments",
+			"band": "Band",
+			"noteSave": "Notes Saved."
+		},
+		"plansPage": {
+			"selMin": "Select a Ministry"
+		},
+		"planValidation": {
+			"and": "and",
+			"between": "between",
+			"blockCon": "Blockout date conflict of",
+			"cons": "Conflicts",
+			"during": "during",
+			"more": "more",
+			"needed": "needed.",
+			"notify": "Notify",
+			"person": "person",
+			"ppl": "people",
+			"timeCon": "Time conflict between",
+			"timeCon2": "Time conflict at",
+			"to": "to",
+			"val": "Validation",
+			"valPlan": "Plan is valid.",
+			"vol": "volunteer(s)",
+			"volNotif": "All volunteers notified.",
+			"volReq": "Volunteer Requests: "
+		},
+		"positionEdit": {
+			"catName": "Category Name",
+			"catNameReq": "Category Name is required.",
+			"nameReq": "Name is required",
+			"posAdd": "Add a Position",
+			"posEdit": "Edit Position",
+			"volCount": "Volunteer Count",
+			"volGroup": "Volunteer Group"
+		},
+		"positionList": {
+			"load": "Loading...",
+			"persNeed": "1 Person Needed",
+			"pos": "Position",
+			"ppl": "People",
+			"pplNeed": " People Needed",
+			"team": "Team"
+		},
+		"teamList": {
+			"noTeam": "No teams found. Please create a team.",
+			"peeps": " people",
+			"pers": "1 person",
+			"ppl": "People",
+			"teams": "Teams"
+		},
+		"timeEdit": {
+			"disName": "Display Name",
+			"disNameReq": "Display name is required.",
+			"endReq": "End time is required",
+			"startReq": "Start time is required",
+			"teamNeed": "Needed Teams",
+			"timeAdd": "Add a Time",
+			"timeEdit": "Edit Time",
+			"timeEnd": "End Time",
+			"timeStart": "Start Time"
+		},
+		"timeList": {
+			"noTime": "No times have been added yet",
+			"sunServ": "Sunday Service",
+			"times": "Times"
+		}
+	},
+	"profile": {
+		"profilePage": {
+			"accDel": "Account Deletion",
+			"confirmMsg": "Are you sure you wish to permanently delete your account?",
+			"daily": "Daily",
+			"delAcc": "Delete my account",
+			"emailMsg": "Please enter an email address.",
+			"firstMsg": "Please enter firstname",
+			"freqEmail": "Email Frequency",
+			"indiv": "Individual",
+			"lastMsg": "Please enter lastname",
+			"never": "Never",
+			"noDirect": "Directory opt-out",
+			"notifMsg": "Choose how you would like to receive updates about private messages, conversations, forms and other notifications.",
+			"notifPref": "Notification Preferences",
+			"notifPush": "Allow Push Notifications",
+			"passLong": "Please enter a password that is at least 8 characters long.",
+			"passMatch": "Passwords do not match.",
+			"passNew": "New password",
+			"passVer": "Verify password",
+			"permWarn": "Careful, these actions are permanent",
+			"profEdit": "Edit Profile",
+			"saveChange": "Changes saved.",
+			"valEmail": "Please enter a valid email address."
+		}
+	},
+	"reports": {
+		"reportPage": {
+			"report": "Report"
+		},
+		"reportsPage": {
+			"attTrend": "Attendance Trend",
+			"bDays": "Birthdays",
+			"dailyGroupAtt": "Daily Group Attendance",
+			"donSum": "Donation Summary",
+			"groupAtt": "Group Attendance",
+			"reports": "Reports"
+		}
+	},
+	"serverAdmin": {
+		"adminPage": {
+			"act": "Active",
+			"arch": "Archived",
+			"church": "Church",
+			"churches": "Churches",
+			"churchName": "Church Name",
+			"noChurch": "No churches found.  Please search for a different name.",
+			"noteFour": "Comparable software is ProPresenter.  It's $399 for a site license.  I made assumptions that the average church installs the software on 3 computers and divided our total installs by 3 to get the number of churches.  I also made the assumption that churches will upgrade to a newer version every 5 years on average.  So $399 / 5 years / 3 computers = $26.60 annual cost per computer.  If we can quantify these assumptions we should update this number.",
+			"noteOne": "Comparable software is Breeze.  They charge $72/mo or $864/year.",
+			"noteThree": "Comparable content is Orange.  They charge $1023/year for churches with 26-50 viewers for 252 Basic.",
+			"noteTwo": "Comparable software is SubSplash.  They start at $99/mo or $1200/year.  This does not include the cut they take on donations.",
+			"regist": "Registered",
+			"servAdmin": "Server Admin",
+			"valueNotes": "Notes on How Values are Calculated"
+		},
+		"reportPage": {
+			"report": "Report"
+		}
+	},
+	"settings": {
+		"associatePerson": {
+			"change": "Change"
+		},
+		"churchSettings": {
+			"churchSet": "Church Settings",
+			"subdom": "Subdomain"
+		},
+		"churchSettingsEdit": {
+			"address1": "Address Line 1",
+			"address2": "Address Line 2",
+			"churchName": "Church Name",
+			"noNameMsg": "Church name cannot be blank.",
+			"noSubMsg": "Subdomain cannot be blank.",
+			"subdom": "Subdomain"
+		},
+		"domainSettingsEdit": {
+			"act": "Action",
+			"delete": "Delete",
+			"domain": "Domain",
+			"domains": "Domains",
+			"domMsg": "You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS:"
+		},
+		"givingSettingsEdit": {
+			"forceMsg": "Automatically forces users to cover the transaction fees",
+			"giving": "Giving",
+			"none": "None",
+			"prov": "Provider",
+			"pubKey": "Public Key",
+			"secKey": "Secret Key",
+			"stripe": "Stripe",
+			"transFee": "Transaction Fee"
+		},
+		"imageEditor": {
+			"crop": "Crop",
+			"upload": "Upload"
+		},
+		"manageChurch": {
+			"imEx": "Import/Export",
+			"manage": "Manage",
+			"tools": "Tools"
+		},
+		"preview": {
+			"preview": "Preview"
+		},
+		"roleEdit": {
+			"confirmMsg": "Are you sure you wish to permanently delete this role?",
+			"roleEdit": "Edit Role",
+			"roleName": "Role Name",
+			"valMsg": "Please enter a valid role name."
+		},
+		"roleMembers": {
+			"confirmMsg": "Are you sure you wish to delete this user from",
+			"delete": "Delete",
+			"mem": "Members",
+			"roleAppMsg": "This role applies to all the members of the church."
+		},
+		"rolePage": {
+			"noEditMsg": "Permissions cannot be edited for the Domain Admins role.  Domain Admins have full access.",
+			"permEdit": "Edit Permissions",
+			"roleEdit": "Edit Role:"
+		},
+		"rolePermissions": {
+			"permEdit": "Edit Permissions"
+		},
+		"roles": {
+			"acc": "Accounting",
+			"accDesc": "Has access to view and manage donations.",
+			"canEdit": "Can edit most data in ",
+			"churchDesc": " including people, groups, attendance and forms.",
+			"churchStaff": "Church Staff",
+			"contAdmin": "Content Admin",
+			"contAdminDesc": "Can edit website content, mobile content and sermons.",
+			"custAdd": "Add Custom Role",
+			"everyone": "Everyone",
+			"itMsg": "? It ",
+			"lesAdmin": "Lessons Admin",
+			"lesAdminDesc": "Can set up classrooms and schedule lessons on ",
+			"role": "Role",
+			"roleCreate": "Do you wish to create a new role of ",
+			"roles": "Roles"
+		},
+		"userAdd": {
+			"addTo": "Add To ",
+			"createNew": "Create New User",
+			"errAnother": "Cannot save. Another user already exists for this email address.",
+			"errDiff": "The user account for this email is associated with a different person.",
+			"firstMsg": "Please enter firstname",
+			"lastMsg": "Please enter lastname",
+			"noAcc": "Don't have a user account?",
+			"valEmail": "Please enter a valid Email",
+			"valEmailMsg": "Enter a valid Email"
+		}
+	},
+	"tasks": {
+		"actionEdit": {
+			"actType": "Action Type",
+			"assignTo": "Assign to",
+			"editAct": "Action Edit",
+			"taskAssign": "Assign a Task",
+			"taskNote": "Task Note",
+			"taskTitle": "Task Title"
+		},
+		"automationDetails": {
+			"acts": "Actions",
+			"auto": "Automation Details",
+			"rep": "Repeats",
+			"task": "Task"
+		},
+		"automationEdit": {
+			"autoEdit": "Edit Automation",
+			"monthly": "Monthly",
+			"never": "Never",
+			"rep": "Repeat",
+			"yearly": "Yearly"
+		},
+		"automationsPage": {
+			"auto": "Automated Tasks",
+			"manageAuto": "Managed Automated Tasks"
+		},
+		"conditionAttendance": {
+			"anywhere": "Anywhere",
+			"campus": "Campus",
+			"eventType": "Event Type",
+			"group": "Group",
+			"hasAtt": "has attended",
+			"hasNoAtt": "has not attended",
+			"op": "Operator",
+			"serv": "Service",
+			"servTime": "Service Time"
+		},
+		"conditionDate": {
+			"absolute": "Absolute Values",
+			"curMonth": "Current Month",
+			"dateFull": "Full Date",
+			"datePart": "Date Part",
+			"dayOf": "Day of Week",
+			"fri": "Friday",
+			"mon": "Monday",
+			"month": "Month",
+			"monthDay": "Day of Month",
+			"nextMonth": "Next Month",
+			"op": "Operator",
+			"prevMonth": "Previous Month",
+			"relative": "Relative Values",
+			"sat": "Saturday",
+			"sun": "Sunday",
+			"thurs": "Thursday",
+			"tues": "Tuesday",
+			"wed": "Wednesday",
+			"weekDay": "Day of Week",
+			"yearsE": "Years Elapsed"
+		},
+		"conditionDetails": {
+			"addCon": "Add Condition",
+			"addConj": "Add Conjunction",
+			"all": "All",
+			"any": "Any",
+			"con": "Conditions:",
+			"trueCon": "of these conditions are true"
+		},
+		"conditionEdit": {
+			"conEdit": "Edit Condition",
+			"confirmMsg": "Are you sure you want to delete this condition?",
+			"conInfo": "Contact Info",
+			"conType": "Condition Type",
+			"gen": "General",
+			"persAtt": "Personal Attributes",
+			"today": "Today's Date"
+		},
+		"conditionSelect": {
+			"is": "is",
+			"isNot": "is not",
+			"op": "Operator"
+		},
+		"conditionText": {
+			"contains": "contains",
+			"endW": "ends with",
+			"op": "Operator",
+			"startW": "starts with"
+		},
+		"conjunctionEdit": {
+			"and": "AND - All of the conditions are true",
+			"conjEdit": "Edit Conjunction",
+			"conjType": "Conjunction Type",
+			"or": "OR - Any of the conditions are true"
+		},
+		"contentPicker": {
+			"group": "Group",
+			"sel": "Select",
+			"selPers": "Select a Person or Group"
+		},
+		"newTask": {
+			"assignPers": "Please assign this task to a person.",
+			"assignTo": "Assign to",
+			"associatePers": "Please associate this task with a person.",
+			"associateW": "Associate with",
+			"taskNew": "New Task",
+			"titleTask": "Please enter a title for this task."
+		},
+		"selectGroup": {
+			"group": "Group",
+			"sel": "Select"
+		},
+		"taskList": {
+			"assignGroup": "Assigned to My Groups",
+			"assignMe": "Assigned to Me",
+			"assignTo": "Assigned to",
+			"associateW": "Associated with",
+			"reqMe": "Requested by Me",
+			"tasks": "Tasks"
+		},
+		"taskPage": {
+			"assignTo": "Assigned to",
+			"associateW": "Associated With",
+			"change": "Change",
+			"closed": "Closed",
+			"createdBy": "Created By",
+			"dateCreated": "Date Created",
+			"open": "Open",
+			"stat": "Status",
+			"taskDet": "Task Details"
+		},
+		"tasksPage": {
+			"auto": "Automations",
+			"showClosed": "Show Closed",
+			"showOpen": "Show Open",
+			"tasks": "Tasks"
+		}
+	}
 }
