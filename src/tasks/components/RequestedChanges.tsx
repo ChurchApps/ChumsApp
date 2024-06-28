@@ -59,7 +59,7 @@ export const RequestedChanges = (props: Props) => {
   };
 
   return (
-    <InputBox headerIcon="assignment_return" headerText="Requested Changes" saveText="Apply" saveFunction={handleApply} isSubmitting={props.task.assignedToId !== UserHelper.person.id || props.task.status === "Closed"}>
+    <InputBox headerIcon="assignment_return" headerText="Requested Changes" saveText="Apply" saveFunction={handleApply} isSubmitting={props.task.status === "Closed"}>
       <Table>
         <TableHead>
           <TableRow>
