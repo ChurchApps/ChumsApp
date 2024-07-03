@@ -131,7 +131,7 @@ export function HouseholdEdit(props: Props) {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell>
-                <SmallButton icon="person_add" text={Locale.label("people.householdEdit.add")} onClick={() => setShowAdd(true)} />
+                <SmallButton icon="person_add" text={Locale.label("common.add")} onClick={() => setShowAdd(true)} />
               </TableCell>
             </TableRow>
           </TableBody>
