@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { Button, Icon, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
+import { Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
@@ -14,6 +14,8 @@ export const GroupMembers: React.FC<Props> = (props) => {
   const [groupMembers, setGroupMembers] = useState<GroupMemberInterface[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
+  const [showTemplates, setShowTemplates] = useState<boolean>(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [count, setCount] = useState<number>(0);
   //const isSubscribed = useRef(true);
@@ -98,6 +100,17 @@ export const GroupMembers: React.FC<Props> = (props) => {
     return rows;
   }
 
+  const handleTemplateMessage = (templateType: string) => {
+    let newMessage = "";
+    if (templateType !== "") {
+      switch (templateType) {
+        case "welcome_volunteers": newMessage = Locale.label("groups.groupMembers.templates.welcome_volunteers.message"); break;
+        default: newMessage = ""; break;
+      }
+    }
+    setMessage(newMessage);
+  }
+
   const getEditContent = () => (<>
     {UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit) && <SmallButton icon="edit_square" toolTip={Locale.label("groups.groupMembers.sendMemMsg")} onClick={() => { setCount(0); setShow(!show) }}></SmallButton>}
     <ExportLink data={groupMembers} spaceAfter={true} filename="groupmembers.csv" />
@@ -108,6 +121,9 @@ export const GroupMembers: React.FC<Props> = (props) => {
     const ids = peopleIds.filter(id => id !== UserHelper.person.id); //remove the one that is sending the message.
     const data: any = { peopleIds: ids, contentType: "groupMessage", contentId: props.group.id, message: `Message from ${UserHelper.person.name.first}: ${message}` };
     await ApiHelper.post("/notifications/create", data, "MessagingApi");
+    setShowTemplates(false);
+    setMessage("");
+    setSelectedTemplate("");
   }
 
   React.useEffect(() => {
@@ -132,8 +148,18 @@ export const GroupMembers: React.FC<Props> = (props) => {
     <DisplayBox id="groupMembersBox" data-cy="group-members-tab" headerText={Locale.label("groups.groupMembers.groupMem")} headerIcon="group" editContent={getEditContent()} help="chums/groups">
       {show === true && (
         <div style={{ marginTop: "18px", marginBottom: "18px" }}>
-          <TextField fullWidth multiline helperText={count + "/140"} inputProps={{ maxLength: 140 }} onChange={(e) => { setCount(e.target.value.length); setMessage(e.target.value); }} sx={{ margin: 0 }} />
-          <div style={{ display: "flex", justifyContent: "end", alignItems: "center" }}>
+          {(showTemplates === true)
+            ? (<FormControl fullWidth>
+              <InputLabel id="message_templates">{Locale.label("groups.groupMembers.templates.templates")}</InputLabel>
+              <Select name="templates" labelId="message_templates" label={Locale.label("groups.groupMembers.templates.templates")} value={selectedTemplate} onChange={(e) => { setSelectedTemplate(e.target.value); handleTemplateMessage(e.target.value); }}>
+                <MenuItem value="">{Locale.label("groups.groupMembers.templates.none")}</MenuItem>
+                <MenuItem value="welcome_volunteers">{Locale.label("groups.groupMembers.templates.welcome_volunteers.heading")}</MenuItem>
+              </Select>
+            </FormControl>)
+            : (<a href="about:blank" onClick={(e) => { e.preventDefault(); setShowTemplates(!showTemplates); }} style={{ paddingLeft: "5px" }}>{Locale.label("groups.groupMembers.showTemplates")}</a>)
+          }
+          <TextField fullWidth multiline helperText={(selectedTemplate) ? "" : (count + "/140")} inputProps={{ maxLength: (selectedTemplate) ? null : 140 }} value={message} onChange={(e) => { setCount(e.target.value.length); setMessage(e.target.value); }} sx={{ margin: 0, marginTop: 1 }} />
+          <div style={{ display: "flex", justifyContent: "end", alignItems: "center", marginTop: "15px" }}>
             <Button size="small" variant="contained" endIcon={<Icon fontSize="small">send</Icon>} onClick={() => { handleSend(); setShow(false); }}>{Locale.label("groups.groupMembers.send")}</Button>
           </div>
         </div>)

@@ -269,7 +269,16 @@
 			"groupMem": "Group Members",
 			"noMem": "No group members found.",
 			"send": "Send",
-			"sendMemMsg": "Send a message to members"
+			"sendMemMsg": "Send a message to members",
+			"showTemplates": "Show Templates",
+			"templates": {
+				"templates": "Templates",
+				"none": "None",
+				"welcome_volunteers": {
+					"heading": "Welcome Volunteers",
+					"message": "Welcome Thank you for volunteering.\n\nPlease download the B1.Church app and login to manage your schedule. https://support.churchapps.org/b1/download"
+				}
+			}
 		},
 		"groupPage": {
 			"addPpl": "Add Person"
