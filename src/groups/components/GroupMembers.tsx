@@ -121,9 +121,6 @@ export const GroupMembers: React.FC<Props> = (props) => {
     const ids = peopleIds.filter(id => id !== UserHelper.person.id); //remove the one that is sending the message.
     const data: any = { peopleIds: ids, contentType: "groupMessage", contentId: props.group.id, message: `Message from ${UserHelper.person.name.first}: ${message}` };
     await ApiHelper.post("/notifications/create", data, "MessagingApi");
-    setShowTemplates(false);
-    setMessage("");
-    setSelectedTemplate("");
   }
 
   React.useEffect(() => {
@@ -160,7 +157,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
           }
           <TextField fullWidth multiline helperText={(selectedTemplate) ? "" : (count + "/140")} inputProps={{ maxLength: (selectedTemplate) ? null : 140 }} value={message} onChange={(e) => { setCount(e.target.value.length); setMessage(e.target.value); }} sx={{ margin: 0, marginTop: 1 }} />
           <div style={{ display: "flex", justifyContent: "end", alignItems: "center", marginTop: "15px" }}>
-            <Button size="small" variant="contained" endIcon={<Icon fontSize="small">send</Icon>} onClick={() => { handleSend(); setShow(false); }}>{Locale.label("groups.groupMembers.send")}</Button>
+            <Button size="small" variant="contained" endIcon={<Icon fontSize="small">send</Icon>} onClick={() => { handleSend(); setShow(false); setMessage(""); setShowTemplates(false); setSelectedTemplate(""); }}>{Locale.label("groups.groupMembers.send")}</Button>
           </div>
         </div>)
       }
