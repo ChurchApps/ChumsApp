@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, Icon, InputLabel, MenuItem, Select, Tooltip } from "@mui/material";
+import { FormControl, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography } from "@mui/material";
 import { ApiHelper, GenericSettingInterface, GroupInterface, UniqueIdHelper } from "@churchapps/apphelper";
 
 interface Props { churchId: string; saveTrigger: Date | null; }
@@ -45,15 +45,15 @@ export const DirectoryApproveSettingsEdit: React.FC<Props> = (props) => {
 
   return (
     <div style={{ marginTop: 10, marginBottom: 10 }}>
-      <div>
-        Directory Approval Group{" "}
+      <Stack direction="row" alignItems="center">
+        <Typography>Directory Approval Group</Typography>
         <Tooltip
           title="This group will handle all the member directory updates. Only after their approval, changes will be applied."
           arrow
         >
-          <Icon fontSize="small" sx={{ paddingTop: "2px", cursor: "pointer" }} color="primary">info</Icon>
+          <Icon fontSize="small" sx={{ cursor: "pointer", color: "#757575", paddingLeft: "2px" }}>help</Icon>
         </Tooltip>
-      </div>
+      </Stack>
       <FormControl fullWidth>
         <InputLabel id="groups">Groups</InputLabel>
         <Select labelId="groups" name="groups" label="Groups" value={selectedGroupId} onChange={(e) => setSelectedGroupId(e.target.value)}>
