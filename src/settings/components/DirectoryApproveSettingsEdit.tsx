@@ -1,6 +1,6 @@
 import React from "react";
 import { FormControl, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography } from "@mui/material";
-import { ApiHelper, GenericSettingInterface, GroupInterface, UniqueIdHelper } from "@churchapps/apphelper";
+import { ApiHelper, GenericSettingInterface, GroupInterface, Locale, UniqueIdHelper } from "@churchapps/apphelper";
 
 interface Props { churchId: string; saveTrigger: Date | null; }
 
@@ -46,19 +46,19 @@ export const DirectoryApproveSettingsEdit: React.FC<Props> = (props) => {
   return (
     <div style={{ marginTop: 10, marginBottom: 10 }}>
       <Stack direction="row" alignItems="center">
-        <Typography>Directory Approval Group</Typography>
+        <Typography>{Locale.label("settings.directoryApprovalSettingsEdit.directoryApprovalGroup")}</Typography>
         <Tooltip
-          title="This group will handle all the member directory updates. Only after their approval, changes will be applied."
+          title={Locale.label("settings.directoryApprovalSettingsEdit.forceMsg")}
           arrow
         >
           <Icon fontSize="small" sx={{ cursor: "pointer", color: "#757575", paddingLeft: "2px" }}>help</Icon>
         </Tooltip>
       </Stack>
       <FormControl fullWidth>
-        <InputLabel id="groups">Groups</InputLabel>
-        <Select labelId="groups" name="groups" label="Groups" value={selectedGroupId} onChange={(e) => setSelectedGroupId(e.target.value)}>
-          <MenuItem value="">None</MenuItem>
-          {groups?.length > 0 ? (getFields()) : (<MenuItem value="" disabled>No groups available</MenuItem>)}
+        <InputLabel id="groups">{Locale.label("settings.directoryApprovalSettingsEdit.groups")}</InputLabel>
+        <Select labelId="groups" name="groups" label={Locale.label("settings.directoryApprovalSettingsEdit.groups")} value={selectedGroupId} onChange={(e) => setSelectedGroupId(e.target.value)}>
+          <MenuItem value="">{Locale.label("settings.directoryApprovalSettingsEdit.none")}</MenuItem>
+          {groups?.length > 0 ? (getFields()) : (<MenuItem value="" disabled>{Locale.label("settings.directoryApprovalSettingsEdit.noGroups")}</MenuItem>)}
         </Select>
       </FormControl>
     </div>
