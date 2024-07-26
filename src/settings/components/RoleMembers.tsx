@@ -31,6 +31,7 @@ export const RoleMembers: React.FC<Props> = (props) => {
 
   const getRows = () => {
     let canEdit = UserHelper.checkAccess(Permissions.membershipApi.roles.edit);
+    let canDelete = (props.role.name === "Domain Admins") ? (canEdit && roleMembers.length > 1) : canEdit;
     let rows: JSX.Element[] = [];
     if (isRoleEveryone) {
       rows.push(<TableRow><TableCell key="0">{Locale.label("settings.roleMembers.roleAppMsg")}</TableCell></TableRow>)
@@ -39,7 +40,7 @@ export const RoleMembers: React.FC<Props> = (props) => {
 
     for (let i = 0; i < roleMembers.length; i++) {
       const rm = roleMembers[i];
-      const removeLink = (canEdit) ? (<SmallButton icon="delete" color="error" toolTip={Locale.label("common.delete")} onClick={() => { handleRemove(rm) }} />) : null;
+      const removeLink = (canDelete) ? (<SmallButton icon="delete" color="error" toolTip={Locale.label("common.delete")} onClick={() => { handleRemove(rm) }} />) : null;
       const editLink = (canEdit) ? (<SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { props.setSelectedRoleMember(rm.userId) }} />) : null;
 
       const { firstName, lastName } = rm.user;

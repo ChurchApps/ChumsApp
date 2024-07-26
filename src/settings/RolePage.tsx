@@ -35,7 +35,7 @@ export const RolePage = () => {
     else {
       if (role.name==="Domain Admins") return (<>
         {getAddUser()}
-        <DisplayBox id="rolePermissionsBox" headerText={Locale.label("settings.rolePage.editPerm")} headerIcon="lock"><p>{Locale.label("settings.rolePage.noEditMsg")}</p></DisplayBox>
+        <DisplayBox id="rolePermissionsBox" headerText={Locale.label("settings.rolePage.permEdit")} headerIcon="lock"><p>{Locale.label("settings.rolePage.noEditMsg")}</p></DisplayBox>
       </>)
       else return (<>
         {getAddUser()}
