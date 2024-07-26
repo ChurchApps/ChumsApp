@@ -697,6 +697,13 @@
 			"stripe": "Stripe",
 			"transFee": "Transaction Fee"
 		},
+		"directoryApprovalSettingsEdit": {
+			"directoryApprovalGroup": "Directory Approval Group",
+			"forceMsg": "This group will handle all the member directory updates. Only after their approval, changes will be applied.",
+			"groups": "Groups",
+			"none": "None",
+			"noGroups": "No Groups available"
+		},
 		"imageEditor": {
 			"crop": "Crop",
 			"upload": "Upload"
