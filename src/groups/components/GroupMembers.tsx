@@ -52,7 +52,9 @@ export const GroupMembers: React.FC<Props> = (props) => {
   const handleAdd = React.useCallback(() => {
     if (getMemberByPersonId(props.addedPerson.id) === null) {
       let gm = { groupId: props.group.id, personId: props.addedPerson.id, person: props.addedPerson } as GroupMemberInterface
-      ApiHelper.post("/groupmembers", [gm], "MembershipApi");
+      ApiHelper.post("/groupmembers", [gm], "MembershipApi").then((data) => {
+        gm.id = data[0].id;
+      });
       let members = [...groupMembers];
       members.push(gm);
       setGroupMembers(members);
