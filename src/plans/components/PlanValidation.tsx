@@ -31,7 +31,7 @@ export const PlanValidation = (props:Props) => {
 
       const times:TimeInterface[] = [];
       positions.forEach(p => {
-        const posTimes = props.times.filter(t => t.teams.indexOf(p.categoryName)>-1);
+        const posTimes = props.times.filter(t => t?.teams?.indexOf(p.categoryName)>-1);
         if (person.id==="bTrK6d0kvF6") console.log("TIMES", posTimes, p, props.times);
         times.push(...posTimes);
       });
@@ -59,7 +59,7 @@ export const PlanValidation = (props:Props) => {
       const assignments = props.assignments.filter(a => a.positionId === p.id);
       if (assignments.length < p.count) {
         const needed = p.count - assignments.length;
-        issues.push(<><b>{p.name}:</b> {needed} {Locale.label("plans.planValidation.more")} {(needed===1) ? Locale.label("common.person") : Locale.label("plans.planValidation.ppl")} {Locale.label("plans.planValidation.needed")}</>);
+        issues.push(<><b>{p.name}:</b> {needed} {Locale.label("plans.planValidation.more")} {(needed===1) ? Locale.label("plans.planValidation.person") : Locale.label("plans.planValidation.ppl")} {Locale.label("plans.planValidation.needed")}</>);
       }
     });
   }
@@ -70,7 +70,7 @@ export const PlanValidation = (props:Props) => {
     assignments.forEach(a => {
       const position = props.positions.find(p => p.id === a.positionId);
       if (position) {
-        const posTimes = props.times.filter(t => t.teams.indexOf(position.categoryName)>-1);
+        const posTimes = props.times.filter(t => t?.teams?.indexOf(position.categoryName)>-1);
         duties.push({position, times:posTimes});
       }
     });
