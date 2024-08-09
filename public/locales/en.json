@@ -860,6 +860,7 @@
 		},
 		"contentPicker": {
 			"group": "Group",
+			"pers": "Person",
 			"sel": "Select",
 			"selPers": "Select a Person or Group"
 		},
