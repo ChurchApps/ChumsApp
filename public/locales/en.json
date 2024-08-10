@@ -593,6 +593,7 @@
 			"disNameReq": "Display name is required.",
 			"endReq": "End time is required",
 			"startReq": "Start time is required",
+			"teamReq": "Please Select Team(s).",
 			"teamNeed": "Needed Teams",
 			"timeAdd": "Add a Time",
 			"timeEdit": "Edit Time",
