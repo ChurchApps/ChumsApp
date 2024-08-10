@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox, SelectChangeEvent, TextField } from "@mui/material";
+import { Checkbox, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import { ApiHelper, DateHelper, ErrorMessages, InputBox, Locale, TimeInterface } from "@churchapps/apphelper";
 
 interface Props { time: TimeInterface, categories:string[], onUpdate: () => void }
@@ -26,6 +26,7 @@ export const TimeEdit = (props:Props) => {
     if (!time.displayName) errors.push(Locale.label("plans.timeEdit.disNameReq"));
     if (!time.startTime) errors.push(Locale.label("plans.timeEdit.startReq"));
     if (!time.endTime) errors.push(Locale.label("plans.timeEdit.endReq"));
+    if (!time.teams || time.teams === "") errors.push(Locale.label("plans.timeEdit.teamReq"));
     setErrors(errors);
     if (errors.length === 0) ApiHelper.post("/times", [time], "DoingApi").then(props.onUpdate);
   }
@@ -53,6 +54,7 @@ export const TimeEdit = (props:Props) => {
       result.push(<div><Checkbox key={c} name="team" checked={checked} onChange={handleTeamCheck} value={c} /><label>{c}</label></div>);
     });
 
+    if (result.length === 0) { return <Typography sx={{ fontSize: "13px", fontStyle: "italic" }}>Tip: Start with creating teams first. <a href="https://support.churchapps.org/chums/plans.html" target="_blank" rel="noopener noreferrer">Follow this guide</a></Typography> }
     return result;
   }
 
@@ -61,7 +63,7 @@ export const TimeEdit = (props:Props) => {
 
   return (<>
     <ErrorMessages errors={errors} />
-    <InputBox headerText={(props.time?.id) ? Locale.label("plans.timeEdit.timeEdit") : Locale.label("plans.timeEdit.timeAdd")} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.onUpdate} deleteFunction={(time.id) ? handleDelete : null }>
+    <InputBox headerText={(props.time?.id) ? Locale.label("plans.timeEdit.timeEdit") : Locale.label("plans.timeEdit.timeAdd")} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.onUpdate} deleteFunction={(time.id) ? handleDelete : null } isSubmitting={props.categories.length === 0}>
       <TextField fullWidth label={Locale.label("plans.timeEdit.disName")} id="displayName" name="displayName" type="text" value={time.displayName} onChange={handleChange} />
       <TextField fullWidth label={Locale.label("plans.timeEdit.timeStart")} id="startTime" name="startTime" type="datetime-local" value={DateHelper.formatHtml5DateTime(time.startTime)} onChange={handleChange} />
       <TextField fullWidth label={Locale.label("plans.timeEdit.timeEnd")} id="endTime" name="endTime" type="datetime-local" value={DateHelper.formatHtml5DateTime(time.endTime)} onChange={handleChange} />
