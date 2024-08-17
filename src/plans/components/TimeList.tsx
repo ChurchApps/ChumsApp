@@ -43,9 +43,9 @@ export const TimeList = (props:Props) => {
     props.times.forEach(t => {
       const teamList = t.teams?.split(",") || [];
       const startTime = new Date(t.startTime);
-      startTime.setMinutes(startTime.getMinutes() - startTime.getTimezoneOffset());
+      //startTime.setMinutes(startTime.getMinutes() - startTime.getTimezoneOffset());
       const endTime = new Date(t.endTime);
-      endTime.setMinutes(endTime.getMinutes() - endTime.getTimezoneOffset());
+      //endTime.setMinutes(endTime.getMinutes() - endTime.getTimezoneOffset());
       result.push(<tr key={t.id}>
         <td style={{verticalAlign:"top"}}><Icon>schedule</Icon></td>
         <td style={{width:"90%"}}>
