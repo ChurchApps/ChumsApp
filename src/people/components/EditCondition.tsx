@@ -83,7 +83,7 @@ export function EditCondition(props: Props) {
         result = getValueSelect(options);
         break;
       case "membershipStatus":
-        options = [<MenuItem key="/Visitor" value="Visitor">{Locale.label("person.visitor")}</MenuItem>, <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>, <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>]
+        options = [<MenuItem key="/Visitor" value="Visitor">{Locale.label("person.visitor")}</MenuItem>,<MenuItem key="Regular Attendee" value="Regular Attendee">{Locale.label("person.regularAttendee")}</MenuItem>, <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>, <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>, <MenuItem key="Inactive" value="Inactive">{Locale.label("person.inactive")}</MenuItem>]
         setDefaultValue("Visitor");
         result = getValueSelect(options);
         break;

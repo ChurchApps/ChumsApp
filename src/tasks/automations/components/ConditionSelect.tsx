@@ -68,9 +68,11 @@ export const ConditionSelect = (props: Props) => {
     <FormControl fullWidth>
       <InputLabel>{Locale.label("person.membershipStatus")}</InputLabel>
       <Select fullWidth label={Locale.label("person.membershipStatus")} value={props.condition.value || ""} name="value" onChange={handleChange}>
-        <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>
         <MenuItem value="Visitor">{Locale.label("person.visitor")}</MenuItem>
+        <MenuItem value="Regular Attendee">{Locale.label("person.regularAttendee")}</MenuItem>
+        <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>
         <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>
+        <MenuItem value="Inactive">{Locale.label("person.inactive")}</MenuItem>
       </Select>
     </FormControl>
   )

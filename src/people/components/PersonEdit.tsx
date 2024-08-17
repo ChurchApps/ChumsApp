@@ -225,9 +225,11 @@ export function PersonEdit(props: Props) {
               <FormControl fullWidth>
                 <InputLabel id="membershipStatus-label">{Locale.label("person.membershipStatus")}</InputLabel>
                 <Select name="membershipStatus" id="membershipStatus" labelId="membershipStatus-label" label={Locale.label("person.membershipStatus")} value={person.membershipStatus || ""} onChange={handleChange}>
-                  <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>
                   <MenuItem value="Visitor">{Locale.label("person.visitor")}</MenuItem>
+                  <MenuItem value="Regular Attendee">{Locale.label("person.regularAttendee")}</MenuItem>
+                  <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>
                   <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>
+                  <MenuItem value="Inactive">{Locale.label("person.inactive")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
