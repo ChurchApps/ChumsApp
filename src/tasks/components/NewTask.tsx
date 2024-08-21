@@ -1,6 +1,6 @@
 import { Grid, Icon, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, ConversationInterface, Locale, MessageInterface, TaskInterface, UserHelper } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, ConversationInterface, Locale, MessageInterface, TaskInterface, UserHelper } from "@churchapps/apphelper";
 import { ErrorMessages, InputBox } from "@churchapps/apphelper";
 import { ContentPicker } from "./ContentPicker";
 
@@ -35,6 +35,20 @@ export const NewTask = (props: Props) => {
     return result.length === 0;
   }
 
+  const sendNotification = async (task: TaskInterface) => {
+    const type = task.assignedToType;
+    const id = task.assignedToId;
+    let data: any = { peopleIds: [id], contentType: "task", contentId: task.id, message: `New Task Assignment: ${task.title}` };
+
+    if (type === "group") {
+      const groupMembers = await ApiHelper.get("/groupmembers?groupId=" + task.assignedToId.toString(), "MembershipApi");
+      const ids = ArrayHelper.getIds(groupMembers, "personId");
+      data.peopleIds = ids;
+    }
+
+    await ApiHelper.post("/notifications/create", data, "MessagingApi");
+  }
+
   const handleSave = async () => {
     if (validate()) {
       const tasks = await ApiHelper.post("/tasks", [task], "DoingApi");
@@ -50,6 +64,7 @@ export const NewTask = (props: Props) => {
         //message.contentId = tasks[0].id;
         await ApiHelper.post("/messages", [message], "MessagingApi");
       }
+      await sendNotification(tasks[0]);
       props.onSave();
     }
   }
