@@ -50,8 +50,8 @@ export const FundEdit: React.FC<Props> = (props) => {
     <InputBox id="fundsBox" headerIcon="volunteer_activism" headerText={Locale.label("common.edit")} cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete} help="chums/giving">
       <ErrorMessages errors={errors} />
       <TextField fullWidth name="fundName" label={Locale.label("common.name")} value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />
-      <FormControlLabel control={<Checkbox sx={{ marginLeft: "5px" }} checked={fund.taxDeductible} onChange={handleChange} name="taxDeductible" />} label="Tax Deductible" />
-      <Typography sx={{ fontStyle: "italic", fontSize: "12px", marginLeft: "5px" }}>{fund.taxDeductible ? "tracks donations." : "tracks non-donation transactions like camp registrations, tshirts, event tickets, etc."}</Typography>
+      <FormControlLabel control={<Checkbox sx={{ marginLeft: "5px" }} checked={fund.taxDeductible} onChange={handleChange} name="taxDeductible" />} label={Locale.label("donations.fundEdit.taxDeductible")} />
+      <Typography sx={{ fontStyle: "italic", fontSize: "12px", marginLeft: "5px" }}>{fund.taxDeductible ? Locale.label("donations.fundEdit.trackDonations") : Locale.label("donations.fundEdit.trackNonDonations")}</Typography>
     </InputBox>
 
   );

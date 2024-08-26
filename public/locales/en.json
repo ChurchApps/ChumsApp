@@ -133,7 +133,10 @@
 		"fundEdit": {
 			"confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
 			"edit": "Edit Fund",
-			"errBlank": "Enter a fund name"
+			"errBlank": "Enter a fund name",
+			"taxDeductible": "Tax Deductible",
+			"trackDonations": "Tracks donations.",
+			"trackNonDonations": "Tracks non-donation transactions like camp registrations, tshirts, event tickets, etc."
 		},
 		"funds": {
 			"fund": "Funds",
