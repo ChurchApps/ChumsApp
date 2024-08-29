@@ -2,6 +2,7 @@ import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, 
 import React, { useState } from "react";
 import { ChoicesEdit } from ".";
 import { useMountedState, QuestionInterface, ApiHelper, InputBox, UniqueIdHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { PaymentEdit } from "./PaymentEdit";
 
 interface Props {
   questionId: string,
@@ -43,6 +44,23 @@ export function FormQuestionEdit(props: Props) {
     setQuestion(q);
   }
 
+  const getChoices = (fieldType: string) => {
+    let result = <></>;
+    switch (fieldType) {
+      case "Multiple Choice":
+      case "Checkbox":
+        result = <ChoicesEdit question={question} updatedFunction={setQuestion} />;
+        break;
+      case "Payment":
+        result = <PaymentEdit question={question} updatedFunction={setQuestion} />;
+        break;
+      default:
+        result = <TextField fullWidth label={Locale.label("forms.formQuestionEdit.plcOp")} id="placeholder" type="text" name="placeholder" value={question.placeholder || ""} onChange={handleChange} />;
+        break;
+    }
+    return result;
+  }
+
   const validate = () => {
     const result = [];
     if (!question.title) result.push(Locale.label("forms.formQuestionEdit.questionReq"));
@@ -82,17 +100,14 @@ export function FormQuestionEdit(props: Props) {
           <MenuItem value="Text Area">{Locale.label("forms.formQuestionEdit.textArea")}</MenuItem>
           <MenuItem value="Multiple Choice">{Locale.label("forms.formQuestionEdit.multiChoice")}</MenuItem>
           <MenuItem value="Checkbox">{Locale.label("forms.formQuestionEdit.checkBox")}</MenuItem>
+          <MenuItem value="Payment">{Locale.label("forms.formQuestionEdit.payment")}</MenuItem>
         </Select>
       </FormControl>
 
       <TextField fullWidth label={Locale.label("common.title")} id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} />
       <TextField fullWidth label={Locale.label("forms.formQuestionEdit.desc")} id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} />
 
-      {
-        (question.fieldType === "Multiple Choice" || question.fieldType === "Checkbox")
-          ? <ChoicesEdit question={question} updatedFunction={setQuestion} />
-          : <TextField fullWidth label={Locale.label("forms.formQuestionEdit.plcOp")} id="placeholder" type="text" name="placeholder" value={question.placeholder || ""} onChange={handleChange} />
-      }
+      {getChoices(question.fieldType)}
       <FormControlLabel control={<Checkbox />} label={Locale.label("forms.formQuestionEdit.ansReq")} name="required" checked={!!question.required} onChange={handleCheckChange} />
     </InputBox>
   );
