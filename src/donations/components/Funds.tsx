@@ -17,7 +17,7 @@ export const Funds: React.FC = () => {
   }
   const handleFundUpdated = () => { loadData(); setEditFund(null); }
   const getEditSection = () => {
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<SmallButton onClick={() => { setEditFund({ id: "", name: "" }) }} icon="add" />);
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<SmallButton onClick={() => { setEditFund({ id: "", name: "", taxDeductible: true }) }} icon="add" />);
     else return null;
   }
 
