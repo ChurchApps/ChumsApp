@@ -16,19 +16,13 @@ export const PaymentEdit: React.FC<Props> = (props) => {
       case "amount": setAmount(Number(e.target.value)); break;
     }
     let q = { ...props.question };
-    if(!q.choices) {
-      q.choices = [{ value: e.target.value, text: "FundId" }];
-      q.choices.push({ value: amount.toString(), text: "Amount" });
+    if (e.target.name === "fundId") {
+      let fundIndex = q.choices.findIndex((c: any) => c.text === "FundId");
+      q.choices[fundIndex].value = e.target.value;
     }
-    else {
-      if (e.target.name === "fundId") {
-        let fundIndex = q.choices.findIndex((c: any) => c.text === "FundId");
-        q.choices[fundIndex].value = e.target.value;
-      }
-      else if (e.target.name === "amount") {
-        let amountIndex = q.choices.findIndex((c: any) => c.text === "Amount");
-        q.choices[amountIndex].value = e.target.value.toString();
-      }
+    else if (e.target.name === "amount") {
+      let amountIndex = q.choices.findIndex((c: any) => c.text === "Amount");
+      q.choices[amountIndex].value = e.target.value.toString();
     }
     props.updatedFunction(q);
   }
@@ -39,6 +33,12 @@ export const PaymentEdit: React.FC<Props> = (props) => {
       setFunds(result);
       if (fundId === "" && result.length > 0) {
         setFundId(result[0].id);
+        let q = { ...props.question };
+        if (!q.choices) {
+          q.choices = [{ value: result[0].id, text: "FundId" }];
+          q.choices.push({ value: "0", text: "Amount" });
+        }
+        props.updatedFunction(q)
       }
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
