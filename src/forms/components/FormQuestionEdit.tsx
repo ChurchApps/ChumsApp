@@ -108,7 +108,7 @@ export function FormQuestionEdit(props: Props) {
       <TextField fullWidth label={Locale.label("forms.formQuestionEdit.desc")} id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} />
 
       {getChoices(question.fieldType)}
-      <FormControlLabel control={<Checkbox />} label={Locale.label("forms.formQuestionEdit.ansReq")} name="required" checked={!!question.required} onChange={handleCheckChange} />
+      {question.fieldType !== "Payment" && <FormControlLabel control={<Checkbox />} label={Locale.label("forms.formQuestionEdit.ansReq")} name="required" checked={!!question.required} onChange={handleCheckChange} />}
     </InputBox>
   );
 }
