@@ -87,6 +87,11 @@
 		},
 		"tasks": "Tasks"
 	},
+	"donation": {
+		"paymentMethods": {
+			"noMethod": "Please select a payment method."
+		}
+	},
 	"donations": {
 		"batchEdit": {
 			"confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
@@ -475,11 +480,11 @@
 		}
 	},
 	"person": {
-    "address": "Address",
+		"address": "Address",
 		"age": "Age",
 		"anniversary": "Anniversary",
 		"birthDate": "Birth Date",
-    "city": "City",
+		"city": "City",
 		"country": "Country",
 		"displayName": "Display Name",
 		"divorced": "Divorced",
@@ -487,7 +492,7 @@
 		"female": "Female",
 		"firstName": "First Name",
 		"gender": "Gender",
-    "inactive": "Inactive",
+		"inactive": "Inactive",
 		"lastName": "Last Name",
 		"line1": "Line 1",
 		"line2": "Line 2",
@@ -502,7 +507,7 @@
 		"person": "Person",
 		"phone": "Phone",
 		"prefix": "Prefix",
-    "regularAttendee": "Regular Attendee",
+		"regularAttendee": "Regular Attendee",
 		"single": "Single",
 		"staff": "Staff",
 		"state": "State/Province",

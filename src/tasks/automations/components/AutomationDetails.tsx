@@ -66,7 +66,7 @@ export const AutomationDetails = (props: Props) => {
       <div><b>{Locale.label("common.name")}:</b> {automation?.title}</div>
       <div><b>{Locale.label("tasks.automationDetails.rep")}:</b> {automation?.recurs}</div>
       <br />
-      <span style={{ float: "right" }}><SmallButton icon="add" onClick={() => { setEditAction({ automationId: automation.id, actionType: "task" }) }} /></span><b>{Locale.label("tasks.automationDetails.act")}:</b>
+      <span style={{ float: "right" }}><SmallButton icon="add" onClick={() => { setEditAction({ automationId: automation.id, actionType: "task" }) }} /></span><b>{Locale.label("tasks.automationDetails.acts")}:</b>
       <hr />
       <ul>
         {getActions()}
