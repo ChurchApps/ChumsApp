@@ -203,6 +203,7 @@
 			"view": "View Only"
 		},
 		"formQuestionEdit": {
+			"amt": "Amount",
 			"ansReq": "Require an answer for this question",
 			"checkBox": "Checkbox",
 			"confirmMsg": "Are you sure you wish to permanently delete this question?",
@@ -210,7 +211,9 @@
 			"decNum": "Decimal",
 			"desc": "Description",
 			"fieldReq": "Field type is required.",
+			"fund": "Fund",
 			"multiChoice": "Multiple Choice",
+			"payment": "Payment",
 			"phoneNum": "Phone Number",
 			"plcOp": "Placeholder (optional)",
 			"prov": "Provider",
