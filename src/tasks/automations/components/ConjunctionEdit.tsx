@@ -49,7 +49,7 @@ export const ConjunctionEdit = (props: Props) => {
     <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.conjunctionEdit.conjEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
       <ErrorMessages errors={errors} />
       <Select fullWidth label={Locale.label("tasks.conjunctionEdit.conjType")} value={conjunction?.groupType} name="groupType" onChange={handleChange}>
-        <MenuItem value="and">{Locale.label("tasks.conjunctionEdit.add")}</MenuItem>
+        <MenuItem value="and">{Locale.label("tasks.conjunctionEdit.and")}</MenuItem>
         <MenuItem value="or">{Locale.label("tasks.conjunctionEdit.or")}</MenuItem>
       </Select>
     </InputBox>
