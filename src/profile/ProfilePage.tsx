@@ -1,4 +1,4 @@
-import { Grid, Icon, TextField, Checkbox, Typography, Button, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
+import { Grid, Icon, TextField, Checkbox, Typography, Button, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputBox, ApiHelper, ErrorMessages, UserHelper, NotificationPreferenceInterface, Locale } from "@churchapps/apphelper"
@@ -12,6 +12,7 @@ export const ProfilePage = () => {
   const [optedOut, setOptedOut] = useState<boolean>(false);
   const [errors, setErrors] = useState([]);
   const [pref, setPref] = useState<NotificationPreferenceInterface>({} as NotificationPreferenceInterface);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const initData = () => {
@@ -130,8 +131,12 @@ export const ProfilePage = () => {
             <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} />
           </Grid>
           <Grid item>
-            <TextField type="password" fullWidth name="password" label={Locale.label("profile.profilePage.passNew")} value={password} onChange={handleChange} />
-            <TextField type="password" fullWidth name="passwordVerify" label={Locale.label("profile.profilePage.passVer")} value={passwordVerify} onChange={handleChange} />
+            <TextField type={showPassword ? "text" : "password"} fullWidth name="password" label={Locale.label("profile.profilePage.passNew")} value={password} onChange={handleChange} InputProps={{
+              endAdornment: (<InputAdornment position="end"><IconButton aria-label="toggle password visibility" onClick={() => { setShowPassword(!showPassword) }}>{showPassword ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}</IconButton></InputAdornment>)
+            }} />
+            <TextField type={showPassword ? "text" : "password"} fullWidth name="passwordVerify" label={Locale.label("profile.profilePage.passVer")} value={passwordVerify} onChange={handleChange}  InputProps={{
+              endAdornment: (<InputAdornment position="end"><IconButton aria-label="toggle password visibility" onClick={() => { setShowPassword(!showPassword) }}>{showPassword ?  <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}</IconButton></InputAdornment>)
+            }} />
             <Checkbox name="optedOut" checked={optedOut} onChange={handleChange} />
             <label htmlFor="optedOut">{Locale.label("profile.profilePage.noDirect")}</label>
           </Grid>
