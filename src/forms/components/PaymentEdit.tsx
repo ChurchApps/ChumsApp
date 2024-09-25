@@ -29,13 +29,12 @@ export const PaymentEdit: React.FC<Props> = (props) => {
 
   React.useEffect(() => {
     ApiHelper.get("/funds", "GivingApi").then((data: any) => {
-      const result = ArrayHelper.getAll(data, "taxDeductible", false);
-      setFunds(result);
-      if (fundId === "" && result.length > 0) {
-        setFundId(result[0].id);
+      setFunds(data);
+      if (fundId === "" && data.length > 0) {
+        setFundId(data[0].id);
         let q = { ...props.question };
         if (!q.choices) {
-          q.choices = [{ value: result[0].id, text: "FundId" }];
+          q.choices = [{ value: data[0].id, text: "FundId" }];
           q.choices.push({ value: "0", text: "Amount" });
         }
         props.updatedFunction(q)
