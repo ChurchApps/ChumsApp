@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@churchapps/apphelper": "0.2.67",
+    "@churchapps/apphelper": "0.2.70",
     "@mui/icons-material": "^5.14.7",
     "@mui/material": "^5.14.7",
     "@types/react-cropper": "^1.3.2",
