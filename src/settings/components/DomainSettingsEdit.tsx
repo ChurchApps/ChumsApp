@@ -70,13 +70,26 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
     return result;
   }
 
+  const relink = (e: React.MouseEvent) => {
+    e.preventDefault();
+    ApiHelper.get("/domains/caddy", "MembershipApi").then((data) => {
+      alert("Done.  Please only click this link once.");
+    });
+  }
+
   React.useEffect(() => { if (props.churchId) loadData() }, [props.churchId]); //eslint-disable-line
   React.useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
+
 
   return (
     <>
       <div className="subHead">{Locale.label("settings.domainSettingsEdit.domains")}</div>
-      <p>{Locale.label("settings.domainSettingsEdit.domMsg")} <i style={{ fontSize: 12 }}>CNAME: proxy.b1.church</i></p>
+      <p style={{fontSize:12}}>
+        {Locale.label("settings.domainSettingsEdit.domMsg")} <i style={{ fontSize: 12 }}>CNAME: proxy.b1.church</i>
+        {Locale.label("settings.domainSettingsEdit.domMsg2")} <i style={{ fontSize: 12 }}>A: 3.23.251.61</i>
+        {Locale.label("settings.domainSettingsEdit.domMsg3")} <a href="about:blank" onClick={relink}>{Locale.label("settings.domainSettingsEdit.domMsgConnect")}</a>
+        {Locale.label("settings.domainSettingsEdit.domMsg4")}
+      </p>
       <Grid container spacing={3}>
         <Grid item md={6} xs={12}>
           <Table>

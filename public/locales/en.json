@@ -699,7 +699,11 @@
 			"delete": "Delete",
 			"domain": "Domain",
 			"domains": "Domains",
-			"domMsg": "You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS:"
+			"domMsg": "You can make your B1 website answer for any custom domain you wish.  Enter the associated domain name here and then add the following record to your DNS:",
+      "domMsg2": "If your DNS provider will not allow you to add a CNAME record you can alternatively use an A record:",
+      "domMsg3": "If you receive SSL errors after adding the DNS entry.  Click here to ",
+      "domMsgConnect": "connect",
+      "domMsg4": ".  It can take up to 5 minutes."
 		},
 		"givingSettingsEdit": {
 			"forceMsg": "Automatically forces users to cover the transaction fees",
