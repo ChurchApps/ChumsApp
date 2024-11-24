@@ -9,6 +9,6 @@ export class Themes {
     }
   });
 
-  static NavBarStyle = { "& .selected .MuiListItemButton-root": { backgroundColor: "#333333" } }
+  static NavBarStyle = { "& .selected .MuiListItemButton-root": { backgroundColor: "#555555" } }
 
 }
