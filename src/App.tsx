@@ -8,10 +8,23 @@ import "@churchapps/apphelper/dist/components/markdownEditor/editor.css";
 //TODO export the css from apphelper
 import { EnvironmentHelper } from "./helpers";
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    InputBox: {
+      headerText: string;
+    };
+  }
+  interface PaletteOptions {
+    InputBox?: {
+      headerText?: string;
+    };
+  }
+}
+
 const mdTheme = createTheme({
   palette: {
-    secondary: {
-      main: "#444444"
+    InputBox: {
+      headerText: "#333333"
     }
   },
   components: {
