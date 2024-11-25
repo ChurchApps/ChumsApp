@@ -57,7 +57,6 @@ export const RequestedChanges = (props: Props) => {
         }
       }
     });
-    console.log("peopleArray", peopleArray)
 
     await ApiHelper.post("/people", peopleArray, "MembershipApi");
     await ApiHelper.post("/tasks", [task], "DoingApi");
