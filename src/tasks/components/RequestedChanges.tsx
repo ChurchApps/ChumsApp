@@ -28,6 +28,7 @@ export const RequestedChanges = (props: Props) => {
     let task: TaskInterface = { ...props.task, status: "Closed", dateClosed: new Date() };
     const person = await ApiHelper.get("/people/" + props.task.associatedWithId, "MembershipApi");
     let p = { ...person } as PersonInterface;
+    const peopleArray = [p];
 
     requestedChanges.forEach((change) => {
       const value = change.value;
@@ -50,10 +51,14 @@ export const RequestedChanges = (props: Props) => {
         case "contactInfo.homePhone": p.contactInfo.homePhone = value; break;
         case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = value; break;
         case "contactInfo.workPhone": p.contactInfo.workPhone = value; break;
+        case "familyMember": {
+          const newPerson: PersonInterface = { name: { first: value, last: p.name.last }, contactInfo: {}, householdId: p.householdId };
+          peopleArray.push(newPerson);
+        }
       }
     });
 
-    await ApiHelper.post("/people", [p], "MembershipApi");
+    await ApiHelper.post("/people", peopleArray, "MembershipApi");
     await ApiHelper.post("/tasks", [task], "DoingApi");
     navigate("/tasks");
   };
