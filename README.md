@@ -25,7 +25,7 @@ We have a great community for end-users on [Facebook](https://www.facebook.com/c
 
 ### ⚠️ Report an Issue
 
-If you discover an issue or have a feature request, simply submit it to our [issues log](https://github.com/ChurchApps/ChurchAppsSupport). Don't be shy, that's how the program gets better.
+If you discover an issue or have a feature request, simply submit it to our [issues log](https://github.com/ChurchApps/ChurchAppsSupport/issues). Don't be shy, that's how the program gets better.
 
 ### 💬 Join us on Slack
 
