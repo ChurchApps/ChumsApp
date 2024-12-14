@@ -2,7 +2,7 @@ import React from "react";
 import { ServiceTimesEdit } from ".";
 import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField } from "@mui/material";
 import { useMountedState, GalleryModal, GroupInterface } from "@churchapps/apphelper";
 import { MarkdownEditor } from "@churchapps/apphelper";
 
@@ -33,6 +33,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
       case "name": g.name = e.target.value; break;
       case "trackAttendance": g.trackAttendance = e.target.value === "true"; break;
       case "parentPickup": g.parentPickup = e.target.value === "true"; break;
+      case "printNametag": g.printNametag = e.target.value === "true"; break;
     }
     setGroup(g);
   };
@@ -109,13 +110,22 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                 </FormControl>
               </Grid>
               <Grid item md={6} xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel>{Locale.label("groups.groupDetailsEdit.parPick")}</InputLabel>
-                  <Select label={Locale.label("groups.groupDetailsEdit.parPick")} name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                    <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
-                    <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
-                  </Select>
-                </FormControl>
+                <Stack direction={{ xs: "column", md: "row" }}>
+                  <FormControl fullWidth>
+                    <InputLabel>{Locale.label("groups.groupDetailsEdit.parPick")}</InputLabel>
+                    <Select label={Locale.label("groups.groupDetailsEdit.parPick")} name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+                      <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
+                      <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FormControl fullWidth sx={{ marginLeft: { md: 2 } }}>
+                    <InputLabel>{Locale.label("groups.groupDetailsEdit.prinName")}</InputLabel>
+                    <Select label={Locale.label("groups.groupDetailsEdit.prinName")} name="printNametag" value={group.printNametag?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+                      <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
+                      <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Stack>
               </Grid>
             </Grid>
             <Grid container spacing={3}>
