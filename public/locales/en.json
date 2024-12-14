@@ -261,7 +261,8 @@
 			"attTrack": "Track Attendance:",
 			"cat": "Category",
 			"groupDet": "Group Details",
-			"parPick": "Parent Pickup:"
+			"parPick": "Parent Pickup:",
+			"prinName": "Print Nametag:"
 		},
 		"groupDetailsEdit": {
 			"attTrack": "Track Attendance",
@@ -274,6 +275,7 @@
 			"groupName": "Group Name",
 			"groupNameMsg": "Please enter a group name.",
 			"parPick": "Parent Pickup",
+			"prinName": "Print Nametag",
 			"selImg": "Select Photo"
 		},
 		"groupMembers": {
