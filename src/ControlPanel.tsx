@@ -8,6 +8,7 @@ import { Login } from "./Login";
 import { Authenticated } from "./Authenticated";
 import { Logout } from "./Logout";
 import { AnalyticsHelper, UserHelper, ErrorHelper, ErrorLogInterface, ErrrorAppDataInterface  } from "@churchapps/apphelper";
+import { UI } from "./ui/Test";
 
 
 export const ControlPanel = () => {
@@ -43,6 +44,7 @@ export const ControlPanel = () => {
     <>
       <ErrorMessages errors={errors} />
       <Routes>
+        <Route path="/ui" element={<UI />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/*" element={<RequireAuth><Authenticated /></RequireAuth>} />

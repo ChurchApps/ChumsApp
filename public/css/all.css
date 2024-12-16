@@ -8,7 +8,7 @@
 }
 
 a {
-  color: #24b8ff;
+  color: #568BDA;
   text-decoration: none;
 }
 
@@ -24,9 +24,6 @@ h2 span {
   color: #24b8ff;
 }
 
-body {
-  background-color: #f3f3f6;
-}
 
 h1 {
   border-bottom: 1px solid #ccc;
@@ -688,7 +685,41 @@ label .description {
 .positionsTable div img { height:25px; }
 
 
+.sideNav ul {
+  padding-left: 0px;
+}
 
+.sideNav li {
+  list-style-type: none;
+  border-bottom: 1px solid #ccc;
+  padding:8px 10px;
+}
+.sideNav li a {
+  color:#333;
+}
+
+.sideNav li.active {
+  list-style-type: none;
+  border-bottom: 1px solid #568BDA;
+  padding:8px 10px;
+}
+
+.sideNav li.active a, .sideNav li a:hover {
+  color:#568BDA;
+}
+
+.sideNav .subhead {
+  margin-top:30px;
+  background-color:#DDE1FC;
+  padding-left:12px;
+  padding-top:5px;
+  padding-bottom: 5px;
+}
+
+.sideNav li span {
+  padding-top:5px;
+  overflow:visible;
+}
 
 
 @media print {
