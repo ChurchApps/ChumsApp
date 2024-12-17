@@ -721,9 +721,31 @@ label .description {
   overflow:visible;
 }
 
+#primaryNavButton {
+  margin-right:50px;
+  text-transform: "none";
+}
+
+#primaryNavButton img {
+  height:35px;
+  margin-right:15px;
+}
+
 
 @media print {
   .form-submission-summary {
     margin: 20px;
   }
+}
+
+@media (max-width: 740px) {
+  #primaryNavButton h2 { display:none; }
+  #primaryNavButton>img {margin-right:0px;}
+  #primaryNavButton>span {margin-left:0px;}
+  #secondaryMenu { display:none; }
+}
+
+@media (min-width: 741px) {
+  #secondaryMenuAlt { display:none; width:100%; text-align: center;}
+
 }

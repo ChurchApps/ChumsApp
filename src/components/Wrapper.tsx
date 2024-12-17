@@ -3,11 +3,17 @@ import { List } from "@mui/material";
 import { SiteWrapper, NavItem, ApiHelper, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import UserContext from "../UserContext";
 import { Themes } from "../helpers/Themes";
+import { Header } from "../ui/components/Header";
 
 
 interface Props { pageTitle?: string, children: React.ReactNode }
 
-export const Wrapper: React.FC<Props> = props => {
+export const Wrapper: React.FC<Props> = props =>
+  <>
+    <Header />
+    {props.children}
+  </>
+  /*
   const [donationError, setDonationError] = React.useState<boolean>(false);
   const [isFormMember, setIsFormMember] = React.useState<boolean>(false);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
@@ -59,4 +65,5 @@ export const Wrapper: React.FC<Props> = props => {
   const navContent = <><List component="nav" sx={Themes.NavBarStyle}>{tabs}</List></>
 
   return <SiteWrapper navContent={navContent} context={context} appName="CHUMS" appearance={{wrapperBackground:"#333"}}>{props.children}</SiteWrapper>
-};
+  */
+;
