@@ -4,6 +4,7 @@ import { ApiHelper, DisplayBox, DateHelper, UserHelper, ExportLink, Loading, Cur
 import { Link } from "react-router-dom";
 import { ReportWithFilter, useMountedState, DonationBatchInterface, Permissions } from "@churchapps/apphelper";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
+import { Banner } from "../baseComponents/Banner";
 
 export const DonationsPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
@@ -150,17 +151,19 @@ export const DonationsPage = () => {
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
   else return (
     <>
-      <h1><Icon>volunteer_activism</Icon> {Locale.label("donations.donationsPage.don")}</h1>
-      <ReportWithFilter keyName="donationSummary" autoRun={true} />
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="volunteer_activism" headerText={Locale.label("donations.donationsPage.batch")} editContent={getEditContent()} help="chums/manual-input">
-            {getTable()}
-          </DisplayBox>
-          <DonationEvents />
+      <Banner><h1>{Locale.label("donations.donationsPage.don")}</h1></Banner>
+      <div id="mainContent">
+        <ReportWithFilter keyName="donationSummary" autoRun={true} />
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
+            <DisplayBox id="batchesBox" data-cy="batches-box" headerIcon="volunteer_activism" headerText={Locale.label("donations.donationsPage.batch")} editContent={getEditContent()} help="chums/manual-input">
+              {getTable()}
+            </DisplayBox>
+            <DonationEvents />
+          </Grid>
+          <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
         </Grid>
-        <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
-      </Grid>
+      </div>
     </>
   );
 }

@@ -3,6 +3,7 @@ import { ChurchSettings, Roles, RoleEdit } from "./components"
 import { ChurchInterface, ApiHelper, UserHelper, Permissions, DisplayBox, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import { Grid, Icon } from "@mui/material";
+import { Banner } from "../baseComponents/Banner";
 
 export const ManageChurch = () => {
   const [church, setChurch] = useState<ChurchInterface>(null);
@@ -40,16 +41,18 @@ export const ManageChurch = () => {
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (
     <>
-      <h1><Icon>church</Icon> {Locale.label("settings.manageChurch.manage")} {church?.name}</h1>
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <ChurchSettings church={church} updatedFunction={loadData} />
-          {church && <Roles selectRoleId={setSelectedRoleId} selectedRoleId={selectedRoleId} church={church} />}
+      <Banner><h1>{Locale.label("settings.manageChurch.manage")}: {church?.name}</h1></Banner>
+      <div id="mainContent">
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
+            <ChurchSettings church={church} updatedFunction={loadData} />
+            {church && <Roles selectRoleId={setSelectedRoleId} selectedRoleId={selectedRoleId} church={church} />}
+          </Grid>
+          <Grid item md={4} xs={12}>
+            {getSidebar()}
+          </Grid>
         </Grid>
-        <Grid item md={4} xs={12}>
-          {getSidebar()}
-        </Grid>
-      </Grid>
+      </div>
     </>
   );
 }

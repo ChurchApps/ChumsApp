@@ -4,6 +4,7 @@ import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
 import { useParams } from "react-router-dom";
 import { ApiHelper, GroupInterface, Locale } from "@churchapps/apphelper";
+import { Banner } from "../baseComponents/Banner";
 
 export const MinistryPage = () => {
 
@@ -42,13 +43,14 @@ export const MinistryPage = () => {
   React.useEffect(loadData, [params.id]);
 
   return (<>
+    <Banner><h1>Plans</h1></Banner>
+    <div id="mainContent">
+      <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
+        {getTabs()}
+      </MaterialTabs>
 
-    <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
-      {getTabs()}
-    </MaterialTabs>
-
-    {getCurrentTab()}
-
+      {getCurrentTab()}
+    </div>
   </>);
 }
 

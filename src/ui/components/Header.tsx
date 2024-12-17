@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Locale, UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
 import UserContext from "../../UserContext";
 import { SiteHeader } from "../../baseComponents/SiteHeader";
+import { SecondaryMenuHelper } from "../../helpers/SecondaryMenuHelper";
 
 export const Header: React.FC = () => {
   const context = React.useContext(UserContext);
@@ -28,21 +29,24 @@ export const Header: React.FC = () => {
     menuItems.push({url: "/", icon:"home", label: Locale.label("components.wrapper.dash")});
     menuItems.push({url: "/people", icon:"person", label: Locale.label("components.wrapper.ppl")});
     if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({ url:"/donations", label: Locale.label("components.wrapper.don"), icon: donationIcon });
-    if (formPermission || isFormMember) menuItems.push({url:"/forms", label:Locale.label("components.wrapper.form"), icon:"description" });
-    menuItems.push({url:"/tasks", label: Locale.label("components.wrapper.tasks"), icon:"list_alt" });
-    if (UserHelper.checkAccess(Permissions.membershipApi.plans.edit)) menuItems.push({ url:"/plans", label: Locale.label("components.wrapper.plans"), icon: "assignment" });
+
+
+    if (UserHelper.checkAccess(Permissions.membershipApi.plans.edit)) menuItems.push({ url:"/plans", label: Locale.label("components.wrapper.serving"), icon: "assignment" });
+    else menuItems.push({url:"/tasks", label: Locale.label("components.wrapper.serving"), icon:"assignment" });
+
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) menuItems.push({ url: "/settings", label: Locale.label("components.wrapper.set"), icon: "settings" });
+    else if (formPermission || isFormMember) menuItems.push({url:"/forms", label:Locale.label("components.wrapper.set"), icon:"settings" });
     // if (UserHelper.checkAccess(Permissions.membershipApi.server.admin)) tabs.push(<NavItem key="/admin" url="/admin" label={Locale.label("components.wrapper.servAdmin")} icon="admin_panel_settings" selected={selectedTab === "admin"} />);
     return menuItems;
   }
-
+  /*
   const getSecondaryMenu = () => {
     const menuItems:{ url: string, label: string }[] = []
     menuItems.push({url: "/groups", label: Locale.label("components.wrapper.groups")});
     menuItems.push({url: "/people", label: Locale.label("components.wrapper.ppl")});
     if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) menuItems.push({url:"/attendance", label: Locale.label("components.wrapper.att")});
     return menuItems;
-  }
+  }*/
 
   const getPrimaryLabel = () => {
     const path = window.location.pathname;
@@ -51,15 +55,13 @@ export const Header: React.FC = () => {
     else if (path.startsWith("/attendance")) result = "People";
     else if (path.startsWith("/groups")) result = "People";
     else if (path.startsWith("/donations")) result = "Donations";
-    else if (path.startsWith("/forms")) result = "Forms";
-    else if (path.startsWith("/plans") || window.location.search.indexOf("tag=")>-1) result = "Plans";
-    else if (path.startsWith("/settings")) result = "Settings";
-    else if (path.startsWith("/admin")) result = "Settings";
-    else if (path.startsWith("/tasks")) result = "Tasks";
+    else if (path.startsWith("/tasks") || path.startsWith("/plans") || window.location.search.indexOf("tag=")>-1) result = Locale.label("components.wrapper.serving");
+    else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = "Settings";
     return result;
   }
 
+  const secondaryMenu = SecondaryMenuHelper.getSecondaryMenu(window.location.pathname, {formPermission});
 
   /*<Typography variant="h6" noWrap>{UserHelper.currentUserChurch?.church?.name || ""}</Typography>*/
-  return (<SiteHeader primaryMenuItems={getPrimaryMenu()} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={getSecondaryMenu()} secondaryMenuLabel="People" /> );
+  return (<SiteHeader primaryMenuItems={getPrimaryMenu()} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={secondaryMenu.menuItems} secondaryMenuLabel={secondaryMenu.label} /> );
 }

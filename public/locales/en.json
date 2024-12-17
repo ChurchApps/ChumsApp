@@ -66,11 +66,12 @@
 			"att": "Attendance",
 			"dash": "Dashboard",
 			"don": "Donations",
-			"form": "Form",
+			"forms": "Forms",
 			"groups": "Groups",
 			"plans": "Plans",
 			"ppl": "People",
 			"servAdmin": "Server Admin",
+      "serving": "Serving",
 			"set": "Settings",
 			"tasks": "Tasks"
 		}

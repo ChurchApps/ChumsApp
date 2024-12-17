@@ -4,6 +4,7 @@ import { ApiHelper, DisplayBox, FormInterface, UserHelper, Permissions, Loading,
 import { Link } from "react-router-dom"
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Paper, Tabs, Tab } from "@mui/material"
 import { SmallButton } from "@churchapps/apphelper";
+import { Banner } from "../baseComponents/Banner";
 
 export const FormsPage = () => {
   const [forms, setForms] = React.useState<FormInterface[]>(null);
@@ -110,23 +111,25 @@ export const FormsPage = () => {
 
     return (
       <>
-        <h1><Icon>description</Icon> {title}</h1>
-        <Grid container spacing={3}>
-          <Grid item md={8} xs={12}>
-            <Paper>
-              <Box>
-                <Tabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
-                  {tabs}
-                </Tabs>
-                <DisplayBox id="formsBox" headerText={title} headerIcon={icon} editContent={getEditContent()}>
-                  {contents}
-                </DisplayBox>
-              </Box>
-            </Paper>
+        <Banner><h1>{title}</h1></Banner>
+        <div id="mainContent">
+          <Grid container spacing={3}>
+            <Grid item md={8} xs={12}>
+              <Paper>
+                <Box>
+                  <Tabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
+                    {tabs}
+                  </Tabs>
+                  <DisplayBox id="formsBox" headerText={title} headerIcon={icon} editContent={getEditContent()}>
+                    {contents}
+                  </DisplayBox>
+                </Box>
+              </Paper>
 
+            </Grid>
+            <Grid item md={4} xs={12}>{getSidebar()}</Grid>
           </Grid>
-          <Grid item md={4} xs={12}>{getSidebar()}</Grid>
-        </Grid>
+        </div>
       </>
     );
   }

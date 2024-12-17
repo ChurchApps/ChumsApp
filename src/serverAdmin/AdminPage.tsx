@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import { Grid, TextField, Button, Icon } from "@mui/material";
 import UserContext from "../UserContext";
 import { ReportWithFilter, ChurchInterface } from "@churchapps/apphelper";
+import { Banner } from "../baseComponents/Banner";
 
 export const AdminPage = () => {
   const [searchText, setSearchText] = React.useState<string>("")
@@ -80,44 +81,45 @@ export const AdminPage = () => {
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (
     <>
-      <h1><Icon>admin_panel_settings</Icon> {Locale.label("serverAdmin.adminPage.servAdmin")}</h1>
+      <Banner><h1>{Locale.label("serverAdmin.adminPage.servAdmin")}</h1></Banner>
+      <div id="mainContent">
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
+            <DisplayBox headerIcon="church" headerText={Locale.label("serverAdmin.adminPage.churches")}>
+              <TextField fullWidth variant="outlined" name="searchText" label={Locale.label("serverAdmin.adminPage.churchName")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
+                InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" disableElevation onClick={loadData}>{Locale.label("common.search")}</Button> }}
+              />
+              <br />
+              {
+                churches.length === 0
+                  ? <>{Locale.label("serverAdmin.adminPage.noChurch")}</>
+                  : (
+                    <table className="table table-sm" id="adminChurchesTable">
+                      {getChurchRows()}
+                    </table>
+                  )
+              }
+            </DisplayBox>
+          </Grid>
+          <Grid item md={4} xs={12}>
 
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <DisplayBox headerIcon="church" headerText={Locale.label("serverAdmin.adminPage.churches")}>
-            <TextField fullWidth variant="outlined" name="searchText" label={Locale.label("serverAdmin.adminPage.churchName")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-              InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" disableElevation onClick={loadData}>{Locale.label("common.search")}</Button> }}
-            />
-            <br />
-            {
-              churches.length === 0
-                ? <>{Locale.label("serverAdmin.adminPage.noChurch")}</>
-                : (
-                  <table className="table table-sm" id="adminChurchesTable">
-                    {getChurchRows()}
-                  </table>
-                )
-            }
-          </DisplayBox>
+          </Grid>
         </Grid>
-        <Grid item md={4} xs={12}>
+        <ReportWithFilter keyName="usageTrends" autoRun={true} />
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
+            <DisplayBox headerIcon="summarize" headerText={Locale.label("serverAdmin.adminPage.valueNotes")}>
+              <ul>
+                <li><b>Chums</b> - {Locale.label("serverAdmin.adminPage.noteOne")}</li>
+                <li><b>B1</b> - {Locale.label("serverAdmin.adminPage.noteTwo")}</li>
+                <li><b>Lessons</b> - {Locale.label("serverAdmin.adminPage.noteThree")}</li>
+                <li><b>FreeShow</b> - {Locale.label("serverAdmin.adminPage.noteFour")}</li>
+              </ul>
+            </DisplayBox>
 
+          </Grid>
         </Grid>
-      </Grid>
-      <ReportWithFilter keyName="usageTrends" autoRun={true} />
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <DisplayBox headerIcon="summarize" headerText={Locale.label("serverAdmin.adminPage.valueNotes")}>
-            <ul>
-              <li><b>Chums</b> - {Locale.label("serverAdmin.adminPage.noteOne")}</li>
-              <li><b>B1</b> - {Locale.label("serverAdmin.adminPage.noteTwo")}</li>
-              <li><b>Lessons</b> - {Locale.label("serverAdmin.adminPage.noteThree")}</li>
-              <li><b>FreeShow</b> - {Locale.label("serverAdmin.adminPage.noteFour")}</li>
-            </ul>
-          </DisplayBox>
-
-        </Grid>
-      </Grid>
+      </div>
     </>
   );
 
