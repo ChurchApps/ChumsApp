@@ -1,17 +1,17 @@
-import React from "react";
-import { Person, Groups, Tabs, Household, Merge } from "./components"
-import { UserHelper, ApiHelper, PersonInterface,Permissions, PersonHelper } from "@churchapps/apphelper"
+import React, { useContext } from "react";
+import { Groups, PersonAttendance } from "./components"
+import { UserHelper, ApiHelper, PersonInterface,Permissions, PersonHelper, ConversationInterface, Notes, DonationPage, Locale } from "@churchapps/apphelper"
 import { Grid, Icon } from "@mui/material"
 import { useParams } from "react-router-dom";
-import { ImageEditor } from "@churchapps/apphelper";
 import { PersonBanner } from "./components/PersonBanner";
-import { PersonNav } from "./components/PersonNav";
+import { PersonDetails } from "./components/PersonDetails";
+import UserContext from "../UserContext";
 
 export const PersonPage = () => {
-  const params = useParams();
   const [person, setPerson] = React.useState<PersonInterface>(null);
-  const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
-  const [showMergeSearch, setShowMergeSearch] = React.useState<boolean>(false);
+  const [selectedTab, setSelectedTab] = React.useState("");
+  const context = useContext(UserContext);
+  const params = useParams();
 
   const loadData = () => {
     ApiHelper.get("/people/" + params.id, "MembershipApi").then(data => {
@@ -21,49 +21,56 @@ export const PersonPage = () => {
         if (!p.contactInfo.homePhone) p.contactInfo.homePhone = "";
         if (!p.contactInfo.mobilePhone) p.contactInfo.mobilePhone = "";
         if (!p.contactInfo.workPhone) p.contactInfo.workPhone = "";
-
       }
       setPerson(data)
     }
     );
   }
 
-  const handlePhotoUpdated = (dataUrl: string) => {
-    const updatedPerson = { ...person };
-    updatedPerson.photo = dataUrl;
-    if (!dataUrl) {
-      updatedPerson.photoUpdated = null;
+  const handleCreateConversation = async () => {
+    const conv: ConversationInterface = { allowAnonymousPosts: false, contentType: "person", contentId: person.id, title: person.name.display + " Notes", visibility: "hidden" }
+    const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
+    const p = { ...person };
+    p.conversationId = result[0].id;
+    ApiHelper.post("/people", [p], "MembershipApi");
+    setPerson(p);
+    return p.conversationId;
+  }
+
+
+
+
+
+  let defaultTab = "details";
+
+  const getTabs = () => {
+    const tabs: {key: string, icon: string, label: string}[] = [];
+    tabs.push({key:"details", icon:"person", label:Locale.label("person.person")});
+    if (UserHelper.checkAccess(Permissions.membershipApi.people.edit)) { tabs.push({key:"notes", icon:"notes", label:Locale.label("common.notes")}); if (defaultTab === "") defaultTab = "notes" }
+    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push({key:"attendance", icon:"calendar_month", label:Locale.label("people.tabs.att")}); if (defaultTab === "") defaultTab = "attendance"; }
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.view)) { tabs.push({key:"donations", icon:"volunteer_activism", label:Locale.label("people.tabs.don") }); if (defaultTab === "") defaultTab = "donations"; }
+    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) tabs.push({key:"groups", icon:"people", label:Locale.label("people.groups.groups")});
+    if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
+    return tabs;
+  }
+
+  const getCurrentTab = () => {
+    let currentTab = null;
+    switch (selectedTab) {
+      case "details": currentTab = <PersonDetails person={person} loadData={loadData} />; break;
+      case "notes": currentTab = <Notes context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />; break;
+      case "attendance": currentTab = <PersonAttendance personId={person.id} />; break;
+      case "donations": currentTab = <DonationPage personId={person.id} church={UserHelper.currentUserChurch.church} />; break;
+      case "groups": currentTab = <Groups personId={person?.id} />; break;
+      default: currentTab = <div>{Locale.label("people.tabs.noImplement")}</div>; break;
     }
-    setPerson(updatedPerson);
-    setInPhotoEditMode(false);
+    return currentTab;
+  }
+  const getItem = (tab:any) => {
+    if (tab.key === selectedTab) return (<li className="active"><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+    return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
   }
 
-  const togglePhotoEditor = (show: boolean, updatedPerson?: PersonInterface) => {
-    setInPhotoEditMode(show);
-    if (updatedPerson) {
-      setPerson(updatedPerson)
-    }
-  }
-
-  const imageEditor = inPhotoEditMode && (
-    <ImageEditor
-      aspectRatio={4 / 3}
-      photoUrl={PersonHelper.getPhotoUrl(person)}
-      onCancel={() => togglePhotoEditor(false)}
-      onUpdate={handlePhotoUpdated}
-    />
-  );
-  const getGroups = () => (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) ? <Groups personId={person?.id} /> : null
-
-  const handleShowSearch = () => {
-    setShowMergeSearch(true)
-  }
-
-  const hideMergeBox = () => {
-    setShowMergeSearch(false)
-  }
-
-  const addMergeSearch = (showMergeSearch) ? <Merge hideMergeBox={hideMergeBox} person={person} /> : <></>;
   React.useEffect(loadData, [params.id]);
 
   return (
@@ -71,31 +78,24 @@ export const PersonPage = () => {
       <PersonBanner person={person} />
       <Grid container spacing={2}>
         <Grid item xs={12} md={2}>
-          <PersonNav person={person} />
+          <div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
+            <ul>
+              {getTabs().map((tab, index) => getItem(tab))}
+            </ul>
+
+            <div className="subhead">Custom Forms</div>
+            <ul>
+              <li><a href="about:blank">Discipleship</a></li>
+            </ul>
+
+          </div>
         </Grid>
         <Grid item xs={12} md={10}>
           <div id="mainContent">
-            <Grid container spacing={3}>
-              <Grid item md={8} xs={12}>
-                <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
-                <Tabs person={person} />
-              </Grid>
-              <Grid item md={4} xs={12}>
-                {addMergeSearch}
-                {imageEditor}
-                <Household person={person} reload={person?.photoUpdated} />
-                {getGroups()}
-              </Grid>
-            </Grid>
+            {getCurrentTab()}
           </div>
-
         </Grid>
       </Grid>
-
-
-
-
-
 
     </>
   )

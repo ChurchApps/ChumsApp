@@ -3,6 +3,7 @@ import { CampusEdit, ServiceEdit, ServiceTimeEdit, Tabs } from "./components";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box } from "@mui/material"
 import { useMountedState, AttendanceInterface, CampusInterface, ServiceInterface, ServiceTimeInterface, GroupServiceTimeInterface, GroupInterface, ApiHelper, DisplayBox, ArrayHelper, Loading, Locale } from "@churchapps/apphelper";
+import { Banner } from "../baseComponents/Banner";
 
 export const AttendancePage = () => {
   const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
@@ -150,20 +151,22 @@ export const AttendancePage = () => {
 
   return (
     <>
-      <h1><Icon>calendar_month</Icon> {Locale.label("attendance.attendancePage.att")}</h1>
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="group" headerText={Locale.label("attendance.attendancePage.groups")} editContent={getEditLinks()} help="chums/attendance">
-            {getTable()}
-          </DisplayBox>
+      <Banner><h1>{Locale.label("attendance.attendancePage.att")}</h1></Banner>
+      <div id="mainContent">
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
+            <DisplayBox id="groupsBox" data-cy="attendance-groups" headerIcon="group" headerText={Locale.label("attendance.attendancePage.groups")} editContent={getEditLinks()} help="chums/attendance">
+              {getTable()}
+            </DisplayBox>
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <CampusEdit campus={selectedCampus} updatedFunction={handleUpdated} />
+            <ServiceEdit service={selectedService} updatedFunction={handleUpdated} />
+            <ServiceTimeEdit serviceTime={selectedServiceTime} updatedFunction={handleUpdated} />
+          </Grid>
         </Grid>
-        <Grid item md={4} xs={12}>
-          <CampusEdit campus={selectedCampus} updatedFunction={handleUpdated} />
-          <ServiceEdit service={selectedService} updatedFunction={handleUpdated} />
-          <ServiceTimeEdit serviceTime={selectedServiceTime} updatedFunction={handleUpdated} />
-        </Grid>
-      </Grid>
-      <Tabs />
+        <Tabs />
+      </div>
     </>
   );
 }

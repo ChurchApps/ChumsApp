@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Grid, Icon } from "@mui/material"
 import { PersonAdd } from "../people/components/PersonAdd";
 import { PersonAddAdvanced } from "../people/components/PersonAddAdvanced";
+import { Banner } from "../baseComponents/Banner";
 
 export const GroupPage = () => {
   const params = useParams();
@@ -51,14 +52,16 @@ export const GroupPage = () => {
 
   return (
     <>
-      <h1><Icon>people</Icon> {group?.name}</h1>
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <GroupDetails group={group} updatedFunction={handleGroupUpdated} />
-          <Tabs group={group} addedPerson={addedPerson} addedSession={addedSession} addedCallback={handleAddedCallback} sidebarVisibilityFunction={handleSidebarVisibility} />
+      <Banner><h1>{group?.name}</h1></Banner>
+      <div id="mainContent">
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
+            <GroupDetails group={group} updatedFunction={handleGroupUpdated} />
+            <Tabs group={group} addedPerson={addedPerson} addedSession={addedSession} addedCallback={handleAddedCallback} sidebarVisibilityFunction={handleSidebarVisibility} />
+          </Grid>
+          <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
         </Grid>
-        <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
-      </Grid>
+      </div>
     </>
   );
 }

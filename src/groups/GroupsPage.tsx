@@ -4,6 +4,7 @@ import { ApiHelper, DisplayBox, UserHelper, ExportLink, Loading, Locale } from "
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
 import { useMountedState, GroupInterface, Permissions } from "@churchapps/apphelper";
+import { Banner } from "../baseComponents/Banner";
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
@@ -93,15 +94,17 @@ export const GroupsPage = () => {
 
   return (
     <>
-      <h1><Icon>people</Icon> {Locale.label("groups.groupsPage.groups")}</h1>
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("groups.groupsPage.groups")} editContent={getEditContent()} help="chums/groups">
-            {getTable()}
-          </DisplayBox>
+      <Banner><h1>{Locale.label("groups.groupsPage.groups")}</h1></Banner>
+      <div id="mainContent">
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
+            <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("groups.groupsPage.groups")} editContent={getEditContent()} help="chums/groups">
+              {getTable()}
+            </DisplayBox>
+          </Grid>
+          <Grid item md={4} xs={12}>{addBox}</Grid>
         </Grid>
-        <Grid item md={4} xs={12}>{addBox}</Grid>
-      </Grid>
+      </div>
     </>
   );
 };
