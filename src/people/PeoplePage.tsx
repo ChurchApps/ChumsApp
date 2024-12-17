@@ -6,6 +6,7 @@ import { Grid, Icon } from "@mui/material"
 import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
 import { useMountedState } from "@churchapps/apphelper";
+import { Banner } from "../baseComponents/Banner";
 
 export const PeoplePage = () => {
 
@@ -75,17 +76,19 @@ export const PeoplePage = () => {
 
   return (
     <>
-      <h1><Icon>person</Icon> {Locale.label("people.peoplePage.searchPpl")}</h1>
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("people.peoplePage.ppl")} editContent={getEditContent()} help="chums/adding-people">
-            <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} />
-          </DisplayBox>
+      <Banner><h1>{Locale.label("people.peoplePage.searchPpl")}</h1></Banner>
+      <div id="mainContent">
+        <Grid container spacing={3}>
+          <Grid item md={8} xs={12}>
+            <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("people.peoplePage.ppl")} editContent={getEditContent()} help="chums/adding-people">
+              <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} />
+            </DisplayBox>
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <PeopleSearch updateSearchResults={(people) => setSearchResults(people)} />
+          </Grid>
         </Grid>
-        <Grid item md={4} xs={12}>
-          <PeopleSearch updateSearchResults={(people) => setSearchResults(people)} />
-        </Grid>
-      </Grid>
+      </div>
     </>
   );
 }

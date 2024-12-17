@@ -731,6 +731,24 @@ label .description {
   margin-right:15px;
 }
 
+#banner {
+  background-color:#568BDA;
+  color: #FFF;
+  padding: 12px 24px;
+}
+
+#banner h1 {
+  border-bottom: none;
+  line-height: 30px;
+  margin-top:10px;
+  margin-bottom: 0px;
+  font-size:30px;
+}
+
+#mainContent {
+  padding:24px;
+}
+
 
 @media print {
   .form-submission-summary {

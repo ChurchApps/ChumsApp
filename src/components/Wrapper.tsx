@@ -1,8 +1,4 @@
-import React, { useEffect } from "react";
-import { List } from "@mui/material";
-import { SiteWrapper, NavItem, ApiHelper, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
-import UserContext from "../UserContext";
-import { Themes } from "../helpers/Themes";
+import React from "react";
 import { Header } from "../ui/components/Header";
 
 
@@ -11,7 +7,11 @@ interface Props { pageTitle?: string, children: React.ReactNode }
 export const Wrapper: React.FC<Props> = props =>
   <>
     <Header />
-    {props.children}
+
+    <div style={{width:"100%"}}>
+      <div style={{height:64}}></div>
+      {props.children}
+    </div>
   </>
   /*
   const [donationError, setDonationError] = React.useState<boolean>(false);

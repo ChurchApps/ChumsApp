@@ -4,10 +4,10 @@ import { PersonBanner } from "./components/PersonBanner";
 import { Grid } from "@mui/material";
 import { DisplayBox } from "@churchapps/apphelper";
 import { PersonNav } from "./components/PersonNav";
+import { Wrapper } from "../components";
 
 export const UI = () => (
-  <>
-    <Header />
+  <Wrapper>
 
     <PersonBanner />
     <Grid container spacing={2}>
@@ -31,5 +31,5 @@ export const UI = () => (
 
     </Grid>
 
-  </>
+  </Wrapper>
 )

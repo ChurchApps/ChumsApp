@@ -40,7 +40,7 @@ export const PrimaryMenu = (props:Props) => {
   return (<>
     <Button onClick={handleClick} color="inherit" aria-controls={open ? "account-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} endIcon={<Icon>expand_more</Icon>} id="primaryNavButton">
       <img src="/images/logo-icon.png" alt="CHUMS - Church Management Software" />
-      <h2 style={{lineHeight:1}}>People</h2>
+      <h2 style={{lineHeight:1}}>{props.label}</h2>
     </Button>
 
     <Menu anchorEl={anchorEl} id="account-menu" open={anchorEl!==null} onClose={handleClose} slotProps={{ paper: paperProps }} transformOrigin={{ horizontal: "right", vertical: "top" }} anchorOrigin={{ horizontal: "right", vertical: "bottom" }} sx={{ "& .MuiBox-root": { borderBottom: 0 } }}>

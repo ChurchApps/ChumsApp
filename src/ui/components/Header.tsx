@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
-import { AppBar, Link, styled, Toolbar, Typography } from "@mui/material";
-import { Locale, NavItem, UserHelper, Permissions, ApiHelper, UserMenu, PersonHelper } from "@churchapps/apphelper";
-import { PrimaryMenu } from "../../baseComponents/PrimaryMenu";
-import { SecondaryMenu } from "../../baseComponents/SecondaryMenu";
-import { SecondaryMenuAlt } from "../../baseComponents/SecondaryMenuAlt";
+import { Locale, UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
 import UserContext from "../../UserContext";
+import { SiteHeader } from "../../baseComponents/SiteHeader";
 
 export const Header: React.FC = () => {
   const context = React.useContext(UserContext);
@@ -24,17 +21,6 @@ export const Header: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formPermission]);
-
-  const CustomAppBar = styled(AppBar)(
-    ({ theme }) => ({
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-      }),
-      "& .MuiIcon-root": { color: "#FFFFFF" }
-    })
-  );
 
   const getPrimaryMenu = () => {
     const donationIcon = donationError ? "error" : "volunteer_activism";
@@ -58,22 +44,22 @@ export const Header: React.FC = () => {
     return menuItems;
   }
 
+  const getPrimaryLabel = () => {
+    const path = window.location.pathname;
+    let result = "Dashboard";
+    if (path.startsWith("/people")) result = "People";
+    else if (path.startsWith("/attendance")) result = "People";
+    else if (path.startsWith("/groups")) result = "People";
+    else if (path.startsWith("/donations")) result = "Donations";
+    else if (path.startsWith("/forms")) result = "Forms";
+    else if (path.startsWith("/plans") || window.location.search.indexOf("tag=")>-1) result = "Plans";
+    else if (path.startsWith("/settings")) result = "Settings";
+    else if (path.startsWith("/admin")) result = "Settings";
+    else if (path.startsWith("/tasks")) result = "Tasks";
+    return result;
+  }
+
+
   /*<Typography variant="h6" noWrap>{UserHelper.currentUserChurch?.church?.name || ""}</Typography>*/
-  return (<>
-    <div style={{backgroundColor:"#1565c0", color: "#FFF"}}>
-      <CustomAppBar position="absolute">
-        <Toolbar sx={{ pr: "24px", backgroundColor: "#1565C0" }}>
-          <PrimaryMenu label="People" menuItems={getPrimaryMenu()}  />
-          <SecondaryMenu label="People" menuItems={getSecondaryMenu()} />
-          <div style={{ flex: 1 }}>
-            <SecondaryMenuAlt label="People" menuItems={getSecondaryMenu()}  />
-          </div>
-          {UserHelper.user && <UserMenu profilePicture={PersonHelper.getPhotoUrl(context?.person)} userName={`${UserHelper.user?.firstName} ${UserHelper.user?.lastName}`} userChurches={UserHelper.userChurches} currentUserChurch={UserHelper.currentUserChurch} context={context} appName={"CHUMS"} loadCounts={() => {}} notificationCounts={{notificationCount:0, pmCount:0}} />}
-          {!UserHelper.user && <Link href="/login" color="inherit" style={{ textDecoration: "none" }}>Login</Link>}
-        </Toolbar>
-      </CustomAppBar>
-      <div style={{height:64}}></div>
-    </div>
-  </>
-  );
+  return (<SiteHeader primaryMenuItems={getPrimaryMenu()} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={getSecondaryMenu()} secondaryMenuLabel="People" /> );
 }

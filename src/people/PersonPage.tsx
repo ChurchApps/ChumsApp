@@ -4,6 +4,8 @@ import { UserHelper, ApiHelper, PersonInterface,Permissions, PersonHelper } from
 import { Grid, Icon } from "@mui/material"
 import { useParams } from "react-router-dom";
 import { ImageEditor } from "@churchapps/apphelper";
+import { PersonBanner } from "./components/PersonBanner";
+import { PersonNav } from "./components/PersonNav";
 
 export const PersonPage = () => {
   const params = useParams();
@@ -66,19 +68,35 @@ export const PersonPage = () => {
 
   return (
     <>
-      <h1><Icon>person</Icon> {person?.name?.display}</h1>
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
-          <Tabs person={person} />
+      <PersonBanner person={person} />
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={2}>
+          <PersonNav person={person} />
         </Grid>
-        <Grid item md={4} xs={12}>
-          {addMergeSearch}
-          {imageEditor}
-          <Household person={person} reload={person?.photoUpdated} />
-          {getGroups()}
+        <Grid item xs={12} md={10}>
+          <div id="mainContent">
+            <Grid container spacing={3}>
+              <Grid item md={8} xs={12}>
+                <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={loadData} showMergeSearch={handleShowSearch} />
+                <Tabs person={person} />
+              </Grid>
+              <Grid item md={4} xs={12}>
+                {addMergeSearch}
+                {imageEditor}
+                <Household person={person} reload={person?.photoUpdated} />
+                {getGroups()}
+              </Grid>
+            </Grid>
+          </div>
+
         </Grid>
       </Grid>
+
+
+
+
+
+
     </>
   )
 
