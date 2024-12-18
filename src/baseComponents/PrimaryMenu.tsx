@@ -21,6 +21,8 @@ export const PrimaryMenu = (props:Props) => {
   const paperProps = {
     elevation: 0,
     sx: {
+      backgroundColor: "var(--c1)",
+      color: "#FFF",
       overflow: "visible",
       filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
 
@@ -44,7 +46,7 @@ export const PrimaryMenu = (props:Props) => {
     </Button>
 
     <Menu anchorEl={anchorEl} id="account-menu" open={anchorEl!==null} onClose={handleClose} slotProps={{ paper: paperProps }} transformOrigin={{ horizontal: "right", vertical: "top" }} anchorOrigin={{ horizontal: "right", vertical: "bottom" }} sx={{ "& .MuiBox-root": { borderBottom: 0 } }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }} id="primaryMenu">
         {getNavItems()}
       </Box>
     </Menu>

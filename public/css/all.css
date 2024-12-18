@@ -1,7 +1,5 @@
 ﻿:root {
-  --c1: #1565C0;    /* Base color */
-  
-  /* Lighter shades */
+  --c1: #1565C0;
   --c1l1: #3578CC;
   --c1l2: #568BDA;
   --c1l3: #77A0E5;
@@ -9,8 +7,6 @@
   --c1l5: #BBCBF8;
   --c1l6: #DDE1FC;
   --c1l7: #F0F4FF;
-
-  /* Darker shades */
   --c1d1: #1358AD;
   --c1d2: #114A99;
   --c1d3: #0E3D86;
@@ -19,6 +15,9 @@
   --c1d6: #07184B;
   --c1d7: #050C37;
 }
+
+
+
 
 body {
   font-family: "Roboto", sans-serif;
@@ -769,6 +768,10 @@ label .description {
 
 #mainContent {
   padding:24px;
+}
+
+#primaryMenu span, #primaryMenu a {
+  color:#FFF;
 }
 
 
