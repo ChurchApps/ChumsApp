@@ -11,7 +11,7 @@ export const Tabs: React.FC = () => {
   )
 
   let tabs = [];
-  let defaultTab = "";
+  let defaultTab = "setup";
   let currentTab = null;
   if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(0, "attendance", "calendar_month", Locale.label("attendance.tabs.attTrend"))); if (defaultTab === "") defaultTab = "attendance"; }
   if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(1, "groups", "person", Locale.label("attendance.tabs.groupAtt"))); if (defaultTab === "") defaultTab = "groups"; }

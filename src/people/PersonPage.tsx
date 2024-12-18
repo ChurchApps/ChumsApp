@@ -1,17 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Groups, PersonAttendance } from "./components"
-import { UserHelper, ApiHelper, PersonInterface,Permissions, PersonHelper, ConversationInterface, Notes, DonationPage, Locale } from "@churchapps/apphelper"
+import { UserHelper, ApiHelper, PersonInterface,Permissions, PersonHelper, ConversationInterface, Notes, DonationPage, Locale, FormInterface, FormSubmissionEdit, ArrayHelper } from "@churchapps/apphelper"
 import { Grid, Icon } from "@mui/material"
 import { useParams } from "react-router-dom";
 import { PersonBanner } from "./components/PersonBanner";
 import { PersonDetails } from "./components/PersonDetails";
 import UserContext from "../UserContext";
+import { PersonForm } from "./components/PersonForm";
 
 export const PersonPage = () => {
   const [person, setPerson] = React.useState<PersonInterface>(null);
   const [selectedTab, setSelectedTab] = React.useState("");
   const context = useContext(UserContext);
   const params = useParams();
+  const [allForms, setAllForms] = useState(null);
+  const [form, setForm] = useState<FormInterface>(null);
 
   const loadData = () => {
     ApiHelper.get("/people/" + params.id, "MembershipApi").then(data => {
@@ -23,8 +26,8 @@ export const PersonPage = () => {
         if (!p.contactInfo.workPhone) p.contactInfo.workPhone = "";
       }
       setPerson(data)
-    }
-    );
+    });
+    ApiHelper.get("/forms?contentType=person", "MembershipApi").then(data => setAllForms(data));
   }
 
   const handleCreateConversation = async () => {
@@ -62,6 +65,7 @@ export const PersonPage = () => {
       case "attendance": currentTab = <PersonAttendance personId={person.id} />; break;
       case "donations": currentTab = <DonationPage personId={person.id} church={UserHelper.currentUserChurch.church} />; break;
       case "groups": currentTab = <Groups personId={person?.id} />; break;
+      case "form": currentTab = <PersonForm form={form} contentType={"person"} contentId={person.id} formSubmissions={person.formSubmissions} updatedFunction={() => {loadData()}} />; break;
       default: currentTab = <div>{Locale.label("people.tabs.noImplement")}</div>; break;
     }
     return currentTab;
@@ -73,6 +77,11 @@ export const PersonPage = () => {
 
   React.useEffect(loadData, [params.id]);
 
+  const getFormList = () => {
+    const result = allForms?.map((form:FormInterface) => <li><a href="about:blank" onClick={(e) => { e.preventDefault(); setForm(ArrayHelper.getOne(allForms, "id", form.id)); setSelectedTab("form"); }}>{form.name}</a></li>);
+    if (result) return (<><div className="subhead">Custom Forms</div><ul>{result}</ul></>)
+  }
+
   return (
     <>
       <PersonBanner person={person} />
@@ -83,10 +92,7 @@ export const PersonPage = () => {
               {getTabs().map((tab, index) => getItem(tab))}
             </ul>
 
-            <div className="subhead">Custom Forms</div>
-            <ul>
-              <li><a href="about:blank">Discipleship</a></li>
-            </ul>
+            {getFormList()}
 
           </div>
         </Grid>

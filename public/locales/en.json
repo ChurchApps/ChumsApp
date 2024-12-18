@@ -39,6 +39,7 @@
 			}
 		},
 		"tabs": {
+      "setup": "Setup",
 			"attTrend": "Attendance Trend",
 			"groupAtt": "Group Attendance",
 			"noImplement": "Not Implemented"

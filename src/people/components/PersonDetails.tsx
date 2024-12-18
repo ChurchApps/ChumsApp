@@ -57,16 +57,14 @@ export const PersonDetails = (props:Props) => {
 
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={props.loadData} showMergeSearch={handleShowSearch} />
-        </Grid>
-        <Grid item md={4} xs={12}>
-          {addMergeSearch}
-          {imageEditor}
-          <Household person={person} reload={person?.photoUpdated} />
-        </Grid>
-      </Grid>
+      {addMergeSearch}
+      {imageEditor}
+      <Person id="personDetailsBox" person={person} togglePhotoEditor={togglePhotoEditor} updatedFunction={props.loadData} showMergeSearch={handleShowSearch} />
+
+
+      <Household person={person} reload={person?.photoUpdated} />
+
+
     </>
   )
 
