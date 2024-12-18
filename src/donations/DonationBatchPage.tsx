@@ -1,6 +1,6 @@
 import React from "react";
 import { DonationEdit, Donations } from "./components";
-import { ApiHelper, DonationBatchInterface, UserHelper, FundInterface, Permissions } from "@churchapps/apphelper";
+import { ApiHelper, DonationBatchInterface, UserHelper, FundInterface, Permissions, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Grid, Icon } from "@mui/material"
 import { Banner } from "../baseComponents/Banner";
@@ -31,12 +31,11 @@ export const DonationBatchPage = () => {
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return (<></>);
   return (
     <>
-      <Banner><h1>{batch.name}</h1></Banner>
+      <Banner><h1>{Locale.label("donations.donations.batches")}: {batch.name}</h1></Banner>
       <div id="mainContent">
-        <Grid container spacing={3}>
-          <Grid item md={8} xs={12}><Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} funds={funds} /></Grid>
-          <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
-        </Grid>
+        {getSidebarModules()}
+        <Donations batch={batch} addFunction={showAddDonation} editFunction={showEditDonation} funds={funds} />
+
       </div>
     </>
   );

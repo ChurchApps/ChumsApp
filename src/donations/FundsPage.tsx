@@ -6,14 +6,16 @@ import { ReportWithFilter, useMountedState, DonationBatchInterface, Permissions 
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
 import { Banner } from "../baseComponents/Banner";
 
-export const DonationsPage = () => {
+export const FundsPage = () => {
+
+
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
   else return (
     <>
-      <Banner><h1>{Locale.label("donations.donationsPage.don")}</h1></Banner>
+      <Banner><h1>{Locale.label("donations.donations.funds")}</h1></Banner>
       <div id="mainContent">
-        <ReportWithFilter keyName="donationSummary" autoRun={true} />
+        <Funds />
       </div>
     </>
   );

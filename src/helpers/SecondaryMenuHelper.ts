@@ -59,9 +59,13 @@ export class SecondaryMenuHelper {
   static getDonationsMenu = (path:string) => {
     const menuItems:MenuItem[] = []
     let label:string = "";
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({url: "/donations", label: Locale.label("components.wrapper.don") });
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({url: "/donations", label: Locale.label("donations.donations.summary") });
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({url: "/donations/batches", label: Locale.label("donations.donations.batches") });
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({url: "/donations/funds", label: Locale.label("donations.donations.funds") });
 
-    if (path.startsWith("/donations")) label = Locale.label("components.wrapper.don");
+    if (path.startsWith("/donations/funds")) label = Locale.label("donations.donations.funds");
+    else if (path.startsWith("/donations/batches")) label = Locale.label("donations.donations.batches");
+    else if (path.startsWith("/donations")) label = Locale.label("donations.donations.summary");
 
     return {menuItems, label};
   }
