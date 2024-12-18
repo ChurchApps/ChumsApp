@@ -4,7 +4,7 @@ import React from "react";
 export const PersonBanner: React.FC = () => {
   const a="";
 
-  return (<div style={{backgroundColor:"#568BDA", color: "#FFF", padding:"12px 24px"}}>
+  return (<div style={{backgroundColor:"var(--c1l2)", color: "#FFF", padding:"12px 24px"}}>
 
     <Grid container spacing={2}>
       <Grid item md={1} xs={12} sx={{display:"flex", justifyContent: {xs:"center", sm:"flex-start"}}}>

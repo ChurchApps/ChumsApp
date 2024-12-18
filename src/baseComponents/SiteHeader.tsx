@@ -28,9 +28,9 @@ export const SiteHeader = (props:Props) => {
   );
   /*<Typography variant="h6" noWrap>{UserHelper.currentUserChurch?.church?.name || ""}</Typography>*/
   return (<>
-    <div style={{backgroundColor:"#1565c0", color: "#FFF"}}>
+    <div style={{backgroundColor:"var(--c1)", color: "#FFF"}}>
       <CustomAppBar position="absolute">
-        <Toolbar sx={{ pr: "24px", backgroundColor: "#1565C0" }}>
+        <Toolbar sx={{ pr: "24px", backgroundColor: "var(--c1)" }}>
           <PrimaryMenu label={props.primaryMenuLabel} menuItems={props.primaryMenuItems}  />
           <SecondaryMenu label={props.secondaryMenuLabel} menuItems={props.secondaryMenuItems} />
           <div style={{ flex: 1 }}>

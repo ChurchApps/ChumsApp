@@ -96,14 +96,11 @@ export const GroupsPage = () => {
     <>
       <Banner><h1>{Locale.label("groups.groupsPage.groups")}</h1></Banner>
       <div id="mainContent">
-        <Grid container spacing={3}>
-          <Grid item md={8} xs={12}>
-            <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("groups.groupsPage.groups")} editContent={getEditContent()} help="chums/groups">
-              {getTable()}
-            </DisplayBox>
-          </Grid>
-          <Grid item md={4} xs={12}>{addBox}</Grid>
-        </Grid>
+        {addBox}
+        <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("groups.groupsPage.groups")} editContent={getEditContent()} help="chums/groups">
+          {getTable()}
+        </DisplayBox>
+
       </div>
     </>
   );

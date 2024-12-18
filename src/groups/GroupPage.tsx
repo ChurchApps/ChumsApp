@@ -1,67 +1,74 @@
 import React from "react";
-import { MembersAdd, GroupDetails, Tabs, SessionAdd } from "./components";
-import { ApiHelper, DisplayBox, GroupInterface, PersonInterface, SessionInterface, PersonHelper, Locale } from "@churchapps/apphelper";
+import { MembersAdd, GroupDetails, Tabs, SessionAdd, GroupMembers, GroupSessions } from "./components";
+import { ApiHelper, DisplayBox, GroupInterface, PersonInterface, SessionInterface, PersonHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Grid, Icon } from "@mui/material"
 import { PersonAdd } from "../people/components/PersonAdd";
 import { PersonAddAdvanced } from "../people/components/PersonAddAdvanced";
 import { Banner } from "../baseComponents/Banner";
+import { GroupMembersTab } from "./components/GroupMembersTab";
+import { GroupSessionsTab } from "./components/GroupSessionsTab";
 
 export const GroupPage = () => {
   const params = useParams();
 
   const [group, setGroup] = React.useState({} as GroupInterface);
-  const [addedPerson, setAddedPerson] = React.useState({} as PersonInterface);
-  const [addedSession, setAddedSession] = React.useState({} as SessionInterface);
-  const [addPersonVisible, setAddPersonVisible] = React.useState(false);
-  const [addSessionVisible, setAddSessionVisible] = React.useState(false);
-  const [addMemberVisible, setAddMemberVisible] = React.useState(false);
+  const [selectedTab, setSelectedTab] = React.useState("");
 
-  const addPerson = (p: PersonInterface) => setAddedPerson(p);
   const loadData = () => { ApiHelper.get("/groups/" + params.id, "MembershipApi").then(data => setGroup(data)); }
-  const handleSessionAdd = (session: SessionInterface) => { setAddedSession(session); setAddSessionVisible(false); }
-
   React.useEffect(loadData, []); //eslint-disable-line
-
-  const handleSidebarVisibility = (name: string, visible: boolean) => {
-    if (name === "addPerson") setAddPersonVisible(visible);
-    else if (name === "addSession") setAddSessionVisible(visible);
-    else if (name === "addMember") setAddMemberVisible(visible);
-  }
-
-  const getSidebarModules = () => {
-    const result = [] as JSX.Element[];
-    if (addSessionVisible) result.push(<SessionAdd key="sessionAdd" group={group} updatedFunction={handleSessionAdd} />);
-    if (addPersonVisible) result.push(<PersonAddAdvanced getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} showCreatePersonOnNotFound />);
-    if (addMemberVisible) result.push(<MembersAdd key="membersAdd" group={group} addFunction={addPerson} />);
-    return result;
-  }
-
-  const handleAddedCallback = () => {
-    setAddedPerson(null);
-
-    setAddedSession(null);
-  }
 
   const handleGroupUpdated = (g: GroupInterface) => {
     setGroup(g);
     loadData();
   }
 
-  console.log("GROUP", group)
+
+
+  let defaultTab = "settings";
+
+  const getTabs = () => {
+    const tabs: {key: string, icon: string, label: string}[] = [];
+    tabs.push({key:"settings", icon:"settings", label:Locale.label("components.wrapper.set")});
+    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) tabs.push({ key: "members", icon: "people", label: Locale.label("groups.tabs.mem")});
+    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && group?.trackAttendance) tabs.push({ key: "sessions", icon: "calendar_month", label: Locale.label("groups.tabs.ses") });
+
+    if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
+    return tabs;
+  }
+
+  const getCurrentTab = () => {
+    let currentTab = null;
+    switch (selectedTab) {
+      case "settings": currentTab = <GroupDetails group={group} updatedFunction={handleGroupUpdated} /> ; break;
+      case "members": currentTab = <GroupMembersTab group={group} />; break;  //<GroupMembers group={group} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />; break;
+      case "sessions": currentTab = <GroupSessionsTab group={group}  />; break;
+    }
+    return currentTab;
+  }
+
+  const getItem = (tab:any) => {
+    if (tab.key === selectedTab) return (<li className="active"><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+    return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+  }
+
+
 
   return (
     <>
       <Banner><h1>{group?.name}</h1></Banner>
-      <div id="mainContent">
-        <Grid container spacing={3}>
-          <Grid item md={8} xs={12}>
-            <GroupDetails group={group} updatedFunction={handleGroupUpdated} />
-            <Tabs group={group} addedPerson={addedPerson} addedSession={addedSession} addedCallback={handleAddedCallback} sidebarVisibilityFunction={handleSidebarVisibility} />
-          </Grid>
-          <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={2}>
+          <div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
+            <ul>{getTabs().map((tab, index) => getItem(tab))}</ul>
+          </div>
         </Grid>
-      </div>
+        <Grid item xs={12} md={10}>
+          <div id="mainContent">
+            {getCurrentTab()}
+          </div>
+        </Grid>
+      </Grid>
     </>
   );
 }
