@@ -113,22 +113,17 @@ export const FormsPage = () => {
       <>
         <Banner><h1>{title}</h1></Banner>
         <div id="mainContent">
-          <Grid container spacing={3}>
-            <Grid item md={8} xs={12}>
-              <Paper>
-                <Box>
-                  <Tabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
-                    {tabs}
-                  </Tabs>
-                  <DisplayBox id="formsBox" headerText={title} headerIcon={icon} editContent={getEditContent()}>
-                    {contents}
-                  </DisplayBox>
-                </Box>
-              </Paper>
-
-            </Grid>
-            <Grid item md={4} xs={12}>{getSidebar()}</Grid>
-          </Grid>
+          {getSidebar()}
+          <Paper>
+            <Box>
+              <Tabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
+                {tabs}
+              </Tabs>
+              <DisplayBox id="formsBox" headerText={title} headerIcon={icon} editContent={getEditContent()}>
+                {contents}
+              </DisplayBox>
+            </Box>
+          </Paper>
         </div>
       </>
     );

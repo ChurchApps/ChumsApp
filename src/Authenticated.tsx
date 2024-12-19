@@ -45,7 +45,7 @@ export const Authenticated: React.FC = () => {
     navigate("/")
   }
   else return (
-    <Box sx={{ display: "flex", backgroundColor: "#EEE" }}>
+    <Box sx={{ display: "flex" }}>
       <Wrapper>
         <Routes>
           <Route path="/admin/report/:keyName" element={<AdminReportPage />} />

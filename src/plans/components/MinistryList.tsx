@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const MinistryList = (props:Props) => {
-  const [redirect, setRedirect] = React.useState("");
+  //const [redirect, setRedirect] = React.useState("");
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
   const [showAdd, setShowAdd] = React.useState<boolean>(false);
   const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([]);
@@ -41,7 +41,7 @@ export const MinistryList = (props:Props) => {
       let g = groups[i];
       const members = ArrayHelper.getAll(groupMembers, "groupId", g.id);
       const hasAccess = members.length===0 || ArrayHelper.getOne(members, "personId", context.person?.id) !== null;
-      if (hasAccess && window.location.pathname==="/plans") setRedirect("/plans/ministries/" + g.id.toString());
+      //if (hasAccess && window.location.pathname==="/plans") setRedirect("/plans/ministries/" + g.id.toString());
 
       rows.push(<TableRow key={g.id}>
         <TableCell>
@@ -57,8 +57,8 @@ export const MinistryList = (props:Props) => {
 
   React.useEffect(() => {loadData()}, []);
 
-  if (redirect !== "") return <Navigate to={redirect} />;
-  else if (showAdd) return (<GroupAdd updatedFunction={handleAddUpdated} tags="ministry" categoryName="Ministry" />)
+  //if (redirect !== "") return <Navigate to={redirect} />;
+  if (showAdd) return (<GroupAdd updatedFunction={handleAddUpdated} tags="ministry" categoryName="Ministry" />)
   else return (<DisplayBox headerText={Locale.label("plans.ministryList.mins")} headerIcon="assignment" editContent={getAddLink()}>
     <Table size="small">
       <TableBody>

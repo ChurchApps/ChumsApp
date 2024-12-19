@@ -679,6 +679,7 @@
 			"noteTwo": "Comparable software is SubSplash.  They start at $99/mo or $1200/year.  This does not include the cut they take on donations.",
 			"regist": "Registered",
 			"servAdmin": "Server Admin",
+      "usageTrends": "Usage Trends",
 			"valueNotes": "Notes on How Values are Calculated"
 		},
 		"reportPage": {

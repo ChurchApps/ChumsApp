@@ -1,14 +1,10 @@
 import React from "react";
-import { BatchEdit, Funds, DonationEvents } from "./components";
-import { ApiHelper, DisplayBox, DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, SmallButton, Locale } from "@churchapps/apphelper";
-import { Link } from "react-router-dom";
-import { ReportWithFilter, useMountedState, DonationBatchInterface, Permissions } from "@churchapps/apphelper";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
+import { Funds } from "./components";
+import { UserHelper, Locale } from "@churchapps/apphelper";
+import { Permissions } from "@churchapps/apphelper";
 import { Banner } from "../baseComponents/Banner";
 
 export const FundsPage = () => {
-
-
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
   else return (

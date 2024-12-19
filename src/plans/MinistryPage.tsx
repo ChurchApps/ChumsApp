@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs as MaterialTabs, Tab } from "@mui/material";
+import { Grid, Icon, Tabs as MaterialTabs, Tab } from "@mui/material";
 import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
 import { useParams } from "react-router-dom";
@@ -9,7 +9,6 @@ import { Banner } from "../baseComponents/Banner";
 export const MinistryPage = () => {
 
   const [selectedTab, setSelectedTab] = React.useState("plans");
-  const [tabIndex, setTabIndex] = React.useState(0);
   const params = useParams();
   const [ministry, setMinistry] = React.useState<GroupInterface>(null);
 
@@ -25,16 +24,21 @@ export const MinistryPage = () => {
     return currentTab;
   }
 
-  const getTab = (index: number, keyName: string, text: string) => (
-    <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
-  )
+
+  const getItem = (tab:any) => {
+    if (tab.key === selectedTab) return (<li className="active"><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+    return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+  }
 
   const getTabs = () => {
     let tabs = [];
-    tabs.push(getTab(0, "plans", Locale.label("plans.ministryPage.plans")));
-    tabs.push(getTab(1, "teams", Locale.label("plans.ministryPage.teams")));
+    tabs.push({ key: "plans", icon: "assignment", label: Locale.label("plans.ministryPage.plans")});
+    tabs.push({ key: "teams", icon: "people", label: Locale.label("plans.ministryPage.teams")});
+
+    if (selectedTab === "") setSelectedTab("plans");
     return tabs;
   }
+
 
   const loadData = () => {
     ApiHelper.get("/groups/" + params.id, "MembershipApi").then((data) => { setMinistry(data); });
@@ -43,14 +47,20 @@ export const MinistryPage = () => {
   React.useEffect(loadData, [params.id]);
 
   return (<>
-    <Banner><h1>Plans</h1></Banner>
-    <div id="mainContent">
-      <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
-        {getTabs()}
-      </MaterialTabs>
+    <Banner><h1>{ministry?.name}</h1></Banner>
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={2}>
+        <div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
+          <ul>{getTabs().map((tab, index) => getItem(tab))}</ul>
+        </div>
+      </Grid>
+      <Grid item xs={12} md={10}>
+        <div id="mainContent">
+          {getCurrentTab()}
+        </div>
+      </Grid>
+    </Grid>
 
-      {getCurrentTab()}
-    </div>
   </>);
 }
 

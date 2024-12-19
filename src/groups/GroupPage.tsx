@@ -52,8 +52,6 @@ export const GroupPage = () => {
     return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
   }
 
-
-
   return (
     <>
       <Banner><h1>{group?.name}</h1></Banner>
