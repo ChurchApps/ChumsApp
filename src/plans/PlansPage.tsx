@@ -1,8 +1,7 @@
 import React from "react";
-import { Grid, Icon } from "@mui/material";
 import { MinistryList } from "./components/MinistryList";
 import { Locale } from "@churchapps/apphelper";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const PlansPage = () => {
 

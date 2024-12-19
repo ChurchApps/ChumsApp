@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { Grid, Icon, Menu, MenuItem, Typography } from "@mui/material";
+import { Grid, Menu, MenuItem, Typography } from "@mui/material";
 import { ApiHelper, DisplayBox, TaskInterface, Notes, DateHelper, ConversationInterface, Locale } from "@churchapps/apphelper";
 import { SmallButton } from "@churchapps/apphelper";
 import { Link, useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
 import UserContext from "../UserContext";
 import { RequestedChanges } from "./components/RequestedChanges";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const TaskPage = () => {
   const params = useParams();

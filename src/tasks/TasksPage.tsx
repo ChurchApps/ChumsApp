@@ -1,8 +1,7 @@
-import { Icon } from "@mui/material";
 import React from "react";
 import { Locale, SmallButton } from "@churchapps/apphelper";
 import { TaskList } from "./components/TaskList";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const TasksPage = () => {
   const [status, setStatus] = React.useState("Open");

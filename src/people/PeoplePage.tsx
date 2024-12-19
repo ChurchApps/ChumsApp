@@ -2,11 +2,11 @@ import React from "react";
 import { Locale, PersonInterface } from "@churchapps/apphelper";
 import { PeopleSearchResults, PeopleColumns } from "./components";
 import { ApiHelper, DisplayBox, ExportLink } from "@churchapps/apphelper";
-import { Grid, Icon } from "@mui/material"
+import { Grid } from "@mui/material"
 import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
 import { useMountedState } from "@churchapps/apphelper";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const PeoplePage = () => {
 

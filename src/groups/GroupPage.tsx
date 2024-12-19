@@ -3,9 +3,7 @@ import { MembersAdd, GroupDetails, Tabs, SessionAdd, GroupMembers, GroupSessions
 import { ApiHelper, DisplayBox, GroupInterface, PersonInterface, SessionInterface, PersonHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Grid, Icon } from "@mui/material"
-import { PersonAdd } from "../people/components/PersonAdd";
-import { PersonAddAdvanced } from "../people/components/PersonAddAdvanced";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 import { GroupMembersTab } from "./components/GroupMembersTab";
 import { GroupSessionsTab } from "./components/GroupSessionsTab";
 

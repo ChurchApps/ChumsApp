@@ -2,7 +2,7 @@ import React from "react";
 import { Funds } from "./components";
 import { UserHelper, Locale } from "@churchapps/apphelper";
 import { Permissions } from "@churchapps/apphelper";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const FundsPage = () => {
 

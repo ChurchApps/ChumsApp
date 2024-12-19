@@ -3,7 +3,7 @@ import { CampusEdit, ServiceEdit, ServiceTimeEdit, Tabs } from "./components";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box } from "@mui/material"
 import { useMountedState, AttendanceInterface, CampusInterface, ServiceInterface, ServiceTimeInterface, GroupServiceTimeInterface, GroupInterface, ApiHelper, DisplayBox, ArrayHelper, Loading, Locale, UserHelper, ReportWithFilter } from "@churchapps/apphelper";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 import { AttendanceSetup } from "./components/AttendanceSetup";
 import { Permissions } from "@churchapps/apphelper";
 

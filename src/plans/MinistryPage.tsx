@@ -4,7 +4,7 @@ import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
 import { useParams } from "react-router-dom";
 import { ApiHelper, GroupInterface, Locale } from "@churchapps/apphelper";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const MinistryPage = () => {
 

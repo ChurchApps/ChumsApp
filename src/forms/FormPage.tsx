@@ -2,9 +2,8 @@ import React from "react";
 import { Tabs } from "./components";
 import { ApiHelper, FormInterface, MemberPermissionInterface } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom"
-import { Icon } from "@mui/material";
 import UserContext from "../UserContext";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const FormPage = () => {
   const params = useParams();

@@ -5,7 +5,7 @@ import { PeopleSearch } from "./components";
 import { Groups } from "../people/components";
 import { UserHelper } from "@churchapps/apphelper";
 import { Locale } from "@churchapps/apphelper";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const DashboardPage = () => (<>
   <Banner><h1> Chums {Locale.label("dashboard.dashboardPage.dash")}</h1></Banner>

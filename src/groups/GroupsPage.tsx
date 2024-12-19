@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { GroupAdd } from "./components";
 import { ApiHelper, DisplayBox, UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
 import { useMountedState, GroupInterface, Permissions } from "@churchapps/apphelper";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Header } from "./components/Header";
+import { Header } from "../components/Header";
 import { PersonBanner } from "./components/PersonBanner";
 import { Grid } from "@mui/material";
 import { DisplayBox } from "@churchapps/apphelper";

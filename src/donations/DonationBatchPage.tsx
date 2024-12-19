@@ -2,8 +2,7 @@ import React from "react";
 import { DonationEdit, Donations } from "./components";
 import { ApiHelper, DonationBatchInterface, UserHelper, FundInterface, Permissions, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
-import { Grid, Icon } from "@mui/material"
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const DonationBatchPage = () => {
   const params = useParams();

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Locale, UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
-import UserContext from "../../UserContext";
-import { SiteHeader } from "../../baseComponents/SiteHeader";
-import { SecondaryMenuHelper } from "../../helpers/SecondaryMenuHelper";
+import UserContext from "../UserContext";
+import { SiteHeader } from "@churchapps/apphelper";
+import { SecondaryMenuHelper } from "../helpers/SecondaryMenuHelper";
 
 export const Header: React.FC = () => {
   const context = React.useContext(UserContext);
@@ -63,5 +63,5 @@ export const Header: React.FC = () => {
   const secondaryMenu = SecondaryMenuHelper.getSecondaryMenu(window.location.pathname, {formPermission});
 
   /*<Typography variant="h6" noWrap>{UserHelper.currentUserChurch?.church?.name || ""}</Typography>*/
-  return (<SiteHeader primaryMenuItems={getPrimaryMenu()} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={secondaryMenu.menuItems} secondaryMenuLabel={secondaryMenu.label} /> );
+  return (<SiteHeader primaryMenuItems={getPrimaryMenu()} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={secondaryMenu.menuItems} secondaryMenuLabel={secondaryMenu.label} context={context} appName={"CHUMS"} /> );
 }

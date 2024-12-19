@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { ChurchSettings, Roles, RoleEdit } from "./components"
 import { ChurchInterface, ApiHelper, UserHelper, Permissions, DisplayBox, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import { Grid, Icon } from "@mui/material";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 import { ChurchSettingsTab } from "./components/ChurchSettingsTab";
 import { RolesTab } from "./components/RolesTab";
 

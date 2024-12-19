@@ -1,8 +1,8 @@
 import React from "react";
 import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper, Locale } from "@churchapps/apphelper";
 import { useParams, Link } from "react-router-dom";
-import { Table, TableBody, TableRow, TableCell, TableHead, Grid, TextField, Icon } from "@mui/material"
-import { Banner } from "../baseComponents/Banner";
+import { Table, TableBody, TableRow, TableCell, TableHead, Grid, TextField } from "@mui/material"
+import { Banner } from "@churchapps/apphelper";
 
 export const FundPage = () => {
   const params = useParams();

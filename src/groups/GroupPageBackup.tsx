@@ -3,9 +3,8 @@ import { MembersAdd, GroupDetails, Tabs, SessionAdd } from "./components";
 import { ApiHelper, DisplayBox, GroupInterface, PersonInterface, SessionInterface, PersonHelper, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Grid, Icon } from "@mui/material"
-import { PersonAdd } from "../people/components/PersonAdd";
 import { PersonAddAdvanced } from "../people/components/PersonAddAdvanced";
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const GroupPage = () => {
   const params = useParams();

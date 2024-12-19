@@ -4,7 +4,7 @@ import { ApiHelper, DisplayBox, DateHelper, UserHelper, ExportLink, Loading, Cur
 import { Link } from "react-router-dom";
 import { useMountedState, DonationBatchInterface, Permissions } from "@churchapps/apphelper";
 import {  Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
-import { Banner } from "../baseComponents/Banner";
+import { Banner } from "@churchapps/apphelper";
 
 export const DonationBatchesPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
