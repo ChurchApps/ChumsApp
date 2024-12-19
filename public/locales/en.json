@@ -39,6 +39,7 @@
 			}
 		},
 		"tabs": {
+      "setup": "Setup",
 			"attTrend": "Attendance Trend",
 			"groupAtt": "Group Attendance",
 			"noImplement": "Not Implemented"
@@ -66,11 +67,12 @@
 			"att": "Attendance",
 			"dash": "Dashboard",
 			"don": "Donations",
-			"form": "Form",
+			"forms": "Forms",
 			"groups": "Groups",
 			"plans": "Plans",
 			"ppl": "People",
 			"servAdmin": "Server Admin",
+      "serving": "Serving",
 			"set": "Settings",
 			"tasks": "Tasks"
 		}
@@ -123,6 +125,9 @@
 			"anon": "Anonymous",
 			"date": "Date",
 			"don": "Donations",
+      "summary": "Summary",
+      "batches": "Batches",
+      "funds": "Funds",
 			"errMsg": "No fund found. Please create a fund before making a donation",
 			"noDonMsg": "No donations have been tracked. Once donations are entered they will show up here.",
 			"tableIdent": "Id",
@@ -674,6 +679,7 @@
 			"noteTwo": "Comparable software is SubSplash.  They start at $99/mo or $1200/year.  This does not include the cut they take on donations.",
 			"regist": "Registered",
 			"servAdmin": "Server Admin",
+      "usageTrends": "Usage Trends",
 			"valueNotes": "Notes on How Values are Calculated"
 		},
 		"reportPage": {

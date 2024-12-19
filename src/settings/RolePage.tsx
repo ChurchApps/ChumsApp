@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { UserAdd, RolePermissions, RoleMembers } from "./components";
 import { ApiHelper, RoleInterface, UserHelper, Permissions, RoleMemberInterface, DisplayBox, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom"
-import { Icon, Grid } from "@mui/material";
-
-
+import { Grid } from "@mui/material";
+import { Banner } from "@churchapps/apphelper";
 
 export const RolePage = () => {
   const params = useParams();
@@ -51,21 +50,23 @@ export const RolePage = () => {
   else {
     return (
       <>
-        <h1><Icon>lock</Icon> {Locale.label("settings.rolePage.roleEdit")} {role?.name}</h1>
-        <Grid container spacing={3}>
-          <Grid item md={8} xs={12}>
-            <RoleMembers
-              role={role}
-              roleMembers={roleMembers}
-              addFunction={handleShowAdd}
-              setSelectedRoleMember={setSelectedRoleMemberId}
-              updatedFunction={handleAdd}
-            />
+        <Banner><h1>{Locale.label("settings.rolePage.roleEdit")} {role?.name}</h1></Banner>
+        <div id="mainContent">
+          <Grid container spacing={3}>
+            <Grid item md={8} xs={12}>
+              <RoleMembers
+                role={role}
+                roleMembers={roleMembers}
+                addFunction={handleShowAdd}
+                setSelectedRoleMember={setSelectedRoleMemberId}
+                updatedFunction={handleAdd}
+              />
+            </Grid>
+            <Grid item md={4} xs={12}>
+              {getSidebar()}
+            </Grid>
           </Grid>
-          <Grid item md={4} xs={12}>
-            {getSidebar()}
-          </Grid>
-        </Grid>
+        </div>
       </>
     );
   }

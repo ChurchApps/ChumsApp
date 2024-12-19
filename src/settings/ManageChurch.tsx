@@ -1,16 +1,47 @@
 import React, { useState } from "react";
-import { ChurchSettings, Roles, RoleEdit } from "./components"
 import { ChurchInterface, ApiHelper, UserHelper, Permissions, DisplayBox, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import { Grid, Icon } from "@mui/material";
+import { Banner } from "@churchapps/apphelper";
+import { ChurchSettingsTab } from "./components/ChurchSettingsTab";
+import { RolesTab } from "./components/RolesTab";
 
 export const ManageChurch = () => {
+  const [selectedTab, setSelectedTab] = React.useState("plans");
   const [church, setChurch] = useState<ChurchInterface>(null);
   const [redirectUrl, setRedirectUrl] = useState<string>("");
-  const [selectedRoleId, setSelectedRoleId] = useState<string>("notset");
+
 
   const jwt = ApiHelper.getConfig("MembershipApi").jwt;
   const churchId = UserHelper.currentUserChurch.church.id;
+
+
+  const getCurrentTab = () => {
+
+    let currentTab = <div></div>;
+    if (church) {
+      switch (selectedTab) {
+        case "settings": currentTab = <ChurchSettingsTab />; break;
+        case "roles": currentTab = <RolesTab church={church} />; break;
+      }
+    }
+    return currentTab;
+  }
+
+
+  const getItem = (tab:any) => {
+    if (tab.key === selectedTab) return (<li className="active"><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+    return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+  }
+
+  const getTabs = () => {
+    let tabs = [];
+    tabs.push({ key: "settings", icon: "settings", label: Locale.label("settings.manageChurch.manage")});
+    tabs.push({ key: "roles", icon: "lock", label: Locale.label("settings.roles.roles")});
+
+    if (selectedTab === "") setSelectedTab("settings");
+    return tabs;
+  }
 
   const loadData = () => {
     //const churchId = params.id;
@@ -18,36 +49,25 @@ export const ManageChurch = () => {
     ApiHelper.get("/churches/" + churchId + "?include=permissions", "MembershipApi").then(data => setChurch(data));
   }
 
-  const getSidebar = () => {
-    let modules: JSX.Element[] = [];
-    if (selectedRoleId !== "notset") {
-      modules.splice(1, 0, <RoleEdit key="roleEdit" roleId={selectedRoleId} updatedFunction={() => { setSelectedRoleId("notset") }} />);
-    }
-    modules.push(<DisplayBox headerIcon="link" headerText={Locale.label("settings.manageChurch.tools")} editContent={false}>
-      <table className="table">
-        <tbody>
-          <tr><td>
-            <a href={`https://transfer.chums.org/login?jwt=${jwt}&churchId=${churchId}`} target="_blank" rel="noreferrer noopener" style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>{Locale.label("settings.manageChurch.imEx")}</a>
-          </td></tr>
-        </tbody>
-      </table>
-    </DisplayBox>);
-    return modules;
-  }
-
   React.useEffect(loadData, [UserHelper.currentUserChurch.church.id]); //eslint-disable-line
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (
     <>
-      <h1><Icon>church</Icon> {Locale.label("settings.manageChurch.manage")} {church?.name}</h1>
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <ChurchSettings church={church} updatedFunction={loadData} />
-          {church && <Roles selectRoleId={setSelectedRoleId} selectedRoleId={selectedRoleId} church={church} />}
+      <Banner><h1>{Locale.label("settings.manageChurch.manage")}: {church?.name}</h1></Banner>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={2}>
+          <div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
+            <ul>
+              {getTabs().map((tab, index) => getItem(tab))}
+              <li><a href={`https://transfer.chums.org/login?jwt=${jwt}&churchId=${churchId}`} target="_blank" rel="noreferrer noopener"><Icon>play_arrow</Icon> {Locale.label("settings.manageChurch.imEx")}</a></li>
+            </ul>
+          </div>
         </Grid>
-        <Grid item md={4} xs={12}>
-          {getSidebar()}
+        <Grid item xs={12} md={10}>
+          <div id="mainContent">
+            {getCurrentTab()}
+          </div>
         </Grid>
       </Grid>
     </>

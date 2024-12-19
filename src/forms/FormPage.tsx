@@ -2,8 +2,8 @@ import React from "react";
 import { Tabs } from "./components";
 import { ApiHelper, FormInterface, MemberPermissionInterface } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom"
-import { Icon } from "@mui/material";
 import UserContext from "../UserContext";
+import { Banner } from "@churchapps/apphelper";
 
 export const FormPage = () => {
   const params = useParams();
@@ -21,8 +21,10 @@ export const FormPage = () => {
 
   return form?.id
     ? <>
-      <h1><Icon>description</Icon> {form.name}</h1>
-      <Tabs form={form} memberPermission={memberPermission} />
+      <Banner><h1>{form.name}</h1></Banner>
+      <div id="mainContent">
+        <Tabs form={form} memberPermission={memberPermission} />
+      </div>
     </>
     : <></>;
 }

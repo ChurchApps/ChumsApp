@@ -40,24 +40,15 @@ export const PlanList = (props:Props) => {
   useEffect(() => { loadData(); }, [props.ministry]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (<>
-    <h1><Icon>assignment</Icon> {props.ministry.name} {Locale.label("plans.planList.plans")}</h1>
-    <Grid container spacing={3}>
-      <Grid item md={8} xs={12}>
-        <DisplayBox headerText={Locale.label("plans.planList.plans")} headerIcon="assignment" editContent={getAddPlanLink()}>
-          <Table size="small">
-            <TableBody>
-              {getPlans()}
-            </TableBody>
-          </Table>
-        </DisplayBox>
-      </Grid>
-      <Grid item md={4} xs={12}>
-        {plan && (<PlanEdit plan={plan} plans={plans} updatedFunction={loadData} />)}
-
-        <MinistryList />
-
-      </Grid>
-    </Grid>
+    {plan && (<PlanEdit plan={plan} plans={plans} updatedFunction={loadData} />)}
+    <DisplayBox headerText={Locale.label("plans.planList.plans")} headerIcon="assignment" editContent={getAddPlanLink()}>
+      <Table size="small">
+        <TableBody>
+          {getPlans()}
+        </TableBody>
+      </Table>
+    </DisplayBox>
+    <MinistryList />
   </>);
 }
 

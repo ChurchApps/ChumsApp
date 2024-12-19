@@ -27,6 +27,8 @@ import { ProfilePage } from "./profile/ProfilePage";
 import { PlansPage } from "./plans/PlansPage";
 import { PlanPage } from "./plans/PlanPage";
 import { MinistryPage } from "./plans/MinistryPage";
+import { DonationBatchesPage } from "./donations/DonationBatchesPage";
+import { FundsPage } from "./donations/FundsPage";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
@@ -43,7 +45,7 @@ export const Authenticated: React.FC = () => {
     navigate("/")
   }
   else return (
-    <Box sx={{ display: "flex", backgroundColor: "#EEE" }}>
+    <Box sx={{ display: "flex" }}>
       <Wrapper>
         <Routes>
           <Route path="/admin/report/:keyName" element={<AdminReportPage />} />
@@ -54,7 +56,9 @@ export const Authenticated: React.FC = () => {
           <Route path="/groups" element={<GroupsPage />} />
           <Route path="/attendance" element={<AttendancePage />} />
           <Route path="/donations/funds/:id" element={<FundPage />} />
-          <Route path="/donations/:id" element={<DonationBatchPage />} />
+          <Route path="/donations/funds" element={<FundsPage />} />
+          <Route path="/donations/batches/:id" element={<DonationBatchPage />} />
+          <Route path="/donations/batches" element={<DonationBatchesPage />} />
           <Route path="/donations" element={<DonationsPage />} />
           <Route path="/forms/:id" element={<FormPage />} />
           <Route path="/forms" element={<FormsPage />} />

@@ -87,15 +87,10 @@ export const TeamList = (props:Props) => {
 
   return (
     <>
-      <h1><Icon>people</Icon> {props.ministry.name} {Locale.label("plans.teamList.teams")}</h1>
-      <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
-          <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("plans.teamList.teams")} editContent={getEditContent()}>
-            {getTable()}
-          </DisplayBox>
-        </Grid>
-        <Grid item md={4} xs={12}>{addBox}</Grid>
-      </Grid>
+      {addBox}
+      <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("plans.teamList.teams")} editContent={getEditContent()}>
+        {getTable()}
+      </DisplayBox>
     </>
   );
 };

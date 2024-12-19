@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { ReportWithFilter, ReportInterface, ApiHelper, Locale } from "@churchapps/apphelper";
-import { Icon } from "@mui/material";
+import { Banner } from "@churchapps/apphelper";
 
 export const ReportPage = () => {
   const params = useParams();
@@ -12,8 +12,10 @@ export const ReportPage = () => {
 
   return (
     <>
-      <h1><Icon>summarize</Icon> {report?.displayName || Locale.label("serverAdmin.reportPage.report")}</h1>
-      <ReportWithFilter keyName={params.keyName} autoRun={false} />
+      <Banner><h1>{report?.displayName || Locale.label("serverAdmin.reportPage.report")}</h1></Banner>
+      <div id="mainContent">
+        <ReportWithFilter keyName={params.keyName} autoRun={false} />
+      </div>
     </>
   );
 }

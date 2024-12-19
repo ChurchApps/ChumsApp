@@ -1,4 +1,25 @@
-﻿body {
+﻿:root {
+  --c1: #1565C0;
+  --c1l1: #3578CC;
+  --c1l2: #568BDA;
+  --c1l3: #77A0E5;
+  --c1l4: #99B5F0;
+  --c1l5: #BBCBF8;
+  --c1l6: #DDE1FC;
+  --c1l7: #F0F4FF;
+  --c1d1: #1358AD;
+  --c1d2: #114A99;
+  --c1d3: #0E3D86;
+  --c1d4: #0C3172;
+  --c1d5: #09245F;
+  --c1d6: #07184B;
+  --c1d7: #050C37;
+}
+
+
+
+
+body {
   font-family: "Roboto", sans-serif;
   color: #333;
 }
@@ -8,7 +29,7 @@
 }
 
 a {
-  color: #24b8ff;
+  color: var(--c1l2);
   text-decoration: none;
 }
 
@@ -24,9 +45,6 @@ h2 span {
   color: #24b8ff;
 }
 
-body {
-  background-color: #f3f3f6;
-}
 
 h1 {
   border-bottom: 1px solid #ccc;
@@ -688,11 +706,89 @@ label .description {
 .positionsTable div img { height:25px; }
 
 
+.sideNav ul {
+  padding-left: 0px;
+}
 
+.sideNav li {
+  list-style-type: none;
+  border-bottom: 1px solid #ccc;
+  padding:8px 10px;
+}
+.sideNav li a {
+  color:#333;
+}
+
+.sideNav li.active {
+  list-style-type: none;
+  border-bottom: 1px solid var(--c1l2);
+  padding:8px 10px;
+}
+
+.sideNav li.active a, .sideNav li a:hover {
+  color:var(--c1l2);
+}
+
+.sideNav .subhead {
+  margin-top:30px;
+  background-color:var(--c1l6);
+  padding-left:12px;
+  padding-top:5px;
+  padding-bottom: 5px;
+}
+
+.sideNav li span {
+  padding-top:5px;
+  overflow:visible;
+}
+
+#primaryNavButton {
+  margin-right:50px;
+  text-transform: "none";
+}
+
+#primaryNavButton img {
+  height:35px;
+  margin-right:15px;
+}
+
+#banner {
+  background-color:var(--c1l2);
+  color: #FFF;
+  padding: 12px 24px;
+}
+
+#banner h1 {
+  border-bottom: none;
+  line-height: 30px;
+  margin-top:10px;
+  margin-bottom: 0px;
+  font-size:30px;
+}
+
+#mainContent {
+  padding:24px;
+}
+
+#primaryMenu span, #primaryMenu a {
+  color:#FFF;
+}
 
 
 @media print {
   .form-submission-summary {
     margin: 20px;
   }
+}
+
+@media (max-width: 740px) {
+  #primaryNavButton h2 { display:none; }
+  #primaryNavButton>img {margin-right:0px;}
+  #primaryNavButton>span {margin-left:0px;}
+  #secondaryMenu { display:none; }
+}
+
+@media (min-width: 741px) {
+  #secondaryMenuAlt { display:none; width:100%; text-align: center;}
+
 }
