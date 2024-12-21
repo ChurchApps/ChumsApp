@@ -9,10 +9,12 @@ export class SecondaryMenuHelper {
 
   static getSecondaryMenu = (path:string, data:any) => {
     let result:{menuItems:MenuItem[], label:string} = {menuItems:[], label:""};
+
     if (path.startsWith("/people") || path.startsWith("/groups") || path.startsWith("/attendance")) result = this.getPeopleMenu(path);
     else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = this.getSettingsMenu(path, data);
     else if (path.startsWith("/plans") || path.startsWith("/tasks")) result = this.getServingMenu(path);
     else if (path.startsWith("/donations")) result = this.getDonationsMenu(path);
+    else if (path===("/")) result = this.getDashboardMenu(path);
     return result;
   }
 
@@ -66,6 +68,17 @@ export class SecondaryMenuHelper {
     if (path.startsWith("/donations/funds")) label = Locale.label("donations.donations.funds");
     else if (path.startsWith("/donations/batches")) label = Locale.label("donations.donations.batches");
     else if (path.startsWith("/donations")) label = Locale.label("donations.donations.summary");
+
+    return {menuItems, label};
+  }
+
+  static getDashboardMenu = (path:string) => {
+    const menuItems:MenuItem[] = []
+    let label:string = "";
+    menuItems.push({url: "/", label: Locale.label("components.wrapper.dash") });
+
+    if (path==="/") label = Locale.label("components.wrapper.dash");
+
 
     return {menuItems, label};
   }

@@ -9,7 +9,7 @@ export const Wrapper: React.FC<Props> = props =>
     <Header />
 
     <div style={{width:"100%"}}>
-      <div style={{height:64}}></div>
+      <div id="appBarSpacer"></div>
       {props.children}
     </div>
   </>

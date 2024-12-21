@@ -742,6 +742,10 @@ label .description {
   overflow:visible;
 }
 
+#appBarSpacer {
+  height: 64px;
+}
+
 #primaryNavButton {
   margin-right:50px;
   text-transform: "none";
@@ -785,6 +789,7 @@ label .description {
   #primaryNavButton h2 { display:none; }
   #primaryNavButton>img {margin-right:0px;}
   #primaryNavButton>span {margin-left:0px;}
+  #appBarSpacer { height:60px;}
   #secondaryMenu { display:none; }
 }
 
