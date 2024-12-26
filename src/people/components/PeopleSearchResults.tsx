@@ -118,9 +118,30 @@ export function PeopleSearchResults(props: Props) {
     setSortDirection(!asc) //set sort direction for next time
     people = people.sort(function (a: any, b: any) {
       if (a[key] === null) return Infinity; // if value is null push to the end of array
+      if (key === "birthDay") { //there's no 'birthDay' property in the people object; instead use birthDate to sort
+        if (a["birthDate"] === null && b["birthDate"] === null) return 0;
+        if (a["birthDate"] === null) return 1;
+        if (b["birthDate"] === null) return -1;
+      }
 
       if (typeof a[key]?.getMonth === "function") {
-        return asc ? (a[key]?.getTime() - b[key]?.getTime()) : (b[key]?.getTime() - a[key]?.getTime());
+        return asc ? (a[key] - b[key]) : (b[key] - a[key]);
+      }
+
+      if (key === "birthDay") { //to sort dates as per the month
+        if (asc) {
+          if (a["birthDate"]?.getMonth() !== b["birthDate"]?.getMonth()) {
+            return a["birthDate"]?.getMonth() - b["birthDate"]?.getMonth();
+          } else {
+            return a["birthDate"]?.getDate() - b["birthDate"]?.getDate();
+          }
+        } else {
+          if (b["birthDate"]?.getMonth() !== a["birthDate"]?.getMonth()) {
+            return b["birthDate"]?.getMonth() - a["birthDate"]?.getMonth();
+          } else {
+            return b["birthDate"]?.getDate() - a["birthDate"]?.getDate();
+          }
+        }
       }
 
       const parsedNum = parseInt(a[key]);
