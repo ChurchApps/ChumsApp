@@ -730,6 +730,12 @@
 			"none": "None",
 			"noGroups": "No Groups available"
 		},
+		"supportContactSettingsEdit": {
+			"supportContact": "Support Contact",
+			"forceMsg": "This link will be used by users to contact the church",
+			"link": "Link",
+			"linkHelperText": "It must be either church's email or a link to the church's contact form"
+		},
 		"imageEditor": {
 			"crop": "Crop",
 			"upload": "Upload"
