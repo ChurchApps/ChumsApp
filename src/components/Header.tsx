@@ -3,9 +3,11 @@ import { Locale, UserHelper, Permissions, ApiHelper } from "@churchapps/apphelpe
 import UserContext from "../UserContext";
 import { SiteHeader } from "@churchapps/apphelper";
 import { SecondaryMenuHelper } from "../helpers/SecondaryMenuHelper";
+import { useNavigate } from "react-router-dom";
 
 export const Header: React.FC = () => {
   const context = React.useContext(UserContext);
+  const navigate = useNavigate();
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
   const [donationError, setDonationError] = React.useState<boolean>(false);
   const [isFormMember, setIsFormMember] = React.useState<boolean>(false);
@@ -62,6 +64,8 @@ export const Header: React.FC = () => {
 
   const secondaryMenu = SecondaryMenuHelper.getSecondaryMenu(window.location.pathname, {formPermission});
 
+  const handleNavigate = (url: string) => {navigate(url);}
+
   /*<Typography variant="h6" noWrap>{UserHelper.currentUserChurch?.church?.name || ""}</Typography>*/
-  return (<SiteHeader primaryMenuItems={getPrimaryMenu()} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={secondaryMenu.menuItems} secondaryMenuLabel={secondaryMenu.label} context={context} appName={"CHUMS"} /> );
+  return (<SiteHeader primaryMenuItems={getPrimaryMenu()} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={secondaryMenu.menuItems} secondaryMenuLabel={secondaryMenu.label} context={context} appName={"CHUMS"} onNavigate={handleNavigate} /> );
 }
