@@ -266,6 +266,8 @@
 			"attTrack": "Track Attendance:",
 			"cat": "Category",
 			"groupDet": "Group Details",
+      "meetingLocation": "Meeting Location",
+      "meetingTime": "Meeting Time",
 			"parPick": "Parent Pickup:",
 			"prinName": "Print Nametag:"
 		},
@@ -279,6 +281,8 @@
 			"groupImg": "Group Photo",
 			"groupName": "Group Name",
 			"groupNameMsg": "Please enter a group name.",
+      "meetingLocation": "Meeting Location",
+      "meetingTime": "Meeting Time",
 			"parPick": "Parent Pickup",
 			"prinName": "Print Nametag",
 			"selImg": "Select Photo"

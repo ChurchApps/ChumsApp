@@ -20,6 +20,8 @@ export const GroupDetails: React.FC<Props> = (props) => {
       <Grid container spacing={1}>
         {isStandard && <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.cat")}</label> {props.group.categoryName}</Grid>}
         <Grid item md={6} xs={12}><label>{Locale.label("common.name")}</label> {props.group.name}</Grid>
+        {isStandard && <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.meetingTime")}</label> {props.group.meetingTime}</Grid>}
+        {isStandard && <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.meetingLocation")}</label> {props.group.meetingLocation}</Grid>}
       </Grid>
       {isStandard && <>
         <Grid container spacing={1} marginTop="1px">

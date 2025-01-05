@@ -31,6 +31,8 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     switch (e.target.name) {
       case "categoryName": g.categoryName = e.target.value; break;
       case "name": g.name = e.target.value; break;
+      case "meetingTime": g.meetingTime = e.target.value; break;
+      case "meetingLocation": g.meetingLocation = e.target.value; break;
       case "trackAttendance": g.trackAttendance = e.target.value === "true"; break;
       case "parentPickup": g.parentPickup = e.target.value === "true"; break;
       case "printNametag": g.printNametag = e.target.value === "true"; break;
@@ -80,6 +82,44 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     if (isMounted()) { setGroup(props.group); }
   }, [props.group, isMounted]);
 
+  const getAttendance = () => {
+    if (teamMode) return (<></>);
+    else return(<>
+      <hr style={{marginTop:30}} />
+      <h4>Attendance</h4>
+      <Grid container spacing={3}>
+        <Grid item md={6} xs={12}>
+          <FormControl fullWidth>
+            <InputLabel>{Locale.label("groups.groupDetailsEdit.attTrack")}</InputLabel>
+            <Select label={Locale.label("groups.groupDetailsEdit.attTrack")} id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+              <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
+              <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <Stack direction={{ xs: "column", md: "row" }}>
+            <FormControl fullWidth>
+              <InputLabel>{Locale.label("groups.groupDetailsEdit.parPick")}</InputLabel>
+              <Select label={Locale.label("groups.groupDetailsEdit.parPick")} name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+                <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
+                <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth sx={{ marginLeft: { md: 2 } }}>
+              <InputLabel>{Locale.label("groups.groupDetailsEdit.prinName")}</InputLabel>
+              <Select label={Locale.label("groups.groupDetailsEdit.prinName")} name="printNametag" value={group.printNametag?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
+                <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
+                <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
+        </Grid>
+      </Grid>
+      <ServiceTimesEdit group={group} />
+    </>);
+  }
+
   const teamMode = group?.tags?.indexOf("team") !== -1;
 
   if (redirect !== "") return <Navigate to={redirect} />;
@@ -98,36 +138,17 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
               <TextField fullWidth label={Locale.label("groups.groupDetailsEdit.groupName")} type="text" name="name" value={group.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
           </Grid>
-          {!teamMode && <>
-            <Grid container spacing={3}>
+          <Grid container spacing={3}>
+            {!teamMode && (
               <Grid item md={6} xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel>{Locale.label("groups.groupDetailsEdit.attTrack")}</InputLabel>
-                  <Select label={Locale.label("groups.groupDetailsEdit.attTrack")} id="trackAttendance" name="trackAttendance" data-cy="select-attendance-type" value={group.trackAttendance?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                    <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
-                    <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
-                  </Select>
-                </FormControl>
+                <TextField fullWidth type="text" name="meetingTime" label={Locale.label("groups.groupDetailsEdit.meetingTime")} value={group.meetingTime || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
               </Grid>
-              <Grid item md={6} xs={12}>
-                <Stack direction={{ xs: "column", md: "row" }}>
-                  <FormControl fullWidth>
-                    <InputLabel>{Locale.label("groups.groupDetailsEdit.parPick")}</InputLabel>
-                    <Select label={Locale.label("groups.groupDetailsEdit.parPick")} name="parentPickup" value={group.parentPickup?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                      <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
-                      <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl fullWidth sx={{ marginLeft: { md: 2 } }}>
-                    <InputLabel>{Locale.label("groups.groupDetailsEdit.prinName")}</InputLabel>
-                    <Select label={Locale.label("groups.groupDetailsEdit.prinName")} name="printNametag" value={group.printNametag?.toString() || "false"} onChange={handleChange} onKeyDown={handleKeyDown}>
-                      <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
-                      <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Stack>
-              </Grid>
+            )}
+            <Grid item md={6} xs={12}>
+              <TextField fullWidth type="text" name="meetingTime" label={Locale.label("groups.groupDetailsEdit.meetingLocation")} value={group.meetingLocation || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
+          </Grid>
+          {!teamMode && <>
             <Grid container spacing={3}>
               <Grid item md={6} xs={12}>
                 <MarkdownEditor value={group.about || ""} onChange={(val) => handleMarkdownChange(val)} style={{ maxHeight: 200, overflowY: "scroll" }} placeholder={Locale.label("groups.groupDetailsEdit.groupDesc")} />
@@ -141,9 +162,9 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                 <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>{Locale.label("groups.groupDetailsEdit.selImg")}</Button>
               </Grid>
             </Grid>
-            <ServiceTimesEdit group={group} />
           </>
           }
+          {getAttendance()}
         </InputBox>
 
         {selectPhotoField && (
