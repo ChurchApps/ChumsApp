@@ -1,6 +1,6 @@
 import React from "react";
 import { GroupDetailsEdit, ServiceTimes } from ".";
-import { GroupInterface, DisplayBox, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
+import { GroupInterface, DisplayBox, UserHelper, Permissions, Loading, Locale, MarkdownPreviewLight } from "@churchapps/apphelper";
 import { Grid } from "@mui/material"
 
 interface Props { group: GroupInterface, updatedFunction: (group: GroupInterface) => void }
@@ -29,6 +29,7 @@ export const GroupDetails: React.FC<Props> = (props) => {
           <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.parPick")}</label> {(props.group.parentPickup?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
           <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.prinName")}</label> {(props.group.printNametag?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
         </Grid>
+        <MarkdownPreviewLight value={props.group.about} />
         <ServiceTimes group={props.group} />
       </>}
     </>);

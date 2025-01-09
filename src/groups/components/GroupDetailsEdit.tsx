@@ -145,7 +145,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
               </Grid>
             )}
             <Grid item md={6} xs={12}>
-              <TextField fullWidth type="text" name="meetingTime" label={Locale.label("groups.groupDetailsEdit.meetingLocation")} value={group.meetingLocation || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              <TextField fullWidth type="text" name="meetingLocation" label={Locale.label("groups.groupDetailsEdit.meetingLocation")} value={group.meetingLocation || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
           </Grid>
           {!teamMode && <>
