@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField } from "@mui/material";
 import { useMountedState, GalleryModal, GroupInterface } from "@churchapps/apphelper";
 import { MarkdownEditor } from "@churchapps/apphelper";
+import { GroupLabelsEdit } from "./GroupLabelsEdit";
 
 interface Props {
   group: GroupInterface;
@@ -37,6 +38,13 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
       case "parentPickup": g.parentPickup = e.target.value === "true"; break;
       case "printNametag": g.printNametag = e.target.value === "true"; break;
     }
+    setGroup(g);
+  };
+
+  const handleArrayChange = (val:string[]) => {
+    console.log("Array change", val)
+    let g = { ...group };
+    g.labelArray = val;
     setGroup(g);
   };
 
@@ -85,8 +93,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   const getAttendance = () => {
     if (teamMode) return (<></>);
     else return(<>
-      <hr style={{marginTop:30}} />
-      <h4>Attendance</h4>
+      <div style={{ backgroundColor:"var(--c1l2)", color:"#FFF", padding:10, marginTop:20, marginBottom:20}}><b>Attendance</b></div>
       <Grid container spacing={3}>
         <Grid item md={6} xs={12}>
           <FormControl fullWidth>
@@ -162,6 +169,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                 <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>{Locale.label("groups.groupDetailsEdit.selImg")}</Button>
               </Grid>
             </Grid>
+            <GroupLabelsEdit group={group} onUpdate={handleArrayChange} />
           </>
           }
           {getAttendance()}
