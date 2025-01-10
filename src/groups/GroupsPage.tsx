@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GroupAdd } from "./components";
 import { ApiHelper, DisplayBox, UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box, Chip } from "@mui/material"
 import { useMountedState, GroupInterface, Permissions } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 
@@ -65,6 +65,7 @@ export const GroupsPage = () => {
               <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
             </Box>
           </TableCell>
+          <TableCell>{g.labelArray.map(label => (<Chip label={label} variant="outlined" size="small" style={{marginRight:5}} />))}</TableCell>
           <TableCell>{memberCount}</TableCell>
         </TableRow>
       );
@@ -76,7 +77,7 @@ export const GroupsPage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("groups.groupsPage.cat")}</th><th>{Locale.label("common.name")}</th><th>{Locale.label("groups.groupsPage.ppl")}</th></TableRow>);
+    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("groups.groupsPage.cat")}</th><th>{Locale.label("common.name")}</th><th>{Locale.label("groups.groupsPage.labels")}</th><th>{Locale.label("groups.groupsPage.ppl")}</th></TableRow>);
     return rows;
   }
 

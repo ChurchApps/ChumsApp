@@ -316,6 +316,7 @@
 		"groupsPage": {
 			"cat": "Category",
 			"groups": "Groups",
+      "labels": "Labels",
 			"noGroupMsg": "No groups found. Please create a group.",
 			"pers": "1 person",
 			"ppl": "People",
