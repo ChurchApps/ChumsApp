@@ -37,6 +37,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
       case "trackAttendance": g.trackAttendance = e.target.value === "true"; break;
       case "parentPickup": g.parentPickup = e.target.value === "true"; break;
       case "printNametag": g.printNametag = e.target.value === "true"; break;
+      case "slug": g.slug = e.target.value; break;
     }
     setGroup(g);
   };
@@ -168,8 +169,16 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                 {!group.photoUrl && <InputLabel>{Locale.label("groups.groupDetailsEdit.groupImg")}</InputLabel>}
                 <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>{Locale.label("groups.groupDetailsEdit.selImg")}</Button>
               </Grid>
+
+              <Grid item md={6} xs={12}>
+                <TextField fullWidth type="text" name="slug" label={Locale.label("groups.groupDetailsEdit.slug")} value={group.slug || ""} onChange={handleChange} onKeyDown={handleKeyDown} placeholder="group-name" />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <GroupLabelsEdit group={group} onUpdate={handleArrayChange} />
+              </Grid>
+
             </Grid>
-            <GroupLabelsEdit group={group} onUpdate={handleArrayChange} />
+
           </>
           }
           {getAttendance()}

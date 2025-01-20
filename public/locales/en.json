@@ -285,7 +285,8 @@
       "meetingTime": "Meeting Time",
 			"parPick": "Parent Pickup",
 			"prinName": "Print Nametag",
-			"selImg": "Select Photo"
+			"selImg": "Select Photo",
+      "slug": "Slug"
 		},
 		"groupMembers": {
 			"groupMem": "Group Members",
