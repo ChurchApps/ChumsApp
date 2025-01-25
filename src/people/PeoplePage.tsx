@@ -80,7 +80,7 @@ export const PeoplePage = () => {
       <div id="mainContent">
         <Grid container spacing={3}>
           <Grid item md={8} xs={12}>
-            <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("people.peoplePage.ppl")} editContent={getEditContent()} help="chums/adding-people">
+            <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("people.peoplePage.recentPpl")} editContent={getEditContent()} help="chums/adding-people">
               <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} />
             </DisplayBox>
           </Grid>

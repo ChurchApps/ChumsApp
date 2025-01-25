@@ -440,7 +440,8 @@
 			"ppl": "People",
 			"primEmail": "Primary Email",
 			"primPhone": "Primary Phone",
-			"searchPpl": "Search People"
+			"searchPpl": "Search People",
+			"recentPpl": "Recently Added People"
 		},
 		"peopleSearch": {
 			"addCon": "Add Condition",
