@@ -743,6 +743,16 @@
 			"link": "Link",
 			"linkHelperText": "It must be either church's email or a link to the church's contact form"
 		},
+		"visibilityPrefSettingsEdit": {
+			"visibilityPreference": "Visibility Preference",
+			"forceMsg": "This will set the default value for people who have not configured their settings yet",
+			"address": "Address",
+			"phoneNum":"Phone Number",
+			"email": "Email",
+			"everyone": "Everyone",
+			"members": "Members",
+			"groups": "Groups Only"
+		},
 		"imageEditor": {
 			"crop": "Crop",
 			"upload": "Upload"
