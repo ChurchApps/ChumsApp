@@ -1,7 +1,8 @@
 import React from "react";
 import { MinistryList } from "./components/MinistryList";
-import { Locale } from "@churchapps/apphelper";
+import { DisplayBox, Locale } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
+import { Link } from "react-router-dom";
 
 export const PlansPage = () => {
 
@@ -11,6 +12,10 @@ export const PlansPage = () => {
     <Banner><h1>{Locale.label("plans.plansPage.selMin")}</h1></Banner>
     <div id="mainContent">
       <MinistryList />
+      <DisplayBox headerText="Temp" headerIcon="none">
+        <Link to="/plans/song">Song</Link>
+
+      </DisplayBox>
     </div>
   </>);
 }
