@@ -30,6 +30,7 @@ import { MinistryPage } from "./plans/MinistryPage";
 import { DonationBatchesPage } from "./donations/DonationBatchesPage";
 import { FundsPage } from "./donations/FundsPage";
 import { SongsPage } from "./plans/songs/SongsPage";
+import { SongPage } from "./plans/songs/SongPage";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
@@ -74,6 +75,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/plans/:id" element={<PlanPage />} />
           <Route path="/plans" element={<PlansPage />} />
           <Route path="/plans/songs" element={<SongsPage />} />
+          <Route path="/plans/songs/:id" element={<SongPage />} />
           <Route path="/" element={<DashboardPage />} />
         </Routes>
       </Wrapper>

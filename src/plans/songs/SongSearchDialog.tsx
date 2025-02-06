@@ -66,7 +66,7 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={{width:60}}></TableCell>
+                <TableCell style={{width:82}}></TableCell>
                 <TableCell>Title</TableCell>
                 <TableCell>Artist</TableCell>
               </TableRow>

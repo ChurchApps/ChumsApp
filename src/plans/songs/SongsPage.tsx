@@ -18,6 +18,7 @@ export const SongsPage = () => {
 
   const handleAdd = () => {
     loadData();
+    setShowSearch(false);
   }
 
   useEffect(() => { loadData() }, [])
@@ -28,7 +29,6 @@ export const SongsPage = () => {
 
   const getRows = () => {
     const result:JSX.Element[] = [];
-    console.log("SONGS", songs)
     songs?.forEach((songDetail) => {
       result.push(
         <TableRow key={songDetail.id}>
