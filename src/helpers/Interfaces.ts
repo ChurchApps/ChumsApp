@@ -1,5 +1,11 @@
 export interface PaymentGatewaysInterface { id?: string, churchId?: string, provider?: string, publicKey?: string, privateKey?: string, payFees?: boolean }
 
+export interface SongInterface {
+  id?: string,
+  songDetailId?: string,
+  dateAdded: Date
+}
+
 export interface SongDetailInterface {
   id?: string,
   musicBrainzId?: string,
@@ -17,4 +23,11 @@ export interface SongDetailInterface {
   bpm?: number,
   keySignature?: string,
   seconds: number
+}
+
+export interface ArrangementInterface {
+  id?: string,
+  songId?: string,
+  name?: string,
+  lyrics?: string
 }

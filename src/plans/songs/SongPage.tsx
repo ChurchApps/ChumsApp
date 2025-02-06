@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { ApiHelper, DisplayBox } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, DisplayBox, Locale } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { SongDetailInterface } from "../../helpers";
-import { Grid } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Icon } from "@mui/material";
 import { SongDetails } from "./components/SongDetails";
+import { Arrangements } from "./components/Arrangements";
 
 export const SongPage = () => {
   const [song, setSong] = React.useState<any>(null)
@@ -26,9 +27,7 @@ export const SongPage = () => {
     <div id="mainContent">
       <Grid container spacing={3}>
         <Grid item md={8}>
-          <DisplayBox headerText="Arrangements" headerIcon="library_music">
-            test
-          </DisplayBox>
+          <Arrangements song={song} reload={loadData} />
           <DisplayBox headerText="Keys" headerIcon="music_note">
             test
           </DisplayBox>
