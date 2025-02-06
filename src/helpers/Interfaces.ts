@@ -14,7 +14,7 @@ export interface SongDetailInterface {
   hymnaryId?: string,
   thumbnail?: string,
   releaseDate?: Date,
-  bpm?: string,
+  bpm?: number,
   keySignature?: string,
   seconds: number
 }

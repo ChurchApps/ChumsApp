@@ -1,0 +1,71 @@
+import React from "react";
+import { DisplayBox } from "@churchapps/apphelper";
+import { SongDetailInterface } from "../../../helpers";
+import { Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { SongDetailsEdit } from "./SongDetailsEdit";
+
+interface Props {
+  songDetail: SongDetailInterface;
+  reload: () => void;
+}
+
+export const SongDetails = (props: Props) => {
+  const [editMode, setEditMode] = React.useState(false);
+
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.style.display="none";
+  }
+
+  const getDetails = () => {
+    const result:JSX.Element[] = [];
+    if (!props.songDetail) return result;
+
+
+    if (props.songDetail.artist) result.push(<TableRow><TableCell><strong>Artist</strong></TableCell><TableCell>{props.songDetail.artist}</TableCell></TableRow>);
+    if (props.songDetail.releaseDate) {
+      const d = new Date(props.songDetail.releaseDate);
+      result.push(<TableRow key="releaseDate"><TableCell><strong>Release Date</strong></TableCell><TableCell>{d.toLocaleDateString()}</TableCell></TableRow>);
+    }
+    if (props.songDetail.album) result.push(<TableRow key="album"><TableCell><strong>Album</strong></TableCell><TableCell>{props.songDetail.album}</TableCell></TableRow>);
+    if (props.songDetail.language) result.push(<TableRow key="language"><TableCell><strong>Language</strong></TableCell><TableCell>{props.songDetail.language}</TableCell></TableRow>);
+    if (props.songDetail.bpm) result.push(<TableRow key="bpm"><TableCell><strong>BPM</strong></TableCell><TableCell>{props.songDetail.bpm}</TableCell></TableRow>);
+    if (props.songDetail.keySignature) result.push(<TableRow key="keySignature"><TableCell><strong>Key Signature</strong></TableCell><TableCell>{props.songDetail.keySignature}</TableCell></TableRow>);
+    if (props.songDetail.seconds) result.push(<TableRow key="seconds"><TableCell><strong>Length</strong></TableCell><TableCell>{formatSeconds(props.songDetail.seconds)}</TableCell></TableRow>);
+
+
+
+    if (props.songDetail.ccliId) result.push(<TableRow><TableCell><strong>CCLI ID</strong></TableCell><TableCell>{props.songDetail.ccliId}</TableCell></TableRow>);
+    if (props.songDetail.geniusId) result.push(<TableRow><TableCell><strong>Genius ID</strong>: {props.songDetail.geniusId}</TableCell></TableRow>);
+    if (props.songDetail.appleId) result.push(<TableRow><TableCell><strong>Apple ID</strong>: {props.songDetail.appleId}</TableCell></TableRow>);
+    if (props.songDetail.youtubeId) result.push(<TableRow><TableCell><strong>YouTube ID</strong>: {props.songDetail.youtubeId}</TableCell></TableRow>);
+    if (props.songDetail.hymnaryId) result.push(<TableRow><TableCell><strong>Hymnary ID</strong>: {props.songDetail.hymnaryId}</TableCell></TableRow>);
+    //if (songDetail.musicBrainzId) result.push(<div key="musicBrainzId"><strong>MusicBrainz ID</strong>: {songDetail.musicBrainzId}</div>);
+
+
+    return result;
+  }
+
+  const formatSeconds = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return mins + ":" + (secs < 10 ? "0" : "") + secs;
+  }
+
+  const handleSave = () => {
+    props.reload();
+    setEditMode(false);
+  }
+
+  if (editMode) return <SongDetailsEdit songDetail={props.songDetail} onCancel={() => {setEditMode(false)}} onSave={handleSave} />
+
+  return (<DisplayBox headerText={props.songDetail?.title} headerIcon="album" editFunction={() => {setEditMode(true)}}>
+    <img src={props.songDetail?.thumbnail} alt={props.songDetail?.title} style={{ display:"block", marginLeft:"auto", marginRight:"auto"}} onError={handleImageError} />
+    <Table size="small">
+      <TableBody>
+        {getDetails()}
+      </TableBody>
+    </Table>
+  </DisplayBox>);
+}
+
