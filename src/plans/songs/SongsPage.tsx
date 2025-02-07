@@ -47,7 +47,7 @@ export const SongsPage = () => {
       <h1>Songs</h1>
     </Banner>
     <div id="mainContent">
-      <DisplayBox headerText="Song Library" headerIcon="none">
+      <DisplayBox headerText="Song Library" headerIcon="album">
         <Table>
           <TableHead>
             <TableRow>

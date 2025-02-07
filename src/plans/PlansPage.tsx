@@ -12,10 +12,6 @@ export const PlansPage = () => {
     <Banner><h1>{Locale.label("plans.plansPage.selMin")}</h1></Banner>
     <div id="mainContent">
       <MinistryList />
-      <DisplayBox headerText="Temp" headerIcon="none">
-        <Link to="/plans/song">Song</Link>
-
-      </DisplayBox>
     </div>
   </>);
 }
