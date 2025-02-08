@@ -68,7 +68,7 @@ export const ServiceOrder = (props: Props) => {
 
   const getItemRow = (pi:PlanItemInterface) => <>
     <TableRow>
-      <TableCell style={{paddingLeft:10}}>{pi.seconds}</TableCell>
+      <TableCell style={{paddingLeft:10}}>{formatTime(pi.seconds)}</TableCell>
       <TableCell>
         <span style={{float:"right", marginTop:-2, marginBottom:-2}}>
           <a href="about:blank" onClick={e => { e.preventDefault(); setEditPlanItem(pi); }}><Icon>edit</Icon></a>
@@ -81,7 +81,7 @@ export const ServiceOrder = (props: Props) => {
 
   const getSongRow = (pi:PlanItemInterface) => <>
     <TableRow>
-      <TableCell style={{paddingLeft:10}}>{pi.seconds}</TableCell>
+      <TableCell style={{paddingLeft:10}}>{formatTime(pi.seconds)}</TableCell>
       <TableCell>
         <span style={{float:"right", marginTop:-2, marginBottom:-2}}>
           <a href="about:blank" onClick={e => { e.preventDefault(); setEditPlanItem(pi); }}><Icon>edit</Icon></a>
@@ -102,6 +102,12 @@ export const ServiceOrder = (props: Props) => {
       case "song": return getSongRow(pi);
       case "item": return getItemRow(pi);
     }
+  }
+
+  const formatTime = (seconds:number) => {
+    let minutes = Math.floor(seconds / 60);
+    let secs = seconds % 60;
+    return minutes + ":" + (secs < 10 ? "0" : "") + secs;
   }
 
   React.useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps

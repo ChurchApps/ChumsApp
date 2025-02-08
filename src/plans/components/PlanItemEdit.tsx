@@ -22,7 +22,8 @@ export const PlanItemEdit = (props: Props) => {
     switch (e.target.name) {
       case "label": pi.label = value; break;
       case "description": pi.description = value; break;
-      case "seconds": pi.seconds = parseInt(value); break;
+      case "minutes": pi.seconds = (parseInt(value) * 60) + (pi.seconds % 60); break;
+      case "seconds": pi.seconds = (Math.floor(pi.seconds / 60) * 60) + parseInt(value); break;
     }
     setPlanItem(pi);
   }
@@ -95,7 +96,14 @@ export const PlanItemEdit = (props: Props) => {
     {planItem?.itemType==="song" && getSongFields()}
     {(showLabel) && <TextField fullWidth label={Locale.label("common.name")} id="label" name="label" type="text" value={planItem?.label} onChange={handleChange} /> }
     {(showDesc) && <TextField multiline fullWidth label="Description" id="description" name="description" type="text" value={planItem?.description} onChange={handleChange} /> }
-    {(showDuration) && <TextField fullWidth label="Seconds" name="seconds" type="number" value={planItem?.seconds} onChange={handleChange} /> }
+    {(showDuration) && <Grid container>
+      <Grid item xs={6}>
+        <TextField fullWidth label="Minutes" name="minutes" type="number" value={Math.floor(planItem?.seconds / 60)} onChange={handleChange} />
+      </Grid>
+      <Grid item xs={6}>
+        <TextField fullWidth label="Seconds" name="seconds" type="number" value={planItem?.seconds % 60} onChange={handleChange} />
+      </Grid>
+    </Grid>}
   </InputBox>)
 };
 
