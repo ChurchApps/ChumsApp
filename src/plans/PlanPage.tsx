@@ -9,7 +9,7 @@ import { ServiceOrder } from "./components/ServiceOrder";
 export const PlanPage = () => {
   const params = useParams();
   const [plan, setPlan] = React.useState<PlanInterface>(null);
-  const [selectedTab, setSelectedTab] = React.useState("plans");
+  const [selectedTab, setSelectedTab] = React.useState("assignments");
 
   const loadData = async () => {
     ApiHelper.get("/plans/" + params.id, "DoingApi").then(data => { setPlan(data); });
@@ -45,7 +45,7 @@ export const PlanPage = () => {
       </Grid>
       <Grid item xs={12} md={10}>
         <div id="mainContent">
-          {plan && selectedTab==="assignment" && <Assignment plan={plan} /> }
+          {plan && selectedTab==="assignments" && <Assignment plan={plan} /> }
           {plan && selectedTab==="order" && <ServiceOrder plan={plan} /> }
         </div>
       </Grid>

@@ -31,3 +31,15 @@ export interface ArrangementInterface {
   name?: string,
   lyrics?: string
 }
+
+export interface PlanItemInterface {
+  id?: string,
+  planId?: string,
+  parentId?: string,
+  sort?: number,
+  itemType?: string,
+  relatedId?: string,
+  label?: string,
+  description?: string,
+  seconds?: string
+}
