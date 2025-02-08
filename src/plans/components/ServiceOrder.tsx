@@ -17,6 +17,8 @@ interface Props {
 export const ServiceOrder = (props: Props) => {
   const [planItems, setPlanItems] = React.useState<PlanItemInterface[]>([]);
   const [editPlanItem, setEditPlanItem] = React.useState<PlanItemInterface>(null);
+  const [showHeaderDrop, setShowHeaderDrop] = React.useState(false);
+  const [showItemDrop, setShowItemDrop] = React.useState(false);
 
   const loadData = async () => {
     if (props.plan?.id) {
@@ -33,17 +35,19 @@ export const ServiceOrder = (props: Props) => {
   )
 
   const handleDrop = (data: any, sort: number) => {
+    console.log(JSON.stringify(data));
+    console.log("handleDrop Header", data);
     const pi = data.data as PlanItemInterface;
     pi.sort = sort;
     ApiHelper.post("/planItems/sort", pi, "DoingApi").then(() => { loadData() });
   }
 
   const wrapPlanItem = (pi: PlanItemInterface, index:number) => <>
-    <DroppableWrapper accept="planItemHeader" onDrop={(item) => { console.log("MADE IT"); handleDrop(item, index+0.5)}}>
+    {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, index+0.5)}}>
       &nbsp;
-    </DroppableWrapper>
-    <DraggableWrapper dndType="planItemHeader" elementType={"not used"} data={pi}>
-      <PlanItem planItem={pi} setEditPlanItem={setEditPlanItem} />
+    </DroppableWrapper>}
+    <DraggableWrapper dndType="planItemHeader" data={pi} draggingCallback={(isDragging) => setShowHeaderDrop(isDragging)}>
+      <PlanItem planItem={pi} setEditPlanItem={setEditPlanItem} showItemDrop={showItemDrop} onDragChange={(dragging) => setShowItemDrop(dragging)} onChange={() => {loadData()}} />
     </DraggableWrapper>
 
   </>
@@ -58,6 +62,7 @@ export const ServiceOrder = (props: Props) => {
         <DisplayBox headerText="Order of Service" headerIcon="album" editContent={getEditContent()}>
           <DndProvider backend={HTML5Backend}>
             {planItems.map((pi, i) => wrapPlanItem(pi,i))}
+            {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, planItems?.length + 1)}}>&nbsp;</DroppableWrapper>}
           </DndProvider>
         </DisplayBox>
       </Grid>

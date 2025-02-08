@@ -709,8 +709,8 @@ label .description {
 
 .planItemHeader { background-color:#EEE; border-bottom: 3px solid var(--c1l2); font-weight:bold; padding: 5px 5px 5px 10px; text-transform:uppercase; }
 .planItem {border-bottom: 1px solid #DDD; padding: 5px 5px 5px 10px; }
-.planItem div:first-child { float:left;width:100px }
-.planItemDescription { font-style:italic; color:#777; }
+.planItem div:first-of-type { float:left;width:100px }
+.planItemDescription { font-style:italic; color:#777; padding-left:22px;}
 
 
 @media print {
