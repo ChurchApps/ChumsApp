@@ -41,5 +41,7 @@ export interface PlanItemInterface {
   relatedId?: string,
   label?: string,
   description?: string,
-  seconds?: string
+  seconds?: number
+
+  children?: PlanItemInterface[]
 }
