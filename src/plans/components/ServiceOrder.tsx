@@ -4,8 +4,11 @@ import { ApiHelper, DisplayBox, PlanInterface, SmallButton } from "@churchapps/a
 import { PlanItemInterface } from "../../helpers";
 import { PlanItemEdit } from "./PlanItemEdit";
 import { tableCellClasses } from "@mui/material/TableCell";
-import { useDrag } from 'react-dnd'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import { PlanItem } from "./PlanItem";
+import { DraggableWrapper } from "../../components/DraggableWrapper";
+import { DroppableWrapper } from "../../components/DroppableWrapper";
 
 interface Props {
   plan: PlanInterface
@@ -29,6 +32,22 @@ export const ServiceOrder = (props: Props) => {
     <SmallButton onClick={addHeader} icon="add" />
   )
 
+  const handleDrop = (data: any, sort: number) => {
+    const pi = data.data as PlanItemInterface;
+    pi.sort = sort;
+    ApiHelper.post("/planItems/sort", pi, "DoingApi").then(() => { loadData() });
+  }
+
+  const wrapPlanItem = (pi: PlanItemInterface, index:number) => <>
+    <DroppableWrapper accept="planItemHeader" onDrop={(item) => { console.log("MADE IT"); handleDrop(item, index+0.5)}}>
+      &nbsp;
+    </DroppableWrapper>
+    <DraggableWrapper dndType="planItemHeader" elementType={"not used"} data={pi}>
+      <PlanItem planItem={pi} setEditPlanItem={setEditPlanItem} />
+    </DraggableWrapper>
+
+  </>
+
 
   React.useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -37,21 +56,9 @@ export const ServiceOrder = (props: Props) => {
     <Grid container spacing={3}>
       <Grid item md={8} xs={12}>
         <DisplayBox headerText="Order of Service" headerIcon="album" editContent={getEditContent()}>
-          <Table size="small" sx={{
-            [`& .${tableCellClasses.root}`]: {
-              borderBottom: "none"
-            }
-          }}>
-            <TableHead>
-              <TableRow>
-                <TableCell style={{paddingLeft:10}}>Length</TableCell>
-                <TableCell>Title</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {planItems.map((pi, i) => <PlanItem planItem={pi} setEditPlanItem={setEditPlanItem} />)}
-            </TableBody>
-          </Table>
+          <DndProvider backend={HTML5Backend}>
+            {planItems.map((pi, i) => wrapPlanItem(pi,i))}
+          </DndProvider>
         </DisplayBox>
       </Grid>
       <Grid item md={4} xs={12}>
