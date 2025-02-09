@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { ApiHelper, DateHelper, DisplayBox, InputBox } from "@churchapps/apphelper";
-import { SongDetailInterface } from "../../../helpers";
+import { SongDetailInterface, SongDetailLinkInterface } from "../../../helpers";
 import { Table, TableBody, TableCell, TableRow, TextField } from "@mui/material";
+import { SongDetailLinks } from "./SongDetailLinks";
 
 interface Props {
   songDetail: SongDetailInterface;
@@ -11,6 +12,7 @@ interface Props {
 
 export const SongDetailsEdit = (props: Props) => {
   const [songDetail, setSongDetail] = React.useState<SongDetailInterface>(props.songDetail);
+  const [pendingLinksSave, setPendingLinksSave] = React.useState<number>(0);
 
   useEffect(() => { setSongDetail(props.songDetail); }, [props.songDetail]);
 
@@ -34,10 +36,13 @@ export const SongDetailsEdit = (props: Props) => {
   }
 
   const handleSave = () => {
+    setPendingLinksSave(pendingLinksSave + 1);
+  }
+
+  const continueSave = (songDetailLinks: SongDetailLinkInterface[]) => {
     ApiHelper.post("/songDetails", [songDetail], "ContentApi").then(data => {
       props.onSave(data[0]);
     });
-
   }
 
   return (<InputBox headerText={props.songDetail?.title} headerIcon="album" saveFunction={handleSave} cancelFunction={props.onCancel}>
@@ -52,5 +57,7 @@ export const SongDetailsEdit = (props: Props) => {
     <TextField label="Apple ID" name="appleId" value={songDetail?.appleId || ""} onChange={handleChange} fullWidth size="small" />
     <TextField label="YouTube ID" name="youtubeId" value={songDetail?.youtubeId || ""} onChange={handleChange} fullWidth size="small" />
     <TextField label="Hymnary ID" name="hymnaryId" value={songDetail?.hymnaryId || ""} onChange={handleChange} fullWidth size="small" />
+
+    <SongDetailLinks songDetailId={songDetail?.id} pendingSave={pendingLinksSave} onSave={continueSave} />
   </InputBox>);
 }

@@ -25,6 +25,14 @@ export interface SongDetailInterface {
   seconds: number
 }
 
+export interface SongDetailLinkInterface {
+  id?: string,
+  songDetailId?: string,
+  service?: string,
+  serviceKey?: string,
+  url?: string,
+}
+
 export interface ArrangementInterface {
   id?: string,
   songId?: string,
