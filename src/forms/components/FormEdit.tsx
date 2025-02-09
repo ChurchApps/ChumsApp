@@ -1,11 +1,13 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { useMountedState, FormInterface,ApiHelper, InputBox, DateHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { useMountedState, ApiHelper, InputBox, DateHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 
 interface Props { formId: string, updatedFunction: () => void }
 
+export interface FormInterface { id?: string, name?: string, contentType?: string, restricted?: boolean, accessStartTime?: Date, accessEndTime?: Date, archived: boolean, action?: string, thankYouMessage?: string }
+
 export function FormEdit(props: Props) {
-  const [form, setForm] = useState<FormInterface>({ name: "", contentType: "person" } as FormInterface);
+  const [form, setForm] = useState<FormInterface>({ name: "", contentType: "person", thankYouMessage: "" } as FormInterface);
   const [standAloneForm, setStandAloneForm] = useState<boolean>(false);
   const [showDates, setShowDates] = useState<boolean>(false);
   const [errors, setErrors] = React.useState<string[]>([]);
@@ -15,7 +17,7 @@ export function FormEdit(props: Props) {
   function loadData() {
     if (props.formId) {
       ApiHelper.get("/forms/" + props.formId, "MembershipApi").then((data: FormInterface) => {
-        if(!isMounted()) {
+        if (!isMounted()) {
           return;
         }
         if (data.restricted !== undefined && data.contentType === "form")
@@ -38,6 +40,7 @@ export function FormEdit(props: Props) {
       case "restricted": f.restricted = value === "true"; break;
       case "accessStartTime": f.accessStartTime = showDates ? DateHelper.convertToDate(value) : null; break;
       case "accessEndTime": f.accessEndTime = showDates ? DateHelper.convertToDate(value) : null; break;
+      case "thankYouMessage": f.thankYouMessage = value; break;
     }
     setForm(f);
   }
@@ -110,14 +113,15 @@ export function FormEdit(props: Props) {
       }
       {showDates
         && <>
-          <TextField fullWidth={true} type="date" label={Locale.label("forms.formEdit.availableStart")} InputLabelProps={{shrink: true}} name="accessStartTime" value={DateHelper.formatHtml5Date(form.accessStartTime)} onChange={handleChange}
+          <TextField fullWidth={true} type="date" label={Locale.label("forms.formEdit.availableStart")} InputLabelProps={{ shrink: true }} name="accessStartTime" value={DateHelper.formatHtml5Date(form.accessStartTime)} onChange={handleChange}
             InputProps={{ inputProps: { max: DateHelper.formatHtml5Date(form.accessEndTime) } }}
           />
-          <TextField fullWidth={true} type="date" label={Locale.label("forms.formEdit.availableEnd")} InputLabelProps={{shrink: true}} name="accessEndTime" value={DateHelper.formatHtml5Date(form.accessEndTime)} onChange={handleChange}
+          <TextField fullWidth={true} type="date" label={Locale.label("forms.formEdit.availableEnd")} InputLabelProps={{ shrink: true }} name="accessEndTime" value={DateHelper.formatHtml5Date(form.accessEndTime)} onChange={handleChange}
             InputProps={{ inputProps: { min: DateHelper.formatHtml5Date(form.accessStartTime) } }}
           />
         </>
       }
+      <TextField fullWidth={true} label={Locale.label("Thank You Message")} type="text" name="thankYouMessage" value={form.thankYouMessage} onChange={handleChange} />
     </InputBox>
   );
 }

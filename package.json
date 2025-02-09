@@ -8,6 +8,7 @@
     "@mui/material": "^5.14.7",
     "@types/react-cropper": "^1.3.2",
     "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.7.9",
     "mui-tel-input": "^5.1.2",
     "react": "^18.2.0",
     "react-cookie": "^6.1.0",
