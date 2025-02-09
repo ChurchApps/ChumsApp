@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ApiHelper, DateHelper, DisplayBox, InputBox } from "@churchapps/apphelper";
 import { SongDetailInterface, SongDetailLinkInterface } from "../../../helpers";
 import { Table, TableBody, TableCell, TableRow, TextField } from "@mui/material";
-import { SongDetailLinks } from "./SongDetailLinks";
+import { SongDetailLinksEdit } from "./SongDetailLinksEdit";
 
 interface Props {
   songDetail: SongDetailInterface;
@@ -26,11 +26,6 @@ export const SongDetailsEdit = (props: Props) => {
       case "bpm": sd.bpm = parseInt(e.target.value); break;
       case "keySignature": sd.keySignature = e.target.value; break;
       case "seconds": sd.seconds = parseInt(e.target.value); break;
-      case "ccliId": sd.ccliId = e.target.value; break;
-      case "geniusId": sd.geniusId = e.target.value; break;
-      case "appleId": sd.appleId = e.target.value; break;
-      case "youtubeId": sd.youtubeId = e.target.value; break;
-      case "hymnaryId": sd.hymnaryId = e.target.value; break;
     }
     setSongDetail(sd);
   }
@@ -52,12 +47,6 @@ export const SongDetailsEdit = (props: Props) => {
     <TextField type="number" label="BPM" name="bpm" value={songDetail?.bpm} onChange={handleChange} fullWidth size="small" />
     <TextField label="Key" name="keySignature" value={songDetail?.keySignature} placeholder="C#" onChange={handleChange} fullWidth size="small" />
     <TextField type="number" label="Seconds" name="seconds" value={songDetail?.seconds} onChange={handleChange} fullWidth size="small" />
-    <TextField label="CCLI ID" name="ccliId" value={songDetail?.ccliId || ""} onChange={handleChange} fullWidth size="small" />
-    <TextField label="Genius ID" name="geniusId" value={songDetail?.geniusId || ""} onChange={handleChange} fullWidth size="small" />
-    <TextField label="Apple ID" name="appleId" value={songDetail?.appleId || ""} onChange={handleChange} fullWidth size="small" />
-    <TextField label="YouTube ID" name="youtubeId" value={songDetail?.youtubeId || ""} onChange={handleChange} fullWidth size="small" />
-    <TextField label="Hymnary ID" name="hymnaryId" value={songDetail?.hymnaryId || ""} onChange={handleChange} fullWidth size="small" />
-
-    <SongDetailLinks songDetailId={songDetail?.id} pendingSave={pendingLinksSave} onSave={continueSave} />
+    <SongDetailLinksEdit songDetailId={songDetail?.id} pendingSave={pendingLinksSave} onSave={continueSave} />
   </InputBox>);
 }

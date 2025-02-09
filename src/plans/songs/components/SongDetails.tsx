@@ -3,6 +3,7 @@ import { DisplayBox } from "@churchapps/apphelper";
 import { SongDetailInterface } from "../../../helpers";
 import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { SongDetailsEdit } from "./SongDetailsEdit";
+import { SongDetailLinks } from "./SongDetailLinks";
 
 interface Props {
   songDetail: SongDetailInterface;
@@ -34,13 +35,14 @@ export const SongDetails = (props: Props) => {
     if (props.songDetail.seconds) result.push(<TableRow key="seconds"><TableCell><strong>Length</strong></TableCell><TableCell>{formatSeconds(props.songDetail.seconds)}</TableCell></TableRow>);
 
 
-
+    /*
     if (props.songDetail.ccliId) result.push(<TableRow><TableCell><strong>CCLI ID</strong></TableCell><TableCell><a target="_blank" rel="noreferrer" href={`https://songselect.ccli.com/songs/${props.songDetail.ccliId}`}>{props.songDetail.ccliId}</a>{props.songDetail.ccliId}</TableCell></TableRow>);
 
     if (props.songDetail.geniusId) result.push(<TableRow><TableCell><strong>Genius ID</strong>: <a href={`https://genius.com/songs/${props.songDetail.geniusId}`} target="_blank" rel="noreferrer">{props.songDetail.geniusId}</a></TableCell></TableRow>);
     if (props.songDetail.appleId) result.push(<TableRow><TableCell><strong>Apple ID</strong>: <a href={`https://music.apple.com/us/song/preview/${props.songDetail.appleId}`} target="_blank" rel="noreferrer">{props.songDetail.appleId}</a></TableCell></TableRow>);
     if (props.songDetail.youtubeId) result.push(<TableRow><TableCell><strong>YouTube ID</strong>: <a href={`https://youtube.com/watch?v=${props.songDetail.youtubeId}`} target="_blank" rel="noreferrer">{props.songDetail.youtubeId}</a></TableCell></TableRow>);
     if (props.songDetail.hymnaryId) result.push(<TableRow><TableCell><strong>Hymnary ID</strong>: <a href={`https://hymnary.org/hymn/${props.songDetail.hymnaryId}`} target="_blank" rel="noreferrer">{props.songDetail.hymnaryId}</a></TableCell></TableRow>);
+    */
     //if (songDetail.musicBrainzId) result.push(<div key="musicBrainzId"><strong>MusicBrainz ID</strong>: {songDetail.musicBrainzId}</div>);
 
 
@@ -67,6 +69,7 @@ export const SongDetails = (props: Props) => {
         {getDetails()}
       </TableBody>
     </Table>
+    <SongDetailLinks songDetailId={props.songDetail?.id} />
   </DisplayBox>);
 }
 

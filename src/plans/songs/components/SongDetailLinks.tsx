@@ -1,41 +1,14 @@
 import React, { useEffect } from "react";
 import { ApiHelper, SmallButton } from "@churchapps/apphelper";
 import { SongDetailLinkInterface } from "../../../helpers";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 
 interface Props {
   songDetailId: string;
-  pendingSave?: number;
-  onSave?: (songDetailLinks: SongDetailLinkInterface[]) => void;
 }
 
 export const SongDetailLinks = (props: Props) => {
   const [songDetailLinks, setSongDetailLinks] = React.useState<SongDetailLinkInterface[]>([]);
-  const [pendingDeleteIds, setPendingDeleteIds] = React.useState<string[]>([]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>, index:number) => {
-    console.log("handleChange", e.target.name, e.target.value, index);
-
-    const links = [...songDetailLinks];
-    const l = links[index];
-    switch (e.target.name) {
-      case "serviceKey": l.serviceKey = e.target.value; break;
-      case "service": l.service = e.target.value; break;
-    }
-    console.log(l);
-    setSongDetailLinks(links);
-  }
-
-  useEffect(() => {
-    if (props.pendingSave>0) {
-      pendingDeleteIds.forEach(id => {
-        ApiHelper.delete("/songDetailLinks/" + id, "ContentApi");
-      });
-      ApiHelper.post("/songDetailLinks", songDetailLinks, "ContentApi").then(() => {
-        if (props.onSave) props.onSave(songDetailLinks);
-      });
-    }
-  }, [props.pendingSave]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (props.songDetailId) {
@@ -45,50 +18,20 @@ export const SongDetailLinks = (props: Props) => {
     }
   }, [props.songDetailId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleAdd = () => {
-    const links = [...songDetailLinks];
-    links.push({songDetailId:props.songDetailId, service:"Apple"} as SongDetailLinkInterface);
-    setSongDetailLinks(links);
+  const getLink = (link:SongDetailLinkInterface, idx:number) => {
+    let result = <a href={link.url}>{link.service}</a>
+    switch (link.service) {
+      case "Apple": result = <a href={link.url}>Apple</a>
+    }
+    return result;
   }
 
-  const handleDelete = (idx:number) => {
-    const links = [...songDetailLinks];
-    const toDelete = links.splice(idx, 1);
-    if (toDelete[0].id) setPendingDeleteIds([...pendingDeleteIds, toDelete[0].id]);
-    setSongDetailLinks(links);
-  }
-
-  const getRow = (link:SongDetailLinkInterface, idx:number) => <TableRow>
-    <TableCell>
-      <FormControl fullWidth size="small">
-        <InputLabel>Service</InputLabel>
-        <Select size="small" name="service" label="Service" value={link.service} onChange={e => handleChange(e, idx)}>
-          <MenuItem value="Apple">Apple</MenuItem>
-          <MenuItem value="CCLI">CCLI</MenuItem>
-          <MenuItem value="Genius">Genius</MenuItem>
-          <MenuItem value="Hymnary">Hymnary</MenuItem>
-          <MenuItem value="YouTube">YouTube</MenuItem>
-        </Select>
-      </FormControl>
-    </TableCell>
-    <TableCell><TextField size="small" name="serviceKey" fullWidth label="Id" value={link.serviceKey} onChange={e => handleChange(e, idx)} /></TableCell>
-    <TableCell><SmallButton icon="delete" onClick={() => handleDelete(idx)} /></TableCell>
-  </TableRow>
-
-  return <>
+  if (!songDetailLinks || songDetailLinks.length===0) return null;
+  else return <>
     <hr />
     <h4>Links</h4>
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>Service</TableCell>
-          <TableCell>Key</TableCell>
-          <TableCell style={{textAlign:"right"}}><SmallButton icon="add" onClick={handleAdd} /></TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {songDetailLinks?.map((sd, i) => getRow(sd, i))}
-      </TableBody>
-    </Table>
+    <Stack direction="column">
+      {songDetailLinks?.map((sd, i) => getLink(sd, i))}
+    </Stack>
   </>
 }
