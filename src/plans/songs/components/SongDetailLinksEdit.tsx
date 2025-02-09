@@ -14,8 +14,6 @@ export const SongDetailLinksEdit = (props: Props) => {
   const [pendingDeleteIds, setPendingDeleteIds] = React.useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>, index:number) => {
-    console.log("handleChange", e.target.name, e.target.value, index);
-
     const links = [...songDetailLinks];
     const l = links[index];
     switch (e.target.name) {
@@ -31,6 +29,10 @@ export const SongDetailLinksEdit = (props: Props) => {
       pendingDeleteIds.forEach(id => {
         ApiHelper.delete("/songDetailLinks/" + id, "ContentApi");
       });
+
+      songDetailLinks.forEach(link => { link.url = determineUrl(link); });
+
+
       ApiHelper.post("/songDetailLinks", songDetailLinks, "ContentApi").then(() => {
         if (props.onSave) props.onSave(songDetailLinks);
       });
@@ -44,6 +46,19 @@ export const SongDetailLinksEdit = (props: Props) => {
       });
     }
   }, [props.songDetailId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const determineUrl = (link:SongDetailLinkInterface) => {
+    let result = "";
+    switch (link.service) {
+      case "Apple": result = "https://music.apple.com/us/album/" + link.serviceKey; break;
+      case "CCLI": result = "https://songselect.ccli.com/Songs/" + link.serviceKey; break;
+      case "Genius": result = "https://genius.com/" + link.serviceKey; break;
+      case "Hymnary": result = "https://hymnary.org/text/" + link.serviceKey; break;
+      case "Spotify": result = "https://open.spotify.com/track/" + link.serviceKey; break;
+      case "YouTube": result = "https://www.youtube.com/watch?v=" + link.serviceKey; break;
+    }
+    return result;
+  }
 
   const handleAdd = () => {
     const links = [...songDetailLinks];
@@ -67,6 +82,7 @@ export const SongDetailLinksEdit = (props: Props) => {
           <MenuItem value="CCLI">CCLI</MenuItem>
           <MenuItem value="Genius">Genius</MenuItem>
           <MenuItem value="Hymnary">Hymnary</MenuItem>
+          <MenuItem value="Spotify">Spotify</MenuItem>
           <MenuItem value="YouTube">YouTube</MenuItem>
         </Select>
       </FormControl>
