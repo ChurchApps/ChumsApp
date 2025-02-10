@@ -11,7 +11,9 @@
       "esnext"
     ],
     "paths": {
-      "react": [ "./node_modules/@types/react" ]
+      "react": [
+        "./node_modules/@types/react"
+      ]
     },
     "allowJs": true,
     "skipLibCheck": true,
