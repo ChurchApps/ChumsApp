@@ -706,6 +706,10 @@ label .description {
 .positionsTable div img { height:25px; }
 
 
+.printBackgrounds { 
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;  
+}
 
 .planItemHeader { background-color:#EEE; border-bottom: 3px solid var(--c1l2); font-weight:bold; padding: 5px 5px 5px 10px; text-transform:uppercase; }
 .planItem {border-bottom: 1px solid #DDD; padding: 5px 5px 5px 10px; }

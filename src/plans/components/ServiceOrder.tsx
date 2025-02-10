@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Icon, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Grid, Icon, Menu, MenuItem, Stack, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { ApiHelper, DisplayBox, PlanInterface, SmallButton } from "@churchapps/apphelper";
 import { PlanItemInterface } from "../../helpers";
 import { PlanItemEdit } from "./PlanItemEdit";
@@ -9,6 +9,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { PlanItem } from "./PlanItem";
 import { DraggableWrapper } from "../../components/DraggableWrapper";
 import { DroppableWrapper } from "../../components/DroppableWrapper";
+import { Link } from "react-router-dom";
 
 interface Props {
   plan: PlanInterface
@@ -31,7 +32,10 @@ export const ServiceOrder = (props: Props) => {
   }
 
   const getEditContent = () => (
-    <SmallButton onClick={addHeader} icon="add" />
+    <Stack direction="row">
+      <SmallButton href={"/plans/print/" + props.plan?.id} icon="print" />
+      <SmallButton onClick={addHeader} icon="add" />
+    </Stack>
   )
 
   const handleDrop = (data: any, sort: number) => {
