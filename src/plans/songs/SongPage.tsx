@@ -18,7 +18,7 @@ export const SongPage = () => {
     ApiHelper.get("/songDetails/" + s.songDetailId, "ContentApi").then(data => setSongDetail(data));
   }
 
-  useEffect(() => { loadData() }, [])
+  useEffect(() => { loadData() }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
   return (<>
     <Banner>

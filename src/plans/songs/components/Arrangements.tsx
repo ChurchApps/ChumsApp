@@ -21,7 +21,7 @@ export const Arrangements = (props: Props) => {
     ApiHelper.get("/arrangements/song/" + props.song.id, "ContentApi").then(data => setArrangements(data));
   }
 
-  React.useEffect(() => { if (props.song) loadData() }, [props.song?.id]);
+  React.useEffect(() => { if (props.song) loadData() }, [props.song?.id]); //eslint-disable-line react-hooks/exhaustive-deps
 
   const getArrangements = () => {
     const result:JSX.Element[] = [];

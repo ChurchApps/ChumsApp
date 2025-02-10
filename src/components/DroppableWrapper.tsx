@@ -29,7 +29,7 @@ export function DroppableWrapper(props: Props) {
 
   if (canDrop!==isDragging) setIsDragging(canDrop);
 
-  useEffect(() => { if (props.updateIsDragging) props.updateIsDragging(isDragging) }, [isDragging]);
+  useEffect(() => { if (props.updateIsDragging) props.updateIsDragging(isDragging) }, [isDragging]); //eslint-disable-line react-hooks/exhaustive-deps
 
   let droppableStyle:CSSProperties = { width: "100%", zIndex: 1, backgroundColor: (isOver) ? "rgba(25,118,210, 1)" : "rgba(25,118,210, 0.1)" }
 
