@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Outlet } from "react-router-dom";
 import { Wrapper } from "./components";
 import { UserHelper } from "@churchapps/apphelper";
 import { PeoplePage } from "./people/PeoplePage";
@@ -29,6 +29,9 @@ import { PlanPage } from "./plans/PlanPage";
 import { MinistryPage } from "./plans/MinistryPage";
 import { DonationBatchesPage } from "./donations/DonationBatchesPage";
 import { FundsPage } from "./donations/FundsPage";
+import { SongsPage } from "./plans/songs/SongsPage";
+import { SongPage } from "./plans/songs/SongPage";
+import { PrintPlan } from "./plans/PrintPlan";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
@@ -40,42 +43,51 @@ export const Authenticated: React.FC = () => {
   UserHelper.user = context.user;
   UserHelper.person = context.person;
 
+  const LayoutWithWrapper: React.FC = () => (<Box sx={{ display: "flex" }}>
+    <Wrapper>
+      {/* This renders the nested child route */}
+      <Outlet />
+    </Wrapper>
+  </Box>)
+
   if (UserHelper.churchChanged) {
     UserHelper.churchChanged = false;
     navigate("/")
   }
   else return (
-    <Box sx={{ display: "flex" }}>
-      <Wrapper>
-        <Routes>
-          <Route path="/admin/report/:keyName" element={<AdminReportPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/people/:id" element={<PersonPage />} />
-          <Route path="/people" element={<PeoplePage />} />
-          <Route path="/groups/:id" element={<GroupPage />} />
-          <Route path="/groups" element={<GroupsPage />} />
-          <Route path="/attendance" element={<AttendancePage />} />
-          <Route path="/donations/funds/:id" element={<FundPage />} />
-          <Route path="/donations/funds" element={<FundsPage />} />
-          <Route path="/donations/batches/:id" element={<DonationBatchPage />} />
-          <Route path="/donations/batches" element={<DonationBatchesPage />} />
-          <Route path="/donations" element={<DonationsPage />} />
-          <Route path="/forms/:id" element={<FormPage />} />
-          <Route path="/forms" element={<FormsPage />} />
-          <Route path="/reports/:keyName" element={<ReportPage />} />
-          <Route path="/reports" element={<ReportsPage />} />
-          <Route path="/settings/*" element={<Settings />} />
-          <Route path="/tasks/automations" element={<AutomationsPage />} />
-          <Route path="/tasks/:id" element={<TaskPage />} />
-          <Route path="/tasks" element={<TasksPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/plans/ministries/:id" element={<MinistryPage />} />
-          <Route path="/plans/:id" element={<PlanPage />} />
-          <Route path="/plans" element={<PlansPage />} />
-          <Route path="/" element={<DashboardPage />} />
-        </Routes>
-      </Wrapper>
-    </Box>
+    <Routes>
+      <Route element={<LayoutWithWrapper />}>
+        <Route path="/admin/report/:keyName" element={<AdminReportPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/people/:id" element={<PersonPage />} />
+        <Route path="/people" element={<PeoplePage />} />
+        <Route path="/groups/:id" element={<GroupPage />} />
+        <Route path="/groups" element={<GroupsPage />} />
+        <Route path="/attendance" element={<AttendancePage />} />
+        <Route path="/donations/funds/:id" element={<FundPage />} />
+        <Route path="/donations/funds" element={<FundsPage />} />
+        <Route path="/donations/batches/:id" element={<DonationBatchPage />} />
+        <Route path="/donations/batches" element={<DonationBatchesPage />} />
+        <Route path="/donations" element={<DonationsPage />} />
+        <Route path="/forms/:id" element={<FormPage />} />
+        <Route path="/forms" element={<FormsPage />} />
+        <Route path="/reports/:keyName" element={<ReportPage />} />
+        <Route path="/reports" element={<ReportsPage />} />
+        <Route path="/settings/*" element={<Settings />} />
+        <Route path="/tasks/automations" element={<AutomationsPage />} />
+        <Route path="/tasks/:id" element={<TaskPage />} />
+        <Route path="/tasks" element={<TasksPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/plans/ministries/:id" element={<MinistryPage />} />
+        <Route path="/plans/:id" element={<PlanPage />} />
+        <Route path="/plans" element={<PlansPage />} />
+        <Route path="/plans/songs" element={<SongsPage />} />
+        <Route path="/plans/songs/:id" element={<SongPage />} />
+        <Route path="/" element={<DashboardPage />} />
+      </Route>
+
+      <Route path="/plans/print/:id" element={<PrintPlan />} />
+    </Routes>
 
   );
 };
