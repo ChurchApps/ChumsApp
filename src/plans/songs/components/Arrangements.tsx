@@ -27,7 +27,7 @@ export const Arrangements = (props: Props) => {
     const result:JSX.Element[] = [];
     if (!arrangements) return result;
     else if (arrangements.length === 0) result.push(<p>No arrangements found.</p>);
-    else if (arrangements.length === 1) result.push(<Arrangement arrangement={arrangements[0]} />);
+    else if (arrangements.length === 1) result.push(<Arrangement arrangement={arrangements[0]} originalKey="C" />);
     else {
       const accordions:JSX.Element[] = [];
       arrangements.forEach((arrangement: any) => {
@@ -37,7 +37,7 @@ export const Arrangements = (props: Props) => {
             <span style={{marginLeft:"auto"}}><SmallButton onClick={() => { setEditArrangement(arrangement) }} icon="edit" /></span>
           </AccordionSummary>
           <AccordionDetails>
-            <Arrangement arrangement={arrangement} />
+            <Arrangement arrangement={arrangement} originalKey="C" />
           </AccordionDetails>
         </Accordion>);
       });

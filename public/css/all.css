@@ -716,6 +716,10 @@ label .description {
 .planItem div:first-of-type { float:left;width:100px }
 .planItemDescription { font-style:italic; color:#777; padding-left:22px;}
 
+.chordPro H3 { margin-bottom:0px; }
+.chordPro .line { margin-top:15px; vertical-align: bottom;}
+.chordPro sup { vertical-align: top; position:absolute; margin-top:-12px; font-weight: bold; }
+
 
 @media print {
   .form-submission-summary {
