@@ -19,7 +19,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
 
   const loadAttDownloadData = () => {
     ApiHelper.get("/visitsessions/download/" + session?.id, "AttendanceApi").then((data) => {
-      if (data?.length > 0) setDownloadData(data);
+      setDownloadData(data);
     })
   };
 
@@ -119,7 +119,8 @@ export const GroupSessions: React.FC<Props> = (props) => {
 
   React.useEffect(() => { handleSessionSelected(); }, [session, handleSessionSelected]);
 
-  React.useEffect(() => { loadAttDownloadData(); }, [session]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(() => { loadAttDownloadData(); }, [session, visitSessions]);
   const customHeaders = [
     { label: "id", key: "id" },
     { label: "sessionDate", key: "sessionDate" },
