@@ -15,6 +15,13 @@ export const GroupSessions: React.FC<Props> = (props) => {
   const [people, setPeople] = React.useState<PersonInterface[]>([]);
   const [sessions, setSessions] = React.useState<SessionInterface[]>([]);
   const [session, setSession] = React.useState<SessionInterface>(null);
+  const [downloadData, setDownloadData] = React.useState<any[]>([]);
+
+  const loadAttDownloadData = () => {
+    ApiHelper.get("/visitsessions/download/" + session?.id, "AttendanceApi").then((data) => {
+      if (data?.length > 0) setDownloadData(data);
+    })
+  };
 
   const loadAttendance = React.useCallback(() => {
     ApiHelper.get("/visitsessions?sessionId=" + session.id, "AttendanceApi").then((vs: VisitSessionInterface[]) => {
@@ -112,11 +119,21 @@ export const GroupSessions: React.FC<Props> = (props) => {
 
   React.useEffect(() => { handleSessionSelected(); }, [session, handleSessionSelected]);
 
+  React.useEffect(() => { loadAttDownloadData(); }, [session]);
+  const customHeaders = [
+    { label: "id", key: "id" },
+    { label: "sessionDate", key: "sessionDate" },
+    { label: "personName", key: "personName" },
+    { label: "status", key: "status" },
+    { label: "personId", key: "personId" },
+    { label: "visitId", key: "visitId" }
+  ]
+
   let content = <Loading />;
   if (sessions) {
     if (sessions.length === 0) content = <div className="alert alert-warning" role="alert" data-cy="no-session-msg"><b>{Locale.label("groups.groupSessions.noSesMsg")}</b>  {Locale.label("groups.groupSessions.addSesMsg")}</div>
     else content = (<>
-      <span className="float-right"><ExportLink data={visitSessions} spaceAfter={true} filename="visits.csv" /></span>
+      <span className="float-right">{downloadData ? <ExportLink data={downloadData} spaceAfter={true} filename={`${props.group.name}_visits.csv`} customHeaders={customHeaders} /> : <></>}</span>
       <b data-cy="session-present-msg">{Locale.label("groups.groupSessions.attFor")} {props.group.name}</b>
       <Table id="groupMemberTable">
         <TableHead><TableRow><th></th><th>{Locale.label("common.name")}</th><th></th></TableRow></TableHead>
