@@ -1,10 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { ApiHelper, Locale, PlanInterface } from "@churchapps/apphelper";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 import { Assignment } from "./components/Assignment";
 import { Grid, Icon } from "@mui/material";
 import { ServiceOrder } from "./components/ServiceOrder";
+
+export interface PlanInterface { id?: string, churchId?: string, name?: string, ministryId?: string, serviceDate?: Date, notes?: string, serviceOrder?: boolean }
 
 export const PlanPage = () => {
   const params = useParams();
@@ -20,24 +22,25 @@ export const PlanPage = () => {
 
   const getTabs = () => {
     let tabs = [];
-    tabs.push({ key: "assignments", icon: "assignment", label: "Assignments"});
-    tabs.push({ key: "order", icon: "album", label: "Service Order" });
+    tabs.push({ key: "assignments", icon: "assignment", label: "Assignments" });
+    { plan && plan.serviceOrder && tabs.push({ key: "order", icon: "album", label: "Service Order" }); }
+    console.log("Plan is:", plan);
 
     if (selectedTab === "") setSelectedTab("assignments");
     return tabs;
   }
 
 
-  const getItem = (tab:any) => {
+  const getItem = (tab: any) => {
     if (tab.key === selectedTab) return (<li className="active"><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
     return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
   }
 
   return (<>
-    <Banner><h1>{ (plan?.name) ? plan.name : "Service Plan"}</h1></Banner>
+    <Banner><h1>{(plan?.name) ? plan.name : "Service Plan"}</h1></Banner>
     <Grid container spacing={2}>
       <Grid item xs={12} md={2}>
-        <div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
+        <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
           <ul>
             {getTabs().map((tab, index) => getItem(tab))}
           </ul>
@@ -45,8 +48,8 @@ export const PlanPage = () => {
       </Grid>
       <Grid item xs={12} md={10}>
         <div id="mainContent">
-          {plan && selectedTab==="assignments" && <Assignment plan={plan} /> }
-          {plan && selectedTab==="order" && <ServiceOrder plan={plan} /> }
+          {plan && selectedTab === "assignments" && <Assignment plan={plan} />}
+          {plan && selectedTab === "order" && <ServiceOrder plan={plan} />}
         </div>
       </Grid>
     </Grid>
