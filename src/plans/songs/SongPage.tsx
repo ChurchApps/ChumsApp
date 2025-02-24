@@ -27,7 +27,7 @@ export const SongPage = () => {
     <div id="mainContent">
       <Grid container spacing={3}>
         <Grid item md={8}>
-          <Arrangements song={song} reload={loadData} />
+          <Arrangements song={song} reload={loadData} songDetail={songDetail} />
           <DisplayBox headerText="Keys" headerIcon="music_note">
             test
           </DisplayBox>
