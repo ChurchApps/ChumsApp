@@ -14,6 +14,7 @@ export class SecondaryMenuHelper {
     else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = this.getSettingsMenu(path, data);
     else if (path.startsWith("/plans") || path.startsWith("/tasks")) result = this.getServingMenu(path);
     else if (path.startsWith("/donations")) result = this.getDonationsMenu(path);
+    else if (path.startsWith("/profile")) result = this.getProfileMenu(path);
     else if (path === ("/")) result = this.getDashboardMenu(path);
     return result;
   }
@@ -43,6 +44,14 @@ export class SecondaryMenuHelper {
     else if (path.startsWith("/admin")) label = Locale.label("components.wrapper.servAdmin");
     else if (path.startsWith("/forms")) label = Locale.label("components.wrapper.forms");
 
+    return { menuItems, label };
+  }
+
+  static getProfileMenu = (path: string) => {
+    const menuItems: MenuItem[] = []
+    let label: string = "";
+    menuItems.push({ url: "/profile", label: "Profile" });
+    menuItems.push({ url: "/profile/devices", label: "Devices" });
     return { menuItems, label };
   }
 

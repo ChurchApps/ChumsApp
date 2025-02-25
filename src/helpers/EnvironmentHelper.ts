@@ -2,6 +2,7 @@ import { CommonEnvironmentHelper, ApiHelper, Locale } from "@churchapps/apphelpe
 
 
 export class EnvironmentHelper {
+  private static LessonsApi = "";
   static B1Url = "";
   static ChurchAppsUrl = "";
   static Common = CommonEnvironmentHelper;
@@ -23,7 +24,8 @@ export class EnvironmentHelper {
       { keyName: "ReportingApi", url: EnvironmentHelper.Common.ReportingApi, jwt: "", permisssions: [] },
       { keyName: "DoingApi", url: EnvironmentHelper.Common.DoingApi, jwt: "", permisssions: [] },
       { keyName: "MessagingApi", url: EnvironmentHelper.Common.MessagingApi, jwt: "", permisssions: [] },
-      { keyName: "ContentApi", url: EnvironmentHelper.Common.ContentApi, jwt: "", permisssions: [] }
+      { keyName: "ContentApi", url: EnvironmentHelper.Common.ContentApi, jwt: "", permisssions: [] },
+      { keyName: "LessonsApi", url: EnvironmentHelper.LessonsApi, jwt: "", permisssions: [] },
     ];
 
 
@@ -37,15 +39,19 @@ export class EnvironmentHelper {
 
 
   static initDev = () => {
+    this.initStaging();
+    EnvironmentHelper.LessonsApi = process.env.NEXT_PUBLIC_LESSONS_API || EnvironmentHelper.LessonsApi;
   }
 
   //NOTE: None of these values are secret.
   static initStaging = () => {
+    EnvironmentHelper.LessonsApi = "https://api.staging.lessons.church";
   }
 
   //NOTE: None of these values are secret.
   static initProd = () => {
     EnvironmentHelper.Common.GoogleAnalyticsTag = "G-JB7VCG51LF";
+    EnvironmentHelper.LessonsApi = "https://api.lessons.church";
   }
 
 }

@@ -1,7 +1,7 @@
 import { Grid, Icon, TextField, Checkbox, Typography, Button, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, InputAdornment, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { InputBox, ApiHelper, ErrorMessages, UserHelper, NotificationPreferenceInterface, Locale } from "@churchapps/apphelper"
+import { InputBox, ApiHelper, ErrorMessages, UserHelper, NotificationPreferenceInterface, Locale, Banner } from "@churchapps/apphelper"
 
 export const ProfilePage = () => {
   const [password, setPassword] = useState<string>("");
@@ -21,7 +21,7 @@ export const ProfilePage = () => {
     setLastName(lastName);
     setEmail(email);
 
-    if(UserHelper.person) {
+    if (UserHelper.person) {
       const { optedOut } = UserHelper.person;
       setOptedOut(optedOut);
     }
@@ -36,7 +36,7 @@ export const ProfilePage = () => {
       if (password.length >= 8) promises.push(ApiHelper.post("/users/updatePassword", { newPassword: password }, "MembershipApi"));
       if (areNamesChanged()) promises.push(ApiHelper.post("/users/setDisplayName", { firstName, lastName }, "MembershipApi"));
       if (email !== UserHelper.user.email) promises.push(ApiHelper.post("/users/updateEmail", { email: email }, "MembershipApi"));
-      promises.push(ApiHelper.post("/users/updateOptedOut", {personId: UserHelper.person.id, optedOut: optedOut }, "MembershipApi"));
+      promises.push(ApiHelper.post("/users/updateOptedOut", { personId: UserHelper.person.id, optedOut: optedOut }, "MembershipApi"));
 
       Promise.all(promises).then(() => {
         UserHelper.user.firstName = firstName;
@@ -121,57 +121,61 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <h1><Icon>person</Icon> {Locale.label("profile.profilePage.profEdit")}</h1>
-      <ErrorMessages errors={errors} />
-      <InputBox headerText={Locale.label("profile.profilePage.profEdit")} saveFunction={handleSave}>
-        <Grid container spacing={3}>
-          <Grid item>
-            <TextField fullWidth type="email" name="email" label={Locale.label("person.email")} value={email} onChange={handleChange} />
-            <TextField fullWidth name="firstName" label={Locale.label("person.firstName")} value={firstName} onChange={handleChange} />
-            <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} />
+      <Banner>
+        <h1>{Locale.label("profile.profilePage.profEdit")}</h1>
+      </Banner>
+      <div id="mainContent">
+        <ErrorMessages errors={errors} />
+        <InputBox headerText={Locale.label("profile.profilePage.profEdit")} saveFunction={handleSave}>
+          <Grid container spacing={3}>
+            <Grid item>
+              <TextField fullWidth type="email" name="email" label={Locale.label("person.email")} value={email} onChange={handleChange} />
+              <TextField fullWidth name="firstName" label={Locale.label("person.firstName")} value={firstName} onChange={handleChange} />
+              <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} />
+            </Grid>
+            <Grid item>
+              <TextField type={showPassword ? "text" : "password"} fullWidth name="password" label={Locale.label("profile.profilePage.passNew")} value={password} onChange={handleChange} InputProps={{
+                endAdornment: (<InputAdornment position="end"><IconButton aria-label="toggle password visibility" onClick={() => { setShowPassword(!showPassword) }}>{showPassword ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}</IconButton></InputAdornment>)
+              }} />
+              <TextField type={showPassword ? "text" : "password"} fullWidth name="passwordVerify" label={Locale.label("profile.profilePage.passVer")} value={passwordVerify} onChange={handleChange} InputProps={{
+                endAdornment: (<InputAdornment position="end"><IconButton aria-label="toggle password visibility" onClick={() => { setShowPassword(!showPassword) }}>{showPassword ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}</IconButton></InputAdornment>)
+              }} />
+              <Checkbox name="optedOut" checked={optedOut} onChange={handleChange} />
+              <label htmlFor="optedOut">{Locale.label("profile.profilePage.noDirect")}</label>
+            </Grid>
           </Grid>
-          <Grid item>
-            <TextField type={showPassword ? "text" : "password"} fullWidth name="password" label={Locale.label("profile.profilePage.passNew")} value={password} onChange={handleChange} InputProps={{
-              endAdornment: (<InputAdornment position="end"><IconButton aria-label="toggle password visibility" onClick={() => { setShowPassword(!showPassword) }}>{showPassword ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}</IconButton></InputAdornment>)
-            }} />
-            <TextField type={showPassword ? "text" : "password"} fullWidth name="passwordVerify" label={Locale.label("profile.profilePage.passVer")} value={passwordVerify} onChange={handleChange}  InputProps={{
-              endAdornment: (<InputAdornment position="end"><IconButton aria-label="toggle password visibility" onClick={() => { setShowPassword(!showPassword) }}>{showPassword ?  <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}</IconButton></InputAdornment>)
-            }} />
-            <Checkbox name="optedOut" checked={optedOut} onChange={handleChange} />
-            <label htmlFor="optedOut">{Locale.label("profile.profilePage.noDirect")}</label>
-          </Grid>
-        </Grid>
-      </InputBox>
+        </InputBox>
 
-      <InputBox headerText={Locale.label("profile.profilePage.notifPref")} saveFunction={handleNotificationSave}>
-        <p>{Locale.label("profile.profilePage.notifMsg")}</p>
-        <Grid container spacing={3}>
-          <Grid item sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="push">{Locale.label("profile.profilePage.notifPush")}</InputLabel>
-              <Select fullWidth name="push" labelId="push" label={Locale.label("profile.profilePage.notifPush")} value={pref.allowPush?.toString() || "true"} onChange={handlePrefChange}>
-                <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
-                <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
-              </Select>
-            </FormControl>
+        <InputBox headerText={Locale.label("profile.profilePage.notifPref")} saveFunction={handleNotificationSave}>
+          <p>{Locale.label("profile.profilePage.notifMsg")}</p>
+          <Grid container spacing={3}>
+            <Grid item sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="push">{Locale.label("profile.profilePage.notifPush")}</InputLabel>
+                <Select fullWidth name="push" labelId="push" label={Locale.label("profile.profilePage.notifPush")} value={pref.allowPush?.toString() || "true"} onChange={handlePrefChange}>
+                  <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
+                  <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="emailFrequency">{Locale.label("profile.profilePage.freqEmail")}</InputLabel>
+                <Select fullWidth name="emailFrequency" labelId="emailFrequency" label={Locale.label("profile.profilePage.freqEmail")} value={pref.emailFrequency || "daily"} onChange={handlePrefChange}>
+                  <MenuItem value="never">{Locale.label("profile.profilePage.never")}</MenuItem>
+                  <MenuItem value="individual">{Locale.label("profile.profilePage.indiv")}</MenuItem>
+                  <MenuItem value="daily">{Locale.label("profile.profilePage.daily")}</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
-          <Grid item sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="emailFrequency">{Locale.label("profile.profilePage.freqEmail")}</InputLabel>
-              <Select fullWidth name="emailFrequency" labelId="emailFrequency" label={Locale.label("profile.profilePage.freqEmail")} value={pref.emailFrequency || "daily"} onChange={handlePrefChange}>
-                <MenuItem value="never">{Locale.label("profile.profilePage.never")}</MenuItem>
-                <MenuItem value="individual">{Locale.label("profile.profilePage.indiv")}</MenuItem>
-                <MenuItem value="daily">{Locale.label("profile.profilePage.daily")}</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-      </InputBox>
+        </InputBox>
 
-      <InputBox headerText={Locale.label("profile.profilePage.accDel")} saveFunction={null}>
-        <Typography color="GrayText">{Locale.label("profile.profilePage.permWarn")}</Typography>
-        <Button variant="outlined" color="error" sx={{ marginTop: 4 }} onClick={handleAccountDelete}>{Locale.label("profile.profilePage.delAcc")}</Button>
-      </InputBox>
+        <InputBox headerText={Locale.label("profile.profilePage.accDel")} saveFunction={null}>
+          <Typography color="GrayText">{Locale.label("profile.profilePage.permWarn")}</Typography>
+          <Button variant="outlined" color="error" sx={{ marginTop: 4 }} onClick={handleAccountDelete}>{Locale.label("profile.profilePage.delAcc")}</Button>
+        </InputBox>
+      </div>
     </>
   );
 }
