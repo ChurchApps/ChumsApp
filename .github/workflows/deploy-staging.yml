@@ -1,6 +1,9 @@
 on:
   push:
-    branches: [main]
+    branches:
+      [
+        main
+      ]
   workflow_dispatch:
 
 name: Deploy Staging
@@ -17,13 +20,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          submodules: 'true'
+          submodules: "true"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
+          restore-keys:
+            |
             ${{ runner.os }}-node-
 
       - name: Configure AWS Credentials
@@ -34,10 +38,12 @@ jobs:
           aws-region: us-east-2
 
       - name: Setup Serverless
-        run: |
+        run:
+          |
           export SERVERLESS_ACCESS_KEY="$SERVERLESS_ACCESS_KEY"
 
       - name: Deploy
-        run: |
+        run:
+          |
           npm ci
           npm run deploy-staging
