@@ -17,7 +17,7 @@ export const DeviceContent = (props: Props) => {
     ApiHelper.get("/deviceContents/deviceId/" + props.device.id, "MessagingApi").then(data => { setContents(data); });
   }
 
-  useEffect(loadData, []);
+  useEffect(loadData, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
