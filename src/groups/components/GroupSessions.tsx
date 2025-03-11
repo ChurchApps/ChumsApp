@@ -7,7 +7,8 @@ interface Props {
   sidebarVisibilityFunction: (name: string, visible: boolean) => void,
   addedSession: SessionInterface,
   addedPerson: PersonInterface,
-  addedCallback?: () => void
+  addedCallback?: (personId: string) => void,
+  setHiddenPeople?: (peopleIds: string[]) => void
 }
 
 export const GroupSessions: React.FC<Props> = (props) => {
@@ -21,22 +22,26 @@ export const GroupSessions: React.FC<Props> = (props) => {
     ApiHelper.get("/visitsessions/download/" + session?.id, "AttendanceApi").then((data) => {
       setDownloadData(data);
     })
+    downloadData.forEach((dp) => {
+      console.log("Name:", dp.personName ? dp.personName : "Nameless", "Status:", dp.status);
+    });
   };
 
-  const loadAttendance = React.useCallback(() => {
+  const loadAttendance = () => {
     ApiHelper.get("/visitsessions?sessionId=" + session.id, "AttendanceApi").then((vs: VisitSessionInterface[]) => {
       setVisitSessions(vs);
       const peopleIds = ArrayHelper.getUniqueValues(vs, "visit.personId");
       ApiHelper.get("/people/ids?ids=" + escape(peopleIds.join(",")), "MembershipApi").then(data => setPeople(data));
+      props.setHiddenPeople(peopleIds);
     });
-  }, [session]);
+  };
 
-  const loadSessions = React.useCallback(() => {
+  const loadSessions = () => {
     ApiHelper.get("/sessions?groupId=" + props.group.id, "AttendanceApi").then(data => {
       setSessions(data);
       if (data.length > 0) setSession(data[0]);
     });
-  }, [props.group]);
+  };
 
   const handleRemove = (vs: VisitSessionInterface) => {
     ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + vs.visit.personId, "AttendanceApi").then(loadAttendance);
@@ -100,24 +105,24 @@ export const GroupSessions: React.FC<Props> = (props) => {
     );*/
   }
 
-  const handleSessionSelected = React.useCallback(() => {
+  const handleSessionSelected = () => {
     if (session !== null) {
       loadAttendance();
       props.sidebarVisibilityFunction("addPerson", true);
     }
-  }, [props, loadAttendance, session])
+  }
 
-  const handlePersonAdd = React.useCallback(() => {
+  const handlePersonAdd = () => {
     let v = { checkinTime: new Date(), personId: props.addedPerson.id, visitSessions: [{ sessionId: session.id }] } as VisitInterface;
     ApiHelper.post("/visitsessions/log", v, "AttendanceApi").then(() => { loadAttendance(); });
-    props.addedCallback();
-  }, [props, loadAttendance, session]);
+    props.addedCallback(v.personId);
+  }
 
-  React.useEffect(() => { if (props.group.id !== undefined) { loadSessions() }; props.addedCallback(); }, [props.group, props.addedSession, loadSessions, props]);
+  React.useEffect(() => { if (props.group.id !== undefined) { loadSessions() }; props.addedCallback(""); }, [props.group, props.addedSession]);  //eslint-disable-line
 
-  React.useEffect(() => { if (props.addedPerson?.id !== undefined) { handlePersonAdd() } }, [props.addedPerson, handlePersonAdd]);
+  React.useEffect(() => { if (props.addedPerson?.id !== undefined) { handlePersonAdd() } }, [props.addedPerson]); //eslint-disable-line
 
-  React.useEffect(() => { handleSessionSelected(); }, [session, handleSessionSelected]);
+  React.useEffect(() => { handleSessionSelected(); }, [session]);  //eslint-disable-line
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => { loadAttDownloadData(); }, [session, visitSessions]);

@@ -4,29 +4,42 @@ import { ApiHelper, GroupInterface, DisplayBox, GroupMemberInterface, PersonHelp
 import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
-interface Props { group: GroupInterface, addFunction: (person: PersonInterface) => void }
+interface Props { group: GroupInterface, addFunction: (person: PersonInterface) => void, hiddenPeople?: string[] }
 
 export const MembersAdd: React.FC<Props> = (props) => {
   const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([]);
   const isSubscribed = useRef(true)
 
-  const loadData = React.useCallback(() => { ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => { if (isSubscribed.current) { setGroupMembers(data) } }); }, [props.group, isSubscribed]);
+  const loadData = React.useCallback(() => {
+    ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => {
+      if (isSubscribed.current) {
+        setGroupMembers(data);
+      }
+    });
+  }, [props.group, isSubscribed]);
   const addMember = (gm: GroupMemberInterface) => {
     let members = groupMembers;
     let idx = members.indexOf(gm);
-    let person = members.splice(idx, 1)[0].person;
+    let person = members[idx].person;
     setGroupMembers(members);
     props.addFunction(person);
   }
 
   const getRows = () => {
     const rows: JSX.Element[] = [];
-    if (groupMembers.length === 0) {
+    const filtered: GroupMemberInterface[] = [];
+    console.log("Hidden People:", props.hiddenPeople)
+    groupMembers.forEach((d: GroupMemberInterface) => {
+      if (!props.hiddenPeople || props.hiddenPeople.indexOf(d.personId) === -1) {
+        filtered.push(d);
+      }
+    })
+    if (filtered.length === 0) {
       rows.push(<TableRow key="0"><TableCell>{Locale.label("groups.membersAdd.noMem")}</TableCell></TableRow>);
       return rows;
     }
-    for (let i = 0; i < groupMembers.length; i++) {
-      const gm = groupMembers[i];
+    for (let i = 0; i < filtered.length; i++) {
+      const gm = filtered[i];
       rows.push(
         <TableRow key={i}>
           <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
