@@ -23,7 +23,9 @@ export const PlanPage = () => {
   const getTabs = () => {
     let tabs = [];
     tabs.push({ key: "assignments", icon: "assignment", label: "Assignments" });
-    { plan && plan.serviceOrder && tabs.push({ key: "order", icon: "album", label: "Service Order" }); }
+    if (plan && plan.serviceOrder) {
+      tabs.push({ key: "order", icon: "album", label: "Service Order" });
+    }
     console.log("Plan is:", plan);
 
     if (selectedTab === "") setSelectedTab("assignments");

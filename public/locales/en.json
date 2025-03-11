@@ -591,7 +591,8 @@
       "valPlan": "Plan is valid.",
       "vol": "volunteer(s)",
       "volNotif": "All volunteers notified.",
-      "volReq": "Volunteer Requests: "
+      "volReq": "Volunteer Requests: ",
+      "pleaseConfirm": "Please log in and confirm."
     },
     "positionEdit": {
       "catName": "Category Name",

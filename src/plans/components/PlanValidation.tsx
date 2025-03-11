@@ -11,32 +11,32 @@ interface Props {
   onUpdate: () => void
 }
 
-export const PlanValidation = (props:Props) => {
+export const PlanValidation = (props: Props) => {
 
   const [errors, setErrors] = React.useState<JSX.Element[]>([]);
   const [plans, setPlans] = React.useState<PlanInterface[]>([]);
-  const [planTimeConflicts, setPlanTimeConflicts] = React.useState<{time: TimeInterface, overlapingTimes: TimeInterface[]}[]>([]);
+  const [planTimeConflicts, setPlanTimeConflicts] = React.useState<{ time: TimeInterface, overlapingTimes: TimeInterface[] }[]>([]);
   const [externalPositions, setExternalPositions] = React.useState<PositionInterface[]>();
   const [externalAssignments, setExternalAssignments] = React.useState<AssignmentInterface[]>();
 
 
-  const validateBlockout = (issues:JSX.Element[]) => {
-    const conflicts: {person:PersonInterface, blockout:BlockoutDateInterface}[] = [];
+  const validateBlockout = (issues: JSX.Element[]) => {
+    const conflicts: { person: PersonInterface, blockout: BlockoutDateInterface }[] = [];
     props.people.forEach(person => {
-      const assignments:AssignmentInterface[] = ArrayHelper.getAll(props.assignments, "personId", person.id);
-      if (person.id==="bTrK6d0kvF6") console.log("ASSIGNMENTS", assignments)
+      const assignments: AssignmentInterface[] = ArrayHelper.getAll(props.assignments, "personId", person.id);
+      if (person.id === "bTrK6d0kvF6") console.log("ASSIGNMENTS", assignments)
       const positionIds = ArrayHelper.getIds(assignments, "positionId");
-      const positions:PositionInterface[] = ArrayHelper.getAllArray(props.positions, "id", positionIds);
-      if (person.id==="bTrK6d0kvF6") console.log("POSITIONS", positions)
+      const positions: PositionInterface[] = ArrayHelper.getAllArray(props.positions, "id", positionIds);
+      if (person.id === "bTrK6d0kvF6") console.log("POSITIONS", positions)
 
-      const times:TimeInterface[] = [];
+      const times: TimeInterface[] = [];
       positions.forEach(p => {
-        const posTimes = props.times.filter(t => t?.teams?.indexOf(p.categoryName)>-1);
-        if (person.id==="bTrK6d0kvF6") console.log("TIMES", posTimes, p, props.times);
+        const posTimes = props.times.filter(t => t?.teams?.indexOf(p.categoryName) > -1);
+        if (person.id === "bTrK6d0kvF6") console.log("TIMES", posTimes, p, props.times);
         times.push(...posTimes);
       });
 
-      const blockouts:BlockoutDateInterface[] = ArrayHelper.getAll(props.blockoutDates, "personId", person.id);
+      const blockouts: BlockoutDateInterface[] = ArrayHelper.getAll(props.blockoutDates, "personId", person.id);
       blockouts.forEach(b => {
         b.endDate = new Date(b.endDate);
         b.endDate.setHours(23, 59, 59, 999);
@@ -45,7 +45,7 @@ export const PlanValidation = (props:Props) => {
         times.forEach(t => {
           if (new Date(b.startDate) < new Date(t.endTime) && new Date(b.endDate) > new Date(t.startTime)) conflict = true;
         });
-        if (conflict) conflicts.push({person, blockout:b});
+        if (conflict) conflicts.push({ person, blockout: b });
       });
     });
 
@@ -54,29 +54,29 @@ export const PlanValidation = (props:Props) => {
     });
   }
 
-  const validatePoisitionsFilled = (issues:JSX.Element[]) => {
+  const validatePoisitionsFilled = (issues: JSX.Element[]) => {
     props.positions.forEach(p => {
       const assignments = props.assignments.filter(a => a.positionId === p.id);
       if (assignments.length < p.count) {
         const needed = p.count - assignments.length;
-        issues.push(<><b>{p.name}:</b> {needed} {Locale.label("plans.planValidation.more")} {(needed===1) ? Locale.label("plans.planValidation.person") : Locale.label("plans.planValidation.ppl")} {Locale.label("plans.planValidation.needed")}</>);
+        issues.push(<><b>{p.name}:</b> {needed} {Locale.label("plans.planValidation.more")} {(needed === 1) ? Locale.label("plans.planValidation.person") : Locale.label("plans.planValidation.ppl")} {Locale.label("plans.planValidation.needed")}</>);
       }
     });
   }
 
-  const checkPersonTimeConflicts = (person:PersonInterface, issues:JSX.Element[]) => {
+  const checkPersonTimeConflicts = (person: PersonInterface, issues: JSX.Element[]) => {
     const assignments = props.assignments.filter(a => a.personId === person.id);
-    const duties:{position:PositionInterface, times:TimeInterface[]}[] = [];
+    const duties: { position: PositionInterface, times: TimeInterface[] }[] = [];
     assignments.forEach(a => {
       const position = props.positions.find(p => p.id === a.positionId);
       if (position) {
-        const posTimes = props.times.filter(t => t?.teams?.indexOf(position.categoryName)>-1);
-        duties.push({position, times:posTimes});
+        const posTimes = props.times.filter(t => t?.teams?.indexOf(position.categoryName) > -1);
+        duties.push({ position, times: posTimes });
       }
     });
 
     for (let i = 0; i < duties.length; i++) {
-      for (let j = i+1; j < duties.length; j++) {
+      for (let j = i + 1; j < duties.length; j++) {
         const a = duties[i];
         const b = duties[j];
         a.times.forEach(at => {
@@ -93,10 +93,10 @@ export const PlanValidation = (props:Props) => {
   const checkPlanTimeConflicts = (person: PersonInterface, issues: JSX.Element[]) => {
     if (props.assignments.length > 0) {
       const assignments = externalAssignments?.filter(ea => ea.personId === person.id);
-      const duties: {position:PositionInterface}[] = [];
+      const duties: { position: PositionInterface }[] = [];
       assignments?.forEach(a => {
         const position = externalPositions.find(p => p.id === a.positionId);
-        if (position) duties.push({position});
+        if (position) duties.push({ position });
       });
 
       for (let i = 0; i < duties.length; i++) {
@@ -116,7 +116,7 @@ export const PlanValidation = (props:Props) => {
     }
   }
 
-  const validateTimeConflicts = (issues:JSX.Element[]) => {
+  const validateTimeConflicts = (issues: JSX.Element[]) => {
     props.people.forEach(person => {
       checkPersonTimeConflicts(person, issues);
       checkPlanTimeConflicts(person, issues);
@@ -124,7 +124,7 @@ export const PlanValidation = (props:Props) => {
   }
 
   const validate = () => {
-    const result:JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     validatePoisitionsFilled(result);
     validateTimeConflicts(result);
     validateBlockout(result);
@@ -148,7 +148,7 @@ export const PlanValidation = (props:Props) => {
           const removedcurrentPlan = overlapingTimes.filter((ot: TimeInterface) => ot.planId !== props.plan.id);
           filteredTimes = [...filteredTimes, ...removedcurrentPlan.filter(removeDuplicates())];
           //an array with current time and it's overlaping times from other plans.
-          timeConflicts = [ ...timeConflicts, { time: t, overlapingTimes: [...removedcurrentPlan] }];
+          timeConflicts = [...timeConflicts, { time: t, overlapingTimes: [...removedcurrentPlan] }];
         };
         setPlanTimeConflicts(timeConflicts);
         // load positions/assignments, if overlap.
@@ -183,18 +183,18 @@ export const PlanValidation = (props:Props) => {
   }
 
   const getPendingNotifications = () => {
-    const pending:AssignmentInterface[] = [];
+    const pending: AssignmentInterface[] = [];
     props.assignments.forEach(a => { if (!a.notified) pending.push(a); });
     return pending;
   }
 
   const notify = () => {
     const pending = getPendingNotifications();
-    const promises:Promise<any>[] = []
+    const promises: Promise<any>[] = []
     pending.forEach(a => {
-      const position:PositionInterface = ArrayHelper.getOne(props.positions, "id", a.positionId);
+      const position: PositionInterface = ArrayHelper.getOne(props.positions, "id", a.positionId);
       a.notified = new Date();
-      const data:any = { peopleIds:[a.personId], contentType:"assignment", contentId:props.plan.id, message:Locale.label("plans.planValidation.volReq") + props.plan.name + " - " + position.name };
+      const data: any = { peopleIds: [a.personId], contentType: "assignment", contentId: props.plan.id, message: Locale.label("plans.planValidation.volReq") + props.plan.name + " - " + position.name + "." + Locale.label("plans.planValidation.pleaseConfirm") };
       promises.push(ApiHelper.post("/notifications/create", data, "MessagingApi"));
     });
     promises.push(ApiHelper.post("/assignments", pending, "DoingApi"));

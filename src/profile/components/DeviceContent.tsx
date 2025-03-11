@@ -17,15 +17,15 @@ export const DeviceContent = (props: Props) => {
     ApiHelper.get("/deviceContents/deviceId/" + props.device.id, "MessagingApi").then(data => { setContents(data); });
   }
 
-  useEffect(loadData, []);
+  useEffect(loadData, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const d = { ...contents };
     if (e.target.checked) {
       const newRecord: DeviceContentInterface = { deviceId: props.device.id, contentType: "classroom", contentId: e.target.value };
       ApiHelper.post("/deviceContents", [newRecord], "MessagingApi").then(() => { loadData(); });
     } else {
-      const existing = ArrayHelper.getOne(d, "contentId", e.target.value);
+      console.log("CONTENTS ARE", contents)
+      const existing = ArrayHelper.getOne(contents, "contentId", e.target.value);
       ApiHelper.delete("/deviceContents/" + existing.id, "MessagingApi").then(() => { loadData(); });
     }
   }
