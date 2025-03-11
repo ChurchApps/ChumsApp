@@ -7,7 +7,8 @@ interface Props {
   sidebarVisibilityFunction: (name: string, visible: boolean) => void,
   addedSession: SessionInterface,
   addedPerson: PersonInterface,
-  addedCallback?: () => void
+  addedCallback?: (personId: string) => void,
+  setHiddenPeople?: (peopleIds: string[]) => void
 }
 
 export const GroupSessions: React.FC<Props> = (props) => {
@@ -21,6 +22,9 @@ export const GroupSessions: React.FC<Props> = (props) => {
     ApiHelper.get("/visitsessions/download/" + session?.id, "AttendanceApi").then((data) => {
       setDownloadData(data);
     })
+    downloadData.forEach((dp) => {
+      console.log("Name:", dp.personName ? dp.personName : "Nameless", "Status:", dp.status);
+    });
   };
 
   const loadAttendance = () => {
@@ -28,6 +32,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
       setVisitSessions(vs);
       const peopleIds = ArrayHelper.getUniqueValues(vs, "visit.personId");
       ApiHelper.get("/people/ids?ids=" + escape(peopleIds.join(",")), "MembershipApi").then(data => setPeople(data));
+      props.setHiddenPeople(peopleIds);
     });
   };
 
@@ -110,10 +115,10 @@ export const GroupSessions: React.FC<Props> = (props) => {
   const handlePersonAdd = () => {
     let v = { checkinTime: new Date(), personId: props.addedPerson.id, visitSessions: [{ sessionId: session.id }] } as VisitInterface;
     ApiHelper.post("/visitsessions/log", v, "AttendanceApi").then(() => { loadAttendance(); });
-    props.addedCallback();
+    props.addedCallback(v.personId);
   }
 
-  React.useEffect(() => { if (props.group.id !== undefined) { loadSessions() }; props.addedCallback(); }, [props.group, props.addedSession]);  //eslint-disable-line
+  React.useEffect(() => { if (props.group.id !== undefined) { loadSessions() }; props.addedCallback(""); }, [props.group, props.addedSession]);  //eslint-disable-line
 
   React.useEffect(() => { if (props.addedPerson?.id !== undefined) { handlePersonAdd() } }, [props.addedPerson]); //eslint-disable-line
 
