@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, GroupMemberInterface, Locale, PlanInterface, PositionInterface, SmallButton, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, GroupMemberInterface, Locale, PlanInterface, PositionInterface, SmallButton, TimeInterface, UserHelper, Permissions } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
 import { GroupAdd } from "../../groups/components";
 import UserContext from "../../UserContext";
@@ -8,7 +8,7 @@ import UserContext from "../../UserContext";
 interface Props {
 }
 
-export const MinistryList = (props:Props) => {
+export const MinistryList = (props: Props) => {
   //const [redirect, setRedirect] = React.useState("");
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
   const [showAdd, setShowAdd] = React.useState<boolean>(false);
@@ -18,9 +18,9 @@ export const MinistryList = (props:Props) => {
   const context = React.useContext(UserContext);
 
   const loadData = async () => {
-    const groups:GroupInterface[] = await ApiHelper.get("/groups/tag/ministry", "MembershipApi");
+    const groups: GroupInterface[] = await ApiHelper.get("/groups/tag/ministry", "MembershipApi");
     setGroups(groups)
-    if (groups.length>0) ApiHelper.get("/groupMembers?groupIds=" + ArrayHelper.getIds(groups, "id"), "MembershipApi").then((data) => { setGroupMembers(data); })
+    if (groups.length > 0) ApiHelper.get("/groupMembers?groupIds=" + ArrayHelper.getIds(groups, "id"), "MembershipApi").then((data) => { setGroupMembers(data); })
   };
 
   const getAddLink = () => (
@@ -40,7 +40,7 @@ export const MinistryList = (props:Props) => {
     for (let i = 0; i < groups.length; i++) {
       let g = groups[i];
       const members = ArrayHelper.getAll(groupMembers, "groupId", g.id);
-      const hasAccess = members.length===0 || ArrayHelper.getOne(members, "personId", context.person?.id) !== null;
+      const hasAccess = members.length === 0 || ArrayHelper.getOne(members, "personId", context.person?.id) !== null || UserHelper.checkAccess(Permissions.membershipApi.roles.edit);
       //if (hasAccess && window.location.pathname==="/plans") setRedirect("/plans/ministries/" + g.id.toString());
 
       rows.push(<TableRow key={g.id}>
@@ -55,7 +55,7 @@ export const MinistryList = (props:Props) => {
     return rows;
   };
 
-  React.useEffect(() => {loadData()}, []);
+  React.useEffect(() => { loadData() }, []);
 
   //if (redirect !== "") return <Navigate to={redirect} />;
   if (showAdd) return (<GroupAdd updatedFunction={handleAddUpdated} tags="ministry" categoryName="Ministry" />)
