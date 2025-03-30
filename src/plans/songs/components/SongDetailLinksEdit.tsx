@@ -13,7 +13,7 @@ export const SongDetailLinksEdit = (props: Props) => {
   const [songDetailLinks, setSongDetailLinks] = React.useState<SongDetailLinkInterface[]>([]);
   const [pendingDeleteIds, setPendingDeleteIds] = React.useState<string[]>([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>, index:number) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>, index: number) => {
     const links = [...songDetailLinks];
     const l = links[index];
     switch (e.target.name) {
@@ -25,7 +25,7 @@ export const SongDetailLinksEdit = (props: Props) => {
   }
 
   useEffect(() => {
-    if (props.pendingSave>0) {
+    if (props.pendingSave > 0) {
       pendingDeleteIds.forEach(id => {
         ApiHelper.delete("/songDetailLinks/" + id, "ContentApi");
       });
@@ -47,13 +47,14 @@ export const SongDetailLinksEdit = (props: Props) => {
     }
   }, [props.songDetailId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const determineUrl = (link:SongDetailLinkInterface) => {
+  const determineUrl = (link: SongDetailLinkInterface) => {
     let result = "";
     switch (link.service) {
       case "Apple": result = "https://music.apple.com/us/album/" + link.serviceKey; break;
       case "CCLI": result = "https://songselect.ccli.com/Songs/" + link.serviceKey; break;
       case "Genius": result = "https://genius.com/" + link.serviceKey; break;
       case "Hymnary": result = "https://hymnary.org/text/" + link.serviceKey; break;
+      case "MusicBrainz": result = "https://musicbrainz.org/recording/" + link.serviceKey; break;
       case "Spotify": result = "https://open.spotify.com/track/" + link.serviceKey; break;
       case "YouTube": result = "https://www.youtube.com/watch?v=" + link.serviceKey; break;
     }
@@ -62,18 +63,18 @@ export const SongDetailLinksEdit = (props: Props) => {
 
   const handleAdd = () => {
     const links = [...songDetailLinks];
-    links.push({songDetailId:props.songDetailId, service:"Apple"} as SongDetailLinkInterface);
+    links.push({ songDetailId: props.songDetailId, service: "Apple" } as SongDetailLinkInterface);
     setSongDetailLinks(links);
   }
 
-  const handleDelete = (idx:number) => {
+  const handleDelete = (idx: number) => {
     const links = [...songDetailLinks];
     const toDelete = links.splice(idx, 1);
     if (toDelete[0].id) setPendingDeleteIds([...pendingDeleteIds, toDelete[0].id]);
     setSongDetailLinks(links);
   }
 
-  const getRow = (link:SongDetailLinkInterface, idx:number) => <TableRow>
+  const getRow = (link: SongDetailLinkInterface, idx: number) => <TableRow>
     <TableCell>
       <FormControl fullWidth size="small">
         <InputLabel>Service</InputLabel>
@@ -82,6 +83,7 @@ export const SongDetailLinksEdit = (props: Props) => {
           <MenuItem value="CCLI">CCLI</MenuItem>
           <MenuItem value="Genius">Genius</MenuItem>
           <MenuItem value="Hymnary">Hymnary</MenuItem>
+          <MenuItem value="MusicBrainz">MusicBrainz</MenuItem>
           <MenuItem value="Spotify">Spotify</MenuItem>
           <MenuItem value="YouTube">YouTube</MenuItem>
         </Select>
@@ -99,7 +101,7 @@ export const SongDetailLinksEdit = (props: Props) => {
         <TableRow>
           <TableCell>Service</TableCell>
           <TableCell>Key</TableCell>
-          <TableCell style={{textAlign:"right"}}><SmallButton icon="add" onClick={handleAdd} /></TableCell>
+          <TableCell style={{ textAlign: "right" }}><SmallButton icon="add" onClick={handleAdd} /></TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

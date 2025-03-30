@@ -8,7 +8,7 @@ export interface SongInterface {
 
 export interface SongDetailInterface {
   id?: string,
-  musicBrainzId?: string,
+  praiseChartsId?: string,
   title?: string,
   artist?: string,
   album?: string,
