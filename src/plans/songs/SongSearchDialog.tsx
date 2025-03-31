@@ -5,7 +5,7 @@ import { SongDetailInterface } from "../../helpers";
 
 interface Props {
   onClose: () => void,
-  onSelect: (song:SongDetailInterface) => void
+  onSelect: (song: SongDetailInterface) => void
 }
 
 export const SongSearchDialog: React.FC<Props> = (props) => {
@@ -27,7 +27,7 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.style.display="none";
+    e.currentTarget.style.display = "none";
   }
 
   const handleSongClick = async (songDetail: SongDetailInterface) => {
@@ -40,11 +40,11 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
   }
 
   const getRows = () => {
-    const result:JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     songDetails.forEach((songDetail, index) => {
       result.push(
         <TableRow key={index}>
-          <TableCell><img src={songDetail.thumbnail} alt={songDetail.title} style={{width:50,height:50}} onError={handleImageError} /></TableCell>
+          <TableCell><img src={songDetail.thumbnail} alt={songDetail.title} style={{ width: 50, height: 50 }} onError={handleImageError} /></TableCell>
           <TableCell><a href="about:blank" onClick={(e) => { e.preventDefault(); handleSongClick(songDetail) }}>{songDetail.title}</a></TableCell>
           <TableCell>{songDetail.artist}</TableCell>
         </TableRow>
@@ -55,18 +55,17 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
 
   return (<>
     <Dialog open={true} onClose={props.onClose} fullWidth maxWidth="md">
-      <DialogTitle>Search for Song</DialogTitle>
+      <DialogTitle>Search for a Song</DialogTitle>
       <DialogContent>
-
         <TextField fullWidth name="personAddText" label="Tile or Artist" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
           InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => handleSearch()}>{Locale.label("common.search")}</Button> }}
         />
 
-        {songDetails && <div style={{overflowY:"scroll", height:400}}>
+        {songDetails && <div style={{ overflowY: "scroll", height: 400 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={{width:82}}></TableCell>
+                <TableCell style={{ width: 82 }}></TableCell>
                 <TableCell>Title</TableCell>
                 <TableCell>Artist</TableCell>
               </TableRow>
@@ -80,6 +79,7 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
 
       </DialogContent>
       <DialogActions>
+        <label style={{ color: "#999" }}>Powered by: PraiseCharts</label> &nbsp;
         <Button variant="outlined" onClick={props.onClose}>{Locale.label("common.close")}</Button>
       </DialogActions>
     </Dialog>

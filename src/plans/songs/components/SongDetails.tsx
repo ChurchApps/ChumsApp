@@ -15,11 +15,11 @@ export const SongDetails = (props: Props) => {
 
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.style.display="none";
+    e.currentTarget.style.display = "none";
   }
 
   const getDetails = () => {
-    const result:JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     if (!props.songDetail) return result;
 
 
@@ -32,6 +32,8 @@ export const SongDetails = (props: Props) => {
     if (props.songDetail.language) result.push(<TableRow key="language"><TableCell><strong>Language</strong></TableCell><TableCell>{props.songDetail.language}</TableCell></TableRow>);
     if (props.songDetail.bpm) result.push(<TableRow key="bpm"><TableCell><strong>BPM</strong></TableCell><TableCell>{props.songDetail.bpm}</TableCell></TableRow>);
     if (props.songDetail.keySignature) result.push(<TableRow key="keySignature"><TableCell><strong>Key Signature</strong></TableCell><TableCell>{props.songDetail.keySignature}</TableCell></TableRow>);
+    if (props.songDetail.tones) result.push(<TableRow key="tones"><TableCell><strong>Keys</strong></TableCell><TableCell>{props.songDetail.tones}</TableCell></TableRow>);
+    if (props.songDetail.meter) result.push(<TableRow key="meter"><TableCell><strong>Meter</strong></TableCell><TableCell>{props.songDetail.meter}</TableCell></TableRow>);
     if (props.songDetail.seconds) result.push(<TableRow key="seconds"><TableCell><strong>Length</strong></TableCell><TableCell>{formatSeconds(props.songDetail.seconds)}</TableCell></TableRow>);
 
 
@@ -60,10 +62,10 @@ export const SongDetails = (props: Props) => {
     setEditMode(false);
   }
 
-  if (editMode) return <SongDetailsEdit songDetail={props.songDetail} onCancel={() => {setEditMode(false)}} onSave={handleSave} />
+  if (editMode) return <SongDetailsEdit songDetail={props.songDetail} onCancel={() => { setEditMode(false) }} onSave={handleSave} />
 
-  return (<DisplayBox headerText={props.songDetail?.title} headerIcon="album" editFunction={() => {setEditMode(true)}}>
-    <img src={props.songDetail?.thumbnail} alt={props.songDetail?.title} style={{ display:"block", marginLeft:"auto", marginRight:"auto"}} onError={handleImageError} />
+  return (<DisplayBox headerText={props.songDetail?.title} headerIcon="album" editFunction={() => { setEditMode(true) }}>
+    <img src={props.songDetail?.thumbnail} alt={props.songDetail?.title} style={{ display: "block", marginLeft: "auto", marginRight: "auto" }} onError={handleImageError} />
     <Table size="small">
       <TableBody>
         {getDetails()}

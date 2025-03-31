@@ -17,7 +17,9 @@ export interface SongDetailInterface {
   releaseDate?: Date,
   bpm?: number,
   keySignature?: string,
-  seconds: number
+  seconds: number,
+  meter?: string,
+  tones?: string,
 }
 
 export interface SongDetailLinkInterface {
