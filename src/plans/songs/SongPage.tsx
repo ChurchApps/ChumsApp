@@ -6,6 +6,7 @@ import { SongDetailInterface } from "../../helpers";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Icon } from "@mui/material";
 import { SongDetails } from "./components/SongDetails";
 import { Arrangements } from "./components/Arrangements";
+import { PraiseChartsProducts } from "./components/PraiseChartsProducts";
 
 export const SongPage = () => {
   const [song, setSong] = React.useState<any>(null)
@@ -15,7 +16,8 @@ export const SongPage = () => {
   const loadData = async () => {
     const s = await ApiHelper.get("/songs/" + params.id, "ContentApi");
     setSong(s);
-    ApiHelper.get("/songDetails/" + s.songDetailId, "ContentApi").then(data => setSongDetail(data));
+    const sd: SongDetailInterface = await ApiHelper.get("/songDetails/" + s.songDetailId, "ContentApi");
+    setSongDetail(sd);
   }
 
   useEffect(() => { loadData() }, []) //eslint-disable-line react-hooks/exhaustive-deps
@@ -29,7 +31,7 @@ export const SongPage = () => {
         <Grid item md={8}>
           <Arrangements song={song} reload={loadData} songDetail={songDetail} />
           <DisplayBox headerText="Keys" headerIcon="music_note">
-            test
+            <PraiseChartsProducts praiseChartsId={songDetail?.praiseChartsId} />
           </DisplayBox>
         </Grid>
         <Grid item md={4}>

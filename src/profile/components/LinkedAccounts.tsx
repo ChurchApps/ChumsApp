@@ -5,8 +5,6 @@ import { Button, Grid } from "@mui/material";
 export const LinkedAccounts = () => {
 
   const [settings, setSettings] = React.useState<SettingInterface[]>([]);
-  const [oauthToken, setOauthToken] = React.useState<string | null>(null);
-  const [oauthTokenSecret, setOauthTokenSecret] = React.useState<string | null>(null);
 
   const loadData = () => {
     ApiHelper.get("/songDetails/praiseCharts/library", "ContentApi").then(data => { console.log("CATALOG", data) });
@@ -24,8 +22,6 @@ export const LinkedAccounts = () => {
   const openOAuthPopup = async () => {
     const returnUrl = "http://localhost:3101/pingback"
     const { authUrl, oauthToken, oauthTokenSecret } = await ApiHelper.get("/songDetails/praiseCharts/authUrl?returnUrl=" + encodeURIComponent(returnUrl), "ContentApi");
-    setOauthToken(oauthToken);
-    setOauthTokenSecret(oauthTokenSecret);
 
     const popup = window.open(authUrl, 'oauth', 'width=600,height=700');
 
