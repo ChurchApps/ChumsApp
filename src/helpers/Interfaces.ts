@@ -2,7 +2,7 @@ export interface PaymentGatewaysInterface { id?: string, churchId?: string, prov
 
 export interface SongInterface {
   id?: string,
-  songDetailId?: string,
+  title?: string,
   dateAdded: Date
 }
 
@@ -33,6 +33,7 @@ export interface SongDetailLinkInterface {
 export interface ArrangementInterface {
   id?: string,
   songId?: string,
+  songDetailId?: string,
   name?: string,
   lyrics?: string
 }

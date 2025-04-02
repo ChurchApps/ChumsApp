@@ -9,14 +9,14 @@ interface Props {
   onCancel: () => void;
 }
 
-export const ArrangementEdit = (props: Props) => {
+export const OldArrangementEdit = (props: Props) => {
   const [arrangement, setArrangement] = React.useState<ArrangementInterface>(props.arrangement);
 
   useEffect(() => { setArrangement(props.arrangement); }, [props.arrangement]);
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const a = {...arrangement};
+    const a = { ...arrangement };
     switch (e.target.name) {
       case "name": a.name = e.target.value; break;
       case "lyrics": a.lyrics = e.target.value; break;
