@@ -17,6 +17,9 @@ export const PraiseChartsProducts = (props: Props) => {
       const result = buildTree(data.products);
       setProducts(result);
 
+      console.log("Products", data);
+      const arrangements = await ApiHelper.get("/songDetails/praiseCharts/arrangement/raw/73318", "ContentApi");
+      console.log("Arrangements", arrangements);
     }
   }
 
