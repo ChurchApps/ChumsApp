@@ -26,6 +26,7 @@ export const Keys = (props: Props) => {
   const [selectedKey, setSelectedKey] = React.useState<ArrangementKeyInterface>(null);
   const [editKey, setEditKey] = React.useState<ArrangementKeyInterface>(null);
   const [products, setProducts] = React.useState<any[]>([]);
+  const [showImport, setShowImport] = React.useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
     if (newValue === "add") setEditKey({ arrangementId: props.arrangement.id, keySignature: "C", shortDescription: "Default" });
@@ -36,7 +37,6 @@ export const Keys = (props: Props) => {
     }
   };
 
-
   const loadData = async () => {
     if (props.arrangement) {
       const keys = await ApiHelper.get("/arrangementKeys/arrangement/" + props.arrangement.id, "ContentApi");
@@ -46,10 +46,8 @@ export const Keys = (props: Props) => {
   }
 
   const loadPraiseCharts = async () => {
-    console.log("loadPraiseCharts", selectedKey, props.songDetail);
     if (selectedKey && props.songDetail?.praiseChartsId) {
       const data = await ApiHelper.get("/songDetails/praiseCharts/arrangement/raw/" + props.songDetail.praiseChartsId + "?keys=" + selectedKey.keySignature, "ContentApi");
-      console.log("DATA", data);
       const products = data[selectedKey.keySignature];
       if (products) setProducts(products);
       else setProducts([]);
@@ -93,7 +91,9 @@ export const Keys = (props: Props) => {
       </Box>
 
       {listProducts()}
+      <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowImport(true); }}><i className="material-icons">cloud_download</i> Import from PraiseCharts</a>
     </DisplayBox>
+    {showImport && <PraiseChartsProducts praiseChartsId={props.songDetail?.praiseChartsId} keySignature={selectedKey?.keySignature || ""} onHide={() => { setShowImport(false); loadPraiseCharts(); }} />}
   </>)
 }
 

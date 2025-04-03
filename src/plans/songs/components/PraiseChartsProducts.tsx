@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
-import { ApiHelper, ArrayHelper, CurrencyHelper } from "@churchapps/apphelper";
-import { Button, Grid, Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { ApiHelper, ArrayHelper, CurrencyHelper, Locale } from "@churchapps/apphelper";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { PraiseChartsHelper } from "../../../helpers/PraiseChartsHelper";
 
 interface Props {
   praiseChartsId: string;
+  keySignature: string;
+  onHide: () => void;
 }
 
 export const PraiseChartsProducts = (props: Props) => {
@@ -13,29 +16,16 @@ export const PraiseChartsProducts = (props: Props) => {
 
   const loadData = async () => {
     if (props.praiseChartsId) {
-      /*
-      const data = await ApiHelper.get("/songDetails/praiseCharts/library/" + props.praiseChartsId, "ContentApi");
-      console.log("DATA", data);
-      if (data.in_library.items?.length > 0) {
-        const result = buildTree(data.in_library.items[0].products);
-        setProducts(result);
-      } else {
-        const result = buildTree(data.other_results.items[0].products);
-        setProducts(result);
-      }*/
-      const data = await ApiHelper.get("/songDetails/praiseCharts/products/" + props.praiseChartsId, "ContentApi");
+      let url = "/songDetails/praiseCharts/products/" + props.praiseChartsId
+      if (props.keySignature) url += "?keys=" + props.keySignature;
+      const data = await ApiHelper.get(url, "ContentApi");
       const tree = buildTree(data);
       setProducts(tree);
-
-
-      console.log("Products", data);
-      const arrangements = await ApiHelper.get("/songDetails/praiseCharts/arrangement/raw/" + props.praiseChartsId, "ContentApi");
-      console.log("Arrangements", arrangements);
     }
   }
 
   const addChildren = (product: any, allProducts: any[]) => {
-    if (product.child_products) {
+    if (product?.child_products) {
       product.children = [];
       product.child_products.forEach((child: any) => {
         const c = allProducts.find((p: any) => p.sku === child.sku);
@@ -70,38 +60,10 @@ export const PraiseChartsProducts = (props: Props) => {
 
   }
 
-  useEffect(() => { loadData() }, [props.praiseChartsId]) //eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { loadData() }, [props.praiseChartsId, props.keySignature]) //eslint-disable-line react-hooks/exhaustive-deps
 
   const download = async (product: any) => {
-    const url = `/songDetails/praiseCharts/download?skus=${product.sku}&file_name=${encodeURIComponent(product.file_name)}`;
-    console.log("Download URL", url);
-    const config = ApiHelper.getConfig("ContentApi");
-    const requestOptions: any = {
-      method: "GET",
-      headers: { Authorization: "Bearer " + config.jwt },
-      cache: "no-store"
-    };
-    const response = await fetch(config.url + url, requestOptions);
-
-    if (!response.ok) {
-      console.error("Failed to download PDF");
-      return;
-    }
-
-    const blob = await response.blob();
-    const blobUrl = window.URL.createObjectURL(blob);
-    console.log("BLOB URL", blobUrl);
-    // Trigger file download
-    const link = document.createElement("a");
-    link.href = blobUrl;
-    link.download = product.file_name || "praisecharts.pdf"; // You can customize filename here
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Clean up the blob URL after download
-    window.URL.revokeObjectURL(blobUrl);
-
+    PraiseChartsHelper.download(product.sku, product.file_name, "");
   }
 
   const purchase = async (sku: string) => {
@@ -138,7 +100,7 @@ export const PraiseChartsProducts = (props: Props) => {
         <Icon>expand_more</Icon>
       </a>
     }
-    let result = <Grid container key={product.sku} style={{ marginBottom: 4 }}>
+    let result = <Grid container spacing={1} key={product.sku} style={{ marginBottom: 4 }}>
       <Grid item xs={1}>{expand}</Grid>
       <Grid item xs={4} style={{ paddingLeft: indent * 20 }}>{product.name}</Grid>
       <Grid item xs={1}>{product.file_type}</Grid>
@@ -157,8 +119,14 @@ export const PraiseChartsProducts = (props: Props) => {
     return result;
   }
 
-  return (<>
-    {products.map((product: any) => getProductRow(product, 0))}
-  </>)
+  return (<Dialog open={true} fullWidth={true} maxWidth="lg">
+    <DialogTitle>Add Products from PraiseCharts</DialogTitle>
+    <DialogContent>
+      {products.map((product: any) => getProductRow(product, 0))}
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={props.onHide} data-cy="cancel-merge">Close</Button>
+    </DialogActions>
+  </Dialog>)
 }
 
