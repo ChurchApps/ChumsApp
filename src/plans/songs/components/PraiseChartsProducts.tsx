@@ -13,12 +13,23 @@ export const PraiseChartsProducts = (props: Props) => {
 
   const loadData = async () => {
     if (props.praiseChartsId) {
-      const data = await ApiHelper.get("/songDetails/praiseCharts/raw/" + props.praiseChartsId, "ContentApi");
-      const result = buildTree(data.products);
-      setProducts(result);
+      /*
+      const data = await ApiHelper.get("/songDetails/praiseCharts/library/" + props.praiseChartsId, "ContentApi");
+      console.log("DATA", data);
+      if (data.in_library.items?.length > 0) {
+        const result = buildTree(data.in_library.items[0].products);
+        setProducts(result);
+      } else {
+        const result = buildTree(data.other_results.items[0].products);
+        setProducts(result);
+      }*/
+      const data = await ApiHelper.get("/songDetails/praiseCharts/products/" + props.praiseChartsId, "ContentApi");
+      const tree = buildTree(data);
+      setProducts(tree);
+
 
       console.log("Products", data);
-      const arrangements = await ApiHelper.get("/songDetails/praiseCharts/arrangement/raw/73318", "ContentApi");
+      const arrangements = await ApiHelper.get("/songDetails/praiseCharts/arrangement/raw/" + props.praiseChartsId, "ContentApi");
       console.log("Arrangements", arrangements);
     }
   }
@@ -61,9 +72,9 @@ export const PraiseChartsProducts = (props: Props) => {
 
   useEffect(() => { loadData() }, [props.praiseChartsId]) //eslint-disable-line react-hooks/exhaustive-deps
 
-  const download = async (sku: string) => {
-
-    const url = "/songDetails/praiseCharts/download?skus=" + sku;
+  const download = async (product: any) => {
+    const url = `/songDetails/praiseCharts/download?skus=${product.sku}&file_name=${encodeURIComponent(product.file_name)}`;
+    console.log("Download URL", url);
     const config = ApiHelper.getConfig("ContentApi");
     const requestOptions: any = {
       method: "GET",
@@ -83,7 +94,7 @@ export const PraiseChartsProducts = (props: Props) => {
     // Trigger file download
     const link = document.createElement("a");
     link.href = blobUrl;
-    link.download = "praisecharts.pdf"; // You can customize filename here
+    link.download = product.file_name || "praisecharts.pdf"; // You can customize filename here
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -93,11 +104,25 @@ export const PraiseChartsProducts = (props: Props) => {
 
   }
 
+  const purchase = async (sku: string) => {
+    const returnUrl = "http://localhost:3101/pingback"
+    const purchaseUrl = `https://www.praisecharts.com/buynow?sku=${sku}&return_url=${encodeURIComponent(returnUrl)}`;
+    const popup = window.open(purchaseUrl, 'oauth', 'width=600,height=700');
+
+    window.addEventListener('message', async (event) => {
+      if (event.origin !== window.location.origin) return;
+      popup.close();
+      loadData();
+    });
+  };
+
+
   const getPriceButton = (product: any) => {
     let result = <></>
     if (product.price) {
-      if (product.price.price === 0) result = <Button variant="contained" size="small" color="primary" onClick={(e) => { e.preventDefault(); download(product.sku); }}><Icon>download</Icon></Button>
-      else result = <Button variant="contained" size="small" color="error">{CurrencyHelper.formatCurrency(product.price.price)}</Button>
+      if (product.permissions?.can_download) result = <Button variant="contained" size="small" color="primary" onClick={(e) => { e.preventDefault(); download(product); }}><Icon>download</Icon></Button>
+      else if (product.price.price === 0) result = <Button variant="contained" size="small" color="success" onClick={(e) => { e.preventDefault(); purchase(product.sku); }}>Free</Button>
+      else result = <Button variant="contained" size="small" color="error" onClick={(e) => { e.preventDefault(); purchase(product.sku); }}>{CurrencyHelper.formatCurrency(product.price.price)}</Button>
     }
     return result;
   }
