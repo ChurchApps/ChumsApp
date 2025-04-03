@@ -1,38 +1,40 @@
 import React, { useEffect } from "react";
 import { ApiHelper, DisplayBox, Locale } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { SongSearchDialog } from "./SongSearchDialog";
-import { SongDetailInterface } from "../../helpers";
+import { SongDetailInterface, SongInterface } from "../../helpers";
 
 export const SongsPage = () => {
   const [songs, setSongs] = React.useState<SongDetailInterface[]>(null)
   const [showSearch, setShowSearch] = React.useState(false)
+  const [redirect, setRedirect] = React.useState("")
 
-  const a=true;
+  const a = true;
   const loadData = async () => {
     ApiHelper.get("/songDetails", "ContentApi").then(data => setSongs(data));
 
   }
 
-  const handleAdd = () => {
+  const handleAdd = (song: SongInterface) => {
     loadData();
     setShowSearch(false);
+    setRedirect("/plans/songs/" + song.id);
   }
 
   useEffect(() => { loadData() }, [])
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.style.display="none";
+    e.currentTarget.style.display = "none";
   }
 
   const getRows = () => {
-    const result:JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     songs?.forEach((songDetail) => {
       result.push(
         <TableRow key={songDetail.id}>
-          <TableCell><img src={songDetail.thumbnail} alt={songDetail.title} style={{width:50,height:50}} onError={handleImageError} /></TableCell>
+          <TableCell><img src={songDetail.thumbnail} alt={songDetail.title} style={{ width: 50, height: 50 }} onError={handleImageError} /></TableCell>
           <TableCell><Link to={"/plans/songs/" + (songDetail as any).songId}>{songDetail.title}</Link></TableCell>
           <TableCell>{songDetail.artist}</TableCell>
         </TableRow>
@@ -41,9 +43,10 @@ export const SongsPage = () => {
     return result;
   }
 
-  return (<>
+  if (redirect) return <Navigate to={redirect} />
+  else return (<>
     <Banner>
-      <Button onClick={() => {setShowSearch(true);}} variant="contained" color="success" style={{float:"right", marginTop:6}}>Add Song</Button>
+      <Button onClick={() => { setShowSearch(true); }} variant="contained" color="success" style={{ float: "right", marginTop: 6 }}>Add Song</Button>
       <h1>Songs</h1>
     </Banner>
     <div id="mainContent">
@@ -51,7 +54,7 @@ export const SongsPage = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={{width:60}}></TableCell>
+              <TableCell style={{ width: 60 }}></TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Artist</TableCell>
             </TableRow>

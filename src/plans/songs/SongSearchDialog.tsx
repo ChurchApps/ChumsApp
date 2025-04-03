@@ -1,11 +1,11 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import React from "react";
 import { ApiHelper, Locale } from "@churchapps/apphelper";
-import { SongDetailInterface } from "../../helpers";
+import { ArrangementInterface, SongDetailInterface, SongInterface } from "../../helpers";
 
 interface Props {
   onClose: () => void,
-  onSelect: (song: SongDetailInterface) => void
+  onSelect: (song: SongInterface) => void
 }
 
 export const SongSearchDialog: React.FC<Props> = (props) => {
@@ -18,7 +18,7 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
   };
 
   const handleSearch = () => {
-    ApiHelper.get("/songDetails/search?q=" + searchText, "ContentApi").then((data) => { setSongDetails(data); });
+    ApiHelper.get("/songDetails/praiseCharts/search?q=" + searchText, "ContentApi").then((data) => { setSongDetails(data); });
 
   };
 
@@ -34,9 +34,19 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
     if (!songDetail.id) {
       songDetail = await ApiHelper.post("/songDetails/create", songDetail, "ContentApi")
     }
-    const s = { songDetailId: songDetail.id, dateAdded: new Date() };
-    const song = await ApiHelper.post("/songs/create", s, "ContentApi");
-    props.onSelect(song);
+
+    const existing = await ApiHelper.get("/arrangements/songDetail/" + songDetail.id, "ContentApi");
+    if (existing.length > 0) {
+      const song = await ApiHelper.get("/songs/" + existing[0].songId, "ContentApi");
+      props.onSelect(song);
+    } else {
+      const s: SongInterface = { title: songDetail.title, dateAdded: new Date() };
+      const songs = await ApiHelper.post("/songs", [s], "ContentApi");
+      const a: ArrangementInterface = { songId: songs[0].id, songDetailId: songDetail.id, name: "(Default)", lyrics: "" };
+      await ApiHelper.post("/arrangements", [a], "ContentApi");
+      props.onSelect(songs[0]);
+    }
+
   }
 
   const getRows = () => {
