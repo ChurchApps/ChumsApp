@@ -94,7 +94,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
 
   return (
     <>
-      <div className="subHead">{Locale.label("settings.givingSettingsEdit.giving")}</div>
+      {/* <div className="subHead">{Locale.label("settings.givingSettingsEdit.giving")}</div> */}
       <Grid container spacing={3} marginBottom={2}>
         <Grid item md={4} xs={12}>
           <FormControl fullWidth>

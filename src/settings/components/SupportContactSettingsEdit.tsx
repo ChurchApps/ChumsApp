@@ -31,7 +31,7 @@ export const SupportContactSettingsEdit: React.FC<Props> = (props) => {
   useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
   return (
-    <div style={{ marginTop: 10, marginBottom: 10 }}>
+    <div style={{ marginBottom: 10 }}>
       <Stack direction="row" alignItems="center">
         <Typography>{Locale.label("settings.supportContactSettingsEdit.supportContact")}</Typography>
         <Tooltip arrow title={Locale.label("settings.supportContactSettingsEdit.forceMsg")}>

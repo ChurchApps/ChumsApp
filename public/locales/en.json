@@ -710,7 +710,8 @@
       "churchName": "Church Name",
       "noNameMsg": "Church name cannot be blank.",
       "noSubMsg": "Subdomain cannot be blank.",
-      "subdom": "Subdomain"
+      "subdom": "Subdomain",
+      "general": "General"
     },
     "domainSettingsEdit": {
       "act": "Action",

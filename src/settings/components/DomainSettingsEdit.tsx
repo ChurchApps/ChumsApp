@@ -83,7 +83,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
 
   return (
     <>
-      <div className="subHead">{Locale.label("settings.domainSettingsEdit.domains")}</div>
+      {/* <div className="subHead">{Locale.label("settings.domainSettingsEdit.domains")}</div> */}
       <p style={{fontSize:12}}>
         {Locale.label("settings.domainSettingsEdit.domMsg")} <i style={{ fontSize: 12 }}>CNAME: proxy.b1.church</i>
         {Locale.label("settings.domainSettingsEdit.domMsg2")} <i style={{ fontSize: 12 }}>A: 3.23.251.61</i>

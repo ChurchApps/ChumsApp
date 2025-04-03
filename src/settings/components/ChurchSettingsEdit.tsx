@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, ChurchInterface, InputBox, ErrorMessages, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import { GivingSettingsEdit } from "./GivingSettingsEdit";
-import { TextField, Grid } from "@mui/material";
+import { TextField, Grid, Divider, Chip } from "@mui/material";
 import { DomainSettingsEdit } from "./DomainSettingsEdit";
 import { DirectoryApproveSettingsEdit } from "./DirectoryApproveSettingsEdit";
 import { SupportContactSettingsEdit } from "./SupportContactSettingsEdit";
@@ -91,10 +91,25 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
         </Grid>
       </Grid>
       <TextField fullWidth name="country" label={Locale.label("person.country")} value={church?.country || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+
+      {/* GENERAL SECTION */}
+      <Divider variant="middle" textAlign="center" sx={{ marginTop: 3, marginBottom: 3 }}>
+        <Chip label={Locale.label("settings.churchSettingsEdit.general")} size="small" color="primary" sx={{ width: 100 }} />
+      </Divider>
       <SupportContactSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger} />
       <DirectoryApproveSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger}  />
       <VisbilityPrefSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger} />
+
+      {/* GIVING SECTION */}
+      <Divider variant="middle" textAlign="center" sx={{ marginTop: 3, marginBottom: 3 }}>
+        <Chip label={Locale.label("settings.givingSettingsEdit.giving")} size="small" color="primary" sx={{ width: 100 }} />
+      </Divider>
       {giveSection()}
+
+      {/* DOMAINS SECTION */}
+      <Divider variant="middle" textAlign="center" sx={{ marginTop: 3, marginBottom: 3 }}>
+        <Chip label={Locale.label("settings.domainSettingsEdit.domains")} size="small" color="primary" sx={{ width: 100 }} />
+      </Divider>
       <DomainSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger} />
 
     </InputBox>
