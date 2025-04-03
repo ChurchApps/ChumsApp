@@ -68,7 +68,7 @@ export const SongPage = () => {
 
   return (<>
     <Banner>
-      <h1>{song?.title}</h1>
+      <h1>{song?.name}</h1>
     </Banner>
     <Grid container spacing={2}>
       <Grid item xs={12} md={2}>
