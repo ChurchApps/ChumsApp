@@ -3,6 +3,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField
 import HelpIcon from '@mui/icons-material/Help';
 import { ApiHelper, Locale, UniqueIdHelper } from "@churchapps/apphelper";
 import { PaymentGatewaysInterface } from "../../helpers";
+import { FeeOptionsSettingsEdit } from "./FeeOptionsSettingsEdit";
 
 interface Props { churchId: string, saveTrigger: Date | null }
 
@@ -107,7 +108,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
         </Grid>
         {getKeys()}
       </Grid>
-
+      <FeeOptionsSettingsEdit churchId={props.churchId} saveTrigger={props.saveTrigger} />
     </>
   );
 

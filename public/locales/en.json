@@ -724,6 +724,19 @@
       "domMsgConnect": "connect",
       "domMsg4": ".  It can take up to 5 minutes."
     },
+    "directoryApprovalSettingsEdit": {
+      "directoryApprovalGroup": "Directory Approval Group",
+      "forceMsg": "This group will handle all the member directory updates. Only after their approval, changes will be applied.",
+      "groups": "Groups",
+      "none": "None",
+      "noGroups": "No Groups available"
+    },
+    "feeOptionsSettings": {
+      "creditCardFlatRate": "Flat Rate [ Credit Card ]",
+      "creditCardTransactionFee": "Transaction Fee [ Credit Card ]",
+      "achFlatRate": "Flat Rate [ ACH ]",
+      "achHardLimit": "Hard limit [ ACH ]"
+    },
     "givingSettingsEdit": {
       "forceMsg": "Automatically forces users to cover the transaction fees",
       "giving": "Giving",
@@ -733,13 +746,6 @@
       "secKey": "Secret Key",
       "stripe": "Stripe",
       "transFee": "Transaction Fee"
-    },
-    "directoryApprovalSettingsEdit": {
-      "directoryApprovalGroup": "Directory Approval Group",
-      "forceMsg": "This group will handle all the member directory updates. Only after their approval, changes will be applied.",
-      "groups": "Groups",
-      "none": "None",
-      "noGroups": "No Groups available"
     },
     "supportContactSettingsEdit": {
       "supportContact": "Support Contact",
