@@ -38,6 +38,14 @@ export interface ArrangementInterface {
   lyrics?: string
 }
 
+
+export interface ArrangementKeyInterface {
+  id?: string,
+  arrangementId?: string,
+  keySignature?: string,
+  shortDescription?: string
+}
+
 export interface PlanItemInterface {
   id?: string,
   planId?: string,
