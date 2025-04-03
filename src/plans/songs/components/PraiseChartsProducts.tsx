@@ -58,10 +58,42 @@ export const PraiseChartsProducts = (props: Props) => {
 
   useEffect(() => { loadData() }, [props.praiseChartsId]) //eslint-disable-line react-hooks/exhaustive-deps
 
+  const download = async (sku: string) => {
+
+    const url = "/songDetails/praiseCharts/download?skus=" + sku;
+    const config = ApiHelper.getConfig("ContentApi");
+    const requestOptions: any = {
+      method: "GET",
+      headers: { Authorization: "Bearer " + config.jwt },
+      cache: "no-store"
+    };
+    const response = await fetch(config.url + url, requestOptions);
+
+    if (!response.ok) {
+      console.error("Failed to download PDF");
+      return;
+    }
+
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    console.log("BLOB URL", blobUrl);
+    // Trigger file download
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = "praisecharts.pdf"; // You can customize filename here
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Clean up the blob URL after download
+    window.URL.revokeObjectURL(blobUrl);
+
+  }
+
   const getPriceButton = (product: any) => {
     let result = <></>
     if (product.price) {
-      if (product.price.price === 0) result = <Button variant="contained" size="small" color="primary"><Icon>download</Icon></Button>
+      if (product.price.price === 0) result = <Button variant="contained" size="small" color="primary" onClick={(e) => { e.preventDefault(); download(product.sku); }}><Icon>download</Icon></Button>
       else result = <Button variant="contained" size="small" color="error">{CurrencyHelper.formatCurrency(product.price.price)}</Button>
     }
     return result;
@@ -82,6 +114,7 @@ export const PraiseChartsProducts = (props: Props) => {
       <Grid item xs={1}>{expand}</Grid>
       <Grid item xs={4} style={{ paddingLeft: indent * 20 }}>{product.name}</Grid>
       <Grid item xs={1}>{product.file_type}</Grid>
+      <Grid item xs={2}>{product.sku}</Grid>
       <Grid item xs={2}>{getPriceButton(product)}</Grid>
     </Grid>
 
