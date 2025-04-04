@@ -39,7 +39,7 @@ export const SongPage = () => {
 
   const getCurrentTab = () => {
     let currentTab = null;
-    if (selectedArrangement) currentTab = <Arrangement arrangement={selectedArrangement} />;
+    if (selectedArrangement) currentTab = <Arrangement arrangement={selectedArrangement} reload={loadData} />;
     return currentTab;
   }
 

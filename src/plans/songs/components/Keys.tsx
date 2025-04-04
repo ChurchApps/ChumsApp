@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { ArrangementInterface, ArrangementKeyInterface, SongDetailInterface } from "../../../helpers";
 import { ApiHelper, ArrayHelper, DisplayBox } from "@churchapps/apphelper";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Alert, Box, Button, Icon, Tab, Tabs } from "@mui/material";
 import { PraiseChartsProducts } from "./PraiseChartsProducts";
 import { KeyEdit } from "./KeyEdit";
 import { PraiseChartsHelper } from "../../../helpers/PraiseChartsHelper";
@@ -9,6 +9,7 @@ import { PraiseChartsHelper } from "../../../helpers/PraiseChartsHelper";
 interface Props {
   arrangement: ArrangementInterface;
   songDetail: SongDetailInterface;
+  importLyrics: () => void;
 }
 
 export const Keys = (props: Props) => {
@@ -17,6 +18,7 @@ export const Keys = (props: Props) => {
   const [editKey, setEditKey] = React.useState<ArrangementKeyInterface>(null);
   const [products, setProducts] = React.useState<any[]>([]);
   const [showImport, setShowImport] = React.useState(false);
+  const [canImportLyrics, setCanImportLyrics] = React.useState(false);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
     if (newValue === "add") setEditKey({ arrangementId: props.arrangement.id, keySignature: "C", shortDescription: "Default" });
@@ -39,6 +41,7 @@ export const Keys = (props: Props) => {
     if (selectedKey && props.songDetail?.praiseChartsId) {
       const data = await ApiHelper.get("/songDetails/praiseCharts/arrangement/raw/" + props.songDetail.praiseChartsId + "?keys=" + selectedKey.keySignature, "ContentApi");
       const products = data[selectedKey.keySignature];
+      if (!props.arrangement?.lyrics && products.length > 0) setCanImportLyrics(true);
       if (products) setProducts(products);
       else setProducts([]);
     }
@@ -80,11 +83,13 @@ export const Keys = (props: Props) => {
           <Tab value="add" label="+ Add" />
         </Tabs>
       </Box>
-
+      {canImportLyrics && <Alert style={{ marginTop: 10 }} icon={<Button onClick={() => { props.importLyrics(); setShowImport(false); }} variant="contained" color="success">Import</Button>} severity="success">Would you like to import the text lyrics from PraiseCharts?</Alert>}
       {listProducts()}
-      <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowImport(true); }}><i className="material-icons">cloud_download</i> Import from PraiseCharts</a>
+      <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowImport(true); }}><i className="material-icons">cloud_download</i> Import files from PraiseCharts</a>
     </DisplayBox>
+
     {showImport && <PraiseChartsProducts praiseChartsId={props.songDetail?.praiseChartsId} keySignature={selectedKey?.keySignature || ""} onHide={() => { setShowImport(false); loadPraiseCharts(); }} />}
+
   </>)
 }
 
