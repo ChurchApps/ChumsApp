@@ -3,7 +3,7 @@ import { ApiHelper } from "@churchapps/apphelper";
 export class PraiseChartsHelper {
 
   static async download(sku: string, fileName: string, keys: string) {
-    let url = `/songDetails/praiseCharts/download?skus=${sku}&file_name=${encodeURIComponent(fileName)}`;
+    let url = `/songDetails/praiseCharts/download?skus=${sku}&keys=${keys}&file_name=${encodeURIComponent(fileName)}`;
     if (keys) url += "&keys=" + keys;
     console.log("Download URL", url);
     const config = ApiHelper.getConfig("ContentApi");

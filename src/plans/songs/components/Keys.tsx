@@ -59,6 +59,7 @@ export const Keys = (props: Props) => {
 
   const listProducts = () => {
     if (products.length === 0) return <p>No products found for this key</p>;
+    console.log("Products", products);
     return (<ul>
       {products.map((p, i) => (<li key={i}>
         <a href="about:blank" onClick={(e) => { e.preventDefault(); download(p); }}>
