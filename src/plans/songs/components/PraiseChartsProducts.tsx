@@ -75,7 +75,7 @@ export const PraiseChartsProducts = (props: Props) => {
   }
 
   const purchase = async (sku: string) => {
-    const returnUrl = "http://localhost:3101/pingback"
+    const returnUrl = window.location.origin + "/pingback"
     const purchaseUrl = `https://www.praisecharts.com/buynow?sku=${sku}&return_url=${encodeURIComponent(returnUrl)}`;
     const popup = window.open(purchaseUrl, 'oauth', 'width=600,height=700');
 

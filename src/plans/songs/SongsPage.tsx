@@ -4,7 +4,7 @@ import { Banner } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { SongSearchDialog } from "./SongSearchDialog";
-import { ArrangementInterface, SongDetailInterface, SongInterface } from "../../helpers";
+import { ArrangementInterface, ArrangementKeyInterface, SongDetailInterface, SongInterface } from "../../helpers";
 
 export const SongsPage = () => {
   const [songs, setSongs] = React.useState<SongDetailInterface[]>(null)
@@ -33,8 +33,13 @@ export const SongsPage = () => {
       const songs = await ApiHelper.post("/songs", [s], "ContentApi");
       const a: ArrangementInterface = { songId: songs[0].id, songDetailId: songDetail.id, name: "(Default)", lyrics: "" };
       await ApiHelper.post("/arrangements", [a], "ContentApi");
+      if (songDetail.keySignature) {
+        const key: ArrangementKeyInterface = { arrangementId: a.id, keySignature: songDetail.keySignature, shortDescription: "Default" };
+        await ApiHelper.post("/arrangementKeys", [key], "ContentApi");
+      }
       selectedSong = songs[0];
     }
+
 
 
     loadData();

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, Locale } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 import { Link, useParams } from "react-router-dom";
-import { ArrangementInterface, SongDetailInterface, SongInterface } from "../../helpers";
+import { ArrangementInterface, ArrangementKeyInterface, SongDetailInterface, SongInterface } from "../../helpers";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Icon } from "@mui/material";
 import { Arrangement } from "./components/Arrangement";
 import { SongSearchDialog } from "./SongSearchDialog";
@@ -57,6 +57,10 @@ export const SongPage = () => {
   const handleAdd = async (songDetail: SongDetailInterface) => {
     const a: ArrangementInterface = { songId: song.id, songDetailId: songDetail.id, name: songDetail.artist, lyrics: "" };
     await ApiHelper.post("/arrangements", [a], "ContentApi");
+    if (songDetail.keySignature) {
+      const key: ArrangementKeyInterface = { arrangementId: a.id, keySignature: songDetail.keySignature, shortDescription: "Default" };
+      await ApiHelper.post("/arrangementKeys", [key], "ContentApi");
+    }
     loadData();
     setShowSearch(false);
   }
