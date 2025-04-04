@@ -3,7 +3,7 @@ import { ApiHelper, DisplayBox, SmallButton } from "@churchapps/apphelper";
 
 import { Accordion, AccordionDetails, AccordionSummary, Icon, IconButton, Stack, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { ArrangementInterface, SongDetailInterface, SongInterface } from "../../../helpers";
-import { OldArrangementEdit } from "./OldArrangementEdit";
+import { ArrangementEdit } from "./ArrangementEdit";
 import { OldArrangement } from "./OldArrangement";
 
 
@@ -60,7 +60,7 @@ export const OldArrangements = (props: Props) => {
   }
 
 
-  if (editArrangement) return (<OldArrangementEdit arrangement={editArrangement} onSave={handleSave} onCancel={() => { setEditArrangement(null) }} />)
+  if (editArrangement) return (<ArrangementEdit arrangement={editArrangement} onSave={handleSave} onCancel={() => { setEditArrangement(null) }} />)
   else return (<DisplayBox headerText="Arrangements" headerIcon="library_music" editContent={getEditContent()}>
     {getArrangements()}
   </DisplayBox>);

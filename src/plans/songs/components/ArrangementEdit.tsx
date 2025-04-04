@@ -9,7 +9,7 @@ interface Props {
   onCancel: () => void;
 }
 
-export const OldArrangementEdit = (props: Props) => {
+export const ArrangementEdit = (props: Props) => {
   const [arrangement, setArrangement] = React.useState<ArrangementInterface>(props.arrangement);
 
   useEffect(() => { setArrangement(props.arrangement); }, [props.arrangement]);

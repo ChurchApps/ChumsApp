@@ -8,6 +8,7 @@ import { Box, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent
 import { PraiseChartsProducts } from "./PraiseChartsProducts";
 import { SongDetails } from "./SongDetails";
 import { Keys } from "./Keys";
+import { ArrangementEdit } from "./ArrangementEdit";
 
 
 
@@ -20,6 +21,7 @@ interface Props {
 
 export const Arrangement = (props: Props) => {
   const [songDetail, setSongDetail] = React.useState<SongDetailInterface>(null)
+  const [edit, setEdit] = React.useState(false);
 
 
   const loadData = async () => {
@@ -39,9 +41,10 @@ export const Arrangement = (props: Props) => {
     <Grid container spacing={2}>
       <Grid item md={8}>
         <Keys arrangement={props.arrangement} songDetail={songDetail} />
-        <DisplayBox headerText="Lyrics" headerIcon="music_note">
+        {!edit && <DisplayBox headerText="Lyrics" headerIcon="music_note" editFunction={() => { setEdit(true) }}>
           <div className="chordPro" dangerouslySetInnerHTML={{ __html: ChordProHelper.formatLyrics(props.arrangement?.lyrics || "Manually enter or import from PraiseCharts", 0) }}></div>
-        </DisplayBox>
+        </DisplayBox>}
+        {edit && <ArrangementEdit arrangement={props.arrangement} onSave={(arrangement: ArrangementInterface) => { setEdit(false); loadData(); }} onCancel={() => { setEdit(false); }} />}
       </Grid>
       <Grid item md={4}>
         <SongDetails songDetail={songDetail} reload={loadData} />
