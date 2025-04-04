@@ -1,25 +1,15 @@
 import React, { useEffect } from "react";
-
-
 import { ArrangementInterface, ArrangementKeyInterface, SongDetailInterface } from "../../../helpers";
-import { ChordProHelper } from "../../../helpers/ChordProHelper";
-import { ApiHelper, ArrayHelper, DisplayBox, Locale } from "@churchapps/apphelper";
-import { Box, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Tab, Tabs } from "@mui/material";
+import { ApiHelper, ArrayHelper, DisplayBox } from "@churchapps/apphelper";
+import { Box, Tab, Tabs } from "@mui/material";
 import { PraiseChartsProducts } from "./PraiseChartsProducts";
-import { SongDetails } from "./SongDetails";
 import { KeyEdit } from "./KeyEdit";
-import { Arrangement } from "./Arrangement";
 import { PraiseChartsHelper } from "../../../helpers/PraiseChartsHelper";
-
-
 
 interface Props {
   arrangement: ArrangementInterface;
   songDetail: SongDetailInterface;
 }
-
-
-
 
 export const Keys = (props: Props) => {
   const [keys, setKeys] = React.useState<ArrangementKeyInterface[]>([])

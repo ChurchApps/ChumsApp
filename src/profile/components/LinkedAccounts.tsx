@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Locale, DisplayBox, ApiHelper, SettingInterface } from "@churchapps/apphelper"
-import { Button, Grid } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, Grid, Icon } from "@mui/material";
 
 export const LinkedAccounts = () => {
 
@@ -41,21 +41,19 @@ export const LinkedAccounts = () => {
 
   return (
     <>
-      <DisplayBox headerText={Locale.label("profile.profilePage.linkedAccounts")}>
-        <br />
-        <Grid container spacing={3}>
-          <Grid item sm={3}>
-            <img src="/images/praisecharts.png" alt="PraiseCharts" style={{ height: 40 }} />
-          </Grid>
-          <Grid item sm={1} style={{ textAlign: "right" }}>
-            {!praiseChartsAccessToken && (<Button variant="contained" color="primary" onClick={() => openOAuthPopup()}>Link</Button>)}
-            {praiseChartsAccessToken && (<Button variant="contained" color="error" onClick={unlinkPraiseCharts}>Unlink</Button>)}
-          </Grid>
+      <div style={{ marginBottom: 15 }}><b>{Locale.label("profile.profilePage.linkedAccounts")}</b></div>
+      <Grid container spacing={3} style={{ marginBottom: 25 }}>
+        <Grid item sm={3}>
+          <Card>
+            <CardContent sx={{ textAlign: "center" }}>
+              <CardMedia component="img" image="/images/praisecharts.png" alt="Praise Charts" />
+              <br />
+              {!praiseChartsAccessToken && (<Button variant="contained" color="primary" onClick={() => openOAuthPopup()}>Link</Button>)}
+              {praiseChartsAccessToken && (<Button variant="contained" color="error" onClick={unlinkPraiseCharts}>Unlink</Button>)}
+            </CardContent>
+          </Card>
         </Grid>
-
-
-      </DisplayBox>
-
+      </Grid>
     </>
   )
 }

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { ApiHelper, ArrayHelper, CurrencyHelper, Locale } from "@churchapps/apphelper";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { PraiseChartsHelper } from "../../../helpers/PraiseChartsHelper";
+import { Link } from "react-router-dom";
 
 interface Props {
   praiseChartsId: string;
@@ -13,6 +14,7 @@ export const PraiseChartsProducts = (props: Props) => {
 
   const [products, setProducts] = React.useState<any[]>([]);
   const [expandedSkus, setExpandedSkus] = React.useState<string[]>([]);
+  const [hasAccount, setHasAccount] = React.useState<boolean>(true);
 
   const loadData = async () => {
     if (props.praiseChartsId) {
@@ -20,6 +22,12 @@ export const PraiseChartsProducts = (props: Props) => {
       if (props.keySignature) url += "?keys=" + props.keySignature;
       const data = await ApiHelper.get(url, "ContentApi");
       const tree = buildTree(data);
+
+      if (data.length === 0) {
+        const { hasAccount } = await ApiHelper.get("/songDetails/praiseCharts/hasAccount", "ContentApi");
+        setHasAccount(hasAccount);
+      }
+
       setProducts(tree);
     }
   }
@@ -123,6 +131,7 @@ export const PraiseChartsProducts = (props: Props) => {
     <DialogTitle>Add Products from PraiseCharts</DialogTitle>
     <DialogContent>
       {products.map((product: any) => getProductRow(product, 0))}
+      {!hasAccount && <p>You do not have a linked PraiseCharts account.  Go to your <Link to="/profile">profile</Link> to link an account. </p>}
     </DialogContent>
     <DialogActions>
       <Button onClick={props.onHide} data-cy="cancel-merge">Close</Button>
