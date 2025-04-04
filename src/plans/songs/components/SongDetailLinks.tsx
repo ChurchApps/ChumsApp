@@ -1,25 +1,26 @@
 import React, { useEffect } from "react";
 import { ApiHelper, SmallButton } from "@churchapps/apphelper";
-import { SongDetailLinkInterface } from "../../../helpers";
+import { SongDetailInterface, SongDetailLinkInterface } from "../../../helpers";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 
 interface Props {
-  songDetailId: string;
+  songDetail: SongDetailInterface;
 }
 
 export const SongDetailLinks = (props: Props) => {
   const [songDetailLinks, setSongDetailLinks] = React.useState<SongDetailLinkInterface[]>([]);
 
   useEffect(() => {
-    if (props.songDetailId) {
-      ApiHelper.get("/songDetailLinks/songDetail/" + props.songDetailId, "ContentApi").then(data => {
+    if (props.songDetail?.id) {
+      ApiHelper.get("/songDetailLinks/songDetail/" + props.songDetail?.id, "ContentApi").then(data => {
         setSongDetailLinks(data);
       });
     }
-  }, [props.songDetailId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.songDetail]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getLink = (link: SongDetailLinkInterface, idx: number) => {
     const logos: { [key: string]: string } = {
+      PraiseCharts: "/images/praisecharts.png",
       Spotify: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg",
       Apple: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/AppleMusic_2019.svg/300px-AppleMusic_2019.svg.png",
       YouTube: "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg",
@@ -43,6 +44,7 @@ export const SongDetailLinks = (props: Props) => {
     <h4>Links</h4>
     <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: 'wrap' }}>
       {songDetailLinks?.map((sd, i) => getLink(sd, i))}
+      {props.songDetail?.praiseChartsId && getLink({ service: "PraiseCharts", url: `https://www.praisecharts.com/songs/details/${props.songDetail?.praiseChartsId}` }, songDetailLinks.length + 1)}
     </Stack>
   </>
 }

@@ -71,7 +71,7 @@ export const SongDetails = (props: Props) => {
         {getDetails()}
       </TableBody>
     </Table>
-    <SongDetailLinks songDetailId={props.songDetail?.id} />
+    <SongDetailLinks songDetail={props.songDetail} />
   </DisplayBox>);
 }
 
