@@ -18,13 +18,13 @@ export const PraiseChartsProducts = (props: Props) => {
 
   const loadData = async () => {
     if (props.praiseChartsId) {
-      let url = "/songDetails/praiseCharts/products/" + props.praiseChartsId
+      let url = "/praiseCharts/products/" + props.praiseChartsId
       if (props.keySignature) url += "?keys=" + props.keySignature;
       const data = await ApiHelper.get(url, "ContentApi");
       const tree = buildTree(data);
 
       if (data.length === 0) {
-        const { hasAccount } = await ApiHelper.get("/songDetails/praiseCharts/hasAccount", "ContentApi");
+        const { hasAccount } = await ApiHelper.get("/praiseCharts/hasAccount", "ContentApi");
         setHasAccount(hasAccount);
       }
 

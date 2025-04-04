@@ -20,7 +20,7 @@ export const LinkedAccounts = () => {
 
   const openOAuthPopup = async () => {
     const returnUrl = window.location.origin + "/pingback"
-    const { authUrl, oauthToken, oauthTokenSecret } = await ApiHelper.get("/songDetails/praiseCharts/authUrl?returnUrl=" + encodeURIComponent(returnUrl), "ContentApi");
+    const { authUrl, oauthToken, oauthTokenSecret } = await ApiHelper.get("/praiseCharts/authUrl?returnUrl=" + encodeURIComponent(returnUrl), "ContentApi");
 
     const popup = window.open(authUrl, 'oauth', 'width=600,height=700');
 
@@ -33,7 +33,7 @@ export const LinkedAccounts = () => {
 
       try {
         // TODO:  Make sure this listener doesn't get mapps more than once.
-        await ApiHelper.get("/songDetails/praiseCharts/access?verifier=" + encodeURIComponent(oauth_verifier) + "&token=" + encodeURIComponent(oauthToken) + "&secret=" + encodeURIComponent(oauthTokenSecret), "ContentApi");
+        await ApiHelper.get("/praiseCharts/access?verifier=" + encodeURIComponent(oauth_verifier) + "&token=" + encodeURIComponent(oauthToken) + "&secret=" + encodeURIComponent(oauthTokenSecret), "ContentApi");
       } catch { }
       loadData();
     });

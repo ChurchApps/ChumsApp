@@ -35,7 +35,7 @@ export const Arrangement = (props: Props) => {
   //<PraiseChartsProducts praiseChartsId={songDetail?.praiseChartsId} />
 
   const importLyrics = async () => {
-    const data: any = await ApiHelper.get("/songDetails/praiseCharts/raw/" + songDetail.praiseChartsId, "ContentApi");
+    const data: any = await ApiHelper.get("/praiseCharts/raw/" + songDetail.praiseChartsId, "ContentApi");
     const a = { ...props.arrangement }
     const lines = data.details.lyrics.split("\n");
     const newLines = [];

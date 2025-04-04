@@ -22,7 +22,7 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
   };
 
   const handleSearch = () => {
-    ApiHelper.get("/songDetails/praiseCharts/search?q=" + searchText, "ContentApi").then((data) => { setSongDetails(data); });
+    ApiHelper.get("/praiseCharts/search?q=" + searchText, "ContentApi").then((data) => { setSongDetails(data); });
 
   };
 

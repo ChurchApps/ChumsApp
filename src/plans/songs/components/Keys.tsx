@@ -39,7 +39,7 @@ export const Keys = (props: Props) => {
 
   const loadPraiseCharts = async () => {
     if (selectedKey && props.songDetail?.praiseChartsId) {
-      const data = await ApiHelper.get("/songDetails/praiseCharts/arrangement/raw/" + props.songDetail.praiseChartsId + "?keys=" + selectedKey.keySignature, "ContentApi");
+      const data = await ApiHelper.get("/praiseCharts/arrangement/raw/" + props.songDetail.praiseChartsId + "?keys=" + selectedKey.keySignature, "ContentApi");
       const products = data[selectedKey.keySignature];
       if (!props.arrangement?.lyrics && products.length > 0) setCanImportLyrics(true);
       if (products) setProducts(products);
