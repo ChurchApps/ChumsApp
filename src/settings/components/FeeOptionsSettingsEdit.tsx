@@ -9,7 +9,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
   const [transFeeCC, setTransFeeCC] = React.useState<GenericSettingInterface>(null);
   const [flatRateACH, setFlatRateACH] = React.useState<GenericSettingInterface>(null);
   const [hardLimitACH, setHardLimitACH] = React.useState<GenericSettingInterface>(null);
-  const [options, setOptions] = React.useState({ flatRateCC: "0.35", transFeeCC: "2.9", flatRateACH: "0.8", hardLimitACH: "5" });
+  const [options, setOptions] = React.useState({ flatRateCC: "0.30", transFeeCC: "2.9", flatRateACH: "0.8", hardLimitACH: "5" });
 
   const loadData = async () => {
     const o = { ...options };
