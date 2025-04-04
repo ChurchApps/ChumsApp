@@ -2,6 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Table, Table
 import React, { useEffect } from "react";
 import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { ArrangementInterface, SongDetailInterface, SongInterface } from "../../helpers";
+import { CreateSongDetail } from "./components/CreateSongDetail";
 
 interface Props {
   searchText?: string
@@ -12,6 +13,7 @@ interface Props {
 export const SongSearchDialog: React.FC<Props> = (props) => {
   const [searchText, setSearchText] = React.useState<string>(props.searchText || "");
   const [songDetails, setSongDetails] = React.useState<SongDetailInterface[]>(null);
+  const [showCreate, setShowCreate] = React.useState(false);
 
   useEffect(() => {
     if (props.searchText) handleSearch();
@@ -61,11 +63,13 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
     <Dialog open={true} onClose={props.onClose} fullWidth maxWidth="md">
       <DialogTitle>Search for a Song</DialogTitle>
       <DialogContent>
-        <TextField fullWidth name="personAddText" label="Tile or Artist" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
+        <TextField fullWidth label="Tile or Artist" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
           InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => handleSearch()}>{Locale.label("common.search")}</Button> }}
         />
 
-        {songDetails && <div style={{ overflowY: "scroll", height: 400 }}>
+
+
+        {!showCreate && songDetails && <div style={{ overflowY: "scroll", height: 400 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -78,7 +82,10 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
               {getRows()}
             </TableBody>
           </Table>
+          <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowCreate(true); }}>Manaully Enter</a>
         </div>}
+
+        {showCreate && <CreateSongDetail onSave={(sd: SongDetailInterface) => { props.onSelect(sd); }} />}
 
 
       </DialogContent>

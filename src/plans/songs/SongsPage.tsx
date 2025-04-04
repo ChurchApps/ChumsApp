@@ -58,7 +58,7 @@ export const SongsPage = () => {
     songs?.forEach((songDetail) => {
       result.push(
         <TableRow key={songDetail.id}>
-          <TableCell><img src={songDetail.thumbnail} alt={songDetail.title} style={{ width: 50, height: 50 }} onError={handleImageError} /></TableCell>
+          <TableCell>{songDetail.thumbnail && <img src={songDetail.thumbnail} alt={songDetail.title} style={{ width: 50, height: 50 }} onError={handleImageError} />}</TableCell>
           <TableCell><Link to={"/plans/songs/" + (songDetail as any).songId}>{songDetail.title}</Link></TableCell>
           <TableCell>{songDetail.artist}</TableCell>
           <TableCell>{(songDetail.seconds) ? formatSeconds(songDetail.seconds) : ""}</TableCell>
