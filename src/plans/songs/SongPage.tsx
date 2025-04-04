@@ -5,9 +5,11 @@ import { Link, useParams } from "react-router-dom";
 import { ArrangementInterface, SongDetailInterface, SongInterface } from "../../helpers";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Icon } from "@mui/material";
 import { Arrangement } from "./components/Arrangement";
+import { SongSearchDialog } from "./SongSearchDialog";
 
 export const SongPage = () => {
   const [song, setSong] = React.useState<SongInterface>(null)
+  const [showSearch, setShowSearch] = React.useState(false)
   const [arrangements, setArrangements] = React.useState<ArrangementInterface[]>([]);
   const [selectedArrangement, setSelectedArrangement] = React.useState(null);
   const params = useParams();
@@ -51,19 +53,13 @@ export const SongPage = () => {
     return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); selectTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
   }
 
-  /*
-  <Grid container spacing={3}>
-            <Grid item md={8}>
-              <Arrangements song={song} reload={loadData} songDetail={songDetail} />
-              <DisplayBox headerText="Keys" headerIcon="music_note">
-                <PraiseChartsProducts praiseChartsId={songDetail?.praiseChartsId} />
-              </DisplayBox>
-            </Grid>
-            <Grid item md={4}>
-              <SongDetails songDetail={songDetail} reload={loadData} />
-            </Grid>
-          </Grid>
-*/
+
+  const handleAdd = async (songDetail: SongDetailInterface) => {
+    const a: ArrangementInterface = { songId: song.id, songDetailId: songDetail.id, name: songDetail.artist, lyrics: "" };
+    await ApiHelper.post("/arrangements", [a], "ContentApi");
+    loadData();
+    setShowSearch(false);
+  }
 
 
   return (<>
@@ -75,7 +71,7 @@ export const SongPage = () => {
         <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
           <ul>
             {getTabs().map((tab, index) => getItem(tab))}
-            <li><a href="about:blank" onClick={(e) => { e.preventDefault(); }}><Icon>add</Icon> Add Arrangement</a></li>
+            <li><a href="about:blank" onClick={(e) => { e.preventDefault(); setShowSearch(true); }}><Icon>add</Icon> Add Arrangement</a></li>
           </ul>
         </div>
       </Grid>
@@ -88,6 +84,7 @@ export const SongPage = () => {
         </div>
       </Grid>
     </Grid>
+    {showSearch && <SongSearchDialog searchText={song.name} onClose={() => setShowSearch(false)} onSelect={handleAdd} />}
   </>);
 }
 
