@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, FormControl, Grid, InputLabel, OutlinedInput, SelectChangeEvent, TextField} from "@mui/material";
+import { Button, FormControl, Grid, InputLabel, OutlinedInput, SelectChangeEvent, TextField } from "@mui/material";
 import { PlanItemInterface, SongDetailInterface } from "../../helpers";
-import { ApiHelper, DisplayBox, InputBox, Locale } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DisplayBox, InputBox, Locale } from "@churchapps/apphelper";
 
 
 interface Props {
@@ -43,7 +43,7 @@ export const PlanItemEdit = (props: Props) => {
   const getHeaderText = () => {
     let result = "Edit";
     if (planItem?.itemType === "header") result += " Header";
-    else if (planItem?.itemType === "song") result += " Song";
+    else if (planItem?.itemType === "arrangementKey") result += " Song";
     return result;
   }
 
@@ -67,17 +67,45 @@ export const PlanItemEdit = (props: Props) => {
   }
 
   const selectSong = (song: SongDetailInterface) => {
-    setPlanItem({ ...planItem,
-      relatedId: (song as any).songId,
+    const pi = {
+      ...planItem,
+      relatedId: (song as any).arrangementKeyId,
       label: song.title,
-      description:song.artist,
-      seconds:song.seconds
-    });
+      description: song.artist + " - " + (song as any).shortDescription + " (" + (song as any).arrangementKeySignature + ")",
+      seconds: song.seconds
+    }
+    setPlanItem(pi);
     setSongs([]);
+    ApiHelper.post("/planItems", [pi], "DoingApi").then(() => { props.onDone(); });
+  }
+
+  const getSongs = () => {
+    const songDetails: SongDetailInterface[] = [];
+    songs.forEach((song) => {
+      if (songDetails.findIndex(sd => sd.id === song.id) === -1) {
+        songDetails.push(song);
+      }
+    });
+    const result: JSX.Element[] = [];
+    songDetails.forEach((sd) => {
+
+      const keys = ArrayHelper.getAll(songs, "id", sd.id);
+      const links: JSX.Element[] = []
+      keys.forEach(k => {
+        links.push(<span style={{ paddingRight: 10 }}><a href="about:blank" onClick={e => { e.preventDefault(); selectSong(k) }}>{k.shortDescription} ({k.arrangementKeySignature})</a></span>)
+      })
+
+
+      result.push(<tr><td>
+        {sd.title} - {sd.artist}
+        <div style={{ paddingLeft: 15 }}><b>Key:</b> {links}</div>
+      </td></tr>)
+    });
+    return <table>{result}</table>
   }
 
   const getSongFields = () => {
-    let a=1;
+    let a = 1;
     return <>
       <FormControl fullWidth variant="outlined">
         <InputLabel htmlFor="searchText">{Locale.label("common.search")}</InputLabel>
@@ -85,19 +113,18 @@ export const PlanItemEdit = (props: Props) => {
           endAdornment={<Button variant="contained" onClick={handleSearch}>{Locale.label("common.search")}</Button>}
         />
       </FormControl>
-      {songs?.map((song) => <a href="about:blank" onClick={e => { e.preventDefault(); selectSong(song) }}>{song.title} - {song.artist}</a>)}
-
+      {getSongs()}
     </>
   }
 
-  const showLabel = planItem?.itemType==="header" || planItem?.itemType==="item" || (planItem?.itemType==="song" && planItem?.relatedId);
-  const showDesc = planItem?.itemType==="item" || (planItem?.itemType==="song" && planItem?.relatedId);
-  const showDuration = planItem?.itemType==="item" || (planItem?.itemType==="song" && planItem?.relatedId);
+  const showLabel = planItem?.itemType === "header" || planItem?.itemType === "item" || (planItem?.itemType === "arrangementKey" && planItem?.relatedId);
+  const showDesc = planItem?.itemType === "item" || (planItem?.itemType === "arrangementKey" && planItem?.relatedId);
+  const showDuration = planItem?.itemType === "item" || (planItem?.itemType === "arrangementKey" && planItem?.relatedId);
 
   return (<InputBox headerText={getHeaderText()} headerIcon="album" saveFunction={handleSave} cancelFunction={props.onDone} deleteFunction={planItem?.id && handleDelete}>
-    {planItem?.itemType==="song" && getSongFields()}
-    {(showLabel) && <TextField fullWidth label={Locale.label("common.name")} id="label" name="label" type="text" value={planItem?.label} onChange={handleChange} /> }
-    {(showDesc) && <TextField multiline fullWidth label="Description" id="description" name="description" type="text" value={planItem?.description} onChange={handleChange} /> }
+    {planItem?.itemType === "arrangementKey" && getSongFields()}
+    {(showLabel) && <TextField fullWidth label={Locale.label("common.name")} id="label" name="label" type="text" value={planItem?.label} onChange={handleChange} />}
+    {(showDesc) && <TextField multiline fullWidth label="Description" id="description" name="description" type="text" value={planItem?.description} onChange={handleChange} />}
     {(showDuration) && <Grid container>
       <Grid item xs={6}>
         <TextField fullWidth label="Minutes" name="minutes" type="number" value={Math.floor(planItem?.seconds / 60)} onChange={handleChange} />

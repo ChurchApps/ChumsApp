@@ -1,24 +1,30 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { ApiHelper, Locale } from "@churchapps/apphelper";
-import { SongDetailInterface } from "../../helpers";
+import { ArrangementInterface, SongDetailInterface, SongInterface } from "../../helpers";
+import { CreateSongDetail } from "./components/CreateSongDetail";
 
 interface Props {
+  searchText?: string
   onClose: () => void,
-  onSelect: (song: SongDetailInterface) => void
+  onSelect: (songDetail: SongDetailInterface) => void
 }
 
 export const SongSearchDialog: React.FC<Props> = (props) => {
-  const [searchText, setSearchText] = React.useState<string>("");
+  const [searchText, setSearchText] = React.useState<string>(props.searchText || "");
   const [songDetails, setSongDetails] = React.useState<SongDetailInterface[]>(null);
+  const [showCreate, setShowCreate] = React.useState(false);
 
+  useEffect(() => {
+    if (props.searchText) handleSearch();
+  }, [props.searchText]); //eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
   const handleSearch = () => {
-    ApiHelper.get("/songDetails/search?q=" + searchText, "ContentApi").then((data) => { setSongDetails(data); });
+    ApiHelper.get("/praiseCharts/search?q=" + searchText, "ContentApi").then((data) => { setSongDetails(data); });
 
   };
 
@@ -34,9 +40,9 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
     if (!songDetail.id) {
       songDetail = await ApiHelper.post("/songDetails/create", songDetail, "ContentApi")
     }
-    const s = { songDetailId: songDetail.id, dateAdded: new Date() };
-    const song = await ApiHelper.post("/songs/create", s, "ContentApi");
-    props.onSelect(song);
+    props.onSelect(songDetail);
+
+
   }
 
   const getRows = () => {
@@ -57,11 +63,13 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
     <Dialog open={true} onClose={props.onClose} fullWidth maxWidth="md">
       <DialogTitle>Search for a Song</DialogTitle>
       <DialogContent>
-        <TextField fullWidth name="personAddText" label="Tile or Artist" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
+        <TextField fullWidth label="Tile or Artist" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
           InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => handleSearch()}>{Locale.label("common.search")}</Button> }}
         />
 
-        {songDetails && <div style={{ overflowY: "scroll", height: 400 }}>
+
+
+        {!showCreate && songDetails && <div style={{ overflowY: "scroll", height: 400 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -74,7 +82,10 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
               {getRows()}
             </TableBody>
           </Table>
+          <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowCreate(true); }}>Manaully Enter</a>
         </div>}
+
+        {showCreate && <CreateSongDetail onSave={(sd: SongDetailInterface) => { props.onSelect(sd); }} />}
 
 
       </DialogContent>

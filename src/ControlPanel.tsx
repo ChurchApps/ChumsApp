@@ -7,14 +7,15 @@ import { Login } from "./Login";
 
 import { Authenticated } from "./Authenticated";
 import { Logout } from "./Logout";
-import { AnalyticsHelper, UserHelper, ErrorHelper, ErrorLogInterface, ErrrorAppDataInterface  } from "@churchapps/apphelper";
+import { AnalyticsHelper, UserHelper, ErrorHelper, ErrorLogInterface, ErrrorAppDataInterface } from "@churchapps/apphelper";
 import { UI } from "./ui/Test";
+import { Pingback } from "./Pingback";
 
 
 export const ControlPanel = () => {
   const [errors, setErrors] = React.useState([]);
 
-  const location = (typeof(window) === "undefined") ? null : window.location;
+  const location = (typeof (window) === "undefined") ? null : window.location;
   AnalyticsHelper.init();
   React.useEffect(() => { AnalyticsHelper.logPageView() }, [location]);
 
@@ -44,6 +45,7 @@ export const ControlPanel = () => {
     <>
       <ErrorMessages errors={errors} />
       <Routes>
+        <Route path="/pingback" element={<Pingback />} />
         <Route path="/ui" element={<UI />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
