@@ -18,9 +18,7 @@ export const SongDetailLinksEdit = (props: Props) => {
       case "serviceKey": l.serviceKey = e.target.value; break;
       case "service": l.service = e.target.value; break;
     }
-    console.log(l);
     setEditLink(l);
-
   }
 
   const loadData = () => {
@@ -31,6 +29,20 @@ export const SongDetailLinksEdit = (props: Props) => {
     }
   }
   useEffect(() => { loadData(); }, [props.songDetailId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const getPlaceholder = (link: SongDetailLinkInterface) => {
+    let result = "";
+    switch (link.service) {
+      case "Apple": result = "10-000-reasons-bless-the-lord-10th-anniversary-feat/1618341399"; break;
+      case "CCLI": result = "6016351"; break;
+      case "Genius": result = "Matt-redman-10000-reasons-bless-the-lord-lyrics"; break;
+      case "Hymnary": result = "https://hymnary.org/text/" + link.serviceKey; break;
+      case "MusicBrainz": result = "https://musicbrainz.org/recording/" + link.serviceKey; break;
+      case "Spotify": result = "2I9pjIezpupeJfVM1r9ZIm"; break;
+      case "YouTube": result = "XtwIT8JjddM"; break;
+    }
+    return result;
+  }
 
   const determineUrl = (link: SongDetailLinkInterface) => {
     let result = "";
@@ -47,9 +59,7 @@ export const SongDetailLinksEdit = (props: Props) => {
   }
 
   const handleAdd = () => {
-    const links = [...songDetailLinks];
-    links.push({ songDetailId: props.songDetailId, service: "Apple" } as SongDetailLinkInterface);
-    setSongDetailLinks(links);
+    setEditLink({ songDetailId: props.songDetailId, service: "Apple" });
   }
 
   const handleDelete = () => {
@@ -67,26 +77,6 @@ export const SongDetailLinksEdit = (props: Props) => {
     });
   }
 
-  /*
-  const getRow = (link: SongDetailLinkInterface, idx: number) => <TableRow>
-    <TableCell>
-      <FormControl fullWidth size="small">
-        <InputLabel>Service</InputLabel>
-        <Select size="small" name="service" label="Service" value={link.service} onChange={e => handleChange(e, idx)}>
-          <MenuItem value="Apple">Apple</MenuItem>
-          <MenuItem value="CCLI">CCLI</MenuItem>
-          <MenuItem value="Genius">Genius</MenuItem>
-          <MenuItem value="Hymnary">Hymnary</MenuItem>
-          <MenuItem value="MusicBrainz">MusicBrainz</MenuItem>
-          <MenuItem value="Spotify">Spotify</MenuItem>
-          <MenuItem value="YouTube">YouTube</MenuItem>
-        </Select>
-      </FormControl>
-    </TableCell>
-    <TableCell><TextField size="small" name="serviceKey" fullWidth label="Id" value={link.serviceKey} onChange={e => handleChange(e, idx)} /></TableCell>
-    <TableCell><SmallButton icon="delete" onClick={() => handleDelete(idx)} /></TableCell>
-  </TableRow>
-  */
   const getRow = (link: SongDetailLinkInterface, idx: number) => <TableRow>
     <TableCell><a href="about:blank" onClick={(e) => { e.preventDefault(); setEditLink(link); }}>{link.service}</a></TableCell>
     <TableCell>{link.serviceKey}</TableCell>
@@ -105,7 +95,7 @@ export const SongDetailLinksEdit = (props: Props) => {
         <MenuItem value="YouTube">YouTube</MenuItem>
       </Select>
     </FormControl>
-    <TextField size="small" name="serviceKey" fullWidth label="Id" value={editLink.serviceKey} onChange={handleChange} />
+    <TextField size="small" name="serviceKey" placeholder={getPlaceholder(editLink)} fullWidth label="Id" value={editLink.serviceKey} onChange={handleChange} />
   </InputBox>
   else return <>
     <DisplayBox headerText="Links" headerIcon="link" editContent={<SmallButton icon="add" onClick={handleAdd} />}>
