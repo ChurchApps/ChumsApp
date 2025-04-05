@@ -106,9 +106,10 @@ export const Keys = (props: Props) => {
       {listProducts()}
       {listLinks()}
 
-      <Button id="addBtnGroup" variant="contained" size="small" color="success" onClick={handleClick} sx={{ mt: 2 }}>
+      {selectedKey && <Button id="addBtnGroup" variant="contained" size="small" color="success" onClick={handleClick} sx={{ mt: 2 }}>
         <Icon sx={{ mr: "3px" }}>add</Icon> Add Files
       </Button>
+      }
       <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem data-cy="add-campus" onClick={() => { handleClose(); setShowImport(true); }}>
           <Icon sx={{ mr: "3px" }}>cloud_download</Icon> Import files from PraiseCharts

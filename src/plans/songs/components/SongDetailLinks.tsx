@@ -31,7 +31,7 @@ export const SongDetailLinks = (props: Props) => {
     }
     let result = <a href={link.url} target="_blank" rel="noreferrer">{link.service}</a>
     const logo: string = logos[link.service] as string;
-    if (logo) result = <a href={link.url} target="_blank" rel="noreferrer"><img src={logo} alt={link.service} style={{ maxHeight: 30, maxWidth: 100 }} /></a>
+    if (logo) result = <a href={link.url} target="_blank" rel="noreferrer"><img src={logo} alt={link.service} style={{ minHeight: 20, maxHeight: 30, maxWidth: 100 }} /></a>
     //switch (link.service) {
     //case "Apple": result = <a href={link.url}>Apple</a>
     //}
