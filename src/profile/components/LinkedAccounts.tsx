@@ -52,7 +52,12 @@ export const LinkedAccounts = () => {
             <CardContent sx={{ textAlign: "center" }}>
               <CardMedia component="img" image="/images/praisecharts.png" alt="Praise Charts" />
               <br />
-              {!praiseChartsAccessToken && (<Button variant="contained" color="primary" onClick={() => openOAuthPopup()}>Link</Button>)}
+
+              {!praiseChartsAccessToken && (<>
+                <Button variant="contained" color="primary" onClick={() => { window.open("https://www.praisecharts.com/?XID=churchapps") }}>Sign-up</Button>
+                &nbsp;
+                <Button variant="contained" color="success" onClick={() => openOAuthPopup()}>Link</Button>
+              </>)}
               {praiseChartsAccessToken && (<Button variant="contained" color="error" onClick={unlinkPraiseCharts}>Unlink</Button>)}
             </CardContent>
           </Card>

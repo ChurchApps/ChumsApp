@@ -90,7 +90,7 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
 
       </DialogContent>
       <DialogActions>
-        <label style={{ color: "#999" }}>Powered by: PraiseCharts</label> &nbsp;
+        <label style={{ color: "#999" }}>Powered by: <a href="https://www.praisecharts.com/?XID=churchapps" target="_blank" rel="noreferrer">PraiseCharts</a></label> &nbsp;
         <Button variant="outlined" onClick={props.onClose}>{Locale.label("common.close")}</Button>
       </DialogActions>
     </Dialog>

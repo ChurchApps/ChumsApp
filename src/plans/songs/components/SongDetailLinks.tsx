@@ -44,7 +44,7 @@ export const SongDetailLinks = (props: Props) => {
     <h4>Links</h4>
     <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: 'wrap' }}>
       {songDetailLinks?.map((sd, i) => getLink(sd, i))}
-      {props.songDetail?.praiseChartsId && getLink({ service: "PraiseCharts", url: `https://www.praisecharts.com/songs/details/${props.songDetail?.praiseChartsId}` }, songDetailLinks.length + 1)}
+      {props.songDetail?.praiseChartsId && getLink({ service: "PraiseCharts", url: `https://www.praisecharts.com/songs/details/${props.songDetail?.praiseChartsId}?XID=churchapps` }, songDetailLinks.length + 1)}
     </Stack>
   </>
 }

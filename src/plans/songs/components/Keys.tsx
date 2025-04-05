@@ -102,9 +102,12 @@ export const Keys = (props: Props) => {
           <Tab value="add" label="+ Add" />
         </Tabs>
       </Box>
-      {canImportLyrics && <Alert style={{ marginTop: 10 }} icon={<Button onClick={() => { props.importLyrics(); setShowImport(false); }} variant="contained" color="success">Import</Button>} severity="success">Would you like to import the text lyrics from PraiseCharts?</Alert>}
-      {listProducts()}
-      {listLinks()}
+      {selectedKey && <>
+        {canImportLyrics && <Alert style={{ marginTop: 10 }} icon={<Button onClick={() => { props.importLyrics(); setShowImport(false); }} variant="contained" color="success">Import</Button>} severity="success">Would you like to import the text lyrics from PraiseCharts?</Alert>}
+        {listProducts()}
+        {listLinks()}
+      </>}
+
 
       {selectedKey && <Button id="addBtnGroup" variant="contained" size="small" color="success" onClick={handleClick} sx={{ mt: 2 }}>
         <Icon sx={{ mr: "3px" }}>add</Icon> Add Files
