@@ -31,6 +31,8 @@ export const Keys = (props: Props) => {
     setAnchorEl(null);
   };
 
+
+
   const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
     if (newValue === "add") setEditKey({ arrangementId: props.arrangement.id, keySignature: "C", shortDescription: "Default" });
     else {
@@ -72,7 +74,9 @@ export const Keys = (props: Props) => {
     const qs = product.download.split("?")[1].split("&");
     const skus = qs[0].split("=")[1];
     const keys = qs[1].split("=")[1];
-    PraiseChartsHelper.download(skus, product.name + "." + product.file_type, keys)
+    const url = await PraiseChartsHelper.download(skus, product.name + "." + product.file_type, keys)
+    console.log("Download URL", url);
+    window.open(url, "_blank");
   }
 
   const listProducts = () => (<ul>
