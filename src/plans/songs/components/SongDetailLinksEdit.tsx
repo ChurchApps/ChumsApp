@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { ApiHelper, DisplayBox, InputBox, SmallButton } from "@churchapps/apphelper";
 import { SongDetailLinkInterface } from "../../../helpers";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
-import { Api } from "@mui/icons-material";
 
 interface Props {
   songDetailId: string;
+  reload: () => void;
 }
 
 export const SongDetailLinksEdit = (props: Props) => {
@@ -74,6 +74,7 @@ export const SongDetailLinksEdit = (props: Props) => {
     ApiHelper.post("/songDetailLinks", [l], "ContentApi").then(() => {
       loadData();
       setEditLink(null);
+      if (l.service === "MusicBrainz") props.reload();
     });
   }
 

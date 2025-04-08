@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import { ApiHelper, DateHelper, DisplayBox, InputBox } from "@churchapps/apphelper";
-import { SongDetailInterface, SongDetailLinkInterface } from "../../../helpers";
-import { Table, TableBody, TableCell, TableRow, TextField } from "@mui/material";
+import { ApiHelper, DateHelper, InputBox } from "@churchapps/apphelper";
+import { SongDetailInterface } from "../../../helpers";
+import { TextField } from "@mui/material";
 import { SongDetailLinksEdit } from "./SongDetailLinksEdit";
 
 interface Props {
   songDetail: SongDetailInterface;
   onSave: (songDetail: SongDetailInterface) => void;
+  reload: () => void;
   onCancel: () => void;
 }
 
@@ -45,6 +46,6 @@ export const SongDetailsEdit = (props: Props) => {
       <TextField label="Key" name="keySignature" value={songDetail?.keySignature} placeholder="C#" onChange={handleChange} fullWidth size="small" />
       <TextField type="number" label="Seconds" name="seconds" value={songDetail?.seconds} onChange={handleChange} fullWidth size="small" />
     </InputBox>
-    <SongDetailLinksEdit songDetailId={songDetail?.id} />
+    <SongDetailLinksEdit songDetailId={songDetail?.id} reload={props.reload} />
   </>);
 }

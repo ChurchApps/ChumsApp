@@ -32,9 +32,9 @@ export const SongsPage = () => {
       const s: SongInterface = { name: songDetail.title, dateAdded: new Date() };
       const songs = await ApiHelper.post("/songs", [s], "ContentApi");
       const a: ArrangementInterface = { songId: songs[0].id, songDetailId: songDetail.id, name: "(Default)", lyrics: "" };
-      await ApiHelper.post("/arrangements", [a], "ContentApi");
+      const arrangements = await ApiHelper.post("/arrangements", [a], "ContentApi");
       if (songDetail.keySignature) {
-        const key: ArrangementKeyInterface = { arrangementId: a.id, keySignature: songDetail.keySignature, shortDescription: "Default" };
+        const key: ArrangementKeyInterface = { arrangementId: arrangements[0].id, keySignature: songDetail.keySignature, shortDescription: "Default" };
         await ApiHelper.post("/arrangementKeys", [key], "ContentApi");
       }
       selectedSong = songs[0];

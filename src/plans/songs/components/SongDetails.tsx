@@ -62,7 +62,7 @@ export const SongDetails = (props: Props) => {
     setEditMode(false);
   }
 
-  if (editMode) return <SongDetailsEdit songDetail={props.songDetail} onCancel={() => { setEditMode(false) }} onSave={handleSave} />
+  if (editMode) return <SongDetailsEdit songDetail={props.songDetail} onCancel={() => { setEditMode(false) }} onSave={handleSave} reload={props.reload} />
 
   return (<DisplayBox headerText={props.songDetail?.title} headerIcon="album" editFunction={() => { setEditMode(true) }}>
     <img src={props.songDetail?.thumbnail} alt={props.songDetail?.title} style={{ display: "block", marginLeft: "auto", marginRight: "auto" }} onError={handleImageError} />
