@@ -54,8 +54,11 @@ export const Keys = (props: Props) => {
     if (selectedKey && props.songDetail?.praiseChartsId) {
       const data = await ApiHelper.get("/praiseCharts/arrangement/raw/" + props.songDetail.praiseChartsId + "?keys=" + selectedKey.keySignature, "ContentApi");
       const products = data[selectedKey.keySignature];
-      if (!props.arrangement?.lyrics && products.length > 0) setCanImportLyrics(true);
-      if (products) setProducts(products);
+      if (products) {
+        setProducts(products);
+        if (!props.arrangement?.lyrics && products.length > 0) setCanImportLyrics(true);
+      }
+
       else setProducts([]);
     }
   }
@@ -75,7 +78,6 @@ export const Keys = (props: Props) => {
     const skus = qs[0].split("=")[1];
     const keys = qs[1].split("=")[1];
     const url = await PraiseChartsHelper.download(skus, product.name + "." + product.file_type, keys)
-    console.log("Download URL", url);
     window.open(url, "_blank");
   }
 
