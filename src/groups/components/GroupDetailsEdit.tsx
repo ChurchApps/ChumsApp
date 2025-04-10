@@ -188,7 +188,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
           <GalleryModal
             onClose={() => setSelectPhotoField(null)}
             onSelect={handlePhotoSelected}
-            aspectRatio={4}
+            aspectRatio={1.78}
           />
         )}
       </>
