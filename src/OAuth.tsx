@@ -19,6 +19,7 @@ export const OAuthPage: React.FC = (props: any) => {
   const redirectUri = search.get("redirect_uri");
   const scope = search.get("scope");
   const responseType = search.get("response_type");
+  const state = search.get("state");
 
   React.useEffect(() => {
     if (clientId) {
@@ -27,6 +28,28 @@ export const OAuthPage: React.FC = (props: any) => {
       });
     }
   }, [clientId]);
+
+  const handleAllow = async () => {
+    try {
+      const response = await ApiHelper.post("/oauth/authorize", {
+        client_id: clientId,
+        redirect_uri: redirectUri,
+        response_type: responseType,
+        scope: scope,
+        state: state
+      }, "MembershipApi");
+
+      if (response?.code) {
+        // Redirect back to the client with the authorization code
+        const redirectUrl = new URL(redirectUri || "");
+        redirectUrl.searchParams.append("code", response.code);
+        if (state) redirectUrl.searchParams.append("state", state);
+        window.location.href = redirectUrl.toString();
+      }
+    } catch (error) {
+      console.error("Authorization error:", error);
+    }
+  };
 
   return (<Box sx={{ display: "flex", backgroundColor: "#EEE", minHeight: "100vh" }}>
     <div style={{ marginLeft: "auto", marginRight: "auto", paddingTop: 20 }}>
@@ -49,10 +72,10 @@ export const OAuthPage: React.FC = (props: any) => {
         <div style={{ backgroundColor: "rgb(229, 246, 253)", padding: 10 }}>
           <Grid container spacing={2}>
             <Grid item xs={6} style={{ textAlign: "center" }}>
-              <Button fullWidth variant="contained" color="error" onClick={() => { }}>Deny</Button>
+              <Button fullWidth variant="contained" color="error" onClick={() => { window.location.href = redirectUri || "/"; }}>Deny</Button>
             </Grid>
             <Grid item xs={6} style={{ textAlign: "center" }}>
-              <Button fullWidth variant="contained" color="primary" onClick={() => { }}>Allow</Button>
+              <Button fullWidth variant="contained" color="primary" onClick={handleAllow}>Allow</Button>
             </Grid>
           </Grid>
         </div>
