@@ -46,12 +46,12 @@ export const ServiceOrder = (props: Props) => {
     ApiHelper.post("/planItems/sort", pi, "DoingApi").then(() => { loadData() });
   }
 
-  const wrapPlanItem = (pi: PlanItemInterface, index:number) => <>
-    {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, index+0.5)}}>
+  const wrapPlanItem = (pi: PlanItemInterface, index: number) => <>
+    {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, index + 0.5) }}>
       &nbsp;
     </DroppableWrapper>}
-    <DraggableWrapper dndType="planItemHeader" data={pi} draggingCallback={(isDragging) => setShowHeaderDrop(isDragging)}>
-      <PlanItem planItem={pi} setEditPlanItem={setEditPlanItem} showItemDrop={showItemDrop} onDragChange={(dragging) => setShowItemDrop(dragging)} onChange={() => {loadData()}} />
+    <DraggableWrapper dndType="planItem" data={pi} draggingCallback={(isDragging) => { console.log("isDragging", isDragging); setShowItemDrop(isDragging) }}>
+      <PlanItem planItem={pi} setEditPlanItem={setEditPlanItem} showItemDrop={showItemDrop} onDragChange={(dragging) => { console.log("Dragging", dragging); setShowItemDrop(dragging) }} onChange={() => { loadData() }} />
     </DraggableWrapper>
 
   </>
@@ -65,8 +65,8 @@ export const ServiceOrder = (props: Props) => {
       <Grid item md={8} xs={12}>
         <DisplayBox headerText="Order of Service" headerIcon="album" editContent={getEditContent()}>
           <DndProvider backend={HTML5Backend}>
-            {planItems.map((pi, i) => wrapPlanItem(pi,i))}
-            {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, planItems?.length + 1)}}>&nbsp;</DroppableWrapper>}
+            {planItems.map((pi, i) => wrapPlanItem(pi, i))}
+            {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, planItems?.length + 1) }}>&nbsp;</DroppableWrapper>}
           </DndProvider>
         </DisplayBox>
       </Grid>

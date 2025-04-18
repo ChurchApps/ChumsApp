@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Icon, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Alert, Grid, Icon, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { PlanItemInterface } from "../../helpers";
 import { DraggableWrapper } from "../../components/DraggableWrapper";
 import { DroppableWrapper } from "../../components/DroppableWrapper";
@@ -49,13 +49,14 @@ export const PlanItem = (props: Props) => {
         <>
           {props.showItemDrop && <DroppableWrapper accept="planItem" onDrop={(item) => { handleDrop(item, index + 0.5) }}>&nbsp;</DroppableWrapper>}
 
-          <DraggableWrapper dndType="planItem" data={c} draggingCallback={(isDragging) => props.onDragChange(isDragging)}>
+          <DraggableWrapper dndType="planItem" data={c} draggingCallback={(isDragging) => { console.log("ISdragging", isDragging); props.onDragChange(isDragging) }}>
             <PlanItem key={c.id} planItem={c} setEditPlanItem={props.setEditPlanItem} />
           </DraggableWrapper>
         </>
       );
     });
-    if (props.showItemDrop) result.push(<DroppableWrapper accept="planItem" onDrop={(item) => { handleDrop(item, props.planItem.children?.length + 1) }}>&nbsp;</DroppableWrapper>)
+    console.log("showItemDrop", props.showItemDrop);
+    if (props.showItemDrop) result.push(<><DroppableWrapper accept="planItem" onDrop={(item) => { handleDrop(item, props.planItem.children?.length + 1) }}>&nbsp;</DroppableWrapper></>)
     return result;
   }
 
