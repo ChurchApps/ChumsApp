@@ -50,7 +50,7 @@ export const ServiceOrder = (props: Props) => {
     {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, index + 0.5) }}>
       &nbsp;
     </DroppableWrapper>}
-    <DraggableWrapper dndType="planItem" data={pi} draggingCallback={(isDragging) => { console.log("isDragging", isDragging); setShowItemDrop(isDragging) }}>
+    <DraggableWrapper dndType="planItemHeader" data={pi} draggingCallback={(isDragging) => { console.log("isDragging", isDragging); setShowHeaderDrop(isDragging) }}>
       <PlanItem planItem={pi} setEditPlanItem={setEditPlanItem} showItemDrop={showItemDrop} onDragChange={(dragging) => { console.log("Dragging", dragging); setShowItemDrop(dragging) }} onChange={() => { loadData() }} />
     </DraggableWrapper>
 
