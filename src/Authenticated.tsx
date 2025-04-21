@@ -34,6 +34,7 @@ import { SongPage } from "./plans/songs/SongPage";
 import { PrintPlan } from "./plans/PrintPlan";
 import { DevicesPage } from "./profile/DevicesPage";
 import { PrintDonationPage } from "./donations/PrintDonationPage";
+import { OAuthPage } from "./OAuth";
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
@@ -89,6 +90,7 @@ export const Authenticated: React.FC = () => {
         <Route path="/" element={<DashboardPage />} />
       </Route>
 
+      <Route path="/oauth" element={<OAuthPage />} />
       <Route path="/donations/print/:personId" element={<PrintDonationPage />} />
       <Route path="/plans/print/:id" element={<PrintPlan />} />
     </Routes>
