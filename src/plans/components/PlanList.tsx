@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, Locale, SmallButton } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
@@ -31,13 +31,14 @@ export const PlanList = (props: Props) => {
     ApiHelper.get("/plans", "DoingApi").then((data: any[]) => { setPlans(ArrayHelper.getAll(data, "ministryId", props.ministry.id)); });
   }
 
-  const getPlans = () => {
-    if (plans.length === 0) return <TableRow><TableCell>{Locale.label("plans.planList.noPlan")}</TableCell></TableRow>;
-    return plans.map((p, i) => (<TableRow key={i}>
+  const getRows = () => plans.map((p, i) => (
+    <TableRow key={p.id}>
       <TableCell><Link to={"/plans/" + p.id}>{p.name}</Link></TableCell>
-      <TableCell style={{ textAlign: "right" }}><SmallButton icon="edit" onClick={(e) => { setPlan(p); }} /></TableCell>
-    </TableRow>));
-  }
+      <TableCell style={{ textAlign: "right" }}>
+        <SmallButton icon="edit" onClick={(e) => { setPlan(p); }} />
+      </TableCell>
+    </TableRow>
+  ))
 
   useEffect(() => { loadData(); }, [props.ministry]);  // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -45,8 +46,14 @@ export const PlanList = (props: Props) => {
     {plan && (<PlanEdit plan={plan} plans={plans} updatedFunction={loadData} />)}
     <DisplayBox headerText={Locale.label("plans.planList.plans")} headerIcon="assignment" editContent={getAddPlanLink()}>
       <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell key="name">{Locale.label("common.name")}</TableCell>
+            <TableCell key="actions" style={{ textAlign: "right" }}></TableCell>
+          </TableRow>
+        </TableHead>
         <TableBody>
-          {getPlans()}
+          {getRows()}
         </TableBody>
       </Table>
     </DisplayBox>

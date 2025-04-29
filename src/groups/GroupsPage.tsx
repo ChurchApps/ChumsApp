@@ -31,14 +31,15 @@ export const GroupsPage = () => {
     setIsLoading(true)
     ApiHelper.get("/groups/tag/standard", "MembershipApi")
       .then((data) => {
-        if(isMounted()) {
+        if (isMounted()) {
           setGroups(data);
         }
       })
       .finally(() => {
-        if(isMounted()) {
+        if (isMounted()) {
           setIsLoading(false);
-        }})
+        }
+      })
   };
 
   React.useEffect(loadData, [isMounted]);
@@ -54,18 +55,28 @@ export const GroupsPage = () => {
     let lastCat = "";
     for (let i = 0; i < groups.length; i++) {
       let g = groups[i];
-      let cat = (g.categoryName !== lastCat) ? <Box sx={{display: "flex", alignItems: "center"}}><Icon>folder</Icon> {g.categoryName}</Box> : <></>
+      let cat = (g.categoryName !== lastCat) ? <Box sx={{ display: "flex", alignItems: "center" }}><Icon>folder</Icon> {g.categoryName}</Box> : <></>
       let memberCount = g.memberCount === 1 ? Locale.label("groups.groupsPage.pers") : g.memberCount.toString() + Locale.label("groups.groupsPage.spPpl");
       rows.push(
-        <TableRow sx={{whiteSpace: "nowrap"}} key={g.id}>
+        <TableRow sx={{ whiteSpace: "nowrap" }} key={g.id}>
           <TableCell>{cat}</TableCell>
           <TableCell>
-            <Box sx={{display: "flex", alignItems: "center"}}>
-              <Icon sx={{marginRight: "5px"}}>group</Icon>{" "}
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Icon sx={{ marginRight: "5px" }}>group</Icon>{" "}
               <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
             </Box>
           </TableCell>
-          <TableCell>{g.labelArray.map(label => (<Chip label={label} variant="outlined" size="small" style={{marginRight:5}} />))}</TableCell>
+          <TableCell>
+            {g.labelArray.map((label, index) => (
+              <Chip
+                key={`${g.id}-${label}-${index}`}
+                label={label}
+                variant="outlined"
+                size="small"
+                style={{ marginRight: 5 }}
+              />
+            ))}
+          </TableCell>
           <TableCell>{memberCount}</TableCell>
         </TableRow>
       );
@@ -77,7 +88,7 @@ export const GroupsPage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("groups.groupsPage.cat")}</th><th>{Locale.label("common.name")}</th><th>{Locale.label("groups.groupsPage.labels")}</th><th>{Locale.label("groups.groupsPage.ppl")}</th></TableRow>);
+    rows.push(<TableRow sx={{ textAlign: "left" }} key="header"><th>{Locale.label("groups.groupsPage.cat")}</th><th>{Locale.label("common.name")}</th><th>{Locale.label("groups.groupsPage.labels")}</th><th>{Locale.label("groups.groupsPage.ppl")}</th></TableRow>);
     return rows;
   }
 
