@@ -40,7 +40,7 @@ export const AutomationDetails = (props: Props) => {
       if (a.actionType === "task") {
         const d: any = JSON.parse(a.actionData);
         const action = a;
-        result.push(<li>
+        result.push(<li key={a.id}>
           <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { setEditAction(action); }} /></span>
           <b>{Locale.label("tasks.automationDetails.task")}:</b> {d.title} - <i>{d.assignedToLabel}</i></li>);
       }

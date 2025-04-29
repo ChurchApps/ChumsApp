@@ -11,22 +11,24 @@ export const AdminPage = () => {
   const getCurrentTab = () => {
     let currentTab = <div></div>;
     switch (selectedTab) {
-      case "churches": currentTab = <ChurchesTab />; break;
-      case "usage": currentTab = <UsageTrendsTab />; break;
+      case "churches": currentTab = <ChurchesTab key="churches" />; break;
+      case "usage": currentTab = <UsageTrendsTab key="usage" />; break;
     }
     return currentTab;
   }
 
 
-  const getItem = (tab:any) => {
-    if (tab.key === selectedTab) return (<li className="active"><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
-    return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+  const getItem = (tab: any) => {
+    if (tab.key === selectedTab) return (
+      <li key={tab.key} className="active">
+        <a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+    return (<li key={tab.key}><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
   }
 
   const getTabs = () => {
     let tabs = [];
-    tabs.push({ key: "churches", icon: "church", label: Locale.label("serverAdmin.adminPage.churches")});
-    tabs.push({ key: "usage", icon: "show_chart", label: Locale.label("serverAdmin.adminPage.usageTrends")});
+    tabs.push({ key: "churches", icon: "church", label: Locale.label("serverAdmin.adminPage.churches") });
+    tabs.push({ key: "usage", icon: "show_chart", label: Locale.label("serverAdmin.adminPage.usageTrends") });
 
     return tabs;
   }
@@ -36,8 +38,8 @@ export const AdminPage = () => {
       <Banner><h1>{Locale.label("serverAdmin.adminPage.servAdmin")}</h1></Banner>
       <Grid container spacing={2}>
         <Grid item xs={12} md={2}>
-          <div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
-            <ul>{getTabs().map((tab, index) => getItem(tab))}</ul>
+          <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
+            <ul>{getTabs().map((tab) => getItem(tab))}</ul>
           </div>
         </Grid>
         <Grid item xs={12} md={10}>

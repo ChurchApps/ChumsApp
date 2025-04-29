@@ -17,23 +17,35 @@ export const MinistryPage = () => {
     let currentTab = <div></div>;
     if (ministry) {
       switch (selectedTab) {
-        case "plans": currentTab = <PlanList ministry={ministry} />; break;
-        case "teams": currentTab = <TeamList ministry={ministry} />; break;
+        case "plans": currentTab = <PlanList key="plans" ministry={ministry} />; break;
+        case "teams": currentTab = <TeamList key="teams" ministry={ministry} />; break;
       }
     }
     return currentTab;
   }
 
 
-  const getItem = (tab:any) => {
-    if (tab.key === selectedTab) return (<li className="active"><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
-    return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
+  const getItem = (tab: any) => {
+    if (tab.key === selectedTab) return (
+      <li key={tab.key} className="active">
+        <a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}>
+          <Icon>{tab.icon}</Icon> {tab.label}
+        </a>
+      </li>
+    );
+    return (
+      <li key={tab.key}>
+        <a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}>
+          <Icon>{tab.icon}</Icon> {tab.label}
+        </a>
+      </li>
+    );
   }
 
   const getTabs = () => {
     let tabs = [];
-    tabs.push({ key: "plans", icon: "assignment", label: Locale.label("plans.ministryPage.plans")});
-    tabs.push({ key: "teams", icon: "people", label: Locale.label("plans.ministryPage.teams")});
+    tabs.push({ key: "plans", icon: "assignment", label: Locale.label("plans.ministryPage.plans") });
+    tabs.push({ key: "teams", icon: "people", label: Locale.label("plans.ministryPage.teams") });
 
     if (selectedTab === "") setSelectedTab("plans");
     return tabs;
@@ -50,8 +62,8 @@ export const MinistryPage = () => {
     <Banner><h1>{ministry?.name}</h1></Banner>
     <Grid container spacing={2}>
       <Grid item xs={12} md={2}>
-        <div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
-          <ul>{getTabs().map((tab, index) => getItem(tab))}</ul>
+        <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
+          <ul>{getTabs().map((tab) => getItem(tab))}</ul>
         </div>
       </Grid>
       <Grid item xs={12} md={10}>

@@ -11,7 +11,7 @@ export const PaymentEdit: React.FC<Props> = (props) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
-    switch(e.target.name) {
+    switch (e.target.name) {
       case "fundId": setFundId(e.target.value); break;
       case "amount": setAmount(Number(e.target.value)); break;
     }
@@ -42,11 +42,17 @@ export const PaymentEdit: React.FC<Props> = (props) => {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const getFundOptions = () => funds.map((fund: FundInterface) => (
+    <MenuItem key={fund.id} value={fund.id}>
+      {fund.name}
+    </MenuItem>
+  ))
+
   return <>
     <FormControl fullWidth>
       <InputLabel id="fund">{Locale.label("forms.formQuestionEdit.fund")}</InputLabel>
       <Select name="fundId" labelId="fund" label={Locale.label("forms.formQuestionEdit.fund")} value={fundId} onChange={handleChange}>
-        {funds.map((fund: FundInterface, index: number) => <MenuItem key={index} value={fund.id}>{fund.name}</MenuItem>)}
+        {getFundOptions()}
       </Select>
     </FormControl>
     <TextField fullWidth name="amount" label={Locale.label("forms.formQuestionEdit.amt")} type="number" value={amount} onChange={handleChange} InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }} />

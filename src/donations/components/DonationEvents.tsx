@@ -12,7 +12,7 @@ export const DonationEvents: React.FC = () => {
 
   const loadData = () => {
     ApiHelper.get("/eventLog/type/failed", "GivingApi").then(logs => {
-      if(!isMounted()) {
+      if (!isMounted()) {
         return;
       }
       setErrorLogs(logs);
@@ -24,7 +24,7 @@ export const DonationEvents: React.FC = () => {
       let personIds = "";
       logs.map((log: any) => personIds += log.personId + ",");
       if (personIds) ApiHelper.get("/people/ids?ids=" + personIds, "MembershipApi").then(people => {
-        if(isMounted()) {
+        if (isMounted()) {
           setPeople(people);
         }
       });
@@ -50,15 +50,15 @@ export const DonationEvents: React.FC = () => {
       logs.push(
         <Accordion key={i}>
           <AccordionSummary>
-            <Icon sx={{marginRight: "5px", color: !log.resolved ? "#dc3545" : "#000"}}>error</Icon>
+            <Icon sx={{ marginRight: "5px", color: !log.resolved ? "#dc3545" : "#000" }}>error</Icon>
             <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
           </AccordionSummary>
           <AccordionDetails>
             <ul>
-              <li>{Locale.label("common.person")}<Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link></li>
-              <li className="capitalize">{Locale.label("donations.donationEvents.event")}<a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
-              <li>{Locale.label("donations.donationEvents.msg")}{log.message}</li>
-              <li style={{ float: "right" }}>
+              <li key="person">{Locale.label("common.person")}<Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link></li>
+              <li key="event" className="capitalize">{Locale.label("donations.donationEvents.event")}<a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a></li>
+              <li key="message">{Locale.label("donations.donationEvents.msg")}{log.message}</li>
+              <li key="actions" style={{ float: "right" }}>
                 <Button aria-label="resolve-button" variant={log.resolved ? "outlined" : "contained"} onClick={() => handleClick(log.id, log.resolved)}>
                   {Locale.label("donations.donationEvents.mark")}{log.resolved ? "Unresolved" : "Resolved"}
                 </Button>

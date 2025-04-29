@@ -82,7 +82,7 @@ export const Keys = (props: Props) => {
   }
 
   const listProducts = () => (<ul>
-    {products.map((p, i) => (<li key={i}>
+    {products.map((p, i) => (<li key={`${p.name}-${i}`}>
       <a href="about:blank" onClick={(e) => { e.preventDefault(); download(p); }}>
         {p.name}
       </a>
@@ -90,21 +90,26 @@ export const Keys = (props: Props) => {
   </ul>)
 
   const listLinks = () => (<ul>
-    {links.map((l, i) => (<li key={l.id}>
+    {links.map((l) => (<li key={l.id}>
       <a href="about:blank" onClick={(e) => { e.preventDefault(); setEditLink(l); }}><Icon>edit</Icon></a>
       <a href={l.url} target="_blank" rel="noreferrer">{l.text}</a>
     </li>))}
   </ul>)
 
-
-
+  const getTabs = () => keys.map((k, i) => (
+    <Tab
+      key={k.id}
+      value={k.id}
+      label={k.shortDescription + " (" + k.keySignature + ")"}
+    />
+  ))
 
   if (editKey) return <KeyEdit arrangementKey={editKey} onSave={(k) => { setEditKey(null); loadData(); }} onCancel={() => setEditKey(null)} />
   return (<>
     <DisplayBox headerText="Keys" headerIcon="music_note" editFunction={(selectedKey) ? () => { setEditKey(selectedKey) } : null}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={selectedKey?.id || ""} onChange={handleTabChange} aria-label="basic tabs example">
-          {keys.map((k, i) => <Tab key={k.id} value={k.id} label={k.shortDescription + " (" + k.keySignature + ")"} />)}
+          {getTabs()}
           <Tab value="add" label="+ Add" />
         </Tabs>
       </Box>
@@ -120,10 +125,10 @@ export const Keys = (props: Props) => {
       </Button>
       }
       <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem data-cy="add-campus" onClick={() => { handleClose(); setShowImport(true); }}>
+        <MenuItem key="import" data-cy="add-campus" onClick={() => { handleClose(); setShowImport(true); }}>
           <Icon sx={{ mr: "3px" }}>cloud_download</Icon> Import files from PraiseCharts
         </MenuItem>
-        <MenuItem data-cy="add-campus" onClick={() => { handleClose(); setEditLink({ category: "arrangementKey_" + selectedKey.id, linkType: "url", sort: 1, linkData: "", icon: "" }) }}>
+        <MenuItem key="link" data-cy="add-campus" onClick={() => { handleClose(); setEditLink({ category: "arrangementKey_" + selectedKey.id, linkType: "url", sort: 1, linkData: "", icon: "" }) }}>
           <Icon sx={{ mr: "3px" }}>link</Icon> Add external link
         </MenuItem>
       </Menu>
