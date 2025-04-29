@@ -93,16 +93,10 @@ export const GroupSessions: React.FC<Props> = (props) => {
           </FormControl>
         </Grid>
         <Grid item>
-          <Button variant="contained" data-cy="add-service-time" onClick={handleAdd}><Icon>calendar_month</Icon> {Locale.label("groups.groupSessions.new")}</Button>
+          {getAddButton()}
         </Grid>
       </Grid>
     );
-    /*else return (
-      <InputGroup>
-        <FormControl as="select" value={session?.id} onChange={selectSession}>{getSessionOptions()}</FormControl>
-        <InputGroup.Append><Button variant="primary" onClick={handleAdd} data-cy="create-new-session"><Icon>calendar_month</Icon> New</Button></InputGroup.Append>
-      </InputGroup>
-    );*/
   }
 
   const handleSessionSelected = () => {
@@ -146,6 +140,21 @@ export const GroupSessions: React.FC<Props> = (props) => {
         <TableBody>{getRows()}</TableBody>
       </Table>
     </>);
+  }
+
+  const getAddButton = () => {
+    if (!UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit)) return null;
+    return (
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={<Icon>calendar_month</Icon>}
+        onClick={handleAdd}
+        data-cy="create-new-session"
+      >
+        {Locale.label("groups.groupSessions.new")}
+      </Button>
+    );
   }
 
   return (<DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText={Locale.label("groups.groupSessions.sessions")} headerIcon="calendar_month" editContent={getHeaderSection()}>{content}</DisplayBox>);
