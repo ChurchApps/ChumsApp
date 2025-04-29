@@ -14,16 +14,17 @@ export function EditCondition(props: Props) {
   const [loadingOptions, setLoadingOptions] = React.useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
-    let c = { ...condition }
-    switch (e.target.name) {
+    let c = { ...condition };
+    const { name, value } = e.target;
 
+    switch (name) {
       case "field":
-        c.field = e.target.value;
+        c.field = value;
         c.operator = "equals";
         c.value = "";
         break;
       case "operator":
-        c.operator = e.target.value;
+        c.operator = value;
         if (c.field === "memberDonations" || c.field === "memberAttendance") {
           c.value = "";
         }
@@ -83,7 +84,7 @@ export function EditCondition(props: Props) {
         result = getValueSelect(options);
         break;
       case "membershipStatus":
-        options = [<MenuItem key="/Visitor" value="Visitor">{Locale.label("person.visitor")}</MenuItem>,<MenuItem key="Regular Attendee" value="Regular Attendee">{Locale.label("person.regularAttendee")}</MenuItem>, <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>, <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>, <MenuItem key="Inactive" value="Inactive">{Locale.label("person.inactive")}</MenuItem>]
+        options = [<MenuItem key="/Visitor" value="Visitor">{Locale.label("person.visitor")}</MenuItem>, <MenuItem key="Regular Attendee" value="Regular Attendee">{Locale.label("person.regularAttendee")}</MenuItem>, <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>, <MenuItem value="Staff">{Locale.label("person.staff")}</MenuItem>, <MenuItem key="Inactive" value="Inactive">{Locale.label("person.inactive")}</MenuItem>]
         setDefaultValue("Visitor");
         result = getValueSelect(options);
         break;
@@ -109,9 +110,9 @@ export function EditCondition(props: Props) {
       case "memberDonations":
         let defaultDonationValue;
         if (condition.operator === "donatedToAny") {
-          options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>{Locale.label("people.editCondition.any")}</MenuItem>);
+          options.push(<MenuItem key="any" value={JSON.stringify({ value: "any", text: "Any" })}>{Locale.label("people.editCondition.any")}</MenuItem>);
           defaultDonationValue = JSON.stringify([{ value: "any", text: "Any" }, { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]);
-        } else  {
+        } else {
           loadedOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultDonationValue = (loadedOptions?.length > 0) ? JSON.stringify([loadedOptions[0], { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]) : "";
         }
@@ -128,7 +129,7 @@ export function EditCondition(props: Props) {
         let defaultAttendanceValue;
         const defaultDateObj = { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) };
         if (condition.operator === "attendedAny") {
-          options.push(<MenuItem key="any" value={JSON.stringify({value: "any", text: "Any"})}>{Locale.label("people.editCondition.any")}</MenuItem>);
+          options.push(<MenuItem key="any" value={JSON.stringify({ value: "any", text: "Any" })}>{Locale.label("people.editCondition.any")}</MenuItem>);
           defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, defaultDateObj]);
         }
         else if (condition.operator === "attendedService") {

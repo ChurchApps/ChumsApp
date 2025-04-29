@@ -31,10 +31,23 @@ export const ProfilePage = () => {
   const handleSave = () => {
     if (validate()) {
       const promises: Promise<any>[] = [];
-      if (password.length >= 8) promises.push(ApiHelper.post("/users/updatePassword", { newPassword: password }, "MembershipApi"));
-      if (areNamesChanged()) promises.push(ApiHelper.post("/users/setDisplayName", { firstName, lastName }, "MembershipApi"));
-      if (email !== UserHelper.user.email) promises.push(ApiHelper.post("/users/updateEmail", { email: email }, "MembershipApi"));
-      promises.push(ApiHelper.post("/users/updateOptedOut", { personId: UserHelper.person.id, optedOut: optedOut }, "MembershipApi"));
+
+      if (password.length >= 8) {
+        promises.push(ApiHelper.post("/users/updatePassword", { newPassword: password }, "MembershipApi"));
+      }
+
+      if (areNamesChanged()) {
+        promises.push(ApiHelper.post("/users/setDisplayName", { firstName, lastName }, "MembershipApi"));
+      }
+
+      if (email !== UserHelper.user.email) {
+        promises.push(ApiHelper.post("/users/updateEmail", { email }, "MembershipApi"));
+      }
+
+      promises.push(ApiHelper.post("/users/updateOptedOut", {
+        personId: UserHelper.person.id,
+        optedOut
+      }, "MembershipApi"));
 
       Promise.all(promises).then(() => {
         UserHelper.user.firstName = firstName;
@@ -79,13 +92,18 @@ export const ProfilePage = () => {
   const validateEmail = (email: string) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email))
 
   const validate = () => {
-    let errors = [];
-    if (!firstName) errors.push(Locale.label("profile.profilePage.firstMsg"));
-    if (!lastName) errors.push(Locale.label("profile.profilePage.lastMsg"));
-    if (email === "") errors.push(Locale.label("profile.profilePage.emailMsg"));
-    else if (!validateEmail(email)) errors.push(Locale.label("profile.profilePage.valEmail"));
-    if (password !== passwordVerify) errors.push(Locale.label("profile.profilePage.passMatch"));
-    if (password !== "" && password.length < 8) errors.push(Locale.label("profile.profilePage.passLong"));
+    const validationRules = [
+      { condition: !firstName, message: Locale.label("profile.profilePage.firstMsg") },
+      { condition: !lastName, message: Locale.label("profile.profilePage.lastMsg") },
+      { condition: email === "", message: Locale.label("profile.profilePage.emailMsg") },
+      { condition: email !== "" && !validateEmail(email), message: Locale.label("profile.profilePage.valEmail") },
+      { condition: password !== passwordVerify, message: Locale.label("profile.profilePage.passMatch") },
+      { condition: password !== "" && password.length < 8, message: Locale.label("profile.profilePage.passLong") }
+    ];
+
+    const errors = validationRules
+      .filter(rule => rule.condition)
+      .map(rule => rule.message);
 
     setErrors(errors);
     return errors.length === 0;
