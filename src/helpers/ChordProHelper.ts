@@ -105,6 +105,9 @@ export class ChordProHelper {
           l = this.replaceChords(l);
           result.push("<div class=\"line\">" + l + "</div>")
           break;
+        case "empty":
+          result.push("<br/>");
+          break;
       }
 
     });

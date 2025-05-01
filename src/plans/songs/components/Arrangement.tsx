@@ -3,12 +3,12 @@ import React, { useEffect } from "react";
 
 import { ArrangementInterface, SongDetailInterface } from "../../../helpers";
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
-import { ApiHelper, DisplayBox, Locale } from "@churchapps/apphelper";
-import { Box, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Tab, Tabs } from "@mui/material";
-import { PraiseChartsProducts } from "./PraiseChartsProducts";
+import { ApiHelper, DisplayBox } from "@churchapps/apphelper";
+import { Grid } from "@mui/material";
 import { SongDetails } from "./SongDetails";
 import { Keys } from "./Keys";
 import { ArrangementEdit } from "./ArrangementEdit";
+import { redirect, useNavigate } from "react-router-dom";
 
 
 interface Props {
@@ -18,6 +18,7 @@ interface Props {
 
 
 export const Arrangement = (props: Props) => {
+  const navigate = useNavigate()
   const [songDetail, setSongDetail] = React.useState<SongDetailInterface>(null)
   const [edit, setEdit] = React.useState(false);
 
@@ -57,10 +58,10 @@ export const Arrangement = (props: Props) => {
     <Grid container spacing={2}>
       <Grid item md={8}>
         <Keys arrangement={props.arrangement} songDetail={songDetail} importLyrics={importLyrics} />
-        {!edit && <DisplayBox headerText="Lyrics" headerIcon="music_note" editFunction={() => { setEdit(true) }}>
-          <div className="chordPro" dangerouslySetInnerHTML={{ __html: ChordProHelper.formatLyrics(props.arrangement?.lyrics || "Manually enter or import from PraiseCharts", 0) }}></div>
+        {!edit && <DisplayBox headerText={"Arrangment - " + props.arrangement?.name} headerIcon="music_note" editFunction={() => { setEdit(true) }}>
+          <div className="chordPro" dangerouslySetInnerHTML={{ __html: ChordProHelper.formatLyrics(props.arrangement?.lyrics || "Manually enter lyrics or import from PraiseCharts", 0) }}></div>
         </DisplayBox>}
-        {edit && <ArrangementEdit arrangement={props.arrangement} onSave={(arrangement: ArrangementInterface) => { setEdit(false); props.reload(); }} onCancel={() => { setEdit(false); }} />}
+        {edit && <ArrangementEdit arrangement={props.arrangement} onSave={(arrangement: ArrangementInterface) => { setEdit(false); console.log("ARRANGEMENT IS", arrangement); if (arrangement) props.reload(); else navigate("/plans/songs") }} onCancel={() => { setEdit(false); }} />}
       </Grid>
       <Grid item md={4}>
         <SongDetails songDetail={songDetail} reload={loadData} />
