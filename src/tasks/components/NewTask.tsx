@@ -1,8 +1,9 @@
 import { Grid, Icon, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, ArrayHelper, ConversationInterface, Locale, MessageInterface, TaskInterface, UserHelper } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, ConversationInterface, MessageInterface, TaskInterface, UserHelper } from "@churchapps/apphelper";
 import { ErrorMessages, InputBox } from "@churchapps/apphelper";
 import { ContentPicker } from "./ContentPicker";
+import { useAppTranslation } from "../../contexts/TranslationContext";
 
 interface Props {
   onCancel: () => void,
@@ -25,12 +26,13 @@ export const NewTask = (props: Props) => {
   const [message, setMessage] = React.useState<MessageInterface>({});
   const [modalField, setModalField] = React.useState("");
   const [errors, setErrors] = React.useState([]);
+  const { t } = useAppTranslation();
 
   const validate = () => {
     const result = [];
-    if (!task.associatedWithId) result.push(Locale.label("tasks.newTask.associatePers"));
-    if (!task.assignedToId) result.push(Locale.label("tasks.newTask.assignPers"));
-    if (!task.title?.trim()) result.push(Locale.label("tasks.newTask.titleTask"));
+    if (!task.associatedWithId) result.push(t("tasks.newTask.associatePers"));
+    if (!task.assignedToId) result.push(t("tasks.newTask.assignPers"));
+    if (!task.title?.trim()) result.push(t("tasks.newTask.titleTask"));
     setErrors(result);
     return result.length === 0;
   }
@@ -108,21 +110,21 @@ export const NewTask = (props: Props) => {
   const handleModalClose = () => { setModalField(""); }
 
   return (
-    <InputBox headerIcon="list_alt" headerText={Locale.label("tasks.newTask.taskNew")} saveFunction={handleSave} cancelFunction={props.onCancel}>
+    <InputBox headerIcon="list_alt" headerText={t("tasks.newTask.taskNew")} saveFunction={handleSave} cancelFunction={props.onCancel}>
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={6} md={(props.compact) ? 6 : 3}>
-          <TextField fullWidth label={Locale.label("tasks.newTask.associateW")} value={task.associatedWithLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} />
+          <TextField fullWidth label={t("tasks.newTask.associateW")} value={task.associatedWithLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} />
         </Grid>
         <Grid item xs={6} md={(props.compact) ? 6 : 3}>
-          <TextField fullWidth label={Locale.label("tasks.newTask.assignTo")} value={task.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
+          <TextField fullWidth label={t("tasks.newTask.assignTo")} value={task.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
         </Grid>
         <Grid item xs={12} md={(props.compact) ? 12 : 6}>
-          <TextField fullWidth label={Locale.label("common.title")} value={task.title || ""} name="title" onChange={handleChange} />
+          <TextField fullWidth label={t("common.title")} value={task.title || ""} name="title" onChange={handleChange} />
         </Grid>
       </Grid>
 
-      <TextField fullWidth label={Locale.label("common.notes")} value={message.content} name="note" onChange={handleChange} multiline />
+      <TextField fullWidth label={t("common.notes")} value={message.content} name="note" onChange={handleChange} multiline />
       {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
     </InputBox>
   );

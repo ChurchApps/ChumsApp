@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ApiHelper, GroupInterface, Locale } from "@churchapps/apphelper";
+import { ApiHelper, GroupInterface, SmallButton } from "@churchapps/apphelper";
 import { TextField, Button, Table, TableBody, TableRow, TableCell } from "@mui/material";
-import { SmallButton } from "@churchapps/apphelper";
+import { useAppTranslation } from "../../contexts/TranslationContext";
 
 interface Props {
   addFunction: (group: GroupInterface) => void,
@@ -11,6 +11,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
   const [searchResults, setSearchResults] = useState<GroupInterface[]>([]);
   const [searchText, setSearchText] = useState("");
+  const { t } = useAppTranslation();
 
   const loadData = () => { ApiHelper.get("/groups", "MembershipApi").then((data) => { setGroups(data); }); };
   React.useEffect(loadData, []);
@@ -39,7 +40,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
       <TableRow key={sr.id}>
         <TableCell>{sr.name}</TableCell>
         <TableCell style={{ textAlign: "right" }}>
-          <SmallButton color="success" icon="people" text={Locale.label("tasks.selectGroup.sel")} ariaLabel="addGroup" onClick={() => handleAdd(sr)} />
+          <SmallButton color="success" icon="people" text={t("tasks.selectGroup.sel")} ariaLabel="addGroup" onClick={() => handleAdd(sr)} />
         </TableCell>
       </TableRow>
     );
@@ -47,8 +48,8 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <TextField fullWidth name="groupSearchText" label={Locale.label("tasks.selectGroup.group")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={handleSearch}>{Locale.label("common.search")}</Button> }}
+      <TextField fullWidth name="groupSearchText" label={t("tasks.selectGroup.group")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
+        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={handleSearch}>{t("common.search")}</Button> }}
       />
       <Table size="small" id="householdMemberAddTable"><TableBody>{rows}</TableBody></Table>
     </>

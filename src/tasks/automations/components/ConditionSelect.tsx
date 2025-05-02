@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ConditionHelper } from "../../components";
-import { ConditionInterface, Locale } from "@churchapps/apphelper";
+import { ConditionInterface } from "@churchapps/apphelper";
 import { useAppTranslation } from "../../../contexts/TranslationContext";
 
 interface Props {
@@ -44,11 +44,11 @@ export const ConditionSelect = (props: Props) => {
 
   const getGender = () => (
     <FormControl fullWidth>
-      <InputLabel>{Locale.label("person.gender")}</InputLabel>
-      <Select fullWidth label={Locale.label("person.gender")} value={props.condition.value || ""} name="value" onChange={handleChange}>
-        <MenuItem value="Unknown">{Locale.label("person.unknown")}</MenuItem>
-        <MenuItem value="Male">{Locale.label("person.male")}</MenuItem>
-        <MenuItem value="Female">{Locale.label("person.female")}</MenuItem>
+      <InputLabel>{t("person.gender")}</InputLabel>
+      <Select fullWidth label={t("person.gender")} value={props.condition.value || ""} name="value" onChange={handleChange}>
+        <MenuItem value="Unknown">{t("person.unknown")}</MenuItem>
+        <MenuItem value="Male">{t("person.male")}</MenuItem>
+        <MenuItem value="Female">{t("person.female")}</MenuItem>
       </Select>
     </FormControl>
   )

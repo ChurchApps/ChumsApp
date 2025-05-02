@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, ApiHelper, ConditionInterface, Locale } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, ApiHelper, ConditionInterface } from "@churchapps/apphelper";
 import { ConditionAttendance } from "./ConditionAttendance";
 import { ConditionDate } from "./ConditionDate";
 import { ConditionSelect } from "./ConditionSelect";
@@ -71,7 +71,7 @@ export const ConditionEdit = (props: Props) => {
   }
 
   const handleDelete = async () => {
-    const conf = window.confirm(Locale.label("tasks.conditionEdit.confirmMsg"));
+    const conf = window.confirm(t("tasks.conditionEdit.confirmMsg"));
     if (!conf) return;
     await ApiHelper.delete("/conditions/" + condition.id, "DoingApi")
     props.onSave(null);
@@ -79,35 +79,35 @@ export const ConditionEdit = (props: Props) => {
 
   if (!condition) return <></>
   return (
-    <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.conditionEdit.conEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={condition?.id ? handleDelete : undefined} help="chums/automations">
+    <InputBox headerIcon="settings_suggest" headerText={t("tasks.conditionEdit.conEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={condition?.id ? handleDelete : undefined} help="chums/automations">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
-        <InputLabel>{Locale.label("tasks.conditionEdit.conType")}</InputLabel>
-        <Select fullWidth label={Locale.label("tasks.conditionEdit.conType")} value={condition.field} name="field" onChange={handleChange}>
-          <ListSubheader>{Locale.label("tasks.conditionEdit.gen")}</ListSubheader>
-          <MenuItem value="today">{Locale.label("tasks.conditionEdit.today")}</MenuItem>
+        <InputLabel>{t("tasks.conditionEdit.conType")}</InputLabel>
+        <Select fullWidth label={t("tasks.conditionEdit.conType")} value={condition.field} name="field" onChange={handleChange}>
+          <ListSubheader>{t("tasks.conditionEdit.gen")}</ListSubheader>
+          <MenuItem value="today">{t("tasks.conditionEdit.today")}</MenuItem>
 
-          <ListSubheader>{Locale.label("common.name")}</ListSubheader>
-          <MenuItem key="/displayName" value="displayName">{Locale.label("person.displayName")}</MenuItem>
-          <MenuItem key="/firstName" value="firstName">{Locale.label("person.firstName")}</MenuItem>
-          <MenuItem key="/lastName" value="lastName">{Locale.label("person.lastName")}</MenuItem>
-          <MenuItem key="/middleName" value="middleName">{Locale.label("person.middleName")}</MenuItem>
-          <MenuItem key="/nickName" value="nickName">{Locale.label("person.nickName")}</MenuItem>
+          <ListSubheader>{t("common.name")}</ListSubheader>
+          <MenuItem key="/displayName" value="displayName">{t("person.displayName")}</MenuItem>
+          <MenuItem key="/firstName" value="firstName">{t("person.firstName")}</MenuItem>
+          <MenuItem key="/lastName" value="lastName">{t("person.lastName")}</MenuItem>
+          <MenuItem key="/middleName" value="middleName">{t("person.middleName")}</MenuItem>
+          <MenuItem key="/nickName" value="nickName">{t("person.nickName")}</MenuItem>
 
-          <ListSubheader>{Locale.label("tasks.conditionEdit.persAtt")}</ListSubheader>
-          <MenuItem key="/birthDate" value="birthDate">{Locale.label("person.birthDate")}</MenuItem>
-          <MenuItem key="/gender" value="gender">{Locale.label("person.gender")}</MenuItem>
-          <MenuItem key="/maritalStatus" value="maritalStatus">{Locale.label("person.maritalStatus")}</MenuItem>
-          <MenuItem key="/anniversary" value="anniversary">{Locale.label("person.anniversary")}</MenuItem>
-          <MenuItem key="/membershipStatus" value="membershipStatus">{Locale.label("person.membershipStatus")}</MenuItem>
+          <ListSubheader>{t("tasks.conditionEdit.persAtt")}</ListSubheader>
+          <MenuItem key="/birthDate" value="birthDate">{t("person.birthDate")}</MenuItem>
+          <MenuItem key="/gender" value="gender">{t("person.gender")}</MenuItem>
+          <MenuItem key="/maritalStatus" value="maritalStatus">{t("person.maritalStatus")}</MenuItem>
+          <MenuItem key="/anniversary" value="anniversary">{t("person.anniversary")}</MenuItem>
+          <MenuItem key="/membershipStatus" value="membershipStatus">{t("person.membershipStatus")}</MenuItem>
 
-          <ListSubheader>{Locale.label("tasks.conditionEdit.conInfo")}</ListSubheader>
-          <MenuItem key="/phone" value="phone">{Locale.label("person.phone")}</MenuItem>
-          <MenuItem key="/email" value="email">{Locale.label("person.email")}</MenuItem>
-          <MenuItem key="/address" value="address">{Locale.label("person.address")}</MenuItem>
-          <MenuItem key="/city" value="city">{Locale.label("person.city")}</MenuItem>
-          <MenuItem key="/state" value="state">{Locale.label("person.state")}</MenuItem>
-          <MenuItem key="/zip" value="zip">{Locale.label("person.zip")}</MenuItem>
+          <ListSubheader>{t("tasks.conditionEdit.conInfo")}</ListSubheader>
+          <MenuItem key="/phone" value="phone">{t("person.phone")}</MenuItem>
+          <MenuItem key="/email" value="email">{t("person.email")}</MenuItem>
+          <MenuItem key="/address" value="address">{t("person.address")}</MenuItem>
+          <MenuItem key="/city" value="city">{t("person.city")}</MenuItem>
+          <MenuItem key="/state" value="state">{t("person.state")}</MenuItem>
+          <MenuItem key="/zip" value="zip">{t("person.zip")}</MenuItem>
 
         </Select>
       </FormControl>
