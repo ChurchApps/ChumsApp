@@ -1,22 +1,20 @@
-import React from "react";
-import { Locale, SmallButton } from "@churchapps/apphelper";
-import { TaskList } from "./components/TaskList";
+import React, { useState } from "react";
 import { Banner } from "@churchapps/apphelper";
+import { TaskList } from "./components/TaskList";
+import { SmallButton } from "@churchapps/apphelper";
+import { useAppTranslation } from "../contexts/TranslationContext";
 
 export const TasksPage = () => {
-  const [status, setStatus] = React.useState("Open");
+  const [status, setStatus] = useState("Open");
+  const { t } = useAppTranslation();
 
-  //
   return (<>
-    <Banner><h1>{Locale.label("tasks.tasksPage.tasks")}</h1></Banner>
+    <Banner><h1>{t("tasks.tasksPage.tasks")}</h1></Banner>
     <div id="mainContent">
-      <span style={{ float: "right", paddingTop: 15, paddingRight:10 }}>
-        <SmallButton icon="settings_suggest" text={Locale.label("tasks.tasksPage.auto")} href="/tasks/automations" /> &nbsp;
-        {(status === "Open") && <SmallButton icon="list_alt" text={Locale.label("tasks.tasksPage.showClosed")} onClick={() => { setStatus("Closed") }} />}
-        {(status === "Closed") && <SmallButton icon="list_alt" text={Locale.label("tasks.tasksPage.showOpen")} onClick={() => { setStatus("Open") }} />}
-      </span>
-
+      <SmallButton icon="settings_suggest" text={t("tasks.tasksPage.auto")} href="/tasks/automations" /> &nbsp;
+      {(status === "Open") && <SmallButton icon="list_alt" text={t("tasks.tasksPage.showClosed")} onClick={() => { setStatus("Closed") }} />}
+      {(status === "Closed") && <SmallButton icon="list_alt" text={t("tasks.tasksPage.showOpen")} onClick={() => { setStatus("Open") }} />}
       <TaskList status={status} />
     </div>
-  </>)
+  </>);
 };

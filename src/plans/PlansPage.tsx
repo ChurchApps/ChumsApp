@@ -1,15 +1,17 @@
 import React from "react";
 import { MinistryList } from "./components/MinistryList";
-import { DisplayBox, Locale } from "@churchapps/apphelper";
+import { DisplayBox } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
+import { useAppTranslation } from "../contexts/TranslationContext";
 
 export const PlansPage = () => {
+  const { t } = useAppTranslation();
 
-  const a=true;
+  const a = true;
 
   return (<>
-    <Banner><h1>{Locale.label("plans.plansPage.selMin")}</h1></Banner>
+    <Banner><h1>{t("plans.plansPage.selMin")}</h1></Banner>
     <div id="mainContent">
       <MinistryList />
     </div>

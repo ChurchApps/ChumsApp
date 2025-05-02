@@ -1,6 +1,7 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ConditionInterface, Locale } from "@churchapps/apphelper";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { ConditionInterface } from "@churchapps/apphelper";
+import { useAppTranslation } from "../../../contexts/TranslationContext";
 
 interface Props {
   condition: ConditionInterface,
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export const ConditionAttendance = (props: Props) => {
+  const { t } = useAppTranslation();
 
   const fieldData: any = (props.condition.fieldData) ? JSON.parse(props.condition.fieldData) : {}
 
@@ -67,20 +69,23 @@ export const ConditionAttendance = (props: Props) => {
   */
   return <>
     <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionAttendance.op")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionAttendance.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
-        <MenuItem value=">">{Locale.label("tasks.conditionAttendance.hasAtt")}</MenuItem>
-        <MenuItem value="=">{Locale.label("tasks.conditionAttendance.hasNoAtt")}</MenuItem>
+      <InputLabel>{t("tasks.conditionAttendance.op")}</InputLabel>
+      <Select fullWidth label={t("tasks.conditionAttendance.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
+        <MenuItem value="attendedAny">{t("tasks.conditionAttendance.attendedAny")}</MenuItem>
+        <MenuItem value="attendedCampus">{t("tasks.conditionAttendance.attendedCampus")}</MenuItem>
+        <MenuItem value="attendedService">{t("tasks.conditionAttendance.attendedService")}</MenuItem>
+        <MenuItem value="attendedServiceTime">{t("tasks.conditionAttendance.attendedServiceTime")}</MenuItem>
+        <MenuItem value="attendedGroup">{t("tasks.conditionAttendance.attendedGroup")}</MenuItem>
       </Select>
     </FormControl>
     <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionAttendance.eventType")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionAttendance.eventType")} value={fieldData.eventType || ""} name="eventType" onChange={handleFieldDataChange}>
-        <MenuItem value="any">{Locale.label("tasks.conditionAttendance.anywhere")}</MenuItem>
-        <MenuItem value="campus">{Locale.label("tasks.conditionAttendance.campus")}</MenuItem>
-        <MenuItem value="service">{Locale.label("tasks.conditionAttendance.serv")}</MenuItem>
-        <MenuItem value="serviceTime">{Locale.label("tasks.conditionAttendance.servTime")}</MenuItem>
-        <MenuItem value="group">{Locale.label("tasks.conditionAttendance.group")}</MenuItem>
+      <InputLabel>{t("tasks.conditionAttendance.eventType")}</InputLabel>
+      <Select fullWidth label={t("tasks.conditionAttendance.eventType")} value={fieldData.eventType || ""} name="eventType" onChange={handleFieldDataChange}>
+        <MenuItem value="any">{t("tasks.conditionAttendance.anywhere")}</MenuItem>
+        <MenuItem value="campus">{t("tasks.conditionAttendance.campus")}</MenuItem>
+        <MenuItem value="service">{t("tasks.conditionAttendance.serv")}</MenuItem>
+        <MenuItem value="serviceTime">{t("tasks.conditionAttendance.servTime")}</MenuItem>
+        <MenuItem value="group">{t("tasks.conditionAttendance.group")}</MenuItem>
       </Select>
     </FormControl>
   </>

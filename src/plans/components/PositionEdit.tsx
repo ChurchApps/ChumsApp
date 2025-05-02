@@ -1,33 +1,44 @@
 import React, { useEffect } from "react";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
-import { ApiHelper, ErrorMessages, GroupInterface, InputBox, Locale, PositionInterface } from "@churchapps/apphelper";
+import { ApiHelper, ErrorMessages, GroupInterface, InputBox, PositionInterface } from "@churchapps/apphelper";
 import ReactSelect from "react-select";
+import { useAppTranslation } from "../../contexts/TranslationContext";
 
-interface Props { position: PositionInterface, categoryNames:string[], updatedFunction: () => void }
+interface Props {
+  position: PositionInterface;
+  categoryNames: string[];
+  updatedFunction: () => void
+}
 
-type OptionType = {
+interface OptionType {
   value: string;
   label: string;
-};
+}
 
-
-export const PositionEdit = (props:Props) => {
+export const PositionEdit = (props: Props) => {
+  const { t } = useAppTranslation();
 
   const options: OptionType[] = [];
-  props.categoryNames.forEach(categoryName => options.push({ value: categoryName, label: categoryName }));
+  props.categoryNames.forEach(cn => {
+    options.push({ value: cn, label: cn });
+  });
 
-  const [position, setPosition] = React.useState<PositionInterface>(props.position);
+  const [position, setPosition] = React.useState<PositionInterface>(null);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [categoryInput, setCategoryInput] = React.useState("");
-  const [categoryOptions, setCategoryOptions] = React.useState<OptionType[]>(options);
+  const [categoryOption, setCategoryOption] = React.useState<OptionType>(null);
   const [groups, setGroups] = React.useState<GroupInterface[]>([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent ) => {
-    setErrors([]);
-    const p = { ...position } as PositionInterface;
-    let value = e.target.value;
+  useEffect(() => {
+    if (props.position?.id) setPosition(props.position);
+    else setPosition({ name: "", count: 1, categoryName: "" });
+    ApiHelper.get("/groups", "MembershipApi").then(data => setGroups(data));
+  }, [props.position]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+    const p = { ...position };
+    const value = e.target.value;
     switch (e.target.name) {
-      case "categoryName": p.categoryName = value; break;
       case "name": p.name = value; break;
       case "count": p.count = parseInt(value); break;
       case "groupId": p.groupId = value; break;
@@ -36,67 +47,50 @@ export const PositionEdit = (props:Props) => {
   }
 
   const handleSave = () => {
-    const errors:string[] = [];
-    if (!position.categoryName) errors.push(Locale.label("plans.positionEdit.catNameReq"));
-    if (!position.name) errors.push(Locale.label("plans.positionEdit.nameReq"));
+    const errors: string[] = [];
+    if (!position.categoryName) errors.push(t("plans.positionEdit.catNameReq"));
+    if (!position.name) errors.push(t("plans.positionEdit.nameReq"));
     setErrors(errors);
     if (errors.length === 0) ApiHelper.post("/positions", [position], "DoingApi").then(props.updatedFunction);
   }
 
   const handleDelete = () => {
-    ApiHelper.delete("/positions/" + position.id, "DoingApi").then(props.updatedFunction);
-  }
-
-  const categoryOption = (position?.categoryName === "" && categoryOptions.length > 0) ? categoryOptions[0] : { value: position.categoryName, label: position.categoryName }
-
-  const handleCategoryChange = (newValue: { label: string, value: string }, obj: any) => {
-    let p: PositionInterface = { ...position };
-    p.categoryName = newValue.value;
-    setCategoryInput("");
-    setPosition(p);
-  }
-
-  const handleCategoryBlur = () => {
-    if (categoryInput) {
-      const options = [...categoryOptions]
-      options.push({ value: categoryInput, label: categoryInput })
-      let p: PositionInterface = { ...position };
-      p.categoryName = categoryInput;
-      setCategoryOptions(options);
-      setPosition(p);
+    if (window.confirm(t("plans.positionEdit.confirmDelete"))) {
+      ApiHelper.delete("/positions/" + position.id, "DoingApi").then(props.updatedFunction);
     }
   }
 
   const getGroupOptions = () => {
-    let options = [];
-    for (let i = 0; i < groups.length; i++) options.push(<MenuItem key={i} value={groups[i].id}>{groups[i].name}</MenuItem>);
-    return options;
+    const result: JSX.Element[] = [];
+    groups.forEach(g => {
+      result.push(<MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>);
+    });
+    return result;
   }
-
-  const loadData = () => {
-    ApiHelper.get("/groups/tag/team", "MembershipApi").then(data => setGroups(data));
-  }
-
-  useEffect(() => { loadData(); }, []);
 
   return (<>
     <ErrorMessages errors={errors} />
-    <InputBox headerText={(props.position?.id) ? Locale.label("plans.positionEdit.posEdit") : Locale.label("plans.positionEdit.posAdd")} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={(position.id) ? handleDelete : null }>
+    <InputBox headerText={(props.position?.id) ? t("plans.positionEdit.posEdit") : t("plans.positionEdit.posAdd")} headerIcon="assignment" saveFunction={handleSave} cancelFunction={props.updatedFunction} deleteFunction={(position.id) ? handleDelete : null}>
       <FormControl fullWidth>
-        <div style={{fontSize:12, color:"#999", position:"absolute", top:-8, left:10, backgroundColor:"#FFF", zIndex:999}}>{Locale.label("plans.positionEdit.catName")}</div>
+        <div style={{ fontSize: 12, color: "#999", position: "absolute", top: -8, left: 10, backgroundColor: "#FFF", zIndex: 999 }}>{t("plans.positionEdit.catName")}</div>
         <ReactSelect onInputChange={(newValue: string) => { setCategoryInput(newValue) }}
           value={categoryOption}
-          onChange={handleCategoryChange}
-          options={categoryOptions}
-          onBlur={handleCategoryBlur}
-          className="comboBox"
+          onChange={(e: OptionType) => {
+            setCategoryOption(e);
+            const p = { ...position };
+            p.categoryName = e.value;
+            setPosition(p);
+          }}
+          options={options}
+          isClearable
+          placeholder={t("plans.positionEdit.selectCategory")}
         />
       </FormControl>
-      <TextField fullWidth label={Locale.label("common.name")} id="name" name="name" type="text" value={position.name} onChange={handleChange} />
-      <TextField fullWidth label={Locale.label("plans.positionEdit.volCount")} id="count" name="count" type="number" value={position.count} onChange={handleChange} />
+      <TextField fullWidth label={t("common.name")} id="name" name="name" type="text" value={position.name} onChange={handleChange} />
+      <TextField fullWidth label={t("plans.positionEdit.volCount")} id="count" name="count" type="number" value={position.count} onChange={handleChange} />
       <FormControl fullWidth>
-        <InputLabel>{Locale.label("plans.positionEdit.volGroup")}</InputLabel>
-        <Select name="groupId" label={Locale.label("plans.positionEdit.volGroup")} value={position.groupId} onChange={handleChange}>
+        <InputLabel>{t("plans.positionEdit.volGroup")}</InputLabel>
+        <Select name="groupId" label={t("plans.positionEdit.volGroup")} value={position.groupId} onChange={handleChange}>
           {getGroupOptions()}
         </Select>
       </FormControl>

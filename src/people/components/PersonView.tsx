@@ -3,6 +3,7 @@ import { AssociatedForms } from "."
 import { PersonHelper, PersonInterface, Loading, DisplayBox, DateHelper, Locale } from "@churchapps/apphelper"
 import { Grid, Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { formattedPhoneNumber } from "./PersonEdit";
+import { useAppTranslation } from "../../contexts/TranslationContext";
 
 interface Props {
   id?: string,
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export const PersonView = ({ id, person, editFunction, updatedFunction }: Props) => {
+  const { t } = useAppTranslation();
+
   const getFields = () => {
     if (!person) return <Loading />
     else {
@@ -20,15 +23,15 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
       let contactMethods = [];
       if (person) {
         const p = { ...person };
-        if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>{Locale.label("person.gender")}</label> <b>{p.gender}</b></div>);
-        if (p.birthDate) leftAttributes.push(<div key="age"><label>{Locale.label("person.age")}</label> <b>{PersonHelper.getAge(p.birthDate)}</b></div>);
+        if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>{t("person.gender")}</label> <b>{t(`person.${p.gender.toLowerCase()}`)}</b></div>);
+        if (p.birthDate) leftAttributes.push(<div key="age"><label>{t("person.age")}</label> <b>{PersonHelper.getAge(p.birthDate)}</b></div>);
         if (p.maritalStatus && p.maritalStatus !== "Single") {
-          if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>{Locale.label("person.maritalStatus")}:</label> <b>{p.maritalStatus} ({DateHelper.getShortDate(DateHelper.toDate(p.anniversary))})</b></div>);
-          else leftAttributes.push(<div key="maritalStatus"><label>{Locale.label("person.maritalStatus")}:</label> <b>{p.maritalStatus}</b></div>);
+          if (p.anniversary) leftAttributes.push(<div key="maritalStatus"><label>{t("person.maritalStatus")}:</label> <b>{p.maritalStatus} ({DateHelper.getShortDate(DateHelper.toDate(p.anniversary))})</b></div>);
+          else leftAttributes.push(<div key="maritalStatus"><label>{t("person.maritalStatus")}:</label> <b>{p.maritalStatus}</b></div>);
         }
-        if (p.membershipStatus) leftAttributes.push(<div key="membership"><label>{Locale.label("people.personView.memShip")}</label> <b>{p.membershipStatus}</b></div>);
+        if (p.membershipStatus) leftAttributes.push(<div key="membership"><label>{t("people.personView.memShip")}</label> <b>{t(`person.${p.membershipStatus.toLowerCase()}`)}</b></div>);
 
-        let homeLabel = Locale.label("people.personView.home");
+        let homeLabel = t("people.personView.home");
         if (p.contactInfo.email) {
           contactMethods.push(<TableRow key="email"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>mail</Icon></TableCell><TableCell><a href={"mailto:" + p.contactInfo.email}><b>{p.contactInfo.email}</b></a></TableCell></TableRow>);
           homeLabel = "";
@@ -46,8 +49,8 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
 
           contactMethods.push(<TableRow key="address"><TableCell><label>{homeLabel}</label></TableCell><TableCell><Icon>home_pin</Icon></TableCell><TableCell>{lines}</TableCell></TableRow>);
         }
-        if (p.contactInfo.mobilePhone) contactMethods.push(<TableRow key="mobilePHone"><TableCell><label>{Locale.label("people.personView.mobile")}</label></TableCell><TableCell><Icon>phone_iphone</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.mobilePhone)}</b></TableCell></TableRow>);
-        if (p.contactInfo.workPhone) contactMethods.push(<TableRow key="workPhone"><TableCell><label>{Locale.label("people.personView.work")}</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.workPhone)}</b></TableCell></TableRow>);
+        if (p.contactInfo.mobilePhone) contactMethods.push(<TableRow key="mobilePHone"><TableCell><label>{t("people.personView.mobile")}</label></TableCell><TableCell><Icon>phone_iphone</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.mobilePhone)}</b></TableCell></TableRow>);
+        if (p.contactInfo.workPhone) contactMethods.push(<TableRow key="workPhone"><TableCell><label>{t("people.personView.work")}</label></TableCell><TableCell><Icon>call</Icon></TableCell><TableCell><b>{formattedPhoneNumber(p.contactInfo.workPhone)}</b></TableCell></TableRow>);
       }
 
       return (<Grid container spacing={3}>
@@ -66,7 +69,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
   }
 
   return (
-    <DisplayBox headerText={Locale.label("people.personView.persDet")} editFunction={editFunction} footerContent={<AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />}>
+    <DisplayBox headerText={t("people.personView.persDet")} editFunction={editFunction} footerContent={<AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />}>
       {getFields()}
     </DisplayBox>
   )

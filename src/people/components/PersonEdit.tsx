@@ -5,6 +5,7 @@ import { PersonHelper, DateHelper, InputBox, ApiHelper, PersonInterface, Loading
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
+import { useAppTranslation } from "../../contexts/TranslationContext";
 
 interface Props {
   id?: string,
@@ -30,6 +31,7 @@ export function PersonEdit(props: Props) {
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [phoneHasError, setPhoneHasError] = React.useState({ homePhone: false, workPhone: false, mobilePhone: false });
+  const { t } = useAppTranslation();
 
   const [person, setPerson] = React.useState<PersonInterface>({
     name: { first: "", last: "", middle: "", nick: "", display: "" },
@@ -65,8 +67,8 @@ export function PersonEdit(props: Props) {
   }
 
   const handlePhoneChange = (value: string, field: "homePhone" | "workPhone" | "mobilePhone") => {
-    setPhoneHasError((prevState) => ({...prevState, [field]: !matchIsValidTel(value)}));
-    const p: PersonInterface = {...person};
+    setPhoneHasError((prevState) => ({ ...prevState, [field]: !matchIsValidTel(value) }));
+    const p: PersonInterface = { ...person };
     p.contactInfo[field] = value;
     setPerson(p);
   }
@@ -173,7 +175,7 @@ export function PersonEdit(props: Props) {
   React.useEffect(fetchMembers, [props.person]);
 
   const ariaLabel = {
-    "aria-label" : "phone-number"
+    "aria-label": "phone-number"
   }
 
   const ariaDesc = {

@@ -1,5 +1,6 @@
-import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
+import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { useAppTranslation } from "../../../contexts/TranslationContext";
 import { ConditionInterface, Locale } from "@churchapps/apphelper";
 import { ConditionHelper } from "../../../helpers"
 
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export const ConditionDate = (props: Props) => {
+  const { t } = useAppTranslation();
+
   const init = () => {
     const c = { ...props.condition };
     if (!c.value) {

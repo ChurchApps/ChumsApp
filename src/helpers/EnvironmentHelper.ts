@@ -1,5 +1,5 @@
-import { CommonEnvironmentHelper, ApiHelper, Locale } from "@churchapps/apphelper";
-
+import { CommonEnvironmentHelper, ApiHelper } from "@churchapps/apphelper";
+import '../i18n'; // Import our i18n configuration
 
 export class EnvironmentHelper {
   private static LessonsApi = "";
@@ -27,16 +27,11 @@ export class EnvironmentHelper {
       { keyName: "ContentApi", url: EnvironmentHelper.Common.ContentApi, jwt: "", permisssions: [] },
       { keyName: "LessonsApi", url: EnvironmentHelper.LessonsApi, jwt: "", permisssions: [] },
     ];
-
-
-    await Locale.init([`/locales/{{lng}}.json?v=1`, `/apphelper/locales/{{lng}}.json`])
-
   }
 
   static initLocal = async () => {
 
   }
-
 
   static initDev = () => {
     this.initStaging();
@@ -53,6 +48,5 @@ export class EnvironmentHelper {
     EnvironmentHelper.Common.GoogleAnalyticsTag = "G-JB7VCG51LF";
     EnvironmentHelper.LessonsApi = "https://api.lessons.church";
   }
-
 }
 

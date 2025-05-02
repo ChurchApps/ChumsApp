@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DateHelper, DisplayBox, Locale, NotificationInterface, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
+import { useAppTranslation } from "../../contexts/TranslationContext";
 
 interface Props {
   plan: PlanInterface,
@@ -12,13 +13,13 @@ interface Props {
 }
 
 export const PlanValidation = (props: Props) => {
+  const { t } = useAppTranslation();
 
   const [errors, setErrors] = React.useState<JSX.Element[]>([]);
   const [plans, setPlans] = React.useState<PlanInterface[]>([]);
   const [planTimeConflicts, setPlanTimeConflicts] = React.useState<{ time: TimeInterface, overlapingTimes: TimeInterface[] }[]>([]);
   const [externalPositions, setExternalPositions] = React.useState<PositionInterface[]>();
   const [externalAssignments, setExternalAssignments] = React.useState<AssignmentInterface[]>();
-
 
   const validateBlockout = (issues: JSX.Element[]) => {
     const conflicts: { person: PersonInterface, blockout: BlockoutDateInterface }[] = [];
@@ -50,7 +51,7 @@ export const PlanValidation = (props: Props) => {
     });
 
     conflicts.forEach(c => {
-      issues.push(<><b>{c.person.name.display}:</b> {Locale.label("plans.planValidation.blockCon")} {DateHelper.prettyDate(new Date(c.blockout.startDate))} {Locale.label("plans.planValidation.to")} {DateHelper.prettyDate(new Date(c.blockout.endDate))}.</>);
+      issues.push(<><b>{c.person.name.display}:</b> {t("plans.planValidation.blockCon")} {DateHelper.prettyDate(new Date(c.blockout.startDate))} {t("plans.planValidation.to")} {DateHelper.prettyDate(new Date(c.blockout.endDate))}.</>);
     });
   }
 
@@ -59,7 +60,7 @@ export const PlanValidation = (props: Props) => {
       const assignments = props.assignments.filter(a => a.positionId === p.id);
       if (assignments.length < p.count) {
         const needed = p.count - assignments.length;
-        issues.push(<><b>{p.name}:</b> {needed} {Locale.label("plans.planValidation.more")} {(needed === 1) ? Locale.label("plans.planValidation.person") : Locale.label("plans.planValidation.ppl")} {Locale.label("plans.planValidation.needed")}</>);
+        issues.push(<><b>{p.name}:</b> {needed} {t("plans.planValidation.more")} {(needed === 1) ? t("plans.planValidation.person") : t("plans.planValidation.ppl")} {t("plans.planValidation.needed")}</>);
       }
     });
   }
@@ -82,7 +83,7 @@ export const PlanValidation = (props: Props) => {
         a.times.forEach(at => {
           b.times.forEach(bt => {
             if (at.startTime < bt.endTime && at.endTime > bt.startTime) {
-              issues.push(<><b>{person.name.display}:</b> {Locale.label("plans.planValidation.timeCon")} {a.position.name} {Locale.label("plans.planValidation.and")} {b.position.name} {Locale.label("plans.planValidation.during")} {at.displayName}.</>);
+              issues.push(<><b>{person.name.display}:</b> {t("plans.planValidation.timeCon")} {a.position.name} {t("plans.planValidation.and")} {b.position.name} {t("plans.planValidation.during")} {at.displayName}.</>);
             }
           });
         });
@@ -106,9 +107,9 @@ export const PlanValidation = (props: Props) => {
           //get overlaping times from planTimeConflicts based on current duty.
           const filtered = tc.overlapingTimes.filter(ot => a.position.planId === ot.planId && ot.teams?.indexOf(a.position.categoryName) > -1);
           if (filtered.length > 0) {
-            issues.push(<><hr /><b style={{ display: "flex", justifyContent: "center", alignItems: "center", fontStyle: "italic" }}>{plan.name} {Locale.label("plans.planValidation.cons")}</b></>);
+            issues.push(<><hr /><b style={{ display: "flex", justifyContent: "center", alignItems: "center", fontStyle: "italic" }}>{plan.name} {t("plans.planValidation.cons")}</b></>);
             filtered.forEach(f => {
-              issues.push(<><b>{person.name.display}:</b> {Locale.label("plans.planValidation.timeCon2")} {a.position.name} {Locale.label("plans.planValidation.between")} {tc.time.displayName} {Locale.label("plans.planValidation.and")} {f.displayName}</>);
+              issues.push(<><b>{person.name.display}:</b> {t("plans.planValidation.timeCon2")} {a.position.name} {t("plans.planValidation.between")} {tc.time.displayName} {t("plans.planValidation.and")} {f.displayName}</>);
             })
           }
         });
@@ -175,7 +176,7 @@ export const PlanValidation = (props: Props) => {
   useEffect(() => { getAll(); validate(); }, [props.assignments, props.positions, props.people]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const getErrorList = () => {
-    if (errors.length === 0) return <p>{Locale.label("plans.planValidation.valPlan")}</p>;
+    if (errors.length === 0) return <p>{t("plans.planValidation.valPlan")}</p>;
     else {
       const lines = errors.map((e, i) => (<li key={i}>{e}</li>));
       return <ul>{lines}</ul>;
@@ -194,25 +195,22 @@ export const PlanValidation = (props: Props) => {
     pending.forEach(a => {
       const position: PositionInterface = ArrayHelper.getOne(props.positions, "id", a.positionId);
       a.notified = new Date();
-      const data: any = { peopleIds: [a.personId], contentType: "assignment", contentId: props.plan.id, message: Locale.label("plans.planValidation.volReq") + props.plan.name + " - " + position.name + "." + Locale.label("plans.planValidation.pleaseConfirm") };
+      const data: any = { peopleIds: [a.personId], contentType: "assignment", contentId: props.plan.id, message: t("plans.planValidation.volReq") + props.plan.name + " - " + position.name + "." + t("plans.planValidation.pleaseConfirm") };
       promises.push(ApiHelper.post("/notifications/create", data, "MessagingApi"));
     });
     promises.push(ApiHelper.post("/assignments", pending, "DoingApi"));
     Promise.all(promises).then(props.onUpdate);
   }
 
-
-
   const getNotificationLink = () => {
     const pending = getPendingNotifications();
 
-    if (pending.length === 0) return <p>{Locale.label("plans.planValidation.volNotif")}</p>;
-    else return <p><a href="about:blank" onClick={(e) => { e.preventDefault(); notify(); }}>{Locale.label("plans.planValidation.notify")} {pending.length} {Locale.label("plans.planValidation.vol")}</a></p>;
+    if (pending.length === 0) return <p>{t("plans.planValidation.volNotif")}</p>;
+    else return <p><a href="about:blank" onClick={(e) => { e.preventDefault(); notify(); }}>{t("plans.planValidation.notify")} {pending.length} {t("plans.planValidation.vol")}</a></p>;
   }
 
-
   return (<>
-    <DisplayBox headerText={Locale.label("plans.planValidation.val")} headerIcon="assignment">
+    <DisplayBox headerText={t("plans.planValidation.val")} headerIcon="assignment">
       {getErrorList()}
       {getNotificationLink()}
     </DisplayBox>

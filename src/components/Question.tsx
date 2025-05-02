@@ -1,9 +1,11 @@
 import React from "react";
-import { DateHelper, QuestionInterface, AnswerInterface, Locale } from "@churchapps/apphelper";
+import { DateHelper, QuestionInterface, AnswerInterface } from "@churchapps/apphelper";
+import { useAppTranslation } from "../contexts/TranslationContext";
 
 interface Props { question: QuestionInterface, answer: AnswerInterface }
 
 export const Question: React.FC<Props> = (props) => {
+  const { t } = useAppTranslation();
   let q = props.question;
   let a = props.answer;
   if (a === null) return null;
@@ -25,7 +27,7 @@ export const Question: React.FC<Props> = (props) => {
         }
         break;
       case "Yes/No":
-        displayValue = (a.value === null || a.value === "") ? "" : a.value.replace("False", Locale.label("common.no")).replace("True", Locale.label("common.yes"));
+        displayValue = (a.value === null || a.value === "") ? "" : a.value.replace("False", t("common.no")).replace("True", t("common.yes"));
         break;
       default:
         displayValue = a.value;

@@ -5,6 +5,7 @@ import { ConditionAttendance } from "./ConditionAttendance";
 import { ConditionDate } from "./ConditionDate";
 import { ConditionSelect } from "./ConditionSelect";
 import { ConditionText } from "./ConditionText";
+import { useAppTranslation } from "../../../contexts/TranslationContext";
 
 interface Props {
   condition: ConditionInterface,
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export const ConditionEdit = (props: Props) => {
+  const { t } = useAppTranslation();
   const [condition, setCondition] = React.useState<ConditionInterface>(null);
   const [errors, setErrors] = React.useState([]);
 

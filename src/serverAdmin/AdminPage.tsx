@@ -1,12 +1,13 @@
 import React from "react";
-import { Locale } from "@churchapps/apphelper";
 import { Grid, Icon } from "@mui/material";
 import { Banner } from "@churchapps/apphelper";
 import { UsageTrendsTab } from "./components/UsageTrendTab";
 import { ChurchesTab } from "./components/ChurchesTab";
+import { useAppTranslation } from "../contexts/TranslationContext";
 
 export const AdminPage = () => {
   const [selectedTab, setSelectedTab] = React.useState("churches");
+  const { t } = useAppTranslation();
 
   const getCurrentTab = () => {
     let currentTab = <div></div>;
@@ -17,7 +18,6 @@ export const AdminPage = () => {
     return currentTab;
   }
 
-
   const getItem = (tab: any) => {
     if (tab.key === selectedTab) return (
       <li key={tab.key} className="active">
@@ -27,15 +27,15 @@ export const AdminPage = () => {
 
   const getTabs = () => {
     let tabs = [];
-    tabs.push({ key: "churches", icon: "church", label: Locale.label("serverAdmin.adminPage.churches") });
-    tabs.push({ key: "usage", icon: "show_chart", label: Locale.label("serverAdmin.adminPage.usageTrends") });
+    tabs.push({ key: "churches", icon: "church", label: t("serverAdmin.adminPage.churches") });
+    tabs.push({ key: "usage", icon: "show_chart", label: t("serverAdmin.adminPage.usageTrends") });
 
     return tabs;
   }
 
   return (
     <>
-      <Banner><h1>{Locale.label("serverAdmin.adminPage.servAdmin")}</h1></Banner>
+      <Banner><h1>{t("serverAdmin.adminPage.servAdmin")}</h1></Banner>
       <Grid container spacing={2}>
         <Grid item xs={12} md={2}>
           <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>

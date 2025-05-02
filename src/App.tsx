@@ -7,6 +7,7 @@ import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import "@churchapps/apphelper/dist/components/markdownEditor/editor.css";
 //TODO export the css from apphelper
 import { EnvironmentHelper } from "./helpers";
+import { TranslationProvider } from "./contexts/TranslationContext";
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -57,11 +58,13 @@ const App: React.FC = () => (
       <CookiesProvider>
         <ThemeProvider theme={mdTheme}>
           <CssBaseline />
-          <Router>
-            <Routes>
-              <Route path="/*" element={<ControlPanel />} />
-            </Routes>
-          </Router>
+          <TranslationProvider>
+            <Router>
+              <Routes>
+                <Route path="/*" element={<ControlPanel />} />
+              </Routes>
+            </Router>
+          </TranslationProvider>
         </ThemeProvider>
       </CookiesProvider>
     </UserProvider>

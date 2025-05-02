@@ -1,7 +1,8 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import React from "react";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { useAppTranslation } from "../../../contexts/TranslationContext";
 import { ConditionHelper } from "../../components";
-import { ConditionInterface, Locale } from "@churchapps/apphelper";
+import { ConditionInterface } from "@churchapps/apphelper";
 
 interface Props {
   condition: ConditionInterface,
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export const ConditionText = (props: Props) => {
+  const { t } = useAppTranslation();
+
   const init = () => {
     const c = { ...props.condition };
     if (!c.value) {
@@ -43,17 +46,13 @@ export const ConditionText = (props: Props) => {
 
   return <>
     <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionText.op")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionText.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
-        <MenuItem key="/equals" value="=">=</MenuItem>
-        <MenuItem key="/contains" value="contains">{Locale.label("tasks.conditionText.contains")}</MenuItem>
-        <MenuItem key="/startsWith" value="startsWith">{Locale.label("tasks.conditionText.startW")}</MenuItem>
-        <MenuItem key="/endsWith" value="endsWith">{Locale.label("tasks.conditionText.endW")}</MenuItem>
-        <MenuItem key="/greaterThan" value=">">&gt;</MenuItem>
-        <MenuItem key="/greaterThanEqual" value=">=">&gt;=</MenuItem>
-        <MenuItem key="/lessThan" value="<">&lt;</MenuItem>
-        <MenuItem key="/lessThanEqual" value="<=">&lt;=</MenuItem>
-        <MenuItem key="/notEquals" value="!=">!=</MenuItem>
+      <InputLabel>{t("tasks.conditionText.op")}</InputLabel>
+      <Select fullWidth label={t("tasks.conditionText.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
+        <MenuItem value="contains">{t("tasks.conditionText.contains")}</MenuItem>
+        <MenuItem value="startsWith">{t("tasks.conditionText.startsWith")}</MenuItem>
+        <MenuItem value="endsWith">{t("tasks.conditionText.endsWith")}</MenuItem>
+        <MenuItem value="equals">{t("tasks.conditionText.equals")}</MenuItem>
+        <MenuItem value="notEquals">{t("tasks.conditionText.notEquals")}</MenuItem>
       </Select>
     </FormControl>
     {getTextField()}
