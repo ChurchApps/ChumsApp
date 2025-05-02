@@ -121,7 +121,7 @@ export function FormEdit(props: Props) {
           />
         </>
       }
-      <TextField fullWidth={true} label={Locale.label("Thank You Message")} type="text" name="thankYouMessage" value={form.thankYouMessage} onChange={handleChange} />
+      <TextField fullWidth={true} label={Locale.label("forms.formEdit.thankYouMessage")} type="text" name="thankYouMessage" value={form.thankYouMessage} onChange={handleChange} />
     </InputBox>
   );
 }
