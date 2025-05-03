@@ -66,12 +66,14 @@
 			"att": "Présence",
 			"dash": "Tableau de bord",
 			"don": "Dons",
-			"form": "Formulaire",
+			"forms": "Formulaires",
 			"groups": "Groupes",
 			"plans": "Plans",
 			"ppl": "Personnes",
 			"servAdmin": "Admin Serveur",
+			"serving": "Service",
 			"set": "Paramètres",
+			"songs": "Chants",
 			"tasks": "Tâches"
 		}
 	},
@@ -519,7 +521,8 @@
 			"planEdit": "Modifier le plan",
 			"planReq": "Le nom du plan est requis.",
 			"servDate": "Date de service",
-			"servReq": "La date de service est requise."
+			"servReq": "La date de service est requise.",
+			"servOrder": "Inclure l'ordre de service ?"
 		},
 		"planList": {
 			"noPlan": "Aucun plan n'a encore été ajouté.",
@@ -592,6 +595,11 @@
 			"noTime": "Aucune heure n'a encore été ajoutée",
 			"sunServ": "Service du dimanche",
 			"times": "Heures"
+		},
+		"printPlan": {
+			"serviceOrder": "ORDRE DU SERVICE",
+			"time": "Heure",
+			"length": "Durée"
 		}
 	},
 	"profile": {
@@ -745,6 +753,86 @@
 			"noAcc": "Vous n'avez pas de compte utilisateur ?",
 			"valEmail": "Veuillez entrer un email valide",
 			"valEmailMsg": "Entrez un email valide"
+		},
+		"directoryApprovalSettingsEdit": {
+			"directoryApprovalGroup": "Groupe d'approbation du répertoire",
+			"forceMsg": "Ce groupe traitera toutes les mises à jour du répertoire des membres. Les modifications ne seront appliquées qu'après leur approbation.",
+			"groups": "Groupes",
+			"none": "Aucun",
+			"noGroups": "Aucun groupe disponible"
+		},
+		"feeOptionsSettings": {
+			"creditCardFlatRate": "Tarif fixe [ Carte de crédit ]",
+			"creditCardTransactionFee": "Frais de transaction [ Carte de crédit ]",
+			"achFlatRate": "Tarif fixe [ ACH ]",
+			"achHardLimit": "Limite stricte [ ACH ]"
+		},
+		"supportContactSettingsEdit": {
+			"supportContact": "Contact de support",
+			"forceMsg": "Ce lien sera utilisé par les utilisateurs pour contacter l'église",
+			"link": "Lien",
+			"linkHelperText": "Il doit s'agir soit de l'email de l'église, soit d'un lien vers le formulaire de contact de l'église"
+		},
+		"visibilityPrefSettingsEdit": {
+			"visibilityPreference": "Préférence de visibilité",
+			"forceMsg": "Ceci définit la valeur par défaut pour les personnes qui n'ont pas encore configuré leurs paramètres",
+			"address": "Adresse",
+			"phoneNum": "Numéro de téléphone",
+			"email": "Email",
+			"everyone": "Tout le monde",
+			"members": "Membres",
+			"groups": "Groupes uniquement"
+		}
+	},
+	"songs": {
+		"arrangement": {
+			"title": "Arrangement",
+			"enterLyrics": "Entrer les paroles manuellement ou importer depuis PraiseCharts",
+			"edit": "Modifier l'arrangement",
+			"name": "Nom de l'arrangement",
+			"lyrics": "Paroles",
+			"deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet arrangement ?"
+		},
+		"create": {
+			"title": "Créer un chant",
+			"songTitle": "Titre du chant",
+			"artist": "Artiste"
+		},
+		"key": {
+			"edit": "Modifier la tonalité",
+			"signature": "Tonalité",
+			"label": "Étiquette",
+			"default": "Par défaut",
+			"defaultLabel": "Tonalité de John",
+			"deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette tonalité ?"
+		},
+		"keys": {
+			"title": "Tonalités",
+			"add": "+ Ajouter",
+			"import": "Importer",
+			"importPrompt": "Voulez-vous importer les chants de PraiseCharts ?",
+			"addFiles": "Ajouter des fichiers",
+			"importFromPraiseCharts": "Importer des fichiers depuis PraiseCharts",
+			"addExternalLink": "Ajouter un lien externe"
+		},
+		"link": {
+			"edit": "Modifier le lien",
+			"url": "Url",
+			"text": "Texte",
+			"chordChart": "Grille d'accords",
+			"deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce lien ?"
+		},
+		"details": {
+			"artist": "Artiste",
+			"releaseDate": "Date de sortie",
+			"album": "Album",
+			"language": "Langue",
+			"bpm": "BPM",
+			"keySignature": "Tonalité",
+			"keys": "Tonalités",
+			"meter": "Mètre",
+			"length": "Durée",
+			"key": "Tonalité"
 		}
 	},
 	"tasks": {
@@ -881,6 +969,12 @@
 			"showClosed": "Afficher les fermés",
 			"showOpen": "Afficher les ouverts",
 			"tasks": "Tâches"
+		},
+		"requestedChanges": {
+			"requestedChanges": "Modifications demandées",
+			"apply": "Appliquer",
+			"field": "Champ",
+			"value": "Valeur"
 		}
 	}
 }

@@ -66,12 +66,14 @@
 			"att": "Presença",
 			"dash": "Painel",
 			"don": "Doações",
-			"form": "Formulário",
+			"forms": "Formulários",
 			"groups": "Grupos",
 			"plans": "Planos",
 			"ppl": "Pessoas",
 			"servAdmin": "Admin do Servidor",
+			"serving": "Serviço",
 			"set": "Configurações",
+			"songs": "Músicas",
 			"tasks": "Tarefas"
 		}
 	},
@@ -515,11 +517,12 @@
 		"planEdit": {
 			"copy": "Copiar de",
 			"none": "Nenhum",
-			"planAdd": "Adicionar um Plano",
-			"planEdit": "Editar Plano",
-			"planReq": "O nome do plano é obrigatório.",
-			"servDate": "Data do Serviço",
-			"servReq": "A data do serviço é obrigatória."
+			"planAdd": "Adicionar plano",
+			"planEdit": "Editar plano",
+			"planReq": "Nome do plano é obrigatório.",
+			"servDate": "Data do serviço",
+			"servReq": "Data do serviço é obrigatória.",
+			"servOrder": "Incluir ordem do serviço?"
 		},
 		"planList": {
 			"noPlan": "Nenhum plano foi adicionado ainda.",
@@ -592,6 +595,11 @@
 			"noTime": "Nenhum horário foi adicionado ainda",
 			"sunServ": "Serviço de Domingo",
 			"times": "Horários"
+		},
+		"printPlan": {
+			"serviceOrder": "ORDEM DO SERVIÇO",
+			"time": "Hora",
+			"length": "Duração"
 		}
 	},
 	"profile": {
@@ -745,6 +753,86 @@
 			"noAcc": "Não tem uma conta de usuário?",
 			"valEmail": "Por favor, insira um email válido",
 			"valEmailMsg": "Insira um email válido"
+		},
+		"directoryApprovalSettingsEdit": {
+			"directoryApprovalGroup": "Grupo de aprovação do diretório",
+			"forceMsg": "Este grupo gerenciará todas as atualizações do diretório de membros. As alterações serão aplicadas apenas após sua aprovação.",
+			"groups": "Grupos",
+			"none": "Nenhum",
+			"noGroups": "Nenhum grupo disponível"
+		},
+		"feeOptionsSettings": {
+			"creditCardFlatRate": "Taxa fixa [ Cartão de crédito ]",
+			"creditCardTransactionFee": "Taxa de transação [ Cartão de crédito ]",
+			"achFlatRate": "Taxa fixa [ ACH ]",
+			"achHardLimit": "Limite rígido [ ACH ]"
+		},
+		"supportContactSettingsEdit": {
+			"supportContact": "Contato de suporte",
+			"forceMsg": "Este link será usado pelos usuários para contatar a igreja",
+			"link": "Link",
+			"linkHelperText": "Deve ser o email da igreja ou um link para o formulário de contato da igreja"
+		},
+		"visibilityPrefSettingsEdit": {
+			"visibilityPreference": "Preferência de visibilidade",
+			"forceMsg": "Isso definirá o valor padrão para pessoas que ainda não configuraram suas configurações",
+			"address": "Endereço",
+			"phoneNum": "Número de telefone",
+			"email": "Email",
+			"everyone": "Todos",
+			"members": "Membros",
+			"groups": "Apenas grupos"
+		}
+	},
+	"songs": {
+		"arrangement": {
+			"title": "Arranjo",
+			"enterLyrics": "Digite as letras manualmente ou importe do PraiseCharts",
+			"edit": "Editar arranjo",
+			"name": "Nome do arranjo",
+			"lyrics": "Letras",
+			"deleteConfirm": "Tem certeza que deseja excluir este arranjo?"
+		},
+		"create": {
+			"title": "Criar música",
+			"songTitle": "Título da música",
+			"artist": "Artista"
+		},
+		"key": {
+			"edit": "Editar tom",
+			"signature": "Tom",
+			"label": "Rótulo",
+			"default": "Padrão",
+			"defaultLabel": "Tom do John",
+			"deleteConfirm": "Tem certeza que deseja excluir este tom?"
+		},
+		"keys": {
+			"title": "Tons",
+			"add": "+ Adicionar",
+			"import": "Importar",
+			"importPrompt": "Deseja importar músicas do PraiseCharts?",
+			"addFiles": "Adicionar arquivos",
+			"importFromPraiseCharts": "Importar arquivos do PraiseCharts",
+			"addExternalLink": "Adicionar link externo"
+		},
+		"link": {
+			"edit": "Editar link",
+			"url": "Url",
+			"text": "Texto",
+			"chordChart": "Gráfico de acordes",
+			"deleteConfirm": "Tem certeza que deseja excluir este link?"
+		},
+		"details": {
+			"artist": "Artista",
+			"releaseDate": "Data de lançamento",
+			"album": "Álbum",
+			"language": "Idioma",
+			"bpm": "BPM",
+			"keySignature": "Tom",
+			"keys": "Tons",
+			"meter": "Compasso",
+			"length": "Duração",
+			"key": "Tom"
 		}
 	},
 	"tasks": {
@@ -881,6 +969,12 @@
 			"showClosed": "Mostrar Fechados",
 			"showOpen": "Mostrar Abertos",
 			"tasks": "Tarefas"
+		},
+		"requestedChanges": {
+			"requestedChanges": "Alterações solicitadas",
+			"apply": "Aplicar",
+			"field": "Campo",
+			"value": "Valor"
 		}
 	}
 }

@@ -63,16 +63,18 @@
 			"rights": "Tutti i diritti riservati."
 		},
 		"wrapper": {
-			"att": "Partecipazione",
-			"dash": "Pannello di Controllo",
+			"att": "Presenza",
+			"dash": "Dashboard",
 			"don": "Donazioni",
-			"form": "Modulo",
+			"forms": "Moduli",
 			"groups": "Gruppi",
 			"plans": "Piani",
 			"ppl": "Persone",
-			"servAdmin": "Amministratore del Server",
+			"servAdmin": "Admin Server",
+			"serving": "Servizio",
 			"set": "Impostazioni",
-			"tasks": "Compiti"
+			"songs": "Canzoni",
+			"tasks": "Attività"
 		}
 	},
 	"dashboard": {
@@ -513,13 +515,14 @@
 			"teams": "Squadre"
 		},
 		"planEdit": {
-			"copy": "Copia Da",
+			"copy": "Copia da",
 			"none": "Nessuno",
-			"planAdd": "Aggiungi un Piano",
-			"planEdit": "Modifica Piano",
+			"planAdd": "Aggiungi piano",
+			"planEdit": "Modifica piano",
 			"planReq": "Il nome del piano è obbligatorio.",
-			"servDate": "Data del Servizio",
-			"servReq": "La data del servizio è obbligatoria."
+			"servDate": "Data del servizio",
+			"servReq": "La data del servizio è obbligatoria.",
+			"servOrder": "Includi ordine del servizio?"
 		},
 		"planList": {
 			"noPlan": "Nessun piano è stato ancora aggiunto.",
@@ -592,6 +595,11 @@
 			"noTime": "Non è stato ancora aggiunto alcun orario",
 			"sunServ": "Servizio Domenicale",
 			"times": "Orari"
+		},
+		"printPlan": {
+			"serviceOrder": "ORDINE DEL SERVIZIO",
+			"time": "Ora",
+			"length": "Durata"
 		}
 	},
 	"profile": {
@@ -745,6 +753,86 @@
 			"noAcc": "Non hai un account utente?",
 			"valEmail": "Si prega di inserire una Email valida",
 			"valEmailMsg": "Inserisci una Email valida"
+		},
+		"directoryApprovalSettingsEdit": {
+			"directoryApprovalGroup": "Gruppo di approvazione directory",
+			"forceMsg": "Questo gruppo gestirà tutti gli aggiornamenti della directory dei membri. Le modifiche verranno applicate solo dopo la loro approvazione.",
+			"groups": "Gruppi",
+			"none": "Nessuno",
+			"noGroups": "Nessun gruppo disponibile"
+		},
+		"feeOptionsSettings": {
+			"creditCardFlatRate": "Tariffa fissa [ Carta di credito ]",
+			"creditCardTransactionFee": "Commissione transazione [ Carta di credito ]",
+			"achFlatRate": "Tariffa fissa [ ACH ]",
+			"achHardLimit": "Limite rigido [ ACH ]"
+		},
+		"supportContactSettingsEdit": {
+			"supportContact": "Contatto di supporto",
+			"forceMsg": "Questo link sarà utilizzato dagli utenti per contattare la chiesa",
+			"link": "Link",
+			"linkHelperText": "Deve essere l'email della chiesa o un link al modulo di contatto della chiesa"
+		},
+		"visibilityPrefSettingsEdit": {
+			"visibilityPreference": "Preferenza di visibilità",
+			"forceMsg": "Questo imposterà il valore predefinito per le persone che non hanno ancora configurato le loro impostazioni",
+			"address": "Indirizzo",
+			"phoneNum": "Numero di telefono",
+			"email": "Email",
+			"everyone": "Tutti",
+			"members": "Membri",
+			"groups": "Solo gruppi"
+		}
+	},
+	"songs": {
+		"arrangement": {
+			"title": "Arrangiamento",
+			"enterLyrics": "Inserisci il testo manualmente o importa da PraiseCharts",
+			"edit": "Modifica arrangiamento",
+			"name": "Nome arrangiamento",
+			"lyrics": "Testo",
+			"deleteConfirm": "Sei sicuro di voler eliminare questo arrangiamento?"
+		},
+		"create": {
+			"title": "Crea canzone",
+			"songTitle": "Titolo della canzone",
+			"artist": "Artista"
+		},
+		"key": {
+			"edit": "Modifica tonalità",
+			"signature": "Tonalità",
+			"label": "Etichetta",
+			"default": "Predefinito",
+			"defaultLabel": "Tonalità di John",
+			"deleteConfirm": "Sei sicuro di voler eliminare questa tonalità?"
+		},
+		"keys": {
+			"title": "Tonalità",
+			"add": "+ Aggiungi",
+			"import": "Importa",
+			"importPrompt": "Vuoi importare le canzoni da PraiseCharts?",
+			"addFiles": "Aggiungi file",
+			"importFromPraiseCharts": "Importa file da PraiseCharts",
+			"addExternalLink": "Aggiungi link esterno"
+		},
+		"link": {
+			"edit": "Modifica link",
+			"url": "Url",
+			"text": "Testo",
+			"chordChart": "Griglia accordi",
+			"deleteConfirm": "Sei sicuro di voler eliminare questo link?"
+		},
+		"details": {
+			"artist": "Artista",
+			"releaseDate": "Data di uscita",
+			"album": "Album",
+			"language": "Lingua",
+			"bpm": "BPM",
+			"keySignature": "Tonalità",
+			"keys": "Tonalità",
+			"meter": "Metro",
+			"length": "Durata",
+			"key": "Tonalità"
 		}
 	},
 	"tasks": {
@@ -881,6 +969,12 @@
 			"showClosed": "Mostra Chiuso",
 			"showOpen": "Mostra Aperto",
 			"tasks": "Compiti"
+		},
+		"requestedChanges": {
+			"requestedChanges": "Modifiche richieste",
+			"apply": "Applica",
+			"field": "Campo",
+			"value": "Valore"
 		}
 	}
 }

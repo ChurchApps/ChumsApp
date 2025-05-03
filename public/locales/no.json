@@ -66,12 +66,14 @@
 			"att": "Oppmøte",
 			"dash": "Dashbord",
 			"don": "Donasjoner",
-			"form": "Skjema",
+			"forms": "Skjemaer",
 			"groups": "Grupper",
 			"plans": "Planer",
 			"ppl": "Personer",
-			"servAdmin": "Serveradmin",
+			"servAdmin": "Server Admin",
+			"serving": "Tjeneste",
 			"set": "Innstillinger",
+			"songs": "Sanger",
 			"tasks": "Oppgaver"
 		}
 	},
@@ -515,11 +517,12 @@
 		"planEdit": {
 			"copy": "Kopier fra",
 			"none": "Ingen",
-			"planAdd": "Legg til en plan",
+			"planAdd": "Legg til plan",
 			"planEdit": "Rediger plan",
 			"planReq": "Plannavn er påkrevd.",
 			"servDate": "Tjenestedato",
-			"servReq": "Tjenestedato er påkrevd."
+			"servReq": "Tjenestedato er påkrevd.",
+			"servOrder": "Inkluder tjenesteorden?"
 		},
 		"planList": {
 			"noPlan": "Ingen planer er lagt til ennå.",
@@ -592,6 +595,11 @@
 			"noTime": "Ingen tider er lagt til ennå",
 			"sunServ": "Søndagstjeneste",
 			"times": "Tider"
+		},
+		"printPlan": {
+			"serviceOrder": "TJENESTEORDEN",
+			"time": "Tid",
+			"length": "Lengde"
 		}
 	},
 	"profile": {
@@ -745,6 +753,86 @@
 			"noAcc": "Har du ikke en brukerkonto?",
 			"valEmail": "Vennligst skriv inn en gyldig e-post",
 			"valEmailMsg": "Skriv inn en gyldig e-post"
+		},
+		"directoryApprovalSettingsEdit": {
+			"directoryApprovalGroup": "Kataloggodkjenningsgruppe",
+			"forceMsg": "Denne gruppen vil håndtere alle medlemskatalogoppdateringer. Endringer vil bare bli anvendt etter deres godkjenning.",
+			"groups": "Grupper",
+			"none": "Ingen",
+			"noGroups": "Ingen grupper tilgjengelig"
+		},
+		"feeOptionsSettings": {
+			"creditCardFlatRate": "Fast pris [ Kredittkort ]",
+			"creditCardTransactionFee": "Transaksjonsgebyr [ Kredittkort ]",
+			"achFlatRate": "Fast pris [ ACH ]",
+			"achHardLimit": "Hard grense [ ACH ]"
+		},
+		"supportContactSettingsEdit": {
+			"supportContact": "Støttekontakt",
+			"forceMsg": "Denne lenken vil bli brukt av brukere for å kontakte kirken",
+			"link": "Lenke",
+			"linkHelperText": "Dette må være enten kirkens e-post eller en lenke til kirkens kontaktskjema"
+		},
+		"visibilityPrefSettingsEdit": {
+			"visibilityPreference": "Synlighetspreferanse",
+			"forceMsg": "Dette vil sette standardverdien for personer som ennå ikke har konfigurert sine innstillinger",
+			"address": "Adresse",
+			"phoneNum": "Telefonnummer",
+			"email": "E-post",
+			"everyone": "Alle",
+			"members": "Medlemmer",
+			"groups": "Kun grupper"
+		}
+	},
+	"songs": {
+		"arrangement": {
+			"title": "Arrangement",
+			"enterLyrics": "Skriv inn tekster manuelt eller importer fra PraiseCharts",
+			"edit": "Rediger arrangement",
+			"name": "Arrangementnavn",
+			"lyrics": "Tekster",
+			"deleteConfirm": "Er du sikker på at du vil slette dette arrangementet?"
+		},
+		"create": {
+			"title": "Opprett sang",
+			"songTitle": "Sangtittel",
+			"artist": "Artist"
+		},
+		"key": {
+			"edit": "Rediger toneart",
+			"signature": "Toneart",
+			"label": "Etikett",
+			"default": "Standard",
+			"defaultLabel": "Johns toneart",
+			"deleteConfirm": "Er du sikker på at du vil slette denne tonearten?"
+		},
+		"keys": {
+			"title": "Tonearter",
+			"add": "+ Legg til",
+			"import": "Importer",
+			"importPrompt": "Vil du importere sanger fra PraiseCharts?",
+			"addFiles": "Legg til filer",
+			"importFromPraiseCharts": "Importer filer fra PraiseCharts",
+			"addExternalLink": "Legg til ekstern lenke"
+		},
+		"link": {
+			"edit": "Rediger lenke",
+			"url": "Url",
+			"text": "Tekst",
+			"chordChart": "Akkorddiagram",
+			"deleteConfirm": "Er du sikker på at du vil slette denne lenken?"
+		},
+		"details": {
+			"artist": "Artist",
+			"releaseDate": "Utgivelsesdato",
+			"album": "Album",
+			"language": "Språk",
+			"bpm": "BPM",
+			"keySignature": "Toneart",
+			"keys": "Tonearter",
+			"meter": "Taktart",
+			"length": "Lengde",
+			"key": "Toneart"
 		}
 	},
 	"tasks": {
@@ -881,6 +969,12 @@
 			"showClosed": "Vis lukkede",
 			"showOpen": "Vis åpne",
 			"tasks": "Oppgaver"
+		},
+		"requestedChanges": {
+			"requestedChanges": "Forespurte endringer",
+			"apply": "Bruk",
+			"field": "Felt",
+			"value": "Verdi"
 		}
 	}
 }

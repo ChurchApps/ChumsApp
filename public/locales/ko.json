@@ -60,18 +60,20 @@
 	"components": {
 		"footer": {
 			"phone": "전화",
-			"rights": "판권 소유."
+			"rights": "모든 권리 보유."
 		},
 		"wrapper": {
 			"att": "출석",
 			"dash": "대시보드",
 			"don": "기부",
-			"form": "양식",
+			"forms": "양식",
 			"groups": "그룹",
 			"plans": "계획",
-			"ppl": "사람들",
+			"ppl": "사람",
 			"servAdmin": "서버 관리자",
+			"serving": "봉사",
 			"set": "설정",
+			"songs": "노래",
 			"tasks": "작업"
 		}
 	},
@@ -513,13 +515,14 @@
 			"teams": "팀들"
 		},
 		"planEdit": {
-			"copy": "복사 원본",
+			"copy": "복사",
 			"none": "없음",
 			"planAdd": "계획 추가",
 			"planEdit": "계획 편집",
 			"planReq": "계획 이름이 필요합니다.",
-			"servDate": "서비스 날짜",
-			"servReq": "서비스 날짜가 필요합니다."
+			"servDate": "예배 날짜",
+			"servReq": "예배 날짜가 필요합니다.",
+			"servOrder": "예배 순서를 포함하시겠습니까?"
 		},
 		"planList": {
 			"noPlan": "아직 추가된 계획이 없습니다.",
@@ -592,6 +595,11 @@
 			"noTime": "아직 추가된 시간이 없습니다",
 			"sunServ": "일요일 서비스",
 			"times": "시간들"
+		},
+		"printPlan": {
+			"serviceOrder": "예배 순서",
+			"time": "시간",
+			"length": "길이"
 		}
 	},
 	"profile": {
@@ -637,8 +645,6 @@
 		"adminPage": {
 			"act": "활성",
 			"arch": "보관됨",
-
-
 			"church": "교회",
 			"churches": "교회들",
 			"churchName": "교회 이름",
@@ -747,6 +753,86 @@
 			"noAcc": "사용자 계정이 없습니까?",
 			"valEmail": "유효한 이메일 주소를 입력해주세요",
 			"valEmailMsg": "유효한 이메일을 입력해주세요"
+		},
+		"directoryApprovalSettingsEdit": {
+			"directoryApprovalGroup": "디렉토리 승인 그룹",
+			"forceMsg": "이 그룹은 모든 회원 디렉토리 업데이트를 처리합니다. 변경 사항은 승인 후에만 적용됩니다.",
+			"groups": "그룹",
+			"none": "없음",
+			"noGroups": "사용 가능한 그룹 없음"
+		},
+		"feeOptionsSettings": {
+			"creditCardFlatRate": "정액 요금 [ 신용카드 ]",
+			"creditCardTransactionFee": "거래 수수료 [ 신용카드 ]",
+			"achFlatRate": "정액 요금 [ ACH ]",
+			"achHardLimit": "엄격한 한도 [ ACH ]"
+		},
+		"supportContactSettingsEdit": {
+			"supportContact": "지원 연락처",
+			"forceMsg": "이 링크는 사용자가 교회에 연락하는 데 사용됩니다",
+			"link": "링크",
+			"linkHelperText": "교회 이메일이거나 교회 연락 양식 링크여야 합니다"
+		},
+		"visibilityPrefSettingsEdit": {
+			"visibilityPreference": "가시성 기본 설정",
+			"forceMsg": "아직 설정을 구성하지 않은 사람들을 위한 기본값을 설정합니다",
+			"address": "주소",
+			"phoneNum": "전화번호",
+			"email": "이메일",
+			"everyone": "모든 사람",
+			"members": "회원",
+			"groups": "그룹만"
+		}
+	},
+	"songs": {
+		"arrangement": {
+			"title": "편곡",
+			"enterLyrics": "수동으로 가사를 입력하거나 PraiseCharts에서 가져오기",
+			"edit": "편곡 편집",
+			"name": "편곡 이름",
+			"lyrics": "가사",
+			"deleteConfirm": "이 편곡을 삭제하시겠습니까?"
+		},
+		"create": {
+			"title": "노래 만들기",
+			"songTitle": "노래 제목",
+			"artist": "아티스트"
+		},
+		"key": {
+			"edit": "키 편집",
+			"signature": "조표",
+			"label": "레이블",
+			"default": "기본값",
+			"defaultLabel": "존의 키",
+			"deleteConfirm": "이 키를 삭제하시겠습니까?"
+		},
+		"keys": {
+			"title": "키",
+			"add": "+ 추가",
+			"import": "가져오기",
+			"importPrompt": "PraiseCharts에서 노래를 가져오시겠습니까?",
+			"addFiles": "파일 추가",
+			"importFromPraiseCharts": "PraiseCharts에서 파일 가져오기",
+			"addExternalLink": "외부 링크 추가"
+		},
+		"link": {
+			"edit": "링크 편집",
+			"url": "URL",
+			"text": "텍스트",
+			"chordChart": "코드 차트",
+			"deleteConfirm": "이 링크를 삭제하시겠습니까?"
+		},
+		"details": {
+			"artist": "아티스트",
+			"releaseDate": "출시일",
+			"album": "앨범",
+			"language": "언어",
+			"bpm": "BPM",
+			"keySignature": "조표",
+			"keys": "키",
+			"meter": "박자",
+			"length": "길이",
+			"key": "키"
 		}
 	},
 	"tasks": {
@@ -883,6 +969,12 @@
 			"showClosed": "닫힘 표시",
 			"showOpen": "열림 표시",
 			"tasks": "작업들"
+		},
+		"requestedChanges": {
+			"requestedChanges": "요청된 변경 사항",
+			"apply": "적용",
+			"field": "필드",
+			"value": "값"
 		}
 	}
 }
