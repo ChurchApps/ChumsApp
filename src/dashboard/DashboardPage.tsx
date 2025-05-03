@@ -8,7 +8,7 @@ import { Locale } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 
 export const DashboardPage = () => (<>
-  <Banner><h1>{Locale.label("common.appName")} {Locale.label("dashboard.dashboardPage.dash")}</h1></Banner>
+  <Banner><h1>Chums {Locale.label("dashboard.dashboardPage.dash")}</h1></Banner>
   <div id="mainContent">
 
     <Grid container spacing={3}>
