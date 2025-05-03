@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox } from "@churchapps/apphelper";
+import { DisplayBox, Locale } from "@churchapps/apphelper";
 import { SongDetailInterface } from "../../../helpers";
 import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { SongDetailsEdit } from "./SongDetailsEdit";
@@ -23,18 +23,18 @@ export const SongDetails = (props: Props) => {
     if (!props.songDetail) return result;
 
 
-    if (props.songDetail.artist) result.push(<TableRow><TableCell><strong>Artist</strong></TableCell><TableCell>{props.songDetail.artist}</TableCell></TableRow>);
+    if (props.songDetail.artist) result.push(<TableRow><TableCell><strong>{Locale.label("songs.details.artist")}</strong></TableCell><TableCell>{props.songDetail.artist}</TableCell></TableRow>);
     if (props.songDetail.releaseDate) {
       const d = new Date(props.songDetail.releaseDate);
-      result.push(<TableRow key="releaseDate"><TableCell><strong>Release Date</strong></TableCell><TableCell>{d.toLocaleDateString()}</TableCell></TableRow>);
+      result.push(<TableRow key="releaseDate"><TableCell><strong>{Locale.label("songs.details.releaseDate")}</strong></TableCell><TableCell>{d.toLocaleDateString()}</TableCell></TableRow>);
     }
-    if (props.songDetail.album) result.push(<TableRow key="album"><TableCell><strong>Album</strong></TableCell><TableCell>{props.songDetail.album}</TableCell></TableRow>);
-    if (props.songDetail.language) result.push(<TableRow key="language"><TableCell><strong>Language</strong></TableCell><TableCell>{props.songDetail.language}</TableCell></TableRow>);
-    if (props.songDetail.bpm) result.push(<TableRow key="bpm"><TableCell><strong>BPM</strong></TableCell><TableCell>{props.songDetail.bpm}</TableCell></TableRow>);
-    if (props.songDetail.keySignature) result.push(<TableRow key="keySignature"><TableCell><strong>Key Signature</strong></TableCell><TableCell>{props.songDetail.keySignature}</TableCell></TableRow>);
-    if (props.songDetail.tones) result.push(<TableRow key="tones"><TableCell><strong>Keys</strong></TableCell><TableCell>{props.songDetail.tones}</TableCell></TableRow>);
-    if (props.songDetail.meter) result.push(<TableRow key="meter"><TableCell><strong>Meter</strong></TableCell><TableCell>{props.songDetail.meter}</TableCell></TableRow>);
-    if (props.songDetail.seconds) result.push(<TableRow key="seconds"><TableCell><strong>Length</strong></TableCell><TableCell>{formatSeconds(props.songDetail.seconds)}</TableCell></TableRow>);
+    if (props.songDetail.album) result.push(<TableRow key="album"><TableCell><strong>{Locale.label("songs.details.album")}</strong></TableCell><TableCell>{props.songDetail.album}</TableCell></TableRow>);
+    if (props.songDetail.language) result.push(<TableRow key="language"><TableCell><strong>{Locale.label("songs.details.language")}</strong></TableCell><TableCell>{props.songDetail.language}</TableCell></TableRow>);
+    if (props.songDetail.bpm) result.push(<TableRow key="bpm"><TableCell><strong>{Locale.label("songs.details.bpm")}</strong></TableCell><TableCell>{props.songDetail.bpm}</TableCell></TableRow>);
+    if (props.songDetail.keySignature) result.push(<TableRow key="keySignature"><TableCell><strong>{Locale.label("songs.details.keySignature")}</strong></TableCell><TableCell>{props.songDetail.keySignature}</TableCell></TableRow>);
+    if (props.songDetail.tones) result.push(<TableRow key="tones"><TableCell><strong>{Locale.label("songs.details.keys")}</strong></TableCell><TableCell>{props.songDetail.tones}</TableCell></TableRow>);
+    if (props.songDetail.meter) result.push(<TableRow key="meter"><TableCell><strong>{Locale.label("songs.details.meter")}</strong></TableCell><TableCell>{props.songDetail.meter}</TableCell></TableRow>);
+    if (props.songDetail.seconds) result.push(<TableRow key="seconds"><TableCell><strong>{Locale.label("songs.details.length")}</strong></TableCell><TableCell>{formatSeconds(props.songDetail.seconds)}</TableCell></TableRow>);
 
 
     /*

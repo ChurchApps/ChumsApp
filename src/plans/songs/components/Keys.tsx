@@ -31,10 +31,8 @@ export const Keys = (props: Props) => {
     setAnchorEl(null);
   };
 
-
-
   const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
-    if (newValue === "add") setEditKey({ arrangementId: props.arrangement.id, keySignature: "C", shortDescription: "Default" });
+    if (newValue === "add") setEditKey({ arrangementId: props.arrangement.id, keySignature: "C", shortDescription: Locale.label("songs.key.default") });
     else {
       const k = ArrayHelper.getOne(keys, "id", newValue);
       setSelectedKey(k);
@@ -106,38 +104,34 @@ export const Keys = (props: Props) => {
 
   if (editKey) return <KeyEdit arrangementKey={editKey} onSave={(k) => { setEditKey(null); loadData(); }} onCancel={() => setEditKey(null)} />
   return (<>
-    <DisplayBox headerText="Keys" headerIcon="music_note" editFunction={(selectedKey) ? () => { setEditKey(selectedKey) } : null}>
+    <DisplayBox headerText={Locale.label("songs.keys.title")} headerIcon="music_note" editFunction={(selectedKey) ? () => { setEditKey(selectedKey) } : null}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={selectedKey?.id || ""} onChange={handleTabChange} aria-label="basic tabs example">
           {getTabs()}
-          <Tab value="add" label="+ Add" />
+          <Tab value="add" label={Locale.label("songs.keys.add")} />
         </Tabs>
       </Box>
       {selectedKey && <>
-        {canImportLyrics && <Alert style={{ marginTop: 10 }} icon={<Button onClick={() => { props.importLyrics(); setShowImport(false); }} variant="contained" color="success">Import</Button>} severity="success">Would you like to import the text lyrics from PraiseCharts?</Alert>}
+        {canImportLyrics && <Alert style={{ marginTop: 10 }} icon={<Button onClick={() => { props.importLyrics(); setShowImport(false); }} variant="contained" color="success">{Locale.label("songs.keys.import")}</Button>} severity="success">{Locale.label("songs.keys.importPrompt")}</Alert>}
         {listProducts()}
         {listLinks()}
       </>}
 
-
       {selectedKey && <Button id="addBtnGroup" variant="contained" size="small" color="success" onClick={handleClick} sx={{ mt: 2 }}>
-        <Icon sx={{ mr: "3px" }}>add</Icon> Add Files
+        <Icon sx={{ mr: "3px" }}>add</Icon> {Locale.label("songs.keys.addFiles")}
       </Button>
       }
       <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem key="import" data-cy="add-campus" onClick={() => { handleClose(); setShowImport(true); }}>
-          <Icon sx={{ mr: "3px" }}>cloud_download</Icon> Import files from PraiseCharts
+          <Icon sx={{ mr: "3px" }}>cloud_download</Icon> {Locale.label("songs.keys.importFromPraiseCharts")}
         </MenuItem>
         <MenuItem key="link" data-cy="add-campus" onClick={() => { handleClose(); setEditLink({ category: "arrangementKey_" + selectedKey.id, linkType: "url", sort: 1, linkData: "", icon: "" }) }}>
-          <Icon sx={{ mr: "3px" }}>link</Icon> Add external link
+          <Icon sx={{ mr: "3px" }}>link</Icon> {Locale.label("songs.keys.addExternalLink")}
         </MenuItem>
       </Menu>
-
     </DisplayBox>
     {editLink && <LinkEdit link={editLink} onSave={(l) => { setEditLink(null); loadLinks(); }} onCancel={() => setEditLink(null)} />}
-
     {showImport && <PraiseChartsProducts praiseChartsId={props.songDetail?.praiseChartsId} keySignature={selectedKey?.keySignature || ""} onHide={() => { setShowImport(false); loadPraiseCharts(); }} />}
-
   </>)
 }
 

@@ -26,9 +26,9 @@ export const CreateSongDetail: React.FC<Props> = (props) => {
   }
 
   return (<>
-    <InputBox headerText={"Create Song"} headerIcon="library_music" saveFunction={handleSave}>
-      <TextField label="Song Title" name="title" value={songDetail?.title} onChange={handleChange} fullWidth />
-      <TextField label="Artist" name="artist" value={songDetail?.artist} onChange={handleChange} fullWidth />
+    <InputBox headerText={Locale.label("songs.create.title")} headerIcon="library_music" saveFunction={handleSave}>
+      <TextField label={Locale.label("songs.create.songTitle")} name="title" value={songDetail?.title} onChange={handleChange} fullWidth />
+      <TextField label={Locale.label("songs.create.artist")} name="artist" value={songDetail?.artist} onChange={handleChange} fullWidth />
     </InputBox>
 
   </>);
