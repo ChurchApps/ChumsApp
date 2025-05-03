@@ -1,4 +1,4 @@
-import { ApiHelper, ArrayHelper, AssignmentInterface, DateHelper, PersonInterface, PlanInterface, PositionInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, AssignmentInterface, DateHelper, PersonInterface, PlanInterface, PositionInterface, Locale } from "@churchapps/apphelper";
 import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -14,7 +14,7 @@ export const PrintPlan = () => {
 
   let totalSeconds = 0;
 
-  const formatTime = (seconds:number) => {
+  const formatTime = (seconds: number) => {
     let minutes = Math.floor(seconds / 60);
     let secs = seconds % 60;
     return minutes + ":" + (secs < 10 ? "0" : "") + secs;
@@ -39,22 +39,22 @@ export const PrintPlan = () => {
   useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const getPositionCategories = () => {
-    const cats:string[] = [];
+    const cats: string[] = [];
     positions.forEach(p => {
       if (!cats.includes(p.categoryName)) cats.push(p.categoryName);
     });
-    const result:JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     cats.forEach(c => {
-      result.push(<div key={c}><h3 style={{marginTop:15, marginBottom:5}}>{c}</h3>{getPositions(c)}</div>);
+      result.push(<div key={c}><h3 style={{ marginTop: 15, marginBottom: 5 }}>{c}</h3>{getPositions(c)}</div>);
     });
     return result;
   }
 
-  const getPositions = (categoryName:string) => {
-    const result:JSX.Element[] = [];
+  const getPositions = (categoryName: string) => {
+    const result: JSX.Element[] = [];
     positions.filter(p => p.categoryName === categoryName).forEach(p => {
 
-      const names:string[] = [];
+      const names: string[] = [];
       assignments.filter(a => a.positionId === p.id).forEach(a => {
         let person = people.find(p => p.id === a.personId);
         names.push(person?.name?.display);
@@ -65,53 +65,53 @@ export const PrintPlan = () => {
     return result;
   }
 
-  const getPlanItems = (items:PlanItemInterface[]) => {
-    let result:JSX.Element[] = [];
+  const getPlanItems = (items: PlanItemInterface[]) => {
+    let result: JSX.Element[] = [];
     items.forEach(pi => {
       if (pi.itemType !== "header") {
         result.push(<tr key={pi.id}>
           <td style={Styles.tableCell}>{formatTime(totalSeconds)}</td>
           <td style={Styles.tableCell}><b>{pi.label}:</b> {pi.description}</td>
-          <td style={{...Styles.tableCell, textAlign:"right" }}>{formatTime(pi.seconds)}</td>
+          <td style={{ ...Styles.tableCell, textAlign: "right" }}>{formatTime(pi.seconds)}</td>
         </tr>);
         totalSeconds += pi.seconds;
       }
       console.log("PI", pi)
-      if (pi.children) result=result.concat(getPlanItems(pi.children));
+      if (pi.children) result = result.concat(getPlanItems(pi.children));
     });
     return result;
   }
 
-  const Styles:any = {
-    body: {padding: "20px", backgroundColor:"#FFF", color:"#000", minHeight:"100vh"},
-    header: { fontWeight:"bold", textAlign:"center", padding:5 },
-    inverseHeader: {backgroundColor:"#000", color:"#FFF", textAlign:"center", padding:5, fontWeight:"bold" },
+  const Styles: any = {
+    body: { padding: "20px", backgroundColor: "#FFF", color: "#000", minHeight: "100vh" },
+    header: { fontWeight: "bold", textAlign: "center", padding: 5 },
+    inverseHeader: { backgroundColor: "#000", color: "#FFF", textAlign: "center", padding: 5, fontWeight: "bold" },
     divider: { borderBottom: "20px solid #000" },
-    tableCell: {verticalAlign:"top", padding:5, textAlign:"left"}
+    tableCell: { verticalAlign: "top", padding: 5, textAlign: "left" }
   }
 
   return <>
     <div style={Styles.body} className="printBackgrounds">
       <Grid container>
-        <Grid item xs={4} style={Styles.inverseHeader}>SERVICE ORDER</Grid>
-        <Grid item xs={4} style={{...Styles.header, borderTop:"5px solid #000"}}>{plan && DateHelper.prettyDate( DateHelper.convertToDate(plan.serviceDate))}</Grid>
-        <Grid item xs={4} style={Styles.inverseHeader}>SERVICE ORDER</Grid>
+        <Grid item xs={4} style={Styles.inverseHeader}>{Locale.label("plans.printPlan.serviceOrder")}</Grid>
+        <Grid item xs={4} style={{ ...Styles.header, borderTop: "5px solid #000" }}>{plan && DateHelper.prettyDate(DateHelper.convertToDate(plan.serviceDate))}</Grid>
+        <Grid item xs={4} style={Styles.inverseHeader}>{Locale.label("plans.printPlan.serviceOrder")}</Grid>
       </Grid>
       <div style={Styles.divider}>&nbsp;</div>
       <Grid container>
-        <Grid item xs={4} style={{padding:5}}>
-          <div style={{border:"2px solid #000", textAlign:"left", padding:10}}>
+        <Grid item xs={4} style={{ padding: 5 }}>
+          <div style={{ border: "2px solid #000", textAlign: "left", padding: 10 }}>
             {getPositionCategories()}
           </div>
 
         </Grid>
-        <Grid item xs={8} style={{padding:5}}>
-          <div style={{border:"5px solid #000"}}>
-            <table style={{width:"100%", margin:0}} cellSpacing={0}>
+        <Grid item xs={8} style={{ padding: 5 }}>
+          <div style={{ border: "5px solid #000" }}>
+            <table style={{ width: "100%", margin: 0 }} cellSpacing={0}>
               <tr style={Styles.inverseHeader}>
-                <td style={{textAlign:"left", paddingLeft:10}}>Time</td>
+                <td style={{ textAlign: "left", paddingLeft: 10 }}>{Locale.label("plans.printPlan.time")}</td>
                 <td></td>
-                <td style={{textAlign:"right", paddingRight:10}}>Length</td>
+                <td style={{ textAlign: "right", paddingRight: 10 }}>{Locale.label("plans.printPlan.length")}</td>
               </tr>
               {getPlanItems(planItems)}
             </table>

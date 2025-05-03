@@ -65,13 +65,15 @@
 		"wrapper": {
 			"att": "Pagdalo",
 			"dash": "Dashboard",
-			"don": "Donasyon",
-			"form": "Form",
+			"don": "Mga Donasyon",
+			"forms": "Mga Form",
 			"groups": "Mga Grupo",
 			"plans": "Mga Plano",
 			"ppl": "Mga Tao",
-			"servAdmin": "Admin ng Server",
+			"servAdmin": "Server Admin",
+			"serving": "Pagsisilbi",
 			"set": "Mga Setting",
+			"songs": "Mga Awit",
 			"tasks": "Mga Gawain"
 		}
 	},
@@ -515,11 +517,12 @@
 		"planEdit": {
 			"copy": "Kopyahin mula sa",
 			"none": "Wala",
-			"planAdd": "Magdagdag ng Plano",
-			"planEdit": "I-edit ang Plano",
+			"planAdd": "Magdagdag ng plano",
+			"planEdit": "I-edit ang plano",
 			"planReq": "Kinakailangan ang pangalan ng plano.",
-			"servDate": "Petsa ng Serbisyo",
-			"servReq": "Kinakailangan ang petsa ng serbisyo."
+			"servDate": "Petsa ng serbisyo",
+			"servReq": "Kinakailangan ang petsa ng serbisyo.",
+			"servOrder": "Isama ang pagkakasunud-sunod ng serbisyo?"
 		},
 		"planList": {
 			"noPlan": "Walang idinagdag na plano pa.",
@@ -592,6 +595,11 @@
 			"noTime": "Walang idinagdag na oras pa",
 			"sunServ": "Serbisyo ng Linggo",
 			"times": "Mga Oras"
+		},
+		"printPlan": {
+			"serviceOrder": "PAGKAKASUNUD-SUNOD NG SERBISYO",
+			"time": "Oras",
+			"length": "Haba"
 		}
 	},
 	"profile": {
@@ -734,7 +742,7 @@
 			"role": "Papel",
 			"roleCreate": "Nais mo bang lumikha ng bagong papel ng ",
 			"roles": "Mga Papel"
-			},
+		},
 		"userAdd": {
 			"addTo": "Magdagdag sa ",
 			"createNew": "Gumawa ng Bagong Gumagamit",
@@ -745,6 +753,86 @@
 			"noAcc": "Walang account ng gumagamit?",
 			"valEmail": "Mangyaring magpasok ng balidong email",
 			"valEmailMsg": "Magpasok ng balidong email"
+		},
+		"directoryApprovalSettingsEdit": {
+			"directoryApprovalGroup": "Grupo ng pag-apruba ng direktoryo",
+			"forceMsg": "Ang grupong ito ay hahawak ng lahat ng pag-update ng direktoryo ng mga miyembro. Ang mga pagbabago ay ilalapat lamang pagkatapos ng kanilang pag-apruba.",
+			"groups": "Mga Grupo",
+			"none": "Wala",
+			"noGroups": "Walang magagamit na grupo"
+		},
+		"feeOptionsSettings": {
+			"creditCardFlatRate": "Flat rate [ Credit Card ]",
+			"creditCardTransactionFee": "Bayarin sa transaksyon [ Credit Card ]",
+			"achFlatRate": "Flat rate [ ACH ]",
+			"achHardLimit": "Mahigpit na limitasyon [ ACH ]"
+		},
+		"supportContactSettingsEdit": {
+			"supportContact": "Kontak ng suporta",
+			"forceMsg": "Ang link na ito ay gagamitin ng mga user para makipag-ugnayan sa simbahan",
+			"link": "Link",
+			"linkHelperText": "Dapat ito ay email ng simbahan o link sa contact form ng simbahan"
+		},
+		"visibilityPrefSettingsEdit": {
+			"visibilityPreference": "Kagustuhan sa pagiging visible",
+			"forceMsg": "Ito ay magtatakda ng default na halaga para sa mga taong hindi pa nakakapag-configure ng kanilang mga setting",
+			"address": "Address",
+			"phoneNum": "Numero ng telepono",
+			"email": "Email",
+			"everyone": "Lahat",
+			"members": "Mga Miyembro",
+			"groups": "Mga Grupo lamang"
+		}
+	},
+	"songs": {
+		"arrangement": {
+			"title": "Arrangement",
+			"enterLyrics": "Ipasok ang mga lyrics nang manu-mano o i-import mula sa PraiseCharts",
+			"edit": "I-edit ang arrangement",
+			"name": "Pangalan ng arrangement",
+			"lyrics": "Mga Lyrics",
+			"deleteConfirm": "Sigurado ka bang gusto mong tanggalin ang arrangement na ito?"
+		},
+		"create": {
+			"title": "Gumawa ng awit",
+			"songTitle": "Pamagat ng awit",
+			"artist": "Artista"
+		},
+		"key": {
+			"edit": "I-edit ang key",
+			"signature": "Key signature",
+			"label": "Label",
+			"default": "Default",
+			"defaultLabel": "Key ni John",
+			"deleteConfirm": "Sigurado ka bang gusto mong tanggalin ang key na ito?"
+		},
+		"keys": {
+			"title": "Mga Key",
+			"add": "+ Magdagdag",
+			"import": "I-import",
+			"importPrompt": "Gusto mo bang i-import ang mga awit mula sa PraiseCharts?",
+			"addFiles": "Magdagdag ng mga file",
+			"importFromPraiseCharts": "I-import ang mga file mula sa PraiseCharts",
+			"addExternalLink": "Magdagdag ng panlabas na link"
+		},
+		"link": {
+			"edit": "I-edit ang link",
+			"url": "Url",
+			"text": "Teksto",
+			"chordChart": "Chord chart",
+			"deleteConfirm": "Sigurado ka bang gusto mong tanggalin ang link na ito?"
+		},
+		"details": {
+			"artist": "Artista",
+			"releaseDate": "Petsa ng paglabas",
+			"album": "Album",
+			"language": "Wika",
+			"bpm": "BPM",
+			"keySignature": "Key signature",
+			"keys": "Mga Key",
+			"meter": "Meter",
+			"length": "Haba",
+			"key": "Key"
 		}
 	},
 	"tasks": {
@@ -881,6 +969,12 @@
 			"showClosed": "Ipakita ang Mga Nakasarado",
 			"showOpen": "Ipakita ang Mga Nakabukas",
 			"tasks": "Mga Gawain"
+		},
+		"requestedChanges": {
+			"requestedChanges": "Mga hiniling na pagbabago",
+			"apply": "Ilapat",
+			"field": "Field",
+			"value": "Halaga"
 		}
 	}
 }

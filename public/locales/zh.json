@@ -63,15 +63,17 @@
       "rights": "版权所有。"
     },
     "wrapper": {
-      "att": "出席率",
+      "att": "出席",
       "dash": "仪表板",
-      "don": "捐款",
-      "form": "形式",
-      "groups": "团体",
+      "don": "捐赠",
+      "forms": "表单",
+      "groups": "小组",
       "plans": "计划",
-      "ppl": "人们",
-      "servAdmin": "服务器管理",
+      "ppl": "人员",
+      "servAdmin": "服务器管理员",
+      "serving": "服务",
       "set": "设置",
+      "songs": "歌曲",
       "tasks": "任务"
     }
   },
@@ -514,12 +516,13 @@
     },
     "planEdit": {
       "copy": "复制自",
-      "none": "没有任何",
+      "none": "无",
       "planAdd": "添加计划",
       "planEdit": "编辑计划",
-      "planReq": "计划名称为必填项。",
+      "planReq": "计划名称是必需的。",
       "servDate": "服务日期",
-      "servReq": "需要提供服务日期。"
+      "servReq": "服务日期是必需的。",
+      "servOrder": "包含服务顺序？"
     },
     "planList": {
       "noPlan": "尚未添加任何计划。",
@@ -592,6 +595,11 @@
       "noTime": "尚未添加任何时间",
       "sunServ": "周日服务",
       "times": "时代"
+    },
+    "printPlan": {
+      "serviceOrder": "服务顺序",
+      "time": "时间",
+      "length": "长度"
     }
   },
   "profile": {
@@ -745,6 +753,35 @@
       "noAcc": "没有用户帐户？",
       "valEmail": "请输入有效电子邮件",
       "valEmailMsg": "输入有效的电子邮件"
+    },
+    "directoryApprovalSettingsEdit": {
+      "directoryApprovalGroup": "目录审批组",
+      "forceMsg": "该组将处理所有成员目录更新。更改只有在获得批准后才会应用。",
+      "groups": "小组",
+      "none": "无",
+      "noGroups": "没有可用的小组"
+    },
+    "feeOptionsSettings": {
+      "creditCardFlatRate": "固定费率 [ 信用卡 ]",
+      "creditCardTransactionFee": "交易费 [ 信用卡 ]",
+      "achFlatRate": "固定费率 [ ACH ]",
+      "achHardLimit": "硬性限制 [ ACH ]"
+    },
+    "supportContactSettingsEdit": {
+      "supportContact": "支持联系人",
+      "forceMsg": "此链接将被用户用来联系教会",
+      "link": "链接",
+      "linkHelperText": "这必须是教会的电子邮件或教会联系表单的链接"
+    },
+    "visibilityPrefSettingsEdit": {
+      "visibilityPreference": "可见性偏好",
+      "forceMsg": "这将为尚未配置其设置的人员设置默认值",
+      "address": "地址",
+      "phoneNum": "电话号码",
+      "email": "电子邮件",
+      "everyone": "所有人",
+      "members": "成员",
+      "groups": "仅限小组"
     }
   },
   "tasks": {
@@ -881,6 +918,63 @@
       "showClosed": "显示已关闭",
       "showOpen": "显示打开",
       "tasks": "任务"
+    },
+    "requestedChanges": {
+      "requestedChanges": "请求的更改",
+      "apply": "应用",
+      "field": "字段",
+      "value": "值"
+    }
+  },
+  "songs": {
+    "arrangement": {
+      "title": "编曲",
+      "enterLyrics": "手动输入歌词或从PraiseCharts导入",
+      "edit": "编辑编曲",
+      "name": "编曲名称",
+      "lyrics": "歌词",
+      "deleteConfirm": "确定要删除此编曲吗？"
+    },
+    "create": {
+      "title": "创建歌曲",
+      "songTitle": "歌曲标题",
+      "artist": "艺术家"
+    },
+    "key": {
+      "edit": "编辑调式",
+      "signature": "调号",
+      "label": "标签",
+      "default": "默认",
+      "defaultLabel": "John的调式",
+      "deleteConfirm": "确定要删除此调式吗？"
+    },
+    "keys": {
+      "title": "调式",
+      "add": "+ 添加",
+      "import": "导入",
+      "importPrompt": "要从PraiseCharts导入歌曲吗？",
+      "addFiles": "添加文件",
+      "importFromPraiseCharts": "从PraiseCharts导入文件",
+      "addExternalLink": "添加外部链接"
+    },
+    "link": {
+      "edit": "编辑链接",
+      "url": "网址",
+      "text": "文本",
+      "chordChart": "和弦图表",
+      "deleteConfirm": "确定要删除此链接吗？"
+    },
+    "details": {
+      "artist": "艺术家",
+      "releaseDate": "发布日期",
+      "album": "专辑",
+      "language": "语言",
+      "bpm": "BPM",
+      "keySignature": "调号",
+      "keys": "调式",
+      "meter": "节拍",
+      "length": "长度",
+      "key": "调式"
     }
   }
 }

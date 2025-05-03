@@ -22,9 +22,9 @@ export const PlanPage = () => {
 
   const getTabs = () => {
     let tabs = [];
-    tabs.push({ key: "assignments", icon: "assignment", label: "Assignments" });
+    tabs.push({ key: "assignments", icon: "assignment", label: Locale.label("plans.planPage.assignments") });
     if (plan && plan.serviceOrder) {
-      tabs.push({ key: "order", icon: "album", label: "Service Order" });
+      tabs.push({ key: "order", icon: "album", label: Locale.label("plans.planPage.serviceOrder") });
     }
     console.log("Plan is:", plan);
 
@@ -39,7 +39,7 @@ export const PlanPage = () => {
   }
 
   return (<>
-    <Banner><h1>{(plan?.name) ? plan.name : "Service Plan"}</h1></Banner>
+    <Banner><h1>{(plan?.name) ? plan.name : Locale.label("plans.planPage.servicePlan")}</h1></Banner>
     <Grid container spacing={2}>
       <Grid item xs={12} md={2}>
         <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>

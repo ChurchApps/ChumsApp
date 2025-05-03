@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ApiHelper, DateHelper, DisplayBox, InputBox } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, DisplayBox, InputBox, Locale } from "@churchapps/apphelper";
 import { ArrangementInterface } from "../../../helpers";
 import { TextField } from "@mui/material";
 
@@ -13,7 +13,6 @@ export const ArrangementEdit = (props: Props) => {
   const [arrangement, setArrangement] = React.useState<ArrangementInterface>(props.arrangement);
 
   useEffect(() => { setArrangement(props.arrangement); }, [props.arrangement]);
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const a = { ...arrangement };
@@ -31,15 +30,15 @@ export const ArrangementEdit = (props: Props) => {
   }
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this arrangement?")) {
+    if (window.confirm(Locale.label("songs.arrangement.deleteConfirm"))) {
       ApiHelper.delete("/arrangements/" + arrangement?.id, "ContentApi").then(() => {
         props.onSave(null);
       });
     }
   }
 
-  return (<InputBox headerText={props.arrangement?.name || "Edit Arrangement"} headerIcon="library_music" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={(arrangement?.id) ? handleDelete : null}>
-    <TextField label="Arrangement Name" name="name" value={arrangement?.name} onChange={handleChange} fullWidth />
-    <TextField label="Lyrics" multiline name="lyrics" value={arrangement?.lyrics} onChange={handleChange} fullWidth />
+  return (<InputBox headerText={props.arrangement?.name || Locale.label("songs.arrangement.edit")} headerIcon="library_music" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={(arrangement?.id) ? handleDelete : null}>
+    <TextField label={Locale.label("songs.arrangement.name")} name="name" value={arrangement?.name} onChange={handleChange} fullWidth />
+    <TextField label={Locale.label("songs.arrangement.lyrics")} multiline name="lyrics" value={arrangement?.lyrics} onChange={handleChange} fullWidth />
   </InputBox>);
 }

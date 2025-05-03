@@ -18,12 +18,27 @@ interface IConflicts {
   selected: string;
 }
 
-enum SpecialKeys {
-  CONTACT_INFO = "contactInfo",
-  HOUSEHOLD_ID = "householdId",
-  ID = "id",
-  NAME = "name",
-}
+const SpecialKeys = {
+  CONTACT_INFO: "contactInfo",
+  HOUSEHOLD_ID: "householdId",
+  ID: "id",
+  NAME: "name",
+} as const;
+
+const getDisplayValue = (key: string) => {
+  switch (key) {
+    case SpecialKeys.CONTACT_INFO:
+      return Locale.label("people.mergeModal.contactInfo");
+    case SpecialKeys.HOUSEHOLD_ID:
+      return Locale.label("people.mergeModal.householdId");
+    case SpecialKeys.ID:
+      return Locale.label("people.mergeModal.id");
+    case SpecialKeys.NAME:
+      return Locale.label("people.mergeModal.name");
+    default:
+      return key;
+  }
+};
 
 export const MergeModal: React.FC<Props> = (props) => {
   const [aggregatePerson, setAggregatePerson] = React.useState<PersonInterface>(
@@ -163,12 +178,11 @@ export const MergeModal: React.FC<Props> = (props) => {
   React.useEffect(merge, [person1, person2]);
 
   const createConflictRows = () => conflicts.map((outer, i) => (
-
     <FormControl key={i} fullWidth>
-      <InputLabel>{outer.value}</InputLabel>
-      <Select name={outer.value} label={outer.value} id={outer.value} value={outer.selected} onChange={(e) => { handleSelect(outer.value, e.target.value) }}>
+      <InputLabel>{getDisplayValue(outer.value)}</InputLabel>
+      <Select name={outer.value} label={getDisplayValue(outer.value)} id={outer.value} value={outer.selected} onChange={(e) => { handleSelect(outer.value, e.target.value) }}>
         {outer.options.map((name, i) => {
-          const label = outer.value === "photo" ? (<img src={EnvironmentHelper.Common.ContentRoot + name} alt="profile" height="200px" width="200px" />) : name;
+          const label = outer.value === "photo" ? (<img src={EnvironmentHelper.Common.ContentRoot + name} alt={Locale.label("people.mergeModal.profile")} height="200px" width="200px" />) : name;
           return (<MenuItem key={i} value={name}>{label}</MenuItem>)
         })}
       </Select>
@@ -185,10 +199,10 @@ export const MergeModal: React.FC<Props> = (props) => {
           <>
             <p>{Locale.label("people.mergeModal.fieldCon")} </p>
             <Container>{createConflictRows()}</Container>
-            <span style={{color: "#dc3545", fontStyle: "italic"}}>{error}</span>
+            <span style={{ color: "#dc3545", fontStyle: "italic" }}>{error}</span>
           </>
         )}
-        {mergeInProgress && <p style={{textAlign: "center", fontStyle: "italic", marginBottom: 0}}>{Locale.label("people.mergeModal.merge")}</p>}
+        {mergeInProgress && <p style={{ textAlign: "center", fontStyle: "italic", marginBottom: 0 }}>{Locale.label("people.mergeModal.merge")}</p>}
       </DialogContent>
       <DialogActions>
         <Button onClick={props.onHide} data-cy="cancel-merge">{Locale.label("people.mergeModal.cancel")}</Button>

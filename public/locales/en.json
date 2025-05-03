@@ -413,13 +413,18 @@
       "mergeRec": "Merge Records"
     },
     "mergeModal": {
+      "mergeQuestion": "Merge",
+      "with": "with",
+      "fieldCon": "Please resolve field conflicts:",
+      "merge": "Merging...",
       "cancel": "Cancel",
       "confirm": "Confirm",
-      "fieldCon": "Here are some fields conflicting fields:",
-      "merge": "Merging records...",
-      "mergeQuestion": "Would you like to merge",
-      "selMsg": "Please select at least 1 value for each field",
-      "with": "with"
+      "selMsg": "Please select a value for all fields",
+      "contactInfo": "Contact Info",
+      "householdId": "Household ID",
+      "id": "ID",
+      "name": "Name",
+      "profile": "Profile"
     },
     "peopleColumns": {
       "appFilt": "Apply Filters",
@@ -566,9 +571,9 @@
       "plans": "Plans"
     },
     "planPage": {
-      "assign": "Assignments",
-      "band": "Band",
-      "noteSave": "Notes Saved."
+      "assignments": "Assignments",
+      "serviceOrder": "Service Order",
+      "servicePlan": "Service Plan"
     },
     "plansPage": {
       "selMin": "Select a Ministry"
@@ -634,6 +639,11 @@
       "noTime": "No times have been added yet",
       "sunServ": "Sunday Service",
       "times": "Times"
+    },
+    "printPlan": {
+      "serviceOrder": "SERVICE ORDER",
+      "time": "Time",
+      "length": "Length"
     }
   },
   "profile": {
@@ -863,26 +873,18 @@
       "servTime": "Service Time"
     },
     "conditionDate": {
-      "absolute": "Absolute Values",
-      "curMonth": "Current Month",
-      "dateFull": "Full Date",
       "datePart": "Date Part",
-      "dayOf": "Day of Week",
-      "fri": "Friday",
-      "mon": "Monday",
-      "month": "Month",
-      "monthDay": "Day of Month",
-      "nextMonth": "Next Month",
-      "op": "Operator",
-      "prevMonth": "Previous Month",
-      "relative": "Relative Values",
-      "sat": "Saturday",
-      "sun": "Sunday",
-      "thurs": "Thursday",
-      "tues": "Tuesday",
-      "wed": "Wednesday",
+      "dateFull": "Full Date",
       "weekDay": "Day of Week",
-      "yearsE": "Years Elapsed"
+      "monthDay": "Day of Month",
+      "month": "Month",
+      "yearsE": "Years Elapsed",
+      "op": "Operator",
+      "absolute": "Absolute",
+      "relative": "Relative",
+      "prevMonth": "Previous Month",
+      "curMonth": "Current Month",
+      "nextMonth": "Next Month"
     },
     "conditionDetails": {
       "addCon": "Add Condition",
@@ -907,10 +909,10 @@
       "op": "Operator"
     },
     "conditionText": {
-      "contains": "contains",
-      "endW": "ends with",
       "op": "Operator",
-      "startW": "starts with"
+      "contains": "contains",
+      "startW": "starts with",
+      "endW": "ends with"
     },
     "conjunctionEdit": {
       "and": "AND - All of the conditions are true",
@@ -960,6 +962,63 @@
       "showClosed": "Show Closed",
       "showOpen": "Show Open",
       "tasks": "Tasks"
+    },
+    "requestedChanges": {
+      "requestedChanges": "Requested Changes",
+      "apply": "Apply",
+      "field": "Field",
+      "value": "Value"
+    }
+  },
+  "songs": {
+    "arrangement": {
+      "title": "Arrangement",
+      "enterLyrics": "Manually enter lyrics or import from PraiseCharts",
+      "edit": "Edit Arrangement",
+      "name": "Arrangement Name",
+      "lyrics": "Lyrics",
+      "deleteConfirm": "Are you sure you want to delete this arrangement?"
+    },
+    "create": {
+      "title": "Create Song",
+      "songTitle": "Song Title",
+      "artist": "Artist"
+    },
+    "key": {
+      "edit": "Edit Key",
+      "signature": "Key Signature",
+      "label": "Label",
+      "default": "Default",
+      "defaultLabel": "John's Key",
+      "deleteConfirm": "Are you sure you want to delete this key?"
+    },
+    "keys": {
+      "title": "Keys",
+      "add": "+ Add",
+      "import": "Import",
+      "importPrompt": "Would you like to import the text lyrics from PraiseCharts?",
+      "addFiles": "Add Files",
+      "importFromPraiseCharts": "Import files from PraiseCharts",
+      "addExternalLink": "Add external link"
+    },
+    "link": {
+      "edit": "Edit Link",
+      "url": "Url",
+      "text": "Text",
+      "chordChart": "Chord Chart",
+      "deleteConfirm": "Are you sure you want to delete this link?"
+    },
+    "details": {
+      "artist": "Artist",
+      "releaseDate": "Release Date",
+      "album": "Album",
+      "language": "Language",
+      "bpm": "BPM",
+      "keySignature": "Key Signature",
+      "keys": "Keys",
+      "meter": "Meter",
+      "length": "Length",
+      "key": "Key"
     }
   }
 }

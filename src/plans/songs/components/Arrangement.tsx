@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 
 import { ArrangementInterface, SongDetailInterface } from "../../../helpers";
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
-import { ApiHelper, DisplayBox } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, Locale } from "@churchapps/apphelper";
 import { Grid } from "@mui/material";
 import { SongDetails } from "./SongDetails";
 import { Keys } from "./Keys";
@@ -58,8 +58,8 @@ export const Arrangement = (props: Props) => {
     <Grid container spacing={2}>
       <Grid item md={8}>
         <Keys arrangement={props.arrangement} songDetail={songDetail} importLyrics={importLyrics} />
-        {!edit && <DisplayBox headerText={"Arrangment - " + props.arrangement?.name} headerIcon="music_note" editFunction={() => { setEdit(true) }}>
-          <div className="chordPro" dangerouslySetInnerHTML={{ __html: ChordProHelper.formatLyrics(props.arrangement?.lyrics || "Manually enter lyrics or import from PraiseCharts", 0) }}></div>
+        {!edit && <DisplayBox headerText={Locale.label("songs.arrangement.title") + " - " + props.arrangement?.name} headerIcon="music_note" editFunction={() => { setEdit(true) }}>
+          <div className="chordPro" dangerouslySetInnerHTML={{ __html: ChordProHelper.formatLyrics(props.arrangement?.lyrics || Locale.label("songs.arrangement.enterLyrics"), 0) }}></div>
         </DisplayBox>}
         {edit && <ArrangementEdit arrangement={props.arrangement} onSave={(arrangement: ArrangementInterface) => { setEdit(false); console.log("ARRANGEMENT IS", arrangement); if (arrangement) props.reload(); else navigate("/plans/songs") }} onCancel={() => { setEdit(false); }} />}
       </Grid>

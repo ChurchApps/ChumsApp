@@ -20,18 +20,18 @@ export const TaskList = (props: Props) => {
   const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true) }} />
 
   const loadData = () => {
-    if (props.status === "Closed") ApiHelper.get("/tasks/closed", "DoingApi").then(data => {
-      if(isMounted()) {
+    if (props.status === Locale.label("tasks.taskPage.closed")) ApiHelper.get("/tasks/closed", "DoingApi").then(data => {
+      if (isMounted()) {
         setTasks(data);
       }
     });
     else ApiHelper.get("/tasks", "DoingApi").then(data => {
-      if(isMounted()) {
+      if (isMounted()) {
         setTasks(data);
       }
     });
     if (UserHelper.person?.id) ApiHelper.get("/groupmembers?personId=" + UserHelper.person?.id, "MembershipApi").then(data => {
-      if(isMounted()) {
+      if (isMounted()) {
         setGroupMembers(data);
       }
     });
@@ -41,7 +41,7 @@ export const TaskList = (props: Props) => {
     if (groupMembers?.length > 0) {
       const groupIds = ArrayHelper.getIds(groupMembers, "groupId");
       ApiHelper.post("/tasks/loadForGroups", { groupIds, status: props.status }, "DoingApi").then(d => {
-        if(isMounted()) {
+        if (isMounted()) {
           setGroupTasks(d);
         }
       });
@@ -55,7 +55,7 @@ export const TaskList = (props: Props) => {
     <Grid container spacing={3}>
       <Grid item xs={(props.compact) ? 12 : 6}>
         <b><Link to={"/tasks/" + task.id}>{task.title}</Link></b><br />
-        <Typography variant="caption">#{task.taskNumber} opened {DateHelper.getDisplayDuration(DateHelper.convertToDate(task.dateCreated))} ago by {task.createdByLabel}</Typography>
+        <Typography variant="caption">#{task.taskNumber} {Locale.label("tasks.taskPage.opened")} {DateHelper.getDisplayDuration(DateHelper.convertToDate(task.dateCreated))} {Locale.label("tasks.taskPage.ago")} {Locale.label("tasks.taskPage.by")} {task.createdByLabel}</Typography>
       </Grid>
       {!props.compact && (<>
         <Grid item xs={3}>

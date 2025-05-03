@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ApiHelper, DateHelper, DisplayBox, InputBox } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, DisplayBox, InputBox, Locale } from "@churchapps/apphelper";
 import { ArrangementInterface, ArrangementKeyInterface } from "../../../helpers";
 import { TextField } from "@mui/material";
 
@@ -30,15 +30,15 @@ export const KeyEdit = (props: Props) => {
   }
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this key?")) {
+    if (window.confirm(Locale.label("songs.key.deleteConfirm"))) {
       ApiHelper.delete("/arrangementKeys/" + key?.id, "ContentApi").then(() => {
         props.onSave(null);
       });
     }
   }
 
-  return (<InputBox headerText={props.arrangementKey?.keySignature || "Edit Key"} headerIcon="library_music" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={(key?.id) ? handleDelete : null}>
-    <TextField label="Key Signature" name="keySignature" value={key?.keySignature} onChange={handleChange} fullWidth />
-    <TextField label="Label" multiline name="shortDescription" value={key?.shortDescription} onChange={handleChange} fullWidth placeholder="John's Key" />
+  return (<InputBox headerText={props.arrangementKey?.keySignature || Locale.label("songs.key.edit")} headerIcon="library_music" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={(key?.id) ? handleDelete : null}>
+    <TextField label={Locale.label("songs.key.signature")} name="keySignature" value={key?.keySignature} onChange={handleChange} fullWidth />
+    <TextField label={Locale.label("songs.key.label")} multiline name="shortDescription" value={key?.shortDescription} onChange={handleChange} fullWidth placeholder={Locale.label("songs.key.defaultLabel")} />
   </InputBox>);
 }

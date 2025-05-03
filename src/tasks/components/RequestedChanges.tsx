@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiHelper, DateHelper, InputBox, PersonInterface, TaskInterface, UserHelper } from "@churchapps/apphelper";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Locale } from "@churchapps/apphelper";
 
 interface Props { task: TaskInterface; }
 
@@ -64,12 +65,12 @@ export const RequestedChanges = (props: Props) => {
   };
 
   return (
-    <InputBox headerIcon="assignment_return" headerText="Requested Changes" saveText="Apply" saveFunction={handleApply} isSubmitting={props.task.status === "Closed"}>
+    <InputBox headerIcon="assignment_return" headerText={Locale.label("tasks.requestedChanges.requestedChanges")} saveText={Locale.label("tasks.requestedChanges.apply")} saveFunction={handleApply} isSubmitting={props.task.status === Locale.label("tasks.taskPage.closed")}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: "1000 !important" }}>Field</TableCell>
-            <TableCell sx={{ fontWeight: "1000 !important" }}>Value</TableCell>
+            <TableCell sx={{ fontWeight: "1000 !important" }}>{Locale.label("tasks.requestedChanges.field")}</TableCell>
+            <TableCell sx={{ fontWeight: "1000 !important" }}>{Locale.label("tasks.requestedChanges.value")}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{getRows()}</TableBody>

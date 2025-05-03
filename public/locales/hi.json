@@ -59,19 +59,21 @@
 	},
 	"components": {
 		"footer": {
-			"phone": "फ़ोन",
+			"phone": "फोन",
 			"rights": "सर्वाधिकार सुरक्षित।"
 		},
 		"wrapper": {
 			"att": "उपस्थिति",
 			"dash": "डैशबोर्ड",
 			"don": "दान",
-			"form": "प्रपत्र",
+			"forms": "फॉर्म",
 			"groups": "समूह",
 			"plans": "योजनाएं",
 			"ppl": "लोग",
-			"servAdmin": "सर्वर व्यवस्थापक",
+			"servAdmin": "सर्वर एडमिन",
+			"serving": "सेवा",
 			"set": "सेटिंग्स",
+			"songs": "गीत",
 			"tasks": "कार्य"
 		}
 	},
@@ -513,13 +515,14 @@
 			"teams": "टीमें"
 		},
 		"planEdit": {
-			"copy": "से प्रतिलिपि बनाएँ",
+			"copy": "कॉपी करें",
 			"none": "कोई नहीं",
-			"planAdd": "एक योजना जोड़ें",
+			"planAdd": "योजना जोड़ें",
 			"planEdit": "योजना संपादित करें",
 			"planReq": "योजना का नाम आवश्यक है।",
-			"servDate": "सेवा की तारीख",
-			"servReq": "सेवा की तारीख आवश्यक है।"
+			"servDate": "सेवा तिथि",
+			"servReq": "सेवा तिथि आवश्यक है।",
+			"servOrder": "सेवा क्रम शामिल करें?"
 		},
 		"planList": {
 			"noPlan": "अभी तक कोई योजना नहीं जोड़ी गई है।",
@@ -592,6 +595,11 @@
 			"noTime": "अभी तक कोई समय नहीं जोड़ा गया है",
 			"sunServ": "रविवार सेवा",
 			"times": "टाइम्स"
+		},
+		"printPlan": {
+			"serviceOrder": "सेवा क्रम",
+			"time": "समय",
+			"length": "अवधि"
 		}
 	},
 	"profile": {
@@ -745,6 +753,86 @@
 			"noAcc": "क्या आपके पास उपयोगकर्ता खाता नहीं है?",
 			"valEmail": "कृपया एक मान्य ईमेल दर्ज करें",
 			"valEmailMsg": "एक मान्य ईमेल दर्ज करें"
+		},
+		"directoryApprovalSettingsEdit": {
+			"directoryApprovalGroup": "निर्देशिका अनुमोदन समूह",
+			"forceMsg": "यह समूह सभी सदस्य निर्देशिका अपडेट को संभालेगा। केवल उनकी अनुमति के बाद ही परिवर्तन लागू होंगे।",
+			"groups": "समूह",
+			"none": "कोई नहीं",
+			"noGroups": "कोई समूह उपलब्ध नहीं"
+		},
+		"feeOptionsSettings": {
+			"creditCardFlatRate": "फ्लैट रेट [ क्रेडिट कार्ड ]",
+			"creditCardTransactionFee": "लेनदेन शुल्क [ क्रेडिट कार्ड ]",
+			"achFlatRate": "फ्लैट रेट [ ACH ]",
+			"achHardLimit": "कठोर सीमा [ ACH ]"
+		},
+		"supportContactSettingsEdit": {
+			"supportContact": "सहायता संपर्क",
+			"forceMsg": "यह लिंक उपयोगकर्ताओं द्वारा चर्च से संपर्क करने के लिए उपयोग किया जाएगा",
+			"link": "लिंक",
+			"linkHelperText": "यह या तो चर्च का ईमेल होना चाहिए या चर्च के संपर्क फॉर्म का लिंक होना चाहिए"
+		},
+		"visibilityPrefSettingsEdit": {
+			"visibilityPreference": "दृश्यता प्राथमिकता",
+			"forceMsg": "यह उन लोगों के लिए डिफ़ॉल्ट मान सेट करेगा जिन्होंने अभी तक अपनी सेटिंग्स कॉन्फ़िगर नहीं की हैं",
+			"address": "पता",
+			"phoneNum": "फोन नंबर",
+			"email": "ईमेल",
+			"everyone": "सभी",
+			"members": "सदस्य",
+			"groups": "केवल समूह"
+		}
+	},
+	"songs": {
+		"arrangement": {
+			"title": "व्यवस्था",
+			"enterLyrics": "मैन्युअल रूप से गीत दर्ज करें या PraiseCharts से आयात करें",
+			"edit": "व्यवस्था संपादित करें",
+			"name": "व्यवस्था का नाम",
+			"lyrics": "गीत",
+			"deleteConfirm": "क्या आप वाकई इस व्यवस्था को हटाना चाहते हैं?"
+		},
+		"create": {
+			"title": "गीत बनाएं",
+			"songTitle": "गीत का शीर्षक",
+			"artist": "कलाकार"
+		},
+		"key": {
+			"edit": "कुंजी संपादित करें",
+			"signature": "कुंजी हस्ताक्षर",
+			"label": "लेबल",
+			"default": "डिफ़ॉल्ट",
+			"defaultLabel": "जॉन की कुंजी",
+			"deleteConfirm": "क्या आप वाकई इस कुंजी को हटाना चाहते हैं?"
+		},
+		"keys": {
+			"title": "कुंजियां",
+			"add": "+ जोड़ें",
+			"import": "आयात करें",
+			"importPrompt": "क्या आप PraiseCharts से पाठ गीत आयात करना चाहते हैं?",
+			"addFiles": "फ़ाइलें जोड़ें",
+			"importFromPraiseCharts": "PraiseCharts से फ़ाइलें आयात करें",
+			"addExternalLink": "बाहरी लिंक जोड़ें"
+		},
+		"link": {
+			"edit": "लिंक संपादित करें",
+			"url": "यूआरएल",
+			"text": "पाठ",
+			"chordChart": "कोर्ड चार्ट",
+			"deleteConfirm": "क्या आप वाकई इस लिंक को हटाना चाहते हैं?"
+		},
+		"details": {
+			"artist": "कलाकार",
+			"releaseDate": "रिलीज़ तिथि",
+			"album": "एल्बम",
+			"language": "भाषा",
+			"bpm": "बीपीएम",
+			"keySignature": "कुंजी हस्ताक्षर",
+			"keys": "कुंजियां",
+			"meter": "मीटर",
+			"length": "अवधि",
+			"key": "कुंजी"
 		}
 	},
 	"tasks": {
@@ -881,6 +969,12 @@
 			"showClosed": "बंद दिखाएं",
 			"showOpen": "खुला दिखाएं",
 			"tasks": "कार्य"
+		},
+		"requestedChanges": {
+			"requestedChanges": "अनुरोधित परिवर्तन",
+			"apply": "लागू करें",
+			"field": "फ़ील्ड",
+			"value": "मान"
 		}
 	}
 }

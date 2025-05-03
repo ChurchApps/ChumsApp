@@ -66,12 +66,14 @@
 			"att": "Asistencia",
 			"dash": "Panel",
 			"don": "Donaciones",
-			"form": "Formulario",
+			"forms": "Formularios",
 			"groups": "Grupos",
 			"plans": "Planes",
 			"ppl": "Personas",
 			"servAdmin": "Administrador del Servidor",
+			"serving": "Servicio",
 			"set": "Configuraciones",
+			"songs": "Canciones",
 			"tasks": "Tareas"
 		}
 	},
@@ -427,9 +429,7 @@
 			"att": "Asistencia",
 			"noAttMsg": "No hay registros de asistencia. La asistencia aparecerá una vez que se haya registrado para una sesión de grupo."
 		},
-		"personEdit":
-
- {
+		"personEdit": {
 			"applyQuestion": "¿Le gustaría aplicar eso a todo el",
 			"confirmMsg": "¿Está seguro de que desea eliminar permanentemente este registro de persona?",
 			"exten": "Extensión",
@@ -521,16 +521,17 @@
 			"planEdit": "Editar Plan",
 			"planReq": "Se requiere el nombre del plan.",
 			"servDate": "Fecha del Servicio",
-			"servReq": "Se requiere la fecha del servicio."
+			"servReq": "Se requiere la fecha del servicio.",
+			"servOrder": "¿Incluir Orden de Servicio?"
 		},
 		"planList": {
 			"noPlan": "Aún no se han agregado planes.",
 			"plans": "Planes"
 		},
 		"planPage": {
-			"assign": "Asignaciones",
-			"band": "Banda",
-			"noteSave": "Notas Guardadas."
+			"assignments": "Asignaciones",
+			"serviceOrder": "Orden de Servicio",
+			"servicePlan": "Plan de Servicio"
 		},
 		"plansPage": {
 			"selMin": "Seleccione un Ministerio"
@@ -594,6 +595,11 @@
 			"noTime": "Aún no se han agregado horarios",
 			"sunServ": "Servicio del Domingo",
 			"times": "Horarios"
+		},
+		"printPlan": {
+			"serviceOrder": "ORDEN DE SERVICIO",
+			"time": "Hora",
+			"length": "Duración"
 		}
 	},
 	"profile": {
@@ -747,6 +753,86 @@
 			"noAcc": "¿No tienes una cuenta de usuario?",
 			"valEmail": "Por favor ingrese un correo electrónico válido",
 			"valEmailMsg": "Ingrese un correo electrónico válido"
+		},
+		"directoryApprovalSettingsEdit": {
+			"directoryApprovalGroup": "Grupo de Aprobación del Directorio",
+			"forceMsg": "Este grupo manejará todas las actualizaciones del directorio de miembros. Solo después de su aprobación, se aplicarán los cambios.",
+			"groups": "Grupos",
+			"none": "Ninguno",
+			"noGroups": "No hay grupos disponibles"
+		},
+		"feeOptionsSettings": {
+			"creditCardFlatRate": "Tarifa Plana [ Tarjeta de Crédito ]",
+			"creditCardTransactionFee": "Tarifa de Transacción [ Tarjeta de Crédito ]",
+			"achFlatRate": "Tarifa Plana [ ACH ]",
+			"achHardLimit": "Límite máximo [ ACH ]"
+		},
+		"supportContactSettingsEdit": {
+			"supportContact": "Contacto de Soporte",
+			"forceMsg": "Este enlace será utilizado por los usuarios para contactar a la iglesia",
+			"link": "Enlace",
+			"linkHelperText": "Debe ser el correo electrónico de la iglesia o un enlace al formulario de contacto de la iglesia"
+		},
+		"visibilityPrefSettingsEdit": {
+			"visibilityPreference": "Preferencia de Visibilidad",
+			"forceMsg": "Esto establecerá el valor predeterminado para las personas que aún no han configurado sus ajustes",
+			"address": "Dirección",
+			"phoneNum": "Número de Teléfono",
+			"email": "Correo Electrónico",
+			"everyone": "Todos",
+			"members": "Miembros",
+			"groups": "Solo Grupos"
+		}
+	},
+	"songs": {
+		"arrangement": {
+			"title": "Arreglo",
+			"enterLyrics": "Ingrese letras manualmente o importe desde PraiseCharts",
+			"edit": "Editar Arreglo",
+			"name": "Nombre del Arreglo",
+			"lyrics": "Letras",
+			"deleteConfirm": "¿Está seguro de que desea eliminar este arreglo?"
+		},
+		"create": {
+			"title": "Crear Canción",
+			"songTitle": "Título de la Canción",
+			"artist": "Artista"
+		},
+		"key": {
+			"edit": "Editar Tonalidad",
+			"signature": "Armadura de Clave",
+			"label": "Etiqueta",
+			"default": "Predeterminado",
+			"defaultLabel": "Tonalidad de John",
+			"deleteConfirm": "¿Está seguro de que desea eliminar esta tonalidad?"
+		},
+		"keys": {
+			"title": "Tonalidades",
+			"add": "+ Agregar",
+			"import": "Importar",
+			"importPrompt": "¿Desea importar las letras de texto desde PraiseCharts?",
+			"addFiles": "Agregar Archivos",
+			"importFromPraiseCharts": "Importar archivos desde PraiseCharts",
+			"addExternalLink": "Agregar enlace externo"
+		},
+		"link": {
+			"edit": "Editar Enlace",
+			"url": "Url",
+			"text": "Texto",
+			"chordChart": "Gráfico de Acordes",
+			"deleteConfirm": "¿Está seguro de que desea eliminar este enlace?"
+		},
+		"details": {
+			"artist": "Artista",
+			"releaseDate": "Fecha de Lanzamiento",
+			"album": "Álbum",
+			"language": "Idioma",
+			"bpm": "BPM",
+			"keySignature": "Armadura de Clave",
+			"keys": "Tonalidades",
+			"meter": "Compás",
+			"length": "Duración",
+			"key": "Tonalidad"
 		}
 	},
 	"tasks": {
@@ -825,9 +911,7 @@
 			"persAtt": "Atributos Personales",
 			"today": "Fecha de Hoy"
 		},
-		"conditionSelect":
-
- {
+		"conditionSelect": {
 			"is": "es",
 			"isNot": "no es",
 			"op": "Operador"
@@ -885,6 +969,12 @@
 			"showClosed": "Mostrar Cerrados",
 			"showOpen": "Mostrar Abiertos",
 			"tasks": "Tareas"
+		},
+		"requestedChanges": {
+			"requestedChanges": "Cambios Solicitados",
+			"apply": "Aplicar",
+			"field": "Campo",
+			"value": "Valor"
 		}
 	}
 }
