@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DateHelper, DisplayBox, Locale, NotificationInterface, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, CommonEnvironmentHelper, DateHelper, DisplayBox, Locale, NotificationInterface, PersonInterface, PlanInterface, PositionInterface, TimeInterface, UserHelper } from "@churchapps/apphelper";
 
 interface Props {
   plan: PlanInterface,
@@ -194,7 +194,13 @@ export const PlanValidation = (props: Props) => {
     pending.forEach(a => {
       const position: PositionInterface = ArrayHelper.getOne(props.positions, "id", a.positionId);
       a.notified = new Date();
-      const data: any = { peopleIds: [a.personId], contentType: "assignment", contentId: props.plan.id, message: Locale.label("plans.planValidation.volReq") + props.plan.name + " - " + position.name + "." + Locale.label("plans.planValidation.pleaseConfirm") };
+      const data: any = {
+        peopleIds: [a.personId],
+        contentType: "assignment",
+        contentId: props.plan.id,
+        message: Locale.label("plans.planValidation.volReq") + props.plan.name + " - " + position.name + "." + Locale.label("plans.planValidation.pleaseConfirm"),
+        link: CommonEnvironmentHelper.B1Root.replace("{key}", UserHelper.currentUserChurch.church.subDomain) + "/my/plans/" + props.plan.id
+      };
       promises.push(ApiHelper.post("/notifications/create", data, "MessagingApi"));
     });
     promises.push(ApiHelper.post("/assignments", pending, "DoingApi"));
