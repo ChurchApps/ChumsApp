@@ -31,10 +31,14 @@ export const ControlPanel = () => {
 
   const customErrorHandler = (error: ErrorLogInterface) => {
     console.log("customErrorHandler", error);
+    //disabled for now.  This causes infinite loops when the error happens on useEffect page loads.
+
+    /*
     switch (error.errorType) {
       case "401": setErrors(["Access denied when loading " + error.message]); break;
       case "500": setErrors(["Server error when loading " + error.message]); break;
-    }
+    }*/
+
   }
 
   ErrorHelper.init(getErrorAppData, customErrorHandler);
