@@ -4,7 +4,8 @@ import { useCookies } from "react-cookie";
 import { ApiHelper, UserHelper } from "@churchapps/apphelper";
 import UserContext from "./UserContext";
 import { LoginPage, Permissions } from "@churchapps/apphelper";
-import { Box } from "@mui/material";
+import { Alert, Box } from "@mui/material";
+import { EnvironmentHelper } from "./helpers";
 
 export const Login: React.FC = (props: any) => {
   const [errors] = React.useState<string[]>([])
@@ -23,7 +24,13 @@ export const Login: React.FC = (props: any) => {
     if (!returnUrl) returnUrl = "";
 
     return (<Box sx={{ display: "flex", backgroundColor: "#EEE", minHeight: "100vh" }}>
-      <LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} callbackErrors={errors} returnUrl={returnUrl} />
+      <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+        {process.env.REACT_APP_STAGE === "demo" && (<Alert severity="error" style={{ marginTop: 50 }}>
+          <b>Demo:</b> This is the demo environment.  All data is erased nightly.<br />
+          You can log into a test church with the credentials demo@chums.org / password .
+        </Alert>)}
+        <LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} callbackErrors={errors} returnUrl={returnUrl} />
+      </div>
     </Box>);
   } else {
     // @ts-ignore
