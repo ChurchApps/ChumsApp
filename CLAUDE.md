@@ -17,10 +17,12 @@ npm run postinstall  # Copy locales and CSS from apphelper
 npm start  # Start development server
 npm run build  # Build for production
 npm test  # Run tests
+npx playwright test  # Run Playwright tests
 
 # Code quality
 npm run lint:only  # Check linting (TypeScript/JavaScript files)
 npm run lint:fix  # Fix linting issues automatically
+npx playwright test --ui  # Run Playwright tests with UI mode
 
 # Deployment (requires AWS CLI)
 npm run deploy-demo     # Deploy to demo environment

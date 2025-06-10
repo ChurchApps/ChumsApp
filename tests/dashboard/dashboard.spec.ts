@@ -24,7 +24,7 @@ test.describe('Dashboard Page', () => {
       const graceChurch = page.locator('text=Grace Community Church').first();
       await graceChurch.click();
       // Wait for church selection to complete
-      await page.waitForTimeout(2000);
+      await page.waitForSelector('h1:has-text("Chums")', { timeout: 10000 });
     }
     
     await dashboardPage.expectUserIsLoggedIn();
@@ -55,7 +55,7 @@ test.describe('Dashboard Page', () => {
     await searchButton.click();
     
     // Wait for search results to load
-    await page.waitForTimeout(2000);
+    await page.waitForLoadState('networkidle', { timeout: 5000 });
     
     // The search might return results or show no results message
     // Since this is a demo environment, we'll just verify the search was executed
@@ -110,7 +110,7 @@ test.describe('Dashboard Page', () => {
       await primaryMenuButton.click();
       
       // Wait for menu to appear and check for navigation options
-      await page.waitForTimeout(1000);
+      await page.waitForLoadState('networkidle', { timeout: 3000 });
       
       console.log('Primary menu clicked successfully');
     } else {
@@ -139,7 +139,7 @@ test.describe('Dashboard Page', () => {
     
     // Just verify the current page is responsive by checking if elements adapt
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(500);
     
     // Verify page doesn't break on mobile size
     const hasHorizontalScroll = await page.evaluate(() => document.body.scrollWidth > window.innerWidth);

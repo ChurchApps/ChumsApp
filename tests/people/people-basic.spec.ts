@@ -22,7 +22,7 @@ test.describe('People Basic Tests', () => {
     if (isChurchSelectionVisible) {
       const graceChurch = page.locator('text=Grace Community Church').first();
       await graceChurch.click();
-      await page.waitForTimeout(2000);
+      await page.waitForSelector('h1:has-text("Chums")', { timeout: 10000 });
     }
     
     await dashboardPage.expectUserIsLoggedIn();
@@ -35,7 +35,7 @@ test.describe('People Basic Tests', () => {
     
     if (primaryMenuExists) {
       await primaryMenuButton.click();
-      await page.waitForTimeout(1000);
+      await page.waitForLoadState('networkidle', { timeout: 3000 });
       
       // Look for People link in menu
       const peopleMenuLink = page.locator('a:has-text("People"), text=People').first();
@@ -45,7 +45,7 @@ test.describe('People Basic Tests', () => {
         console.log('People menu option found in navigation');
         
         await peopleMenuLink.click();
-        await page.waitForTimeout(2000);
+        await page.waitForLoadState('networkidle', { timeout: 5000 });
         
         // Check where we landed
         const currentUrl = page.url();
@@ -74,7 +74,7 @@ test.describe('People Basic Tests', () => {
 
   test('should access people page directly via URL', async ({ page }) => {
     await page.goto('/people');
-    await page.waitForTimeout(3000);
+    await page.waitForLoadState('networkidle', { timeout: 8000 });
     
     const currentUrl = page.url();
     
@@ -111,7 +111,7 @@ test.describe('People Basic Tests', () => {
       
       if (searchButtonExists) {
         await searchButton.click();
-        await page.waitForTimeout(2000);
+        await page.waitForLoadState('networkidle', { timeout: 5000 });
         
         console.log('People search executed from dashboard');
         

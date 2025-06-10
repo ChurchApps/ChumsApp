@@ -7,7 +7,7 @@ test.describe('Debug Login Page', () => {
     
     // Wait for page to load
     await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(2000); // Give React time to render
+    await page.waitForLoadState('networkidle', { timeout: 5000 }); // Give React time to render
     
     console.log('Page URL:', page.url());
     console.log('Page title:', await page.title());
