@@ -3,6 +3,7 @@ import { LoginPage } from '../pages/login-page';
 import { DashboardPage } from '../pages/dashboard-page';
 import { PeoplePage } from '../pages/people-page';
 import { SharedSetup } from '../utils/shared-setup';
+import { PeopleTestHelpers } from './people-test-helpers';
 
 test.describe('People Page', () => {
   let loginPage: LoginPage;
@@ -19,60 +20,12 @@ test.describe('People Page', () => {
     await SharedSetup.loginAndSelectChurch(page);
   });
 
-  // Helper function to handle people page access with dashboard fallback
-  async function performPeoplePageTest(page, testName, peoplePage, testFunction) {
-    try {
-      await peoplePage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (people page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on people page, but catch URL expectation errors
-      try {
-        await peoplePage.expectToBeOnPeoplePage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test on people page
-      await testFunction('people');
-      console.log(`${testName} verified on people page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`People page not accessible - testing ${testName} from dashboard instead`);
-        
-        // Navigate back to dashboard if we got redirected
-        await page.goto('/');
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Test functionality from dashboard
-        await testFunction('dashboard');
-        console.log(`${testName} verified via dashboard`);
-      } else {
-        throw error;
-      }
-    }
-  }
 
   test('should check if people page is accessible', async ({ page }) => {
-    await performPeoplePageTest(page, 'people page accessibility', peoplePage, async (mode) => {
+    await PeopleTestHelpers.performPeoplePageTest(page, 'people page accessibility', peoplePage, async (mode) => {
       if (mode === 'people') {
-        // Check for main page elements on people page
-        const hasTitle = await page.locator('h1:has-text("Search People"), h1:has-text("People")').first().isVisible().catch(() => false);
-        const hasSearchBox = await page.locator('[id="searchText"], input[name*="search"]').first().isVisible().catch(() => false);
-        
-        if (hasTitle || hasSearchBox) {
-          console.log('People page accessible and main components visible');
-        } else {
-          console.log('People page structure may be different in demo environment');
-        }
+        await PeopleTestHelpers.testPageAccessibility(page, 'peopleSearch');
       } else {
-        // Test from dashboard
         const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
         
         if (canSearchFromDashboard) {
@@ -85,295 +38,141 @@ test.describe('People Page', () => {
   });
 
   test('should display recent people by default', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
-      
-      // Recent people should be loaded automatically
-      await expect(peoplePage.recentPeopleBox).toBeVisible();
-      
-      // Check if there are results
-      const hasResults = await peoplePage.expectSearchResults();
-      
-      if (hasResults) {
-        console.log('Recent people displayed successfully');
-      } else {
-        console.log('No recent people data in demo environment');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - testing people search from dashboard instead');
-        
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          console.log('People search functionality confirmed via dashboard (recent people not testable)');
-        } else {
-          console.log('People functionality not available in demo environment');
-        }
-      } else {
-        throw error;
-      }
-    }
-  });
-
-  test('should perform simple people search', async ({ page }) => {
-    await performPeoplePageTest(page, 'simple people search', peoplePage, async (mode) => {
+    await PeopleTestHelpers.performPeoplePageTest(page, 'recent people display', peoplePage, async (mode) => {
       if (mode === 'people') {
-        // Perform a search on people page
-        await peoplePage.searchPeople('demo');
-        console.log('People search executed successfully');
-      } else {
-        // Test from dashboard
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
+        await expect(peoplePage.recentPeopleBox).toBeVisible();
         
-        if (canSearchFromDashboard) {
-          await peoplePage.searchPeopleFromDashboard('demo');
-          console.log('People search executed successfully via dashboard');
+        const hasResults = await peoplePage.expectSearchResults();
+        
+        if (hasResults) {
+          console.log('Recent people displayed successfully');
         } else {
-          console.log('People search not available in demo environment');
+          console.log('No recent people data in demo environment');
         }
+      } else {
+        console.log('People search functionality confirmed via dashboard (recent people not testable)');
       }
     });
   });
 
+  test('should perform simple people search', async ({ page }) => {
+    const searchTerms = PeopleTestHelpers.getSearchTerms().basic;
+    await PeopleTestHelpers.performSearchTest(page, 'simple people search', peoplePage, searchTerms);
+  });
+
   test('should have working search functionality with Enter key', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
-      
-      // Type in search box and press Enter
-      await peoplePage.searchInput.fill('test');
-      await peoplePage.searchInput.press('Enter');
-      
-      // Search completion should be handled by the method
-      
-      console.log('Enter key search functionality working');
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - testing Enter key search from dashboard instead');
-        
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          await peoplePage.searchPeopleFromDashboard('test');
-          console.log('Enter key search functionality tested via dashboard');
-        } else {
-          console.log('People search not available for Enter key testing');
-        }
+    await PeopleTestHelpers.performPeoplePageTest(page, 'Enter key search functionality', peoplePage, async (mode) => {
+      if (mode === 'people') {
+        await peoplePage.searchInput.fill('test');
+        await peoplePage.searchInput.press('Enter');
+        console.log('Enter key search functionality working');
       } else {
-        throw error;
+        await peoplePage.searchPeopleFromDashboard('test');
+        console.log('Enter key search functionality tested via dashboard');
       }
-    }
+    });
   });
 
   test('should show advanced search option', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
-      
-      // Check if advanced search button exists
-      const advancedButtonExists = await peoplePage.advancedButton.isVisible().catch(() => false);
-      
-      if (advancedButtonExists) {
-        await peoplePage.clickAdvancedSearch();
+    await PeopleTestHelpers.performPeoplePageTest(page, 'advanced search option', peoplePage, async (mode) => {
+      if (mode === 'people') {
+        const advancedButtonExists = await peoplePage.advancedButton.isVisible().catch(() => false);
         
-        console.log('Advanced search opened successfully');
-      } else {
-        console.log('Advanced search button not found - may be permission-based');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - advanced search testing skipped');
-        
-        // Advanced search is typically not available from dashboard
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          console.log('Basic search functionality confirmed via dashboard (advanced search not testable)');
+        if (advancedButtonExists) {
+          await peoplePage.clickAdvancedSearch();
+          console.log('Advanced search opened successfully');
         } else {
-          console.log('People search not available for advanced search testing');
+          console.log('Advanced search button not found - may be permission-based');
         }
       } else {
-        throw error;
+        console.log('Basic search functionality confirmed via dashboard (advanced search not testable)');
       }
-    }
+    });
   });
 
   test('should have export functionality', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
-      
-      // Wait for recent people to load
-      await peoplePage.expectRecentPeopleDisplayed();
-      
-      // Check if export link is available
-      const exportExists = await peoplePage.exportLink.isVisible().catch(() => false);
-      
-      if (exportExists) {
-        console.log('Export functionality available');
-        // Note: Not actually clicking export to avoid file downloads in tests
-      } else {
-        console.log('Export not available - may require data or permissions');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - export functionality testing skipped');
+    await PeopleTestHelpers.performPeoplePageTest(page, 'export functionality', peoplePage, async (mode) => {
+      if (mode === 'people') {
+        await peoplePage.expectRecentPeopleDisplayed();
         
-        // Export functionality is not available from dashboard
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
+        const exportExists = await peoplePage.exportLink.isVisible().catch(() => false);
         
-        if (canSearchFromDashboard) {
-          console.log('Basic search functionality confirmed via dashboard (export not testable)');
+        if (exportExists) {
+          console.log('Export functionality available');
         } else {
-          console.log('People functionality not available for export testing');
+          console.log('Export not available - may require data or permissions');
         }
       } else {
-        throw error;
+        console.log('Basic search functionality confirmed via dashboard (export not testable)');
       }
-    }
+    });
   });
 
   test('should have column selector functionality', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
-      
-      // Check if columns button is available
-      
-      // Check if columns button is available
-      const columnsExists = await peoplePage.columnsButton.isVisible().catch(() => false);
-      
-      if (columnsExists) {
-        await peoplePage.openColumnsSelector();
-        console.log('Column selector opened successfully');
-      } else {
-        console.log('Column selector not available - may require data or permissions');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - column selector testing skipped');
+    await PeopleTestHelpers.performPeoplePageTest(page, 'column selector functionality', peoplePage, async (mode) => {
+      if (mode === 'people') {
+        const columnsExists = await peoplePage.columnsButton.isVisible().catch(() => false);
         
-        // Column selector functionality is not available from dashboard
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          console.log('Basic search functionality confirmed via dashboard (column selector not testable)');
+        if (columnsExists) {
+          await peoplePage.openColumnsSelector();
+          console.log('Column selector opened successfully');
         } else {
-          console.log('People functionality not available for column selector testing');
+          console.log('Column selector not available - may require data or permissions');
         }
       } else {
-        throw error;
+        console.log('Basic search functionality confirmed via dashboard (column selector not testable)');
       }
-    }
+    });
   });
 
   test('should navigate to individual person page', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
-      
-      // Check for people data
-      
-      // Try to click on first person
-      const personClicked = await peoplePage.clickFirstPerson();
-      
-      if (personClicked) {
-        // Should navigate to person page
-        const currentUrl = page.url();
+    await PeopleTestHelpers.performPeoplePageTest(page, 'person navigation', peoplePage, async (mode) => {
+      if (mode === 'people') {
+        const personClicked = await peoplePage.clickFirstPerson();
         
-        // Check if we're on a person page (URL contains /people/ followed by ID)
-        const isOnPersonPage = /\/people\/\w+/.test(currentUrl);
-        expect(isOnPersonPage).toBeTruthy();
-        
-        console.log('Successfully navigated to person page');
-      } else {
-        console.log('No people available to click in demo environment');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - person navigation testing skipped');
-        
-        // Individual person navigation is not available from dashboard
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          console.log('Basic search functionality confirmed via dashboard (person navigation not testable)');
+        if (personClicked) {
+          const currentUrl = page.url();
+          const isOnPersonPage = /\/people\/\w+/.test(currentUrl);
+          expect(isOnPersonPage).toBeTruthy();
+          console.log('Successfully navigated to person page');
         } else {
-          console.log('People functionality not available for person navigation testing');
+          console.log('No people available to click in demo environment');
         }
       } else {
-        throw error;
+        console.log('Basic search functionality confirmed via dashboard (person navigation not testable)');
       }
-    }
+    });
   });
 
   test('should handle empty search results gracefully', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
+    await PeopleTestHelpers.performPeoplePageTest(page, 'empty search results', peoplePage, async (mode) => {
+      const searchTerm = 'xyznobodyhasthisname123';
       
-      // Search for something that likely won't exist
-      await peoplePage.searchPeople('xyznobodyhasthisname123');
-      
-      // Search should complete automatically
-      
-      // Should not crash or show errors
-      const hasResults = await peoplePage.expectSearchResults();
-      expect(hasResults).toBeFalsy();
-      
-      console.log('Empty search results handled gracefully');
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - testing empty search results from dashboard instead');
-        
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          await peoplePage.searchPeopleFromDashboard('xyznobodyhasthisname123');
-          console.log('Empty search results handled gracefully via dashboard');
-        } else {
-          console.log('People search not available for empty results testing');
-        }
+      if (mode === 'people') {
+        await peoplePage.searchPeople(searchTerm);
+        const hasResults = await peoplePage.expectSearchResults();
+        expect(hasResults).toBeFalsy();
+        console.log('Empty search results handled gracefully');
       } else {
-        throw error;
+        await peoplePage.searchPeopleFromDashboard(searchTerm);
+        console.log('Empty search results handled gracefully via dashboard');
       }
-    }
+    });
   });
 
   test('should maintain page functionality after search', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
-      
-      // Perform multiple searches
-      await peoplePage.searchPeople('demo');
-      await peoplePage.searchPeople('test');
-      
-      // Page should still be functional
-      await peoplePage.expectSimpleSearchVisible();
-      
-      console.log('Page functionality maintained after multiple searches');
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - testing continued functionality from dashboard instead');
-        
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          // Perform multiple searches from dashboard
-          await peoplePage.searchPeopleFromDashboard('demo');
-          await peoplePage.searchPeopleFromDashboard('test');
-          
-          console.log('Page functionality maintained after multiple searches via dashboard');
-        } else {
-          console.log('People search not available for functionality testing');
-        }
+    await PeopleTestHelpers.performPeoplePageTest(page, 'page functionality after search', peoplePage, async (mode) => {
+      if (mode === 'people') {
+        await peoplePage.searchPeople('demo');
+        await peoplePage.searchPeople('test');
+        await peoplePage.expectSimpleSearchVisible();
+        console.log('Page functionality maintained after multiple searches');
       } else {
-        throw error;
+        await peoplePage.searchPeopleFromDashboard('demo');
+        await peoplePage.searchPeopleFromDashboard('test');
+        console.log('Page functionality maintained after multiple searches via dashboard');
       }
-    }
+    });
   });
 
   test('should have accessible search elements', async ({ page }) => {

@@ -4,6 +4,7 @@ import { DashboardPage } from '../pages/dashboard-page';
 import { PersonPage } from '../pages/person-page';
 import { PeoplePage } from '../pages/people-page';
 import { SharedSetup } from '../utils/shared-setup';
+import { PeopleTestHelpers } from './people-test-helpers';
 
 test.describe('Person Creation and Editing', () => {
   let loginPage: LoginPage;
@@ -21,145 +22,17 @@ test.describe('Person Creation and Editing', () => {
     await SharedSetup.loginAndSelectChurch(page);
   });
 
-  // Helper function to handle people page access with dashboard fallback
-  async function performCrudTest(page, testName, peoplePage, testFunction) {
-    try {
-      await peoplePage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (people page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on people page, but catch URL expectation errors
-      try {
-        await peoplePage.expectToBeOnPeoplePage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test on people page
-      await testFunction('people');
-      console.log(`${testName} verified on people page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`People page not accessible - ${testName} requires people management permissions that are not available in the demo environment. This CRUD operation cannot be tested without proper access to the people module.`);
-      } else {
-        throw error;
-      }
-    }
-  }
 
   test('should have add person functionality', async ({ page }) => {
-    await performCrudTest(page, 'Add person functionality', peoplePage, async (mode) => {
-      // Look for add person button or link
-      const addPersonButton = page.locator('button:has-text("Add Person"), a:has-text("Add Person"), text=Add Person').first();
-      const addButtonExists = await addPersonButton.isVisible().catch(() => false);
-      
-      if (addButtonExists) {
-        await addPersonButton.click();
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Should either navigate to add person page or open modal
-        const isOnAddPage = page.url().includes('/add') || page.url().includes('/new');
-        const hasAddModal = await page.locator('.modal, .dialog, text=Add Person').first().isVisible().catch(() => false);
-        
-        if (isOnAddPage || hasAddModal) {
-          console.log('Add person functionality available');
-          
-          // Look for person form fields
-          const hasFormFields = await page.locator('input[name*="name"], input[name*="Name"], #firstName, #lastName').first().isVisible().catch(() => false);
-          
-          if (hasFormFields) {
-            console.log('Person creation form displayed');
-          }
-        } else {
-          console.log('Add person interface may be structured differently');
-        }
-      } else {
-        console.log('Add person functionality not found - may require permissions');
-      }
+    await PeopleTestHelpers.performCrudTest(page, 'Add person functionality', peoplePage, async () => {
+      await PeopleTestHelpers.testFormFunctionality(page, 'Add person');
     });
   });
 
   test('should edit existing person details', async ({ page }) => {
-    try {
-      // Navigate to a person page first
-      await peoplePage.goto();
-      await page.waitForLoadState('networkidle');
-      
-      const personClicked = await peoplePage.clickFirstPerson();
-      
-      if (personClicked) {
-        await personPage.expectToBeOnPersonPage();
-        await personPage.clickDetailsTab();
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Try to find edit functionality
-        const editClicked = await personPage.editPerson();
-        
-        if (editClicked) {
-          await page.waitForLoadState('domcontentloaded');
-          
-          // Should be in edit mode with form fields
-          const hasEditForm = await personPage.firstNameInput.isVisible().catch(() => false) ||
-                             await personPage.saveButton.isVisible().catch(() => false);
-          
-          if (hasEditForm) {
-            console.log('Person edit mode activated');
-            
-            // Try to make some changes
-            if (await personPage.firstNameInput.isVisible().catch(() => false)) {
-              const originalValue = await personPage.firstNameInput.inputValue();
-              await personPage.firstNameInput.fill('EditedName');
-              
-              // Save changes
-              const saveClicked = await personPage.savePerson();
-              
-              if (saveClicked) {
-                await page.waitForLoadState('networkidle');
-                console.log('Person details saved successfully');
-                
-                // Restore original value if possible
-                if (originalValue) {
-                  await personPage.editPerson();
-                  await page.waitForLoadState('domcontentloaded');
-                  if (await personPage.firstNameInput.isVisible().catch(() => false)) {
-                    await personPage.firstNameInput.fill(originalValue);
-                    await personPage.savePerson();
-                    console.log('Original value restored');
-                  }
-                }
-              }
-            }
-            
-            // Test cancel functionality
-            await personPage.editPerson();
-            await page.waitForLoadState('domcontentloaded');
-            
-            const cancelClicked = await personPage.cancelEdit();
-            if (cancelClicked) {
-              console.log('Edit cancelled successfully');
-            }
-          } else {
-            console.log('Edit form may be structured differently');
-          }
-        } else {
-          console.log('Edit functionality not available - may require permissions');
-        }
-      } else {
-        console.log('Skipping edit test - no people available in demo environment');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - Edit person functionality requires people management permissions that are not available in the demo environment. This CRUD operation cannot be tested without proper access to the people module.');
-      } else {
-        throw error;
-      }
-    }
+    await PeopleTestHelpers.performPersonPageTest(page, 'Edit person functionality', peoplePage, personPage, async () => {
+      await PeopleTestHelpers.testPersonEditing(page, peoplePage, personPage);
+    });
   });
 
   test('should validate required fields when creating person', async ({ page }) => {

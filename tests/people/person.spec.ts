@@ -4,6 +4,7 @@ import { DashboardPage } from '../pages/dashboard-page';
 import { PersonPage } from '../pages/person-page';
 import { PeoplePage } from '../pages/people-page';
 import { SharedSetup } from '../utils/shared-setup';
+import { PeopleTestHelpers } from './people-test-helpers';
 
 test.describe('Person Page', () => {
   let loginPage: LoginPage;
@@ -21,53 +22,16 @@ test.describe('Person Page', () => {
     await SharedSetup.loginAndSelectChurch(page);
   });
 
-  // Helper function to handle person page navigation with fallback
-  async function performPersonPageTest(page, testName, peoplePage, personPage, testFunction) {
-    try {
-      // First go to people page to find a person
-      await peoplePage.goto();
-      await page.waitForLoadState('domcontentloaded');
-      
-      // Check if we were redirected to login
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on people page
-      try {
-        await peoplePage.expectToBeOnPeoplePage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test
-      await testFunction('people');
-      console.log(`${testName} verified`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication')) {
-        console.log(`${testName} not accessible - individual person page functionality requires people management permissions not available in demo environment`);
-      } else {
-        throw error;
-      }
-    }
-  }
 
   test('should navigate to person page from people list', async ({ page }) => {
-    await performPersonPageTest(page, 'Person page navigation', peoplePage, personPage, async (mode) => {
-      // Wait for recent people to load
+    await PeopleTestHelpers.performPersonPageTest(page, 'Person page navigation', peoplePage, personPage, async () => {
       await page.waitForLoadState('domcontentloaded');
       
-      // Try to click on first person
       const personClicked = await peoplePage.clickFirstPerson();
       
       if (personClicked) {
-        // Should be on person page now
         await personPage.expectToBeOnPersonPage();
         await personPage.expectPersonDetailsVisible();
-        
         console.log('Successfully navigated to person page from people list');
       } else {
         console.log('No people available in demo environment');
