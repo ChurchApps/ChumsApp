@@ -1,107 +1,37 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { ProfilePage } from '../pages/profile-page';
 import { DevicesPage } from '../pages/devices-page';
 
 export class ProfileTestHelpers {
   
   /**
-   * Main helper for testing profile page functionality with dashboard fallback
+   * Main helper for testing profile page functionality - expects it to work
    */
   static async performProfilePageTest(
     page: Page, 
     testName: string, 
     profilePage: ProfilePage, 
-    testFunction: (mode: 'profile' | 'dashboard') => Promise<void>
+    testFunction: () => Promise<void>
   ) {
-    try {
-      await profilePage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (profile page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on profile page, but catch URL expectation errors
-      try {
-        await profilePage.expectToBeOnProfilePage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test on profile page
-      await testFunction('profile');
-      console.log(`${testName} verified on profile page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`Profile page not accessible - testing ${testName} from dashboard instead`);
-        
-        // Navigate back to dashboard if we got redirected
-        await page.goto('/');
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Test basic functionality from dashboard
-        await testFunction('dashboard');
-        console.log(`${testName} verified via dashboard`);
-      } else {
-        throw error;
-      }
-    }
+    await profilePage.goto();
+    await profilePage.expectToBeOnProfilePage();
+    await testFunction();
+    console.log(`${testName} verified on profile page`);
   }
 
   /**
-   * Helper for testing devices page functionality with dashboard fallback
+   * Helper for testing devices page functionality - expects it to work
    */
   static async performDevicesPageTest(
     page: Page, 
     testName: string, 
     devicesPage: DevicesPage, 
-    testFunction: (mode: 'devices' | 'dashboard') => Promise<void>
+    testFunction: () => Promise<void>
   ) {
-    try {
-      await devicesPage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (devices page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on devices page, but catch URL expectation errors
-      try {
-        await devicesPage.expectToBeOnDevicesPage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test on devices page
-      await testFunction('devices');
-      console.log(`${testName} verified on devices page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`Devices page not accessible - testing ${testName} from dashboard instead`);
-        
-        // Navigate back to dashboard if we got redirected
-        await page.goto('/');
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Test functionality from dashboard
-        const canSearchFromDashboard = await devicesPage.testDevicesSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          await testFunction('dashboard');
-          console.log(`${testName} verified via dashboard`);
-        } else {
-          console.log(`${testName} not available in demo environment`);
-        }
-      } else {
-        throw error;
-      }
-    }
+    await devicesPage.goto();
+    await devicesPage.expectToBeOnDevicesPage();
+    await testFunction();
+    console.log(`${testName} verified on devices page`);
   }
 
   /**
@@ -113,34 +43,10 @@ export class ProfileTestHelpers {
     profilePage: ProfilePage, 
     testFunction: () => Promise<void>
   ) {
-    try {
-      await profilePage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (profile page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on profile page, but catch URL expectation errors
-      try {
-        await profilePage.expectToBeOnProfilePage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the CRUD test
-      await testFunction();
-      console.log(`${testName} verified on profile page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`Profile page not accessible - ${testName} requires profile management permissions that are not available in the demo environment. This profile operation cannot be tested without proper access to the profile module.`);
-      } else {
-        throw error;
-      }
-    }
+    await profilePage.goto();
+    await profilePage.expectToBeOnProfilePage();
+    await testFunction();
+    console.log(`${testName} verified on profile page`);
   }
 
   /**
@@ -152,38 +58,25 @@ export class ProfileTestHelpers {
     await profilePage.expectLoadingComplete();
     
     const hasForm = await profilePage.expectProfileFormVisible();
+    expect(hasForm).toBeTruthy();
     
-    if (hasForm) {
-      console.log('Profile form visible');
-      
-      // Test getting current values
-      const firstName = await profilePage.getFirstNameValue();
-      const lastName = await profilePage.getLastNameValue();
-      const email = await profilePage.getEmailValue();
-      const optedOut = await profilePage.getOptedOutValue();
-      
-      console.log(`Current profile: ${firstName} ${lastName} (${email}), optedOut: ${optedOut}`);
-      
-      // Test form field interactions
-      const firstNameFilled = await profilePage.fillFirstName('Test');
-      const lastNameFilled = await profilePage.fillLastName('User');
-      
-      if (firstNameFilled && lastNameFilled) {
-        console.log('Profile form fields accessible');
-        
-        // Test save functionality (but don't actually save in demo)
-        const saveAvailable = await profilePage.saveButton.isVisible().catch(() => false);
-        if (saveAvailable) {
-          console.log('Save functionality available');
-        }
-        
-        return true;
-      }
-    } else {
-      console.log('Profile form may be structured differently');
-    }
+    const firstName = await profilePage.getFirstNameValue();
+    const lastName = await profilePage.getLastNameValue();
+    const email = await profilePage.getEmailValue();
     
-    return false;
+    console.log(`Current profile: ${firstName} ${lastName} (${email})`);
+    
+    const firstNameFilled = await profilePage.fillFirstName('Test');
+    expect(firstNameFilled).toBeTruthy();
+    
+    const lastNameFilled = await profilePage.fillLastName('User');
+    expect(lastNameFilled).toBeTruthy();
+    
+    const saveAvailable = await profilePage.saveButton.isVisible({ timeout: 5000 }).catch(() => false);
+    expect(saveAvailable).toBeTruthy();
+    
+    console.log('Profile form functionality verified');
+    return true;
   }
 
   /**
@@ -192,32 +85,20 @@ export class ProfileTestHelpers {
   static async testPasswordChangeFunctionality(page: Page, profilePage: ProfilePage) {
     console.log('Testing password change functionality');
     
-    // Check if password fields are available
-    const currentPasswordExists = await profilePage.currentPasswordInput.isVisible().catch(() => false);
-    const newPasswordExists = await profilePage.newPasswordInput.isVisible().catch(() => false);
-    const confirmPasswordExists = await profilePage.confirmPasswordInput.isVisible().catch(() => false);
+    const currentPasswordExists = await profilePage.currentPasswordInput.isVisible({ timeout: 5000 }).catch(() => false);
+    expect(currentPasswordExists).toBeTruthy();
     
-    if (currentPasswordExists && newPasswordExists && confirmPasswordExists) {
-      console.log('Password change fields accessible');
-      
-      // Test password visibility toggle
-      const toggleAvailable = await profilePage.togglePasswordVisibility();
-      if (toggleAvailable) {
-        console.log('Password visibility toggle available');
-      }
-      
-      // Test change password button
-      const changePasswordAvailable = await profilePage.changePasswordButton.isVisible().catch(() => false);
-      if (changePasswordAvailable) {
-        console.log('Change password functionality available');
-      }
-      
-      return true;
-    } else {
-      console.log('Password change functionality may be structured differently');
-    }
+    const newPasswordExists = await profilePage.newPasswordInput.isVisible({ timeout: 5000 }).catch(() => false);
+    expect(newPasswordExists).toBeTruthy();
     
-    return false;
+    const confirmPasswordExists = await profilePage.confirmPasswordInput.isVisible({ timeout: 5000 }).catch(() => false);
+    expect(confirmPasswordExists).toBeTruthy();
+    
+    const changePasswordAvailable = await profilePage.changePasswordButton.isVisible({ timeout: 5000 }).catch(() => false);
+    expect(changePasswordAvailable).toBeTruthy();
+    
+    console.log('Password change functionality verified');
+    return true;
   }
 
   /**
@@ -383,11 +264,11 @@ export class ProfileTestHelpers {
     const components = {
       profileManagement: {
         title: 'h1:has-text("Profile"), h1:has-text("Account")',
-        form: 'form, input'
+        content: 'form, input, #mainContent'
       },
       deviceManagement: {
         title: 'h1:has-text("Devices"), h1:has-text("Device")',
-        table: 'table, .devices'
+        content: 'table, .devices, #mainContent'
       },
       navigation: {
         title: 'h1',
@@ -397,16 +278,12 @@ export class ProfileTestHelpers {
 
     const config = components[componentType] || components.navigation;
     
-    const hasTitle = await page.locator(config.title).first().isVisible().catch(() => false);
-    const hasContent = await page.locator(config.form || config.table || config.content).first().isVisible().catch(() => false);
+    const hasTitle = await page.locator(config.title).first().isVisible({ timeout: 5000 }).catch(() => false);
+    const hasContent = await page.locator(config.content).first().isVisible({ timeout: 5000 }).catch(() => false);
     
-    if (hasTitle || hasContent) {
-      console.log(`${componentType} page accessible and main components visible`);
-      return true;
-    } else {
-      console.log(`${componentType} page structure may be different in demo environment`);
-      return false;
-    }
+    expect(hasTitle || hasContent).toBeTruthy();
+    console.log(`${componentType} page accessible and main components visible`);
+    return true;
   }
 
   /**

@@ -40,7 +40,6 @@ export class GroupPage {
 
   async goto(groupId: string) {
     await this.page.goto(`/groups/${groupId}`);
-    await this.page.waitForLoadState('domcontentloaded');
   }
 
   async expectToBeOnGroupPage() {
@@ -63,7 +62,6 @@ export class GroupPage {
     const settingsTabExists = await this.settingsTab.isVisible().catch(() => false);
     if (settingsTabExists) {
       await this.settingsTab.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -73,7 +71,6 @@ export class GroupPage {
     const membersTabExists = await this.membersTab.isVisible().catch(() => false);
     if (membersTabExists) {
       await this.membersTab.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -83,7 +80,6 @@ export class GroupPage {
     const sessionsTabExists = await this.sessionsTab.isVisible().catch(() => false);
     if (sessionsTabExists) {
       await this.sessionsTab.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -93,7 +89,6 @@ export class GroupPage {
     const editButtonExists = await this.editButton.isVisible().catch(() => false);
     if (editButtonExists) {
       await this.editButton.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -103,7 +98,6 @@ export class GroupPage {
     const saveButtonExists = await this.saveButton.isVisible().catch(() => false);
     if (saveButtonExists) {
       await this.saveButton.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -113,7 +107,6 @@ export class GroupPage {
     const cancelButtonExists = await this.cancelButton.isVisible().catch(() => false);
     if (cancelButtonExists) {
       await this.cancelButton.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -123,7 +116,6 @@ export class GroupPage {
     const addMemberButtonExists = await this.addMemberButton.isVisible().catch(() => false);
     if (addMemberButtonExists) {
       await this.addMemberButton.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -133,7 +125,6 @@ export class GroupPage {
     const addSessionButtonExists = await this.addSessionButton.isVisible().catch(() => false);
     if (addSessionButtonExists) {
       await this.addSessionButton.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;

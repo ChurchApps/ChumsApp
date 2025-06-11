@@ -52,7 +52,7 @@ export class TestHelpers {
   }
 
   static async expectUrl(page: Page, expectedPath: string) {
-    await expect(page).toHaveURL(new RegExp(expectedPath), { timeout: 15000 });
+    await expect(page).toHaveURL(new RegExp(expectedPath), { timeout: 5000 });
   }
 
   static async expectElementText(page: Page, locator: Locator, expectedText: string) {

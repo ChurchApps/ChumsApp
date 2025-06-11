@@ -6,11 +6,11 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
-  workers: 1,
+  workers: 4,
   reporter: 'html',
-  timeout: 60 * 1000,
+  timeout: 30 * 1000,
   expect: {
-    timeout: 15 * 1000,
+    timeout: 5 * 1000,
   },
 
   use: {
@@ -18,8 +18,8 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    actionTimeout: 10 * 1000,
-    navigationTimeout: 30 * 1000,
+    actionTimeout: 5 * 1000,
+    navigationTimeout: 10 * 1000,
   },
 
   projects: [

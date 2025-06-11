@@ -1,64 +1,26 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { ReportsPage } from '../pages/reports-page';
 import { ReportPage } from '../pages/report-page';
 
 export class ReportsTestHelpers {
   
   /**
-   * Main helper for testing reports page functionality with dashboard fallback
+   * Main helper for testing reports page functionality - expects it to work
    */
   static async performReportsPageTest(
     page: Page, 
     testName: string, 
     reportsPage: ReportsPage, 
-    testFunction: (mode: 'reports' | 'dashboard') => Promise<void>
+    testFunction: () => Promise<void>
   ) {
-    try {
-      await reportsPage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (reports page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on reports page, but catch URL expectation errors
-      try {
-        await reportsPage.expectToBeOnReportsPage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test on reports page
-      await testFunction('reports');
-      console.log(`${testName} verified on reports page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`Reports page not accessible - testing ${testName} from dashboard instead`);
-        
-        // Navigate back to dashboard if we got redirected
-        await page.goto('/');
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Test functionality from dashboard
-        const canSearchFromDashboard = await reportsPage.testReportsSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          await testFunction('dashboard');
-          console.log(`${testName} verified via dashboard`);
-        } else {
-          console.log(`${testName} not available in demo environment`);
-        }
-      } else {
-        throw error;
-      }
-    }
+    await reportsPage.goto();
+    await reportsPage.expectToBeOnReportsPage();
+    await testFunction();
+    console.log(`${testName} verified on reports page`);
   }
 
   /**
-   * Helper for individual report page navigation tests
+   * Helper for individual report page navigation tests - expects it to work
    */
   static async performReportPageTest(
     page: Page, 
@@ -67,36 +29,10 @@ export class ReportsTestHelpers {
     reportPage: ReportPage, 
     testFunction: () => Promise<void>
   ) {
-    try {
-      // First go to reports page to find a report
-      await reportsPage.goto();
-      await page.waitForLoadState('domcontentloaded');
-      
-      // Check if we were redirected to login
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on reports page
-      try {
-        await reportsPage.expectToBeOnReportsPage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test
-      await testFunction();
-      console.log(`${testName} verified`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication')) {
-        console.log(`${testName} not accessible - individual report page functionality requires reporting permissions not available in demo environment`);
-      } else {
-        throw error;
-      }
-    }
+    await reportsPage.goto();
+    await reportsPage.expectToBeOnReportsPage();
+    await testFunction();
+    console.log(`${testName} verified`);
   }
 
   /**
@@ -108,19 +44,13 @@ export class ReportsTestHelpers {
     await reportsPage.expectLoadingComplete();
     
     const hasReportsDisplay = await reportsPage.expectReportsDisplayed();
+    expect(hasReportsDisplay).toBeTruthy();
     
-    if (hasReportsDisplay) {
-      console.log('Reports listing accessible');
-      
-      const reportsCount = await reportsPage.getReportLinksCount();
-      console.log(`Found ${reportsCount} report links`);
-      
-      return true;
-    } else {
-      console.log('Reports listing may be structured differently');
-    }
+    const reportsCount = await reportsPage.getReportLinksCount();
+    expect(reportsCount).toBeGreaterThanOrEqual(0);
+    console.log(`Found ${reportsCount} report links`);
     
-    return false;
+    return true;
   }
 
   /**
@@ -152,14 +82,9 @@ export class ReportsTestHelpers {
         break;
     }
     
-    if (navigationSuccessful) {
-      console.log(`Successfully navigated to ${reportType} report`);
-      return true;
-    } else {
-      console.log(`${reportType} report navigation not available`);
-    }
-    
-    return false;
+    expect(navigationSuccessful).toBeTruthy();
+    console.log(`Successfully navigated to ${reportType} report`);
+    return true;
   }
 
   /**
@@ -249,11 +174,11 @@ export class ReportsTestHelpers {
     const components = {
       reportsListing: {
         title: 'h1:has-text("Reports"), h1:has-text("reports")',
-        content: '#reportsBox, ul, .reports'
+        content: '#reportsBox, ul, .reports, #mainContent'
       },
       reportPage: {
         title: 'h1:has-text("Report"), h2:has-text("Report")',
-        content: '.report-filter, table, .chart'
+        content: '.report-filter, table, .chart, #mainContent'
       },
       navigation: {
         title: 'h1',
@@ -263,16 +188,12 @@ export class ReportsTestHelpers {
 
     const config = components[componentType] || components.navigation;
     
-    const hasTitle = await page.locator(config.title).first().isVisible().catch(() => false);
-    const hasContent = await page.locator(config.content).first().isVisible().catch(() => false);
+    const hasTitle = await page.locator(config.title).first().isVisible({ timeout: 5000 }).catch(() => false);
+    const hasContent = await page.locator(config.content).first().isVisible({ timeout: 5000 }).catch(() => false);
     
-    if (hasTitle || hasContent) {
-      console.log(`${componentType} page accessible and main components visible`);
-      return true;
-    } else {
-      console.log(`${componentType} page structure may be different in demo environment`);
-      return false;
-    }
+    expect(hasTitle || hasContent).toBeTruthy();
+    console.log(`${componentType} page accessible and main components visible`);
+    return true;
   }
 
   /**

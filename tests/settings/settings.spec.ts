@@ -20,85 +20,43 @@ test.describe('Settings Page', () => {
   });
 
   test('should check if settings page is accessible', async ({ page }) => {
-    await SettingsTestHelpers.performSettingsPageTest(page, 'settings page accessibility', settingsPage, async (mode) => {
-      if (mode === 'settings') {
-        await SettingsTestHelpers.testPageAccessibility(page, 'settingsManagement');
-      } else {
-        const canSearchFromDashboard = await settingsPage.testSettingsSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          console.log('Settings search functionality available via dashboard');
-        } else {
-          console.log('Settings functionality not available in demo environment');
-        }
-      }
+    await SettingsTestHelpers.performSettingsPageTest(page, 'settings page accessibility', settingsPage, async () => {
+      await SettingsTestHelpers.testPageAccessibility(page, 'settingsManagement');
     });
   });
 
   test('should display settings navigation tabs', async ({ page }) => {
-    await SettingsTestHelpers.performSettingsPageTest(page, 'settings navigation tabs', settingsPage, async (mode) => {
-      if (mode === 'settings') {
-        const hasSideNav = await settingsPage.expectSideNavVisible();
-        
-        if (hasSideNav) {
-          console.log('Settings navigation tabs displayed successfully');
-          
-          // Test tab switching
-          await SettingsTestHelpers.testSettingsTabs(page, settingsPage);
-        } else {
-          console.log('Settings navigation may be structured differently');
-        }
-      } else {
-        console.log('Navigation functionality confirmed via dashboard (tabs not testable)');
-      }
+    await SettingsTestHelpers.performSettingsPageTest(page, 'settings navigation tabs', settingsPage, async () => {
+      const hasSideNav = await settingsPage.expectSideNavVisible();
+      expect(hasSideNav).toBeTruthy();
+      
+      const tabsWorking = await SettingsTestHelpers.testSettingsTabs(page, settingsPage);
+      expect(tabsWorking).toBeTruthy();
+      console.log('Settings navigation tabs verified');
     });
   });
 
   test('should handle church settings functionality', async ({ page }) => {
-    await SettingsTestHelpers.performSettingsPageTest(page, 'church settings functionality', settingsPage, async (mode) => {
-      if (mode === 'settings') {
-        const churchSettingsTested = await SettingsTestHelpers.testChurchSettings(page, settingsPage);
-        
-        if (churchSettingsTested) {
-          console.log('Church settings functionality confirmed');
-        } else {
-          console.log('Church settings may require different permissions or structure');
-        }
-      } else {
-        console.log('Church settings functionality confirmed via dashboard (settings not testable)');
-      }
+    await SettingsTestHelpers.performSettingsPageTest(page, 'church settings functionality', settingsPage, async () => {
+      const churchSettingsTested = await SettingsTestHelpers.testChurchSettings(page, settingsPage);
+      expect(churchSettingsTested).toBeTruthy();
+      console.log('Church settings functionality verified');
     });
   });
 
   test('should handle role management functionality', async ({ page }) => {
-    await SettingsTestHelpers.performSettingsPageTest(page, 'role management functionality', settingsPage, async (mode) => {
-      if (mode === 'settings') {
-        const roleManagementTested = await SettingsTestHelpers.testRoleManagement(page, settingsPage);
-        
-        if (roleManagementTested) {
-          console.log('Role management functionality confirmed');
-        } else {
-          console.log('Role management may require different permissions or structure');
-        }
-      } else {
-        console.log('Role management functionality confirmed via dashboard (roles not testable)');
-      }
+    await SettingsTestHelpers.performSettingsPageTest(page, 'role management functionality', settingsPage, async () => {
+      const roleManagementTested = await SettingsTestHelpers.testRoleManagement(page, settingsPage);
+      expect(roleManagementTested).toBeTruthy();
+      console.log('Role management functionality verified');
     });
   });
 
   test('should handle import/export functionality', async ({ page }) => {
-    await SettingsTestHelpers.performSettingsPageTest(page, 'import/export functionality', settingsPage, async (mode) => {
-      if (mode === 'settings') {
-        const importExportTested = await SettingsTestHelpers.testImportExport(page, settingsPage);
-        
-        if (importExportTested) {
-          console.log('Import/Export functionality confirmed');
-        } else {
-          console.log('Import/Export may require different permissions or structure');
-        }
-      } else {
-        console.log('Import/Export functionality confirmed via dashboard (import/export not testable)');
-      }
+    await SettingsTestHelpers.performSettingsPageTest(page, 'import/export functionality', settingsPage, async () => {
+      const importExportTested = await SettingsTestHelpers.testImportExport(page, settingsPage);
+      expect(importExportTested).toBeTruthy();
+      console.log('Import/Export functionality verified');
     });
   });
 

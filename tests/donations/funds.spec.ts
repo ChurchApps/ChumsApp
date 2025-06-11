@@ -20,179 +20,84 @@ test.describe('Funds Page', () => {
   });
 
   test('should check if funds page is accessible', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'funds page accessibility', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        await DonationsTestHelpers.testPageAccessibility(page, 'fundsManagement');
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'funds page accessibility', fundsPage, async () => {
+      await DonationsTestHelpers.testPageAccessibility(page, 'fundsManagement');
     });
   });
 
   test('should display funds list by default', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'funds list display', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        await fundsPage.expectLoadingComplete();
-        
-        const hasFunds = await fundsPage.expectFundsDisplayed();
-        
-        if (hasFunds) {
-          console.log('Funds list displayed successfully');
-          
-          const fundsCount = await fundsPage.getFundsCount();
-          console.log(`Found ${fundsCount} funds`);
-        } else {
-          console.log('No funds data in demo environment');
-        }
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'funds list display', fundsPage, async () => {
+      await DonationsTestHelpers.testFundsDisplay(page, fundsPage);
     });
   });
 
   test('should have add fund functionality', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'add fund functionality', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        const hasAddFund = await fundsPage.expectAddFundAvailable();
-        
-        if (hasAddFund) {
-          console.log('Add fund functionality available');
-          
-          const addClicked = await fundsPage.clickAddFund();
-          if (addClicked) {
-            // Should either navigate to add fund page or open modal
-            const isOnAddPage = page.url().includes('/add') || page.url().includes('/new');
-            const hasAddModal = await page.locator('.modal, .dialog, text=Add Fund').first().isVisible().catch(() => false);
-            
-            if (isOnAddPage || hasAddModal) {
-              console.log('Add fund interface opened');
-            } else {
-              console.log('Add fund interface may be structured differently');
-            }
-          }
-        } else {
-          console.log('Add fund functionality not available - may require permissions');
-        }
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'add fund functionality', fundsPage, async () => {
+      await DonationsTestHelpers.testAddFundFunctionality(page, fundsPage);
     });
   });
 
   test('should have export functionality', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'export functionality', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        await fundsPage.expectLoadingComplete();
-        
-        const exportExists = await fundsPage.expectExportAvailable();
-        
-        if (exportExists) {
-          console.log('Export functionality available');
-        } else {
-          console.log('Export not available - may require data or permissions');
-        }
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'export functionality', fundsPage, async () => {
+      const exportAvailable = await fundsPage.expectExportAvailable();
+      expect(exportAvailable).toBeTruthy();
+      console.log('Export functionality available');
     });
   });
 
   test('should navigate to individual fund page', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'fund navigation', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        await fundsPage.expectLoadingComplete();
-        
-        const fundClicked = await fundsPage.clickFirstFund();
-        
-        if (fundClicked) {
-          const currentUrl = page.url();
-          const isOnFundPage = /\/donations\/funds\/\w+/.test(currentUrl) || currentUrl.includes('/fund/');
-          
-          if (isOnFundPage) {
-            console.log('Successfully navigated to fund page');
-          } else {
-            console.log('Fund navigation may work differently');
-          }
-        } else {
-          console.log('No funds available to click in demo environment');
-        }
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'fund navigation', fundsPage, async () => {
+      await DonationsTestHelpers.testFundNavigation(page, fundsPage);
     });
   });
 
   test('should handle fund search functionality', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'fund search', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        const searchSuccessful = await fundsPage.searchFunds('general');
-        
-        if (searchSuccessful) {
-          await page.waitForLoadState('domcontentloaded');
-          await fundsPage.expectFundsTableVisible();
-          console.log('Fund search functionality working');
-        } else {
-          console.log('Fund search not available or structured differently');
-        }
+    await DonationsTestHelpers.performFundsPageTest(page, 'fund search', fundsPage, async () => {
+      const searchTerms = ['Fund', 'General', 'Tithe'];
+      for (const term of searchTerms) {
+        await DonationsTestHelpers.testFundsSearch(page, fundsPage, term);
       }
     });
   });
 
   test('should handle empty fund search gracefully', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'empty fund search', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        const searchSuccessful = await fundsPage.searchFunds('');
-        
-        if (searchSuccessful) {
-          await page.waitForLoadState('domcontentloaded');
-          await fundsPage.expectFundsTableVisible();
-          console.log('Empty fund search handled gracefully');
-        } else {
-          console.log('Fund search not available for empty search testing');
-        }
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'empty fund search', fundsPage, async () => {
+      await DonationsTestHelpers.testFundsSearch(page, fundsPage, '');
     });
   });
 
   test('should handle fund search with no results', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'no results fund search', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        const searchTerm = 'xyznobodyhasthisfundname123';
-        const searchSuccessful = await fundsPage.searchFunds(searchTerm);
-        
-        if (searchSuccessful) {
-          await page.waitForLoadState('domcontentloaded');
-          // Should not crash or show errors
-          await fundsPage.expectFundsTableVisible();
-          console.log('No results fund search handled gracefully');
-        } else {
-          console.log('Fund search not available for no results testing');
-        }
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'fund search no results', fundsPage, async () => {
+      await DonationsTestHelpers.testFundsSearch(page, fundsPage, 'zzznonexistent999');
     });
   });
 
   test('should maintain funds page functionality after search', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'funds page functionality after search', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        await fundsPage.searchFunds('general');
-        await fundsPage.searchFunds('tithe');
-        await fundsPage.expectFundsTableVisible();
-        console.log('Funds page functionality maintained after multiple searches');
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'funds page functionality after search', fundsPage, async () => {
+      // Perform a search
+      await DonationsTestHelpers.testFundsSearch(page, fundsPage, 'Fund');
+      
+      // Verify page is still functional
+      await DonationsTestHelpers.testFundsDisplay(page, fundsPage);
     });
   });
 
   test('should handle fund management operations', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'fund management', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        await DonationsTestHelpers.testFundManagement(page, fundsPage);
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'fund management operations', fundsPage, async () => {
+      await DonationsTestHelpers.testAddFundFunctionality(page, fundsPage);
     });
   });
 
   test('should have accessible fund elements', async ({ page }) => {
-    await DonationsTestHelpers.performFundsPageTest(page, 'fund accessibility', fundsPage, async (mode) => {
-      if (mode === 'funds') {
-        // Check for proper fund table structure
-        const tableExists = await fundsPage.fundsTable.isVisible().catch(() => false);
-        
-        if (tableExists) {
-          console.log('Funds table elements are accessible');
-        } else {
-          console.log('Funds table may use different structure');
-        }
-      }
+    await DonationsTestHelpers.performFundsPageTest(page, 'fund accessibility', fundsPage, async () => {
+      // Check for proper funds structure
+      const hasFundsList = await fundsPage.expectFundsDisplayed();
+      expect(hasFundsList).toBeTruthy();
+      
+      const hasAddFund = await fundsPage.expectAddFundAvailable();
+      expect(hasAddFund).toBeTruthy();
+      
+      console.log('Fund elements are accessible');
     });
   });
 });

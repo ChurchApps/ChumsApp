@@ -24,24 +24,6 @@ export class PlansPage {
 
   async goto() {
     await this.page.goto('/plans');
-    await this.page.waitForLoadState('domcontentloaded');
-  }
-
-  async gotoViaDashboard() {
-    await this.page.goto('/');
-    await this.page.waitForLoadState('domcontentloaded');
-    
-    // Try to navigate to plans via menu
-    const plansNavLink = this.page.locator('a[href="/plans"], a:has-text("Plans"), nav a:has-text("Plans")').first();
-    const plansNavExists = await plansNavLink.isVisible().catch(() => false);
-    
-    if (plansNavExists) {
-      await plansNavLink.click();
-      await this.page.waitForLoadState('domcontentloaded');
-    } else {
-      // Fallback to direct navigation
-      await this.goto();
-    }
   }
 
   async expectToBeOnPlansPage() {
@@ -55,7 +37,6 @@ export class PlansPage {
   }
 
   async expectMinistriesDisplayed() {
-    await this.page.waitForLoadState('networkidle');
     return await this.expectMinistriesTableVisible();
   }
 
@@ -63,7 +44,6 @@ export class PlansPage {
     const firstMinistryExists = await this.firstMinistryLink.isVisible().catch(() => false);
     if (firstMinistryExists) {
       await this.firstMinistryLink.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -79,7 +59,6 @@ export class PlansPage {
     if (loadingExists) {
       await this.loadingIndicator.waitFor({ state: 'hidden' });
     }
-    await this.page.waitForLoadState('networkidle');
   }
 
   async searchMinistries(searchTerm: string) {
@@ -95,38 +74,9 @@ export class PlansPage {
         await this.searchInput.press('Enter');
       }
       
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
   }
 
-  async testPlansSearchFromDashboard() {
-    // Test if plans/ministry search is available from dashboard
-    await this.page.goto('/');
-    await this.page.waitForLoadState('domcontentloaded');
-    
-    const dashboardSearchInput = this.page.locator('#searchText, input[placeholder*="Search"]').first();
-    const dashboardSearchExists = await dashboardSearchInput.isVisible().catch(() => false);
-    
-    if (dashboardSearchExists) {
-      // Try to search for ministries/plans
-      await dashboardSearchInput.fill('ministry');
-      await dashboardSearchInput.press('Enter');
-      await this.page.waitForLoadState('domcontentloaded');
-      
-      // Check if any ministry-related results appear
-      const hasMinistryResults = await this.page.locator('text=Ministry, text=ministry, text=Plan, text=plan').first().isVisible().catch(() => false);
-      return hasMinistryResults;
-    }
-    
-    return false;
-  }
-
-  async searchPlansFromDashboard(searchTerm: string) {
-    const dashboardSearchInput = this.page.locator('#searchText, input[placeholder*="Search"]').first();
-    await dashboardSearchInput.fill(searchTerm);
-    await dashboardSearchInput.press('Enter');
-    await this.page.waitForLoadState('domcontentloaded');
-  }
 }

@@ -20,103 +20,63 @@ test.describe('Devices Page', () => {
   });
 
   test('should check if devices page is accessible', async ({ page }) => {
-    await ProfileTestHelpers.performDevicesPageTest(page, 'devices page accessibility', devicesPage, async (mode) => {
-      if (mode === 'devices') {
-        await ProfileTestHelpers.testPageAccessibility(page, 'deviceManagement');
-      } else {
-        const canSearchFromDashboard = await devicesPage.testDevicesSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          console.log('Devices search functionality available via dashboard');
-        } else {
-          console.log('Devices functionality not available in demo environment');
-        }
-      }
+    await ProfileTestHelpers.performDevicesPageTest(page, 'devices page accessibility', devicesPage, async () => {
+      await ProfileTestHelpers.testPageAccessibility(page, 'deviceManagement');
     });
   });
 
   test('should display devices list by default', async ({ page }) => {
-    await ProfileTestHelpers.performDevicesPageTest(page, 'devices list display', devicesPage, async (mode) => {
-      if (mode === 'devices') {
-        await devicesPage.expectLoadingComplete();
-        
-        const hasDevicesDisplay = await devicesPage.expectDevicesDisplayed();
-        
-        if (hasDevicesDisplay) {
-          console.log('Devices list displayed successfully');
-          
-          const devicesCount = await devicesPage.getDevicesCount();
-          console.log(`Found ${devicesCount} devices`);
-        } else {
-          console.log('No devices data in demo environment or empty state');
-        }
-      } else {
-        console.log('Devices search functionality confirmed via dashboard (devices list not testable)');
-      }
+    await ProfileTestHelpers.performDevicesPageTest(page, 'devices list display', devicesPage, async () => {
+      await devicesPage.expectLoadingComplete();
+      
+      const hasDevicesDisplay = await devicesPage.expectDevicesDisplayed();
+      expect(hasDevicesDisplay).toBeTruthy();
+      
+      const devicesCount = await devicesPage.getDevicesCount();
+      console.log(`Found ${devicesCount} devices`);
     });
   });
 
   test('should handle device pairing functionality', async ({ page }) => {
-    await ProfileTestHelpers.performDevicesPageTest(page, 'device pairing functionality', devicesPage, async (mode) => {
-      if (mode === 'devices') {
-        const pairingTested = await ProfileTestHelpers.testDevicePairing(page, devicesPage);
-        
-        if (pairingTested) {
-          console.log('Device pairing functionality confirmed');
-        } else {
-          console.log('Device pairing may require different permissions or structure');
-        }
-      } else {
-        console.log('Device pairing functionality confirmed via dashboard (pairing not testable)');
-      }
+    await ProfileTestHelpers.performDevicesPageTest(page, 'device pairing functionality', devicesPage, async () => {
+      const addDeviceClicked = await devicesPage.clickAddDevice();
+      expect(addDeviceClicked).toBeTruthy();
+      
+      const pairModalVisible = await devicesPage.expectPairModalVisible();
+      expect(pairModalVisible).toBeTruthy();
+      
+      console.log('Device pairing functionality verified');
     });
   });
 
   test('should handle add device with pair code', async ({ page }) => {
-    await ProfileTestHelpers.performDevicesPageTest(page, 'add device with pair code', devicesPage, async (mode) => {
-      if (mode === 'devices') {
-        const testData = ProfileTestHelpers.getTestData().devices;
-        
-        // Test add device functionality
-        const addDeviceClicked = await devicesPage.clickAddDevice();
-        
-        if (addDeviceClicked) {
-          console.log('Add device functionality available');
-          
-          // Test filling pair code
-          const codeFilled = await devicesPage.fillPairCode(testData.validPairCode);
-          
-          if (codeFilled) {
-            console.log('Pair code input accessible');
-            
-            // Test pair button (don't actually pair in demo)
-            const pairButtonAvailable = await devicesPage.pairButton.isVisible().catch(() => false);
-            if (pairButtonAvailable) {
-              console.log('Pair button functionality available');
-            }
-          }
-        } else {
-          console.log('Add device functionality not available - may require permissions');
-        }
-      } else {
-        console.log('Add device functionality confirmed via dashboard (pairing not testable)');
-      }
+    await ProfileTestHelpers.performDevicesPageTest(page, 'add device with pair code', devicesPage, async () => {
+      const testData = ProfileTestHelpers.getTestData().devices;
+      
+      const addDeviceClicked = await devicesPage.clickAddDevice();
+      expect(addDeviceClicked).toBeTruthy();
+      
+      const codeFilled = await devicesPage.fillPairCode(testData.validPairCode);
+      expect(codeFilled).toBeTruthy();
+      
+      const pairButtonAvailable = await devicesPage.pairButton.isVisible({ timeout: 5000 }).catch(() => false);
+      expect(pairButtonAvailable).toBeTruthy();
+      
+      console.log('Add device functionality verified');
     });
   });
 
   test('should handle device management functionality', async ({ page }) => {
-    await ProfileTestHelpers.performDevicesPageTest(page, 'device management functionality', devicesPage, async (mode) => {
-      if (mode === 'devices') {
-        const managementTested = await ProfileTestHelpers.testDeviceManagement(page, devicesPage);
-        
-        if (managementTested) {
-          console.log('Device management functionality confirmed');
-        } else {
-          console.log('Device management may require devices or different permissions');
-        }
-      } else {
-        console.log('Device management functionality confirmed via dashboard (management not testable)');
-      }
+    await ProfileTestHelpers.performDevicesPageTest(page, 'device management functionality', devicesPage, async () => {
+      await devicesPage.expectLoadingComplete();
+      
+      const hasDevicesDisplay = await devicesPage.expectDevicesDisplayed();
+      expect(hasDevicesDisplay).toBeTruthy();
+      
+      const devicesCount = await devicesPage.getDevicesCount();
+      expect(devicesCount).toBeGreaterThanOrEqual(0);
+      
+      console.log('Device management functionality verified');
     });
   });
 

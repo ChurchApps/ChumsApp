@@ -24,307 +24,152 @@ test.describe('Person Creation and Editing', () => {
 
 
   test('should have add person functionality', async ({ page }) => {
-    await PeopleTestHelpers.performCrudTest(page, 'Add person functionality', peoplePage, async () => {
-      await PeopleTestHelpers.testFormFunctionality(page, 'Add person');
+    await PeopleTestHelpers.performPeoplePageTest(page, 'Add person functionality', peoplePage, async () => {
+      await PeopleTestHelpers.testAddPersonFunctionality(page, peoplePage);
     });
   });
 
   test('should edit existing person details', async ({ page }) => {
-    await PeopleTestHelpers.performPersonPageTest(page, 'Edit person functionality', peoplePage, personPage, async () => {
-      await PeopleTestHelpers.testPersonEditing(page, peoplePage, personPage);
+    await PeopleTestHelpers.performPeoplePageTest(page, 'Edit person functionality', peoplePage, async () => {
+      await PeopleTestHelpers.testPersonNavigation(page, peoplePage);
+      await PeopleTestHelpers.performPersonPageTest(page, 'person editing', personPage, async () => {
+        await PeopleTestHelpers.testPersonEditing(page, personPage);
+      });
     });
   });
 
   test('should validate required fields when creating person', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
+    await PeopleTestHelpers.performPeoplePageTest(page, 'person form validation', peoplePage, async () => {
+      await PeopleTestHelpers.testAddPersonFunctionality(page, peoplePage);
       
-      // Look for add person functionality
-      const addPersonButton = page.locator('button:has-text("Add Person"), a:has-text("Add Person"), text=Add Person').first();
-      const addButtonExists = await addPersonButton.isVisible().catch(() => false);
+      const addPersonClicked = await peoplePage.clickAddPerson();
+      expect(addPersonClicked).toBeTruthy();
       
-      if (addButtonExists) {
-        await addPersonButton.click();
-        await page.waitForLoadState('networkidle');
-        
-        // Try to save without filling required fields
-        const saveButton = page.locator('button:has-text("Save"), button:has-text("Create")').first();
-        const saveButtonExists = await saveButton.isVisible().catch(() => false);
-        
-        if (saveButtonExists) {
-          await saveButton.click();
-          await page.waitForLoadState('domcontentloaded');
-          
-          // Should show validation errors
-          const hasValidationError = await page.locator('text=required, text=Required, .error, .invalid').first().isVisible().catch(() => false);
-          
-          if (hasValidationError) {
-            console.log('Form validation working correctly');
-          } else {
-            console.log('Validation may be handled differently');
-          }
-        }
-      } else {
-        console.log('Skipping validation test - add person not available');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - Form validation testing for person creation requires people management permissions that are not available in the demo environment. This CRUD operation cannot be tested without proper access to the people module.');
-      } else {
-        throw error;
-      }
-    }
+      const saveButton = page.locator('button:has-text("Save"), button:has-text("Create")').first();
+      const saveButtonExists = await saveButton.isVisible({ timeout: 5000 }).catch(() => false);
+      expect(saveButtonExists).toBeTruthy();
+      
+      await saveButton.click();
+      
+      const hasValidationError = await page.locator('text=required, text=Required, .error, .invalid').first().isVisible({ timeout: 5000 }).catch(() => false);
+      expect(hasValidationError).toBeTruthy();
+      
+      console.log('Form validation working correctly');
+    });
   });
 
   test('should handle person form with all fields', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
+    await PeopleTestHelpers.performPeoplePageTest(page, 'person form fields', peoplePage, async () => {
+      const addPersonClicked = await peoplePage.clickAddPerson();
+      expect(addPersonClicked).toBeTruthy();
       
-      const addPersonButton = page.locator('button:has-text("Add Person"), a:has-text("Add Person"), text=Add Person').first();
-      const addButtonExists = await addPersonButton.isVisible().catch(() => false);
+      const testData = PeopleTestHelpers.getTestPersonData();
       
-      if (addButtonExists) {
-        await addPersonButton.click();
-        await page.waitForLoadState('networkidle');
-        
-        // Try to fill out person form fields
-        const testData = {
-          firstName: 'TestFirst',
-          lastName: 'TestLast',
-          email: 'test@example.com',
-          phone: '555-123-4567'
-        };
-        
-        // Fill available fields
-        if (await page.locator('input[name*="firstName"], #firstName').first().isVisible().catch(() => false)) {
-          await page.locator('input[name*="firstName"], #firstName').first().fill(testData.firstName);
-        }
-        
-        if (await page.locator('input[name*="lastName"], #lastName').first().isVisible().catch(() => false)) {
-          await page.locator('input[name*="lastName"], #lastName').first().fill(testData.lastName);
-        }
-        
-        if (await page.locator('input[name*="email"], #email').first().isVisible().catch(() => false)) {
-          await page.locator('input[name*="email"], #email').first().fill(testData.email);
-        }
-        
-        if (await page.locator('input[name*="phone"], #phone').first().isVisible().catch(() => false)) {
-          await page.locator('input[name*="phone"], #phone').first().fill(testData.phone);
-        }
-        
-        console.log('Person form fields filled with test data');
-        
-        // Don't actually save in demo environment to avoid creating test data
-        const cancelButton = page.locator('button:has-text("Cancel"), button:has-text("Close")').first();
-        const cancelExists = await cancelButton.isVisible().catch(() => false);
-        
-        if (cancelExists) {
-          await cancelButton.click();
-          console.log('Form cancelled to avoid creating test data');
-        }
-      } else {
-        console.log('Skipping form test - add person not available');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - Person form testing with all fields requires people management permissions that are not available in the demo environment. This CRUD operation cannot be tested without proper access to the people module.');
-      } else {
-        throw error;
-      }
-    }
+      const firstNameFilled = await personPage.fillFirstName(testData.firstName);
+      expect(firstNameFilled).toBeTruthy();
+      
+      const lastNameFilled = await personPage.fillLastName(testData.lastName);
+      expect(lastNameFilled).toBeTruthy();
+      
+      const cancelButton = page.locator('button:has-text("Cancel"), button:has-text("Close")').first();
+      const cancelExists = await cancelButton.isVisible({ timeout: 5000 }).catch(() => false);
+      expect(cancelExists).toBeTruthy();
+      
+      await cancelButton.click();
+      console.log('Person form functionality verified');
+    });
   });
 
   test('should handle person photo upload/edit', async ({ page }) => {
-    try {
-      // Navigate to existing person
-      await peoplePage.goto();
-      await page.waitForLoadState('networkidle');
-      
-      const personClicked = await peoplePage.clickFirstPerson();
-      
-      if (personClicked) {
-        await personPage.expectToBeOnPersonPage();
+    await PeopleTestHelpers.performPeoplePageTest(page, 'person photo functionality', peoplePage, async () => {
+      await PeopleTestHelpers.testPersonNavigation(page, peoplePage);
+      await PeopleTestHelpers.performPersonPageTest(page, 'person photo', personPage, async () => {
         await personPage.clickDetailsTab();
-        await page.waitForLoadState('domcontentloaded');
         
-        // Look for photo edit functionality
-        const photoElement = personPage.personPhoto;
-        const photoExists = await photoElement.isVisible().catch(() => false);
-        
-        if (photoExists) {
-          // Try to click on photo to edit
-          await photoElement.click();
-          await page.waitForLoadState('domcontentloaded');
+        const hasPersonPhoto = await personPage.expectPersonPhotoVisible();
+        if (hasPersonPhoto) {
+          await personPage.personPhoto.click();
           
-          // Look for photo editor or upload functionality
-          const hasPhotoEditor = await page.locator('text=Upload, text=Edit Photo, .photo-editor, input[type="file"]').first().isVisible().catch(() => false);
-          
+          const hasPhotoEditor = await page.locator('text=Upload, text=Edit Photo, .photo-editor, input[type="file"]').first().isVisible({ timeout: 5000 }).catch(() => false);
           if (hasPhotoEditor) {
             console.log('Photo edit functionality available');
             
-            // Close photo editor if opened
             const closeButton = page.locator('button:has-text("Cancel"), button:has-text("Close"), .close').first();
-            const closeExists = await closeButton.isVisible().catch(() => false);
+            const closeExists = await closeButton.isVisible({ timeout: 5000 }).catch(() => false);
             if (closeExists) {
               await closeButton.click();
             }
-          } else {
-            console.log('Photo edit may require different interaction');
           }
-        } else {
-          console.log('No photo available for editing');
         }
-      } else {
-        console.log('Skipping photo test - no people available in demo environment');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - Person photo upload/edit functionality requires people management permissions that are not available in the demo environment. This CRUD operation cannot be tested without proper access to the people module.');
-      } else {
-        throw error;
-      }
-    }
+        console.log('Person photo functionality tested');
+      });
+    });
   });
 
   test('should handle person deletion gracefully', async ({ page }) => {
-    try {
-      // Navigate to existing person
-      await peoplePage.goto();
-      await page.waitForLoadState('networkidle');
-      
-      const personClicked = await peoplePage.clickFirstPerson();
-      
-      if (personClicked) {
-        await personPage.expectToBeOnPersonPage();
+    await PeopleTestHelpers.performPeoplePageTest(page, 'person deletion functionality', peoplePage, async () => {
+      await PeopleTestHelpers.testPersonNavigation(page, peoplePage);
+      await PeopleTestHelpers.performPersonPageTest(page, 'person delete', personPage, async () => {
         await personPage.clickDetailsTab();
-        await page.waitForLoadState('domcontentloaded');
         
-        // Look for delete functionality
         const deleteButton = page.locator('button:has-text("Delete"), text=Delete').first();
-        const deleteExists = await deleteButton.isVisible().catch(() => false);
+        const deleteExists = await deleteButton.isVisible({ timeout: 5000 }).catch(() => false);
         
         if (deleteExists) {
-          console.log('Delete functionality found');
-          
-          // Don't actually click delete in demo environment
-          console.log('Delete test skipped to preserve demo data');
+          console.log('Delete functionality found - test skipped to preserve demo data');
         } else {
-          console.log('Delete functionality not visible - may require permissions or be in different location');
+          console.log('Delete functionality may require different permissions or location');
         }
-      } else {
-        console.log('Skipping delete test - no people available in demo environment');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - Person deletion functionality requires people management permissions that are not available in the demo environment. This CRUD operation cannot be tested without proper access to the people module.');
-      } else {
-        throw error;
-      }
-    }
+      });
+    });
   });
 
   test('should handle form validation for email format', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
-      await peoplePage.expectToBeOnPeoplePage();
+    await PeopleTestHelpers.performPeoplePageTest(page, 'email validation', peoplePage, async () => {
+      const addPersonClicked = await peoplePage.clickAddPerson();
+      expect(addPersonClicked).toBeTruthy();
       
-      const addPersonButton = page.locator('button:has-text("Add Person"), a:has-text("Add Person"), text=Add Person').first();
-      const addButtonExists = await addPersonButton.isVisible().catch(() => false);
+      const emailInput = page.locator('input[name*="email"], #email').first();
+      const emailExists = await emailInput.isVisible({ timeout: 5000 }).catch(() => false);
+      expect(emailExists).toBeTruthy();
       
-      if (addButtonExists) {
-        await addPersonButton.click();
-        await page.waitForLoadState('networkidle');
-        
-        // Try to enter invalid email
-        const emailInput = page.locator('input[name*="email"], #email').first();
-        const emailExists = await emailInput.isVisible().catch(() => false);
-        
-        if (emailExists) {
-          await emailInput.fill('invalid-email');
-          
-          // Try to save or move to next field to trigger validation
-          await emailInput.press('Tab');
-          await page.waitForLoadState('domcontentloaded');
-          
-          // Look for email validation error
-          const hasEmailError = await page.locator('text=invalid email, text=valid email, .email-error').first().isVisible().catch(() => false);
-          
-          if (hasEmailError) {
-            console.log('Email validation working correctly');
-          } else {
-            console.log('Email validation may be handled differently or on submit');
-          }
-          
-          // Cancel form
-          const cancelButton = page.locator('button:has-text("Cancel"), button:has-text("Close")').first();
-          const cancelExists = await cancelButton.isVisible().catch(() => false);
-          if (cancelExists) {
-            await cancelButton.click();
-          }
-        }
-      } else {
-        console.log('Skipping email validation test - add person not available');
-      }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - Email format validation testing requires people management permissions that are not available in the demo environment. This CRUD operation cannot be tested without proper access to the people module.');
-      } else {
-        throw error;
-      }
-    }
+      await emailInput.fill('invalid-email');
+      await emailInput.press('Tab');
+      
+      const hasEmailError = await page.locator('text=invalid email, text=valid email, .email-error').first().isVisible({ timeout: 5000 }).catch(() => false);
+      
+      const cancelButton = page.locator('button:has-text("Cancel"), button:has-text("Close")').first();
+      const cancelExists = await cancelButton.isVisible({ timeout: 5000 }).catch(() => false);
+      expect(cancelExists).toBeTruthy();
+      
+      await cancelButton.click();
+      console.log('Email validation functionality tested');
+    });
   });
 
   test('should handle form auto-save or draft functionality', async ({ page }) => {
-    try {
-      await peoplePage.gotoViaDashboard();
+    await PeopleTestHelpers.performPeoplePageTest(page, 'form auto-save functionality', peoplePage, async () => {
+      const addPersonClicked = await peoplePage.clickAddPerson();
+      expect(addPersonClicked).toBeTruthy();
+      
+      const firstNameInput = page.locator('input[name*="firstName"], #firstName').first();
+      const firstNameExists = await firstNameInput.isVisible({ timeout: 5000 }).catch(() => false);
+      expect(firstNameExists).toBeTruthy();
+      
+      await firstNameInput.fill('TestAutoSave');
+      await page.goBack();
+      
       await peoplePage.expectToBeOnPeoplePage();
+      const addPersonClickedAgain = await peoplePage.clickAddPerson();
+      expect(addPersonClickedAgain).toBeTruthy();
       
-      const addPersonButton = page.locator('button:has-text("Add Person"), a:has-text("Add Person"), text=Add Person').first();
-      const addButtonExists = await addPersonButton.isVisible().catch(() => false);
+      const preservedValue = await firstNameInput.inputValue().catch(() => '');
       
-      if (addButtonExists) {
-        await addPersonButton.click();
-        await page.waitForLoadState('networkidle');
-        
-        // Fill some form data
-        const firstNameInput = page.locator('input[name*="firstName"], #firstName').first();
-        const firstNameExists = await firstNameInput.isVisible().catch(() => false);
-        
-        if (firstNameExists) {
-          await firstNameInput.fill('TestAutoSave');
-          await page.waitForLoadState('domcontentloaded');
-          
-          // Navigate away and back to see if data persists
-          await page.goBack();
-          await page.waitForLoadState('domcontentloaded');
-          
-          // Try to go to add person again
-          const addButtonStillExists = await addPersonButton.isVisible().catch(() => false);
-          if (addButtonStillExists) {
-            await addPersonButton.click();
-            await page.waitForLoadState('networkidle');
-            
-            // Check if data was preserved
-            const preservedValue = await firstNameInput.inputValue().catch(() => '');
-            
-            if (preservedValue === 'TestAutoSave') {
-              console.log('Form auto-save/draft functionality working');
-            } else {
-              console.log('Form does not preserve data between sessions');
-            }
-          }
-        }
+      if (preservedValue === 'TestAutoSave') {
+        console.log('Form auto-save/draft functionality working');
       } else {
-        console.log('Skipping auto-save test - add person not available');
+        console.log('Form does not preserve data between sessions (expected behavior)');
       }
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log('People page not accessible - Form auto-save or draft functionality testing requires people management permissions that are not available in the demo environment. This CRUD operation cannot be tested without proper access to the people module.');
-      } else {
-        throw error;
-      }
-    }
+    });
   });
 });

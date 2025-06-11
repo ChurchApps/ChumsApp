@@ -1,60 +1,22 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { SettingsPage } from '../pages/settings-page';
 import { RolePage } from '../pages/role-page';
 
 export class SettingsTestHelpers {
   
   /**
-   * Main helper for testing settings page functionality with dashboard fallback
+   * Main helper for testing settings page functionality - expects it to work
    */
   static async performSettingsPageTest(
     page: Page, 
     testName: string, 
     settingsPage: SettingsPage, 
-    testFunction: (mode: 'settings' | 'dashboard') => Promise<void>
+    testFunction: () => Promise<void>
   ) {
-    try {
-      await settingsPage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (settings page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on settings page, but catch URL expectation errors
-      try {
-        await settingsPage.expectToBeOnSettingsPage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test on settings page
-      await testFunction('settings');
-      console.log(`${testName} verified on settings page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`Settings page not accessible - testing ${testName} from dashboard instead`);
-        
-        // Navigate back to dashboard if we got redirected
-        await page.goto('/');
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Test functionality from dashboard
-        const canSearchFromDashboard = await settingsPage.testSettingsSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          await testFunction('dashboard');
-          console.log(`${testName} verified via dashboard`);
-        } else {
-          console.log(`${testName} not available in demo environment`);
-        }
-      } else {
-        throw error;
-      }
-    }
+    await settingsPage.goto();
+    await settingsPage.expectToBeOnSettingsPage();
+    await testFunction();
+    console.log(`${testName} verified on settings page`);
   }
 
   /**
@@ -66,38 +28,14 @@ export class SettingsTestHelpers {
     settingsPage: SettingsPage, 
     testFunction: () => Promise<void>
   ) {
-    try {
-      await settingsPage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (settings page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on settings page, but catch URL expectation errors
-      try {
-        await settingsPage.expectToBeOnSettingsPage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the CRUD test
-      await testFunction();
-      console.log(`${testName} verified on settings page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`Settings page not accessible - ${testName} requires settings management permissions that are not available in the demo environment. This settings CRUD operation cannot be tested without proper access to the settings module.`);
-      } else {
-        throw error;
-      }
-    }
+    await settingsPage.goto();
+    await settingsPage.expectToBeOnSettingsPage();
+    await testFunction();
+    console.log(`${testName} verified on settings page`);
   }
 
   /**
-   * Helper for role page navigation tests
+   * Helper for role page navigation tests - expects it to work
    */
   static async performRolePageTest(
     page: Page, 
@@ -106,36 +44,10 @@ export class SettingsTestHelpers {
     rolePage: RolePage, 
     testFunction: () => Promise<void>
   ) {
-    try {
-      // First go to settings page to find a role
-      await settingsPage.goto();
-      await page.waitForLoadState('domcontentloaded');
-      
-      // Check if we were redirected to login
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on settings page
-      try {
-        await settingsPage.expectToBeOnSettingsPage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test
-      await testFunction();
-      console.log(`${testName} verified`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication')) {
-        console.log(`${testName} not accessible - individual role page functionality requires settings management permissions not available in demo environment`);
-      } else {
-        throw error;
-      }
-    }
+    await settingsPage.goto();
+    await settingsPage.expectToBeOnSettingsPage();
+    await testFunction();
+    console.log(`${testName} verified`);
   }
 
   /**
@@ -350,11 +262,11 @@ export class SettingsTestHelpers {
     const components = {
       settingsManagement: {
         title: 'h1:has-text("Settings"), h1:has-text("Church")',
-        content: '.sideNav, form'
+        content: '.sideNav, form, #mainContent'
       },
       roleManagement: {
         title: 'h1:has-text("Role"), h2:has-text("Role")',
-        content: '.role-members, .permissions'
+        content: '.role-members, .permissions, #mainContent'
       },
       navigation: {
         title: 'h1',
@@ -364,16 +276,12 @@ export class SettingsTestHelpers {
 
     const config = components[componentType] || components.navigation;
     
-    const hasTitle = await page.locator(config.title).first().isVisible().catch(() => false);
-    const hasContent = await page.locator(config.content).first().isVisible().catch(() => false);
+    const hasTitle = await page.locator(config.title).first().isVisible({ timeout: 5000 }).catch(() => false);
+    const hasContent = await page.locator(config.content).first().isVisible({ timeout: 5000 }).catch(() => false);
     
-    if (hasTitle || hasContent) {
-      console.log(`${componentType} page accessible and main components visible`);
-      return true;
-    } else {
-      console.log(`${componentType} page structure may be different in demo environment`);
-      return false;
-    }
+    expect(hasTitle || hasContent).toBeTruthy();
+    console.log(`${componentType} page accessible and main components visible`);
+    return true;
   }
 
   /**

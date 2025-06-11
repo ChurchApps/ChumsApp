@@ -20,188 +20,104 @@ test.describe('Donations Page', () => {
   });
 
   test('should check if donations page is accessible', async ({ page }) => {
-    await DonationsTestHelpers.performDonationsPageTest(page, 'donations page accessibility', donationsPage, async (mode) => {
-      if (mode === 'donations') {
-        await DonationsTestHelpers.testPageAccessibility(page, 'donationsReport');
-      } else {
-        const canSearchFromDashboard = await donationsPage.testDonationsSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          console.log('Donations search functionality available via dashboard');
-        } else {
-          console.log('Donations functionality not available in demo environment');
-        }
-      }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'donations page accessibility', donationsPage, async () => {
+      await DonationsTestHelpers.testPageAccessibility(page, 'donationsReport');
     });
   });
 
   test('should display donations report by default', async ({ page }) => {
-    await DonationsTestHelpers.performDonationsPageTest(page, 'donations report display', donationsPage, async (mode) => {
-      if (mode === 'donations') {
-        await DonationsTestHelpers.testDonationReporting(page, donationsPage);
-      } else {
-        console.log('Donations search functionality confirmed via dashboard (report not testable)');
-      }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'donations report display', donationsPage, async () => {
+      await DonationsTestHelpers.testDonationsDisplay(page, donationsPage);
     });
   });
 
   test('should perform simple donations search', async ({ page }) => {
-    const searchTerms = DonationsTestHelpers.getSearchTerms().basic;
-    await DonationsTestHelpers.performSearchTest(page, 'simple donations search', donationsPage, searchTerms);
+    await DonationsTestHelpers.performDonationsPageTest(page, 'simple donations search', donationsPage, async () => {
+      const searchTerms = DonationsTestHelpers.getSearchTerms().basic;
+      for (const term of searchTerms) {
+        await DonationsTestHelpers.testDonationsSearch(page, donationsPage, term);
+      }
+    });
   });
 
   test('should handle amount-based searches', async ({ page }) => {
-    const searchTerms = DonationsTestHelpers.getSearchTerms().amounts;
-    await DonationsTestHelpers.performSearchTest(page, 'amount-based search', donationsPage, searchTerms);
+    await DonationsTestHelpers.performDonationsPageTest(page, 'amount-based searches', donationsPage, async () => {
+      const searchTerms = DonationsTestHelpers.getSearchTerms().amounts;
+      for (const term of searchTerms) {
+        await DonationsTestHelpers.testDonationsSearch(page, donationsPage, term);
+      }
+    });
   });
 
   test('should handle case-insensitive searches', async ({ page }) => {
-    const searchTerms = DonationsTestHelpers.getSearchTerms().caseInsensitive;
-    await DonationsTestHelpers.performSearchTest(page, 'case-insensitive search', donationsPage, searchTerms);
+    await DonationsTestHelpers.performDonationsPageTest(page, 'case-insensitive searches', donationsPage, async () => {
+      const searchTerms = DonationsTestHelpers.getSearchTerms().caseInsensitive;
+      for (const term of searchTerms) {
+        await DonationsTestHelpers.testDonationsSearch(page, donationsPage, term);
+      }
+    });
   });
 
   test('should handle empty search gracefully', async ({ page }) => {
-    await DonationsTestHelpers.performDonationsPageTest(page, 'empty search handling', donationsPage, async (mode) => {
-      if (mode === 'donations') {
-        const searchSuccessful = await donationsPage.searchDonations('');
-        if (searchSuccessful) {
-          await page.waitForLoadState('domcontentloaded');
-          await donationsPage.expectDonationsReportVisible();
-        }
-      } else {
-        await donationsPage.searchDonationsFromDashboard('');
-        await page.waitForLoadState('domcontentloaded');
-      }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'empty search handling', donationsPage, async () => {
+      await DonationsTestHelpers.testDonationsSearch(page, donationsPage, '');
     });
   });
 
   test('should have export functionality', async ({ page }) => {
-    await DonationsTestHelpers.performDonationsPageTest(page, 'export functionality', donationsPage, async (mode) => {
-      if (mode === 'donations') {
-        await donationsPage.expectLoadingComplete();
-        
-        const exportExists = await donationsPage.expectExportAvailable();
-        
-        if (exportExists) {
-          console.log('Export functionality available');
-        } else {
-          console.log('Export not available - may require data or permissions');
-        }
-      } else {
-        console.log('Basic search functionality confirmed via dashboard (export not testable)');
-      }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'export functionality', donationsPage, async () => {
+      await DonationsTestHelpers.testDonationsExport(page, donationsPage);
     });
   });
 
   test('should have filter functionality', async ({ page }) => {
-    await DonationsTestHelpers.performDonationsPageTest(page, 'filter functionality', donationsPage, async (mode) => {
-      if (mode === 'donations') {
-        await DonationsTestHelpers.testDonationFiltering(page, donationsPage);
-      } else {
-        console.log('Basic search functionality confirmed via dashboard (filter not testable)');
-      }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'filter functionality', donationsPage, async () => {
+      await DonationsTestHelpers.testDonationFiltering(page, donationsPage);
     });
   });
 
   test('should display donation totals', async ({ page }) => {
-    await DonationsTestHelpers.performDonationsPageTest(page, 'donation totals display', donationsPage, async (mode) => {
-      if (mode === 'donations') {
-        await donationsPage.expectLoadingComplete();
-        
-        const totalAmount = await donationsPage.getTotalAmount();
-        
-        if (totalAmount) {
-          console.log(`Total donation amount displayed: ${totalAmount}`);
-        } else {
-          console.log('Donation totals may be structured differently or require data');
-        }
-      } else {
-        console.log('Basic search functionality confirmed via dashboard (totals not testable)');
-      }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'donation totals display', donationsPage, async () => {
+      await DonationsTestHelpers.testDonationTotals(page, donationsPage);
     });
   });
 
   test('should handle empty donation results gracefully', async ({ page }) => {
-    await DonationsTestHelpers.performDonationsPageTest(page, 'empty donation results', donationsPage, async (mode) => {
-      const searchTerm = 'xyznobodyhasthisdonationname123';
-      
-      if (mode === 'donations') {
-        const searchSuccessful = await donationsPage.searchDonations(searchTerm);
-        if (searchSuccessful) {
-          await page.waitForLoadState('domcontentloaded');
-          // Should not crash or show errors
-          await donationsPage.expectDonationsReportVisible();
-          console.log('Empty donation results handled gracefully');
-        }
-      } else {
-        await donationsPage.searchDonationsFromDashboard(searchTerm);
-        await page.waitForLoadState('domcontentloaded');
-        console.log('Empty donation results handled gracefully via dashboard');
-      }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'empty donation results', donationsPage, async () => {
+      // Search for something that likely won't exist
+      await DonationsTestHelpers.testDonationsSearch(page, donationsPage, 'zzznonexistent999');
     });
   });
 
   test('should maintain page functionality after search', async ({ page }) => {
-    await DonationsTestHelpers.performDonationsPageTest(page, 'page functionality after search', donationsPage, async (mode) => {
-      if (mode === 'donations') {
-        await donationsPage.searchDonations('demo');
-        await donationsPage.searchDonations('test');
-        await donationsPage.expectDonationsReportVisible();
-        console.log('Page functionality maintained after multiple searches');
-      } else {
-        await donationsPage.searchDonationsFromDashboard('demo');
-        await donationsPage.searchDonationsFromDashboard('test');
-        console.log('Page functionality maintained after multiple searches via dashboard');
-      }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'page functionality after search', donationsPage, async () => {
+      // Perform a search
+      await DonationsTestHelpers.testDonationsSearch(page, donationsPage, 'Donation');
+      
+      // Verify page is still functional
+      await DonationsTestHelpers.testDonationsDisplay(page, donationsPage);
     });
   });
 
   test('should handle rapid consecutive searches', async ({ page }) => {
-    const searchTerms = DonationsTestHelpers.getSearchTerms().rapid;
-    await DonationsTestHelpers.performDonationsPageTest(page, 'rapid consecutive searches', donationsPage, async (mode) => {
-      const terms = searchTerms[mode];
-      
-      if (mode === 'donations') {
-        for (const term of terms) {
-          const searchSuccessful = await donationsPage.searchDonations(term);
-          if (searchSuccessful) {
-            await page.waitForLoadState('domcontentloaded');
-          }
-        }
-        
-        await page.waitForLoadState('networkidle');
-        await donationsPage.expectDonationsReportVisible();
-      } else {
-        for (const term of terms) {
-          await donationsPage.searchDonationsFromDashboard(term);
-          await page.waitForLoadState('domcontentloaded');
-        }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'rapid consecutive searches', donationsPage, async () => {
+      const searchTerms = DonationsTestHelpers.getSearchTerms().rapid;
+      for (const term of searchTerms) {
+        await DonationsTestHelpers.testDonationsSearch(page, donationsPage, term);
       }
     });
   });
 
   test('should have accessible donation elements', async ({ page }) => {
-    await DonationsTestHelpers.performDonationsPageTest(page, 'donation accessibility', donationsPage, async (mode) => {
-      if (mode === 'donations') {
-        // Check for proper donation report structure
-        const reportExists = await donationsPage.reportContainer.isVisible().catch(() => false);
-        
-        if (reportExists) {
-          console.log('Donations report elements are accessible');
-        } else {
-          console.log('Donations report may use different structure');
-        }
-      } else {
-        // Check dashboard search accessibility
-        const dashboardSearchInput = page.locator('[id="searchText"]').first();
-        const dashboardSearchExists = await dashboardSearchInput.isVisible().catch(() => false);
-        
-        if (dashboardSearchExists) {
-          console.log('Search elements accessibility tested via dashboard');
-        } else {
-          console.log('Dashboard search not available for accessibility testing');
-        }
-      }
+    await DonationsTestHelpers.performDonationsPageTest(page, 'donation accessibility', donationsPage, async () => {
+      // Check for proper donations structure
+      const hasReport = await donationsPage.expectDonationsReportVisible();
+      expect(hasReport).toBeTruthy();
+      
+      const hasExport = await donationsPage.expectExportAvailable();
+      expect(hasExport).toBeTruthy();
+      
+      console.log('Donation elements are accessible');
     });
   });
 });

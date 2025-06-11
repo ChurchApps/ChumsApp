@@ -1,276 +1,212 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { PeoplePage } from '../pages/people-page';
 import { PersonPage } from '../pages/person-page';
 
 export class PeopleTestHelpers {
   
   /**
-   * Main helper for testing people page functionality with dashboard fallback
+   * Main helper for testing people page functionality - expects it to work
    */
   static async performPeoplePageTest(
     page: Page, 
     testName: string, 
     peoplePage: PeoplePage, 
-    testFunction: (mode: 'people' | 'dashboard') => Promise<void>
-  ) {
-    try {
-      await peoplePage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (people page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on people page, but catch URL expectation errors
-      try {
-        await peoplePage.expectToBeOnPeoplePage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test on people page
-      await testFunction('people');
-      console.log(`${testName} verified on people page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`People page not accessible - testing ${testName} from dashboard instead`);
-        
-        // Navigate back to dashboard if we got redirected
-        await page.goto('/');
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Test functionality from dashboard
-        const canSearchFromDashboard = await peoplePage.testPeopleSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          await testFunction('dashboard');
-          console.log(`${testName} verified via dashboard`);
-        } else {
-          console.log(`${testName} not available in demo environment`);
-        }
-      } else {
-        throw error;
-      }
-    }
-  }
-
-  /**
-   * Helper for testing people search functionality with various search terms
-   */
-  static async performSearchTest(
-    page: Page,
-    testName: string,
-    peoplePage: PeoplePage,
-    searchTerms: { people: string[], dashboard: string[] }
-  ) {
-    await this.performPeoplePageTest(page, testName, peoplePage, async (mode) => {
-      const terms = searchTerms[mode];
-      
-      for (const term of terms) {
-        if (mode === 'people') {
-          await peoplePage.searchPeople(term);
-          await page.waitForLoadState('domcontentloaded');
-          console.log(`Search completed for term: ${term}`);
-          await peoplePage.searchInput.clear();
-        } else {
-          await peoplePage.searchPeopleFromDashboard(term);
-          await page.waitForLoadState('domcontentloaded');
-          console.log(`Dashboard search completed for term: ${term}`);
-        }
-      }
-    });
-  }
-
-  /**
-   * Helper for CRUD operations that require people management permissions
-   */
-  static async performCrudTest(
-    page: Page, 
-    testName: string, 
-    peoplePage: PeoplePage, 
     testFunction: () => Promise<void>
   ) {
-    try {
-      await peoplePage.gotoViaDashboard();
-      
-      // Check if we were redirected to login (people page not accessible)
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on people page, but catch URL expectation errors
-      try {
-        await peoplePage.expectToBeOnPeoplePage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the CRUD test
-      await testFunction();
-      console.log(`${testName} verified on people page`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication may have expired')) {
-        console.log(`People page not accessible - ${testName} requires people management permissions that are not available in the demo environment. This CRUD operation cannot be tested without proper access to the people module.`);
-      } else {
-        throw error;
-      }
-    }
+    await peoplePage.goto();
+    await peoplePage.expectToBeOnPeoplePage();
+    await testFunction();
+    console.log(`${testName} verified on people page`);
   }
 
   /**
-   * Helper for person page navigation tests
+   * Main helper for testing individual person page functionality - expects it to work
    */
   static async performPersonPageTest(
     page: Page, 
     testName: string, 
-    peoplePage: PeoplePage, 
     personPage: PersonPage, 
     testFunction: () => Promise<void>
   ) {
-    try {
-      // First go to people page to find a person
-      await peoplePage.goto();
-      await page.waitForLoadState('domcontentloaded');
-      
-      // Check if we were redirected to login
-      if (page.url().includes('/login')) {
-        throw new Error('redirected to login');
-      }
-      
-      // Try to verify we're on people page
-      try {
-        await peoplePage.expectToBeOnPeoplePage();
-      } catch (urlError) {
-        if (urlError.message.includes('Timed out') || page.url().includes('/login')) {
-          throw new Error('redirected to login');
-        }
-        throw urlError;
-      }
-      
-      // Execute the test
-      await testFunction();
-      console.log(`${testName} verified`);
-    } catch (error) {
-      if (error.message.includes('redirected to login') || error.message.includes('authentication')) {
-        console.log(`${testName} not accessible - individual person page functionality requires people management permissions not available in demo environment`);
-      } else {
-        throw error;
-      }
-    }
+    await testFunction();
+    console.log(`${testName} verified on person page`);
   }
 
   /**
-   * Common search terms for different test scenarios
+   * Helper to test people display functionality
    */
-  static getSearchTerms() {
-    return {
-      basic: {
-        people: ['John', 'Mary', 'Smith', 'demo'],
-        dashboard: ['demo', 'test']
-      },
-      partial: {
-        people: ['Jo', 'Sm', 'Ma'],
-        dashboard: ['de', 'te']
-      },
-      caseInsensitive: {
-        people: ['john', 'JOHN', 'John', 'JoHn'],
-        dashboard: ['demo', 'DEMO', 'Demo']
-      },
-      special: {
-        people: ['O\'Brien', 'Smith-Jones', 'María', 'José'],
-        dashboard: ['demo-test', 'test.user']
-      },
-      rapid: {
-        people: ['A', 'AB', 'ABC', 'ABCD'],
-        dashboard: ['d', 'de', 'dem', 'demo']
-      }
-    };
+  static async testPeopleDisplay(page: Page, peoplePage: PeoplePage) {
+    console.log('Testing people display functionality');
+    
+    await peoplePage.expectLoadingComplete();
+    
+    const hasPeopleList = await peoplePage.expectPeopleDisplayed();
+    expect(hasPeopleList).toBeTruthy();
+    
+    const peopleCount = await peoplePage.getPeopleCount();
+    console.log(`Found ${peopleCount} people`);
+    
+    return true;
   }
 
   /**
-   * Helper to test form functionality with validation
+   * Helper to test people search functionality
    */
-  static async testFormFunctionality(page: Page, formType: string) {
-    const addPersonButton = page.locator('button:has-text("Add Person"), a:has-text("Add Person"), text=Add Person').first();
-    const addButtonExists = await addPersonButton.isVisible().catch(() => false);
+  static async testPeopleSearch(page: Page, peoplePage: PeoplePage, searchTerm: string) {
+    console.log(`Testing people search for: ${searchTerm}`);
     
-    if (addButtonExists) {
-      await addPersonButton.click();
-      await page.waitForLoadState('domcontentloaded');
-      
-      // Should either navigate to add person page or open modal
-      const isOnAddPage = page.url().includes('/add') || page.url().includes('/new');
-      const hasAddModal = await page.locator('.modal, .dialog, text=Add Person').first().isVisible().catch(() => false);
-      
-      if (isOnAddPage || hasAddModal) {
-        console.log(`${formType} functionality available`);
-        
-        // Look for person form fields
-        const hasFormFields = await page.locator('input[name*="name"], input[name*="Name"], #firstName, #lastName').first().isVisible().catch(() => false);
-        
-        if (hasFormFields) {
-          console.log(`${formType} form displayed`);
-          return true;
-        }
-      } else {
-        console.log(`${formType} interface may be structured differently`);
-      }
-    } else {
-      console.log(`${formType} functionality not found - may require permissions`);
-    }
+    const searchSuccessful = await peoplePage.searchPeople(searchTerm);
+    expect(searchSuccessful).toBeTruthy();
     
-    return false;
+    console.log(`People search completed for term: ${searchTerm}`);
+    return true;
+  }
+
+  /**
+   * Helper to test advanced search functionality
+   */
+  static async testAdvancedSearch(page: Page, peoplePage: PeoplePage) {
+    console.log('Testing advanced search functionality');
+    
+    const advancedSearchClicked = await peoplePage.clickAdvancedSearch();
+    expect(advancedSearchClicked).toBeTruthy();
+    
+    console.log('Advanced search functionality available');
+    return true;
+  }
+
+  /**
+   * Helper to test add person functionality
+   */
+  static async testAddPersonFunctionality(page: Page, peoplePage: PeoplePage) {
+    console.log('Testing add person functionality');
+    
+    const addPersonClicked = await peoplePage.clickAddPerson();
+    expect(addPersonClicked).toBeTruthy();
+    
+    console.log('Add person functionality available');
+    return true;
+  }
+
+  /**
+   * Helper to test person navigation
+   */
+  static async testPersonNavigation(page: Page, peoplePage: PeoplePage) {
+    console.log('Testing person navigation');
+    
+    const peopleCount = await peoplePage.getPeopleCount();
+    expect(peopleCount).toBeGreaterThan(0);
+    
+    const personClicked = await peoplePage.clickFirstPerson();
+    expect(personClicked).toBeTruthy();
+    
+    console.log('Successfully navigated to person page');
+    return true;
+  }
+
+  /**
+   * Helper to test export functionality
+   */
+  static async testExportFunctionality(page: Page, peoplePage: PeoplePage) {
+    console.log('Testing export functionality');
+    
+    const exportAvailable = await peoplePage.expectExportAvailable();
+    expect(exportAvailable).toBeTruthy();
+    
+    console.log('Export functionality available');
+    return true;
+  }
+
+  /**
+   * Helper to test column selector functionality
+   */
+  static async testColumnSelector(page: Page, peoplePage: PeoplePage) {
+    console.log('Testing column selector functionality');
+    
+    const columnSelectorAvailable = await peoplePage.expectColumnSelectorAvailable();
+    expect(columnSelectorAvailable).toBeTruthy();
+    
+    console.log('Column selector functionality available');
+    return true;
+  }
+
+  /**
+   * Helper to test person details functionality
+   */
+  static async testPersonDetails(page: Page, personPage: PersonPage) {
+    console.log('Testing person details');
+    
+    const hasPersonDetails = await personPage.expectPersonDetailsVisible();
+    expect(hasPersonDetails).toBeTruthy();
+    
+    console.log('Person details displayed');
+    return true;
+  }
+
+  /**
+   * Helper to test person tabs functionality
+   */
+  static async testPersonTabs(page: Page, personPage: PersonPage) {
+    console.log('Testing person tabs functionality');
+    
+    const detailsTabClicked = await personPage.clickDetailsTab();
+    expect(detailsTabClicked).toBeTruthy();
+    console.log('Details tab accessible');
+    
+    const attendanceTabClicked = await personPage.clickAttendanceTab();
+    expect(attendanceTabClicked).toBeTruthy();
+    console.log('Attendance tab accessible');
+    
+    const groupsTabClicked = await personPage.clickGroupsTab();
+    expect(groupsTabClicked).toBeTruthy();
+    console.log('Groups tab accessible');
+    
+    return true;
   }
 
   /**
    * Helper to test person editing functionality
    */
-  static async testPersonEditing(page: Page, peoplePage: PeoplePage, personPage: PersonPage) {
-    await page.waitForLoadState('domcontentloaded');
+  static async testPersonEditing(page: Page, personPage: PersonPage) {
+    console.log('Testing person editing functionality');
     
-    const personClicked = await peoplePage.clickFirstPerson();
+    const editPersonClicked = await personPage.clickEditPerson();
+    expect(editPersonClicked).toBeTruthy();
     
-    if (personClicked) {
-      await personPage.expectToBeOnPersonPage();
-      await personPage.clickDetailsTab();
-      await page.waitForLoadState('domcontentloaded');
-      
-      // Try to find edit functionality
-      const editClicked = await personPage.editPerson();
-      
-      if (editClicked) {
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Should be in edit mode with form fields
-        const hasEditForm = await personPage.firstNameInput.isVisible().catch(() => false) ||
-                           await personPage.saveButton.isVisible().catch(() => false);
-        
-        if (hasEditForm) {
-          console.log('Person edit mode activated');
-          
-          // Test cancel functionality
-          const cancelClicked = await personPage.cancelEdit();
-          if (cancelClicked) {
-            console.log('Edit cancelled successfully');
-          }
-          return true;
-        } else {
-          console.log('Edit form may be structured differently');
-        }
-      } else {
-        console.log('Edit functionality not available - may require permissions');
-      }
-    } else {
-      console.log('No people available for editing in demo environment');
-    }
+    console.log('Edit person functionality available');
+    return true;
+  }
+
+  /**
+   * Helper to test person form functionality
+   */
+  static async testPersonForm(page: Page, personPage: PersonPage) {
+    console.log('Testing person form');
     
-    return false;
+    const hasPersonForm = await personPage.expectPersonFormVisible();
+    expect(hasPersonForm).toBeTruthy();
+    
+    console.log('Person form displayed');
+    return true;
+  }
+
+  /**
+   * Helper to test person validation
+   */
+  static async testPersonValidation(page: Page, personPage: PersonPage) {
+    console.log('Testing person validation');
+    
+    const testData = this.getTestPersonData();
+    
+    // Test required field validation
+    const firstNameFilled = await personPage.fillFirstName(testData.firstName);
+    expect(firstNameFilled).toBeTruthy();
+    
+    const lastNameFilled = await personPage.fillLastName(testData.lastName);
+    expect(lastNameFilled).toBeTruthy();
+    
+    console.log('Person validation functionality available');
+    return true;
   }
 
   /**
@@ -278,27 +214,56 @@ export class PeopleTestHelpers {
    */
   static async testPageAccessibility(page: Page, componentType: string) {
     const components = {
-      peopleSearch: {
-        title: 'h1:has-text("Search People"), h1:has-text("People")',
-        searchBox: '[id="searchText"], input[name*="search"]'
+      peopleManagement: {
+        title: 'h1:has-text("People"), h1:has-text("Person")',
+        content: '#mainContent, .people-container, table'
+      },
+      personProfile: {
+        title: 'h1:has-text("Person"), h1:has-text("Profile")',
+        content: '#mainContent, .person-profile, .tabs'
       },
       navigation: {
         title: 'h1',
-        searchBox: '[id="searchText"]'
+        content: '#mainContent'
       }
     };
 
     const config = components[componentType] || components.navigation;
     
     const hasTitle = await page.locator(config.title).first().isVisible().catch(() => false);
-    const hasSearchBox = await page.locator(config.searchBox).first().isVisible().catch(() => false);
+    const hasContent = await page.locator(config.content).first().isVisible().catch(() => false);
     
-    if (hasTitle || hasSearchBox) {
-      console.log(`${componentType} page accessible and main components visible`);
-      return true;
-    } else {
-      console.log(`${componentType} page structure may be different in demo environment`);
-      return false;
-    }
+    expect(hasTitle || hasContent).toBeTruthy();
+    console.log(`${componentType} page accessible and main components visible`);
+    return true;
+  }
+
+  /**
+   * Common search terms for testing
+   */
+  static getSearchTerms() {
+    return {
+      basic: ['Smith', 'John', 'Mary', 'Johnson'],
+      partial: ['Smi', 'Joh', 'Mar'],
+      caseInsensitive: ['smith', 'SMITH', 'Smith', 'SmItH'],
+      special: ['John Smith', 'Mary Johnson', 'Robert Brown'],
+      rapid: ['S', 'Sm', 'Smi', 'Smit']
+    };
+  }
+
+  /**
+   * Test data for person creation
+   */
+  static getTestPersonData() {
+    return {
+      firstName: 'Test',
+      lastName: 'Person',
+      email: 'test.person@example.com',
+      phone: '555-0123',
+      address: '123 Test St',
+      city: 'Test City',
+      state: 'TS',
+      zip: '12345'
+    };
   }
 }

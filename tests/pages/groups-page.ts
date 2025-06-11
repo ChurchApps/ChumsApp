@@ -26,24 +26,6 @@ export class GroupsPage {
 
   async goto() {
     await this.page.goto('/groups');
-    await this.page.waitForLoadState('domcontentloaded');
-  }
-
-  async gotoViaDashboard() {
-    await this.page.goto('/');
-    await this.page.waitForLoadState('domcontentloaded');
-    
-    // Try to navigate to groups via menu
-    const groupsNavLink = this.page.locator('a[href="/groups"], a:has-text("Groups"), nav a:has-text("Groups")').first();
-    const groupsNavExists = await groupsNavLink.isVisible().catch(() => false);
-    
-    if (groupsNavExists) {
-      await groupsNavLink.click();
-      await this.page.waitForLoadState('domcontentloaded');
-    } else {
-      // Fallback to direct navigation
-      await this.goto();
-    }
   }
 
   async expectToBeOnGroupsPage() {
@@ -57,7 +39,6 @@ export class GroupsPage {
   }
 
   async expectGroupsDisplayed() {
-    await this.page.waitForLoadState('networkidle');
     return await this.expectGroupsTableVisible();
   }
 
@@ -65,7 +46,6 @@ export class GroupsPage {
     const addButtonExists = await this.addGroupButton.isVisible().catch(() => false);
     if (addButtonExists) {
       await this.addGroupButton.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -75,7 +55,6 @@ export class GroupsPage {
     const firstGroupExists = await this.firstGroupLink.isVisible().catch(() => false);
     if (firstGroupExists) {
       await this.firstGroupLink.click();
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
@@ -94,40 +73,11 @@ export class GroupsPage {
         await this.searchInput.press('Enter');
       }
       
-      await this.page.waitForLoadState('domcontentloaded');
       return true;
     }
     return false;
   }
 
-  async testGroupsSearchFromDashboard() {
-    // Test if groups search is available from dashboard
-    await this.page.goto('/');
-    await this.page.waitForLoadState('domcontentloaded');
-    
-    const dashboardSearchInput = this.page.locator('#searchText, input[placeholder*="Search"]').first();
-    const dashboardSearchExists = await dashboardSearchInput.isVisible().catch(() => false);
-    
-    if (dashboardSearchExists) {
-      // Try to search for groups
-      await dashboardSearchInput.fill('group');
-      await dashboardSearchInput.press('Enter');
-      await this.page.waitForLoadState('domcontentloaded');
-      
-      // Check if any group-related results appear
-      const hasGroupResults = await this.page.locator('text=Group, text=group').first().isVisible().catch(() => false);
-      return hasGroupResults;
-    }
-    
-    return false;
-  }
-
-  async searchGroupsFromDashboard(searchTerm: string) {
-    const dashboardSearchInput = this.page.locator('#searchText, input[placeholder*="Search"]').first();
-    await dashboardSearchInput.fill(searchTerm);
-    await dashboardSearchInput.press('Enter');
-    await this.page.waitForLoadState('domcontentloaded');
-  }
 
   async expectExportAvailable() {
     return await this.exportLink.isVisible().catch(() => false);
@@ -147,6 +97,5 @@ export class GroupsPage {
     if (loadingExists) {
       await this.loadingIndicator.waitFor({ state: 'hidden' });
     }
-    await this.page.waitForLoadState('networkidle');
   }
 }

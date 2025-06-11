@@ -20,271 +20,132 @@ test.describe('Attendance Page', () => {
   });
 
   test('should check if attendance page is accessible', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance page accessibility', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        await AttendanceTestHelpers.testPageAccessibility(page, 'attendanceManagement');
-      } else {
-        const canSearchFromDashboard = await attendancePage.testAttendanceSearchFromDashboard();
-        
-        if (canSearchFromDashboard) {
-          console.log('Attendance search functionality available via dashboard');
-        } else {
-          console.log('Attendance functionality not available in demo environment');
-        }
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance page accessibility', attendancePage, async () => {
+      await AttendanceTestHelpers.testPageAccessibility(page, 'attendanceManagement');
     });
   });
 
   test('should display attendance setup by default', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance setup display', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        await attendancePage.expectLoadingComplete();
-        
-        const hasAttendanceDisplay = await attendancePage.expectAttendanceDisplayed();
-        
-        if (hasAttendanceDisplay) {
-          console.log('Attendance setup displayed successfully');
-          
-          const campusCount = await attendancePage.getCampusCount();
-          console.log(`Found ${campusCount} campuses`);
-        } else {
-          console.log('No attendance data in demo environment or empty state');
-        }
-      } else {
-        console.log('Attendance search functionality confirmed via dashboard (setup display not testable)');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance setup display', attendancePage, async () => {
+      await AttendanceTestHelpers.testAttendanceDisplay(page, attendancePage);
     });
   });
 
   test('should display navigation tabs', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance navigation tabs', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        const hasSideNav = await attendancePage.expectSideNavVisible();
-        
-        if (hasSideNav) {
-          console.log('Attendance navigation tabs displayed successfully');
-          
-          // Test tab switching
-          await AttendanceTestHelpers.testAttendanceTabs(page, attendancePage);
-        } else {
-          console.log('Attendance navigation may be structured differently');
-        }
-      } else {
-        console.log('Navigation functionality confirmed via dashboard (tabs not testable)');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance navigation tabs', attendancePage, async () => {
+      const hasSideNav = await attendancePage.expectSideNavVisible();
+      expect(hasSideNav).toBeTruthy();
+      console.log('Attendance navigation tabs displayed successfully');
     });
   });
 
   test('should handle setup tab functionality', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'setup tab functionality', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        const setupTabClicked = await attendancePage.clickSetupTab();
-        
-        if (setupTabClicked) {
-          await page.waitForLoadState('domcontentloaded');
-          
-          const hasAttendanceDisplay = await attendancePage.expectAttendanceDisplayed();
-          
-          if (hasAttendanceDisplay) {
-            console.log('Setup tab content displayed successfully');
-          } else {
-            console.log('Setup tab may show empty state');
-          }
-        } else {
-          console.log('Setup tab may be active by default');
-        }
-      } else {
-        console.log('Setup functionality confirmed via dashboard (tab content not testable)');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'setup tab functionality', attendancePage, async () => {
+      const setupTabClicked = await attendancePage.clickSetupTab();
+      expect(setupTabClicked).toBeTruthy();
+      
+      const hasAttendanceDisplay = await attendancePage.expectAttendanceDisplayed();
+      expect(hasAttendanceDisplay).toBeTruthy();
+      console.log('Setup tab content displayed successfully');
     });
   });
 
   test('should handle attendance trend tab', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance trend tab', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        const trendTabClicked = await attendancePage.clickAttendanceTrendTab();
-        
-        if (trendTabClicked) {
-          await page.waitForLoadState('domcontentloaded');
-          console.log('Attendance Trend tab accessible');
-        } else {
-          console.log('Attendance Trend tab not visible - may require permissions');
-        }
-      } else {
-        console.log('Trend functionality confirmed via dashboard (tab not testable)');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance trend tab', attendancePage, async () => {
+      const trendTabClicked = await attendancePage.clickAttendanceTrendTab();
+      expect(trendTabClicked).toBeTruthy();
+      console.log('Attendance Trend tab accessible');
     });
   });
 
   test('should handle group attendance tab', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'group attendance tab', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        const groupTabClicked = await attendancePage.clickGroupAttendanceTab();
-        
-        if (groupTabClicked) {
-          await page.waitForLoadState('domcontentloaded');
-          console.log('Group Attendance tab accessible');
-        } else {
-          console.log('Group Attendance tab not visible - may require permissions');
-        }
-      } else {
-        console.log('Group attendance functionality confirmed via dashboard (tab not testable)');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'group attendance tab', attendancePage, async () => {
+      const groupTabClicked = await attendancePage.clickGroupAttendanceTab();
+      expect(groupTabClicked).toBeTruthy();
+      console.log('Group Attendance tab accessible');
     });
   });
 
   test('should have add functionality with menu options', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'add functionality', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        const addMenuTested = await AttendanceTestHelpers.testAddMenuFunctionality(page, attendancePage);
-        
-        if (addMenuTested) {
-          console.log('Add menu functionality confirmed');
-        } else {
-          console.log('Add menu may require different permissions or structure');
-        }
-      } else {
-        console.log('Add functionality confirmed via dashboard search (menu not testable)');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'add functionality', attendancePage, async () => {
+      await AttendanceTestHelpers.testAddMenuFunctionality(page, attendancePage);
     });
   });
 
   test('should have campus creation functionality', async ({ page }) => {
-    await AttendanceTestHelpers.performCrudTest(page, 'Campus creation functionality', attendancePage, async () => {
-      await AttendanceTestHelpers.testCampusFunctionality(page, 'Campus creation');
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'campus creation functionality', attendancePage, async () => {
+      await AttendanceTestHelpers.testCampusFunctionality(page, attendancePage);
     });
   });
 
   test('should have service creation functionality', async ({ page }) => {
-    await AttendanceTestHelpers.performCrudTest(page, 'Service creation functionality', attendancePage, async () => {
-      await AttendanceTestHelpers.testServiceFunctionality(page, 'Service creation');
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'service creation functionality', attendancePage, async () => {
+      await AttendanceTestHelpers.testServiceFunctionality(page, attendancePage);
     });
   });
 
   test('should have service time creation functionality', async ({ page }) => {
-    await AttendanceTestHelpers.performCrudTest(page, 'Service time creation functionality', attendancePage, async () => {
-      await AttendanceTestHelpers.testServiceTimeFunctionality(page, 'Service time creation');
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'service time creation functionality', attendancePage, async () => {
+      await AttendanceTestHelpers.testServiceTimeFunctionality(page, attendancePage);
     });
   });
 
   test('should handle attendance hierarchy setup', async ({ page }) => {
-    await AttendanceTestHelpers.performCrudTest(page, 'Attendance hierarchy setup', attendancePage, async () => {
-      const hierarchyTested = await AttendanceTestHelpers.testAttendanceHierarchy(page, attendancePage);
-      
-      if (hierarchyTested) {
-        console.log('Attendance hierarchy setup confirmed');
-      } else {
-        console.log('Attendance hierarchy may require different permissions or structure');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance hierarchy setup', attendancePage, async () => {
+      await AttendanceTestHelpers.testAttendanceHierarchy(page, attendancePage);
     });
   });
 
   test('should handle attendance editing functionality', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance editing', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        const editingTested = await AttendanceTestHelpers.testAttendanceEditing(page, attendancePage);
-        
-        if (editingTested) {
-          console.log('Attendance editing functionality confirmed');
-        } else {
-          console.log('Attendance editing may require data or different permissions');
-        }
-      } else {
-        console.log('Editing functionality confirmed via dashboard (editing not testable)');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance editing', attendancePage, async () => {
+      await AttendanceTestHelpers.testAttendanceEditing(page, attendancePage);
     });
   });
 
   test('should maintain page functionality across tabs', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'page functionality across tabs', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        // Click through different tabs and ensure page remains functional
-        await attendancePage.clickSetupTab();
-        await page.waitForLoadState('domcontentloaded');
-        
-        await attendancePage.clickAttendanceTrendTab();
-        await page.waitForLoadState('domcontentloaded');
-        
-        await attendancePage.clickGroupAttendanceTab();
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Go back to setup
-        await attendancePage.clickSetupTab();
-        await page.waitForLoadState('domcontentloaded');
-        
-        // Page should still be functional
-        await attendancePage.expectSideNavVisible();
-        
-        console.log('Attendance functionality maintained across tab switches');
-      } else {
-        console.log('Tab functionality confirmed via dashboard (tab switching not testable)');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'page functionality across tabs', attendancePage, async () => {
+      // Test all tabs work
+      await AttendanceTestHelpers.testAttendanceTabs(page, attendancePage);
+      
+      // Page should still be functional
+      const hasSideNav = await attendancePage.expectSideNavVisible();
+      expect(hasSideNav).toBeTruthy();
+      console.log('Attendance functionality maintained across tab switches');
     });
   });
 
   test('should handle page navigation via URL', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance URL navigation', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        // Test direct navigation to attendance page via URL
-        await attendancePage.goto();
-        await attendancePage.expectToBeOnAttendancePage();
-        
-        console.log('Successfully navigated to attendance page via URL');
-      } else {
-        console.log('URL navigation confirmed via dashboard (direct URL not testable)');
-      }
-    });
+    await attendancePage.goto();
+    await attendancePage.expectToBeOnAttendancePage();
+    console.log('Successfully navigated to attendance page via URL');
   });
 
   test('should handle empty attendance data gracefully', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'empty attendance data', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        await attendancePage.expectLoadingComplete();
-        
-        // Should not crash or show errors even with no data
-        const hasDisplay = await attendancePage.expectAttendanceDisplayed();
-        
-        if (hasDisplay) {
-          console.log('Empty attendance data handled gracefully');
-        } else {
-          console.log('Attendance data handling may be different');
-        }
-      } else {
-        console.log('Empty data handling confirmed via dashboard');
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'empty attendance data', attendancePage, async () => {
+      await attendancePage.expectLoadingComplete();
+      
+      // Should not crash or show errors even with no data
+      const hasDisplay = await attendancePage.expectAttendanceDisplayed();
+      expect(hasDisplay).toBeTruthy();
+      console.log('Empty attendance data handled gracefully');
     });
   });
 
   test('should have accessible attendance elements', async ({ page }) => {
-    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance accessibility', attendancePage, async (mode) => {
-      if (mode === 'attendance') {
-        // Check for proper attendance structure
-        const sideNavExists = await attendancePage.sideNav.isVisible().catch(() => false);
-        const attendanceGroupsExists = await attendancePage.attendanceGroups.isVisible().catch(() => false);
-        
-        if (sideNavExists || attendanceGroupsExists) {
-          console.log('Attendance elements are accessible');
-        } else {
-          console.log('Attendance structure may be different');
-        }
-      } else {
-        // Check dashboard search accessibility
-        const dashboardSearchInput = page.locator('[id="searchText"]').first();
-        const dashboardSearchExists = await dashboardSearchInput.isVisible().catch(() => false);
-        
-        if (dashboardSearchExists) {
-          console.log('Search elements accessibility tested via dashboard');
-        } else {
-          console.log('Dashboard search not available for accessibility testing');
-        }
-      }
+    await AttendanceTestHelpers.performAttendancePageTest(page, 'attendance accessibility', attendancePage, async () => {
+      // Check for proper attendance structure
+      const sideNavExists = await attendancePage.sideNav.isVisible().catch(() => false);
+      const attendanceGroupsExists = await attendancePage.attendanceGroups.isVisible().catch(() => false);
+      const mainContentExists = await attendancePage.mainContent.isVisible().catch(() => false);
+      
+      expect(sideNavExists || attendanceGroupsExists || mainContentExists).toBeTruthy();
+      console.log('Attendance elements are accessible');
     });
   });
 
   test('should handle invalid attendance URL gracefully', async ({ page }) => {
     // Try to navigate to attendance with invalid query params
     await page.goto('/attendance?invalid=true');
-    await page.waitForLoadState('networkidle');
     
     // Should either redirect or show page gracefully
     const currentUrl = page.url();
@@ -293,10 +154,7 @@ test.describe('Attendance Page', () => {
     const isOnAttendancePage = currentUrl.includes('/attendance');
     const hasErrorMessage = await page.locator('text=Not Found, text=Error, text=Invalid').first().isVisible().catch(() => false);
     
-    if (isOnAttendancePage || hasErrorMessage) {
-      console.log('Invalid attendance URL handled gracefully');
-    } else {
-      console.log('Attendance page may have different error handling');
-    }
+    expect(isOnAttendancePage || hasErrorMessage).toBeTruthy();
+    console.log('Invalid attendance URL handled gracefully');
   });
 });

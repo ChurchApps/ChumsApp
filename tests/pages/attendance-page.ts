@@ -253,4 +253,39 @@ export class AttendancePage {
     await dashboardSearchInput.press('Enter');
     await this.page.waitForLoadState('domcontentloaded');
   }
+
+  async clickAddCampusMenuItem() {
+    const addCampusExists = await this.addCampusMenuItem.isVisible().catch(() => false);
+    if (addCampusExists) {
+      await this.addCampusMenuItem.click();
+      return true;
+    }
+    return false;
+  }
+
+  async clickAddServiceMenuItem() {
+    const addServiceExists = await this.addServiceMenuItem.isVisible().catch(() => false);
+    if (addServiceExists) {
+      await this.addServiceMenuItem.click();
+      return true;
+    }
+    return false;
+  }
+
+  async clickAddServiceTimeMenuItem() {
+    const addServiceTimeExists = await this.addServiceTimeMenuItem.isVisible().catch(() => false);
+    if (addServiceTimeExists) {
+      await this.addServiceTimeMenuItem.click();
+      return true;
+    }
+    return false;
+  }
+
+  async expectAttendanceSetupDisplayed() {
+    const hasTable = await this.attendanceTable.isVisible().catch(() => false);
+    const hasAttendanceGroups = await this.attendanceGroups.isVisible().catch(() => false);
+    const hasMainContent = await this.mainContent.isVisible().catch(() => false);
+    const hasEmptyMessage = await this.emptyStateMessage.isVisible().catch(() => false);
+    return hasTable || hasAttendanceGroups || hasMainContent || hasEmptyMessage;
+  }
 }
