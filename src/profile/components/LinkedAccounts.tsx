@@ -24,19 +24,22 @@ export const LinkedAccounts = () => {
 
     const popup = window.open(authUrl, 'oauth', 'width=600,height=700');
 
-
-    // Listen for message from popup
-    window.addEventListener('message', async (event) => {
+    const handleMessage = async (event: MessageEvent) => {
       if (event.origin !== window.location.origin) return;
       const { oauth_token, oauth_verifier } = event.data;
-      popup.close();
+      if (popup) popup.close();
 
       try {
-        // TODO:  Make sure this listener doesn't get mapps more than once.
         await ApiHelper.get("/praiseCharts/access?verifier=" + encodeURIComponent(oauth_verifier) + "&token=" + encodeURIComponent(oauthToken) + "&secret=" + encodeURIComponent(oauthTokenSecret), "ContentApi");
-      } catch { }
+      } catch (error) {
+        console.error("Failed to complete OAuth flow:", error);
+      }
       loadData();
-    });
+      window.removeEventListener('message', handleMessage);
+    };
+
+    // Listen for message from popup
+    window.addEventListener('message', handleMessage);
   };
 
   useEffect(loadData, []);

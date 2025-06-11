@@ -38,7 +38,6 @@ export const DonationEvents: React.FC = () => {
 
   const getPersonName = (personId: string) => {
     const person = people.find((person: any) => person.id === personId);
-    console.log(people, personId);
     return person?.name?.display;
   }
 

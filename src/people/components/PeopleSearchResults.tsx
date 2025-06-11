@@ -116,7 +116,7 @@ export function PeopleSearchResults(props: Props) {
     if (asc === null) asc = false;
     setCurrentSortedCol(key)
     setSortDirection(!asc) //set sort direction for next time
-    people = people.sort(function (a: any, b: any) {
+    const sortedPeople = [...people].sort(function (a: any, b: any) {
       if (a[key] === null) return Infinity; // if value is null push to the end of array
       if (key === "birthDay") { //there's no 'birthDay' property in the people object; instead use birthDate to sort
         if (a["birthDate"] === null && b["birthDate"] === null) return 0;
@@ -158,6 +158,11 @@ export function PeopleSearchResults(props: Props) {
       // equal
       return 0;
     });
+    
+    if (props.updateSearchResults) {
+      props.updateSearchResults(sortedPeople);
+    }
+    people = sortedPeople;
   }
 
   const getRows = () => {

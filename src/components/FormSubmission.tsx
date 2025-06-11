@@ -9,26 +9,32 @@ interface Props {
 }
 
 export const FormSubmission: React.FC<Props> = (props) => {
-  const [formSubmission, setFormSubmission] = React.useState(null);
+  const [formSubmission, setFormSubmission] = React.useState<FormSubmissionInterface | null>(null);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const getEditLink = () => {
     if (!formPermission) return null;
     else return <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { props.editFunction(props.formSubmissionId); }} /></span>
   }
-  const loadData = () => {
+  const loadData = async () => {
     if (!UniqueIdHelper.isMissing(props.formSubmissionId)) {
       try {
-        ApiHelper.get("/formsubmissions/" + props.formSubmissionId + "/?include=questions,answers", "MembershipApi").then((data: FormSubmissionInterface) => setFormSubmission(data));
-      } catch { }
+        const data = await ApiHelper.get("/formsubmissions/" + props.formSubmissionId + "/?include=questions,answers", "MembershipApi");
+        setFormSubmission(data);
+      } catch (error) {
+        console.error("Failed to load form submission:", error);
+      }
     }
   }
   const getAnswer = (questionId: string) => {
-    let answers = formSubmission.answers;
+    if (!formSubmission?.answers) return null;
+    const answers = formSubmission.answers;
     for (let i = 0; i < answers.length; i++) if (answers[i].questionId === questionId) return answers[i];
     return null;
   }
-  React.useEffect(loadData, [props.formSubmissionId]);
+  React.useEffect(() => {
+    loadData();
+  }, [props.formSubmissionId]);
 
   let firstHalf = [];
   let secondHalf = [];
