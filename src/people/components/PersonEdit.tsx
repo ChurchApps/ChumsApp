@@ -57,16 +57,16 @@ export function PersonEdit(props: Props) {
       case "gender": p.gender = value; break;
       case "maritalStatus": p.maritalStatus = value; break;
       case "nametagNotes": p.nametagNotes = value; break;
-      case "anniversary": p.anniversary = DateHelper.convertToDate(value); break;
-      case "birthDate": p.birthDate = DateHelper.convertToDate(value); break;
+      case "anniversary": p.anniversary = DateHelper.toDate(value); break;
+      case "birthDate": p.birthDate = DateHelper.toDate(value); break;
       case "photo": p.photo = value; break;
     }
     setPerson(p);
   }
 
   const handlePhoneChange = (value: string, field: "homePhone" | "workPhone" | "mobilePhone") => {
-    setPhoneHasError((prevState) => ({...prevState, [field]: !matchIsValidTel(value)}));
-    const p: PersonInterface = {...person};
+    setPhoneHasError((prevState) => ({ ...prevState, [field]: !matchIsValidTel(value) }));
+    const p: PersonInterface = { ...person };
     p.contactInfo[field] = value;
     setPerson(p);
   }
@@ -173,7 +173,7 @@ export function PersonEdit(props: Props) {
   React.useEffect(fetchMembers, [props.person]);
 
   const ariaLabel = {
-    "aria-label" : "phone-number"
+    "aria-label": "phone-number"
   }
 
   const ariaDesc = {

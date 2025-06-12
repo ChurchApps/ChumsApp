@@ -42,7 +42,7 @@ export const ChurchesTab = () => {
 
       result.push(<tr key={index}>
         <td>{getManageAccessLink(c)}</td>
-        <td>{DateHelper.prettyDate(DateHelper.convertToDate(c.registrationDate))}</td>
+        <td>{DateHelper.prettyDate(DateHelper.toDate(c.registrationDate))}</td>
         <td>{activeLink}</td>
       </tr>);
     });

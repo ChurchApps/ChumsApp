@@ -50,8 +50,8 @@ export const DevicesPage = () => {
                   <TableCell>
                     <a href="about:blank" onClick={(e) => { e.preventDefault(); setEditDevice(device) }}>{device.label || "Device"}</a>
                   </TableCell>
-                  <TableCell>{DateHelper.convertToDate(device.registrationDate).toLocaleDateString()}</TableCell>
-                  <TableCell>{DateHelper.convertToDate(device.lastActiveDate).toLocaleDateString()}</TableCell>
+                  <TableCell>{DateHelper.toDate(device.registrationDate).toLocaleDateString()}</TableCell>
+                  <TableCell>{DateHelper.toDate(device.lastActiveDate).toLocaleDateString()}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

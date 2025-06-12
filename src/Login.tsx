@@ -35,11 +35,22 @@ export const Login: React.FC = (props: any) => {
   } else {
     // @ts-ignore
     let from = location.state?.from?.pathname || "/";
-    if (!UserHelper.checkAccess(Permissions.membershipApi.people.view))
-      return <Navigate to={from + 'profile'} replace />;
-    else if (returnUrl)
+    
+    // Priority: 1. URL from React Router state, 2. returnUrl query param, 3. default home
+    if (from && from !== "/") {
+      // If user was redirected from a specific page, return them there
+      if (!UserHelper.checkAccess(Permissions.membershipApi.people.view) && from !== "/profile")
+        return <Navigate to="/profile" replace />;
+      else
+        return <Navigate to={from} replace />;
+    } else if (returnUrl) {
       return <Navigate to={returnUrl} replace />;
-    else
-      return <Navigate to={from} replace />;
+    } else {
+      // Default redirect based on permissions
+      if (!UserHelper.checkAccess(Permissions.membershipApi.people.view))
+        return <Navigate to="/profile" replace />;
+      else
+        return <Navigate to="/" replace />;
+    }
   }
 };

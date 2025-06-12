@@ -53,9 +53,14 @@ export const PersonPage = () => {
     if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push({ key: "attendance", icon: "calendar_month", label: Locale.label("people.tabs.att") }); if (defaultTab === "") defaultTab = "attendance"; }
     if (UserHelper.checkAccess(Permissions.givingApi.donations.view)) { tabs.push({ key: "donations", icon: "volunteer_activism", label: Locale.label("people.tabs.don") }); if (defaultTab === "") defaultTab = "donations"; }
     if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) tabs.push({ key: "groups", icon: "people", label: Locale.label("people.groups.groups") });
-    if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
     return tabs;
   }
+
+  React.useEffect(() => {
+    if (selectedTab === "" && defaultTab !== "") {
+      setSelectedTab(defaultTab);
+    }
+  }, [selectedTab, defaultTab]);
 
   const getCurrentTab = () => {
     let currentTab = null;

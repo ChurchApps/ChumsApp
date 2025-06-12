@@ -94,7 +94,7 @@ export const PrintPlan = () => {
     <div style={Styles.body} className="printBackgrounds">
       <Grid container>
         <Grid item xs={4} style={Styles.inverseHeader}>{Locale.label("plans.printPlan.serviceOrder")}</Grid>
-        <Grid item xs={4} style={{ ...Styles.header, borderTop: "5px solid #000" }}>{plan && DateHelper.prettyDate(DateHelper.convertToDate(plan.serviceDate))}</Grid>
+        <Grid item xs={4} style={{ ...Styles.header, borderTop: "5px solid #000" }}>{plan && DateHelper.prettyDate(DateHelper.toDate(plan.serviceDate))}</Grid>
         <Grid item xs={4} style={Styles.inverseHeader}>{Locale.label("plans.printPlan.serviceOrder")}</Grid>
       </Grid>
       <div style={Styles.divider}>&nbsp;</div>

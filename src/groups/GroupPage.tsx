@@ -31,9 +31,14 @@ export const GroupPage = () => {
     if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) tabs.push({ key: "members", icon: "people", label: Locale.label("groups.tabs.mem") });
     if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && group?.trackAttendance) tabs.push({ key: "sessions", icon: "calendar_month", label: Locale.label("groups.tabs.ses") });
 
-    if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
     return tabs;
   }
+
+  React.useEffect(() => {
+    if (selectedTab === "" && defaultTab !== "") {
+      setSelectedTab(defaultTab);
+    }
+  }, [selectedTab, defaultTab]);
 
   const getCurrentTab = () => {
     let currentTab = null;

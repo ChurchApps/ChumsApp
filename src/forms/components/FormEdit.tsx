@@ -38,8 +38,8 @@ export function FormEdit(props: Props) {
       case "name": f.name = value; break;
       case "contentType": f.contentType = value; break;
       case "restricted": f.restricted = value === "true"; break;
-      case "accessStartTime": f.accessStartTime = showDates ? DateHelper.convertToDate(value) : null; break;
-      case "accessEndTime": f.accessEndTime = showDates ? DateHelper.convertToDate(value) : null; break;
+      case "accessStartTime": f.accessStartTime = showDates ? DateHelper.toDate(value) : null; break;
+      case "accessEndTime": f.accessEndTime = showDates ? DateHelper.toDate(value) : null; break;
       case "thankYouMessage": f.thankYouMessage = value; break;
     }
     setForm(f);
