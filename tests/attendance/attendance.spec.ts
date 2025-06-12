@@ -115,7 +115,7 @@ test.describe('Attendance Page', () => {
   });
 
   test('should handle page navigation via URL', async ({ page }) => {
-    await attendancePage.goto();
+    await SharedSetup.navigateToPage(page, '/attendance');
     await attendancePage.expectToBeOnAttendancePage();
     console.log('Successfully navigated to attendance page via URL');
   });
@@ -145,7 +145,7 @@ test.describe('Attendance Page', () => {
 
   test('should handle invalid attendance URL gracefully', async ({ page }) => {
     // Try to navigate to attendance with invalid query params
-    await page.goto('/attendance?invalid=true');
+    await SharedSetup.navigateToPage(page, '/attendance?invalid=true');
     
     // Should either redirect or show page gracefully
     const currentUrl = page.url();

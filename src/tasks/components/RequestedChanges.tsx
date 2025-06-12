@@ -42,7 +42,7 @@ export const RequestedChanges = (props: Props) => {
           const getTime = value.split("?dt=")[1];
           p.photoUpdated = new Date(+getTime); break;
         }
-        case "birthDate": p.birthDate = DateHelper.convertToDate(value); break;
+        case "birthDate": p.birthDate = DateHelper.toDate(value); break;
         case "contactInfo.email": p.contactInfo.email = value; break;
         case "contactInfo.address1": p.contactInfo.address1 = value; break;
         case "contactInfo.address2": p.contactInfo.address2 = value; break;

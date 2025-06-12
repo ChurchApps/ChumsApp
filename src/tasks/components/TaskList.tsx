@@ -55,7 +55,7 @@ export const TaskList = (props: Props) => {
     <Grid container spacing={3}>
       <Grid item xs={(props.compact) ? 12 : 6}>
         <b><Link to={"/tasks/" + task.id}>{task.title}</Link></b><br />
-        <Typography variant="caption">#{task.taskNumber} {Locale.label("tasks.taskPage.opened")} {DateHelper.getDisplayDuration(DateHelper.convertToDate(task.dateCreated))} {Locale.label("tasks.taskPage.ago")} {Locale.label("tasks.taskPage.by")} {task.createdByLabel}</Typography>
+        <Typography variant="caption">#{task.taskNumber} {Locale.label("tasks.taskPage.opened")} {DateHelper.getDisplayDuration(DateHelper.toDate(task.dateCreated))} {Locale.label("tasks.taskPage.ago")} {Locale.label("tasks.taskPage.by")} {task.createdByLabel}</Typography>
       </Grid>
       {!props.compact && (<>
         <Grid item xs={3}>

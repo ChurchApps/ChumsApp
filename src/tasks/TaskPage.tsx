@@ -59,7 +59,7 @@ export const TaskPage = () => {
   const getDateClosed = () => {
     if (task?.dateClosed) return (<>
       <div><Typography variant="subtitle1">{Locale.label("tasks.taskPage.dateCreated")}</Typography></div>
-      <div><Typography variant="caption">{DateHelper.prettyDate(DateHelper.convertToDate(task?.dateCreated))}</Typography></div>
+      <div><Typography variant="caption">{DateHelper.prettyDate(DateHelper.toDate(task?.dateCreated))}</Typography></div>
       <hr />
     </>);
   }
@@ -88,7 +88,7 @@ export const TaskPage = () => {
           <Grid item md={4} xs={12}>
             <DisplayBox headerIcon="list_alt" headerText={Locale.label("tasks.taskPage.taskDet")} help="chums/tasks">
               <div><Typography variant="subtitle1">{Locale.label("tasks.taskPage.dateCreated")}</Typography></div>
-              <div><Typography variant="caption">{DateHelper.prettyDate(DateHelper.convertToDate(task?.dateCreated))}</Typography></div>
+              <div><Typography variant="caption">{DateHelper.prettyDate(DateHelper.toDate(task?.dateCreated))}</Typography></div>
               <hr />
               {getDateClosed()}
               <div><Typography variant="subtitle1">{Locale.label("tasks.taskPage.stat")}</Typography></div>

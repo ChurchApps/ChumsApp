@@ -1,5 +1,6 @@
 import { Page, expect } from '@playwright/test';
 import { AttendancePage } from '../pages/attendance-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class AttendanceTestHelpers {
   
@@ -12,7 +13,7 @@ export class AttendanceTestHelpers {
     attendancePage: AttendancePage, 
     testFunction: () => Promise<void>
   ) {
-    await attendancePage.goto();
+    await SharedSetup.navigateToPage(page, '/attendance');
     await attendancePage.expectToBeOnAttendancePage();
     await testFunction();
     console.log(`${testName} verified on attendance page`);
