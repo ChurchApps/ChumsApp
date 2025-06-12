@@ -35,7 +35,6 @@ export const Login: React.FC = (props: any) => {
   } else {
     // @ts-ignore
     let from = location.state?.from?.pathname || "/";
-    
     // Priority: 1. URL from React Router state, 2. returnUrl query param, 3. default home
     if (from && from !== "/") {
       // If user was redirected from a specific page, return them there

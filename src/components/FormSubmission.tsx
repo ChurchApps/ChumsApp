@@ -16,7 +16,7 @@ export const FormSubmission: React.FC<Props> = (props) => {
     if (!formPermission) return null;
     else return <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { props.editFunction(props.formSubmissionId); }} /></span>
   }
-  const loadData = async () => {
+  const loadData = React.useCallback(async () => {
     if (!UniqueIdHelper.isMissing(props.formSubmissionId)) {
       try {
         const data = await ApiHelper.get("/formsubmissions/" + props.formSubmissionId + "/?include=questions,answers", "MembershipApi");
@@ -25,7 +25,7 @@ export const FormSubmission: React.FC<Props> = (props) => {
         console.error("Failed to load form submission:", error);
       }
     }
-  }
+  }, [props.formSubmissionId]);
   const getAnswer = (questionId: string) => {
     if (!formSubmission?.answers) return null;
     const answers = formSubmission.answers;
@@ -34,7 +34,7 @@ export const FormSubmission: React.FC<Props> = (props) => {
   }
   React.useEffect(() => {
     loadData();
-  }, [props.formSubmissionId]);
+  }, [props.formSubmissionId, loadData]);
 
   let firstHalf = [];
   let secondHalf = [];

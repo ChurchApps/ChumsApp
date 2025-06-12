@@ -158,7 +158,7 @@ export function PeopleSearchResults(props: Props) {
       // equal
       return 0;
     });
-    
+
     if (props.updateSearchResults) {
       props.updateSearchResults(sortedPeople);
     }
