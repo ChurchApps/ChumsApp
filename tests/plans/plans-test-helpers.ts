@@ -2,6 +2,7 @@ import { Page, expect } from '@playwright/test';
 import { PlansPage } from '../pages/plans-page';
 import { MinistryPage } from '../pages/ministry-page';
 import { PlanPage } from '../pages/plan-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class PlansTestHelpers {
   
@@ -14,7 +15,7 @@ export class PlansTestHelpers {
     plansPage: PlansPage, 
     testFunction: () => Promise<void>
   ) {
-    await plansPage.goto();
+    await SharedSetup.navigateDirectly(page, '/plans');
     await plansPage.expectToBeOnPlansPage();
     await testFunction();
     console.log(`${testName} verified on plans page`);
@@ -54,7 +55,7 @@ export class PlansTestHelpers {
     ministryPage: MinistryPage, 
     testFunction: () => Promise<void>
   ) {
-    await plansPage.goto();
+    await SharedSetup.navigateDirectly(page, '/plans');
     await plansPage.expectToBeOnPlansPage();
     await testFunction();
     console.log(`${testName} verified`);
@@ -71,7 +72,7 @@ export class PlansTestHelpers {
     planPage: PlanPage, 
     testFunction: () => Promise<void>
   ) {
-    await plansPage.goto();
+    await SharedSetup.navigateDirectly(page, '/plans');
     await plansPage.expectToBeOnPlansPage();
     await testFunction();
     console.log(`${testName} verified`);

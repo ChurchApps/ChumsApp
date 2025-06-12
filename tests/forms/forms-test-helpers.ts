@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { FormsPage } from '../pages/forms-page';
 import { FormPage } from '../pages/form-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class FormsTestHelpers {
   
@@ -13,7 +14,7 @@ export class FormsTestHelpers {
     formsPage: FormsPage, 
     testFunction: () => Promise<void>
   ) {
-    await formsPage.goto();
+    await SharedSetup.navigateDirectly(page, '/forms');
     await formsPage.expectToBeOnFormsPage();
     await testFunction();
     console.log(`${testName} verified on forms page`);

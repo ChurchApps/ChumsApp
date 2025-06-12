@@ -14,9 +14,6 @@ test.describe('Attendance Page', () => {
     loginPage = new LoginPage(page);
     dashboardPage = new DashboardPage(page);
     attendancePage = new AttendancePage(page);
-    
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should check if attendance page is accessible', async ({ page }) => {

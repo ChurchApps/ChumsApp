@@ -8,8 +8,6 @@ test.describe('People Search Demo', () => {
   test.beforeEach(async ({ page }) => {
     peoplePage = new PeoplePage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should perform search with improved timeout handling', async ({ page }) => {

@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { PeoplePage } from '../pages/people-page';
 import { PersonPage } from '../pages/person-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class PeopleTestHelpers {
   
@@ -13,7 +14,8 @@ export class PeopleTestHelpers {
     peoplePage: PeoplePage, 
     testFunction: () => Promise<void>
   ) {
-    await peoplePage.goto();
+    // Navigate directly to people page - will handle login if needed
+    await SharedSetup.navigateDirectly(page, '/people');
     await peoplePage.expectToBeOnPeoplePage();
     await testFunction();
     console.log(`${testName} verified on people page`);

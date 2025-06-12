@@ -18,8 +18,6 @@ test.describe('Ministry Page', () => {
     plansPage = new PlansPage(page);
     ministryPage = new MinistryPage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should navigate to ministry from plans list', async ({ page }) => {

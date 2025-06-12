@@ -18,8 +18,6 @@ test.describe('Form Builder', () => {
     formsPage = new FormsPage(page);
     formPage = new FormPage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should navigate to form builder from forms list', async ({ page }) => {

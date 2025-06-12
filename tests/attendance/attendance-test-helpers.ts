@@ -13,7 +13,7 @@ export class AttendanceTestHelpers {
     attendancePage: AttendancePage, 
     testFunction: () => Promise<void>
   ) {
-    await SharedSetup.navigateToPage(page, '/attendance');
+    await SharedSetup.navigateDirectly(page, '/attendance');
     await attendancePage.expectToBeOnAttendancePage();
     await testFunction();
     console.log(`${testName} verified on attendance page`);

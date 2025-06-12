@@ -18,8 +18,6 @@ test.describe('Person Creation and Editing', () => {
     personPage = new PersonPage(page);
     peoplePage = new PeoplePage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
 

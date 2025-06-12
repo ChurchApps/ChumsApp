@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { TasksPage } from '../pages/tasks-page';
 import { AutomationsPage } from '../pages/automations-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class TasksTestHelpers {
   
@@ -13,7 +14,7 @@ export class TasksTestHelpers {
     tasksPage: TasksPage, 
     testFunction: () => Promise<void>
   ) {
-    await tasksPage.goto();
+    await SharedSetup.navigateDirectly(page, '/tasks');
     await tasksPage.expectToBeOnTasksPage();
     await testFunction();
     console.log(`${testName} verified on tasks page`);
@@ -29,7 +30,7 @@ export class TasksTestHelpers {
     automationsPage: AutomationsPage, 
     testFunction: () => Promise<void>
   ) {
-    await tasksPage.goto();
+    await SharedSetup.navigateDirectly(page, '/tasks');
     await tasksPage.expectToBeOnTasksPage();
     await testFunction();
     console.log(`${testName} verified`);

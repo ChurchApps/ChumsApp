@@ -15,8 +15,6 @@ test.describe('People Search', () => {
     dashboardPage = new DashboardPage(page);
     peoplePage = new PeoplePage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
 

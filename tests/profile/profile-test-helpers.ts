@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { ProfilePage } from '../pages/profile-page';
 import { DevicesPage } from '../pages/devices-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class ProfileTestHelpers {
   
@@ -13,7 +14,7 @@ export class ProfileTestHelpers {
     profilePage: ProfilePage, 
     testFunction: () => Promise<void>
   ) {
-    await profilePage.goto();
+    await SharedSetup.navigateDirectly(page, '/profile');
     await profilePage.expectToBeOnProfilePage();
     await testFunction();
     console.log(`${testName} verified on profile page`);
@@ -28,7 +29,7 @@ export class ProfileTestHelpers {
     devicesPage: DevicesPage, 
     testFunction: () => Promise<void>
   ) {
-    await devicesPage.goto();
+    await SharedSetup.navigateDirectly(page, '/devices');
     await devicesPage.expectToBeOnDevicesPage();
     await testFunction();
     console.log(`${testName} verified on devices page`);
@@ -43,7 +44,7 @@ export class ProfileTestHelpers {
     profilePage: ProfilePage, 
     testFunction: () => Promise<void>
   ) {
-    await profilePage.goto();
+    await SharedSetup.navigateDirectly(page, '/profile');
     await profilePage.expectToBeOnProfilePage();
     await testFunction();
     console.log(`${testName} verified on profile page`);

@@ -98,12 +98,6 @@ export class PeoplePage {
 
   // Assertions
   async expectToBeOnPeoplePage() {
-    // Check if we're on the people page or if we were redirected to login
-    const currentUrl = this.page.url();
-    if (currentUrl.includes('/login')) {
-      throw new Error(`Expected to be on people page but was redirected to login: ${currentUrl}`);
-    }
-    
     await TestHelpers.expectUrl(this.page, '/people');
     await expect(this.pageTitle).toBeVisible({ timeout: 10000 });
     await expect(this.recentPeopleBox).toBeVisible({ timeout: 10000 });

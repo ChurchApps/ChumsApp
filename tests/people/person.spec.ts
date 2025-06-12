@@ -18,8 +18,6 @@ test.describe('Person Page', () => {
     peoplePage = new PeoplePage(page);
     personPage = new PersonPage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should navigate to person page from people list', async ({ page }) => {

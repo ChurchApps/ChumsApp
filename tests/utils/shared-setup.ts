@@ -36,15 +36,45 @@ export class SharedSetup {
     await page.goto(path);
     await TestHelpers.waitForPageLoad(page);
     
-    // Handle potential redirect to login
-    if (page.url().includes('/login')) {
-      await this.loginAndSelectChurch(page);
-      // Navigate again after login
-      await page.goto(path);
-      await TestHelpers.waitForPageLoad(page);
-    }
+    // Wait a bit to see if there's a delayed redirect to login (React app auth check)
+    await page.waitForTimeout(3000);
     
-    // Handle church selection if needed
-    await TestHelpers.waitForChurchSelection(page);
+    // Handle potential redirect to login (immediate or delayed)
+    if (page.url().includes('/login')) {
+      // Fill and submit login form directly
+      await page.fill('input[type="email"]', 'demo@chums.org');
+      await page.fill('input[type="password"]', 'password');
+      await page.click('button[type="submit"]');
+      
+      // Wait a bit for the login to process
+      await page.waitForLoadState('networkidle');
+      
+      // Handle church selection dialog
+      try {
+        const churchDialog = page.locator('text=Select a Church');
+        await churchDialog.waitFor({ timeout: 10000 });
+        
+        const graceChurch = page.locator('text=Grace Community Church').first();
+        await graceChurch.click();
+        
+        // Wait for redirect back to the original path
+        await page.waitForURL(url => url.toString().includes(path), { timeout: 15000 });
+        
+      } catch (error) {
+        // Try to wait for the redirect anyway
+        await page.waitForURL(url => url.toString().includes(path), { timeout: 15000 });
+      }
+      
+      await TestHelpers.waitForPageLoad(page);
+    } else {
+      // Still might need church selection even if not redirected to login
+      await TestHelpers.waitForChurchSelection(page);
+    }
+  }
+
+  static async navigateDirectly(page: Page, path: string) {
+    // Navigate directly to the path - if not authenticated, will redirect to login
+    // After login, should redirect back to the original path
+    await this.navigateToPage(page, path);
   }
 }

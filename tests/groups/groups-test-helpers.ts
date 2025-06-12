@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { GroupsPage } from '../pages/groups-page';
 import { GroupPage } from '../pages/group-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class GroupsTestHelpers {
   
@@ -13,7 +14,8 @@ export class GroupsTestHelpers {
     groupsPage: GroupsPage, 
     testFunction: () => Promise<void>
   ) {
-    await groupsPage.goto();
+    // Navigate directly to groups page - will handle login if needed
+    await SharedSetup.navigateDirectly(page, '/groups');
     await groupsPage.expectToBeOnGroupsPage();
     await testFunction();
     console.log(`${testName} verified on groups page`);
@@ -64,7 +66,7 @@ export class GroupsTestHelpers {
     groupPage: GroupPage, 
     testFunction: () => Promise<void>
   ) {
-    await groupsPage.goto();
+    await SharedSetup.navigateDirectly(page, '/groups');
     await groupsPage.expectToBeOnGroupsPage();
     await testFunction();
     console.log(`${testName} verified`);

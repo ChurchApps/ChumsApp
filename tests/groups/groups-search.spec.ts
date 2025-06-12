@@ -15,8 +15,6 @@ test.describe('Groups Search', () => {
     dashboardPage = new DashboardPage(page);
     groupsPage = new GroupsPage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should perform basic group search', async ({ page }) => {

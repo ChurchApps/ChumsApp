@@ -18,8 +18,6 @@ test.describe('Group Creation and Editing', () => {
     groupsPage = new GroupsPage(page);
     groupPage = new GroupPage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should have add group functionality', async ({ page }) => {

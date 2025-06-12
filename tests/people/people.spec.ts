@@ -14,9 +14,6 @@ test.describe('People Page', () => {
     loginPage = new LoginPage(page);
     dashboardPage = new DashboardPage(page);
     peoplePage = new PeoplePage(page);
-    
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should check if people page is accessible', async ({ page }) => {

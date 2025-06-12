@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { SettingsPage } from '../pages/settings-page';
 import { RolePage } from '../pages/role-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class SettingsTestHelpers {
   
@@ -13,7 +14,7 @@ export class SettingsTestHelpers {
     settingsPage: SettingsPage, 
     testFunction: () => Promise<void>
   ) {
-    await settingsPage.goto();
+    await SharedSetup.navigateDirectly(page, '/settings');
     await settingsPage.expectToBeOnSettingsPage();
     await testFunction();
     console.log(`${testName} verified on settings page`);
@@ -28,7 +29,7 @@ export class SettingsTestHelpers {
     settingsPage: SettingsPage, 
     testFunction: () => Promise<void>
   ) {
-    await settingsPage.goto();
+    await SharedSetup.navigateDirectly(page, '/settings');
     await settingsPage.expectToBeOnSettingsPage();
     await testFunction();
     console.log(`${testName} verified on settings page`);
@@ -44,7 +45,7 @@ export class SettingsTestHelpers {
     rolePage: RolePage, 
     testFunction: () => Promise<void>
   ) {
-    await settingsPage.goto();
+    await SharedSetup.navigateDirectly(page, '/settings');
     await settingsPage.expectToBeOnSettingsPage();
     await testFunction();
     console.log(`${testName} verified`);

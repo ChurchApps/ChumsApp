@@ -18,8 +18,6 @@ test.describe('Reports Page', () => {
     reportsPage = new ReportsPage(page);
     reportPage = new ReportPage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should check if reports page is accessible', async ({ page }) => {

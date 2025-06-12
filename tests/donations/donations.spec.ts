@@ -14,9 +14,6 @@ test.describe('Donations Page', () => {
     loginPage = new LoginPage(page);
     dashboardPage = new DashboardPage(page);
     donationsPage = new DonationsPage(page);
-    
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should check if donations page is accessible', async ({ page }) => {

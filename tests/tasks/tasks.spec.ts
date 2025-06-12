@@ -18,8 +18,6 @@ test.describe('Tasks Page', () => {
     tasksPage = new TasksPage(page);
     automationsPage = new AutomationsPage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should check if tasks page is accessible', async ({ page }) => {

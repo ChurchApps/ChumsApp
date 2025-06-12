@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { ReportsPage } from '../pages/reports-page';
 import { ReportPage } from '../pages/report-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class ReportsTestHelpers {
   
@@ -13,7 +14,7 @@ export class ReportsTestHelpers {
     reportsPage: ReportsPage, 
     testFunction: () => Promise<void>
   ) {
-    await reportsPage.goto();
+    await SharedSetup.navigateDirectly(page, '/reports');
     await reportsPage.expectToBeOnReportsPage();
     await testFunction();
     console.log(`${testName} verified on reports page`);
@@ -29,7 +30,7 @@ export class ReportsTestHelpers {
     reportPage: ReportPage, 
     testFunction: () => Promise<void>
   ) {
-    await reportsPage.goto();
+    await SharedSetup.navigateDirectly(page, '/reports');
     await reportsPage.expectToBeOnReportsPage();
     await testFunction();
     console.log(`${testName} verified`);

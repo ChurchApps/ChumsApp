@@ -15,8 +15,6 @@ test.describe('Settings Page', () => {
     dashboardPage = new DashboardPage(page);
     settingsPage = new SettingsPage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should check if settings page is accessible', async ({ page }) => {

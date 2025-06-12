@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { DonationsPage } from '../pages/donations-page';
 import { FundsPage } from '../pages/funds-page';
+import { SharedSetup } from '../utils/shared-setup';
 
 export class DonationsTestHelpers {
   
@@ -13,7 +14,7 @@ export class DonationsTestHelpers {
     donationsPage: DonationsPage, 
     testFunction: () => Promise<void>
   ) {
-    await donationsPage.goto();
+    await SharedSetup.navigateDirectly(page, '/donations');
     await donationsPage.expectToBeOnDonationsPage();
     await testFunction();
     console.log(`${testName} verified on donations page`);
@@ -28,7 +29,7 @@ export class DonationsTestHelpers {
     fundsPage: FundsPage, 
     testFunction: () => Promise<void>
   ) {
-    await fundsPage.goto();
+    await SharedSetup.navigateDirectly(page, '/donations/funds');
     await fundsPage.expectToBeOnFundsPage();
     await testFunction();
     console.log(`${testName} verified on funds page`);

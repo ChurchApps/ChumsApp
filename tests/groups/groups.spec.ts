@@ -14,9 +14,6 @@ test.describe('Groups Page', () => {
     loginPage = new LoginPage(page);
     dashboardPage = new DashboardPage(page);
     groupsPage = new GroupsPage(page);
-    
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should check if groups page is accessible', async ({ page }) => {

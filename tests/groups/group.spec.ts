@@ -18,8 +18,6 @@ test.describe('Group Page', () => {
     groupsPage = new GroupsPage(page);
     groupPage = new GroupPage(page);
     
-    // Use shared setup for consistent authentication
-    await SharedSetup.loginAndSelectChurch(page);
   });
 
   test('should navigate to group page from groups list', async ({ page }) => {
