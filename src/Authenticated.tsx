@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, useNavigate, Outlet } from "react-router-dom";
-import { Wrapper } from "./components";
+import { Wrapper, ErrorBoundary } from "./components";
 import { UserHelper } from "@churchapps/apphelper";
 import { PeoplePage } from "./people/PeoplePage";
 import { PersonPage } from "./people/PersonPage";
@@ -48,8 +48,10 @@ export const Authenticated: React.FC = () => {
 
   const LayoutWithWrapper: React.FC = () => (<Box sx={{ display: "flex" }}>
     <Wrapper>
-      {/* This renders the nested child route */}
-      <Outlet />
+      <ErrorBoundary>
+        {/* This renders the nested child route */}
+        <Outlet />
+      </ErrorBoundary>
     </Wrapper>
   </Box>)
 

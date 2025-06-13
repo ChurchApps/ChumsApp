@@ -37,15 +37,6 @@ export const PeoplePage = () => {
     { key: "deleteOption", label: Locale.label("people.peoplePage.deleteOp"), shortName: Locale.label("common.delete") }
   ];
 
-  const loadData = () => {
-    ApiHelper.get("/people/recent", "MembershipApi").then(data => {
-      if(!isMounted()) {
-        return;
-      }
-      setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
-    });
-  }
-
   const handleToggleColumn = (key: string) => {
     let sc = [...selectedColumns];
     const index = sc.indexOf(key);
@@ -72,7 +63,18 @@ export const PeoplePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  React.useEffect(loadData, [isMounted]);
+  React.useEffect(() => {
+    const loadData = () => {
+      ApiHelper.get("/people/recent", "MembershipApi").then(data => {
+        if(!isMounted()) {
+          return;
+        }
+        setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
+      });
+    }
+
+    loadData();
+  }, [isMounted]);
 
   return (
     <>

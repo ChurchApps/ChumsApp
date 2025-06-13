@@ -1,4 +1,5 @@
 export * from "../helpers"
+export { ErrorBoundary } from "./ErrorBoundary"
 export { Footer } from "./Footer"
 export { AssociatedForms } from "./AssociatedForms"
 export { FormSubmission } from "./FormSubmission"
