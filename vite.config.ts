@@ -13,6 +13,11 @@ export default defineConfig(({mode}) => {
       strictPort: true,
       open: true,
     },    
+    preview: {
+      port: Number(env.PORT) ?? 3101,
+      strictPort: true,
+      open: true,
+    },
     define: {
       // defining REACT_APP_ and NEXT_PUBLIC_ variables so we can phase REACT_APP_ out
       'process.env.REACT_APP_STAGE': JSON.stringify(env.REACT_APP_STAGE),
