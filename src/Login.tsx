@@ -5,7 +5,6 @@ import { ApiHelper, UserHelper } from "@churchapps/apphelper";
 import UserContext from "./UserContext";
 import { LoginPage, Permissions } from "@churchapps/apphelper";
 import { Alert, Box } from "@mui/material";
-import { EnvironmentHelper } from "./helpers";
 
 export const Login: React.FC = (props: any) => {
   const [errors] = React.useState<string[]>([])
@@ -29,7 +28,17 @@ export const Login: React.FC = (props: any) => {
           <b>Demo:</b> This is the demo environment.  All data is erased nightly.<br />
           You can log into a test church with the credentials demo@chums.org / password .
         </Alert>)}
-        <LoginPage auth={auth} context={context} jwt={jwt} appName="CHUMS" appUrl={window.location.href} callbackErrors={errors} returnUrl={returnUrl} />
+        <LoginPage
+          auth={auth}
+          context={context}
+          jwt={jwt}
+          appName="CHUMS"
+          appUrl={window.location.href}
+          callbackErrors={errors}
+          returnUrl={returnUrl}
+          defaultEmail={process.env.REACT_APP_STAGE === "demo" ? "demo@chums.org" : undefined}
+          defaultPassword={process.env.REACT_APP_STAGE === "demo" ? "password" : undefined}
+        />
       </div>
     </Box>);
   } else {

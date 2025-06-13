@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@churchapps/apphelper": "0.3.39",
+    "@churchapps/apphelper": "0.3.40",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "axios": "^1.7.7",
