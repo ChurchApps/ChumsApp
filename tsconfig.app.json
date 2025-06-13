@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2022",
+    "typeRoots": [
+      "./types",
+      "node_modules/@types"
+    ],
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    /* coppied from old config */
+    "allowJs": true,
+    // "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": false, // we should try to enable this
+    "forceConsistentCasingInFileNames": true,
+    // "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "sourceMap": true,
+    "paths": {
+      "react": [
+        "./node_modules/@types/react" // looks fishy
+      ]
+    },
+  },
+  "include": ["src", "tests"],
+  // normally node_modules and build directories would be excluded, but they weren't in the original config
+  "exclude": ["types"],
+}
