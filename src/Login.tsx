@@ -26,7 +26,8 @@ export const Login: React.FC = (props: any) => {
       <div style={{ marginLeft: "auto", marginRight: "auto" }}>
         {process.env.REACT_APP_STAGE === "demo" && (<Alert severity="error" style={{ marginTop: 50 }}>
           <b>Demo:</b> This is the demo environment.  All data is erased nightly.<br />
-          You can log into a test church with the credentials demo@chums.org / password .
+          You can log into a test church of "Grace Community Church"<br />
+          Use the email "<b>demo@chums.org</b>" and password "<b>password</b>".
         </Alert>)}
         <LoginPage
           auth={auth}
