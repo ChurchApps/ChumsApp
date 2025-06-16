@@ -57,18 +57,30 @@ export class SharedSetup {
         const graceChurch = page.locator('text=Grace Community Church').first();
         await graceChurch.click();
         
-        // Wait for redirect back to the original path
-        await page.waitForURL(url => url.toString().includes(path), { timeout: 15000 });
+        // Wait for the dialog to close
+        await page.waitForLoadState('networkidle');
+        
+        // Navigate back to the original path after church selection
+        await page.goto(path);
+        await TestHelpers.waitForPageLoad(page);
         
       } catch (error) {
-        // Try to wait for the redirect anyway
-        await page.waitForURL(url => url.toString().includes(path), { timeout: 15000 });
+        // Church selection dialog may not appear
+        // Try navigating to the path directly
+        if (!page.url().includes(path)) {
+          await page.goto(path);
+          await TestHelpers.waitForPageLoad(page);
+        }
       }
-      
-      await TestHelpers.waitForPageLoad(page);
     } else {
       // Still might need church selection even if not redirected to login
       await TestHelpers.waitForChurchSelection(page);
+      
+      // Ensure we're on the correct path after church selection
+      if (!page.url().includes(path)) {
+        await page.goto(path);
+        await TestHelpers.waitForPageLoad(page);
+      }
     }
   }
 

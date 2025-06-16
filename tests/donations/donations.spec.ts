@@ -14,6 +14,25 @@ test.describe('Donations Page', () => {
     loginPage = new LoginPage(page);
     dashboardPage = new DashboardPage(page);
     donationsPage = new DonationsPage(page);
+    
+    // Login before each test
+    await loginPage.goto();
+    await loginPage.login('demo@chums.org', 'password');
+    await loginPage.expectSuccessfulLogin();
+    
+    // Handle church selection modal
+    const churchSelectionDialog = page.locator('text=Select a Church');
+    const isChurchSelectionVisible = await churchSelectionDialog.isVisible().catch(() => false);
+    
+    if (isChurchSelectionVisible) {
+      // Click on Grace Community Church
+      const graceChurch = page.locator('text=Grace Community Church').first();
+      await graceChurch.click();
+      // Wait for church selection to complete
+      await page.waitForSelector('h1:has-text("Chums")', { timeout: 10000 });
+    }
+    
+    await dashboardPage.expectUserIsLoggedIn();
   });
 
   test('should check if donations page is accessible', async ({ page }) => {

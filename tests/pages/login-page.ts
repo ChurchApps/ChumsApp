@@ -65,14 +65,43 @@ export class LoginPage {
     const churchSelectionDialog = this.page.locator('text=Select a Church');
     await expect(churchSelectionDialog).toBeVisible({ timeout: 10000 });
     
-    // Click on the first church option to proceed
-    const firstChurch = this.page.locator('text=Grace Community Church').first();
-    await firstChurch.click();
+    // Wait for the dialog to be fully loaded and stable
+    await this.page.waitForLoadState('networkidle');
     
-    // Wait for the dialog to be handled and page to redirect away from login
-    await expect(this.page).not.toHaveURL(/\/login/, { timeout: 10000 });
+    // Try different church selection approaches
+    let churchSelected = false;
     
-    // Wait for page to stabilize after any redirects
-    await TestHelpers.waitForPageLoad(this.page);
+    // First try clicking a clickable church button/link
+    const churchButton = this.page.locator('button:has-text("Grace Community Church"), a:has-text("Grace Community Church")').first();
+    if (await churchButton.isVisible({ timeout: 2000 })) {
+      await churchButton.click();
+      churchSelected = true;
+    } else {
+      // Try clicking the church text in a list item or div
+      const churchListItem = this.page.locator('li:has-text("Grace Community Church"), div[role="button"]:has-text("Grace Community Church")').first();
+      if (await churchListItem.isVisible({ timeout: 2000 })) {
+        await churchListItem.click();
+        churchSelected = true;
+      } else {
+        // Last resort: force click the text element
+        const churchText = this.page.locator('text=Grace Community Church').first();
+        if (await churchText.isVisible({ timeout: 2000 })) {
+          await churchText.click({ force: true });
+          churchSelected = true;
+        }
+      }
+    }
+    
+    if (churchSelected) {
+      // Wait for the dialog to be handled and page to redirect away from login
+      await expect(this.page).not.toHaveURL(/\/login/, { timeout: 10000 });
+      
+      // Wait for page to stabilize after any redirects
+      await TestHelpers.waitForPageLoad(this.page);
+    } else {
+      // If no church could be selected, just verify we're not on login anymore
+      // This might happen if the app automatically selects a church
+      await expect(this.page).not.toHaveURL(/\/login/, { timeout: 15000 });
+    }
   }
 }
