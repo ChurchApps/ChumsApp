@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login-page';
 import { DashboardPage } from '../pages/dashboard-page';
 import { DonationsPage } from '../pages/donations-page';
-import { SharedSetup } from '../utils/shared-setup';
 import { DonationsTestHelpers } from './donations-test-helpers';
 
 test.describe('Donations Page', () => {
@@ -14,16 +13,16 @@ test.describe('Donations Page', () => {
     loginPage = new LoginPage(page);
     dashboardPage = new DashboardPage(page);
     donationsPage = new DonationsPage(page);
-    
+
     // Login before each test
     await loginPage.goto();
     await loginPage.login('demo@chums.org', 'password');
     await loginPage.expectSuccessfulLogin();
-    
+
     // Handle church selection modal
     const churchSelectionDialog = page.locator('text=Select a Church');
     const isChurchSelectionVisible = await churchSelectionDialog.isVisible().catch(() => false);
-    
+
     if (isChurchSelectionVisible) {
       // Click on Grace Community Church
       const graceChurch = page.locator('text=Grace Community Church').first();
@@ -31,7 +30,7 @@ test.describe('Donations Page', () => {
       // Wait for church selection to complete
       await page.waitForSelector('h1:has-text("Chums")', { timeout: 10000 });
     }
-    
+
     await dashboardPage.expectUserIsLoggedIn();
   });
 
@@ -109,7 +108,7 @@ test.describe('Donations Page', () => {
     await DonationsTestHelpers.performDonationsPageTest(page, 'page functionality after search', donationsPage, async () => {
       // Perform a search
       await DonationsTestHelpers.testDonationsSearch(page, donationsPage, 'Donation');
-      
+
       // Verify page is still functional
       await DonationsTestHelpers.testDonationsDisplay(page, donationsPage);
     });
@@ -129,10 +128,10 @@ test.describe('Donations Page', () => {
       // Check for proper donations structure
       const hasReport = await donationsPage.expectDonationsReportVisible();
       expect(hasReport).toBeTruthy();
-      
+
       const hasExport = await donationsPage.expectExportAvailable();
       expect(hasExport).toBeTruthy();
-      
+
       console.log('Donation elements are accessible');
     });
   });
