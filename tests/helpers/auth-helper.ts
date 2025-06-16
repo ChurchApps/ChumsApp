@@ -36,6 +36,13 @@ export class AuthHelper {
     
     if (hasChurchSelection) {
       await this.selectGraceCommunityChurch(page);
+      
+      // After church selection, navigate to dashboard
+      await page.waitForTimeout(2000);
+      if (page.url().includes('/login')) {
+        await page.goto('https://chumsdemo.churchapps.org/');
+        await page.waitForLoadState('networkidle');
+      }
     }
     
     console.log('Login and church selection completed');
