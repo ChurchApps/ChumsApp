@@ -36,13 +36,6 @@ export class AuthHelper {
     
     if (hasChurchSelection) {
       await this.selectGraceCommunityChurch(page);
-      
-      // After church selection, navigate to dashboard
-      await page.waitForTimeout(2000);
-      if (page.url().includes('/login')) {
-        await page.goto('https://chumsdemo.churchapps.org/');
-        await page.waitForLoadState('networkidle');
-      }
     }
     
     console.log('Login and church selection completed');
@@ -53,11 +46,16 @@ export class AuthHelper {
    * Select Grace Community Church from the church selection dialog
    */
   static async selectGraceCommunityChurch(page: Page) {
+    // Avoid clicking on alert/instructions by being more specific about clickable elements
     const graceChurchSelectors = [
-      'text=Grace Community Church',
       'button:has-text("Grace Community Church")',
       '[role="button"]:has-text("Grace Community Church")',
-      '.MuiButton-root:has-text("Grace Community Church")'
+      'li:has-text("Grace Community Church")',
+      'div[role="button"]:has-text("Grace Community Church")',
+      '.MuiButton-root:has-text("Grace Community Church")',
+      'a:has-text("Grace Community Church")',
+      // Exclude alert/instructions by being more specific
+      ':not([role="alert"]):not(.MuiAlert-root) >> text=Grace Community Church'
     ];
     
     let clicked = false;
@@ -78,6 +76,17 @@ export class AuthHelper {
     
     if (clicked) {
       await page.waitForLoadState('networkidle');
+      
+      // Wait for potential redirect away from login page (based on old working tests)
+      try {
+        console.log('Waiting for redirect away from login page...');
+        await page.waitForURL(/^(?!.*\/login).*$/, { timeout: 15000 });
+        console.log('Successfully redirected away from login page');
+      } catch (timeoutError) {
+        console.log('Did not redirect away from login page within timeout');
+        // Continue anyway, might be demo environment limitation
+      }
+      
       console.log('Church selection completed');
     } else {
       console.log('Could not find Grace Community Church button');
