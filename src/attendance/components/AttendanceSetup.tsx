@@ -1,18 +1,15 @@
 import React from "react";
 
-import { CampusEdit, ServiceEdit, ServiceTimeEdit, Tabs } from "./";
+import { CampusEdit, ServiceEdit, ServiceTimeEdit } from "./";
 import { Link } from "react-router-dom";
-import { Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box } from "@mui/material"
-import { useMountedState, AttendanceInterface, CampusInterface, ServiceInterface, ServiceTimeInterface, GroupServiceTimeInterface, GroupInterface, ApiHelper, DisplayBox, ArrayHelper, Loading, Locale } from "@churchapps/apphelper";
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box } from "@mui/material";
+import { type CampusInterface, type ServiceInterface, type ServiceTimeInterface, type GroupServiceTimeInterface, type GroupInterface, DisplayBox, ArrayHelper, Loading, Locale, type AttendanceInterface } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 
 
 
 
 export const AttendanceSetup: React.FC = () => {
-  const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
-  const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
-  const [groups, setGroups] = React.useState<GroupInterface[]>([]);
-  const isMounted = useMountedState();
 
   const [selectedCampus, setSelectedCampus] = React.useState<CampusInterface>(null);
   const [selectedService, setSelectedService] = React.useState<ServiceInterface>(null);
@@ -28,48 +25,44 @@ export const AttendanceSetup: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const handleUpdated = () => { removeEditors(); loadData(); }
+  const handleUpdated = () => { removeEditors(); refetch(); }
   const selectCampus = (campus: CampusInterface) => { removeEditors(); if (campus.name !== "Undefined") setSelectedCampus(campus); }
   const selectService = (service: ServiceInterface) => { removeEditors(); setSelectedService(service); }
   const selectServiceTime = (service: ServiceTimeInterface) => { removeEditors(); setSelectedServiceTime(service); }
   const removeEditors = () => { setSelectedCampus(null); setSelectedService(null); setSelectedServiceTime(null); }
+  const refetch = () => { attendance.refetch(); groupServiceTimes.refetch(); groups.refetch(); }
+  
+  const attendance = useQuery<AttendanceInterface[]>({
+    queryKey: ["/attendancerecords/tree", "AttendanceApi"],
+    placeholderData: [],
+  });
 
-  const loadData = () => {
-    ApiHelper.get("/attendancerecords/tree", "AttendanceApi").then(data => {
-      if(isMounted()) {
-        setAttendance(data);
-      }
-    })
-    ApiHelper.get("/groupservicetimes", "AttendanceApi").then(data => {
-      if(isMounted()) {
-        setGroupServiceTimes(data);
-      }
-    })
-    ApiHelper.get("/groups", "MembershipApi").then(data => {
-      if(isMounted()) {
-        setGroups(data);
-      }
-    })
-  }
+  const groupServiceTimes = useQuery<GroupServiceTimeInterface[]>({
+    queryKey: ["/groupservicetimes", "AttendanceApi"],
+    placeholderData: [],
+  });
+
+  const groups = useQuery<GroupInterface[]>({
+    queryKey: ["/groups", "MembershipApi"],
+    placeholderData: [],
+  });
 
   let lastCampus = "";
   let lastService = "";
   let lastServiceTime = "";
   let lastCategory = "";
 
-  React.useEffect(() => { loadData(); }, [isMounted]); //eslint-disable-line
-
   const compare = (a: GroupInterface, b: GroupInterface) => a.categoryName.localeCompare(b.categoryName) || a.name.localeCompare(b.name)
 
   const getRows = () => {
     const rows: JSX.Element[] = [];
 
-    if (attendance.length === 0) {
+    if (attendance.data.length === 0) {
       rows.push(<TableRow key="0"><TableCell>{Locale.label("attendance.attendancePage.groupAttMsg")}</TableCell></TableRow>);
       return rows;
     }
 
-    attendance.forEach((a, i) => {
+    attendance.data.forEach((a, i) => {
       const filteredGroups = (a.serviceTime === undefined) ? [] : getGroups(a.serviceTime.id);
       const sortedGroups = filteredGroups.sort(compare);
       if (sortedGroups.length > 0) sortedGroups.forEach(g => { rows.push(getRow(a.campus, a.service, a.serviceTime, g, g.id.toString())); });
@@ -97,9 +90,9 @@ export const AttendanceSetup: React.FC = () => {
 
   const getUnassignedGroups = () => {
     const result: GroupInterface[] = [];
-    groups.forEach(g => {
+    groups.data.forEach(g => {
       if (g.trackAttendance) {
-        const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes, "groupId", g.id);
+        const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes.data, "groupId", g.id);
         if (gsts.length === 0) result.push(g);
       }
     });
@@ -108,9 +101,9 @@ export const AttendanceSetup: React.FC = () => {
 
   const getGroups = (serviceTimeId: string) => {
     const result: GroupInterface[] = [];
-    const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes, "serviceTimeId", serviceTimeId);
+    const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes.data, "serviceTimeId", serviceTimeId);
     gsts.forEach(gst => {
-      const group: GroupInterface = ArrayHelper.getOne(groups, "id", gst.groupId);
+      const group: GroupInterface = ArrayHelper.getOne(groups.data, "id", gst.groupId);
       if (group !== null && group.trackAttendance) result.push(group);
     });
     return result;
@@ -137,13 +130,13 @@ export const AttendanceSetup: React.FC = () => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    if (attendance.length === 0) return rows;
+    if (attendance.data.length === 0) return rows;
     rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("attendance.attendancePage.campus")}</th><th>{Locale.label("attendance.attendancePage.service")}</th><th>{Locale.label("attendance.attendancePage.time")}</th><th>{Locale.label("attendance.attendancePage.category")}</th><th>{Locale.label("attendance.attendancePage.group")}</th></TableRow>);
     return rows;
   }
 
   const getTable = () => {
-    if (!attendance) return <Loading />
+    if (attendance.isLoading) return <Loading />
     else return (<Paper sx={{ width: "100%", overflowX: "auto" }}>
       <Table size="small">
         <TableHead>{getTableHeader()}</TableHead>

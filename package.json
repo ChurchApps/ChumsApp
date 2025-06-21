@@ -7,6 +7,7 @@
     "@churchapps/apphelper": "0.3.46",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
+    "@tanstack/react-query": "^5.80.7",
     "axios": "^1.7.7",
     "mui-tel-input": "^5.1.2",
     "react": "^18.3.1",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@eslint/js": "^9.28.0",
     "@playwright/test": "^1.49.0",
+    "@tanstack/react-query-devtools": "^5.80.7",
     "@types/react": "^18.3.12",
     "@types/react-cropper": "^1.3.2",
     "@types/react-csv": "^1.1.10",
