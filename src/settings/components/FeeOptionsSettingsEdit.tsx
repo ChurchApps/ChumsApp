@@ -43,7 +43,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     e.preventDefault();
     const o = { ...options };
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "creditCardFlatRate": o.flatRateCC = value; break;
       case "creditCardTransactionFee": o.transFeeCC = value; break;

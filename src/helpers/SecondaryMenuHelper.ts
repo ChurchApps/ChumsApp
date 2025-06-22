@@ -49,7 +49,7 @@ export class SecondaryMenuHelper {
 
   static getProfileMenu = (path: string) => {
     const menuItems: MenuItem[] = []
-    let label: string = "";
+    const label: string = "";
     menuItems.push({ url: "/profile", label: "Profile" });
     menuItems.push({ url: "/profile/devices", label: "Devices" });
     return { menuItems, label };

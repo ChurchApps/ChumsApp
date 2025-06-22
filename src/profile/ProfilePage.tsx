@@ -142,7 +142,7 @@ export const ProfilePage = () => {
             </Grid>
             <Grid item>
               <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} />
-              <Checkbox name="optedOut" checked={optedOut} onChange={handleChange} /> <label htmlFor="optedOut">{Locale.label("profile.profilePage.noDirect")}</label>
+              <Checkbox name="optedOut" checked={optedOut} onChange={handleChange} data-testid="opt-out-checkbox" aria-label="Opt out of direct messages" /> <label htmlFor="optedOut">{Locale.label("profile.profilePage.noDirect")}</label>
             </Grid>
           </Grid>
         </InputBox>
@@ -152,7 +152,7 @@ export const ProfilePage = () => {
 
         <InputBox headerText={Locale.label("profile.profilePage.accDel")} saveFunction={null}>
           <Typography color="GrayText">{Locale.label("profile.profilePage.permWarn")}</Typography>
-          <Button variant="outlined" color="error" sx={{ marginTop: 4 }} onClick={handleAccountDelete}>{Locale.label("profile.profilePage.delAcc")}</Button>
+          <Button variant="outlined" color="error" sx={{ marginTop: 4 }} onClick={handleAccountDelete} data-testid="delete-account-button" aria-label="Delete account">{Locale.label("profile.profilePage.delAcc")}</Button>
         </InputBox>
       </div>
     </>

@@ -24,7 +24,7 @@ export const Groups: React.FC<Props> = (props) => {
     else {
       const items = [];
       for (let i = 0; i < groupMembers.length; i++) {
-        let gm = groupMembers[i];
+        const gm = groupMembers[i];
         items.push(<TableRow key={gm.id}><TableCell><Box sx={{display: "flex", alignItems: "center"}}><Icon sx={{marginRight: "5px"}}>group</Icon><Link to={"/groups/" + gm.groupId}>{gm.group.name}</Link></Box></TableCell></TableRow>);
       }
       return (<Table size="small"><TableBody>{items}</TableBody></Table>)

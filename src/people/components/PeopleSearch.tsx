@@ -20,7 +20,7 @@ export function PeopleSearch(props: Props) {
 
   const handleSubmit = (e: React.MouseEvent) => {
     if (e !== null) e.preventDefault();
-    let term = searchText.trim();
+    const term = searchText.trim();
     const condition: SearchCondition = { field: "displayName", operator: "contains", value: term }
     ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi").then(data => {
       props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
@@ -28,11 +28,11 @@ export function PeopleSearch(props: Props) {
   }
 
   const getSimpleSearch = () => (
-    <DisplayBox headerIcon="person" headerText={Locale.label("people.peopleSearch.simpSearch")} help="chums/advanced-search" editContent={<Button onClick={(e) => {e.preventDefault(); toggleAdvanced() }} sx={{ textTransform: "none" }}>{Locale.label("people.peopleSearch.adv")}</Button>}>
+    <DisplayBox headerIcon="person" headerText={Locale.label("people.peopleSearch.simpSearch")} help="chums/advanced-search" editContent={<Button onClick={(e) => {e.preventDefault(); toggleAdvanced() }} sx={{ textTransform: "none" }} data-testid="toggle-advanced-search-button" aria-label="Toggle advanced search">{Locale.label("people.peopleSearch.adv")}</Button>}>
       <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
         <InputLabel htmlFor="searchText">{Locale.label("common.name")}</InputLabel>
-        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("common.name")} value={searchText} onChange={handleChange}
-          endAdornment={<Button variant="contained" onClick={handleSubmit}>{Locale.label("common.search")}</Button>}
+        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("common.name")} value={searchText} onChange={handleChange} data-testid="people-search-input"
+          endAdornment={<Button variant="contained" onClick={handleSubmit} data-testid="people-search-button" aria-label="Search people">{Locale.label("common.search")}</Button>}
         />
       </FormControl>
     </DisplayBox>

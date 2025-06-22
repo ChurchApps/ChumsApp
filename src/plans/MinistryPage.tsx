@@ -3,7 +3,7 @@ import { Grid, Icon, Tabs as MaterialTabs, Tab } from "@mui/material";
 import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
 import { useParams } from "react-router-dom";
-import { ApiHelper, GroupInterface, Locale } from "@churchapps/apphelper";
+import { ApiHelper, type GroupInterface, Locale } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 
 export const MinistryPage = () => {
@@ -43,7 +43,7 @@ export const MinistryPage = () => {
   }
 
   const getTabs = () => {
-    let tabs = [];
+    const tabs = [];
     tabs.push({ key: "plans", icon: "assignment", label: Locale.label("plans.ministryPage.plans") });
     tabs.push({ key: "teams", icon: "people", label: Locale.label("plans.ministryPage.teams") });
 

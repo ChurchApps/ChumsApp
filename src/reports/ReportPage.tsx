@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { ReportWithFilter, ReportInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { ReportWithFilter, type ReportInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { Icon } from "@mui/material";
 
 export const ReportPage = () => {

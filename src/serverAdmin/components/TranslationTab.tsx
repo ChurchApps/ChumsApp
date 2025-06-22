@@ -1,5 +1,5 @@
 import { ApiHelper, DateHelper, DisplayBox } from "@churchapps/apphelper";
-import { Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, type SelectChangeEvent } from "@mui/material";
+import { Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import React from "react";
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
@@ -14,9 +14,9 @@ export const TranslationTab = () => {
     setReport(reportData);
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "start": setStartDate(new Date(value)); break;
       case "end": setEndDate(new Date(value)); break;
@@ -60,16 +60,16 @@ export const TranslationTab = () => {
               <p>Start Date:</p>
             </Grid>
             <Grid item md={3}>
-              <TextField id="start" name="start" value={DateHelper.formatHtml5Date(startDate)} type="date" onChange={handleChange} />
+              <TextField id="start" name="start" value={DateHelper.formatHtml5Date(startDate)} type="date" onChange={handleChange} data-testid="translation-start-date-input" aria-label="Start date" />
             </Grid>
             <Grid item md={1}>
               <p>End Date:</p>
             </Grid>
             <Grid item md={3}>
-              <TextField id="end" name="end" value={DateHelper.formatHtml5Date(endDate)} type="date" onChange={handleChange} />
+              <TextField id="end" name="end" value={DateHelper.formatHtml5Date(endDate)} type="date" onChange={handleChange} data-testid="translation-end-date-input" aria-label="End date" />
             </Grid>
             <Grid item md={1}>
-              <Button variant="outlined" style={{ height: 56, width: 200, marginTop: 8 }} onClick={loadData}><ManageSearchIcon fontSize="small" />&nbsp;Search</Button>
+              <Button variant="outlined" style={{ height: 56, width: 200, marginTop: 8 }} onClick={loadData} data-testid="search-translation-stats-button" aria-label="Search translation statistics"><ManageSearchIcon fontSize="small" />&nbsp;Search</Button>
             </Grid>
           </Grid>
         </div>

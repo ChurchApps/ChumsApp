@@ -10,7 +10,7 @@ export const Tabs: React.FC = () => {
     <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
   )
 
-  let tabs = [];
+  const tabs = [];
   let defaultTab = "setup";
   let currentTab = null;
   if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push(getTab(0, "attendance", "calendar_month", Locale.label("attendance.tabs.attTrend"))); if (defaultTab === "") defaultTab = "attendance"; }

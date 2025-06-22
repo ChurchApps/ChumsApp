@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-import { PersonInterface } from "@churchapps/helpers"
+import { type PersonInterface } from "@churchapps/helpers"
 import { TextField, Button, Table, TableBody, TableRow, TableCell, Typography } from "@mui/material";
 import { ApiHelper, SmallButton, Locale, CreatePerson } from "@churchapps/apphelper";
 import { PersonAddResults } from "./PersonAddResults";
@@ -30,7 +30,7 @@ export const PersonAdd: React.FC<Props> = ({ addFunction, getPhotoUrl, searchCli
 
   const handleSearch = (e: React.MouseEvent) => {
     if (e !== null) e.preventDefault();
-    let term = searchText.trim();
+    const term = searchText.trim();
     ApiHelper.post("/people/search", { term: term }, "MembershipApi")
       .then((data: PersonInterface[]) => {
         setHasSearched(true);
@@ -43,11 +43,11 @@ export const PersonAdd: React.FC<Props> = ({ addFunction, getPhotoUrl, searchCli
   }
   return (
     <>
-      <TextField fullWidth name="personAddText" label={Locale.label("person.person")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={handleSearch}>{Locale.label("common.search")}</Button> }}
+      <TextField fullWidth name="personAddText" label={Locale.label("person.person")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="person-add-search-input" aria-label="Search for person to add"
+        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={handleSearch} data-testid="person-add-search-button" aria-label="Search for person">{Locale.label("common.search")}</Button> }}
       />
       {showCreatePersonOnNotFound && hasSearched && searchText && searchResults.length === 0 && (
-        <Typography sx={{ marginTop: "7px" }}>{Locale.label("person.noRec")} <a href="about:blank" onClick={(e) => { e.preventDefault(); setOpen(true); }}>{Locale.label("createPerson.addNewPerson")}</a></Typography>
+        <Typography sx={{ marginTop: "7px" }}>{Locale.label("person.noRec")} <a href="about:blank" onClick={(e) => { e.preventDefault(); setOpen(true); }} data-testid="create-new-person-link" aria-label="Create new person">{Locale.label("createPerson.addNewPerson")}</a></Typography>
       )}
       <PersonAddResults addFunction={addFunction} getPhotoUrl={getPhotoUrl} includeEmail={includeEmail} actionLabel={actionLabel} searchResults={searchResults} />
       {open && <CreatePerson showInModal onClose={() => { setOpen(false); }} navigateOnCreate={false} onCreate={person => { setSearchText(""); setSearchResults([person]) }} />}

@@ -1,10 +1,10 @@
 import React from "react";
 
 
-import { ArrangementInterface } from "../../../helpers";
+import { type ArrangementInterface } from "../../../helpers";
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
 import { Locale } from "@churchapps/apphelper";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } from "@mui/material";
 
 
 
@@ -29,7 +29,7 @@ export const OldArrangement = (props: Props) => {
     return result;
   }
 
-  const handleChange = (e: SelectChangeEvent<string>) => {
+  const handleChange = (e: SelectChangeEvent) => {
     setKeyOffset(parseInt(e.target.value));
   }
 

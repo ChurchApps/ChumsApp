@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ConditionInterface, Locale } from "@churchapps/apphelper";
 
@@ -25,7 +25,7 @@ export const ConditionAttendance = (props: Props) => {
 
   React.useEffect(init, [props.condition.field]); //eslint-disable-line
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const c = { ...props.condition };
     const val = e.target.value;
     switch (e.target.name) {
@@ -39,7 +39,7 @@ export const ConditionAttendance = (props: Props) => {
     props.onChange(c);
   }
 
-  const handleFieldDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleFieldDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
     switch (e.target.name) {
       case "eventType":

@@ -1,6 +1,6 @@
 import React from "react";
 import { ApiHelper, ArrayHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading, SmallButton, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, Grid, MenuItem } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, Grid, MenuItem, type SelectChangeEvent } from "@mui/material"
 
 interface Props {
   group: GroupInterface,
@@ -50,13 +50,13 @@ export const GroupSessions: React.FC<Props> = (props) => {
   const handleAdd = (e: React.MouseEvent) => { e.preventDefault(); props.sidebarVisibilityFunction("addSession", true); }
 
   const getRows = () => {
-    let canEdit = UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit);
-    let result: JSX.Element[] = [];
+    const canEdit = UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit);
+    const result: JSX.Element[] = [];
     for (let i = 0; i < visitSessions.length; i++) {
       const vs = visitSessions[i];
       //let editLink = (canEdit) ? (<a href="about:blank" onClick={handleRemove} className="text-danger" data-personid={vs.visit.personId}><Icon>person_remove</Icon> Remove</a>) : null;
-      let editLink = (canEdit) ? <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(vs)} color="error" /> : <></>
-      let person = ArrayHelper.getOne(people, "id", vs.visit.personId);
+      const editLink = (canEdit) ? <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(vs)} color="error" data-testid={`remove-session-visitor-button-${vs.id}`} ariaLabel={`Remove ${person?.name?.display || 'visitor'} from session`} /> : <></>
+      const person = ArrayHelper.getOne(people, "id", vs.visit.personId);
       if (person) {
         result.push(
           <TableRow key={vs.id}>
@@ -70,12 +70,12 @@ export const GroupSessions: React.FC<Props> = (props) => {
     return result;
   }
 
-  const selectSession = (e: SelectChangeEvent<string>) => {
+  const selectSession = (e: SelectChangeEvent) => {
     for (let i = 0; i < sessions.length; i++) if (sessions[i].id === e.target.value) setSession(sessions[i]);
   }
 
   const getSessionOptions = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     for (let i = 0; i < sessions.length; i++) result.push(<MenuItem value={sessions[i].id} key={sessions[i].id}>{sessions[i].displayName}</MenuItem>);
     return result;
   }
@@ -107,7 +107,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
   }
 
   const handlePersonAdd = () => {
-    let v = { checkinTime: new Date(), personId: props.addedPerson.id, visitSessions: [{ sessionId: session.id }] } as VisitInterface;
+    const v = { checkinTime: new Date(), personId: props.addedPerson.id, visitSessions: [{ sessionId: session.id }] } as VisitInterface;
     ApiHelper.post("/visitsessions/log", v, "AttendanceApi").then(() => { loadAttendance(); });
     props.addedCallback(v.personId);
   }

@@ -80,16 +80,16 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     if (!UserHelper.checkAccess(Permissions.membershipApi.roles.edit)) return null;
     else {
       return (<>
-        <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" aria-controls={open ? "add-menu" : undefined} aria-expanded={open ? "true" : undefined} aria-haspopup="true" onClick={handleClick}>
+        <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" aria-controls={open ? "add-menu" : undefined} aria-expanded={open ? "true" : undefined} aria-haspopup="true" onClick={handleClick} data-testid="add-role-button">
           <Icon color="primary">add</Icon>
         </IconButton>
         <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuItem data-cy="add-campus" onClick={() => {handleClose(); selectRoleId(""); }}>
+          <MenuItem data-cy="add-campus" onClick={() => {handleClose(); selectRoleId(""); }} data-testid="add-custom-role-menu-item" aria-label="Add custom role">
             <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("settings.roles.custAdd")}
           </MenuItem>
           <Divider />
           {predefined.map((role, i) => (
-            <MenuItem key={role.name} onClick={() => {addRole(role); }} title={role.description}>
+            <MenuItem key={role.name} onClick={() => {addRole(role); }} title={role.description} data-testid={`add-predefined-role-${role.name.toLowerCase().replace(/\s+/g, '-')}`} aria-label={`Add ${role.name} role`}>
               <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("common.add")} "<b>{role.name}</b>" {Locale.label("settings.roles.role")}
             </MenuItem>
           ))}
@@ -118,7 +118,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     }
 
     sortedRoles.forEach(role => {
-      const editLink = (canEdit) ? <SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { selectRoleId(role.id) }} /> : null;
+      const editLink = (canEdit) ? <SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { selectRoleId(role.id) }} data-testid="edit-role-button" ariaLabel="Edit role" /> : null;
       result.push(<TableRow key={role.id}>
         <TableCell><i className="lock" /> <Link to={`/settings/role/${role.id}`}>{role.name}</Link></TableCell>
         <TableCell align="right">{editLink}</TableCell>
@@ -128,7 +128,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     return result;
   }
 
-  useEffect(loadData, [selectedRoleId, church]); //eslint-disable-line
+  useEffect(loadData, [selectedRoleId, church]);  
 
   return (
     <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={getEditContent()} help="chums/assigning-roles">

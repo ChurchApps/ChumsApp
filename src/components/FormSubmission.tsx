@@ -1,7 +1,7 @@
 import React from "react";
 import { Question } from "./";
 import { Grid } from "@mui/material"
-import { SmallButton, FormSubmissionInterface, Permissions, ApiHelper, UserHelper, UniqueIdHelper } from "@churchapps/apphelper";
+import { SmallButton, type FormSubmissionInterface, Permissions, ApiHelper, UserHelper, UniqueIdHelper } from "@churchapps/apphelper";
 
 interface Props {
   formSubmissionId: string,
@@ -14,7 +14,7 @@ export const FormSubmission: React.FC<Props> = (props) => {
 
   const getEditLink = () => {
     if (!formPermission) return null;
-    else return <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { props.editFunction(props.formSubmissionId); }} /></span>
+    else return <span style={{ float: "right" }}><SmallButton icon="edit" onClick={() => { props.editFunction(props.formSubmissionId); }} data-testid="edit-form-submission-button" ariaLabel="Edit form submission" /></span>
   }
   const loadData = React.useCallback(async () => {
     if (!UniqueIdHelper.isMissing(props.formSubmissionId)) {
@@ -36,11 +36,11 @@ export const FormSubmission: React.FC<Props> = (props) => {
     loadData();
   }, [props.formSubmissionId, loadData]);
 
-  let firstHalf = [];
-  let secondHalf = [];
+  const firstHalf = [];
+  const secondHalf = [];
   if (formSubmission != null) {
-    let questions = formSubmission.questions;
-    let halfWay = Math.round(questions.length / 2);
+    const questions = formSubmission.questions;
+    const halfWay = Math.round(questions.length / 2);
     for (let i = 0; i < halfWay; i++) firstHalf.push(<Question key={i} question={questions[i]} answer={getAnswer(questions[i].id)} />);
     for (let j = halfWay; j < questions.length; j++) secondHalf.push(<Question key={j} question={questions[j]} answer={getAnswer(questions[j].id)} />);
   }

@@ -20,11 +20,11 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     const people = await ApiHelper.get("/people", "MembershipApi");
     const formSubmissions = await ApiHelper.get("/formsubmissions/formId/" + props.formId, "MembershipApi")
 
-    let csv: any[] = [];
-    let summaryData: any = [];
+    const csv: any[] = [];
+    const summaryData: any = [];
     formSubmissions.forEach((formSubmission: any) => {
-      let submittedBy = getPerson(people, formSubmission);
-      let csvData: any = {};
+      const submittedBy = getPerson(people, formSubmission);
+      const csvData: any = {};
       csvData["For"] = submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon");
       formSubmission = setFormSubmissionData(people, formSubmission);
       formSubmission.questions.forEach((question: QuestionInterface) => {
@@ -48,7 +48,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   }
 
   const setSummaryResultData = (summaryData: any, question: QuestionInterface, answer: AnswerInterface) => {
-    let match = summaryData.find((result: any) => result.title === question.title);
+    const match = summaryData.find((result: any) => result.title === question.title);
     if (match) {
       match.values.forEach((resultValue: any) => {
         const key: string = Object.keys(resultValue)[0];
@@ -70,7 +70,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   }
 
   const setFormSubmissionData = (people: PersonInterface[], formSubmission: any) => {
-    let submittedBy = getPerson(people, formSubmission);
+    const submittedBy = getPerson(people, formSubmission);
 
     formSubmission.person = { name: submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon"), id: submittedBy?.id || null };
     formSubmission.mappedQA = [];
@@ -83,7 +83,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     const choices: any = [];
     const questionChoices = question.choices || yesNoDefault;
     questionChoices.forEach((choice: any) => {
-      let choiceCount = { [choice.value]: 0, text: choice.text };
+      const choiceCount = { [choice.value]: 0, text: choice.text };
       if (question.fieldType === "Checkbox") {
         if (answer && answer?.value) {
           const splitAnswer = answer.value?.split(",");
@@ -98,7 +98,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   }
 
   const getResultCount = (summaryValues: any[]) => {
-    let results: JSX.Element[] = [];
+    const results: JSX.Element[] = [];
     summaryValues.forEach((sv: any, i: number) => {
       const key: string = Object.keys(sv)[0];
       results.push(<div key={sv.text + "-" + i}>{`${sv.text}: ${sv[key]}`}</div>);
@@ -107,7 +107,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   }
 
   const getSummary = () => {
-    let results: JSX.Element[] = [];
+    const results: JSX.Element[] = [];
     summary.forEach((s: any, i: number) => {
       results.push(
         <Grid item xs={12} md={6} key={s.id + "-" + i}>
@@ -120,7 +120,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   }
 
   const getTableHeader = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     if (formSubmissions.length) {
       result.push(<TableCell key="submittedBy">{(formSubmissions[0].contentType==="person") ? Locale.label("forms.formSubmissions.subFor") : Locale.label("forms.formSubmissions.subBy") }</TableCell>);
       result.push(<TableCell key="submissionDate">{Locale.label("forms.formSubmissions.subDate")}</TableCell>);
@@ -130,7 +130,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   }
 
   const getTableRows = () => {
-    let rows: JSX.Element[] = [];
+    const rows: JSX.Element[] = [];
     formSubmissions.forEach((submission: any, i: number) => {
       rows.push(<TableRow key={i}>
         <TableCell key="personName"><a href={"/people/" + submission.person.id}>{submission.person.name}</a></TableCell>
@@ -142,9 +142,9 @@ export const FormSubmissions: React.FC<Props> = (props) => {
   }
 
   const getAnswers = (formSubmission: FormSubmissionInterface) => {
-    let rows: JSX.Element[] = [];
+    const rows: JSX.Element[] = [];
     formSubmission.questions.forEach((question: QuestionInterface) => {
-      let answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id);
+      const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id);
       rows.push(<TableCell key={question.id}>{answer?.value || "-"}</TableCell>);
     });
     return rows;

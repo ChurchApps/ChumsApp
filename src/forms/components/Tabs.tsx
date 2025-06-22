@@ -1,8 +1,13 @@
-import { Grid } from "@mui/material";
+import {
+ Grid } from "@mui/material";
 import React from "react";
-import { FormMembers, Form, FormSubmissions } from ".";
-import { UserHelper, Permissions, MemberPermissionInterface, FormInterface, Locale } from "@churchapps/apphelper";
-import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
+import {
+ FormMembers, Form, FormSubmissions } from ".";
+import {
+ UserHelper, Permissions, type MemberPermissionInterface, type FormInterface, Locale 
+} from "@churchapps/apphelper";
+import {
+ Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 interface Props { form: FormInterface, memberPermission: MemberPermissionInterface }
 
@@ -14,7 +19,7 @@ export const Tabs: React.FC<Props> = (props) => {
     <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
   )
 
-  let tabs = [];
+  const tabs = [];
   let defaultTab = "";
   let currentTab = null;
 

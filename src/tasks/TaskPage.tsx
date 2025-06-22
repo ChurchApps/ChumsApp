@@ -1,12 +1,22 @@
 import React, { useContext } from "react";
-import { Grid, Menu, MenuItem, Typography } from "@mui/material";
-import { ApiHelper, DisplayBox, TaskInterface, Notes, DateHelper, ConversationInterface, Locale } from "@churchapps/apphelper";
-import { SmallButton } from "@churchapps/apphelper";
-import { Link, useParams } from "react-router-dom";
-import { ContentPicker } from "./components/ContentPicker";
+import {
+ Grid, Menu, MenuItem, Typography } from "@mui/material";
+import {
+ ApiHelper, DisplayBox, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale 
+} from "@churchapps/apphelper";
+import {
+ SmallButton 
+} from "@churchapps/apphelper";
+import {
+ Link, useParams } from "react-router-dom";
+import {
+ ContentPicker } from "./components/ContentPicker";
 import UserContext from "../UserContext";
-import { RequestedChanges } from "./components/RequestedChanges";
-import { Banner } from "@churchapps/apphelper";
+import {
+ RequestedChanges } from "./components/RequestedChanges";
+import {
+ Banner 
+} from "@churchapps/apphelper";
 
 export const TaskPage = () => {
   const params = useParams();
@@ -104,13 +114,13 @@ export const TaskPage = () => {
               <div><Typography variant="caption">{getContentLink(task.createdByType, task.createdById, task.createdByLabel)}</Typography></div>
               <hr />
               <div>
-                <span style={{ float: "right", paddingTop: 17 }}><SmallButton text={Locale.label("tasks.taskPage.change")} icon="search" onClick={() => { setModalField("associatedWith") }} /></span>
+                <span style={{ float: "right", paddingTop: 17 }}><SmallButton text={Locale.label("tasks.taskPage.change")} icon="search" onClick={() => { setModalField("associatedWith") }} data-testid="change-associated-with-button" ariaLabel="Change associated with" /></span>
                 <Typography variant="subtitle1">{Locale.label("tasks.taskPage.associateW")}</Typography>
               </div>
               <div><Typography variant="caption">{getContentLink(task.associatedWithType, task.associatedWithId, task.associatedWithLabel)}</Typography></div>
               <hr />
               <div>
-                <span style={{ float: "right", paddingTop: 17 }}><SmallButton text={Locale.label("tasks.taskPage.change")} icon="search" onClick={() => { setModalField("assignedTo") }} /></span>
+                <span style={{ float: "right", paddingTop: 17 }}><SmallButton text={Locale.label("tasks.taskPage.change")} icon="search" onClick={() => { setModalField("assignedTo") }} data-testid="change-assigned-to-button" ariaLabel="Change assigned to" /></span>
                 <Typography variant="subtitle1">{Locale.label("tasks.taskPage.assignTo")}</Typography>
               </div>
               <div><Typography variant="caption">{getContentLink(task.assignedToType, task.assignedToId, task.assignedToLabel)}</Typography></div>

@@ -1,6 +1,6 @@
 import React from "react";
-import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem } from "@mui/material";
-import { useMountedState, ServiceInterface, CampusInterface, InputBox, ApiHelper, UniqueIdHelper, ErrorMessages } from "@churchapps/apphelper";
+import { FormControl, InputLabel, Select, TextField, MenuItem, type SelectChangeEvent } from "@mui/material";
+import { useMountedState, type ServiceInterface, type CampusInterface, InputBox, ApiHelper, UniqueIdHelper, ErrorMessages } from "@churchapps/apphelper";
 import { Locale } from "@churchapps/apphelper";
 
 interface Props {
@@ -15,10 +15,10 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const isMounted = useMountedState();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     setErrors([]);
     const s = { ...service } as ServiceInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "name": s.name = value; break;
       case "campus": s.campusId = value; break;
@@ -44,15 +44,15 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   const handleDelete = () => { if (window.confirm(Locale.label("attendance.serviceEdit.validate.name"))) ApiHelper.delete("/services/" + service.id, "AttendanceApi").then(props.updatedFunction); }
 
   const loadData = React.useCallback(() => {
-    ApiHelper.get("/campuses", "AttendanceApi").then((data:any) => {
-      if(isMounted()) {
+    ApiHelper.get("/campuses", "AttendanceApi").then((data: any) => {
+      if (isMounted()) {
         setCampuses(data);
       }
       if (data.length > 0) {
         if (UniqueIdHelper.isMissing(service?.campusId)) {
-          let s = { ...props.service };
+          const s = { ...props.service };
           s.campusId = data[0].id;
-          if(isMounted()) {
+          if (isMounted()) {
             setService(s);
           }
         }
@@ -62,7 +62,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   }, [props.service, isMounted]);
 
   const getCampusOptions = () => {
-    let options = [];
+    const options = [];
     for (let i = 0; i < campuses.length; i++) options.push(<MenuItem key={i} value={campuses[i].id}>{campuses[i].name}</MenuItem>);
     return options;
   }
@@ -79,11 +79,11 @@ export const ServiceEdit: React.FC<Props> = (props) => {
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel id="campus">{Locale.label("attendance.serviceEdit.campus")}</InputLabel>
-        <Select name="campus" labelId="campus" label={Locale.label("attendance.serviceEdit.campus")} value={service.campusId} onChange={handleChange}>
+        <Select name="campus" labelId="campus" label={Locale.label("attendance.serviceEdit.campus")} value={service.campusId} onChange={handleChange} data-testid="campus-select" aria-label="Select campus">
           {getCampusOptions()}
         </Select>
       </FormControl>
-      <TextField fullWidth label={Locale.label("attendance.serviceEdit.name")} id="name" name="name" type="text" value={service.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("attendance.serviceEdit.name")} id="name" name="name" type="text" value={service.name} onChange={handleChange} data-testid="service-name-input" aria-label="Service name" />
     </InputBox>
   );
 }

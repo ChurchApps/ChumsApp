@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Box, Paper, Tabs as MaterialTabs, Tab, Icon } from "@mui/material";
 import { PersonAttendance } from ".";
-import { DonationPage, Permissions, PersonInterface, ConversationInterface, UserHelper, Notes, ApiHelper, Locale } from "@churchapps/apphelper";
+import { DonationPage, Permissions, type PersonInterface, type ConversationInterface, UserHelper, Notes, ApiHelper, Locale } from "@churchapps/apphelper";
 import UserContext from "../../UserContext";
 interface Props { person: PersonInterface }
 
@@ -47,7 +47,7 @@ export const PersonNav: React.FC<Props> = (props) => {
   }
 
 
-  let a =0;
+  const a =0;
   return (<div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
     <ul>
       {tabs.map((tab, index) => getItem(tab))}

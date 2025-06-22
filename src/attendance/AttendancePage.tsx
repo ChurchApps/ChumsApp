@@ -2,7 +2,7 @@ import React from "react";
 import { CampusEdit, ServiceEdit, ServiceTimeEdit, Tabs } from "./components";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box } from "@mui/material"
-import { useMountedState, AttendanceInterface, CampusInterface, ServiceInterface, ServiceTimeInterface, GroupServiceTimeInterface, GroupInterface, ApiHelper, DisplayBox, ArrayHelper, Loading, Locale, UserHelper, ReportWithFilter } from "@churchapps/apphelper";
+import { useMountedState, type AttendanceInterface, type CampusInterface, type ServiceInterface, type ServiceTimeInterface, type GroupServiceTimeInterface, type GroupInterface, ApiHelper, DisplayBox, ArrayHelper, Loading, Locale, UserHelper, ReportWithFilter } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 import { AttendanceSetup } from "./components/AttendanceSetup";
 import { Permissions } from "@churchapps/apphelper";

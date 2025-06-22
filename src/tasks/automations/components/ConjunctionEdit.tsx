@@ -1,6 +1,6 @@
-import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { MenuItem, Select, type SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, ConjunctionInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, type ConjunctionInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   conjunction: ConjunctionInterface,
@@ -32,7 +32,7 @@ export const ConjunctionEdit = (props: Props) => {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
     const c = { ...conjunction };
     switch (e.target.name) {
@@ -48,7 +48,7 @@ export const ConjunctionEdit = (props: Props) => {
   return (
     <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.conjunctionEdit.conjEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
       <ErrorMessages errors={errors} />
-      <Select fullWidth label={Locale.label("tasks.conjunctionEdit.conjType")} value={conjunction?.groupType} name="groupType" onChange={handleChange}>
+      <Select fullWidth label={Locale.label("tasks.conjunctionEdit.conjType")} value={conjunction?.groupType} name="groupType" onChange={handleChange} data-testid="conjunction-type-select" aria-label="Conjunction type">
         <MenuItem value="and">{Locale.label("tasks.conjunctionEdit.and")}</MenuItem>
         <MenuItem value="or">{Locale.label("tasks.conjunctionEdit.or")}</MenuItem>
       </Select>

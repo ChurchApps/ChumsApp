@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, GroupMemberInterface, Locale, PlanInterface, PositionInterface, SmallButton, TimeInterface, UserHelper, Permissions } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, type GroupInterface, type GroupMemberInterface, Locale, type PlanInterface, type PositionInterface, SmallButton, type TimeInterface, UserHelper, Permissions } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
 import { GroupAdd } from "../../groups/components";
 import UserContext from "../../UserContext";
@@ -24,13 +24,13 @@ export const MinistryList = (props: Props) => {
   };
 
   const getAddLink = () => (
-    <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={handleAdd}>
+    <IconButton aria-label="Add ministry" id="addBtnGroup" data-cy="add-button" onClick={handleAdd} data-testid="add-ministry-button">
       <Icon color="primary">add</Icon>
     </IconButton>
   );
 
   const getRows = () => {
-    let rows: JSX.Element[] = [];
+    const rows: JSX.Element[] = [];
 
     if (!groups || groups.length === 0) {
       rows.push(<TableRow key="0"><TableCell>{Locale.label("plans.ministryList.noMinMsg")}</TableCell></TableRow>);
@@ -38,7 +38,7 @@ export const MinistryList = (props: Props) => {
     }
 
     for (let i = 0; i < groups.length; i++) {
-      let g = groups[i];
+      const g = groups[i];
       const members = ArrayHelper.getAll(groupMembers, "groupId", g.id);
       const hasAccess = members.length === 0 || ArrayHelper.getOne(members, "personId", context.person?.id) !== null || UserHelper.checkAccess(Permissions.membershipApi.roles.edit);
       //if (hasAccess && window.location.pathname==="/plans") setRedirect("/plans/ministries/" + g.id.toString());

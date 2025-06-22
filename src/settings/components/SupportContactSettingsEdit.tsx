@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Icon, Stack, TextField, Tooltip, Typography } from "@mui/material";
-import { GenericSettingInterface, UniqueIdHelper, ApiHelper, Locale } from "@churchapps/apphelper";
+import { type GenericSettingInterface, UniqueIdHelper, ApiHelper, Locale } from "@churchapps/apphelper";
 
 interface Props { churchId: string; saveTrigger: Date | null; }
 
@@ -27,7 +27,7 @@ export const SupportContactSettingsEdit: React.FC<Props> = (props) => {
     }
   };
 
-  useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData(); }, [props.churchId]); //eslint-disable-line
+  useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData(); }, [props.churchId]);  
   useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
   return (

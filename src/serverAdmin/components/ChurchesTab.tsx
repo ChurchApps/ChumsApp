@@ -3,7 +3,7 @@ import { ApiHelper, DisplayBox, UserHelper, DateHelper, ArrayHelper, Locale } fr
 import { Navigate } from "react-router-dom";
 import { Grid, TextField, Button } from "@mui/material";
 import UserContext from "../../UserContext";
-import { ChurchInterface } from "@churchapps/apphelper";
+import { type ChurchInterface } from "@churchapps/apphelper";
 
 
 export const ChurchesTab = () => {
@@ -11,7 +11,7 @@ export const ChurchesTab = () => {
   const [churches, setChurches] = React.useState<ChurchInterface[]>([]);
   const [redirectUrl, setRedirectUrl] = React.useState<string>("");
 
-  let context = React.useContext(UserContext);
+  const context = React.useContext(UserContext);
 
   const loadData = () => {
     const term = escape(searchText.trim());
@@ -36,7 +36,7 @@ export const ChurchesTab = () => {
     churches.forEach((c, index) => {
 
       const currentChurch = c;
-      let activeLink = (c.archivedDate)
+      const activeLink = (c.archivedDate)
         ? <a href="about:blank" className="text-danger" onClick={(e) => { e.preventDefault(); handleArchive(currentChurch); }}>{Locale.label("serverAdmin.adminPage.arch")}</a>
         : <a href="about:blank" className="text-success" onClick={(e) => { e.preventDefault(); handleArchive(currentChurch); }}>{Locale.label("serverAdmin.adminPage.act")}</a>
 
@@ -59,8 +59,8 @@ export const ChurchesTab = () => {
 
   const handleEditAccess = async (e: React.MouseEvent) => {
     e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let churchId = anchor.getAttribute("data-churchid");
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    const churchId = anchor.getAttribute("data-churchid");
 
     const result = await ApiHelper.get("/churches/" + churchId + "/impersonate", "MembershipApi");
 
@@ -82,8 +82,8 @@ export const ChurchesTab = () => {
   else return (
     <>
       <DisplayBox headerIcon="church" headerText={Locale.label("serverAdmin.adminPage.churches")}>
-        <TextField fullWidth variant="outlined" name="searchText" label={Locale.label("serverAdmin.adminPage.churchName")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-          InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" disableElevation onClick={loadData}>{Locale.label("common.search")}</Button> }}
+        <TextField fullWidth variant="outlined" name="searchText" label={Locale.label("serverAdmin.adminPage.churchName")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="church-search-input" aria-label="Church name search"
+          InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" disableElevation onClick={loadData} data-testid="search-churches-button" aria-label="Search churches">{Locale.label("common.search")}</Button> }}
         />
         <br />
         {

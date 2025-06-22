@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ApiHelper, GroupInterface, Locale } from "@churchapps/apphelper";
+import { ApiHelper, type GroupInterface, Locale } from "@churchapps/apphelper";
 import { TextField, Button, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
@@ -20,8 +20,8 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
 
   const handleSearch = (e: React.MouseEvent) => {
     if (e !== null) e.preventDefault();
-    let term = searchText.trim().toLowerCase();
-    let result: GroupInterface[] = [];
+    const term = searchText.trim().toLowerCase();
+    const result: GroupInterface[] = [];
     groups.forEach(g => {
       if (g.name.toLowerCase().indexOf(term) > -1) result.push(g);
     })
@@ -31,7 +31,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
     props.addFunction(group);
   }
 
-  let rows = [];
+  const rows = [];
   for (let i = 0; i < searchResults.length; i++) {
     const sr = searchResults[i];
 
@@ -39,7 +39,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
       <TableRow key={sr.id}>
         <TableCell>{sr.name}</TableCell>
         <TableCell style={{ textAlign: "right" }}>
-          <SmallButton color="success" icon="people" text={Locale.label("tasks.selectGroup.sel")} ariaLabel="addGroup" onClick={() => handleAdd(sr)} />
+          <SmallButton color="success" icon="people" text={Locale.label("tasks.selectGroup.sel")} ariaLabel="Select group" onClick={() => handleAdd(sr)} data-testid={`select-group-button-${sr.id}`} />
         </TableCell>
       </TableRow>
     );

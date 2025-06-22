@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { InputBox, RoleInterface, ApiHelper, RoleMemberInterface, UserHelper, LoadCreateUserRequestInterface, PersonInterface, HouseholdInterface, ErrorMessages, UserInterface, UserChurchInterface, Locale } from "@churchapps/apphelper"
+import { InputBox, type RoleInterface, ApiHelper, type RoleMemberInterface, UserHelper, type LoadCreateUserRequestInterface, type PersonInterface, type HouseholdInterface, ErrorMessages, type UserInterface, type UserChurchInterface, Locale } from "@churchapps/apphelper"
 import { AssociatePerson } from "./";
 import { TextField } from "@mui/material";
 
@@ -166,15 +166,15 @@ export const UserAdd = (props: Props) => {
     })()
   }, [props.selectedUser]);
 
-  const message = (!showNameFields && !editMode && hasSearched) && (<span>{Locale.label("settings.userAdd.noAcc")} <a href="about:blank" onClick={CreateNewUser}>{Locale.label("settings.userAdd.createNew")}</a></span>);
+  const message = (!showNameFields && !editMode && hasSearched) && (<span>{Locale.label("settings.userAdd.noAcc")} <a href="about:blank" onClick={CreateNewUser} data-testid="create-new-user-link" aria-label="Create new user">{Locale.label("settings.userAdd.createNew")}</a></span>);
   const nameField = (showNameFields || editMode) && (
     <>
-      <TextField fullWidth name="firstName" label={Locale.label("person.firstName")} value={firstName} onChange={handleChange} />
-      <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} />
+      <TextField fullWidth name="firstName" label={Locale.label("person.firstName")} value={firstName} onChange={handleChange} data-testid="first-name-input" aria-label="First name" />
+      <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} data-testid="last-name-input" aria-label="Last name" />
     </>
   )
   const emailField = (showEmailField || editMode) && (
-    <TextField type="email" fullWidth name="email" label={Locale.label("person.email")} value={email} onChange={handleChange} />
+    <TextField type="email" fullWidth name="email" label={Locale.label("person.email")} value={email} onChange={handleChange} data-testid="email-input" aria-label="Email address" />
   )
 
   return (

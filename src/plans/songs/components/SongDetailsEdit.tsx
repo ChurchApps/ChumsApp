@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { ApiHelper, DateHelper, InputBox, Locale } from "@churchapps/apphelper";
-import { SongDetailInterface } from "../../../helpers";
+import { type SongDetailInterface } from "../../../helpers";
 import { TextField } from "@mui/material";
 import { SongDetailLinksEdit } from "./SongDetailLinksEdit";
 

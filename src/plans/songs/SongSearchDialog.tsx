@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { ApiHelper, Locale } from "@churchapps/apphelper";
-import { ArrangementInterface, SongDetailInterface, SongInterface } from "../../helpers";
+import { type ArrangementInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { CreateSongDetail } from "./components/CreateSongDetail";
 
 interface Props {
@@ -63,8 +63,8 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
     <Dialog open={true} onClose={props.onClose} fullWidth maxWidth="md">
       <DialogTitle>Search for a Song</DialogTitle>
       <DialogContent>
-        <TextField fullWidth label="Tile or Artist" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-          InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => handleSearch()}>{Locale.label("common.search")}</Button> }}
+        <TextField fullWidth label="Tile or Artist" value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="song-search-dialog-input" aria-label="Song title or artist"
+          InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => handleSearch()} data-testid="song-search-dialog-button" aria-label="Search songs">{Locale.label("common.search")}</Button> }}
         />
 
 
@@ -91,7 +91,7 @@ export const SongSearchDialog: React.FC<Props> = (props) => {
       </DialogContent>
       <DialogActions>
         <label style={{ color: "#999" }}>Powered by: <a href="https://www.praisecharts.com/?XID=churchapps" target="_blank" rel="noreferrer">PraiseCharts</a></label> &nbsp;
-        <Button variant="outlined" onClick={props.onClose}>{Locale.label("common.close")}</Button>
+        <Button variant="outlined" onClick={props.onClose} data-testid="song-search-dialog-close" aria-label="Close dialog">{Locale.label("common.close")}</Button>
       </DialogActions>
     </Dialog>
   </>);

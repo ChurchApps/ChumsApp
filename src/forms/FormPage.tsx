@@ -1,9 +1,15 @@
 import React from "react";
-import { Tabs } from "./components";
-import { ApiHelper, FormInterface, MemberPermissionInterface } from "@churchapps/apphelper";
-import { useParams } from "react-router-dom"
+import {
+ Tabs } from "./components";
+import {
+ ApiHelper, type FormInterface, type MemberPermissionInterface 
+} from "@churchapps/apphelper";
+import {
+ useParams } from "react-router-dom"
 import UserContext from "../UserContext";
-import { Banner } from "@churchapps/apphelper";
+import {
+ Banner 
+} from "@churchapps/apphelper";
 
 export const FormPage = () => {
   const params = useParams();

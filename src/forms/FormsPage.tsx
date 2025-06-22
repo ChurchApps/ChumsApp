@@ -1,10 +1,19 @@
 import React, { useRef } from "react";
-import { FormEdit, EnvironmentHelper } from "./components"
-import { ApiHelper, DisplayBox, FormInterface, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
-import { Link } from "react-router-dom"
-import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Paper, Tabs, Tab } from "@mui/material"
-import { SmallButton } from "@churchapps/apphelper";
-import { Banner } from "@churchapps/apphelper";
+import {
+ FormEdit, EnvironmentHelper } from "./components"
+import {
+ ApiHelper, DisplayBox, type FormInterface, UserHelper, Permissions, Loading, Locale 
+} from "@churchapps/apphelper";
+import {
+ Link } from "react-router-dom"
+import {
+ Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Paper, Tabs, Tab } from "@mui/material"
+import {
+ SmallButton 
+} from "@churchapps/apphelper";
+import {
+ Banner 
+} from "@churchapps/apphelper";
 
 export const FormsPage = () => {
   const [forms, setForms] = React.useState<FormInterface[]>(null);
@@ -21,7 +30,7 @@ export const FormsPage = () => {
   }
 
   const getRows = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     if (!forms.length) {
       result.push(<TableRow key="0"><TableCell>{Locale.label("forms.formsPage.noCustomMsg")}</TableCell></TableRow>);
       return result;
@@ -34,11 +43,11 @@ export const FormsPage = () => {
         || (UserHelper.checkAccess(Permissions.membershipApi.forms.edit) && form.contentType !== "form")
         || form?.action === "admin"
       );
-      const editLink = (canEdit && selectedTab === "forms") ? (<SmallButton icon="edit" text="Edit" onClick={() => { setSelectedFormId(form.id); }} />) : null;
+      const editLink = (canEdit && selectedTab === "forms") ? (<SmallButton icon="edit" text="Edit" onClick={() => { setSelectedFormId(form.id); }} data-testid={`edit-form-button-${form.id}`} ariaLabel={`Edit form ${form.name}`} />) : null;
       const formUrl = EnvironmentHelper.B1Url.replace("{key}", UserHelper.currentUserChurch.church.subDomain) + "/forms/" + form.id;
       const formLink = (form.contentType === "form") ? <a href={formUrl}>{formUrl}</a> : null;
-      const archiveLink = (canEdit && selectedTab === "forms") ? (<SmallButton icon="delete" text="Archive" color="error" onClick={() => { handleArchiveChange(form, true); }} />) : null;
-      const unarchiveLink = (canEdit && selectedTab === "archived") ? (<SmallButton icon="undo" text="Restore" color="success" onClick={() => { handleArchiveChange(form, false); }} />) : null;
+      const archiveLink = (canEdit && selectedTab === "forms") ? (<SmallButton icon="delete" text="Archive" color="error" onClick={() => { handleArchiveChange(form, true); }} data-testid={`archive-form-button-${form.id}`} ariaLabel={`Archive form ${form.name}`} />) : null;
+      const unarchiveLink = (canEdit && selectedTab === "archived") ? (<SmallButton icon="undo" text="Restore" color="success" onClick={() => { handleArchiveChange(form, false); }} data-testid={`restore-form-button-${form.id}`} ariaLabel={`Restore form ${form.name}`} />) : null;
       result.push(<TableRow key={form.id}>
         <TableCell><Box sx={{ display: "flex", alignItems: "center" }}><Icon sx={{ fontSize: 20, marginRight: "5px" }}>format_align_left</Icon> <Link to={"/forms/" + form.id}>{form.name}</Link></Box></TableCell>
         <TableCell>{formLink}</TableCell>
@@ -56,7 +65,7 @@ export const FormsPage = () => {
   }
 
   const getArchivedRows = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     if (!archivedForms.length) {
       result.push(<TableRow key="0"><TableCell>{Locale.label("forms.formsPage.noArch")}</TableCell></TableRow>);
       return result;
@@ -89,8 +98,8 @@ export const FormsPage = () => {
 
   if (!forms && !archivedForms) return (<></>);
   else {
-    let title = (selectedTab === "forms") ? Locale.label("forms.formsPage.forms") : Locale.label("forms.formsPage.archForms");
-    let icon = (selectedTab === "forms") ? "format_align_left" : "archive";
+    const title = (selectedTab === "forms") ? Locale.label("forms.formsPage.forms") : Locale.label("forms.formsPage.archForms");
+    const icon = (selectedTab === "forms") ? "format_align_left" : "archive";
     let contents = <Loading />
     if (forms && archivedForms) {
       contents = (<Table>
@@ -103,7 +112,7 @@ export const FormsPage = () => {
       <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
     )
 
-    let tabs = [];
+    const tabs = [];
     let defaultTab = "";
     tabs.push(getTab(0, "forms", "format_align_left", Locale.label("forms.formsPage.forms"))); if (defaultTab === "") defaultTab = "forms";
     if (archivedForms?.length > 0) { tabs.push(getTab(1, "archived", "archive", Locale.label("forms.formsPage.archForms"))); if (defaultTab === "") defaultTab = "archived"; }

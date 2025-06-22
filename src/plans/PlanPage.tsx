@@ -21,7 +21,7 @@ export const PlanPage = () => {
 
 
   const getTabs = () => {
-    let tabs = [];
+    const tabs = [];
     tabs.push({ key: "assignments", icon: "assignment", label: Locale.label("plans.planPage.assignments") });
     if (plan && plan.serviceOrder) {
       tabs.push({ key: "order", icon: "album", label: Locale.label("plans.planPage.serviceOrder") });

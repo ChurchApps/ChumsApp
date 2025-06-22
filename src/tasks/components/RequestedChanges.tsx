@@ -11,7 +11,7 @@ export const RequestedChanges = (props: Props) => {
   const navigate = useNavigate();
 
   const getRows = () => {
-    let rows: JSX.Element[] = [];
+    const rows: JSX.Element[] = [];
     requestedChanges?.forEach((ch, i) => {
       let val: any = ch.value;
       if (ch.field === "photo") val = <img src={ch.value} style={{ maxWidth: "70px", maxHeight: "70px" }} alt="New Profile Pic" />
@@ -26,9 +26,9 @@ export const RequestedChanges = (props: Props) => {
   };
 
   const handleApply = async () => {
-    let task: TaskInterface = { ...props.task, status: "Closed", dateClosed: new Date() };
+    const task: TaskInterface = { ...props.task, status: "Closed", dateClosed: new Date() };
     const person = await ApiHelper.get("/people/" + props.task.associatedWithId, "MembershipApi");
-    let p = { ...person } as PersonInterface;
+    const p = { ...person } as PersonInterface;
     const peopleArray = [p];
 
     requestedChanges.forEach((change) => {

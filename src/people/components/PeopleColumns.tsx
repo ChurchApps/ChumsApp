@@ -28,7 +28,7 @@ export function PeopleColumns(props: Props) {
       const option = o;
       const selectedClass = (props.selectedColumns.indexOf(o.key) > -1) ? "checked" : "";
       result.push(<Grid key={i} item md={4} sm={6} xs={12}>
-        <FormControlLabel control={<Checkbox size="small" checked={selectedClass === "checked"} onChange={(e) => { props.toggleColumn(e.target.name); }} name={option.key} />} label={option.label} />
+        <FormControlLabel control={<Checkbox size="small" checked={selectedClass === "checked"} onChange={(e) => { props.toggleColumn(e.target.name); }} name={option.key} data-testid={`column-checkbox-${option.key}`} aria-label={`Column ${option.label}`} />} label={option.label} />
       </Grid>);
     });
     return result;
@@ -40,7 +40,7 @@ export function PeopleColumns(props: Props) {
       const optionalColumn = oc;
       const selectedClass = (props.selectedColumns.indexOf(optionalColumn.id) > -1) ? "checked" : "";
       result.push(<Grid key={i} item md={4} sm={6} xs={12}>
-        <FormControlLabel control={<Checkbox size="small" checked={selectedClass === "checked"} onChange={(e) => { props.toggleColumn(e.target.name); }} name={optionalColumn.id} />} label={optionalColumn.title} />
+        <FormControlLabel control={<Checkbox size="small" checked={selectedClass === "checked"} onChange={(e) => { props.toggleColumn(e.target.name); }} name={optionalColumn.id} data-testid={`optional-column-checkbox-${optionalColumn.id}`} aria-label={`Optional column ${optionalColumn.title}`} />} label={optionalColumn.title} />
       </Grid>)
     });
     return result;
@@ -69,7 +69,7 @@ export function PeopleColumns(props: Props) {
 
   return (
     <>
-      <SmallButton icon="view_column" onClick={handleClick} />
+      <SmallButton icon="view_column" onClick={handleClick} data-testid="columns-button" ariaLabel="Select columns" />
       <Dialog id="fieldsMenu" open={open} onClose={handleClose} fullWidth maxWidth="md">
         <DialogTitle>{Locale.label("people.peopleColumns.filt")}</DialogTitle>
         <DialogContent>

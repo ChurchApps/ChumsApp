@@ -22,7 +22,7 @@ export const DirectoryApproveSettingsEdit: React.FC<Props> = (props) => {
   };
 
   const getFields = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     groups.forEach((g) => {
       result.push(<MenuItem value={g.id}>{g.name}</MenuItem>);
     });
@@ -40,7 +40,7 @@ export const DirectoryApproveSettingsEdit: React.FC<Props> = (props) => {
     }
   };
 
-  React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData(); }, [props.churchId]); //eslint-disable-line
+  React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData(); }, [props.churchId]);  
   React.useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, GroupInterface, Locale, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, type GroupInterface, Locale, SmallButton } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
 import { MinistryList } from "./MinistryList";
 
@@ -21,7 +21,7 @@ export const PlanList = (props: Props) => {
   }
 
   const getAddPlanLink = () => (
-    <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={addPlan}>
+    <IconButton aria-label="Add plan" id="addBtnGroup" data-cy="add-button" onClick={addPlan} data-testid="add-plan-button">
       <Icon color="primary">add</Icon>
     </IconButton>
   );

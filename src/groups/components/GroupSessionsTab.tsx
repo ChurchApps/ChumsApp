@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const GroupSessionsTab = (props: Props) => {
-  let a = 0
+  const a = 0
   const [addedPerson, setAddedPerson] = React.useState({} as PersonInterface);
   const [addedSession, setAddedSession] = React.useState({} as SessionInterface);
   const [addSessionVisible, setAddSessionVisible] = React.useState(false);

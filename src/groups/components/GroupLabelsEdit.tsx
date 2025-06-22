@@ -58,7 +58,7 @@ export const GroupLabelsEdit: React.FC<Props> = (props) => {
     const isChecked = groupLabels.includes(key);
     return <FormControlLabel
       key={key}
-      control={<Checkbox name={key} checked={isChecked} onChange={handleChange} />}
+      control={<Checkbox name={key} checked={isChecked} onChange={handleChange} data-testid={`label-checkbox-${key.toLowerCase().replace(/\s+/g, '-')}`} aria-label={`Label ${key}`} />}
       label={key}
     />
   }
@@ -68,7 +68,7 @@ export const GroupLabelsEdit: React.FC<Props> = (props) => {
   return <>
     <div style={{marginTop:10}}>Labels</div>
     {getItems()}
-    <a href="about:blank" onClick={handleAdd}>Add New Label</a>
+    <a href="about:blank" onClick={handleAdd} data-testid="add-new-label-link" aria-label="Add new label">Add New Label</a>
 
   </>
 };

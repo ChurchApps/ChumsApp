@@ -1,6 +1,6 @@
 import React from "react";
 import { AssociatedForms } from "."
-import { PersonHelper, PersonInterface, Loading, DisplayBox, DateHelper, Locale } from "@churchapps/apphelper"
+import { PersonHelper, type PersonInterface, Loading, DisplayBox, DateHelper, Locale } from "@churchapps/apphelper"
 import { Grid, Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { formattedPhoneNumber } from "./PersonEdit";
 
@@ -16,8 +16,8 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
     if (!person) return <Loading />
     else {
 
-      let leftAttributes = [];
-      let contactMethods = [];
+      const leftAttributes = [];
+      const contactMethods = [];
       if (person) {
         const p = { ...person };
         if (p.gender && p.gender !== "Unspecified") leftAttributes.push(<div key="gender"><label>{Locale.label("person.gender")}</label> <b>{p.gender}</b></div>);
@@ -39,7 +39,7 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
         }
 
         if (p.contactInfo.address1) {
-          let lines = [];
+          const lines = [];
           lines.push(<div key="address1"><b>{p.contactInfo.address1}</b></div>);
           if (p.contactInfo.address2) lines.push(<div key="address2"><b>{p.contactInfo.address2}</b></div>);
           lines.push(<div key="contactInfo">{p.contactInfo.city}, {p.contactInfo.state} {p.contactInfo.zip}</div>);

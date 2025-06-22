@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { UserAdd, RolePermissions, RoleMembers } from "./components";
-import { ApiHelper, RoleInterface, UserHelper, Permissions, RoleMemberInterface, DisplayBox, Locale } from "@churchapps/apphelper";
+import { ApiHelper, type RoleInterface, UserHelper, Permissions, type RoleMemberInterface, DisplayBox, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom"
 import { Grid } from "@mui/material";
 import { Banner } from "@churchapps/apphelper";

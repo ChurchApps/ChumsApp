@@ -1,4 +1,4 @@
-import { Icon, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Icon, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ErrorMessages, InputBox, ActionInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { ContentPicker } from "../../components/ContentPicker";
@@ -39,7 +39,7 @@ export const ActionEdit = (props: Props) => {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
     const a = { ...action };
     switch (e.target.name) {
@@ -50,7 +50,7 @@ export const ActionEdit = (props: Props) => {
     setAction(a);
   }
 
-  const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
     const d = { ...taskDetails };
     switch (e.target.name) {
@@ -91,12 +91,12 @@ export const ActionEdit = (props: Props) => {
   return (
     <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.actionEdit.editAct")} saveFunction={handleSave} cancelFunction={props.onCancel} help="chums/automations">
       <ErrorMessages errors={errors} />
-      <Select fullWidth label={Locale.label("tasks.actionEdit.actType")} value={action?.actionType} onChange={handleChange}>
+      <Select fullWidth label={Locale.label("tasks.actionEdit.actType")} value={action?.actionType} onChange={handleChange} data-testid="action-type-select" aria-label="Action type">
         <MenuItem value="task">{Locale.label("tasks.actionEdit.taskAssign")}</MenuItem>
       </Select>
-      <TextField fullWidth label={Locale.label("tasks.actionEdit.assignTo")} value={taskDetails.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
-      <TextField fullWidth label={Locale.label("tasks.actionEdit.taskTitle")} value={taskDetails?.title || ""} name="title" onChange={handleDetailsChange} />
-      <TextField fullWidth label={Locale.label("tasks.actionEdit.taskNote")} value={taskDetails?.note || ""} name="note" onChange={handleDetailsChange} multiline={true} />
+      <TextField fullWidth label={Locale.label("tasks.actionEdit.assignTo")} value={taskDetails.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} data-testid="action-assign-to-input" aria-label="Assign to" />
+      <TextField fullWidth label={Locale.label("tasks.actionEdit.taskTitle")} value={taskDetails?.title || ""} name="title" onChange={handleDetailsChange} data-testid="action-task-title-input" aria-label="Task title" />
+      <TextField fullWidth label={Locale.label("tasks.actionEdit.taskNote")} value={taskDetails?.note || ""} name="note" onChange={handleDetailsChange} multiline={true} data-testid="action-task-note-input" aria-label="Task note" />
       {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
     </InputBox>
   );

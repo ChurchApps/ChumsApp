@@ -1,6 +1,6 @@
 import React from "react";
 import { DisplayBox, Locale } from "@churchapps/apphelper";
-import { SongDetailInterface } from "../../../helpers";
+import { type SongDetailInterface } from "../../../helpers";
 import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { SongDetailsEdit } from "./SongDetailsEdit";
 import { SongDetailLinks } from "./SongDetailLinks";

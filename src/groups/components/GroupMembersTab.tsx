@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const GroupMembersTab = (props:Props) => {
-  let a = 0
+  const a = 0
   const [addedPerson, setAddedPerson] = React.useState({} as PersonInterface);
   const addPerson = (p: PersonInterface) => setAddedPerson(p);
 

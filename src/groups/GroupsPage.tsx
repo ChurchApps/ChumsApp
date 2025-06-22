@@ -3,7 +3,7 @@ import { GroupAdd } from "./components";
 import { ApiHelper, DisplayBox, UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box, Chip } from "@mui/material"
-import { useMountedState, GroupInterface, Permissions } from "@churchapps/apphelper";
+import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 
 export const GroupsPage = () => {
@@ -18,7 +18,7 @@ export const GroupsPage = () => {
       return (
         <Stack direction="row" alignItems="center">
           <ExportLink data={groups} spaceAfter={true} filename="groups.csv" />{" "}
-          <IconButton aria-label="addGroup" color="primary" onClick={() => { setShowAdd(true); }}>
+          <IconButton aria-label="addGroup" color="primary" onClick={() => { setShowAdd(true); }} data-testid="add-group-button">
             <Icon>add</Icon>
           </IconButton>
         </Stack>
@@ -45,7 +45,7 @@ export const GroupsPage = () => {
   React.useEffect(loadData, [isMounted]);
 
   const getRows = () => {
-    let rows: JSX.Element[] = [];
+    const rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
       rows.push(<TableRow key="0"><TableCell>{Locale.label("groups.groupsPage.noGroupMsg")}</TableCell></TableRow>);
@@ -54,9 +54,9 @@ export const GroupsPage = () => {
 
     let lastCat = "";
     for (let i = 0; i < groups.length; i++) {
-      let g = groups[i];
-      let cat = (g.categoryName !== lastCat) ? <Box sx={{ display: "flex", alignItems: "center" }}><Icon>folder</Icon> {g.categoryName}</Box> : <></>
-      let memberCount = g.memberCount === 1 ? Locale.label("groups.groupsPage.pers") : g.memberCount.toString() + Locale.label("groups.groupsPage.spPpl");
+      const g = groups[i];
+      const cat = (g.categoryName !== lastCat) ? <Box sx={{ display: "flex", alignItems: "center" }}><Icon>folder</Icon> {g.categoryName}</Box> : <></>
+      const memberCount = g.memberCount === 1 ? Locale.label("groups.groupsPage.pers") : g.memberCount.toString() + Locale.label("groups.groupsPage.spPpl");
       rows.push(
         <TableRow sx={{ whiteSpace: "nowrap" }} key={g.id}>
           <TableCell>{cat}</TableCell>
@@ -92,7 +92,7 @@ export const GroupsPage = () => {
     return rows;
   }
 
-  let addBox = (showAdd) ? <GroupAdd updatedFunction={handleAddUpdated} tags="standard" /> : <></>
+  const addBox = (showAdd) ? <GroupAdd updatedFunction={handleAddUpdated} tags="standard" /> : <></>
 
   const getTable = () => {
     if (isLoading) return <Loading />

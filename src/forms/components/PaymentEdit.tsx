@@ -1,6 +1,9 @@
 import React from "react";
-import { FormControl, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
-import { ApiHelper, ArrayHelper, FundInterface, Locale, QuestionInterface } from "@churchapps/apphelper";
+import {
+ FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
+import {
+ ApiHelper, ArrayHelper, type FundInterface, Locale, type QuestionInterface 
+} from "@churchapps/apphelper";
 
 interface Props { question: QuestionInterface, updatedFunction: (question: QuestionInterface) => void }
 
@@ -9,19 +12,19 @@ export const PaymentEdit: React.FC<Props> = (props) => {
   const [fundId, setFundId] = React.useState(props.question.choices?.find((c: any) => c.text === "FundId")?.value || "");
   const [amount, setAmount] = React.useState(props.question.choices?.find((c: any) => c.text === "Amount")?.value || 0);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     e.preventDefault();
     switch (e.target.name) {
       case "fundId": setFundId(e.target.value); break;
       case "amount": setAmount(Number(e.target.value)); break;
     }
-    let q = { ...props.question };
+    const q = { ...props.question };
     if (e.target.name === "fundId") {
-      let fundIndex = q.choices.findIndex((c: any) => c.text === "FundId");
+      const fundIndex = q.choices.findIndex((c: any) => c.text === "FundId");
       q.choices[fundIndex].value = e.target.value;
     }
     else if (e.target.name === "amount") {
-      let amountIndex = q.choices.findIndex((c: any) => c.text === "Amount");
+      const amountIndex = q.choices.findIndex((c: any) => c.text === "Amount");
       q.choices[amountIndex].value = e.target.value.toString();
     }
     props.updatedFunction(q);
@@ -32,7 +35,7 @@ export const PaymentEdit: React.FC<Props> = (props) => {
       setFunds(data);
       if (fundId === "" && data.length > 0) {
         setFundId(data[0].id);
-        let q = { ...props.question };
+        const q = { ...props.question };
         if (!q.choices) {
           q.choices = [{ value: data[0].id, text: "FundId" }];
           q.choices.push({ value: "0", text: "Amount" });

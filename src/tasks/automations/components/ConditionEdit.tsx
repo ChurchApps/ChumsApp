@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FormControl, InputLabel, ListSubheader, MenuItem, Select, type SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ErrorMessages, InputBox, ApiHelper, ConditionInterface, Locale } from "@churchapps/apphelper";
 import { ConditionAttendance } from "./ConditionAttendance";
@@ -36,7 +36,7 @@ export const ConditionEdit = (props: Props) => {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
     const c = { ...condition };
     switch (e.target.name) {
@@ -81,7 +81,7 @@ export const ConditionEdit = (props: Props) => {
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel>{Locale.label("tasks.conditionEdit.conType")}</InputLabel>
-        <Select fullWidth label={Locale.label("tasks.conditionEdit.conType")} value={condition.field} name="field" onChange={handleChange}>
+        <Select fullWidth label={Locale.label("tasks.conditionEdit.conType")} value={condition.field} name="field" onChange={handleChange} data-testid="condition-type-select" aria-label="Condition type">
           <ListSubheader>{Locale.label("tasks.conditionEdit.gen")}</ListSubheader>
           <MenuItem value="today">{Locale.label("tasks.conditionEdit.today")}</MenuItem>
 

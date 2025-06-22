@@ -21,7 +21,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
     if (e.target) files = e.target.files;
     const reader = new FileReader();
     reader.onload = () => {
-      let url = reader.result.toString();
+      const url = reader.result.toString();
       setCurrentUrl(url);
       setDataUrl(url);
     };
@@ -30,7 +30,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
 
   const getHeaderButton = () => (<div>
     <input type="file" onChange={handleUpload} id="fileUpload" accept="image/*" style={{ display: "none" }} />
-    <SmallButton onClick={() => { document.getElementById("fileUpload").click(); }} text={Locale.label("settings.imageEditor.upload")} icon="upload" />
+    <SmallButton onClick={() => { document.getElementById("fileUpload").click(); }} text={Locale.label("settings.imageEditor.upload")} icon="upload" data-testid="upload-image-button" ariaLabel="Upload image" />
   </div>)
 
   const cropper = React.useRef(null);
@@ -44,7 +44,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
       const data = cropper.current.getCropBoxData();
       const ratio = parseInt((300.0 / data.height).toString());
       const width = data.width * ratio;
-      let url = cropper.current.getCroppedCanvas({ width: width, height: 300 }).toDataURL();
+      const url = cropper.current.getCroppedCanvas({ width: width, height: 300 }).toDataURL();
       setDataUrl(url);
     }
   }
@@ -60,7 +60,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
   const handleSave = () => { props.updatedFunction(dataUrl); }
   const handleCancel = () => { props.updatedFunction(null); }
   const init = useCallback(() => {
-    let startingUrl = (ArrayHelper.getOne(props.settings, "keyName", props.name))?.value;
+    const startingUrl = (ArrayHelper.getOne(props.settings, "keyName", props.name))?.value;
     setCurrentUrl(startingUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

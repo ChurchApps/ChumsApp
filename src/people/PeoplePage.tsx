@@ -1,12 +1,24 @@
 import React from "react";
-import { Locale, PersonInterface } from "@churchapps/apphelper";
-import { PeopleSearchResults, PeopleColumns } from "./components";
-import { ApiHelper, DisplayBox, ExportLink } from "@churchapps/apphelper";
-import { Grid } from "@mui/material"
-import { ChumsPersonHelper } from "../helpers";
-import { PeopleSearch } from "./components/PeopleSearch";
-import { useMountedState } from "@churchapps/apphelper";
-import { Banner } from "@churchapps/apphelper";
+import {
+ Locale, type PersonInterface 
+} from "@churchapps/apphelper";
+import {
+ PeopleSearchResults, PeopleColumns } from "./components";
+import {
+ ApiHelper, DisplayBox, ExportLink 
+} from "@churchapps/apphelper";
+import {
+ Grid } from "@mui/material"
+import {
+ ChumsPersonHelper } from "../helpers";
+import {
+ PeopleSearch } from "./components/PeopleSearch";
+import {
+ useMountedState 
+} from "@churchapps/apphelper";
+import {
+ Banner 
+} from "@churchapps/apphelper";
 
 export const PeoplePage = () => {
 
@@ -38,7 +50,7 @@ export const PeoplePage = () => {
   ];
 
   const handleToggleColumn = (key: string) => {
-    let sc = [...selectedColumns];
+    const sc = [...selectedColumns];
     const index = sc.indexOf(key);
     if (index === -1) sc.push(key);
     else sc.splice(index, 1);

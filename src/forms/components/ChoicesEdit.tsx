@@ -17,16 +17,16 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
 
   const handleRemove = (e: React.MouseEvent) => {
     e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let idx = parseInt(anchor.getAttribute("data-index"));
-    let q = { ...props.question };
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    const idx = parseInt(anchor.getAttribute("data-index"));
+    const q = { ...props.question };
     q.choices.splice(idx, 1);
     props.updatedFunction(q);
   }
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
-    let q = { ...props.question };
+    const q = { ...props.question };
     if (!q.choices) q.choices = [{ value: choiceValue, text: choiceText }];
     else q.choices.push({ value: choiceValue, text: choiceText });
     props.updatedFunction(q);
@@ -35,10 +35,10 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
   }
 
   const getRows = () => {
-    let result = [];
+    const result = [];
     if (props.question.choices) {
       for (let i = 0; i < props.question.choices?.length; i++) {
-        let c = props.question.choices[i];
+        const c = props.question.choices[i];
         result.push(<TableRow key={i}>
           <TableCell>{c.value}</TableCell>
           <TableCell>{c.text}</TableCell>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 
-import { ArrangementInterface, SongDetailInterface } from "../../../helpers";
+import { type ArrangementInterface, type SongDetailInterface } from "../../../helpers";
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
 import { ApiHelper, DisplayBox, Locale } from "@churchapps/apphelper";
 import { Grid } from "@mui/material";

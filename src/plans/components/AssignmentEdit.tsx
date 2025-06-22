@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Table, TableCell, TableRow } from "@mui/material";
-import { ApiHelper, AssignmentInterface, GroupMemberInterface, InputBox, Locale, PersonHelper, PositionInterface } from "@churchapps/apphelper";
+import { ApiHelper, type AssignmentInterface, type GroupMemberInterface, InputBox, Locale, PersonHelper, type PositionInterface } from "@churchapps/apphelper";
 
 interface Props { assignment: AssignmentInterface, position:PositionInterface, peopleNeeded:number, updatedFunction: (done:boolean) => void }
 
@@ -26,7 +26,7 @@ export const AssignmentEdit = (props:Props) => {
   }
 
   const getMembers = () => {
-    let rows: JSX.Element[] = [];
+    const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) {
       rows.push(<TableRow key="0"><TableCell>{Locale.label("plans.assignmentEdit.noMem")}</TableCell></TableRow>)
       return rows;

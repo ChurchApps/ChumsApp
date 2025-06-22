@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, Grid, Icon, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { PlanItemInterface } from "../../helpers";
+import { type PlanItemInterface } from "../../helpers";
 import { DraggableWrapper } from "../../components/DraggableWrapper";
 import { DroppableWrapper } from "../../components/DroppableWrapper";
 import { ApiHelper } from "@churchapps/apphelper";
@@ -113,8 +113,8 @@ export const PlanItem = (props: Props) => {
   }
 
   const formatTime = (seconds: number) => {
-    let minutes = Math.floor(seconds / 60);
-    let secs = seconds % 60;
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
     return minutes + ":" + (secs < 10 ? "0" : "") + secs;
   }
 

@@ -88,7 +88,7 @@ export function AdvancedPeopleSearch(props: Props) {
   const getDisplayConditions = () => {
     const result: JSX.Element[] = [];
     let idx = 0;
-    for (let c of conditions) {
+    for (const c of conditions) {
       const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
       const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", Locale.label("people.peopleSearch.notIn")).replace("donatedToAny", Locale.label("people.peopleSearch.madeTo")).replace("donatedTo", Locale.label("people.peopleSearch.madeTo")).replace("attendedCampus", Locale.label("people.peopleSearch.for")).replace("attendedAny", Locale.label("people.peopleSearch.for")).replace("attendedServiceTime", Locale.label("people.peopleSearch.for")).replace("attendedService", Locale.label("people.peopleSearch.for")).replace("attendedGroup", Locale.label("people.peopleSearch.for"));
       const index = idx;

@@ -4,7 +4,7 @@ import { ChumsPersonHelper, UpdateHouseHold } from "."
 import { PersonHelper, DateHelper, InputBox, ApiHelper, PersonInterface, Loading, ErrorMessages, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material"
 
 interface Props {
   id?: string,
@@ -38,10 +38,10 @@ export function PersonEdit(props: Props) {
   });
 
   //const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     setErrors([]);
     const p = { ...person } as PersonInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "name.first": p.name.first = value; break;
       case "name.middle": p.name.middle = value; break;
@@ -109,7 +109,7 @@ export function PersonEdit(props: Props) {
   }
   const handleChangeExtention = (e: React.ChangeEvent<HTMLInputElement>) => {
     const p = { ...person } as PersonInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "contactInfo.homePhone": p.contactInfo.homePhone = p.contactInfo.homePhone?.split('x')[0] + 'x' + value; break;
       case "contactInfo.workPhone": p.contactInfo.workPhone = p.contactInfo.workPhone?.split('x')[0] + 'x' + value; break;
@@ -169,7 +169,7 @@ export function PersonEdit(props: Props) {
       setPerson(null);
     }
   }, [props.person]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   React.useEffect(fetchMembers, [props.person]);
 
   const ariaLabel = {
@@ -185,7 +185,7 @@ export function PersonEdit(props: Props) {
     !person
       ? <Loading />
       : (
-        <InputBox headerIcon="person" headerText={Locale.label("people.personEdit.persDet")} cancelFunction={props.updatedFunction} deleteFunction={handleDelete} saveFunction={handleSave} isSubmitting={isSubmitting} headerActionContent={<Button id="mergeButton" size="small" onClick={props.showMergeSearch}>{Locale.label("people.personEdit.merge")}</Button>}>
+        <InputBox headerIcon="person" headerText={Locale.label("people.personEdit.persDet")} cancelFunction={props.updatedFunction} deleteFunction={handleDelete} saveFunction={handleSave} isSubmitting={isSubmitting} headerActionContent={<Button id="mergeButton" size="small" onClick={props.showMergeSearch} data-testid="merge-person-button" aria-label="Merge person">{Locale.label("people.personEdit.merge")}</Button>}>
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             <Grid item sm={3} className="my-auto">
@@ -198,18 +198,18 @@ export function PersonEdit(props: Props) {
             <Grid item sm={8}>
               <Grid container spacing={3}>
                 <Grid item md={4} xs={12}>
-                  <TextField fullWidth name="name.first" label={Locale.label("person.firstName")} id="first" value={person.name.first || ""} onChange={handleChange} />
+                  <TextField fullWidth name="name.first" label={Locale.label("person.firstName")} id="first" value={person.name.first || ""} onChange={handleChange} data-testid="first-name-input" aria-label="First name" />
                 </Grid>
                 <Grid item md={4} xs={12}>
                   <TextField fullWidth name="name.middle" label={Locale.label("person.middleName")} id="middle" value={person.name.middle || ""} onChange={handleChange} />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                  <TextField fullWidth name="name.last" label={Locale.label("person.lastName")} id="last" value={person.name.last || ""} onChange={handleChange} />
+                  <TextField fullWidth name="name.last" label={Locale.label("person.lastName")} id="last" value={person.name.last || ""} onChange={handleChange} data-testid="last-name-input" aria-label="Last name" />
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={12}>
-                  <TextField fullWidth name="contactInfo.email" label={Locale.label("person.email")} type="email" id="email" value={person.contactInfo.email || ""} onChange={handleChange} />
+                  <TextField fullWidth name="contactInfo.email" label={Locale.label("person.email")} type="email" id="email" value={person.contactInfo.email || ""} onChange={handleChange} data-testid="email-input" aria-label="Email address" />
                 </Grid>
                 <Grid item md={6} xs={12}>
                   <TextField inputProps={{ maxLength: 20 }} fullWidth name="nametagNotes" label={Locale.label("people.personEdit.nameNote")} id="nametagnotes" value={person.nametagNotes || ""} onChange={handleChange} />
@@ -219,12 +219,12 @@ export function PersonEdit(props: Props) {
           </Grid>
           <Grid container spacing={3}>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth name="name.nick" id="nick" label={Locale.label("person.nickName")} value={person.name.nick || ""} onChange={handleChange} />
+              <TextField fullWidth name="name.nick" id="nick" label={Locale.label("person.nickName")} value={person.name.nick || ""} onChange={handleChange} data-testid="nickname-input" aria-label="Nickname" />
             </Grid>
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
                 <InputLabel id="membershipStatus-label">{Locale.label("person.membershipStatus")}</InputLabel>
-                <Select name="membershipStatus" id="membershipStatus" labelId="membershipStatus-label" label={Locale.label("person.membershipStatus")} value={person.membershipStatus || ""} onChange={handleChange}>
+                <Select name="membershipStatus" id="membershipStatus" labelId="membershipStatus-label" label={Locale.label("person.membershipStatus")} value={person.membershipStatus || ""} onChange={handleChange} data-testid="membership-status-select" aria-label="Membership status">
                   <MenuItem value="Visitor">{Locale.label("person.visitor")}</MenuItem>
                   <MenuItem value="Regular Attendee">{Locale.label("person.regularAttendee")}</MenuItem>
                   <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>
@@ -234,7 +234,7 @@ export function PersonEdit(props: Props) {
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{ shrink: true }} label={Locale.label("person.birthDate")} value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{ shrink: true }} label={Locale.label("person.birthDate")} value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} data-testid="birth-date-input" aria-label="Birth date" />
             </Grid>
           </Grid>
 
@@ -242,7 +242,7 @@ export function PersonEdit(props: Props) {
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
                 <InputLabel id="gender-label">{Locale.label("person.gender")}</InputLabel>
-                <Select name="gender" id="gender" labelId="gender-label" label={Locale.label("person.gender")} value={person.gender || ""} onChange={handleChange}>
+                <Select name="gender" id="gender" labelId="gender-label" label={Locale.label("person.gender")} value={person.gender || ""} onChange={handleChange} data-testid="gender-select" aria-label="Gender">
                   <MenuItem value="Unspecified">{Locale.label("person.unspecified")}</MenuItem>
                   <MenuItem value="Male">{Locale.label("person.male")}</MenuItem>
                   <MenuItem value="Female">{Locale.label("person.female")}</MenuItem>
@@ -252,7 +252,7 @@ export function PersonEdit(props: Props) {
             <Grid item md={4} xs={12}>
               <FormControl fullWidth>
                 <InputLabel id="maritalStatus-label">{Locale.label("person.maritalStatus")}</InputLabel>
-                <Select name="maritalStatus" id="maritalStatus" label={Locale.label("people.personEdit.maritalStatus")} labelId="maritalStatus-label" value={person.maritalStatus || ""} onChange={handleChange}>
+                <Select name="maritalStatus" id="maritalStatus" label={Locale.label("people.personEdit.maritalStatus")} labelId="maritalStatus-label" value={person.maritalStatus || ""} onChange={handleChange} data-testid="marital-status-select" aria-label="Marital status">
                   <MenuItem value="Unknown">{Locale.label("person.unknown")}</MenuItem>
                   <MenuItem value="Single">{Locale.label("person.single")}</MenuItem>
                   <MenuItem value="Married">{Locale.label("person.married")}</MenuItem>
@@ -262,24 +262,24 @@ export function PersonEdit(props: Props) {
               </FormControl>
             </Grid>
             <Grid item md={4} xs={12}>
-              <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{ shrink: true }} label={Locale.label("person.anniversary")} value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} />
+              <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{ shrink: true }} label={Locale.label("person.anniversary")} value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} data-testid="anniversary-input" aria-label="Anniversary" />
             </Grid>
           </Grid>
 
           <Grid container spacing={3}>
             <Grid item md={8}>
               <div className="section">{Locale.label("person.address")}</div>
-              <TextField name="contactInfo.address1" id="address1" fullWidth label={Locale.label("person.line1")} value={person.contactInfo?.address1 || ""} onChange={handleChange} />
-              <TextField name="contactInfo.address2" id="address2" fullWidth label={Locale.label("person.line2")} value={person.contactInfo?.address2 || ""} onChange={handleChange} />
+              <TextField name="contactInfo.address1" id="address1" fullWidth label={Locale.label("person.line1")} value={person.contactInfo?.address1 || ""} onChange={handleChange} data-testid="address1-input" aria-label="Address line 1" />
+              <TextField name="contactInfo.address2" id="address2" fullWidth label={Locale.label("person.line2")} value={person.contactInfo?.address2 || ""} onChange={handleChange} data-testid="address2-input" aria-label="Address line 2" />
               <Grid container spacing={3}>
                 <Grid item xs={6}>
-                  <TextField name="contactInfo.city" id="city" fullWidth label={Locale.label("person.city")} value={person.contactInfo?.city || ""} onChange={handleChange} />
+                  <TextField name="contactInfo.city" id="city" fullWidth label={Locale.label("person.city")} value={person.contactInfo?.city || ""} onChange={handleChange} data-testid="city-input" aria-label="City" />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField name="contactInfo.state" id="state" fullWidth label={Locale.label("person.state")} value={person.contactInfo?.state || ""} onChange={handleChange} />
+                  <TextField name="contactInfo.state" id="state" fullWidth label={Locale.label("person.state")} value={person.contactInfo?.state || ""} onChange={handleChange} data-testid="state-input" aria-label="State" />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField name="contactInfo.zip" id="zip" fullWidth label={Locale.label("person.zip")} value={person.contactInfo?.zip || ""} onChange={handleChange} />
+                  <TextField name="contactInfo.zip" id="zip" fullWidth label={Locale.label("person.zip")} value={person.contactInfo?.zip || ""} onChange={handleChange} data-testid="zip-input" aria-label="ZIP code" />
                 </Grid>
               </Grid>
             </Grid>

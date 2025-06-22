@@ -19,7 +19,7 @@ export const ChurchSettings: React.FC<Props> = (props) => {
   const getEditFunction = () => (UserHelper.checkAccess(Permissions.membershipApi.settings.edit)) ? handleEdit : null
 
   const getDisplayAddress = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     if (props.church !== null) {
 
       if (!isEmpty(props.church.address1)) result.push(<span key="address1">{props.church.address1}<br /></span>);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChurchInterface, ApiHelper, UserHelper, Permissions, DisplayBox, Locale } from "@churchapps/apphelper"
+import { type ChurchInterface, ApiHelper, UserHelper, Permissions, DisplayBox, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import { Grid, Icon } from "@mui/material";
 import { Banner } from "@churchapps/apphelper";
@@ -35,7 +35,7 @@ export const ManageChurch = () => {
   }
 
   const getTabs = () => {
-    let tabs = [];
+    const tabs = [];
     tabs.push({ key: "settings", icon: "settings", label: Locale.label("settings.manageChurch.manage")});
     tabs.push({ key: "roles", icon: "lock", label: Locale.label("settings.roles.roles")});
 

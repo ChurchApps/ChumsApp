@@ -1,7 +1,12 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { ReportWithFilter, ReportInterface, ApiHelper, Locale } from "@churchapps/apphelper";
-import { Banner } from "@churchapps/apphelper";
+import {
+ useParams } from "react-router-dom";
+import {
+ ReportWithFilter, type ReportInterface, ApiHelper, Locale 
+} from "@churchapps/apphelper";
+import {
+ Banner 
+} from "@churchapps/apphelper";
 
 export const ReportPage = () => {
   const params = useParams();

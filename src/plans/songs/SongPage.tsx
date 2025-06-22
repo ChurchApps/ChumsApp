@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, Locale } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 import { Link, useParams } from "react-router-dom";
-import { ArrangementInterface, ArrangementKeyInterface, SongDetailInterface, SongInterface } from "../../helpers";
+import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Icon } from "@mui/material";
 import { Arrangement } from "./components/Arrangement";
 import { SongSearchDialog } from "./SongSearchDialog";
@@ -25,7 +25,7 @@ export const SongPage = () => {
   useEffect(() => { loadData() }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
 
-  let defaultTab = "details";
+  const defaultTab = "details";
 
   const getTabs = () => {
     const tabs: { key: string, icon: string, label: string }[] = [];

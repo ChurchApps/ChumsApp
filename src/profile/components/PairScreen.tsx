@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { ApiHelper, DateHelper, ErrorMessages, InputBox, Locale } from "@churchapps/apphelper";
 
 interface Props { updatedFunction: () => void }
@@ -8,9 +8,9 @@ export const PairScreen = (props: Props) => {
   const [code, setCode] = React.useState<string>("");
   const [errors, setErrors] = React.useState<string[]>([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "code": setCode(value); break;
     }

@@ -1,5 +1,5 @@
-import { ApiHelper, GenericSettingInterface, Locale, UniqueIdHelper, VisibilityPreferenceInterface } from "@churchapps/apphelper";
-import { FormControl, Grid, Icon, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Tooltip, Typography } from "@mui/material";
+import { ApiHelper, type GenericSettingInterface, Locale, UniqueIdHelper, type VisibilityPreferenceInterface } from "@churchapps/apphelper";
+import { FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography, type SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
 
 interface Props {
@@ -37,9 +37,9 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
     setPref(p);
   };
 
-  const handlePrefChange = (e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>) => {
+  const handlePrefChange = (e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => {
     const p = { ...pref } as VisibilityPreferenceInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "address": p.address = value; break;
       case "phoneNumber": p.phoneNumber = value; break;

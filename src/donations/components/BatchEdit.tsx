@@ -19,7 +19,7 @@ export const BatchEdit: React.FC<Props> = (props) => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let b = { ...batch } as DonationBatchInterface;
+    const b = { ...batch } as DonationBatchInterface;
     switch (e.currentTarget.name) {
       case "name": b.name = e.currentTarget.value; break;
       case "date":

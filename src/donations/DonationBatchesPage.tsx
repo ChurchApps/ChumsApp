@@ -2,7 +2,7 @@ import React from "react";
 import { BatchEdit, DonationEvents } from "./components";
 import { ApiHelper, DisplayBox, DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, SmallButton, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { useMountedState, DonationBatchInterface, Permissions } from "@churchapps/apphelper";
+import { useMountedState, type DonationBatchInterface, Permissions } from "@churchapps/apphelper";
 import {  Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
 import { Banner } from "@churchapps/apphelper";
 
@@ -17,8 +17,8 @@ export const DonationBatchesPage = () => {
 
   const showEditBatch = (e: React.MouseEvent) => {
     e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let id = anchor.getAttribute("data-id");
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    const id = anchor.getAttribute("data-id");
     setEditBatchId(id);
   }
 
@@ -27,10 +27,10 @@ export const DonationBatchesPage = () => {
       setBatches(data);
     }}); }
 
-  const getEditContent = () => (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><SmallButton onClick={() => { setEditBatchId("") }} icon="add" /></>) : null
+  const getEditContent = () => (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={batches} spaceAfter={true} filename="donationbatches.csv" /><SmallButton onClick={() => { setEditBatchId("") }} icon="add" data-testid="add-batch-button" ariaLabel="Add donation batch" /></>) : null
 
   const getSidebarModules = () => {
-    let result = [];
+    const result = [];
     if (editBatchId !== "notset") result.push(<BatchEdit key={result.length - 1} batchId={editBatchId} updatedFunction={batchUpdated} />)
     return result;
   }
@@ -82,15 +82,15 @@ export const DonationBatchesPage = () => {
       return result;
     }
 
-    let canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
-    let canViewBatcht = UserHelper.checkAccess(Permissions.givingApi.donations.view);
+    const canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
+    const canViewBatcht = UserHelper.checkAccess(Permissions.givingApi.donations.view);
     for (let i = 0; i < batches.length; i++) {
-      let b = batches[i];
+      const b = batches[i];
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch}><Icon>edit</Icon></a>) : null;
       const batchLink = (canViewBatcht) ? (<Link to={"/donations/batches/" + b.id}>{b.name}</Link>) : <>{b.name}</>;
 
       const dateObj = new Date(b.batchDate);
-      let tz = dateObj.getTimezoneOffset() * 60 * 1000; //get timeZoneOffset in ms
+      const tz = dateObj.getTimezoneOffset() * 60 * 1000; //get timeZoneOffset in ms
       const getDateTime = dateObj.getTime();
       let calcDate;
       if (tz > 0) {

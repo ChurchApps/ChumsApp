@@ -1,6 +1,6 @@
 import React from "react";
 import { DonationEdit, Donations } from "./components";
-import { ApiHelper, DonationBatchInterface, UserHelper, FundInterface, Permissions, Locale } from "@churchapps/apphelper";
+import { ApiHelper, type DonationBatchInterface, UserHelper, type FundInterface, Permissions, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Banner } from "@churchapps/apphelper";
 
@@ -20,7 +20,7 @@ export const DonationBatchPage = () => {
   }
 
   const getSidebarModules = () => {
-    let result = [];
+    const result = [];
     if (editDonationId !== "notset") result.push(<DonationEdit key="donationEdit" donationId={editDonationId} updatedFunction={donationUpdated} funds={funds} batchId={batch.id} />)
     return result;
   }

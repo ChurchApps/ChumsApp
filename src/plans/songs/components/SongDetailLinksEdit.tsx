@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { ApiHelper, DisplayBox, InputBox, SmallButton } from "@churchapps/apphelper";
-import { SongDetailLinkInterface } from "../../../helpers";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
+import { type SongDetailLinkInterface } from "../../../helpers";
+import { FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, type SelectChangeEvent } from "@mui/material";
 
 interface Props {
   songDetailId: string;
@@ -12,7 +12,7 @@ export const SongDetailLinksEdit = (props: Props) => {
   const [songDetailLinks, setSongDetailLinks] = React.useState<SongDetailLinkInterface[]>([]);
   const [editLink, setEditLink] = React.useState<SongDetailLinkInterface>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const l = { ...editLink };
     switch (e.target.name) {
       case "serviceKey": l.serviceKey = e.target.value; break;

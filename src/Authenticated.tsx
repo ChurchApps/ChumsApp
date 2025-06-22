@@ -39,7 +39,7 @@ import { OAuthPage } from "./OAuth";
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
 
-  let context = React.useContext(UserContext);
+  const context = React.useContext(UserContext);
 
   UserHelper.currentUserChurch = context.userChurch;
   UserHelper.userChurches = context.userChurches;

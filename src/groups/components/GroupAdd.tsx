@@ -23,7 +23,7 @@ export const GroupAdd: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);
     const g = { ...group } as GroupInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "name": g.name = value; break;
       case "categoryName": g.categoryName = value; break;
@@ -47,8 +47,8 @@ export const GroupAdd: React.FC<Props> = (props) => {
   return (
     <InputBox headerText={Locale.label("groups.groupAdd.new") + label} headerIcon="group" cancelFunction={handleCancel} saveFunction={handleAdd} saveText="Add" isSubmitting={isSubmitting}>
       <ErrorMessages errors={errors} />
-      {(props.tags==="standard") && <TextField fullWidth={true} label={Locale.label("groups.groupAdd.catName")} type="text" id="categoryName" name="categoryName" value={group.categoryName} onChange={handleChange} />}
-      <TextField fullWidth={true} label={Locale.label("common.name")} type="text" id="groupName" name="name" value={group.name} onChange={handleChange} />
+      {(props.tags==="standard") && <TextField fullWidth={true} label={Locale.label("groups.groupAdd.catName")} type="text" id="categoryName" name="categoryName" value={group.categoryName} onChange={handleChange} data-testid="add-category-name-input" aria-label="Category name" />}
+      <TextField fullWidth={true} label={Locale.label("common.name")} type="text" id="groupName" name="name" value={group.name} onChange={handleChange} data-testid="add-group-name-input" aria-label="Group name" />
     </InputBox>
   );
 }

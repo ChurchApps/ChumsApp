@@ -16,14 +16,14 @@ export const RoleCheck: React.FC<Props> = (props) => {
 
   const init = () => {
     for (let i = 0; i < props.rolePermissions.length; i++) {
-      let rp = props.rolePermissions[i];
+      const rp = props.rolePermissions[i];
       if (rp.apiName === props.apiName && rp.contentType === props.contentType && rp.action === props.action) setRolePermission(rp);
     }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      let rp: RolePermissionInterface = { roleId: props.roleId, apiName: props.apiName, contentType: props.contentType, action: props.action }
+      const rp: RolePermissionInterface = { roleId: props.roleId, apiName: props.apiName, contentType: props.contentType, action: props.action }
       ApiHelper.post("/rolepermissions/", [rp], "MembershipApi").then(data => {
         rp.id = data[0];
         setRolePermission(rp);
@@ -39,7 +39,7 @@ export const RoleCheck: React.FC<Props> = (props) => {
 
   return (
     <FormGroup>
-      <FormControlLabel control={<Checkbox checked={rolePermission !== null} onChange={handleChange} />} label={props.label} />
+      <FormControlLabel control={<Checkbox checked={rolePermission !== null} onChange={handleChange} data-testid={`role-permission-checkbox-${props.contentType}-${props.action}`} aria-label={`Permission ${props.label}`} />} label={props.label} />
     </FormGroup>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { ApiHelper, DisplayBox, SmallButton } from "@churchapps/apphelper";
 
 import { Accordion, AccordionDetails, AccordionSummary, Icon, IconButton, Stack, Table, TableBody, TableCell, TableRow } from "@mui/material";
-import { ArrangementInterface, SongDetailInterface, SongInterface } from "../../../helpers";
+import { type ArrangementInterface, type SongDetailInterface, type SongInterface } from "../../../helpers";
 import { ArrangementEdit } from "./ArrangementEdit";
 import { OldArrangement } from "./OldArrangement";
 
@@ -35,7 +35,7 @@ export const OldArrangements = (props: Props) => {
         result.push(<Accordion key={arrangement.id}>
           <AccordionSummary>
             {arrangement.name}
-            <span style={{ marginLeft: "auto" }}><SmallButton onClick={() => { setEditArrangement(arrangement) }} icon="edit" /></span>
+            <span style={{ marginLeft: "auto" }}><SmallButton onClick={() => { setEditArrangement(arrangement) }} icon="edit" data-testid={`edit-arrangement-button-${arrangement.id}`} ariaLabel={`Edit arrangement ${arrangement.name}`} /></span>
           </AccordionSummary>
           <AccordionDetails>
             <OldArrangement arrangement={arrangement} originalKey={props.songDetail?.keySignature} />
@@ -49,8 +49,8 @@ export const OldArrangements = (props: Props) => {
 
   const getEditContent = () => (
     <Stack direction="row">
-      <SmallButton onClick={() => { setEditArrangement({ name: "Default", songId: props.song?.id }); }} icon="add" />
-      {arrangements?.length === 1 && <SmallButton onClick={() => { setEditArrangement(arrangements[0]) }} icon="edit" />}
+      <SmallButton onClick={() => { setEditArrangement({ name: "Default", songId: props.song?.id }); }} icon="add" data-testid="add-arrangement-button" ariaLabel="Add arrangement" />
+      {arrangements?.length === 1 && <SmallButton onClick={() => { setEditArrangement(arrangements[0]) }} icon="edit" data-testid="edit-single-arrangement-button" ariaLabel="Edit arrangement" />}
     </Stack>
   );
 

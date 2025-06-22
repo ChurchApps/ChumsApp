@@ -21,15 +21,15 @@ export class ChordProHelper {
   static noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
   static replaceChords = (line: string) => {
-    let l = line.replaceAll("[", "<sup>").replaceAll("]", "</sup>");
+    const l = line.replaceAll("[", "<sup>").replaceAll("]", "</sup>");
     return l;
   }
 
   static transposeChords = (line: string, halfSteps: number) => {
-    let chords = line.match(/\[[A-G][#bm]?(\/[A-G][#bm]?)?\]/g);
+    const chords = line.match(/\[[A-G][#bm]?(\/[A-G][#bm]?)?\]/g);
     if (chords) {
       chords.forEach(chord => {
-        let newChord = this.transposeChord(chord.substring(1, chord.length - 1), halfSteps);
+        const newChord = this.transposeChord(chord.substring(1, chord.length - 1), halfSteps);
         line = line.replace(chord, "[" + newChord + "]");
       });
     }
@@ -89,8 +89,8 @@ export class ChordProHelper {
   }
 
   static formatLyrics = (lyrics: string, keyOffset: number) => {
-    let lines = lyrics.split("\n");
-    let result: string[] = [];
+    const lines = lyrics.split("\n");
+    const result: string[] = [];
     lines.forEach((line, index) => {
       let l = line.trim();
       let lineType = "line";

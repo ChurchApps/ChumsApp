@@ -17,7 +17,7 @@ export const RoleEdit: React.FC<Props> = (props) => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let r = { ...role };
+    const r = { ...role };
     r.name = e.currentTarget.value;
 
     setRole(r);
@@ -49,7 +49,7 @@ export const RoleEdit: React.FC<Props> = (props) => {
   return (
     <InputBox id="roleBox" headerIcon="lock" headerText={Locale.label("settings.roleEdit.roleEdit")} saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={(!UniqueIdHelper.isMissing(props.roleId)) ? handleDelete : undefined}>
       <ErrorMessages errors={errors} />
-      <TextField fullWidth name="roleName" label={Locale.label("settings.roleEdit.roleName")} value={role?.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth name="roleName" label={Locale.label("settings.roleEdit.roleName")} value={role?.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="role-name-input" aria-label="Role name" />
     </InputBox>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem } from "@mui/material";
-import { useMountedState, ServiceTimeInterface, ServiceInterface, InputBox, ApiHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { FormControl, InputLabel, Select, TextField, MenuItem, type SelectChangeEvent } from "@mui/material";
+import { useMountedState, type ServiceTimeInterface, type ServiceInterface, InputBox, ApiHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 
 interface Props {
   serviceTime: ServiceTimeInterface,
@@ -14,10 +14,10 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const isMounted = useMountedState();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     setErrors([]);
     const st = { ...serviceTime } as ServiceTimeInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "name": st.name = value; break;
       case "service": st.serviceId = value; break;
@@ -49,7 +49,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
         setServices(data);
       }
       if (data.length > 0) {
-        let st = { ...props.serviceTime };
+        const st = { ...props.serviceTime };
         st.serviceId = data[0].id;
         if (isMounted()) {
           setServiceTime(st);
@@ -59,7 +59,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
   }, [props.serviceTime, isMounted]);
 
   const getServiceOptions = () => {
-    let options = [];
+    const options = [];
     for (let i = 0; i < services.length; i++) options.push(<MenuItem key={i} value={services[i].id}>{services[i].name}</MenuItem>);
     return options;
   }
@@ -75,11 +75,11 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel id="service">{Locale.label("attendance.serviceTimeEdit.service")}</InputLabel>
-        <Select name="service" labelId="service" label={Locale.label("attendance.serviceTimeEdit.service")} value={serviceTime.serviceId} onChange={handleChange}>
+        <Select name="service" labelId="service" label={Locale.label("attendance.serviceTimeEdit.service")} value={serviceTime.serviceId} onChange={handleChange} data-testid="service-select" aria-label="Select service">
           {getServiceOptions()}
         </Select>
       </FormControl>
-      <TextField fullWidth label={Locale.label("attendance.serviceTimeEdit.name")} id="name" name="name" type="text" value={serviceTime.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("attendance.serviceTimeEdit.name")} id="name" name="name" type="text" value={serviceTime.name} onChange={handleChange} data-testid="service-time-name-input" aria-label="Service time name" />
     </InputBox>
   );
 }

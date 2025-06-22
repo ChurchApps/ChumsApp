@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { ApiHelper, SmallButton } from "@churchapps/apphelper";
-import { SongDetailInterface, SongDetailLinkInterface } from "../../../helpers";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
+import { type SongDetailInterface, type SongDetailLinkInterface } from "../../../helpers";
+import { FormControl, InputLabel, MenuItem, Select, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 
 interface Props {
   songDetail: SongDetailInterface;
@@ -16,7 +16,7 @@ export const SongDetailLinks = (props: Props) => {
         setSongDetailLinks(data);
       });
     }
-  }, [props.songDetail]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.songDetail]);  
 
   const getLink = (link: SongDetailLinkInterface, idx: number) => {
     const logos: { [key: string]: string } = {

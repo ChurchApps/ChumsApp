@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton } from "@mui/material";
-import { Info } from "@mui/icons-material";
-import { DisplayBox, PersonAdd, PersonInterface, ApiHelper, MemberPermissionInterface, PersonHelper, Locale } from "@churchapps/apphelper";
+import {
+ Link } from "react-router-dom";
+import {
+ Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton } from "@mui/material";
+import {
+ Info } from "@mui/icons-material";
+import {
+ DisplayBox, PersonAdd, type PersonInterface, ApiHelper, type MemberPermissionInterface, PersonHelper, Locale 
+} from "@churchapps/apphelper";
 
 interface Props { formId: string }
 
@@ -12,7 +17,7 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const loadData = () => {
     ApiHelper.get("/memberpermissions/form/" + props.formId, "MembershipApi").then(results => {
-      let filterMembers: string[] = [];
+      const filterMembers: string[] = [];
       results.forEach((member: MemberPermissionInterface) => filterMembers.push(member.memberId));
       setFilterList(filterMembers);
       setFormMembers(results);
@@ -28,7 +33,7 @@ export const FormMembers: React.FC<Props> = (props) => {
       personName: p.name.display
     };
     ApiHelper.post("/memberpermissions?formId=" + props.formId, [newMember], "MembershipApi").then(result => {
-      let fm = [...formMembers];
+      const fm = [...formMembers];
       fm.push(result[0]);
       setFormMembers(fm);
     })
@@ -37,7 +42,7 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const handleActionChange = (personId: string, action: {}) => {
     let member;
-    let fm = [...formMembers];
+    const fm = [...formMembers];
     const fmArray = fm.map((p: MemberPermissionInterface) => {
       if (p.memberId === personId) {
         p = {...p, ...action};
@@ -59,7 +64,7 @@ export const FormMembers: React.FC<Props> = (props) => {
   }
 
   const getRows = () => {
-    let rows: JSX.Element[] = [];
+    const rows: JSX.Element[] = [];
     formMembers.forEach(fm => {
       rows.push(
         <TableRow key={fm.memberId}>
@@ -80,7 +85,7 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("common.name")}</th><th>{Locale.label("forms.formMembers.perm")}</th><th>{Locale.label("forms.formMembers.act")}</th><th>{Locale.label("forms.formMembers.emailNotif")}<Tooltip title={Locale.label("forms.formMembers.emailNotifMsg")} arrow><IconButton><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
+    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("common.name")}</th><th>{Locale.label("forms.formMembers.perm")}</th><th>{Locale.label("forms.formMembers.act")}</th><th>{Locale.label("forms.formMembers.emailNotif")}<Tooltip title={Locale.label("forms.formMembers.emailNotifMsg")} arrow><IconButton data-testid="email-notification-info-button" aria-label="Email notification information"><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
     return rows;
   }
 

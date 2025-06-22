@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, FormControl, Grid, InputLabel, OutlinedInput, SelectChangeEvent, TextField } from "@mui/material";
-import { PlanItemInterface, SongDetailInterface } from "../../helpers";
+import { Button, FormControl, Grid, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { type PlanItemInterface, type SongDetailInterface } from "../../helpers";
 import { ApiHelper, ArrayHelper, DisplayBox, InputBox, Locale } from "@churchapps/apphelper";
 
 
@@ -15,11 +15,11 @@ export const PlanItemEdit = (props: Props) => {
   const [songs, setSongs] = React.useState<SongDetailInterface[]>([]);
   const [errors, setErrors] = React.useState<string[]>([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);
     const pi = { ...planItem } as PlanItemInterface;
     if (isNaN(pi.seconds)) pi.seconds = 0;
-    let value = e.target.value;
+    const value = e.target.value;
     console.log(e.target.name, value, (parseInt(value) * 60), (pi.seconds % 60));
     switch (e.target.name) {
       case "label": pi.label = value; break;
@@ -105,12 +105,12 @@ export const PlanItemEdit = (props: Props) => {
   }
 
   const getSongFields = () => {
-    let a = 1;
+    const a = 1;
     return <>
       <FormControl fullWidth variant="outlined">
         <InputLabel htmlFor="searchText">{Locale.label("common.search")}</InputLabel>
-        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("common.name")} value={searchText} onChange={handleSearchChange}
-          endAdornment={<Button variant="contained" onClick={handleSearch}>{Locale.label("common.search")}</Button>}
+        <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("common.name")} value={searchText} onChange={handleSearchChange} data-testid="song-search-input"
+          endAdornment={<Button variant="contained" onClick={handleSearch} data-testid="song-search-button" aria-label="Search songs">{Locale.label("common.search")}</Button>}
         />
       </FormControl>
       {getSongs()}
@@ -123,14 +123,14 @@ export const PlanItemEdit = (props: Props) => {
 
   return (<InputBox headerText={getHeaderText()} headerIcon="album" saveFunction={handleSave} cancelFunction={props.onDone} deleteFunction={planItem?.id && handleDelete}>
     {planItem?.itemType === "arrangementKey" && getSongFields()}
-    {(showLabel) && <TextField fullWidth label={Locale.label("common.name")} id="label" name="label" type="text" value={planItem?.label} onChange={handleChange} />}
-    {(showDesc) && <TextField multiline fullWidth label="Description" id="description" name="description" type="text" value={planItem?.description} onChange={handleChange} />}
+    {(showLabel) && <TextField fullWidth label={Locale.label("common.name")} id="label" name="label" type="text" value={planItem?.label} onChange={handleChange} data-testid="plan-item-name-input" aria-label="Plan item name" />}
+    {(showDesc) && <TextField multiline fullWidth label="Description" id="description" name="description" type="text" value={planItem?.description} onChange={handleChange} data-testid="plan-item-description-input" aria-label="Plan item description" />}
     {(showDuration) && <Grid container>
       <Grid item xs={6}>
-        <TextField fullWidth label="Minutes" name="minutes" type="number" value={Math.floor(planItem?.seconds / 60)} onChange={handleChange} />
+        <TextField fullWidth label="Minutes" name="minutes" type="number" value={Math.floor(planItem?.seconds / 60)} onChange={handleChange} data-testid="plan-item-minutes-input" aria-label="Duration minutes" />
       </Grid>
       <Grid item xs={6}>
-        <TextField fullWidth label="Seconds" name="seconds" type="number" value={planItem?.seconds % 60} onChange={handleChange} />
+        <TextField fullWidth label="Seconds" name="seconds" type="number" value={planItem?.seconds % 60} onChange={handleChange} data-testid="plan-item-seconds-input" aria-label="Duration seconds" />
       </Grid>
     </Grid>}
   </InputBox>)

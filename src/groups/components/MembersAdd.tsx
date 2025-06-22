@@ -18,9 +18,9 @@ export const MembersAdd: React.FC<Props> = (props) => {
     });
   }, [props.group, isSubscribed]);
   const addMember = (gm: GroupMemberInterface) => {
-    let members = groupMembers;
-    let idx = members.indexOf(gm);
-    let person = members[idx].person;
+    const members = groupMembers;
+    const idx = members.indexOf(gm);
+    const person = members[idx].person;
     setGroupMembers(members);
     props.addFunction(person);
   }
@@ -44,7 +44,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
         <TableRow key={i}>
           <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
-          <TableCell><SmallButton icon="person_add" text={Locale.label("common.add")} onClick={() => addMember(gm)} color="success" /></TableCell>
+          <TableCell><SmallButton icon="person_add" text={Locale.label("common.add")} onClick={() => addMember(gm)} color="success" data-testid="add-member-button" ariaLabel="Add member to group" /></TableCell>
         </TableRow>
       );
     }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon, IconButton } from "@mui/material";
-import { ArrayHelper, DateHelper, DisplayBox, Locale, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
+import { ArrayHelper, DateHelper, DisplayBox, Locale, type PlanInterface, type PositionInterface, type TimeInterface } from "@churchapps/apphelper";
 import { TimeEdit } from "./TimeEdit";
 
 interface Props {
@@ -14,10 +14,10 @@ export const TimeList = (props:Props) => {
   const [time, setTime] = React.useState<TimeInterface>(null);
 
   const handleAdd = () => {
-    let startTime = new Date(props.plan.serviceDate);
+    const startTime = new Date(props.plan.serviceDate);
     startTime.setHours(9);
     startTime.setMinutes(0);
-    let endTime = new Date(props.plan.serviceDate);
+    const endTime = new Date(props.plan.serviceDate);
     endTime.setHours(10);
     endTime.setMinutes(30);
 
@@ -33,7 +33,7 @@ export const TimeList = (props:Props) => {
   }
 
   const getAddTimeLink = () => (
-    <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={handleAdd}>
+    <IconButton aria-label="Add time" id="addBtnGroup" data-cy="add-button" onClick={handleAdd} data-testid="add-time-button">
       <Icon color="primary">add</Icon>
     </IconButton>
   );

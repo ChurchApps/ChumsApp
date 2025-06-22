@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
-import { ApiHelper, ErrorMessages, GroupInterface, InputBox, Locale, PositionInterface } from "@churchapps/apphelper";
+import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
+import { ApiHelper, ErrorMessages, type GroupInterface, InputBox, Locale, type PositionInterface } from "@churchapps/apphelper";
 import ReactSelect from "react-select";
 
 interface Props { position: PositionInterface, categoryNames:string[], updatedFunction: () => void }
@@ -25,7 +25,7 @@ export const PositionEdit = (props:Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent ) => {
     setErrors([]);
     const p = { ...position } as PositionInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "categoryName": p.categoryName = value; break;
       case "name": p.name = value; break;
@@ -50,7 +50,7 @@ export const PositionEdit = (props:Props) => {
   const categoryOption = (position?.categoryName === "" && categoryOptions.length > 0) ? categoryOptions[0] : { value: position.categoryName, label: position.categoryName }
 
   const handleCategoryChange = (newValue: { label: string, value: string }, obj: any) => {
-    let p: PositionInterface = { ...position };
+    const p: PositionInterface = { ...position };
     p.categoryName = newValue.value;
     setCategoryInput("");
     setPosition(p);
@@ -60,7 +60,7 @@ export const PositionEdit = (props:Props) => {
     if (categoryInput) {
       const options = [...categoryOptions]
       options.push({ value: categoryInput, label: categoryInput })
-      let p: PositionInterface = { ...position };
+      const p: PositionInterface = { ...position };
       p.categoryName = categoryInput;
       setCategoryOptions(options);
       setPosition(p);
@@ -68,7 +68,7 @@ export const PositionEdit = (props:Props) => {
   }
 
   const getGroupOptions = () => {
-    let options = [];
+    const options = [];
     for (let i = 0; i < groups.length; i++) options.push(<MenuItem key={i} value={groups[i].id}>{groups[i].name}</MenuItem>);
     return options;
   }

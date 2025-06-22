@@ -40,7 +40,7 @@ export const Tabs: React.FC<Props> = (props) => {
 
   const getTabs = () => {
     if (props.group === null || props.group.id === undefined) return null;
-    let tabs = [];
+    const tabs = [];
     let defaultTab = ""
 
     if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) { tabs.push(getTab(0, "members", "people", Locale.label("groups.tabs.mem"))); defaultTab = "members"; }

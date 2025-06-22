@@ -29,7 +29,7 @@ export const PositionList = (props:Props) => {
 
   const getPeopleLinks = (position:PositionInterface) => {
     const assignments = ArrayHelper.getAll(props.assignments || [], "positionId", position.id);
-    let result:JSX.Element[] = [];
+    const result:JSX.Element[] = [];
     assignments.forEach(assignment => result.push(<div key={assignment.id}>{getPersonLink(assignment, position)}</div>));
     const remaining = position.count - assignments.length;
     if (remaining > 0)

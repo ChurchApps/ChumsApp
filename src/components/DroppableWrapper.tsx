@@ -1,4 +1,4 @@
-import { CSSProperties } from "@mui/material/styles/createMixins";
+import { CSSProperties } from "react";
 import React, { useEffect } from "react";
 import { useDrop } from 'react-dnd'
 
@@ -31,12 +31,12 @@ export function DroppableWrapper(props: Props) {
 
   useEffect(() => { if (props.updateIsDragging) props.updateIsDragging(isDragging) }, [isDragging]); //eslint-disable-line react-hooks/exhaustive-deps
 
-  let droppableStyle:CSSProperties = { width: "100%", zIndex: 1, backgroundColor: (isOver) ? "rgba(25,118,210, 1)" : "rgba(25,118,210, 0.1)" }
+  const droppableStyle:CSSProperties = { width: "100%", zIndex: 1, backgroundColor: (isOver) ? "rgba(25,118,210, 1)" : "rgba(25,118,210, 0.1)" }
 
   if (canDrop) return (
     <div style={{ position: "relative" }}>
       <div style={droppableStyle}>
-        <div style={{ width: "100%" }} ref={drop as any}>
+        <div style={{ width: "100%" }} ref={drop as any} data-testid="droppable-wrapper" aria-label="Drop zone">
           {props.children}
         </div>
       </div>

@@ -1,4 +1,6 @@
-import { ConditionInterface } from "@churchapps/apphelper";
+import {
+ type ConditionInterface 
+} from "@churchapps/apphelper";
 
 export class ConditionHelper {
 
@@ -8,7 +10,7 @@ export class ConditionHelper {
   }
 
   static getLabel(c: ConditionInterface) {
-    let fieldData = (c.fieldData) ? JSON.parse(c.fieldData) : {};
+    const fieldData = (c.fieldData) ? JSON.parse(c.fieldData) : {};
 
     let displayField = this.getTitleCase(c.field);
     if (fieldData.datePart === "dayOfWeek") displayField += ": Day of week";

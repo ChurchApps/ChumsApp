@@ -1,6 +1,6 @@
 import React from "react";
 import { MembersAdd, GroupDetails, Tabs, SessionAdd, GroupMembers, GroupSessions } from "./components";
-import { ApiHelper, DisplayBox, GroupInterface, PersonInterface, SessionInterface, PersonHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, type GroupInterface, type PersonInterface, type SessionInterface, PersonHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Grid, Icon } from "@mui/material"
 import { Banner } from "@churchapps/apphelper";
@@ -23,7 +23,7 @@ export const GroupPage = () => {
 
 
 
-  let defaultTab = "settings";
+  const defaultTab = "settings";
 
   const getTabs = () => {
     const tabs: { key: string, icon: string, label: string }[] = [];

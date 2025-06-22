@@ -14,7 +14,7 @@ export const OAuthPage: React.FC = (props: any) => {
 
   const context = React.useContext(UserContext);
 
-  let search = new URLSearchParams(window.location.search);
+  const search = new URLSearchParams(window.location.search);
   const clientId = search.get("client_id");
   const redirectUri = search.get("redirect_uri");
   const scope = search.get("scope");
@@ -72,10 +72,10 @@ export const OAuthPage: React.FC = (props: any) => {
         <div style={{ backgroundColor: "rgb(229, 246, 253)", padding: 10 }}>
           <Grid container spacing={2}>
             <Grid item xs={6} style={{ textAlign: "center" }}>
-              <Button fullWidth variant="contained" color="error" onClick={() => { window.location.href = redirectUri || "/"; }}>Deny</Button>
+              <Button fullWidth variant="contained" color="error" onClick={() => { window.location.href = redirectUri || "/"; }} data-testid="oauth-deny-button" aria-label="Deny authorization">Deny</Button>
             </Grid>
             <Grid item xs={6} style={{ textAlign: "center" }}>
-              <Button fullWidth variant="contained" color="primary" onClick={handleAllow}>Allow</Button>
+              <Button fullWidth variant="contained" color="primary" onClick={handleAllow} data-testid="oauth-allow-button" aria-label="Allow authorization">Allow</Button>
             </Grid>
           </Grid>
         </div>

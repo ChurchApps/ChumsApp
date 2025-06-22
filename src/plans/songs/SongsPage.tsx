@@ -4,7 +4,7 @@ import { Banner } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { SongSearchDialog } from "./SongSearchDialog";
-import { ArrangementInterface, ArrangementKeyInterface, SongDetailInterface, SongInterface } from "../../helpers";
+import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 
 export const SongsPage = () => {
   const [songs, setSongs] = React.useState<SongDetailInterface[]>(null)
@@ -77,7 +77,7 @@ export const SongsPage = () => {
   if (redirect) return <Navigate to={redirect} />
   else return (<>
     <Banner>
-      <Button onClick={() => { setShowSearch(true); }} variant="contained" color="success" style={{ float: "right", marginTop: 6 }}>Add Song</Button>
+      <Button onClick={() => { setShowSearch(true); }} variant="contained" color="success" style={{ float: "right", marginTop: 6 }} data-testid="add-song-button" aria-label="Add song">Add Song</Button>
       <h1>Songs</h1>
     </Banner>
     <div id="mainContent">

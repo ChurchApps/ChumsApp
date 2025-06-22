@@ -1,6 +1,6 @@
 import React from "react";
-import { SelectChangeEvent, TextField } from "@mui/material";
-import { CampusInterface, InputBox, ApiHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { TextField } from "@mui/material";
+import { type CampusInterface, InputBox, ApiHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 
 interface Props { campus: CampusInterface, updatedFunction: () => void }
 
@@ -9,10 +9,10 @@ export const CampusEdit: React.FC<Props> = (props) => {
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);
     const c = { ...campus } as CampusInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "name": c.name = value; break;
     }
@@ -41,7 +41,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
   return (
     <InputBox id="campusBox" data-cy="campus-box" cancelFunction={props.updatedFunction} saveFunction={handleSave} deleteFunction={props.campus?.id ? handleDelete : null} headerText={campus.name} headerIcon="church" isSubmitting={isSubmitting} help="chums/attendance">
       <ErrorMessages errors={errors} />
-      <TextField fullWidth label={Locale.label("attendance.campusEdit.name")} id="name" name="name" type="text" value={campus.name} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("attendance.campusEdit.name")} id="name" name="name" type="text" value={campus.name} onChange={handleChange} data-testid="campus-name-input" aria-label="Campus name" />
     </InputBox>
   );
 }

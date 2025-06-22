@@ -1,8 +1,13 @@
-import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import {
+ Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
-import { ChoicesEdit } from ".";
-import { useMountedState, QuestionInterface, ApiHelper, InputBox, UniqueIdHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
-import { PaymentEdit } from "./PaymentEdit";
+import {
+ ChoicesEdit } from ".";
+import {
+ useMountedState, type QuestionInterface, ApiHelper, InputBox, UniqueIdHelper, ErrorMessages, Locale 
+} from "@churchapps/apphelper";
+import {
+ PaymentEdit } from "./PaymentEdit";
 
 interface Props {
   questionId: string,
@@ -24,10 +29,10 @@ export function FormQuestionEdit(props: Props) {
     else setQuestion({ formId: props.formId, fieldType: "Textbox" } as QuestionInterface);
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     setErrors([]);
     const q = { ...question } as QuestionInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "fieldType": q.fieldType = value; break;
       case "title": q.title = value; break;
@@ -104,11 +109,11 @@ export function FormQuestionEdit(props: Props) {
         </Select>
       </FormControl>
 
-      <TextField fullWidth label={Locale.label("common.title")} id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} />
-      <TextField fullWidth label={Locale.label("forms.formQuestionEdit.desc")} id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} />
+      <TextField fullWidth label={Locale.label("common.title")} id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} data-testid="question-title-input" aria-label="Question title" />
+      <TextField fullWidth label={Locale.label("forms.formQuestionEdit.desc")} id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} data-testid="question-description-input" aria-label="Question description" />
 
       {getChoices(question.fieldType)}
-      {question.fieldType !== "Payment" && <FormControlLabel control={<Checkbox />} label={Locale.label("forms.formQuestionEdit.ansReq")} name="required" checked={!!question.required} onChange={handleCheckChange} />}
+      {question.fieldType !== "Payment" && <FormControlLabel control={<Checkbox data-testid="question-required-checkbox" aria-label="Question required" />} label={Locale.label("forms.formQuestionEdit.ansReq")} name="required" checked={!!question.required} onChange={handleCheckChange} />}
     </InputBox>
   );
 }

@@ -1,6 +1,9 @@
-import { ApiHelper, ArrayHelper, CurrencyHelper, DateHelper, DonationInterface, FundDonationInterface, FundInterface, PersonInterface } from "@churchapps/apphelper";
+import {
+ ApiHelper, ArrayHelper, CurrencyHelper, DateHelper, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface 
+} from "@churchapps/apphelper";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, useSearchParams, useNavigate } from "react-router-dom";
+import {
+ useParams, useSearchParams, useNavigate } from "react-router-dom";
 import UserContext from "../UserContext";
 
 export const PrintDonationPage = () => {
@@ -42,9 +45,9 @@ export const PrintDonationPage = () => {
   };
 
   const getDate = () => {
-    let date = DateHelper.prettyDate(new Date());
-    let time = DateHelper.prettyTime(new Date());
-    let dateTime = `${date} ${time}`;
+    const date = DateHelper.prettyDate(new Date());
+    const time = DateHelper.prettyTime(new Date());
+    const dateTime = `${date} ${time}`;
     return dateTime;
   };
 

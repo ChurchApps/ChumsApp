@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormSubmission } from "./";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Icon, Box } from "@mui/material";
-import { FormSubmissionInterface, Permissions, FormSubmissionEdit, UserHelper, ApiHelper } from "@churchapps/apphelper";
+import { type FormSubmissionInterface, Permissions, FormSubmissionEdit, UserHelper, ApiHelper } from "@churchapps/apphelper";
 
 interface Props {
   contentType: string,
@@ -34,7 +34,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   }
 
   const getCards = () => {
-    let cards: any[] = [];
+    const cards: any[] = [];
     const submittedCards = getSubmittedCards() || []; // when there are no submitted cards, function will return undefined
     const unsubmittedCards = getUnsubmittedCards();
     cards.push(...submittedCards, ...unsubmittedCards);
@@ -56,7 +56,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
     <Accordion key={uf.id} expanded={expanded === "unsubmitted" + uf.id} onChange={() => { setExpanded("unsubmitted" + uf.id) }}>
       <AccordionSummary onClick={() => handleAdd(uf.id)}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Button variant="text" onClick={() => handleAdd(uf.id)}><Icon>add</Icon></Button>
+          <Button variant="text" onClick={() => handleAdd(uf.id)} data-testid="add-form-button" aria-label="Add form"><Icon>add</Icon></Button>
           <span>{uf.name}</span>
         </Box>
       </AccordionSummary>
@@ -69,7 +69,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
   const determineUnsubmitted = () => {
     let unsubmitted = [];
     if (allForms !== undefined && allForms !== null && props !== null) {
-      let sf = props.formSubmissions;
+      const sf = props.formSubmissions;
       if (sf !== undefined && sf !== null) {
         for (let i = 0; i < allForms.length; i++) {
           let exists = false;

@@ -1,8 +1,8 @@
 import React from "react";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton, type SelectChangeEvent } from "@mui/material";
 import HelpIcon from '@mui/icons-material/Help';
 import { ApiHelper, Locale, UniqueIdHelper } from "@churchapps/apphelper";
-import { PaymentGatewaysInterface } from "../../helpers";
+import { type PaymentGatewaysInterface } from "../../helpers";
 import { FeeOptionsSettingsEdit } from "./FeeOptionsSettingsEdit";
 
 interface Props { churchId: string, saveTrigger: Date | null }
@@ -14,7 +14,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
   const [privateKey, setPrivateKey] = React.useState("");
   const [payFees, setPayFees] = React.useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     e.preventDefault();
     switch (e.target.name) {
       case "provider": setProvider(e.target.value); break;
@@ -36,7 +36,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
         <Stack direction="row" alignItems="center">
           <Typography>{Locale.label("settings.givingSettingsEdit.transFee")}</Typography>
           <Tooltip title={Locale.label("settings.givingSettingsEdit.forceMsg")} arrow>
-            <IconButton>
+            <IconButton data-testid="force-ssl-help-button" aria-label="Force SSL help">
               <HelpIcon />
             </IconButton>
           </Tooltip>
@@ -90,7 +90,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
     setPrivateKey("");
   }
 
-  React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData() }, [props.churchId]); //eslint-disable-line
+  React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData() }, [props.churchId]);  
   React.useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
   return (

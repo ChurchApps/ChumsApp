@@ -38,7 +38,7 @@ export const NewTask = (props: Props) => {
   const sendNotification = async (task: TaskInterface) => {
     const type = task.assignedToType;
     const id = task.assignedToId;
-    let data: any = { peopleIds: [id], contentType: "task", contentId: task.id, message: `New Task Assignment: ${task.title}` };
+    const data: any = { peopleIds: [id], contentType: "task", contentId: task.id, message: `New Task Assignment: ${task.title}` };
 
     if (type === "group") {
       const groupMembers = await ApiHelper.get("/groupmembers?groupId=" + task.assignedToId.toString(), "MembershipApi");
@@ -112,17 +112,17 @@ export const NewTask = (props: Props) => {
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={6} md={(props.compact) ? 6 : 3}>
-          <TextField fullWidth label={Locale.label("tasks.newTask.associateW")} value={task.associatedWithLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} />
+          <TextField fullWidth label={Locale.label("tasks.newTask.associateW")} value={task.associatedWithLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} data-testid="associate-with-input" aria-label="Associate with" />
         </Grid>
         <Grid item xs={6} md={(props.compact) ? 6 : 3}>
-          <TextField fullWidth label={Locale.label("tasks.newTask.assignTo")} value={task.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} />
+          <TextField fullWidth label={Locale.label("tasks.newTask.assignTo")} value={task.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} data-testid="assign-to-input" aria-label="Assign to" />
         </Grid>
         <Grid item xs={12} md={(props.compact) ? 12 : 6}>
-          <TextField fullWidth label={Locale.label("common.title")} value={task.title || ""} name="title" onChange={handleChange} />
+          <TextField fullWidth label={Locale.label("common.title")} value={task.title || ""} name="title" onChange={handleChange} data-testid="task-title-input" aria-label="Task title" />
         </Grid>
       </Grid>
 
-      <TextField fullWidth label={Locale.label("common.notes")} value={message.content} name="note" onChange={handleChange} multiline />
+      <TextField fullWidth label={Locale.label("common.notes")} value={message.content} name="note" onChange={handleChange} multiline data-testid="task-notes-input" aria-label="Task notes" />
       {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
     </InputBox>
   );

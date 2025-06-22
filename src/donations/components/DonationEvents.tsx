@@ -42,10 +42,10 @@ export const DonationEvents: React.FC = () => {
   }
 
   const getErrorLogs = () => {
-    let logs: React.ReactNode[] = [];
+    const logs: React.ReactNode[] = [];
     errorLogs.forEach((log: any, i: string) => {
       i = i.toString();
-      let eventType = log.eventType.replace(".", " ");
+      const eventType = log.eventType.replace(".", " ");
       logs.push(
         <Accordion key={i}>
           <AccordionSummary>

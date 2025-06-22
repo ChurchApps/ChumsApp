@@ -1,11 +1,13 @@
 import React from "react";
-import { DateHelper, QuestionInterface, AnswerInterface, Locale } from "@churchapps/apphelper";
+import {
+ DateHelper, type QuestionInterface, type AnswerInterface, Locale 
+} from "@churchapps/apphelper";
 
 interface Props { question: QuestionInterface, answer: AnswerInterface }
 
 export const Question: React.FC<Props> = (props) => {
-  let q = props.question;
-  let a = props.answer;
+  const q = props.question;
+  const a = props.answer;
   if (a === null) return null;
 
   if (q.fieldType === "Heading") return <h5>{q.title}</h5>;

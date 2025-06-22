@@ -40,10 +40,10 @@ export const Household: React.FC<Props> = (props) => {
   React.useEffect(loadMembers, [household?.id, props.reload]); //eslint-disable-line
 
   const getRows = () => {
-    let rows = [];
+    const rows = [];
     if (members !== null) {
       for (let i = 0; i < members.length; i++) {
-        let m = members[i];
+        const m = members[i];
         rows.push(
           <TableRow key={m.id}>
             <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
-import { PersonHelper, PersonInterface, Loading, CreatePerson, DateHelper, ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
+import { PersonHelper, type PersonInterface, Loading, CreatePerson, DateHelper, ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton } from "@mui/material"
 
 interface Props {
@@ -105,7 +105,7 @@ export function PeopleSearchResults(props: Props) {
       case "maritalStatus": result = (<>{p.maritalStatus}</>); break;
       case "anniversary": result = (<>{(p.anniversary === null) ? "" : ChumsPersonHelper.getDateStringFromDate(p.anniversary)}</>); break;
       case "nametagNotes": result = (<>{p.nametagNotes}</>); break;
-      case "deleteOption": result = (<Tooltip title={`Delete ${p.name.display}`} arrow placement="left-start"><IconButton sx={{ color: "#c84545" }} onClick={() => { handleDelete(p.id.toString()); }}><Icon>delete</Icon></IconButton></Tooltip>); break;
+      case "deleteOption": result = (<Tooltip title={`Delete ${p.name.display}`} arrow placement="left-start"><IconButton sx={{ color: "#c84545" }} onClick={() => { handleDelete(p.id.toString()); }} data-testid={`delete-person-button-${p.id}`} aria-label={`Delete ${p.name.display}`}><Icon>delete</Icon></IconButton></Tooltip>); break;
       case key: result = (getAnswer(p, key)); break;
     }
 

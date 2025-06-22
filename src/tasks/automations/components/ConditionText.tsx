@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ConditionHelper } from "../../components";
 import { ConditionInterface, Locale } from "@churchapps/apphelper";
@@ -21,7 +21,7 @@ export const ConditionText = (props: Props) => {
 
   React.useEffect(init, [props.condition.field]); //eslint-disable-line
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const c = { ...props.condition };
     const val = e.target.value;
     switch (e.target.name) {
@@ -37,14 +37,14 @@ export const ConditionText = (props: Props) => {
   }
 
   const getTextField = () => {
-    let label = ConditionHelper.getTitleCase(props.condition.field);
-    return <TextField fullWidth type="text" label={label} value={props.condition.value || ""} name="value" onChange={handleChange} />
+    const label = ConditionHelper.getTitleCase(props.condition.field);
+    return <TextField fullWidth type="text" label={label} value={props.condition.value || ""} name="value" onChange={handleChange} data-testid="condition-value-input" aria-label="Condition value" />
   }
 
   return <>
     <FormControl fullWidth>
       <InputLabel>{Locale.label("tasks.conditionText.op")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionText.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
+      <Select fullWidth label={Locale.label("tasks.conditionText.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange} data-testid="condition-operator-select" aria-label="Condition operator">
         <MenuItem key="/equals" value="=">=</MenuItem>
         <MenuItem key="/contains" value="contains">{Locale.label("tasks.conditionText.contains")}</MenuItem>
         <MenuItem key="/startsWith" value="startsWith">{Locale.label("tasks.conditionText.startW")}</MenuItem>

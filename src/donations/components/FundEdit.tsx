@@ -9,7 +9,7 @@ export const FundEdit: React.FC<Props> = (props) => {
 
   const handleCancel = () => props.updatedFunction();
   const handleSave = () => {
-    let errors: string[] = [];
+    const errors: string[] = [];
 
     if (!fund.name.trim()) errors.push(Locale.label("donations.fundEdit.errBlank"));
 
@@ -30,7 +30,7 @@ export const FundEdit: React.FC<Props> = (props) => {
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let f = { ...fund };
+    const f = { ...fund };
     switch (e.target.name) {
       case "fundName":
         f.name = e.target.value;
@@ -49,8 +49,8 @@ export const FundEdit: React.FC<Props> = (props) => {
   return (
     <InputBox id="fundsBox" headerIcon="volunteer_activism" headerText={Locale.label("common.edit")} cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete} help="chums/giving">
       <ErrorMessages errors={errors} />
-      <TextField fullWidth name="fundName" label={Locale.label("common.name")} value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} />
-      <FormControlLabel control={<Checkbox sx={{ marginLeft: "5px" }} checked={fund.taxDeductible} onChange={handleChange} name="taxDeductible" />} label={Locale.label("donations.fundEdit.taxDeductible")} />
+      <TextField fullWidth name="fundName" label={Locale.label("common.name")} value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="fund-name-input" aria-label="Fund name" />
+      <FormControlLabel control={<Checkbox sx={{ marginLeft: "5px" }} checked={fund.taxDeductible} onChange={handleChange} name="taxDeductible" data-testid="tax-deductible-checkbox" aria-label="Tax deductible" />} label={Locale.label("donations.fundEdit.taxDeductible")} />
       <Typography sx={{ fontStyle: "italic", fontSize: "12px", marginLeft: "5px" }}>{fund.taxDeductible ? Locale.label("donations.fundEdit.trackDonations") : Locale.label("donations.fundEdit.trackNonDonations")}</Typography>
     </InputBox>
 

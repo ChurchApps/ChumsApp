@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrayHelper, DomainInterface, ApiHelper, Locale } from "@churchapps/apphelper";
-import { SelectChangeEvent, TextField, Grid, TableCell, TableBody, TableRow, Table, TableHead } from "@mui/material";
+import { TextField, Grid, TableCell, TableBody, TableRow, Table, TableHead } from "@mui/material";
 
 interface Props { churchId: string, saveTrigger: Date | null }
 
@@ -9,7 +9,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
   const [originalDomains, setOriginalDomains] = React.useState<DomainInterface[]>([]);
   const [addDomainName, setAddDomainName] = React.useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     e.preventDefault();
     switch (e.target.name) {
       case "domainName": setAddDomainName(e.target.value); break;
@@ -17,12 +17,12 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
   }
 
   const save = () => {
-    for (let d of originalDomains) {
+    for (const d of originalDomains) {
       if (!ArrayHelper.getOne(domains, "id", d.id)) ApiHelper.delete("/domains/" + d.id, "MembershipApi");
     }
 
-    for (let d of domains) {
-      let toAdd: DomainInterface[] = []
+    for (const d of domains) {
+      const toAdd: DomainInterface[] = []
       if (!d.id) toAdd.push(d);
       if (toAdd.length > 0) ApiHelper.post("/domains", toAdd, "MembershipApi");
     }
@@ -53,7 +53,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
   }
 
   const getRows = () => {
-    let result: JSX.Element[] = []
+    const result: JSX.Element[] = []
     let idx = 0;
     domains.forEach(d => {
       const index = idx;
@@ -77,7 +77,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
     });
   }
 
-  React.useEffect(() => { if (props.churchId) loadData() }, [props.churchId]); //eslint-disable-line
+  React.useEffect(() => { if (props.churchId) loadData() }, [props.churchId]);  
   React.useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
 

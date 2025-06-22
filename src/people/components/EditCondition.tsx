@@ -1,4 +1,4 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, type SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ApiHelper, SearchCondition, Permissions, GroupInterface, Loading, FundInterface, CampusInterface, DateHelper, ServiceInterface, ServiceTimeInterface, Locale } from "@churchapps/apphelper";
 
@@ -13,8 +13,8 @@ export function EditCondition(props: Props) {
   const [loadedOptionsField, setLoadedOptionsField] = React.useState("");
   const [loadingOptions, setLoadingOptions] = React.useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
-    let c = { ...condition };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+    const c = { ...condition };
     const { name, value } = e.target;
 
     switch (name) {
@@ -63,7 +63,7 @@ export function EditCondition(props: Props) {
 
   const setDefaultValue = (val: string) => {
     if (!condition.value && val !== "") {
-      let c = { ...condition }
+      const c = { ...condition }
       c.value = val;
       setCondition(c);
     }

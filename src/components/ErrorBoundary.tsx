@@ -25,7 +25,7 @@ const DefaultErrorFallback: React.FC<ErrorInfo> = ({ error, resetError }) => (
       <Typography variant="body2" sx={{ mt: 1, mb: 2 }}>
         {error?.message || 'An unexpected error occurred'}
       </Typography>
-      <Button variant="outlined" onClick={resetError} size="small">
+      <Button variant="outlined" onClick={resetError} size="small" data-testid="error-retry-button" aria-label="Try again">
         Try again
       </Button>
     </Alert>

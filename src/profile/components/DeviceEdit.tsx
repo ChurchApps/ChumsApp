@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { SelectChangeEvent, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { ApiHelper, ErrorMessages, InputBox } from "@churchapps/apphelper";
-import { DeviceInterface } from "../DevicesPage";
+import { type DeviceInterface } from "../DevicesPage";
 import { DeviceContent } from "./DeviceContent";
 
 interface Props { device: DeviceInterface, updatedFunction: () => void }
@@ -14,9 +14,9 @@ export const DeviceEdit = (props: Props) => {
     setDevice(props.device);
   }, [props.device]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);
-    let value = e.target.value;
+    const value = e.target.value;
     const d = { ...device };
     switch (e.target.name) {
       case "label": d.label = value; break;

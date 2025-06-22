@@ -17,7 +17,7 @@ export const ConditionDetails = (props: Props) => {
 
   const buildTree = (parentId: string) => {
     const conjunctions: ConjunctionInterface[] = ArrayHelper.getAll(props.conjunctions, "parentId", parentId)
-    for (let c of conjunctions) {
+    for (const c of conjunctions) {
       c.conjunctions = buildTree(c.id);
       c.conditions = ArrayHelper.getAll(props.conditions, "conjunctionId", c.id);
     }
@@ -41,7 +41,7 @@ export const ConditionDetails = (props: Props) => {
       result.push(
         <li key={condition.id}>
           <span style={{ float: "right" }}>
-            <SmallButton icon="edit" onClick={() => props.setEditCondition(condition)} />
+            <SmallButton icon="edit" onClick={() => props.setEditCondition(condition)} data-testid={`edit-condition-button-${condition.id}`} ariaLabel="Edit condition" />
           </span>
           <Icon style={{ marginTop: 5, marginBottom: -5 }}>done</Icon> &nbsp; {condition.label}
         </li>
@@ -57,8 +57,8 @@ export const ConditionDetails = (props: Props) => {
       result.push(
         <li key={conjunction.id}>
           <span style={{ float: "right" }}>
-            <SmallButton icon="add" onClick={(e) => { setMenuAnchor(e.currentTarget); setParentId(conjunction.id); }} />
-            <SmallButton icon="edit" onClick={() => props.setEditConjunction(conjunction)} />
+            <SmallButton icon="add" onClick={(e) => { setMenuAnchor(e.currentTarget); setParentId(conjunction.id); }} data-testid={`add-conjunction-button-${conjunction.id}`} ariaLabel="Add conjunction" />
+            <SmallButton icon="edit" onClick={() => props.setEditConjunction(conjunction)} data-testid={`edit-conjunction-button-${conjunction.id}`} ariaLabel="Edit conjunction" />
           </span>
           <Icon style={{ marginTop: 5, marginBottom: -5 }}>account_tree</Icon> &nbsp; {text}
           {getConditionMenu()}
@@ -80,6 +80,8 @@ export const ConditionDetails = (props: Props) => {
       <span style={{ float: "right" }}>
         <SmallButton
           icon="add"
+          data-testid="add-automation-condition-button"
+          ariaLabel="Add condition"
           onClick={() => props.setEditConjunction({ automationId: props.automation.id, groupType: "and" })}
         />
       </span>

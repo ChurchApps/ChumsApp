@@ -1,6 +1,6 @@
 import React from "react";
 import { ApiHelper, GroupInterface, GroupServiceTimeInterface, Locale, ServiceTimeInterface } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, Icon, FormControl, InputLabel, Select, Button, SelectChangeEvent, MenuItem } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, Icon, FormControl, InputLabel, Select, Button, MenuItem, type SelectChangeEvent } from "@mui/material"
 
 interface Props {
   group: GroupInterface,
@@ -17,40 +17,40 @@ export const ServiceTimesEdit: React.FC<Props> = (props) => {
     ApiHelper.get("/groupservicetimes?groupId=" + props.group.id, "AttendanceApi").then(data => setGroupServiceTimes(data));
     ApiHelper.get("/servicetimes", "AttendanceApi").then(data => {
       setServiceTimes(data);
-      let st = data[0] as ServiceTimeInterface;
+      const st = data[0] as ServiceTimeInterface;
       if (data.length > 0) setAddServiceTimeId(st.id);
     });
   }, [props.group]);
 
   const getRows = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     for (let i = 0; i < groupServiceTimes.length; i++) {
-      let gst = groupServiceTimes[i];
+      const gst = groupServiceTimes[i];
       result.push(<TableRow key={gst.id}><TableCell><Icon>schedule</Icon> {gst.serviceTime.name}</TableCell><TableCell><a href="about:blank" style={{color: "#dc3545"}} data-id={gst.id} onClick={handleRemove}><Icon>person_remove</Icon> {Locale.label("common.remove")}</a></TableCell></TableRow>);
     }
     return result;
   }
 
   const getOptions = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     for (let i = 0; i < serviceTimes.length; i++) result.push(<MenuItem key={i} value={serviceTimes[i].id}>{serviceTimes[i].longName}</MenuItem>);
     return result;
   }
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
-    let gst = { groupId: props.group.id, serviceTimeId: addServiceTimeId } as GroupServiceTimeInterface;
+    const gst = { groupId: props.group.id, serviceTimeId: addServiceTimeId } as GroupServiceTimeInterface;
     ApiHelper.post("/groupservicetimes", [gst], "AttendanceApi").then(loadData);
   }
 
   const handleRemove = (e: React.MouseEvent) => {
     e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let id = anchor.getAttribute("data-id");
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    const id = anchor.getAttribute("data-id");
     ApiHelper.delete("/groupservicetimes/" + id.toString(), "AttendanceApi").then(loadData);
   }
 
-  const handleChange = (e: SelectChangeEvent<string>) => setAddServiceTimeId(e.target.value);
+  const handleChange = (e: SelectChangeEvent) => setAddServiceTimeId(e.target.value as string);
 
   React.useEffect(() => { if (props.group.id !== undefined) loadData(); }, [props.group, loadData]);
 

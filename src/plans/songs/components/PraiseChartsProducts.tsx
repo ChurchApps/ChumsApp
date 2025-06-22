@@ -98,7 +98,7 @@ export const PraiseChartsProducts = (props: Props) => {
   }
 
   const getProductRow = (product: any, indent: number) => {
-    let a = 0;
+    const a = 0;
     let expand = <></>;
     if (product.children?.length > 0) {
       if (expandedSkus.includes(product.sku)) expand = <a href="about:blank" onClick={(e) => { e.preventDefault(); setExpandedSkus(expandedSkus.filter(s => s !== product.sku)) }}>
@@ -108,7 +108,7 @@ export const PraiseChartsProducts = (props: Props) => {
         <Icon>expand_more</Icon>
       </a>
     }
-    let result = <Grid container spacing={1} key={product.sku} style={{ marginBottom: 4 }}>
+    const result = <Grid container spacing={1} key={product.sku} style={{ marginBottom: 4 }}>
       <Grid item xs={1}>{expand}</Grid>
       <Grid item xs={4} style={{ paddingLeft: indent * 20 }}>{product.name}</Grid>
       <Grid item xs={1}>{product.file_type}</Grid>

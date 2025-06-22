@@ -2,7 +2,7 @@ import { ApiHelper, ArrayHelper, AssignmentInterface, DateHelper, PersonInterfac
 import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { PlanItemInterface } from "../helpers";
+import { type PlanItemInterface } from "../helpers";
 
 export const PrintPlan = () => {
   const params = useParams();
@@ -15,8 +15,8 @@ export const PrintPlan = () => {
   let totalSeconds = 0;
 
   const formatTime = (seconds: number) => {
-    let minutes = Math.floor(seconds / 60);
-    let secs = seconds % 60;
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
     return minutes + ":" + (secs < 10 ? "0" : "") + secs;
   }
 
@@ -56,7 +56,7 @@ export const PrintPlan = () => {
 
       const names: string[] = [];
       assignments.filter(a => a.positionId === p.id).forEach(a => {
-        let person = people.find(p => p.id === a.personId);
+        const person = people.find(p => p.id === a.personId);
         names.push(person?.name?.display);
       });
 

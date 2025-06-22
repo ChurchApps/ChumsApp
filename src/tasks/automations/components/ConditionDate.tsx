@@ -1,6 +1,6 @@
-import { FormControl, InputLabel, ListSubheader, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputLabel, ListSubheader, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ConditionInterface, Locale } from "@churchapps/apphelper";
+import { type ConditionInterface, Locale } from "@churchapps/apphelper";
 import { ConditionHelper } from "../../../helpers"
 
 interface Props {
@@ -22,7 +22,7 @@ export const ConditionDate = (props: Props) => {
 
   React.useEffect(init, [props.condition.field]); //eslint-disable-line
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const c = { ...props.condition };
     const val = e.target.value;
     switch (e.target.name) {
@@ -42,7 +42,7 @@ export const ConditionDate = (props: Props) => {
   }
 
   const getDateField = () => {
-    let label = ConditionHelper.getTitleCase(props.condition.field);
+    const label = ConditionHelper.getTitleCase(props.condition.field);
     return <FormControl fullWidth>
       <InputLabel>{label}</InputLabel>
       <TextField fullWidth type="date" value={props.condition.value || ""} name="value" onChange={handleChange} />
@@ -50,17 +50,17 @@ export const ConditionDate = (props: Props) => {
   }
 
   const getNumberField = () => {
-    let label = ConditionHelper.getTitleCase(props.condition.field);
+    const label = ConditionHelper.getTitleCase(props.condition.field);
     return <FormControl fullWidth>
       <InputLabel>{label}</InputLabel>
-      <TextField fullWidth type="number" value={props.condition.value || ""} name="value" onChange={handleChange} />
+      <TextField fullWidth type="number" value={props.condition.value || ""} name="value" onChange={handleChange} data-testid="condition-number-input" aria-label="Number value" />
     </FormControl>
   }
 
   const getDayOfWeek = () => (
     <FormControl fullWidth>
       <InputLabel>{Locale.label("tasks.conditionDate.dayOf")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionDate.dayOf")} value={props.condition.value || ""} name="value" onChange={handleChange}>
+      <Select fullWidth label={Locale.label("tasks.conditionDate.dayOf")} value={props.condition.value || ""} name="value" onChange={handleChange} data-testid="day-of-week-select" aria-label="Day of week">
         <MenuItem value="1">{Locale.label("tasks.conditionDate.sun")}</MenuItem>
         <MenuItem value="2">{Locale.label("tasks.conditionDate.mon")}</MenuItem>
         <MenuItem value="3">{Locale.label("tasks.conditionDate.tues")}</MenuItem>

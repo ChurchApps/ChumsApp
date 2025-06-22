@@ -15,7 +15,7 @@ export const RoleMembers: React.FC<Props> = (props) => {
   const isRoleEveryone = props.role.id === null;
   const getEditContent = () => {
     if (isRoleEveryone) return null;
-    return <SmallButton onClick={handleAdd} icon="add" text={Locale.label("common.add")} />
+    return <SmallButton onClick={handleAdd} icon="add" text={Locale.label("common.add")} data-testid="add-role-member-button" ariaLabel="Add role member" />
   }
 
   const handleAdd = (e: React.MouseEvent) => {
@@ -30,9 +30,9 @@ export const RoleMembers: React.FC<Props> = (props) => {
   }
 
   const getRows = () => {
-    let canEdit = UserHelper.checkAccess(Permissions.membershipApi.roles.edit);
-    let canDelete = (props.role.name === "Domain Admins") ? (canEdit && roleMembers.length > 1) : canEdit;
-    let rows: JSX.Element[] = [];
+    const canEdit = UserHelper.checkAccess(Permissions.membershipApi.roles.edit);
+    const canDelete = (props.role.name === "Domain Admins") ? (canEdit && roleMembers.length > 1) : canEdit;
+    const rows: JSX.Element[] = [];
     if (isRoleEveryone) {
       rows.push(<TableRow><TableCell key="0">{Locale.label("settings.roleMembers.roleAppMsg")}</TableCell></TableRow>)
       return rows;
@@ -40,8 +40,8 @@ export const RoleMembers: React.FC<Props> = (props) => {
 
     for (let i = 0; i < roleMembers.length; i++) {
       const rm = roleMembers[i];
-      const removeLink = (canDelete) ? (<SmallButton icon="delete" color="error" toolTip={Locale.label("common.delete")} onClick={() => { handleRemove(rm) }} />) : null;
-      const editLink = (canEdit) ? (<SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { props.setSelectedRoleMember(rm.userId) }} />) : null;
+      const removeLink = (canDelete) ? (<SmallButton icon="delete" color="error" toolTip={Locale.label("common.delete")} onClick={() => { handleRemove(rm) }} data-testid={`remove-role-member-button-${rm.id}`} ariaLabel={`Remove role member ${rm.user?.firstName} ${rm.user?.lastName}`} />) : null;
+      const editLink = (canEdit) ? (<SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { props.setSelectedRoleMember(rm.userId) }} data-testid={`edit-role-member-button-${rm.id}`} ariaLabel={`Edit role member ${rm.user?.firstName} ${rm.user?.lastName}`} />) : null;
 
       const { firstName, lastName } = rm.user;
       rows.push(

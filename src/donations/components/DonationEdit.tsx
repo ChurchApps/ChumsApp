@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Box } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ApiHelper, InputBox, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
 import { FundDonations, DonationInterface, FundDonationInterface, FundInterface, PersonInterface } from "@churchapps/apphelper";
@@ -11,9 +11,9 @@ export const DonationEdit: React.FC<Props> = (props) => {
   const [fundDonations, setFundDonations] = React.useState<FundDonationInterface[]>([]);
   const [showSelectPerson, setShowSelectPerson] = React.useState(false);
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
-    let d = { ...donation } as DonationInterface;
-    let value = e.target.value;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+    const d = { ...donation } as DonationInterface;
+    const value = e.target.value;
     switch (e.target.name) {
       case "notes": d.notes = value; break;
       case "date": d.donationDate = new Date(value); break;
@@ -29,11 +29,11 @@ export const DonationEdit: React.FC<Props> = (props) => {
 
   const handleSave = () => {
     ApiHelper.post("/donations", [donation], "GivingApi").then(data => {
-      let id = data[0].id;
-      let promises = [];
-      let fDonations = [...fundDonations];
+      const id = data[0].id;
+      const promises = [];
+      const fDonations = [...fundDonations];
       for (let i = fDonations.length - 1; i >= 0; i--) {
-        let fd = fundDonations[i];
+        const fd = fundDonations[i];
         if (fd.amount === undefined || fd.amount === 0) {
           if (!UniqueIdHelper.isMissing(fd.id)) promises.push(ApiHelper.delete("/funddonations/" + fd.id, "GivingApi"));
           fDonations.splice(i, 1);
@@ -47,7 +47,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
   const loadData = () => {
     if (UniqueIdHelper.isMissing(props.donationId)) {
       setDonation({ donationDate: new Date(), batchId: props.batchId, amount: 0, method: "Check" });
-      let fd: FundDonationInterface = { amount: 0, fundId: props.funds[0].id };
+      const fd: FundDonationInterface = { amount: 0, fundId: props.funds[0].id };
       setFundDonations([fd]);
     }
     else {
@@ -63,14 +63,14 @@ export const DonationEdit: React.FC<Props> = (props) => {
 
   const getMethodDetails = () => {
     if (donation.method === "Cash") return null;
-    let label = (donation.method === "Check") ? Locale.label("donations.donationEdit.checkNum") : Locale.label("donations.donationEdit.lastDig");
+    const label = (donation.method === "Check") ? Locale.label("donations.donationEdit.checkNum") : Locale.label("donations.donationEdit.lastDig");
     return (
       <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails || ""} onChange={handleChange} />
     );
   }
 
   const handlePersonAdd = (p: PersonInterface) => {
-    let d = { ...donation } as DonationInterface;
+    const d = { ...donation } as DonationInterface;
     if (p === null) {
       d.person = null;
       d.personId = "";
@@ -87,7 +87,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
     let totalAmount = 0;
     for (let i = 0; i < fundDonations.length; i++) totalAmount += fd[i].amount;
     if (totalAmount !== donation.amount) {
-      let d = { ...donation };
+      const d = { ...donation };
       d.amount = totalAmount;
       setDonation(d);
     }
@@ -101,7 +101,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
     </>
     );
     else {
-      let personText = (donation.person === undefined || donation.person === null) ? (Locale.label("donations.donationEdit.anon")) : donation.person.name.display;
+      const personText = (donation.person === undefined || donation.person === null) ? (Locale.label("donations.donationEdit.anon")) : donation.person.name.display;
       return (<div>
         <a href="about:blank" className="text-decoration" data-cy="donating-person" onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowSelectPerson(true); }}>{personText}</a>
       </div>);
@@ -116,10 +116,10 @@ export const DonationEdit: React.FC<Props> = (props) => {
         <label>{Locale.label("common.person")}</label>
         {getPersonSection()}
       </Box>
-      <TextField fullWidth label={Locale.label("donations.donationEdit.date")} type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth label={Locale.label("donations.donationEdit.date")} type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="donation-date-input" aria-label="Donation date" />
       <FormControl fullWidth>
         <InputLabel id="method">{Locale.label("donations.donationEdit.method")}</InputLabel>
-        <Select name="method" labelId="method" label={Locale.label("donations.donationEdit.method")} value={donation.method || ""} onChange={handleChange} onKeyDown={handleKeyDown}>
+        <Select name="method" labelId="method" label={Locale.label("donations.donationEdit.method")} value={donation.method || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="payment-method-select" aria-label="Payment method">
           <MenuItem value="Check">{Locale.label("donations.donationEdit.check")}</MenuItem>
           <MenuItem value="Cash">{Locale.label("donations.donationEdit.cash")}</MenuItem>
           <MenuItem value="Card">{Locale.label("donations.donationEdit.card")}</MenuItem>
@@ -127,7 +127,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
       </FormControl>
       {getMethodDetails()}
       <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
-      <TextField fullWidth label={Locale.label("common.notes")} data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline />
+      <TextField fullWidth label={Locale.label("common.notes")} data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline data-testid="donation-notes-input" aria-label="Donation notes" />
     </InputBox>
   );
 }

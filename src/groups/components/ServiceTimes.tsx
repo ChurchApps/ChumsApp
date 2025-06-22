@@ -10,9 +10,9 @@ export const ServiceTimes: React.FC<Props> = (props) => {
   const loadData = React.useCallback(() => ApiHelper.get("/groupservicetimes?groupId=" + props.group.id, "AttendanceApi").then(data => setGroupServiceTimes(data)), [props.group.id]);
 
   const getRows = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
     for (let i = 0; i < groupServiceTimes.length; i++) {
-      let gst = groupServiceTimes[i];
+      const gst = groupServiceTimes[i];
       result.push(<div key={gst.id}> {gst.serviceTime.name}</div>);
     }
     return result;

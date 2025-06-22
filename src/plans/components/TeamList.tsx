@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ApiHelper, DisplayBox, UserHelper, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
-import { useMountedState, GroupInterface, Permissions } from "@churchapps/apphelper";
+import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
 import { GroupAdd } from "../../groups/components";
 
 interface Props { ministry: GroupInterface }
@@ -18,7 +18,7 @@ export const TeamList = (props:Props) => {
     else
       return (
         <Stack direction="row" alignItems="center">
-          <IconButton aria-label="addGroup" color="primary" onClick={() => { setShowAdd(true); }}>
+          <IconButton aria-label="Add group" color="primary" onClick={() => { setShowAdd(true); }} data-testid="add-team-button">
             <Icon>add</Icon>
           </IconButton>
         </Stack>
@@ -41,7 +41,7 @@ export const TeamList = (props:Props) => {
   React.useEffect(loadData, [isMounted]);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const getRows = () => {
-    let rows: JSX.Element[] = [];
+    const rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
       rows.push(<TableRow key="0"><TableCell>{Locale.label("plans.teamList.noTeam")}</TableCell></TableRow>);
@@ -49,8 +49,8 @@ export const TeamList = (props:Props) => {
     }
 
     for (let i = 0; i < groups.length; i++) {
-      let g = groups[i];
-      let memberCount = g.memberCount === 1 ? Locale.label("plans.teamList.pers") : g.memberCount?.toString() + Locale.label("plans.teamList.peeps");
+      const g = groups[i];
+      const memberCount = g.memberCount === 1 ? Locale.label("plans.teamList.pers") : g.memberCount?.toString() + Locale.label("plans.teamList.peeps");
       rows.push(
         <TableRow sx={{whiteSpace: "nowrap"}} key={g.id}>
           <TableCell>
@@ -73,7 +73,7 @@ export const TeamList = (props:Props) => {
     return rows;
   }
 
-  let addBox = (showAdd) ? <GroupAdd updatedFunction={handleAddUpdated} tags="team" categoryName={props.ministry.id} /> : <></>
+  const addBox = (showAdd) ? <GroupAdd updatedFunction={handleAddUpdated} tags="team" categoryName={props.ministry.id} /> : <></>
 
   const getTable = () => {
     if (isLoading) return <Loading />

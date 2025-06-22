@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
 import { useMountedState, ApiHelper, InputBox, DateHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 
@@ -30,10 +30,10 @@ export function FormEdit(props: Props) {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     setErrors([]);
     const f = { ...form } as FormInterface;
-    let value = e.target.value;
+    const value = e.target.value;
     switch (e.target.name) {
       case "name": f.name = value; break;
       case "contentType": f.contentType = value; break;
@@ -83,11 +83,11 @@ export function FormEdit(props: Props) {
   return (
     <InputBox id="formBox" headerIcon="format_align_left" headerText={Locale.label("forms.formEdit.editForm")} saveFunction={handleSave} isSubmitting={isSubmitting} cancelFunction={props.updatedFunction} deleteFunction={(props.formId) ? handleDelete : undefined}>
       <ErrorMessages errors={errors} />
-      <TextField fullWidth={true} label={Locale.label("forms.formEdit.name")} type="text" name="name" value={form.name} onChange={handleChange} />
+      <TextField fullWidth={true} label={Locale.label("forms.formEdit.name")} type="text" name="name" value={form.name} onChange={handleChange} data-testid="form-name-input" aria-label="Form name" />
       {!props.formId
         && <FormControl fullWidth>
           <InputLabel id="associate">{Locale.label("forms.formEdit.associate")}</InputLabel>
-          <Select name="contentType" labelId="associate" label={Locale.label("forms.formEdit.associate")} value={form.contentType} onChange={e => { handleChange(e); if (e.target.value === "form") setStandAloneForm(true); }}>
+          <Select name="contentType" labelId="associate" label={Locale.label("forms.formEdit.associate")} value={form.contentType} onChange={e => { handleChange(e); if (e.target.value === "form") setStandAloneForm(true); }} data-testid="content-type-select" aria-label="Content type">
             <MenuItem value="person">{Locale.label("forms.formEdit.ppl")}</MenuItem>
             <MenuItem value="form">{Locale.label("forms.formEdit.alone")}</MenuItem>
           </Select>
@@ -97,7 +97,7 @@ export function FormEdit(props: Props) {
         && <>
           <FormControl fullWidth>
             <InputLabel>{Locale.label("forms.formEdit.access")}</InputLabel>
-            <Select label={Locale.label("forms.formEdit.access")} name="restricted" value={form?.restricted?.toString()} onChange={handleChange}>
+            <Select label={Locale.label("forms.formEdit.access")} name="restricted" value={form?.restricted?.toString()} onChange={handleChange} data-testid="access-level-select" aria-label="Access level">
               <MenuItem value="false">{Locale.label("forms.formEdit.public")}</MenuItem>
               <MenuItem value="true">{Locale.label("forms.formEdit.restrict")}</MenuItem>
             </Select>

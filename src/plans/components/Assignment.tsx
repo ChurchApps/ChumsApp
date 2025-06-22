@@ -26,10 +26,10 @@ export const Assignment = (props: Props) => {
 
   const getAddPositionLink = () => (
     <>
-      <IconButton aria-label="Auto Assign" id="aautoBtnGroup" onClick={handleAutoAssign}>
+      <IconButton aria-label="Auto Assign" id="aautoBtnGroup" onClick={handleAutoAssign} data-testid="auto-assign-button">
         <Icon color="primary">published_with_changes</Icon>
       </IconButton>
-      <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" onClick={() => { setPosition({categoryName:(positions?.length>0) ? positions[0].categoryName : "Band", name:"", planId:props.plan?.id, count:1}) }}>
+      <IconButton aria-label="Add position" id="addBtnGroup" data-cy="add-button" onClick={() => { setPosition({categoryName:(positions?.length>0) ? positions[0].categoryName : "Band", name:"", planId:props.plan?.id, count:1}) }} data-testid="add-position-button">
         <Icon color="primary">add</Icon>
       </IconButton>
     </>
@@ -86,7 +86,7 @@ export const Assignment = (props: Props) => {
           <PositionList positions={positions} assignments={assignments} people={people} onSelect={p => setPosition(p)} onAssignmentSelect={handleAssignmentSelect} />
         </DisplayBox>
         <InputBox headerIcon="sticky_note_2" headerText={Locale.label("common.notes")} saveFunction={handleSave}>
-          <TextField fullWidth multiline rows={4} value={plan?.notes} onChange={(e) => { setPlan({ ...plan, notes: e.target.value }) }} />
+          <TextField fullWidth multiline rows={4} value={plan?.notes} onChange={(e) => { setPlan({ ...plan, notes: e.target.value }) }} data-testid="plan-notes-input" aria-label="Plan notes" />
         </InputBox>
       </Grid>
       <Grid item md={4} xs={12}>

@@ -2,7 +2,7 @@ import React from "react";
 import { ServiceTimesEdit } from ".";
 import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField } from "@mui/material";
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, type SelectChangeEvent } from "@mui/material";
 import { useMountedState, GalleryModal, GroupInterface } from "@churchapps/apphelper";
 import { MarkdownEditor } from "@churchapps/apphelper";
 import { GroupLabelsEdit } from "./GroupLabelsEdit";
@@ -26,9 +26,9 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
       handleSave();
     }
   };
-  const handleChange = (e: | React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>| SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     e.preventDefault();
-    let g = { ...group };
+    const g = { ...group };
     switch (e.target.name) {
       case "categoryName": g.categoryName = e.target.value; break;
       case "name": g.name = e.target.value; break;
@@ -44,13 +44,13 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
 
   const handleArrayChange = (val:string[]) => {
     console.log("Array change", val)
-    let g = { ...group };
+    const g = { ...group };
     g.labelArray = val;
     setGroup(g);
   };
 
   const handlePhotoSelected = (image: string) => {
-    let g = { ...group };
+    const g = { ...group };
     g.photoUrl = image;
     setGroup(g);
     setSelectPhotoField(null);
@@ -58,14 +58,14 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
 
   const handleMarkdownChange = (newValue: string) => {
     if (group.id) {
-      let g = { ...group };
+      const g = { ...group };
       g.about = newValue;
       setGroup(g)
     }
   };
 
   const validate = () => {
-    let errors = [];
+    const errors = [];
     if (group.categoryName === "") errors.push(Locale.label("groups.groupDetailsEdit.catNameMsg"));
     if (group.name === "") errors.push(Locale.label("groups.groupDetailsEdit.groupNameMsg"));
     setErrors(errors);
@@ -139,27 +139,27 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
           <Grid container spacing={3}>
             {!teamMode && (
               <Grid item md={6} xs={12}>
-                <TextField fullWidth type="text" name="categoryName" label={Locale.label("groups.groupDetailsEdit.catName")} value={group.categoryName || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <TextField fullWidth type="text" name="categoryName" label={Locale.label("groups.groupDetailsEdit.catName")} value={group.categoryName || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="category-name-input" aria-label="Category name" />
               </Grid>
             )}
             <Grid item md={6} xs={12}>
-              <TextField fullWidth label={Locale.label("groups.groupDetailsEdit.groupName")} type="text" name="name" value={group.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              <TextField fullWidth label={Locale.label("groups.groupDetailsEdit.groupName")} type="text" name="name" value={group.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="group-name-input" aria-label="Group name" />
             </Grid>
           </Grid>
           <Grid container spacing={3}>
             {!teamMode && (
               <Grid item md={6} xs={12}>
-                <TextField fullWidth type="text" name="meetingTime" placeholder="Tuesdays at 7pm" label={Locale.label("groups.groupDetailsEdit.meetingTime")} value={group.meetingTime || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <TextField fullWidth type="text" name="meetingTime" placeholder="Tuesdays at 7pm" label={Locale.label("groups.groupDetailsEdit.meetingTime")} value={group.meetingTime || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="meeting-time-input" aria-label="Meeting time" />
               </Grid>
             )}
             <Grid item md={6} xs={12}>
-              <TextField fullWidth type="text" name="meetingLocation" placeholder="Johnson Home" label={Locale.label("groups.groupDetailsEdit.meetingLocation")} value={group.meetingLocation || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+              <TextField fullWidth type="text" name="meetingLocation" placeholder="Johnson Home" label={Locale.label("groups.groupDetailsEdit.meetingLocation")} value={group.meetingLocation || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="meeting-location-input" aria-label="Meeting location" />
             </Grid>
           </Grid>
           {!teamMode && <>
             <Grid container spacing={3}>
               <Grid item md={6} xs={12}>
-                <MarkdownEditor value={group.about || ""} onChange={(val) => handleMarkdownChange(val)} style={{ maxHeight: 200, overflowY: "scroll" }} placeholder={Locale.label("groups.groupDetailsEdit.groupDesc")} />
+                <MarkdownEditor value={group.about || ""} onChange={(val) => handleMarkdownChange(val)} style={{ maxHeight: 200, overflowY: "scroll" }} placeholder={Locale.label("groups.groupDetailsEdit.groupDesc")} data-testid="group-description-editor" ariaLabel="Group description" />
               </Grid>
               <Grid item md={6} xs={12}>
                 {group.photoUrl && (<>
@@ -167,11 +167,11 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                   <br />
                 </>)}
                 {!group.photoUrl && <InputLabel>{Locale.label("groups.groupDetailsEdit.groupImg")}</InputLabel>}
-                <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")}>{Locale.label("groups.groupDetailsEdit.selImg")}</Button>
+                <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")} data-testid="select-image-button" aria-label="Select group image">{Locale.label("groups.groupDetailsEdit.selImg")}</Button>
               </Grid>
 
               <Grid item md={6} xs={12}>
-                <TextField fullWidth type="text" name="slug" label={Locale.label("groups.groupDetailsEdit.slug")} value={group.slug || ""} onChange={handleChange} onKeyDown={handleKeyDown} placeholder="group-name" />
+                <TextField fullWidth type="text" name="slug" label={Locale.label("groups.groupDetailsEdit.slug")} value={group.slug || ""} onChange={handleChange} onKeyDown={handleKeyDown} placeholder="group-name" data-testid="group-slug-input" aria-label="Group slug" />
               </Grid>
               <Grid item md={6} xs={12}>
                 <GroupLabelsEdit group={group} onUpdate={handleArrayChange} />

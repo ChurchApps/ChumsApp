@@ -1,4 +1,4 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ErrorMessages, InputBox, AutomationInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 
@@ -35,7 +35,7 @@ export const AutomationEdit = (props: Props) => {
   const handleDelete = () => { ApiHelper.delete("/automations/" + automation.id, "DoingApi").then(() => { props.onDelete(); }); }
   const checkDelete = automation?.id ? handleDelete : undefined;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
     const a = { ...automation };
     switch (e.target.name) {
@@ -54,10 +54,10 @@ export const AutomationEdit = (props: Props) => {
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <TextField fullWidth label={Locale.label("common.title")} value={automation?.title || ""} name="title" onChange={handleChange} />
+          <TextField fullWidth label={Locale.label("common.title")} value={automation?.title || ""} name="title" onChange={handleChange} data-testid="automation-title-input" aria-label="Automation title" />
           <FormControl fullWidth>
             <InputLabel>{Locale.label("tasks.automationEdit.rep")}</InputLabel>
-            <Select fullWidth label={Locale.label("tasks.automationEdit.rep")} value={automation?.recurs || ""} name="recurs" onChange={handleChange}>
+            <Select fullWidth label={Locale.label("tasks.automationEdit.rep")} value={automation?.recurs || ""} name="recurs" onChange={handleChange} data-testid="recurs-select" aria-label="Recurrence">
               <MenuItem value="never">{Locale.label("tasks.automationEdit.never")}</MenuItem>
               <MenuItem value="yearly">{Locale.label("tasks.automationEdit.yearly")}</MenuItem>
               <MenuItem value="monthly">{Locale.label("tasks.automationEdit.monthly")}</MenuItem>

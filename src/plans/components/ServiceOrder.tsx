@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Icon, Menu, MenuItem, Stack, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { ApiHelper, DisplayBox, PlanInterface, SmallButton } from "@churchapps/apphelper";
-import { PlanItemInterface } from "../../helpers";
+import { type PlanItemInterface } from "../../helpers";
 import { PlanItemEdit } from "./PlanItemEdit";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { DndProvider } from 'react-dnd'

@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { ApiHelper, InputBox, Locale } from "@churchapps/apphelper";
-import { SongDetailInterface } from "../../../helpers";
+import { type SongDetailInterface } from "../../../helpers";
 
 interface Props {
   onSave: (songDetail: SongDetailInterface) => void

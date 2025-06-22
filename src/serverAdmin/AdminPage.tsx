@@ -28,7 +28,7 @@ export const AdminPage = () => {
   }
 
   const getTabs = () => {
-    let tabs = [];
+    const tabs = [];
     tabs.push({ key: "churches", icon: "church", label: Locale.label("serverAdmin.adminPage.churches") });
     tabs.push({ key: "usage", icon: "show_chart", label: Locale.label("serverAdmin.adminPage.usageTrends") });
     tabs.push({ key: "translation", icon: "book", label: "Translation Lookups" });

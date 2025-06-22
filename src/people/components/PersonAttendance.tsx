@@ -24,7 +24,7 @@ export const PersonAttendance: React.FC<Props> = (props) => {
   }
 
   const getRows = () => {
-    let rows: JSX.Element[] = [];
+    const rows: JSX.Element[] = [];
 
     if (records.length === 0) {
       rows.push(<TableRow key="0"><TableCell>{Locale.label("people.personAttendance.noAttMsg")}</TableCell></TableRow>);
@@ -36,10 +36,10 @@ export const PersonAttendance: React.FC<Props> = (props) => {
     let lastServiceId = "notset";
 
     for (let i = 0; i < records.length; i++) {
-      let r = records[i];
-      let group = ArrayHelper.getOne(groups, "id", r.groupId);
+      const r = records[i];
+      const group = ArrayHelper.getOne(groups, "id", r.groupId);
 
-      let cols: JSX.Element[] = [];
+      const cols: JSX.Element[] = [];
       let showRest = false;
       if (r.visitDate === lastVisitDate && !showRest) cols.push(<TableCell></TableCell>);
       else {

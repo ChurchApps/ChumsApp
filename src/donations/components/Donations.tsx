@@ -10,7 +10,7 @@ export const Donations: React.FC<Props> = (props) => {
   const loadData = React.useCallback(() => { ApiHelper.get("/donations?batchId=" + props.batch?.id, "GivingApi").then(data => populatePeople(data)); }, [props.batch]);
   const getEditContent = () => {
     if (props.funds.length === 0) return null;
-    return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={donations} spaceAfter={true} filename="donations.csv" /><SmallButton onClick={() => { props.addFunction() }} icon="add" /></>) : null;
+    return (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) ? (<><ExportLink data={donations} spaceAfter={true} filename="donations.csv" /><SmallButton onClick={() => { props.addFunction() }} icon="add" data-testid="add-donation-button" ariaLabel="Add donation" /></>) : null;
   }
 
   const populatePeople = async (data: DonationInterface[]) => {
@@ -24,13 +24,13 @@ export const Donations: React.FC<Props> = (props) => {
 
   const showEditDonation = (e: React.MouseEvent) => {
     e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let id = anchor.getAttribute("data-id");
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    const id = anchor.getAttribute("data-id");
     props.editFunction(id);
   }
 
   const getRows = () => {
-    let rows: React.ReactNode[] = [];
+    const rows: React.ReactNode[] = [];
     let total = 0;
     if (props.funds.length === 0) {
       rows.push(<TableRow key="0" data-cy="error-message">{Locale.label("donations.donations.errMsg")}</TableRow>)
@@ -41,9 +41,9 @@ export const Donations: React.FC<Props> = (props) => {
       return rows;
     }
     rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("donations.donations.tableIdent")}</th><th>{Locale.label("common.name")}</th><th>{Locale.label("donations.donations.date")}</th><th>{Locale.label("donations.donations.amt")}</th></TableRow>);
-    let canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
+    const canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
     for (let i = 0; i < donations.length; i++) {
-      let d = donations[i];
+      const d = donations[i];
       total = total + d.amount;
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-link-${i}`} onClick={showEditDonation} data-id={d.id}>{d.id}</a>) : (<>{d.id}</>);
       rows.push(<TableRow key={i}>

@@ -24,7 +24,7 @@ export const DevicesPage = () => {
 
   React.useEffect(loadData, []);
 
-  const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true); }} />
+  const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true); }} data-testid="add-device-button" ariaLabel="Add device" />
 
   return (
     <>

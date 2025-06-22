@@ -1,6 +1,9 @@
 import React from "react";
-import { PersonInterface, PersonHelper, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box } from "@mui/material"
+import {
+ type PersonInterface, PersonHelper, Locale 
+} from "@churchapps/apphelper";
+import {
+ Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box } from "@mui/material"
 
 interface Props {
   handleSearch: (text: string) => void,
@@ -34,7 +37,7 @@ export const Search: React.FC<Props> = (props) => {
         <TableCell style={{paddingRight: 0}}>
           <button type="button" className="no-default-style" onClick={() => {
             props.handleClickAction(person.id);
-          }}>
+          }} data-testid="select-person-button" aria-label="Select person">
             <Box sx={{display: "flex", alignItems: "center"}}>
               <Icon sx={{marginRight: "5px"}}>person</Icon>{props.buttonText}
             </Box>
@@ -50,8 +53,8 @@ export const Search: React.FC<Props> = (props) => {
 
   return (
     <>
-      <TextField fullWidth name="personAddText" label={Locale.label("common.person")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => props.handleSearch(searchText)}>{Locale.label("common.search")}</Button> }}
+      <TextField fullWidth name="personAddText" label={Locale.label("common.person")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="person-search-input" aria-label="Search for person"
+        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => props.handleSearch(searchText)} data-testid="search-button" aria-label="Search">{Locale.label("common.search")}</Button> }}
       />
       <Table size="small" id="searchResults">
         <TableBody>{rows}</TableBody>

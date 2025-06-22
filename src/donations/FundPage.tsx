@@ -1,12 +1,18 @@
 import React from "react";
-import { ApiHelper, DisplayBox, InputBox, DonationBatchInterface, DateHelper, UserHelper, FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, PersonInterface, ArrayHelper, Loading, CurrencyHelper, Locale } from "@churchapps/apphelper";
-import { useParams, Link } from "react-router-dom";
-import { Table, TableBody, TableRow, TableCell, TableHead, Grid, TextField } from "@mui/material"
-import { Banner } from "@churchapps/apphelper";
+import {
+ ApiHelper, DisplayBox, InputBox, type DonationBatchInterface, DateHelper, UserHelper, type FundDonationInterface, ExportLink, Permissions, UniqueIdHelper, type PersonInterface, ArrayHelper, Loading, CurrencyHelper, Locale 
+} from "@churchapps/apphelper";
+import {
+ useParams, Link } from "react-router-dom";
+import {
+ Table, TableBody, TableRow, TableCell, TableHead, Grid, TextField } from "@mui/material"
+import {
+ Banner 
+} from "@churchapps/apphelper";
 
 export const FundPage = () => {
   const params = useParams();
-  let initialDate = new Date();
+  const initialDate = new Date();
   initialDate.setDate(initialDate.getDate() - 7);
 
   const [fund, setFund] = React.useState<DonationBatchInterface>({});
@@ -54,7 +60,7 @@ export const FundPage = () => {
   }
 
   const getRows = () => {
-    let result: JSX.Element[] = [];
+    const result: JSX.Element[] = [];
 
     if (fundDonations.length === 0) {
       result.push(<TableRow key="0"><TableCell>{Locale.label("donations.fundsPage.noDon")}</TableCell></TableRow>);
@@ -62,8 +68,8 @@ export const FundPage = () => {
     }
 
     for (let i = 0; i < fundDonations.length; i++) {
-      let fd = fundDonations[i];
-      let personCol = (UniqueIdHelper.isMissing(fd.donation?.personId))
+      const fd = fundDonations[i];
+      const personCol = (UniqueIdHelper.isMissing(fd.donation?.personId))
         ? (<TableCell>{Locale.label("donations.fundsPage.anon")}</TableCell>)
         : (<TableCell><Link to={"/people/" + fd.donation?.personId}>{people[fd.donation.personId] || Locale.label("donations.fundsPage.anon")}</Link></TableCell>);
       result.push(<TableRow key={i}>

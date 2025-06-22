@@ -16,29 +16,29 @@ export const Form: React.FC<Props> = (props) => {
   const getEditContent = () => (<button className="no-default-style" aria-label="addQuestion" onClick={() => { setEditQuestionId(""); }}><Icon>add</Icon></button>)
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let row = anchor.parentNode.parentNode as HTMLElement;
-    let idx = parseInt(row.getAttribute("data-index"));
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    const row = anchor.parentNode.parentNode as HTMLElement;
+    const idx = parseInt(row.getAttribute("data-index"));
     setEditQuestionId(questions[idx].id);
   }
   const moveUp = (e: React.MouseEvent) => {
     e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let row = anchor.parentNode.parentNode as HTMLElement;
-    let idx = parseInt(row.getAttribute("data-index"));
-    let tmpQuestions = [...questions];
-    let question = tmpQuestions.splice(idx, 1)[0];
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    const row = anchor.parentNode.parentNode as HTMLElement;
+    const idx = parseInt(row.getAttribute("data-index"));
+    const tmpQuestions = [...questions];
+    const question = tmpQuestions.splice(idx, 1)[0];
     tmpQuestions.splice(idx - 1, 0, question);
     setQuestions(tmpQuestions);
     ApiHelper.get("/questions/sort/" + question.id + "/up", "MembershipApi");
   }
   const moveDown = (e: React.MouseEvent) => {
     e.preventDefault();
-    let anchor = e.currentTarget as HTMLAnchorElement;
-    let row = anchor.parentNode.parentNode as HTMLElement;
-    let idx = parseInt(row.getAttribute("data-index"));
-    let tmpQuestions = [...questions];
-    let question = tmpQuestions.splice(idx, 1)[0];
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    const row = anchor.parentNode.parentNode as HTMLElement;
+    const idx = parseInt(row.getAttribute("data-index"));
+    const tmpQuestions = [...questions];
+    const question = tmpQuestions.splice(idx, 1)[0];
     tmpQuestions.splice(idx + 1, 0, question);
     setQuestions(tmpQuestions);
     ApiHelper.get("/questions/sort/" + question.id + "/down", "MembershipApi");
@@ -50,8 +50,8 @@ export const Form: React.FC<Props> = (props) => {
       return rows;
     }
     for (let i = 0; i < questions.length; i++) {
-      let upArrow = (i === 0) ? <span style={{ display: "inline-block", width: 20 }} /> : <button className="no-default-style" aria-label="moveUp" onClick={moveUp}><Icon>arrow_upward</Icon></button>
-      let downArrow = (i === questions.length - 1) ? <></> : <> &nbsp; <button className="no-default-style" aria-label="moveDown" onClick={moveDown}><Icon>arrow_downward</Icon></button></>
+      const upArrow = (i === 0) ? <span style={{ display: "inline-block", width: 20 }} /> : <button className="no-default-style" aria-label="moveUp" onClick={moveUp}><Icon>arrow_upward</Icon></button>
+      const downArrow = (i === questions.length - 1) ? <></> : <> &nbsp; <button className="no-default-style" aria-label="moveDown" onClick={moveDown}><Icon>arrow_downward</Icon></button></>
       rows.push(
         <TableRow key={i} data-index={i}>
           <TableCell><a href="about:blank" onClick={handleClick}>{questions[i].title}</a></TableCell>
@@ -72,7 +72,7 @@ export const Form: React.FC<Props> = (props) => {
     return rows;
   }
   const getSidebarModules = () => {
-    let result = [];
+    const result = [];
     if (editQuestionId !== "notset") result.push(<FormQuestionEdit key="form-questions" questionId={editQuestionId} updatedFunction={questionUpdated} formId={form.id} />)
     return result;
   }
