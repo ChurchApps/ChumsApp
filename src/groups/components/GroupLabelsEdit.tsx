@@ -9,7 +9,6 @@ interface Props {
 }
 
 export const GroupLabelsEdit: React.FC<Props> = (props) => {
-  const a = 1;
 
   const [allLabels, setAllLabels] = React.useState<string[]>(["Small Group", "Sunday School Class"]);
   const groupLabels = props.group?.labelArray;

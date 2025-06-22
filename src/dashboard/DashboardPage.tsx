@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Icon } from "@mui/material";
+import { Grid } from "@mui/material";
 import { TaskList } from "../tasks/components/TaskList";
 import { PeopleSearch } from "./components";
 import { Groups } from "../people/components";

@@ -76,7 +76,10 @@ export const Keys = (props: Props) => {
     const skus = qs[0].split("=")[1];
     const keys = qs[1].split("=")[1];
     const url = await PraiseChartsHelper.download(skus, product.name + "." + product.file_type, keys)
-    window.open(url, "_blank");
+    const newWindow = window.open(url, "_blank");
+    if (newWindow) {
+      newWindow.opener = null;
+    }
   }
 
   const listProducts = () => (<ul>
@@ -90,7 +93,7 @@ export const Keys = (props: Props) => {
   const listLinks = () => (<ul>
     {links.map((l) => (<li key={l.id}>
       <a href="about:blank" onClick={(e) => { e.preventDefault(); setEditLink(l); }}><Icon>edit</Icon></a>
-      <a href={l.url} target="_blank" rel="noreferrer">{l.text}</a>
+      <a href={l.url} target="_blank" rel="noopener noreferrer">{l.text}</a>
     </li>))}
   </ul>)
 

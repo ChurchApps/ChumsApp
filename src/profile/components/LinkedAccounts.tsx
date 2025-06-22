@@ -57,7 +57,10 @@ export const LinkedAccounts = () => {
               <br />
 
               {!praiseChartsAccessToken && (<>
-                <Button variant="contained" color="primary" onClick={() => { window.open("https://www.praisecharts.com/?XID=churchapps") }}>Sign-up</Button>
+                <Button variant="contained" color="primary" onClick={() => { 
+                  const newWindow = window.open("https://www.praisecharts.com/?XID=churchapps", "_blank");
+                  if (newWindow) newWindow.opener = null;
+                }}>Sign-up</Button>
                 &nbsp;
                 <Button variant="contained" color="success" onClick={() => openOAuthPopup()}>Link</Button>
               </>)}

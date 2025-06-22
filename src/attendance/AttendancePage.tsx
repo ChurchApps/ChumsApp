@@ -1,8 +1,6 @@
 import React from "react";
-import { CampusEdit, ServiceEdit, ServiceTimeEdit, Tabs } from "./components";
-import { Link } from "react-router-dom";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box } from "@mui/material"
-import { useMountedState, type AttendanceInterface, type CampusInterface, type ServiceInterface, type ServiceTimeInterface, type GroupServiceTimeInterface, type GroupInterface, ApiHelper, DisplayBox, ArrayHelper, Loading, Locale, UserHelper, ReportWithFilter } from "@churchapps/apphelper";
+import { Grid, Icon } from "@mui/material"
+import { Locale, UserHelper, ReportWithFilter } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 import { AttendanceSetup } from "./components/AttendanceSetup";
 import { Permissions } from "@churchapps/apphelper";
@@ -31,7 +29,7 @@ export const AttendancePage = () => {
     return currentTab;
   }
 
-  const getItem = (tab:any) => {
+  const getItem = (tab: any) => {
     if (tab.key === selectedTab) return (<li className="active"><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
     return (<li><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
   }
@@ -43,7 +41,7 @@ export const AttendancePage = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={2}>
           <div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
-            <ul>{getTabs().map((tab, index) => getItem(tab))}</ul>
+            <ul>{getTabs().map((tab) => getItem(tab))}</ul>
           </div>
         </Grid>
         <Grid item xs={12} md={10}>

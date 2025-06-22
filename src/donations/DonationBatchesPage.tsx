@@ -3,7 +3,7 @@ import { BatchEdit, DonationEvents } from "./components";
 import { ApiHelper, DisplayBox, DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, SmallButton, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { useMountedState, type DonationBatchInterface, Permissions } from "@churchapps/apphelper";
-import {  Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Paper } from "@mui/material"
 import { Banner } from "@churchapps/apphelper";
 
 export const DonationBatchesPage = () => {
@@ -36,11 +36,10 @@ export const DonationBatchesPage = () => {
   }
 
   const sortTable = (key: string, asc: boolean | null) => {
-    let sortedBatches;
     if (asc === null) asc = false;
     setCurrentSortedCol(key);
 
-    sortedBatches = batches.sort(function(a: any, b: any) {
+    const sortedBatches = batches.sort(function(a: any, b: any) {
       if (a[key] === null) return Infinity;
 
       if (key === "batchDate") {

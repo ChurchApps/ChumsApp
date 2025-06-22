@@ -23,7 +23,7 @@ import {
 
 
 export const ControlPanel = () => {
-  const [errors, setErrors] = React.useState([]);
+  const [errors] = React.useState([]);
 
   const location = (typeof (window) === "undefined") ? null : window.location;
   AnalyticsHelper.init();

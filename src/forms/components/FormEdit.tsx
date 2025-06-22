@@ -60,7 +60,7 @@ export function FormEdit(props: Props) {
     if (validate()) {
       setIsSubmitting(true);
       const f = form;
-      if (showDates) {
+      if (!showDates) {
         f.accessEndTime = null;
         f.accessStartTime = null;
       }

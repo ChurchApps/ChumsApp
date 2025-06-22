@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Grid, Icon, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Icon, Menu, MenuItem } from "@mui/material";
 import { type PlanItemInterface } from "../../helpers";
 import { DraggableWrapper } from "../../components/DraggableWrapper";
 import { DroppableWrapper } from "../../components/DroppableWrapper";

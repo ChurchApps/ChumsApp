@@ -1,6 +1,6 @@
 import React from "react";
 
-import {GroupInterface, PersonInterface, PersonHelper,  } from "@churchapps/apphelper";
+import {GroupInterface, PersonInterface, PersonHelper } from "@churchapps/apphelper";
 import { Grid } from "@mui/material";
 import { GroupMembers } from "./GroupMembers";
 import { PersonAddAdvanced } from "../../people/components/PersonAddAdvanced";
@@ -11,7 +11,6 @@ interface Props {
 }
 
 export const GroupMembersTab = (props:Props) => {
-  const a = 0
   const [addedPerson, setAddedPerson] = React.useState({} as PersonInterface);
   const addPerson = (p: PersonInterface) => setAddedPerson(p);
 

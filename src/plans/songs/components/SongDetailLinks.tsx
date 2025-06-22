@@ -29,9 +29,9 @@ export const SongDetailLinks = (props: Props) => {
       Hymnary: "https://upload.wikimedia.org/wikipedia/commons/6/6c/Hymnary_logo.png",
       MusicBrainz: "https://upload.wikimedia.org/wikipedia/commons/0/01/MusicBrainz_Logo_with_text_%282016%29.svg"
     }
-    let result = <a href={link.url} target="_blank" rel="noreferrer">{link.service}</a>
+    let result = <a href={link.url} target="_blank" rel="noopener noreferrer">{link.service}</a>
     const logo: string = logos[link.service] as string;
-    if (logo) result = <a href={link.url} target="_blank" rel="noreferrer"><img src={logo} alt={link.service} style={{ minHeight: 20, maxHeight: 30, maxWidth: 100 }} /></a>
+    if (logo) result = <a href={link.url} target="_blank" rel="noopener noreferrer"><img src={logo} alt={link.service} style={{ minHeight: 20, maxHeight: 30, maxWidth: 100 }} /></a>
     //switch (link.service) {
     //case "Apple": result = <a href={link.url}>Apple</a>
     //}

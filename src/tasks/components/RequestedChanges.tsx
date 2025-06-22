@@ -1,8 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ApiHelper, DateHelper, InputBox, PersonInterface, TaskInterface, UserHelper } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, InputBox, Locale, PersonInterface, TaskInterface } from "@churchapps/apphelper";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { Locale } from "@churchapps/apphelper";
 
 interface Props { task: TaskInterface; }
 

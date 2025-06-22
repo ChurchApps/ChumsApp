@@ -15,14 +15,13 @@ export function DroppableWrapper(props: Props) {
 
   const [isDragging, setIsDragging] = React.useState(false);
 
-  const [{ isOver, canDrop, item }, drop] = useDrop(
+  const [{ isOver, canDrop }, drop] = useDrop(
     () => ({
       accept: props.accept,
       drop: (data) => props.onDrop(data),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
-        canDrop: !!monitor.canDrop(),
-        item: monitor.getDropResult()
+        canDrop: !!monitor.canDrop()
       }),
     }), [props?.dndDeps]
   );

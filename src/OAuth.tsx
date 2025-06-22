@@ -1,18 +1,9 @@
 import * as React from "react";
-import { useLocation, Navigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import { ApiHelper, UserHelper } from "@churchapps/apphelper";
-import UserContext from "./UserContext";
-import { LoginPage, Permissions } from "@churchapps/apphelper";
 import { Alert, Box, Button, Grid, Icon } from "@mui/material";
 
-export const OAuthPage: React.FC = (props: any) => {
-  const [errors] = React.useState<string[]>([])
-  const [cookies] = useCookies();
-  const location = useLocation();
+export const OAuthPage: React.FC = () => {
   const [clientName, setClientName] = React.useState<string>("");
-
-  const context = React.useContext(UserContext);
 
   const search = new URLSearchParams(window.location.search);
   const clientId = search.get("client_id");

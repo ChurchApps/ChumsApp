@@ -1,8 +1,7 @@
-import { Button, Grid, Icon } from "@mui/material";
+import { Icon } from "@mui/material";
 import React from "react";
 
 export const PersonNav: React.FC = () => {
-  const a = "";
 
   return (<div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
     <ul>

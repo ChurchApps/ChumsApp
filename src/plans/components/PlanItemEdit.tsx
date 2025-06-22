@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, FormControl, Grid, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import { type PlanItemInterface, type SongDetailInterface } from "../../helpers";
-import { ApiHelper, ArrayHelper, DisplayBox, InputBox, Locale } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, InputBox, Locale } from "@churchapps/apphelper";
 
 
 interface Props {
@@ -13,7 +13,7 @@ export const PlanItemEdit = (props: Props) => {
   const [planItem, setPlanItem] = React.useState<PlanItemInterface>(null);
   const [searchText, setSearchText] = React.useState("");
   const [songs, setSongs] = React.useState<SongDetailInterface[]>([]);
-  const [errors, setErrors] = React.useState<string[]>([]);
+  const [, setErrors] = React.useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setErrors([]);
@@ -105,7 +105,6 @@ export const PlanItemEdit = (props: Props) => {
   }
 
   const getSongFields = () => {
-    const a = 1;
     return <>
       <FormControl fullWidth variant="outlined">
         <InputLabel htmlFor="searchText">{Locale.label("common.search")}</InputLabel>

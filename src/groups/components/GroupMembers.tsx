@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
@@ -18,14 +18,11 @@ export const GroupMembers: React.FC<Props> = (props) => {
   const [selectedTemplate, setSelectedTemplate] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [count, setCount] = useState<number>(0);
-  //const isSubscribed = useRef(true);
 
   const loadData = React.useCallback(() => {
     setIsLoading(true);
     ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => {
-      //if (isSubscribed.current) {
       setGroupMembers(data)
-      //}
     }).finally(() => { setIsLoading(false) });
   }, [props.group.id]);
 
@@ -73,7 +70,6 @@ export const GroupMembers: React.FC<Props> = (props) => {
 
     for (let i = 0; i < groupMembers.length; i++) {
       const gm = groupMembers[i];
-      //let editLink = (canEdit) ? <a href="about:blank" onClick={handleRemove} data-index={i} data-cy={`remove-member-${i}`} className="text-danger"><Icon>person_remove</Icon> Remove</a> : <></>
       const editLinks = []
       if (canEdit) {
         if (gm.leader) editLinks.push(<SmallButton icon="key_off" toolTip="Remove Leader Access" onClick={() => handleToggleLeader(gm)} color="error" data-testid={`remove-leader-button-${gm.id}`} ariaLabel={`Remove leader access for ${gm.person.name.display}`} />);
@@ -126,9 +122,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
   }
 
   React.useEffect(() => {
-    if (props.group.id !== undefined) { loadData() }; return () => {
-      //isSubscribed.current = false
-    }
+    if (props.group.id !== undefined) { loadData() };
   }, [props.group, loadData]);
 
   React.useEffect(() => {

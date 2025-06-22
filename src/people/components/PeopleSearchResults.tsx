@@ -41,7 +41,7 @@ export function PeopleSearchResults(props: Props) {
     if (photoUrl === "/images/sample-profile.png") {
       return <img src={photoUrl} alt="avatar" />
     } else {
-      return <Tooltip componentsProps={{ tooltip: { sx: { padding: "0" } } }} title={<div dangerouslySetInnerHTML={{ __html: '<img src="' + photoUrl + '" style="max-width: 200px"/>' }} />} arrow placement="right"><a href={photoUrl} target="_blank" rel="noreferrer"><img src={photoUrl} alt="avatar" /></a></Tooltip>
+      return <Tooltip componentsProps={{ tooltip: { sx: { padding: "0" } } }} title={<div dangerouslySetInnerHTML={{ __html: '<img src="' + photoUrl + '" style="max-width: 200px"/>' }} />} arrow placement="right"><a href={photoUrl} target="_blank" rel="noopener noreferrer"><img src={photoUrl} alt="avatar" /></a></Tooltip>
     }
   }
 

@@ -2,7 +2,6 @@ import { Button, Grid } from "@mui/material";
 import React from "react";
 
 export const PersonBanner: React.FC = () => {
-  const a="";
 
   return (<div style={{backgroundColor:"var(--c1l2)", color: "#FFF", padding:"12px 24px"}}>
 

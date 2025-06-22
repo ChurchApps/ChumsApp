@@ -12,7 +12,7 @@ type Props = {
 export function DraggableWrapper(props: Props) {
   const dragRef = React.useRef(null)
 
-  const [{ isDragging }, drag, preview] = useDrag(
+  const [{ isDragging }, drag] = useDrag(
     () => ({
       type: props.dndType,
       item: { data: props.data },

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { GroupInterface, PersonInterface, PersonHelper, SessionInterface, } from "@churchapps/apphelper";
+import { GroupInterface, PersonInterface, PersonHelper, SessionInterface } from "@churchapps/apphelper";
 import { Grid } from "@mui/material";
 import { PersonAddAdvanced } from "../../people/components/PersonAddAdvanced";
 import { GroupSessions } from "./GroupSessions";
@@ -13,7 +13,6 @@ interface Props {
 }
 
 export const GroupSessionsTab = (props: Props) => {
-  const a = 0
   const [addedPerson, setAddedPerson] = React.useState({} as PersonInterface);
   const [addedSession, setAddedSession] = React.useState({} as SessionInterface);
   const [addSessionVisible, setAddSessionVisible] = React.useState(false);

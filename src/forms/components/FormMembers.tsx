@@ -71,8 +71,8 @@ export const FormMembers: React.FC<Props> = (props) => {
           <TableCell><Link to={"/people/" + fm.memberId}>{fm.personName}</Link></TableCell>
           <TableCell>
             <Stack direction="row" spacing={1}>
-              <Button variant={fm.action === "admin" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, {action: "admin"}) }}>{Locale.label("forms.formMembers.admin")}</Button>
-              <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={(e) => { handleActionChange(fm.memberId, {action: "view"}) }}>{Locale.label("forms.formMembers.view")}</Button>
+              <Button variant={fm.action === "admin" ? "contained" : "outlined"} onClick={() => { handleActionChange(fm.memberId, {action: "admin"}) }}>{Locale.label("forms.formMembers.admin")}</Button>
+              <Button variant={fm.action === "view" ? "contained" : "outlined"} onClick={() => { handleActionChange(fm.memberId, {action: "view"}) }}>{Locale.label("forms.formMembers.view")}</Button>
             </Stack>
           </TableCell>
           <TableCell>{<a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemoveMember(fm.memberId); }} style={{display: "flex", alignItems: "center", color: "#dc3545"}}><Icon sx={{marginRight: "5px"}}>person_remove</Icon> {Locale.label("common.remove")}</a>}</TableCell>

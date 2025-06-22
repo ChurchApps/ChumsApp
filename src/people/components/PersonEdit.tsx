@@ -131,7 +131,7 @@ export function PersonEdit(props: Props) {
         member.contactInfo = PersonHelper.changeOnlyAddress(member.contactInfo, person.contactInfo)
         try {
           await ApiHelper.post("/people", [member], "MembershipApi");
-        } catch (err) {
+        } catch {
           console.log(`error in updating ${person.name.display}"s address`);
         }
       })
@@ -151,7 +151,7 @@ export function PersonEdit(props: Props) {
           setMembers(data);
         });
       }
-    } catch (err) {
+    } catch {
       console.log(`Error occured in fetching household members`);
     }
   }

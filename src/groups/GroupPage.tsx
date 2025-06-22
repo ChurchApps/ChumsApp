@@ -1,9 +1,8 @@
 import React from "react";
-import { MembersAdd, GroupDetails, Tabs, SessionAdd, GroupMembers, GroupSessions } from "./components";
-import { ApiHelper, DisplayBox, type GroupInterface, type PersonInterface, type SessionInterface, PersonHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
+import { GroupDetails } from "./components";
+import { ApiHelper, Banner, type GroupInterface, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Grid, Icon } from "@mui/material"
-import { Banner } from "@churchapps/apphelper";
 import { GroupMembersTab } from "./components/GroupMembersTab";
 import { GroupSessionsTab } from "./components/GroupSessionsTab";
 

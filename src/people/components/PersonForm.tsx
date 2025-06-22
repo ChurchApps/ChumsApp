@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FormSubmission } from "./";
-import { Accordion, AccordionDetails, AccordionSummary, Button, Icon, Box } from "@mui/material";
-import { type FormSubmissionInterface, Permissions, FormSubmissionEdit, UserHelper, ApiHelper, DisplayBox, type FormInterface } from "@churchapps/apphelper";
+import { Button, Icon } from "@mui/material";
+import { type FormSubmissionInterface, FormSubmissionEdit, DisplayBox, type FormInterface } from "@churchapps/apphelper";
 
 interface Props {
   contentType: string,

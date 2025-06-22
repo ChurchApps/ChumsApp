@@ -1,7 +1,6 @@
 import { Grid, Icon, TextField } from "@mui/material";
 import React from "react";
-import { ApiHelper, ArrayHelper, ConversationInterface, Locale, MessageInterface, TaskInterface, UserHelper } from "@churchapps/apphelper";
-import { ErrorMessages, InputBox } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, ConversationInterface, ErrorMessages, InputBox, Locale, MessageInterface, TaskInterface, UserHelper } from "@churchapps/apphelper";
 import { ContentPicker } from "./ContentPicker";
 
 interface Props {
