@@ -69,6 +69,8 @@ export class DonationsHelper {
    */
   static async searchDonations(page: Page, searchTerm: string) {
     const searchSelectors = [
+      '[data-testid="people-search-input"]',
+      '[data-testid="dashboard-people-search-input"]',
       '#searchText',
       'input[placeholder*="Search"]',
       'input[name="search"]',
@@ -95,6 +97,8 @@ export class DonationsHelper {
    */
   static async searchFunds(page: Page, searchTerm: string) {
     const searchSelectors = [
+      '[data-testid="people-search-input"]',
+      '[data-testid="dashboard-people-search-input"]',
       '#searchText',
       'input[placeholder*="Search"]',
       'input[name="search"]',
@@ -264,7 +268,7 @@ export class DonationsHelper {
    * Clear search input
    */
   static async clearSearch(page: Page) {
-    const searchInput = page.locator('#searchText, input[placeholder*="Search"]').first();
+    const searchInput = page.locator('[data-testid="people-search-input"], #searchText, input[placeholder*="Search"]').first();
     const isVisible = await searchInput.isVisible().catch(() => false);
     if (isVisible) {
       await searchInput.fill('');

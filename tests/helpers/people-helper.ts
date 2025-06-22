@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 export class PeopleHelper {
   /**
@@ -6,12 +6,19 @@ export class PeopleHelper {
    */
   static async navigateToPeople(page: Page) {
     // Check if we're already authenticated and have the dashboard
-    const searchBox = page.locator('#searchText');
-    const hasSearch = await searchBox.isVisible().catch(() => false);
+    const searchSelectors = [
+      '[data-testid="people-search-input"] input',
+      '[data-testid="dashboard-people-search-input"] input',
+      '#searchText'
+    ];
     
-    if (hasSearch) {
-      console.log('People management available through search interface');
-      return;
+    for (const selector of searchSelectors) {
+      const searchBox = page.locator(selector).first();
+      const hasSearch = await searchBox.isVisible().catch(() => false);
+      if (hasSearch) {
+        console.log('People management available through search interface');
+        return;
+      }
     }
     
     // If no search box, try to navigate to main dashboard
@@ -23,10 +30,13 @@ export class PeopleHelper {
     }
     
     // Check for search box again
-    const hasSearchAfterNav = await page.locator('#searchText').isVisible().catch(() => false);
-    if (hasSearchAfterNav) {
-      console.log('Found people search on dashboard');
-      return;
+    for (const selector of searchSelectors) {
+      const searchBox = page.locator(selector).first();
+      const hasSearchAfterNav = await searchBox.isVisible().catch(() => false);
+      if (hasSearchAfterNav) {
+        console.log('Found people search on dashboard');
+        return;
+      }
     }
     
     throw new Error('Could not access people management functionality');
@@ -36,10 +46,32 @@ export class PeopleHelper {
    * Search for a person by name
    */
   static async searchPerson(page: Page, searchTerm: string) {
-    const searchInput = page.locator('#searchText, input[placeholder*="Search"]').first();
-    await searchInput.fill(searchTerm);
-    await searchInput.press('Enter');
-    await page.waitForLoadState('networkidle');
+    // Try to fill the first available search input
+    const searchInputs = [
+      '[data-testid="people-search-input"] input',
+      '[data-testid="dashboard-people-search-input"] input',
+      '#searchText',
+      'input[placeholder*="Search"]',
+      'input[name="search"]'
+    ];
+    
+    for (const selector of searchInputs) {
+      try {
+        const input = page.locator(selector).first();
+        const isVisible = await input.isVisible().catch(() => false);
+        if (isVisible) {
+          await input.fill(searchTerm);
+          await input.press('Enter');
+          await page.waitForLoadState('networkidle');
+          return;
+        }
+      } catch {
+        // Continue to next selector
+        continue;
+      }
+    }
+    
+    throw new Error('Could not find a valid search input field');
   }
 
   /**
@@ -59,7 +91,7 @@ export class PeopleHelper {
     // Rather than having a traditional "Add Person" form, let's verify we can at least
     // access the search functionality and demonstrate the pattern
     
-    const searchBox = page.locator('#searchText');
+    const searchBox = page.locator('[data-testid="people-search-input"], #searchText');
     const hasSearch = await searchBox.isVisible().catch(() => false);
     
     if (!hasSearch) {
@@ -67,8 +99,16 @@ export class PeopleHelper {
     }
     
     // Search for the person to verify they don't already exist
-    await searchBox.fill(`${person.firstName} ${person.lastName}`);
-    await page.keyboard.press('Enter');
+    const actualInput = searchBox.locator('input').first();
+    const hasInput = await actualInput.isVisible().catch(() => false);
+    
+    if (hasInput) {
+      await actualInput.fill(`${person.firstName} ${person.lastName}`);
+      await page.keyboard.press('Enter');
+    } else {
+      await searchBox.fill(`${person.firstName} ${person.lastName}`);
+      await page.keyboard.press('Enter');
+    }
     await page.waitForTimeout(2000);
     
     // Check if person already exists
@@ -83,7 +123,11 @@ export class PeopleHelper {
     }
     
     // Clear search for next operations
-    await searchBox.fill('');
+    if (hasInput) {
+      await actualInput.fill('');
+    } else {
+      await searchBox.fill('');
+    }
   }
   
   /**

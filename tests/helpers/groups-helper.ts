@@ -6,7 +6,7 @@ export class GroupsHelper {
    */
   static async navigateToGroups(page: Page) {
     // Check if we're already on groups page or can access groups search
-    const groupsSearchBox = page.locator('#searchText, input[placeholder*="Search"]');
+    const groupsSearchBox = page.locator('[data-testid="people-search-input"], #searchText, input[placeholder*="Search"]');
     const hasSearch = await groupsSearchBox.isVisible().catch(() => false);
     
     if (hasSearch) {

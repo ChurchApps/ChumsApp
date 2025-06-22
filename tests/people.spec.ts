@@ -13,7 +13,7 @@ test.describe('People Management', () => {
     console.log('✓ Authentication and church selection successful');
 
     // Step 2: Test people search functionality if available
-    const searchBox = page.locator('#searchText');
+    const searchBox = page.locator('[data-testid="people-search-input"], #searchText');
     const hasSearch = await searchBox.isVisible().catch(() => false);
 
     if (hasSearch) {
@@ -80,6 +80,8 @@ test.describe('People Management', () => {
 
     // Test 2: Search interface variations
     const searchSelectors = [
+      '[data-testid="people-search-input"] input',
+      '[data-testid="dashboard-people-search-input"] input',
       '#searchText',
       'input[placeholder*="Search"]',
       'input[name="search"]',
@@ -88,15 +90,20 @@ test.describe('People Management', () => {
 
     let searchFound = false;
     for (const selector of searchSelectors) {
-      const element = page.locator(selector).first();
-      const isVisible = await element.isVisible().catch(() => false);
-      if (isVisible) {
-        console.log(`✓ Found search interface: ${selector}`);
-        await element.fill('test search');
-        await element.press('Enter');
-        await page.waitForTimeout(1000);
-        searchFound = true;
-        break;
+      try {
+        const element = page.locator(selector).first();
+        const isVisible = await element.isVisible().catch(() => false);
+        if (isVisible) {
+          console.log(`✓ Found search interface: ${selector}`);
+          await element.fill('test search');
+          await element.press('Enter');
+          await page.waitForTimeout(1000);
+          searchFound = true;
+          break;
+        }
+      } catch {
+        // Continue to next selector
+        continue;
       }
     }
 
@@ -199,7 +206,7 @@ test.describe('People Management - Production Patterns', () => {
     console.log('  - Update household addresses');
     
     // Clear search for clean state
-    const searchBox = page.locator('#searchText');
+    const searchBox = page.locator('[data-testid="people-search-input"], #searchText');
     await searchBox.fill('');
     
     console.log('✓ Household management workflow completed');

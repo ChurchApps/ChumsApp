@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 export class FormsHelper {
   /**
@@ -6,12 +6,20 @@ export class FormsHelper {
    */
   static async navigateToForms(page: Page) {
     // Check if we're already on forms page or can access forms search
-    const formsSearchBox = page.locator('#searchText, input[placeholder*="Search"]');
-    const hasSearch = await formsSearchBox.isVisible().catch(() => false);
+    const searchSelectors = [
+      '[data-testid="people-search-input"] input',
+      '[data-testid="dashboard-people-search-input"] input',
+      '#searchText',
+      'input[placeholder*="Search"]'
+    ];
     
-    if (hasSearch) {
-      console.log('Forms management available through search interface');
-      return;
+    for (const selector of searchSelectors) {
+      const formsSearchBox = page.locator(selector).first();
+      const hasSearch = await formsSearchBox.isVisible().catch(() => false);
+      if (hasSearch) {
+        console.log('Forms management available through search interface');
+        return;
+      }
     }
     
     // Try navigating through menu
@@ -49,6 +57,8 @@ export class FormsHelper {
    */
   static async searchForms(page: Page, searchTerm: string) {
     const searchSelectors = [
+      '[data-testid="people-search-input"] input',
+      '[data-testid="dashboard-people-search-input"] input',
       '#searchText',
       'input[placeholder*="Search"]',
       'input[name="search"]',
@@ -56,13 +66,18 @@ export class FormsHelper {
     ];
     
     for (const selector of searchSelectors) {
-      const searchInput = page.locator(selector).first();
-      const isVisible = await searchInput.isVisible().catch(() => false);
-      if (isVisible) {
-        await searchInput.fill(searchTerm);
-        await searchInput.press('Enter');
-        await page.waitForTimeout(2000);
-        return;
+      try {
+        const searchInput = page.locator(selector).first();
+        const isVisible = await searchInput.isVisible().catch(() => false);
+        if (isVisible) {
+          await searchInput.fill(searchTerm);
+          await searchInput.press('Enter');
+          await page.waitForTimeout(2000);
+          return;
+        }
+      } catch {
+        // Continue to next selector
+        continue;
       }
     }
     
@@ -73,10 +88,25 @@ export class FormsHelper {
    * Clear search input
    */
   static async clearSearch(page: Page) {
-    const searchInput = page.locator('#searchText, input[placeholder*="Search"]').first();
-    const isVisible = await searchInput.isVisible().catch(() => false);
-    if (isVisible) {
-      await searchInput.fill('');
+    const searchSelectors = [
+      '[data-testid="people-search-input"] input',
+      '[data-testid="dashboard-people-search-input"] input',
+      '#searchText',
+      'input[placeholder*="Search"]'
+    ];
+    
+    for (const selector of searchSelectors) {
+      try {
+        const searchInput = page.locator(selector).first();
+        const isVisible = await searchInput.isVisible().catch(() => false);
+        if (isVisible) {
+          await searchInput.fill('');
+          return;
+        }
+      } catch {
+        // Continue to next selector
+        continue;
+      }
     }
   }
 
@@ -209,7 +239,7 @@ export class FormsHelper {
   /**
    * Submit a form (simulate submission)
    */
-  static async submitForm(page: Page, formName: string, data: Record<string, any>) {
+  static async submitForm(page: Page, formName: string, data: Record<string, unknown>) {
     console.log(`Simulating form submission for: ${formName}`);
     
     console.log(`Submission data:`);

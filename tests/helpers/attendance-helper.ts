@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
 
 export class AttendanceHelper {
   /**
@@ -6,12 +6,20 @@ export class AttendanceHelper {
    */
   static async navigateToAttendance(page: Page) {
     // Check if we're already on attendance page or can access attendance search
-    const attendanceSearchBox = page.locator('#searchText, input[placeholder*="Search"]');
-    const hasSearch = await attendanceSearchBox.isVisible().catch(() => false);
+    const searchSelectors = [
+      '[data-testid="people-search-input"] input',
+      '[data-testid="dashboard-people-search-input"] input',
+      '#searchText',
+      'input[placeholder*="Search"]'
+    ];
     
-    if (hasSearch) {
-      console.log('Attendance management available through search interface');
-      return;
+    for (const selector of searchSelectors) {
+      const attendanceSearchBox = page.locator(selector).first();
+      const hasSearch = await attendanceSearchBox.isVisible().catch(() => false);
+      if (hasSearch) {
+        console.log('Attendance management available through search interface');
+        return;
+      }
     }
     
     // Try navigating through menu
@@ -49,6 +57,8 @@ export class AttendanceHelper {
    */
   static async searchAttendance(page: Page, searchTerm: string) {
     const searchSelectors = [
+      '[data-testid="people-search-input"] input',
+      '[data-testid="dashboard-people-search-input"] input',
       '#searchText',
       'input[placeholder*="Search"]',
       'input[name="search"]',
@@ -57,15 +67,20 @@ export class AttendanceHelper {
     ];
     
     for (const selector of searchSelectors) {
-      const searchInput = page.locator(selector).first();
-      const isVisible = await searchInput.isVisible().catch(() => false);
-      if (isVisible) {
-        await searchInput.fill(searchTerm);
-        if (selector !== 'input[type="date"]') {
-          await searchInput.press('Enter');
+      try {
+        const searchInput = page.locator(selector).first();
+        const isVisible = await searchInput.isVisible().catch(() => false);
+        if (isVisible) {
+          await searchInput.fill(searchTerm);
+          if (selector !== 'input[type="date"]') {
+            await searchInput.press('Enter');
+          }
+          await page.waitForTimeout(2000);
+          return;
         }
-        await page.waitForTimeout(2000);
-        return;
+      } catch {
+        // Continue to next selector
+        continue;
       }
     }
     
@@ -277,10 +292,25 @@ export class AttendanceHelper {
    * Clear search input
    */
   static async clearSearch(page: Page) {
-    const searchInput = page.locator('#searchText, input[placeholder*="Search"]').first();
-    const isVisible = await searchInput.isVisible().catch(() => false);
-    if (isVisible) {
-      await searchInput.fill('');
+    const searchSelectors = [
+      '[data-testid="people-search-input"] input',
+      '[data-testid="dashboard-people-search-input"] input',
+      '#searchText',
+      'input[placeholder*="Search"]'
+    ];
+    
+    for (const selector of searchSelectors) {
+      try {
+        const searchInput = page.locator(selector).first();
+        const isVisible = await searchInput.isVisible().catch(() => false);
+        if (isVisible) {
+          await searchInput.fill('');
+          return;
+        }
+      } catch {
+        // Continue to next selector
+        continue;
+      }
     }
   }
 

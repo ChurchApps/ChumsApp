@@ -96,6 +96,8 @@ test.describe('Login Page', () => {
     
     expect(isStillOnLogin).toBeTruthy();
     expect(hasChurchSelection).toBeFalsy();
+    // Either should still be on login OR should have some error indication
+    expect(isStillOnLogin || hasError).toBeTruthy();
     
     // Third test: Test forgot password link functionality
     if (forgotLinkElement) {

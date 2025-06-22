@@ -69,7 +69,7 @@ export class AuthHelper {
           console.log(`Selected Grace Community Church using: ${selector}`);
           break;
         }
-      } catch (error) {
+      } catch {
         console.log(`Failed to click with selector: ${selector}`);
       }
     }
@@ -82,7 +82,7 @@ export class AuthHelper {
         console.log('Waiting for redirect away from login page...');
         await page.waitForURL(/^(?!.*\/login).*$/, { timeout: 15000 });
         console.log('Successfully redirected away from login page');
-      } catch (timeoutError) {
+      } catch {
         console.log('Did not redirect away from login page within timeout');
         // Continue anyway, might be demo environment limitation
       }
