@@ -4,6 +4,7 @@ import { Grid, Icon } from "@mui/material";
 import { Banner } from "@churchapps/apphelper";
 import { UsageTrendsTab } from "./components/UsageTrendTab";
 import { ChurchesTab } from "./components/ChurchesTab";
+import { TranslationTab } from "./components/TranslationTab";
 
 export const AdminPage = () => {
   const [selectedTab, setSelectedTab] = React.useState("churches");
@@ -13,6 +14,7 @@ export const AdminPage = () => {
     switch (selectedTab) {
       case "churches": currentTab = <ChurchesTab key="churches" />; break;
       case "usage": currentTab = <UsageTrendsTab key="usage" />; break;
+      case "translation": currentTab = <TranslationTab key="translation" />; break;
     }
     return currentTab;
   }
@@ -29,6 +31,7 @@ export const AdminPage = () => {
     let tabs = [];
     tabs.push({ key: "churches", icon: "church", label: Locale.label("serverAdmin.adminPage.churches") });
     tabs.push({ key: "usage", icon: "show_chart", label: Locale.label("serverAdmin.adminPage.usageTrends") });
+    tabs.push({ key: "translation", icon: "book", label: "Translation Lookups" });
 
     return tabs;
   }
