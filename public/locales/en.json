@@ -688,11 +688,13 @@
   },
   "serverAdmin": {
     "adminPage": {
+      "abb": "Abbreviations",
       "act": "Active",
       "arch": "Archived",
       "church": "Church",
       "churches": "Churches",
       "churchName": "Church Name",
+      "look": "Lookups",
       "noChurch": "No churches found.  Please search for a different name.",
       "noteFour": "Comparable software is ProPresenter.  It's $399 for a site license.  I made assumptions that the average church installs the software on 3 computers and divided our total installs by 3 to get the number of churches.  I also made the assumption that churches will upgrade to a newer version every 5 years on average.  So $399 / 5 years / 3 computers = $26.60 annual cost per computer.  If we can quantify these assumptions we should update this number.",
       "noteOne": "Comparable software is Breeze.  They charge $72/mo or $864/year.",

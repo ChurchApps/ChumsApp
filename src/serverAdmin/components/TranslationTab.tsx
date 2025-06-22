@@ -1,0 +1,81 @@
+import { ApiHelper, DateHelper, DisplayBox } from "@churchapps/apphelper";
+import { Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, type SelectChangeEvent } from "@mui/material";
+import React from "react";
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+
+export const TranslationTab = () => {
+  const [startDate, setStartDate] = React.useState(new Date());
+  const [endDate, setEndDate] = React.useState(new Date());
+  const [report, setReport] = React.useState([]);
+  const [errors, setErrors] = React.useState<string[]>([]);
+
+  const loadData = async () => {
+    const reportData = await ApiHelper.get("/bibles/stats?startDate=" + DateHelper.formatHtml5Date(startDate) + "&endDate=" + DateHelper.formatHtml5Date(endDate), "ContentApi");
+    setReport(reportData);
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+    setErrors([]);
+    let value = e.target.value;
+    switch (e.target.name) {
+      case "start": setStartDate(new Date(value)); break;
+      case "end": setEndDate(new Date(value)); break;
+    }
+  }
+
+  const getTableHeader = () => {
+    const rows: JSX.Element[] = [];
+    rows.push(<TableRow sx={{ textAlign: "left" }} key="header"><th>{"Abbreviations"}</th><th>{"Lookups"}</th></TableRow>);
+    return rows;
+  }
+
+  const getRows = () => {
+    const rows: JSX.Element[] = [];
+    let keyVal = 0;
+
+    report.forEach((r: any) => {
+      rows.push(<TableRow key={keyVal.toString()}><TableCell>{r.abbreviation}</TableCell><TableCell>{r.lookups}</TableCell></TableRow>);
+      keyVal += 1;
+    });
+    return rows;
+  }
+
+  const getTable = () => {
+    if (report.length == 0) {
+      return;
+    } else return (<Paper sx={{ width: "100%", overflowX: "auto" }}>
+      <Table size="small">
+        <TableHead>{getTableHeader()}</TableHead>
+        <TableBody sx={{ whiteSpace: "nowrap" }}>{getRows()}</TableBody>
+      </Table>
+    </Paper>);
+  }
+
+  return <>
+    <DisplayBox headerIcon="summarize" headerText="Bible Translation Lookups">
+      <div>
+        <div style={{ fontSize: 18, marginBottom: 15 }}>
+          <Grid container alignItems="center">
+            <Grid item md={1}>
+              <p>Start Date:</p>
+            </Grid>
+            <Grid item md={3}>
+              <TextField id="start" name="start" value={DateHelper.formatHtml5Date(startDate)} type="date" onChange={handleChange} />
+            </Grid>
+            <Grid item md={1}>
+              <p>End Date:</p>
+            </Grid>
+            <Grid item md={3}>
+              <TextField id="end" name="end" value={DateHelper.formatHtml5Date(endDate)} type="date" onChange={handleChange} />
+            </Grid>
+            <Grid item md={1}>
+              <Button variant="outlined" style={{ height: 56, width: 200, marginTop: 8 }} onClick={loadData}><ManageSearchIcon fontSize="small" />&nbsp;Search</Button>
+            </Grid>
+          </Grid>
+        </div>
+        {getTable()}
+      </div>
+    </DisplayBox>
+
+  </>
+}
