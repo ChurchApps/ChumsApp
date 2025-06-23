@@ -1,13 +1,8 @@
 import React from "react";
-import {
- Button, FormControl, InputLabel, OutlinedInput } from "@mui/material";
-import {
- ChumsPersonHelper } from "../components";
-import {
- ApiHelper, DisplayBox, Locale, type PersonInterface, SearchCondition 
-} from "@churchapps/apphelper";
-import {
- PeopleSearchResults } from "../../people/components";
+import { Button, FormControl, InputLabel, OutlinedInput } from "@mui/material";
+import { ChumsPersonHelper } from "../components";
+import { ApiHelper, DisplayBox, Locale, type PersonInterface, SearchCondition } from "@churchapps/apphelper";
+import { PeopleSearchResults } from "../../people/components";
 
 export const PeopleSearch = () => {
   const [searchResults, setSearchResults] = React.useState(null);

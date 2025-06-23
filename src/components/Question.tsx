@@ -1,7 +1,5 @@
 import React from "react";
-import {
- DateHelper, type QuestionInterface, type AnswerInterface, Locale 
-} from "@churchapps/apphelper";
+import { DateHelper, type QuestionInterface, type AnswerInterface, Locale } from "@churchapps/apphelper";
 
 interface Props { question: QuestionInterface, answer: AnswerInterface }
 

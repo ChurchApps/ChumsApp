@@ -1,25 +1,15 @@
 import React from "react";
 import UserContext from "./UserContext";
 
-import {
- ApiHelper, ErrorMessages 
-} from "@churchapps/apphelper";
-import {
- Routes, Route, Navigate, useLocation } from "react-router-dom";
-import {
- Login } from "./Login";
+import { ApiHelper, ErrorMessages } from "@churchapps/apphelper";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Login } from "./Login";
 
-import {
- Authenticated } from "./Authenticated";
-import {
- Logout } from "./Logout";
-import {
- AnalyticsHelper, UserHelper, ErrorHelper, type ErrorLogInterface, type ErrrorAppDataInterface 
-} from "@churchapps/apphelper";
-import {
- UI } from "./ui/Test";
-import {
- Pingback } from "./Pingback";
+import { Authenticated } from "./Authenticated";
+import { Logout } from "./Logout";
+import { AnalyticsHelper, UserHelper, ErrorHelper, type ErrorLogInterface, type ErrrorAppDataInterface } from "@churchapps/apphelper";
+import { UI } from "./ui/Test";
+import { Pingback } from "./Pingback";
 
 
 export const ControlPanel = () => {

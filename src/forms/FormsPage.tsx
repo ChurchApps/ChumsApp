@@ -1,19 +1,10 @@
 import React, { useRef } from "react";
-import {
- FormEdit, EnvironmentHelper } from "./components"
-import {
- ApiHelper, DisplayBox, type FormInterface, UserHelper, Permissions, Loading, Locale 
-} from "@churchapps/apphelper";
-import {
- Link } from "react-router-dom"
-import {
- Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Paper, Tabs, Tab } from "@mui/material"
-import {
- SmallButton 
-} from "@churchapps/apphelper";
-import {
- Banner 
-} from "@churchapps/apphelper";
+import { FormEdit, EnvironmentHelper } from "./components"
+import { ApiHelper, DisplayBox, type FormInterface, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
+import { Link } from "react-router-dom"
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Paper, Tabs, Tab } from "@mui/material"
+import { SmallButton } from "@churchapps/apphelper";
+import { Banner } from "@churchapps/apphelper";
 
 export const FormsPage = () => {
   const [forms, setForms] = React.useState<FormInterface[]>(null);

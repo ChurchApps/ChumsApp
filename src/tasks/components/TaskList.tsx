@@ -1,20 +1,11 @@
 import React from "react";
-import {
- Grid, Typography } from "@mui/material";
-import {
- ApiHelper, ArrayHelper, DateHelper, DisplayBox, type GroupMemberInterface, Locale, type TaskInterface, UserHelper 
-} from "@churchapps/apphelper";
-import {
- SmallButton 
-} from "@churchapps/apphelper";
-import {
- Link } from "react-router-dom";
-import {
- NewTask } from "./";
+import { Grid, Typography } from "@mui/material";
+import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, type GroupMemberInterface, Locale, type TaskInterface, UserHelper } from "@churchapps/apphelper";
+import { SmallButton } from "@churchapps/apphelper";
+import { Link } from "react-router-dom";
+import { NewTask } from "./";
 import UserContext from "../../UserContext";
-import {
- useMountedState 
-} from "@churchapps/apphelper";
+import { useMountedState } from "@churchapps/apphelper";
 
 interface Props { compact?: boolean; status: string }
 

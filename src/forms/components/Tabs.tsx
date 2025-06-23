@@ -1,13 +1,8 @@
-import {
- Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
-import {
- FormMembers, Form, FormSubmissions } from ".";
-import {
- UserHelper, Permissions, type MemberPermissionInterface, type FormInterface, Locale 
-} from "@churchapps/apphelper";
-import {
- Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
+import { FormMembers, Form, FormSubmissions } from ".";
+import { UserHelper, Permissions, type MemberPermissionInterface, type FormInterface, Locale } from "@churchapps/apphelper";
+import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 interface Props { form: FormInterface, memberPermission: MemberPermissionInterface }
 

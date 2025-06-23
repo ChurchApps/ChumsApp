@@ -1,6 +1,4 @@
-import {
- type ConditionInterface 
-} from "@churchapps/apphelper";
+import { type ConditionInterface } from "@churchapps/apphelper";
 
 export class ConditionHelper {
 

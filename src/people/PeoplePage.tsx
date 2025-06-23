@@ -1,24 +1,12 @@
 import React from "react";
-import {
- Locale, type PersonInterface 
-} from "@churchapps/apphelper";
-import {
- PeopleSearchResults, PeopleColumns } from "./components";
-import {
- ApiHelper, DisplayBox, ExportLink 
-} from "@churchapps/apphelper";
-import {
- Grid } from "@mui/material"
-import {
- ChumsPersonHelper } from "../helpers";
-import {
- PeopleSearch } from "./components/PeopleSearch";
-import {
- useMountedState 
-} from "@churchapps/apphelper";
-import {
- Banner 
-} from "@churchapps/apphelper";
+import { Locale, type PersonInterface } from "@churchapps/apphelper";
+import { PeopleSearchResults, PeopleColumns } from "./components";
+import { ApiHelper, DisplayBox, ExportLink } from "@churchapps/apphelper";
+import { Grid } from "@mui/material"
+import { ChumsPersonHelper } from "../helpers";
+import { PeopleSearch } from "./components/PeopleSearch";
+import { useMountedState } from "@churchapps/apphelper";
+import { Banner } from "@churchapps/apphelper";
 
 export const PeoplePage = () => {
 

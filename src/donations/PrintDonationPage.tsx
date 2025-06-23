@@ -1,9 +1,6 @@
-import {
- ApiHelper, ArrayHelper, CurrencyHelper, DateHelper, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface 
-} from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, CurrencyHelper, DateHelper, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/apphelper";
 import React, { useContext, useEffect, useState } from "react";
-import {
- useParams, useSearchParams, useNavigate } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import UserContext from "../UserContext";
 
 export const PrintDonationPage = () => {
@@ -24,17 +21,24 @@ export const PrintDonationPage = () => {
   const loadData = () => {
     ApiHelper.get("/people/" + params.personId, "MembershipApi").then((p) => { setPerson(p) });
     ApiHelper.get("/funds", "GivingApi").then((f) => { setFunds(f) });
-    ApiHelper.get("/fundDonations?personId=" + params.personId, "GivingApi").then((fd) => { setFundDonations(fd) });
     ApiHelper.get("/donations?personId=" + params.personId, "GivingApi").then(
       (d: DonationInterface[]) => {
-        const result: DonationInterface[] = [];
+        const filteredDonations: DonationInterface[] = [];
         d.forEach((don) => {
           don.donationDate = new Date(don.donationDate);
           if (don.donationDate.getFullYear() === currYear) {
-            result.push(don);
+            filteredDonations.push(don);
           }
         });
-        setDonations(result);
+        setDonations(filteredDonations);
+        
+        // Filter fundDonations to only include those matching the filtered donations
+        ApiHelper.get("/fundDonations?personId=" + params.personId, "GivingApi").then((fd) => {
+          const filteredFundDonations = fd.filter((fundDonation: any) => 
+            filteredDonations.some(donation => donation.id === fundDonation.donationId)
+          );
+          setFundDonations(filteredFundDonations);
+        });
       }
     );
 

@@ -1,6 +1,4 @@
-import {
- PersonHelper, type PersonInterface 
-} from "@churchapps/apphelper";
+import { PersonHelper, type PersonInterface } from "@churchapps/apphelper";
 
 export class ChumsPersonHelper {
   static getBirthDay(person: PersonInterface) {

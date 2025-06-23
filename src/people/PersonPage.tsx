@@ -1,20 +1,12 @@
 import React, { useContext, useState } from "react";
-import {
- Groups, PersonAttendance } from "./components"
-import {
- UserHelper, ApiHelper, type PersonInterface, Permissions, PersonHelper, type ConversationInterface, Notes, DonationPage, Locale, type FormInterface, FormSubmissionEdit, ArrayHelper 
-} from "@churchapps/apphelper"
-import {
- Grid, Icon } from "@mui/material"
-import {
- useParams } from "react-router-dom";
-import {
- PersonBanner } from "./components/PersonBanner";
-import {
- PersonDetails } from "./components/PersonDetails";
+import { Groups, PersonAttendance } from "./components"
+import { UserHelper, ApiHelper, type PersonInterface, Permissions, PersonHelper, type ConversationInterface, Notes, DonationPage, Locale, type FormInterface, FormSubmissionEdit, ArrayHelper } from "@churchapps/apphelper"
+import { Grid, Icon } from "@mui/material"
+import { useParams } from "react-router-dom";
+import { PersonBanner } from "./components/PersonBanner";
+import { PersonDetails } from "./components/PersonDetails";
 import UserContext from "../UserContext";
-import {
- PersonForm } from "./components/PersonForm";
+import { PersonForm } from "./components/PersonForm";
 
 export const PersonPage = () => {
   const [person, setPerson] = React.useState<PersonInterface>(null);
