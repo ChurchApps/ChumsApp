@@ -70,9 +70,8 @@ export const PeoplePage = () => {
     if (sessionStorage.getItem("selectedColumns")) {
       setSelectedColumns(JSON.parse(sessionStorage.getItem("selectedColumns")));
     } else {
-      sessionStorage.setItem("selectedColumns", JSON.stringify(selectedColumns));
+      sessionStorage.setItem("selectedColumns", JSON.stringify(["photo", "displayName"]));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

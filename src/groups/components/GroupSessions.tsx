@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ApiHelper, ArrayHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading, SmallButton, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, Grid, MenuItem, type SelectChangeEvent } from "@mui/material"
 
@@ -12,42 +12,49 @@ interface Props {
 }
 
 export const GroupSessions: React.FC<Props> = (props) => {
+  const { group, sidebarVisibilityFunction, addedSession, addedPerson, addedCallback, setHiddenPeople } = props;
   const [visitSessions, setVisitSessions] = React.useState<VisitSessionInterface[]>([]);
   const [people, setPeople] = React.useState<PersonInterface[]>([]);
   const [sessions, setSessions] = React.useState<SessionInterface[]>([]);
   const [session, setSession] = React.useState<SessionInterface>(null);
   const [downloadData, setDownloadData] = React.useState<any[]>([]);
 
-  const loadAttDownloadData = () => {
-    ApiHelper.get("/visitsessions/download/" + session?.id, "AttendanceApi").then((data) => {
-      setDownloadData(data);
-    })
-    downloadData.forEach((dp) => {
-      console.log("Name:", dp.personName ? dp.personName : "Nameless", "Status:", dp.status);
-    });
-  };
+  const loadAttDownloadData = useCallback(() => {
+    if (session?.id) {
+      ApiHelper.get("/visitsessions/download/" + session.id, "AttendanceApi").then((data) => {
+        setDownloadData(data);
+        data.forEach((dp) => {
+          console.log("Name:", dp.personName ? dp.personName : "Nameless", "Status:", dp.status);
+        });
+      });
+    }
+  }, [session?.id]);
 
-  const loadAttendance = () => {
-    ApiHelper.get("/visitsessions?sessionId=" + session.id, "AttendanceApi").then((vs: VisitSessionInterface[]) => {
-      setVisitSessions(vs);
-      const peopleIds = ArrayHelper.getUniqueValues(vs, "visit.personId");
-      ApiHelper.get("/people/ids?ids=" + escape(peopleIds.join(",")), "MembershipApi").then(data => setPeople(data));
-      props.setHiddenPeople(peopleIds);
-    });
-  };
+  const loadAttendance = useCallback(() => {
+    if (session?.id) {
+      ApiHelper.get("/visitsessions?sessionId=" + session.id, "AttendanceApi").then((vs: VisitSessionInterface[]) => {
+        setVisitSessions(vs);
+        const peopleIds = ArrayHelper.getUniqueValues(vs, "visit.personId");
+        ApiHelper.get("/people/ids?ids=" + escape(peopleIds.join(",")), "MembershipApi").then(data => setPeople(data));
+        setHiddenPeople?.(peopleIds);
+      });
+    }
+  }, [session?.id, setHiddenPeople]);
 
-  const loadSessions = () => {
-    ApiHelper.get("/sessions?groupId=" + props.group.id, "AttendanceApi").then(data => {
-      setSessions(data);
-      if (data.length > 0) setSession(data[0]);
-    });
-  };
+  const loadSessions = useCallback(() => {
+    if (group.id) {
+      ApiHelper.get("/sessions?groupId=" + group.id, "AttendanceApi").then(data => {
+        setSessions(data);
+        if (data.length > 0) setSession(data[0]);
+      });
+    }
+  }, [group.id]);
 
   const handleRemove = (vs: VisitSessionInterface) => {
     ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + vs.visit.personId, "AttendanceApi").then(loadAttendance);
   }
 
-  const handleAdd = (e: React.MouseEvent) => { e.preventDefault(); props.sidebarVisibilityFunction("addSession", true); }
+  const handleAdd = (e: React.MouseEvent) => { e.preventDefault(); sidebarVisibilityFunction("addSession", true); }
 
   const getRows = () => {
     const canEdit = UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit);
@@ -99,27 +106,37 @@ export const GroupSessions: React.FC<Props> = (props) => {
     );
   }
 
-  const handleSessionSelected = () => {
+  const handleSessionSelected = useCallback(() => {
     if (session !== null) {
       loadAttendance();
-      props.sidebarVisibilityFunction("addPerson", true);
+      sidebarVisibilityFunction("addPerson", true);
     }
-  }
+  }, [session, loadAttendance, sidebarVisibilityFunction]);
 
-  const handlePersonAdd = () => {
-    const v = { checkinTime: new Date(), personId: props.addedPerson.id, visitSessions: [{ sessionId: session.id }] } as VisitInterface;
-    ApiHelper.post("/visitsessions/log", v, "AttendanceApi").then(() => { loadAttendance(); });
-    props.addedCallback(v.personId);
-  }
+  const handlePersonAdd = useCallback(() => {
+    if (addedPerson?.id && session?.id) {
+      const v = { checkinTime: new Date(), personId: addedPerson.id, visitSessions: [{ sessionId: session.id }] } as VisitInterface;
+      ApiHelper.post("/visitsessions/log", v, "AttendanceApi").then(() => { loadAttendance(); });
+      addedCallback(v.personId);
+    }
+  }, [addedPerson?.id, session?.id, loadAttendance, addedCallback]);
 
-  React.useEffect(() => { if (props.group.id !== undefined) { loadSessions() }; props.addedCallback(""); }, [props.group, props.addedSession]);  //eslint-disable-line
+  React.useEffect(() => { 
+    if (group.id !== undefined) { 
+      loadSessions(); 
+      addedCallback(""); 
+    }
+  }, [group.id, addedSession?.id, addedCallback, loadSessions]);
 
-  React.useEffect(() => { if (props.addedPerson?.id !== undefined) { handlePersonAdd() } }, [props.addedPerson]); //eslint-disable-line
+  React.useEffect(() => { 
+    if (addedPerson?.id !== undefined) { 
+      handlePersonAdd(); 
+    } 
+  }, [addedPerson?.id, handlePersonAdd]);
 
-  React.useEffect(() => { handleSessionSelected(); }, [session]);  //eslint-disable-line
+  React.useEffect(() => { handleSessionSelected(); }, [handleSessionSelected]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(() => { loadAttDownloadData(); }, [session, visitSessions]);
+  React.useEffect(() => { loadAttDownloadData(); }, [loadAttDownloadData]);
   const customHeaders = [
     { label: "id", key: "id" },
     { label: "sessionDate", key: "sessionDate" },
@@ -133,8 +150,8 @@ export const GroupSessions: React.FC<Props> = (props) => {
   if (sessions) {
     if (sessions.length === 0) content = <div className="alert alert-warning" role="alert" data-cy="no-session-msg"><b>{Locale.label("groups.groupSessions.noSesMsg")}</b>  {Locale.label("groups.groupSessions.addSesMsg")}</div>
     else content = (<>
-      <span className="float-right">{downloadData ? <ExportLink data={downloadData} spaceAfter={true} filename={`${props.group.name}_visits.csv`} customHeaders={customHeaders} /> : <></>}</span>
-      <b data-cy="session-present-msg">{Locale.label("groups.groupSessions.attFor")} {props.group.name}</b>
+      <span className="float-right">{downloadData ? <ExportLink data={downloadData} spaceAfter={true} filename={`${group.name}_visits.csv`} customHeaders={customHeaders} /> : <></>}</span>
+      <b data-cy="session-present-msg">{Locale.label("groups.groupSessions.attFor")} {group.name}</b>
       <Table id="groupMemberTable">
         <TableHead><TableRow><th></th><th>{Locale.label("common.name")}</th><th></th></TableRow></TableHead>
         <TableBody>{getRows()}</TableBody>

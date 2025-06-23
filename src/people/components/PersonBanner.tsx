@@ -6,8 +6,7 @@ interface Props {
   person:PersonInterface
 }
 
-export const PersonBanner = (props:Props) => {
-  const a="";
+export const PersonBanner = React.memo((props:Props) => {
   const phone = props.person?.contactInfo?.mobilePhone || props.person?.contactInfo?.homePhone || props.person?.contactInfo?.workPhone || "";
   const email = props.person?.contactInfo?.email || props.person?.contactInfo?.workEmail || "";
 
@@ -30,4 +29,4 @@ export const PersonBanner = (props:Props) => {
     </Grid>
 
   </div>);
-}
+});

@@ -62,10 +62,9 @@ export const ImageEditor: React.FC<Props> = (props) => {
   const init = useCallback(() => {
     const startingUrl = (ArrayHelper.getOne(props.settings, "keyName", props.name))?.value;
     setCurrentUrl(startingUrl);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.settings, props.name]);
 
-  React.useEffect(init, []); //eslint-disable-line
+  React.useEffect(init, [init]);
 
   return (
     <InputBox id="cropperBox" headerIcon="" headerText={Locale.label("settings.imageEditor.crop")} saveFunction={handleSave} saveText={"Update"} cancelFunction={handleCancel} headerActionContent={getHeaderButton()}>

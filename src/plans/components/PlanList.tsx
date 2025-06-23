@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, type GroupInterface, Locale, SmallButton } from "@churchapps/apphelper";
@@ -26,10 +26,10 @@ export const PlanList = (props: Props) => {
     </IconButton>
   );
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     setPlan(null);
     ApiHelper.get("/plans", "DoingApi").then((data: any[]) => { setPlans(ArrayHelper.getAll(data, "ministryId", props.ministry.id)); });
-  }
+  }, [props.ministry.id]);
 
   const getRows = () => plans.map((p, i) => (
     <TableRow key={p.id}>
@@ -40,7 +40,7 @@ export const PlanList = (props: Props) => {
     </TableRow>
   ))
 
-  useEffect(() => { loadData(); }, [props.ministry]);  // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { loadData(); }, [loadData]);
 
   return (<>
     {plan && (<PlanEdit plan={plan} plans={plans} updatedFunction={loadData} />)}

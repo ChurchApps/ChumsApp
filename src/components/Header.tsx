@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Locale, UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
 import UserContext from "../UserContext";
 import { SiteHeader } from "@churchapps/apphelper";
@@ -22,10 +22,9 @@ export const Header: React.FC = () => {
     if (!formPermission && context?.person?.id) {
       ApiHelper.get("/memberpermissions/member/" + context.person?.id, "MembershipApi").then(data => setIsFormMember(data.length));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formPermission]);
+  }, [formPermission, context?.person?.id]);
 
-  const getPrimaryMenu = () => {
+  const primaryMenu = useMemo(() => {
     const donationIcon = donationError ? "error" : "volunteer_activism";
     const menuItems: { url: string, icon: string, label: string }[] = []
     menuItems.push({ url: "/", icon: "home", label: Locale.label("components.wrapper.dash") });
@@ -40,7 +39,7 @@ export const Header: React.FC = () => {
     else if (formPermission || isFormMember) menuItems.push({ url: "/forms", label: Locale.label("components.wrapper.set"), icon: "settings" });
     // if (UserHelper.checkAccess(Permissions.membershipApi.server.admin)) tabs.push(<NavItem key="/admin" url="/admin" label={Locale.label("components.wrapper.servAdmin")} icon="admin_panel_settings" selected={selectedTab === "admin"} />);
     return menuItems;
-  }
+  }, [donationError, formPermission, isFormMember]);
   /*
   const getSecondaryMenu = () => {
     const menuItems:{ url: string, label: string }[] = []
@@ -67,5 +66,5 @@ export const Header: React.FC = () => {
   const handleNavigate = (url: string) => { navigate(url); }
 
   /*<Typography variant="h6" noWrap>{UserHelper.currentUserChurch?.church?.name || ""}</Typography>*/
-  return (<SiteHeader primaryMenuItems={getPrimaryMenu()} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={secondaryMenu.menuItems} secondaryMenuLabel={secondaryMenu.label} context={context} appName={"CHUMS"} onNavigate={handleNavigate} />);
+  return (<SiteHeader primaryMenuItems={primaryMenu} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={secondaryMenu.menuItems} secondaryMenuLabel={secondaryMenu.label} context={context} appName={"CHUMS"} onNavigate={handleNavigate} />);
 }

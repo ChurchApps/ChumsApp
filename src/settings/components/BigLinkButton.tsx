@@ -9,7 +9,7 @@ interface Props {
   outsideLink?: boolean;
 }
 
-export const BigLinkButton: React.FC<Props> = (props) => (
+export const BigLinkButton: React.FC<Props> = React.memo((props) => (
   <Grid item md={3} xs={6}>
     <LinkType href={props.href} outsideLink={props.outsideLink}>
       <Card>
@@ -21,7 +21,7 @@ export const BigLinkButton: React.FC<Props> = (props) => (
       </Card>
     </LinkType>
   </Grid>
-);
+));
 
 interface LinkTypeProps {
   outsideLink?: boolean;
@@ -29,7 +29,7 @@ interface LinkTypeProps {
   children?: JSX.Element;
 }
 
-const LinkType: React.FC<LinkTypeProps> = (props) => {
+const LinkType: React.FC<LinkTypeProps> = React.memo((props) => {
   if (props.outsideLink) return <a href={props.href} className="text-decoration" target="_blank" rel="noopener noreferrer">{props.children}</a>
   else return <Link to={props.href}>{props.children}</Link>
-}
+});

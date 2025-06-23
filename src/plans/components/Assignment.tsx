@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Grid, Icon, IconButton, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DisplayBox, InputBox, Locale, Notes, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
@@ -48,7 +48,7 @@ export const Assignment = (props: Props) => {
     loadData();
   }
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setPlan(props.plan);
     ApiHelper.get("/positions/plan/" + props.plan?.id, "DoingApi").then(data => { setPositions(data); });
     ApiHelper.get("/times/plan/" + props.plan?.id, "DoingApi").then(data => { setTimes(data); });
@@ -57,7 +57,7 @@ export const Assignment = (props: Props) => {
     setAssignments(d);
     const peopleIds = ArrayHelper.getUniqueValues(d, "personId");
     if (peopleIds.length > 0) ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi").then((data: PersonInterface[]) => { setPeople(data); });
-  }
+  }, [props.plan]);
 
   const handleSave = () => {
     ApiHelper.post("/plans", [plan], "DoingApi");
@@ -75,7 +75,7 @@ export const Assignment = (props: Props) => {
     ApiHelper.post("/plans/autofill/" + props.plan.id, { teams }, "DoingApi").then(() => { loadData(); });
   }
 
-  React.useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  React.useEffect(() => { loadData(); }, [props.plan?.id, loadData]);
   console.log("Position", position, "Assignment", assignment)
 
   return (<>

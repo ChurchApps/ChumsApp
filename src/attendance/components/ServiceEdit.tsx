@@ -58,8 +58,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         }
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.service, isMounted]);
+  }, [props.service, isMounted, service?.campusId]);
 
   const getCampusOptions = () => {
     const options = [];

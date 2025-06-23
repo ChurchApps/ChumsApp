@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { ApiHelper, DisplayBox, UserHelper, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
@@ -27,7 +27,7 @@ export const TeamList = (props:Props) => {
 
   const handleAddUpdated = () => { setShowAdd(false); loadData(); };
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     setIsLoading(true)
     ApiHelper.get("/groups/tag/team", "MembershipApi")
       .then((data) => {
@@ -36,9 +36,9 @@ export const TeamList = (props:Props) => {
       .finally(() => {
         if(isMounted()) setIsLoading(false);
       })
-  };
+  }, [props.ministry.id, isMounted]);
 
-  React.useEffect(loadData, [isMounted]);  // eslint-disable-line react-hooks/exhaustive-deps
+  React.useEffect(loadData, [loadData]);
 
   const getRows = () => {
     const rows: JSX.Element[] = [];

@@ -13,7 +13,7 @@ interface Props {
   onChange?: () => void
 }
 
-export const PlanItem = (props: Props) => {
+export const PlanItem = React.memo((props: Props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -126,5 +126,5 @@ export const PlanItem = (props: Props) => {
     </Menu>}
 
   </>)
-};
+});
 

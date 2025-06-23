@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
 import { PersonHelper, type PersonInterface, Loading, CreatePerson, DateHelper, ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
@@ -19,7 +19,7 @@ export function PeopleSearchResults(props: Props) {
   const [optionalColumns, setOptionalColumns] = React.useState<any[]>([]);
   const [formSubmissions, setFormSubmissions] = React.useState<any[]>([]);
 
-  const getColumns = (p: PersonInterface) => {
+  const getColumns = useCallback((p: PersonInterface) => {
     const result: JSX.Element[] = [];
     columns.forEach(c => {
       if (selectedColumns.indexOf(c.key) > -1) {
@@ -34,18 +34,18 @@ export function PeopleSearchResults(props: Props) {
       })
     }
     return result;
-  }
+  }, [columns, selectedColumns, optionalColumns, getColumn]);
 
-  const getPhotoJSX = (p: PersonInterface) => {
+  const getPhotoJSX = useCallback((p: PersonInterface) => {
     const photoUrl = PersonHelper.getPhotoUrl(p);
     if (photoUrl === "/images/sample-profile.png") {
       return <img src={photoUrl} alt="avatar" />
     } else {
       return <Tooltip componentsProps={{ tooltip: { sx: { padding: "0" } } }} title={<div dangerouslySetInnerHTML={{ __html: '<img src="' + photoUrl + '" style="max-width: 200px"/>' }} />} arrow placement="right"><a href={photoUrl} target="_blank" rel="noopener noreferrer"><img src={photoUrl} alt="avatar" /></a></Tooltip>
     }
-  }
+  }, []);
 
-  const getAnswer = (p: PersonInterface, key: string) => {
+  const getAnswer = useCallback((p: PersonInterface, key: string) => {
     let result = <></>;
     formSubmissions.forEach((fs) => {
       if (fs.submittedBy === p.id) {
@@ -56,9 +56,9 @@ export function PeopleSearchResults(props: Props) {
       }
     });
     return result;
-  }
+  }, [formSubmissions]);
 
-  const handleDelete = (personId: string) => {
+  const handleDelete = useCallback((personId: string) => {
     const peopleArray = [...people];
     ApiHelper.delete("/people/" + personId, "MembershipApi").then(() => {
       const idx = ArrayHelper.getIndex(peopleArray, "id", personId);
@@ -67,7 +67,7 @@ export function PeopleSearchResults(props: Props) {
         props?.updateSearchResults(peopleArray);
       }
     });
-  }
+  }, [people, props]);
 
   useEffect(() => {
     ApiHelper.get("/forms?contentType=person", "MembershipApi").then((data) => {
@@ -83,7 +83,7 @@ export function PeopleSearchResults(props: Props) {
     });
   }, [])
 
-  const getColumn = (p: PersonInterface, key: string) => {
+  const getColumn = useCallback((p: PersonInterface, key: string) => {
     let result = <></>;
     switch (key) {
       case "photo": result = (getPhotoJSX(p)); break;
@@ -110,9 +110,9 @@ export function PeopleSearchResults(props: Props) {
     }
 
     return result;
-  }
+  }, [getPhotoJSX, handleDelete, getAnswer]);
 
-  const sortTableByKey = (key: string, asc: boolean | null) => {
+  const sortTableByKey = useCallback((key: string, asc: boolean | null) => {
     if (asc === null) asc = false;
     setCurrentSortedCol(key)
     setSortDirection(!asc) //set sort direction for next time
@@ -163,18 +163,17 @@ export function PeopleSearchResults(props: Props) {
       props.updateSearchResults(sortedPeople);
     }
     people = sortedPeople;
-  }
+  }, [people, props]);
 
-  const getRows = () => {
-    const result: JSX.Element[] = people?.map(p => (
+  const rows = useMemo(() => {
+    return people?.map(p => (
       <TableRow key={p.id}>
         {getColumns(p)}
       </TableRow>
-    ));
-    return result;
-  }
+    )) || [];
+  }, [people, getColumns]);
 
-  const getHeaders = () => {
+  const headers = useMemo(() => {
     const result: JSX.Element[] = [];
     columns.forEach(c => {
       if (selectedColumns.indexOf(c.key) > -1) {
@@ -205,13 +204,13 @@ export function PeopleSearchResults(props: Props) {
     }
 
     return <TableHead><TableRow>{result}</TableRow></TableHead>;
-  }
+  }, [columns, selectedColumns, optionalColumns, sortDirection, currentSortedCol, sortTableByKey]);
 
   const getResults = () => {
     if (people.length === 0) return <p>{Locale.label("people.peopleSearchResults.noResMsg")}</p>
     else return (<Table id="peopleTable">
-      {getHeaders()}
-      <TableBody>{getRows()}</TableBody>
+      {headers}
+      <TableBody>{rows}</TableBody>
     </Table>);
   }
 
