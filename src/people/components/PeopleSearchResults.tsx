@@ -19,23 +19,6 @@ export function PeopleSearchResults(props: Props) {
   const [optionalColumns, setOptionalColumns] = React.useState<any[]>([]);
   const [formSubmissions, setFormSubmissions] = React.useState<any[]>([]);
 
-  const getColumns = useCallback((p: PersonInterface) => {
-    const result: JSX.Element[] = [];
-    columns.forEach(c => {
-      if (selectedColumns.indexOf(c.key) > -1) {
-        result.push(<TableCell key={c.key}>{getColumn(p, c.key)}</TableCell>);
-      }
-    })
-    if (optionalColumns.length > 0) {
-      optionalColumns.forEach((c) => {
-        if (selectedColumns.indexOf(c.id) > -1) {
-          result.push(<TableCell key={c.id}>{getColumn(p, c.id)}</TableCell>)
-        }
-      })
-    }
-    return result;
-  }, [columns, selectedColumns, optionalColumns, getColumn]);
-
   const getPhotoJSX = useCallback((p: PersonInterface) => {
     const photoUrl = PersonHelper.getPhotoUrl(p);
     if (photoUrl === "/images/sample-profile.png") {
@@ -69,20 +52,6 @@ export function PeopleSearchResults(props: Props) {
     });
   }, [people, props]);
 
-  useEffect(() => {
-    ApiHelper.get("/forms?contentType=person", "MembershipApi").then((data) => {
-      if (data.length > 0) {
-        const personForms = data.filter((f: any) => f.contentType === "person");
-        if (personForms.length > 0) {
-          personForms.forEach((f: any) => {
-            ApiHelper.get("/questions?formId=" + f.id, "MembershipApi").then((q) => setOptionalColumns((prevState) => ([ ...prevState, ...q ])));
-            ApiHelper.get(`/formsubmissions/formId/${f.id}/?include=questions,answers`, "MembershipApi").then((fs) => setFormSubmissions((prevState) => ([ ...prevState, ...fs ])));
-          });
-        }
-      } else setOptionalColumns([]);
-    });
-  }, [])
-
   const getColumn = useCallback((p: PersonInterface, key: string) => {
     let result = <></>;
     switch (key) {
@@ -111,6 +80,37 @@ export function PeopleSearchResults(props: Props) {
 
     return result;
   }, [getPhotoJSX, handleDelete, getAnswer]);
+
+  const getColumns = useCallback((p: PersonInterface) => {
+    const result: JSX.Element[] = [];
+    columns.forEach(c => {
+      if (selectedColumns.indexOf(c.key) > -1) {
+        result.push(<TableCell key={c.key}>{getColumn(p, c.key)}</TableCell>);
+      }
+    })
+    if (optionalColumns.length > 0) {
+      optionalColumns.forEach((c) => {
+        if (selectedColumns.indexOf(c.id) > -1) {
+          result.push(<TableCell key={c.id}>{getColumn(p, c.id)}</TableCell>)
+        }
+      })
+    }
+    return result;
+  }, [columns, selectedColumns, optionalColumns, getColumn]);
+
+  useEffect(() => {
+    ApiHelper.get("/forms?contentType=person", "MembershipApi").then((data) => {
+      if (data.length > 0) {
+        const personForms = data.filter((f: any) => f.contentType === "person");
+        if (personForms.length > 0) {
+          personForms.forEach((f: any) => {
+            ApiHelper.get("/questions?formId=" + f.id, "MembershipApi").then((q) => setOptionalColumns((prevState) => ([ ...prevState, ...q ])));
+            ApiHelper.get(`/formsubmissions/formId/${f.id}/?include=questions,answers`, "MembershipApi").then((fs) => setFormSubmissions((prevState) => ([ ...prevState, ...fs ])));
+          });
+        }
+      } else setOptionalColumns([]);
+    });
+  }, [])
 
   const sortTableByKey = useCallback((key: string, asc: boolean | null) => {
     if (asc === null) asc = false;
