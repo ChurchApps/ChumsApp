@@ -51,14 +51,14 @@ export const PersonView = ({ id, person, editFunction, updatedFunction }: Props)
       }
 
       return (<Grid container spacing={3}>
-        <Grid item xs={3}>
+        <Grid size={{ xs: 3 }}>
           <img style={{ width: "100%" }} src={PersonHelper.getPhotoUrl(person)} className="profilePic" aria-label="personImage" id="imgPreview" alt="avatar" />
         </Grid>
-        <Grid item xs={9}>
+        <Grid size={{ xs: 9 }}>
           <h2>{person?.name.display}</h2>
           <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>{leftAttributes}</Grid>
-            <Grid item md={6} xs={12}><Table className="contactTable"><TableBody>{contactMethods}</TableBody></Table></Grid>
+            <Grid size={{ xs: 12, md: 6 }}>{leftAttributes}</Grid>
+            <Grid size={{ xs: 12, md: 6 }}><Table className="contactTable"><TableBody>{contactMethods}</TableBody></Table></Grid>
           </Grid>
         </Grid>
       </Grid>);

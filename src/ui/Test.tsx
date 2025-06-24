@@ -10,17 +10,17 @@ export const UI = () => (
 
     <PersonBanner />
     <Grid container spacing={2}>
-      <Grid item xs={12} md={2}>
+      <Grid size={{ xs: 12, md: 2 }}>
         <PersonNav />
       </Grid>
-      <Grid item xs={12} md={10} style={{padding:24}}>
+      <Grid size={{ xs: 12, md: 10 }} style={{padding:24}}>
         <Grid container spacing={2}>
-          <Grid item md={8} xs={12}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <DisplayBox headerText="Test" headerIcon="">
           content
             </DisplayBox>
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <DisplayBox headerText="Test" headerIcon="">
           content
             </DisplayBox>

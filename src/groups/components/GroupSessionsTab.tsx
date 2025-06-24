@@ -33,10 +33,10 @@ export const GroupSessionsTab = (props: Props) => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <GroupSessions group={props.group} sidebarVisibilityFunction={handleSidebarVisibility} addedSession={addedSession} addedPerson={addedPerson} addedCallback={handleAddedCallback} setHiddenPeople={setHiddenPeople} />
         </Grid>
-        <Grid item md={4} xs={12}>
+        <Grid size={{ xs: 12, md: 4 }}>
           {addSessionVisible && <SessionAdd key="sessionAdd" group={props.group} updatedFunction={handleSessionAdd} />}
           {!addSessionVisible && <>
             <PersonAddAdvanced getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} showCreatePersonOnNotFound />

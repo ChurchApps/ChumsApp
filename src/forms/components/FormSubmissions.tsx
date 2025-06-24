@@ -110,7 +110,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     const results: JSX.Element[] = [];
     summary.forEach((s: any, i: number) => {
       results.push(
-        <Grid item xs={12} md={6} key={s.id + "-" + i}>
+        <Grid size={{ xs: 12, md: 6 }} key={s.id + "-" + i}>
           <h4>{s.title}</h4>
           {getResultCount(s.values)}
         </Grid>
@@ -173,7 +173,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item md={8} xs={12} className="form-submission-summary">
+      <Grid size={{ xs: 12, md: 8 }} className="form-submission-summary">
         <div ref={contentRef} className="form-submission-summary">
           <DisplayBox headerText={Locale.label("forms.formSubmissions.subSum")} headerIcon="group" editContent={getEditLinks()}>
             <Grid container spacing={3}>{getSummary()}</Grid>

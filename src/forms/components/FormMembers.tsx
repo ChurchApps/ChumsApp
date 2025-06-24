@@ -103,12 +103,12 @@ export const FormMembers: React.FC<Props> = (props) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item md={8} xs={12}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <DisplayBox headerText={Locale.label("forms.formMembers.formMem")} headerIcon="group" help="chums/forms">
           {getTable()}
         </DisplayBox>
       </Grid>
-      <Grid item md={4} xs={12}>
+      <Grid size={{ xs: 12, md: 4 }}>
         <DisplayBox headerText={Locale.label("forms.formMembers.addPpl")} headerIcon="person_add">
           <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} filterList={filterList} />
         </DisplayBox>

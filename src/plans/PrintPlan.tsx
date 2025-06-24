@@ -93,19 +93,19 @@ export const PrintPlan = () => {
   return <>
     <div style={Styles.body} className="printBackgrounds">
       <Grid container>
-        <Grid item xs={4} style={Styles.inverseHeader}>{Locale.label("plans.printPlan.serviceOrder")}</Grid>
-        <Grid item xs={4} style={{ ...Styles.header, borderTop: "5px solid #000" }}>{plan && DateHelper.prettyDate(DateHelper.toDate(plan.serviceDate))}</Grid>
-        <Grid item xs={4} style={Styles.inverseHeader}>{Locale.label("plans.printPlan.serviceOrder")}</Grid>
+        <Grid size={{ xs: 4 }} style={Styles.inverseHeader}>{Locale.label("plans.printPlan.serviceOrder")}</Grid>
+        <Grid size={{ xs: 4 }} style={{ ...Styles.header, borderTop: "5px solid #000" }}>{plan && DateHelper.prettyDate(DateHelper.toDate(plan.serviceDate))}</Grid>
+        <Grid size={{ xs: 4 }} style={Styles.inverseHeader}>{Locale.label("plans.printPlan.serviceOrder")}</Grid>
       </Grid>
       <div style={Styles.divider}>&nbsp;</div>
       <Grid container>
-        <Grid item xs={4} style={{ padding: 5 }}>
+        <Grid size={{ xs: 4 }} style={{ padding: 5 }}>
           <div style={{ border: "2px solid #000", textAlign: "left", padding: 10 }}>
             {getPositionCategories()}
           </div>
 
         </Grid>
-        <Grid item xs={8} style={{ padding: 5 }}>
+        <Grid size={{ xs: 8 }} style={{ padding: 5 }}>
           <div style={{ border: "5px solid #000" }}>
             <table style={{ width: "100%", margin: 0 }} cellSpacing={0}>
               <tr style={Styles.inverseHeader}>

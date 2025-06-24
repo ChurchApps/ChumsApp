@@ -56,19 +56,19 @@ export const TranslationTab = () => {
       <div>
         <div style={{ fontSize: 18, marginBottom: 15 }}>
           <Grid container alignItems="center">
-            <Grid item md={1}>
+            <Grid size={{ md: 1 }}>
               <p>Start Date:</p>
             </Grid>
-            <Grid item md={3}>
+            <Grid size={{ md: 3 }}>
               <TextField id="start" name="start" value={DateHelper.formatHtml5Date(startDate)} type="date" onChange={handleChange} data-testid="translation-start-date-input" aria-label="Start date" />
             </Grid>
-            <Grid item md={1}>
+            <Grid size={{ md: 1 }}>
               <p>End Date:</p>
             </Grid>
-            <Grid item md={3}>
+            <Grid size={{ md: 3 }}>
               <TextField id="end" name="end" value={DateHelper.formatHtml5Date(endDate)} type="date" onChange={handleChange} data-testid="translation-end-date-input" aria-label="End date" />
             </Grid>
-            <Grid item md={1}>
+            <Grid size={{ md: 1 }}>
               <Button variant="outlined" style={{ height: 56, width: 200, marginTop: 8 }} onClick={loadData} data-testid="search-translation-stats-button" aria-label="Search translation statistics"><ManageSearchIcon fontSize="small" />&nbsp;Search</Button>
             </Grid>
           </Grid>

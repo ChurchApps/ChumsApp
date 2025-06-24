@@ -81,11 +81,11 @@ export const TaskPage = () => {
       <Banner><h1>#{task.taskNumber} - {task?.title}</h1></Banner>
       <div id="mainContent">
         <Grid container spacing={3}>
-          <Grid item md={8} xs={12}>
+          <Grid size={{ xs: 12, md: 8 }}>
             {task.taskType === "directoryUpdate" && <RequestedChanges task={task} />}
             <Notes context={context} conversationId={task?.conversationId} createConversation={handleCreateConversation} />
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <DisplayBox headerIcon="list_alt" headerText={Locale.label("tasks.taskPage.taskDet")} help="chums/tasks">
               <div><Typography variant="subtitle1">{Locale.label("tasks.taskPage.dateCreated")}</Typography></div>
               <div><Typography variant="caption">{DateHelper.prettyDate(DateHelper.toDate(task?.dateCreated))}</Typography></div>

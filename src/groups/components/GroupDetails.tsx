@@ -19,17 +19,17 @@ export const GroupDetails: React.FC<Props> = (props) => {
     if (!props.group) return <Loading />
     else return (<>
       <Grid container spacing={1}>
-        {isStandard && <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.cat")}</label> {props.group.categoryName}</Grid>}
-        <Grid item md={6} xs={12}><label>{Locale.label("common.name")}</label> {props.group.name}</Grid>
-        {isStandard && <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.meetingTime")}</label> {props.group.meetingTime}</Grid>}
-        {isStandard && <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.meetingLocation")}</label> {props.group.meetingLocation}</Grid>}
+        {isStandard && <Grid size={{ xs: 12, md: 6 }}><label>{Locale.label("groups.groupDetails.cat")}</label> {props.group.categoryName}</Grid>}
+        <Grid size={{ xs: 12, md: 6 }}><label>{Locale.label("common.name")}</label> {props.group.name}</Grid>
+        {isStandard && <Grid size={{ xs: 12, md: 6 }}><label>{Locale.label("groups.groupDetails.meetingTime")}</label> {props.group.meetingTime}</Grid>}
+        {isStandard && <Grid size={{ xs: 12, md: 6 }}><label>{Locale.label("groups.groupDetails.meetingLocation")}</label> {props.group.meetingLocation}</Grid>}
       </Grid>
       {isStandard && <>
         <Grid container spacing={1} marginTop="1px">
-          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.attTrack")}</label> {(props.group.trackAttendance?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
-          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.parPick")}</label> {(props.group.parentPickup?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
-          <Grid item md={6} xs={12}><label>{Locale.label("groups.groupDetails.prinName")}</label> {(props.group.printNametag?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
-          <Grid item md={6} xs={12}>
+          <Grid size={{ xs: 12, md: 6 }}><label>{Locale.label("groups.groupDetails.attTrack")}</label> {(props.group.trackAttendance?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
+          <Grid size={{ xs: 12, md: 6 }}><label>{Locale.label("groups.groupDetails.parPick")}</label> {(props.group.parentPickup?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
+          <Grid size={{ xs: 12, md: 6 }}><label>{Locale.label("groups.groupDetails.prinName")}</label> {(props.group.printNametag?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "")}</Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
             {props.group?.labelArray.map((label, index) => (
               <Chip
                 key={`${props.group.id}-${label}-${index}`}

@@ -9,7 +9,7 @@ export const ReportsPage = () => {
     <>
       <h1><Icon>summarize</Icon> {Locale.label("reports.reportsPage.reports")}</h1>
       <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <DisplayBox id="reportsBox" headerIcon="summarize" headerText={Locale.label("reports.reportsPage.reports")}>
             <ul>
               <li><Link to="/reports/birthdays">{Locale.label("reports.reportsPage.bDays")}</Link></li>

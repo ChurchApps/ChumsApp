@@ -91,12 +91,12 @@ export const Form: React.FC<Props> = (props) => {
     return (
       <>
         <Grid container spacing={3}>
-          <Grid item md={8} xs={12}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <DisplayBox id="questionsBox" headerText={Locale.label("forms.form.questions")} headerIcon="help" editContent={getEditContent()} help="chums/forms">
               {contents}
             </DisplayBox>
           </Grid>
-          <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
+          <Grid size={{ xs: 12, md: 4 }}>{getSidebarModules()}</Grid>
         </Grid>
       </>
     );

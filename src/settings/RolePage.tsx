@@ -53,7 +53,7 @@ export const RolePage = () => {
         <Banner><h1>{Locale.label("settings.rolePage.roleEdit")} {role?.name}</h1></Banner>
         <div id="mainContent">
           <Grid container spacing={3}>
-            <Grid item md={8} xs={12}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <RoleMembers
                 role={role}
                 roleMembers={roleMembers}
@@ -62,7 +62,7 @@ export const RolePage = () => {
                 updatedFunction={handleAdd}
               />
             </Grid>
-            <Grid item md={4} xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               {getSidebar()}
             </Grid>
           </Grid>

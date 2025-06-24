@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { useCookies, CookiesProvider } from "react-cookie";
 import { ApiHelper, UserHelper } from "@churchapps/apphelper";
 import UserContext from "./UserContext";
 import { LoginPage, Permissions } from "@churchapps/apphelper";
@@ -8,11 +8,10 @@ import { Alert, Box } from "@mui/material";
 
 export const Login: React.FC = () => {
   const [errors] = React.useState<string[]>([])
-  const [cookies] = useCookies();
   const location = useLocation();
   const navigate = useNavigate();
-
   const context = React.useContext(UserContext);
+  const [cookies] = useCookies(['jwt']);
 
   const search = new URLSearchParams(window.location.search);
   const defaultRedirect = (UserHelper.checkAccess(Permissions.membershipApi.people.view)) ? "/people" : "/profile";
@@ -29,8 +28,15 @@ export const Login: React.FC = () => {
     if (!jwt) jwt = "";
     if (!auth) auth = "";
 
-    return (<Box sx={{ display: "flex", backgroundColor: "#EEE", minHeight: "100vh" }}>
-      <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+    return (<Box sx={{ 
+      display: "flex", 
+      backgroundColor: "#EEE", 
+      minHeight: "100vh" 
+    }}>
+      <Box sx={{ 
+        marginLeft: "auto", 
+        marginRight: "auto" 
+      }}>
         {process.env.REACT_APP_STAGE === "demo" && (<Alert severity="error" style={{ marginTop: 50 }}>
           <b>Demo:</b> This is the demo environment.  All data is erased nightly.<br />
           You can log into a test church of "Grace Community Church"<br />
@@ -48,7 +54,7 @@ export const Login: React.FC = () => {
           defaultEmail={process.env.REACT_APP_STAGE === "demo" ? "demo@chums.org" : undefined}
           defaultPassword={process.env.REACT_APP_STAGE === "demo" ? "password" : undefined}
         />
-      </div>
+      </Box>
     </Box>);
   } else {
     // User is authenticated, LoginPage will call handleRedirect to navigate appropriately

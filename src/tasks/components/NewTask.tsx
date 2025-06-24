@@ -110,13 +110,13 @@ export const NewTask = (props: Props) => {
     <InputBox headerIcon="list_alt" headerText={Locale.label("tasks.newTask.taskNew")} saveFunction={handleSave} cancelFunction={props.onCancel}>
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
-        <Grid item xs={6} md={(props.compact) ? 6 : 3}>
+        <Grid size={{ xs: 6 }} md={(props.compact) ? 6 : 3}>
           <TextField fullWidth label={Locale.label("tasks.newTask.associateW")} value={task.associatedWithLabel} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("associatedWith") }} data-testid="associate-with-input" aria-label="Associate with" />
         </Grid>
-        <Grid item xs={6} md={(props.compact) ? 6 : 3}>
+        <Grid size={{ xs: 6 }} md={(props.compact) ? 6 : 3}>
           <TextField fullWidth label={Locale.label("tasks.newTask.assignTo")} value={task.assignedToLabel || ""} InputProps={{ endAdornment: <Icon>search</Icon> }} onFocus={(e) => { e.target.blur(); setModalField("assignedTo") }} data-testid="assign-to-input" aria-label="Assign to" />
         </Grid>
-        <Grid item xs={12} md={(props.compact) ? 12 : 6}>
+        <Grid size={{ xs: 12 }} md={(props.compact) ? 12 : 6}>
           <TextField fullWidth label={Locale.label("common.title")} value={task.title || ""} name="title" onChange={handleChange} data-testid="task-title-input" aria-label="Task title" />
         </Grid>
       </Grid>

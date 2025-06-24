@@ -23,14 +23,58 @@ declare module '@mui/material/styles' {
 
 const mdTheme = createTheme({
   palette: {
+    mode: 'light',
     InputBox: {
       headerText: "#333333"
     }
   },
   components: {
-    MuiTextField: { defaultProps: { margin: "normal" } },
-    MuiFormControl: { defaultProps: { margin: "normal" } }
-  }
+    MuiTextField: { 
+      defaultProps: { margin: "normal" },
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: 'rgba(0, 0, 0, 0.23)',
+            },
+          },
+        },
+      },
+    },
+    MuiFormControl: { defaultProps: { margin: "normal" } },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none', // Disable uppercase transformation for better UX
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+        },
+      },
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontSize: '2rem',
+      fontWeight: 500,
+    },
+    h2: {
+      fontSize: '1.75rem',
+      fontWeight: 500,
+    },
+    h3: {
+      fontSize: '1.5rem',
+      fontWeight: 500,
+    },
+  },
+  shape: {
+    borderRadius: 8,
+  },
 });
 
 const App: React.FC = () => (
@@ -53,18 +97,18 @@ const App: React.FC = () => (
       </>
     )}
 
-    <UserProvider>
-      <CookiesProvider>
-        <ThemeProvider theme={mdTheme}>
-          <CssBaseline />
+    <ThemeProvider theme={mdTheme}>
+      <CssBaseline />
+      <CookiesProvider defaultSetOptions={{ path: '/' }}>
+        <UserProvider>
           <Router>
             <Routes>
               <Route path="/*" element={<ControlPanel />} />
             </Routes>
           </Router>
-        </ThemeProvider>
+        </UserProvider>
       </CookiesProvider>
-    </UserProvider>
+    </ThemeProvider>
   </>
 );
 export default App;

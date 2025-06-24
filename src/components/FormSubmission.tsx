@@ -50,8 +50,8 @@ export const FormSubmission: React.FC<Props> = (props) => {
       <div className="content">
 
         <Grid container spacing={3}>
-          <Grid item md={6} xs={12}>{firstHalf}</Grid>
-          <Grid item md={6} xs={12}>
+          <Grid size={{ xs: 12, md: 6 }}>{firstHalf}</Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
             {getEditLink()}
             {secondHalf}
           </Grid>
