@@ -81,7 +81,7 @@ export const Assignment = (props: Props) => {
   return (<>
 
     <Grid container spacing={3}>
-      <Grid item md={8} xs={12}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <DisplayBox headerText={Locale.label("plans.planPage.assign")} headerIcon="assignment" editContent={getAddPositionLink()}>
           <PositionList positions={positions} assignments={assignments} people={people} onSelect={p => setPosition(p)} onAssignmentSelect={handleAssignmentSelect} />
         </DisplayBox>
@@ -89,7 +89,7 @@ export const Assignment = (props: Props) => {
           <TextField fullWidth multiline rows={4} value={plan?.notes} onChange={(e) => { setPlan({ ...plan, notes: e.target.value }) }} data-testid="plan-notes-input" aria-label="Plan notes" />
         </InputBox>
       </Grid>
-      <Grid item md={4} xs={12}>
+      <Grid size={{ xs: 12, md: 4 }}>
         {position && !assignment && <PositionEdit position={position} categoryNames={(positions?.length>0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : [Locale.label("plans.planPage.band")] } updatedFunction={() => {setPosition(null); loadData() }} /> }
         {assignment && position && <AssignmentEdit position={position} assignment={assignment} peopleNeeded={position.count - ArrayHelper.getAll(assignments, "positionId", position.id).length } updatedFunction={ handleAssignmentUpdate } />}
         <TimeList times={times} positions={positions} plan={plan} onUpdate={loadData} />

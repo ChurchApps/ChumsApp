@@ -53,15 +53,15 @@ export const TaskList = (props: Props) => {
 
   const getTask = (task: TaskInterface) => (<div key={task.id} style={{ borderTop: "1px solid #CCC", paddingTop: 10, paddingBottom: 10 }}>
     <Grid container spacing={3}>
-      <Grid item xs={(props.compact) ? 12 : 6}>
+      <Grid size={{ xs: (props.compact) ? 12 : 6 }}>
         <b><Link to={"/tasks/" + task.id}>{task.title}</Link></b><br />
         <Typography variant="caption">#{task.taskNumber} {Locale.label("tasks.taskPage.opened")} {DateHelper.getDisplayDuration(DateHelper.toDate(task.dateCreated))} {Locale.label("tasks.taskPage.ago")} {Locale.label("tasks.taskPage.by")} {task.createdByLabel}</Typography>
       </Grid>
       {!props.compact && (<>
-        <Grid item xs={3}>
+        <Grid size={{ xs: 3 }}>
           {task.associatedWithLabel}
         </Grid>
-        <Grid item xs={3}>
+        <Grid size={{ xs: 3 }}>
           {task.assignedToLabel}
         </Grid>
       </>)}
@@ -72,11 +72,11 @@ export const TaskList = (props: Props) => {
     if (props.compact) return <></>;
     else return (<div style={{ paddingBottom: 10 }}>
       <Grid container spacing={3}>
-        <Grid item xs={6}>
+        <Grid size={{ xs: 6 }}>
           {Locale.label("common.title")}
         </Grid>
-        <Grid item xs={3}>{Locale.label("tasks.taskList.associateW")}</Grid>
-        <Grid item xs={3}>{Locale.label("tasks.taskList.assignTo")}</Grid>
+        <Grid size={{ xs: 3 }}>{Locale.label("tasks.taskList.associateW")}</Grid>
+        <Grid size={{ xs: 3 }}>{Locale.label("tasks.taskList.assignTo")}</Grid>
       </Grid>
     </div>)
   }

@@ -22,10 +22,10 @@ export const GroupMembersTab = (props:Props) => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item md={8} xs={12}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <GroupMembers group={props.group} addedPerson={addedPerson} addedCallback={handleAddedCallback} />
         </Grid>
-        <Grid item md={4} xs={12}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <PersonAddAdvanced getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} showCreatePersonOnNotFound />
         </Grid>
       </Grid>

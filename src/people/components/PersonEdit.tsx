@@ -188,40 +188,40 @@ export function PersonEdit(props: Props) {
         <InputBox headerIcon="person" headerText={Locale.label("people.personEdit.persDet")} cancelFunction={props.updatedFunction} deleteFunction={handleDelete} saveFunction={handleSave} isSubmitting={isSubmitting} headerActionContent={<Button id="mergeButton" size="small" onClick={props.showMergeSearch} data-testid="merge-person-button" aria-label="Merge person">{Locale.label("people.personEdit.merge")}</Button>}>
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
-            <Grid item sm={3} className="my-auto">
+            <Grid size={{ sm: 3 }} className="my-auto">
               <a href="about:blank" onClick={handlePhotoClick}>
                 <img src={PersonHelper.getPhotoUrl(person)} className="w-100 profilePic" id="imgPreview" alt="avatar" />
               </a>
             </Grid>
-            <Grid item sm={1}>
+            <Grid size={{ sm: 1 }}>
             </Grid>
-            <Grid item sm={8}>
+            <Grid size={{ sm: 8 }}>
               <Grid container spacing={3}>
-                <Grid item md={4} xs={12}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <TextField fullWidth name="name.first" label={Locale.label("person.firstName")} id="first" value={person.name.first || ""} onChange={handleChange} data-testid="first-name-input" aria-label="First name" />
                 </Grid>
-                <Grid item md={4} xs={12}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <TextField fullWidth name="name.middle" label={Locale.label("person.middleName")} id="middle" value={person.name.middle || ""} onChange={handleChange} />
                 </Grid>
-                <Grid item md={4} xs={12}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <TextField fullWidth name="name.last" label={Locale.label("person.lastName")} id="last" value={person.name.last || ""} onChange={handleChange} data-testid="last-name-input" aria-label="Last name" />
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
-                <Grid item md={6} xs={12}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <TextField fullWidth name="contactInfo.email" label={Locale.label("person.email")} type="email" id="email" value={person.contactInfo.email || ""} onChange={handleChange} data-testid="email-input" aria-label="Email address" />
                 </Grid>
-                <Grid item md={6} xs={12}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <TextField inputProps={{ maxLength: 20 }} fullWidth name="nametagNotes" label={Locale.label("people.personEdit.nameNote")} id="nametagnotes" value={person.nametagNotes || ""} onChange={handleChange} />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item md={4} xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <TextField fullWidth name="name.nick" id="nick" label={Locale.label("person.nickName")} value={person.name.nick || ""} onChange={handleChange} data-testid="nickname-input" aria-label="Nickname" />
             </Grid>
-            <Grid item md={4} xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <FormControl fullWidth>
                 <InputLabel id="membershipStatus-label">{Locale.label("person.membershipStatus")}</InputLabel>
                 <Select name="membershipStatus" id="membershipStatus" labelId="membershipStatus-label" label={Locale.label("person.membershipStatus")} value={person.membershipStatus || ""} onChange={handleChange} data-testid="membership-status-select" aria-label="Membership status">
@@ -233,13 +233,13 @@ export function PersonEdit(props: Props) {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item md={4} xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <TextField fullWidth type="date" name="birthDate" id="birthDate" InputLabelProps={{ shrink: true }} label={Locale.label("person.birthDate")} value={DateHelper.formatHtml5Date(person.birthDate)} onChange={handleChange} data-testid="birth-date-input" aria-label="Birth date" />
             </Grid>
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item md={4} xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <FormControl fullWidth>
                 <InputLabel id="gender-label">{Locale.label("person.gender")}</InputLabel>
                 <Select name="gender" id="gender" labelId="gender-label" label={Locale.label("person.gender")} value={person.gender || ""} onChange={handleChange} data-testid="gender-select" aria-label="Gender">
@@ -249,7 +249,7 @@ export function PersonEdit(props: Props) {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item md={4} xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <FormControl fullWidth>
                 <InputLabel id="maritalStatus-label">{Locale.label("person.maritalStatus")}</InputLabel>
                 <Select name="maritalStatus" id="maritalStatus" label={Locale.label("people.personEdit.maritalStatus")} labelId="maritalStatus-label" value={person.maritalStatus || ""} onChange={handleChange} data-testid="marital-status-select" aria-label="Marital status">
@@ -261,29 +261,29 @@ export function PersonEdit(props: Props) {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item md={4} xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <TextField fullWidth type="date" name="anniversary" id="anniversary" InputLabelProps={{ shrink: true }} label={Locale.label("person.anniversary")} value={DateHelper.formatHtml5Date(person.anniversary)} onChange={handleChange} data-testid="anniversary-input" aria-label="Anniversary" />
             </Grid>
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item md={8}>
+            <Grid size={{ md: 8 }}>
               <div className="section">{Locale.label("person.address")}</div>
               <TextField name="contactInfo.address1" id="address1" fullWidth label={Locale.label("person.line1")} value={person.contactInfo?.address1 || ""} onChange={handleChange} data-testid="address1-input" aria-label="Address line 1" />
               <TextField name="contactInfo.address2" id="address2" fullWidth label={Locale.label("person.line2")} value={person.contactInfo?.address2 || ""} onChange={handleChange} data-testid="address2-input" aria-label="Address line 2" />
               <Grid container spacing={3}>
-                <Grid item xs={6}>
+                <Grid size={{ xs: 6 }}>
                   <TextField name="contactInfo.city" id="city" fullWidth label={Locale.label("person.city")} value={person.contactInfo?.city || ""} onChange={handleChange} data-testid="city-input" aria-label="City" />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid size={{ xs: 3 }}>
                   <TextField name="contactInfo.state" id="state" fullWidth label={Locale.label("person.state")} value={person.contactInfo?.state || ""} onChange={handleChange} data-testid="state-input" aria-label="State" />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid size={{ xs: 3 }}>
                   <TextField name="contactInfo.zip" id="zip" fullWidth label={Locale.label("person.zip")} value={person.contactInfo?.zip || ""} onChange={handleChange} data-testid="zip-input" aria-label="ZIP code" />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item md={3}>
+            <Grid size={{ md: 3 }}>
               <div className="section">{Locale.label("person.phone")}</div>
               <MuiTelInput fullWidth name="contactInfo.homePhone" id="homePhone" label={Locale.label("people.personEdit.home")} value={person.contactInfo?.homePhone} onChange={(value) => handlePhoneChange(value, "homePhone")}
                 defaultCountry="US" focusOnSelectCountry inputProps={ariaDesc} error={phoneHasError.homePhone} MenuProps={ariaLabel} helperText={<div id="errorMsg">{phoneHasError.homePhone && <p style={{ margin: 0, color: "#d32f2f" }}>{Locale.label("people.personEdit.invalForm")}</p>}</div>}
@@ -295,7 +295,7 @@ export function PersonEdit(props: Props) {
                 defaultCountry="US" focusOnSelectCountry inputProps={ariaDesc} error={phoneHasError.mobilePhone} MenuProps={ariaLabel} helperText={<div id="errorMsg">{phoneHasError.mobilePhone && <p style={{ margin: 0, color: "#d32f2f" }}>{Locale.label("people.personEdit.invalForm")}</p>}</div>}
               />
             </Grid>
-            <Grid item md={1}>
+            <Grid size={{ md: 1 }}>
               <div className="section">{Locale.label("people.personEdit.exten")}</div>
               <TextField fullWidth name="contactInfo.homePhone" label={Locale.label("people.personEdit.home")} value={person.contactInfo?.homePhone?.split('x')[1] || ""} onChange={handleChangeExtention} InputProps={{ inputProps: { maxLength: 4 } }} />
               <TextField fullWidth name="contactInfo.workPhone" label={Locale.label("people.personEdit.work")} value={person.contactInfo?.workPhone?.split('x')[1] || ""} onChange={handleChangeExtention} InputProps={{ inputProps: { maxLength: 4 } }} />

@@ -17,16 +17,26 @@ export const PersonPage = () => {
   const [form, setForm] = useState<FormInterface>(null);
 
   const loadData = () => {
-    ApiHelper.get("/people/" + params.id, "MembershipApi").then(data => {
-      const p: PersonInterface = data;
-      if (!p.contactInfo) p.contactInfo = { homePhone: "", workPhone: "", mobilePhone: "" }
-      else {
-        if (!p.contactInfo.homePhone) p.contactInfo.homePhone = "";
-        if (!p.contactInfo.mobilePhone) p.contactInfo.mobilePhone = "";
-        if (!p.contactInfo.workPhone) p.contactInfo.workPhone = "";
-      }
-      setPerson(data)
-    });
+    if (params.id === "add") {
+      // Create a new empty person for adding
+      const newPerson: PersonInterface = {
+        name: { first: "", last: "", middle: "", nick: "", display: "" },
+        contactInfo: { address1: "", address2: "", city: "", state: "", zip: "", email: "", homePhone: "", workPhone: "", mobilePhone: "" },
+        membershipStatus: "", gender: "", birthDate: null, maritalStatus: "", nametagNotes: ""
+      };
+      setPerson(newPerson);
+    } else {
+      ApiHelper.get("/people/" + params.id, "MembershipApi").then(data => {
+        const p: PersonInterface = data;
+        if (!p.contactInfo) p.contactInfo = { homePhone: "", workPhone: "", mobilePhone: "" }
+        else {
+          if (!p.contactInfo.homePhone) p.contactInfo.homePhone = "";
+          if (!p.contactInfo.mobilePhone) p.contactInfo.mobilePhone = "";
+          if (!p.contactInfo.workPhone) p.contactInfo.workPhone = "";
+        }
+        setPerson(data)
+      });
+    }
     ApiHelper.get("/forms?contentType=person", "MembershipApi").then(data => setAllForms(data));
   }
 
@@ -113,7 +123,7 @@ export const PersonPage = () => {
     <>
       <PersonBanner person={person} />
       <Grid container spacing={2}>
-        <Grid item xs={12} md={2}>
+        <Grid size={{ xs: 12, md: 2 }}>
           <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
             <ul>{getTabs().map((tab) => getItem(tab))}</ul>
 
@@ -121,7 +131,7 @@ export const PersonPage = () => {
 
           </div>
         </Grid>
-        <Grid item xs={12} md={10}>
+        <Grid size={{ xs: 12, md: 10 }}>
           <div id="mainContent">
             {getCurrentTab()}
           </div>

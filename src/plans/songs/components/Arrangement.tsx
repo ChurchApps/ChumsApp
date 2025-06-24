@@ -56,14 +56,14 @@ export const Arrangement = (props: Props) => {
 
   return (<>
     <Grid container spacing={2}>
-      <Grid item md={8}>
+      <Grid size={{ md: 8 }}>
         <Keys arrangement={props.arrangement} songDetail={songDetail} importLyrics={importLyrics} />
         {!edit && <DisplayBox headerText={Locale.label("songs.arrangement.title") + " - " + props.arrangement?.name} headerIcon="music_note" editFunction={() => { setEdit(true) }}>
           <div className="chordPro" dangerouslySetInnerHTML={{ __html: ChordProHelper.formatLyrics(props.arrangement?.lyrics || Locale.label("songs.arrangement.enterLyrics"), 0) }}></div>
         </DisplayBox>}
         {edit && <ArrangementEdit arrangement={props.arrangement} onSave={(arrangement: ArrangementInterface) => { setEdit(false); console.log("ARRANGEMENT IS", arrangement); if (arrangement) props.reload(); else navigate("/plans/songs") }} onCancel={() => { setEdit(false); }} />}
       </Grid>
-      <Grid item md={4}>
+      <Grid size={{ md: 4 }}>
         <SongDetails songDetail={songDetail} reload={loadData} />
       </Grid>
     </Grid>

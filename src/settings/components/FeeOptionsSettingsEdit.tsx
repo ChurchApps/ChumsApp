@@ -78,7 +78,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TextField
           fullWidth
           margin="dense"
@@ -94,7 +94,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           }}
         />
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TextField
           fullWidth
           margin="dense"
@@ -112,7 +112,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           }}
         />
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TextField
           fullWidth
           margin="dense"
@@ -128,7 +128,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           }}
         />
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TextField
           fullWidth
           margin="dense"

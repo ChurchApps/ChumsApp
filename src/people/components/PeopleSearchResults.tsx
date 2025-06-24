@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
-import { PersonHelper, type PersonInterface, Loading, CreatePerson, DateHelper, ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton } from "@mui/material"
+import { PersonHelper, type PersonInterface, Loading, ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
+import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Button, Box } from "@mui/material"
 
 interface Props {
   people: PersonInterface[],
@@ -13,6 +13,7 @@ interface Props {
 
 export function PeopleSearchResults(props: Props) {
   let { people, columns, selectedColumns } = props;
+  const navigate = useNavigate();
 
   const [sortDirection, setSortDirection] = useState<boolean | null>(null)
   const [currentSortedCol, setCurrentSortedCol] = useState<string>("")
@@ -214,12 +215,25 @@ export function PeopleSearchResults(props: Props) {
     </Table>);
   }
 
+  const handleAddPerson = () => {
+    navigate("/people/add");
+  };
+
   if (!people) return <Loading />;
   return (
     <div>
       {getResults()}
-      <hr />
-      <CreatePerson />
+      <Box sx={{ mt: 2, borderTop: 1, borderColor: 'divider', pt: 2 }}>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          startIcon={<Icon>add</Icon>}
+          onClick={handleAddPerson}
+          sx={{ textTransform: 'none' }}
+        >
+          {Locale.label("people.peopleSearchResults.addPerson") || "Add Person"}
+        </Button>
+      </Box>
     </div>
   )
 }

@@ -105,12 +105,12 @@ export const FundPage = () => {
         <Banner><h1>{fund.name} {Locale.label("donations.fundsPage.don")}</h1></Banner>
         <div id="mainContent">
           <Grid container spacing={3}>
-            <Grid item md={8} xs={12}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <DisplayBox headerIcon="volunteer_activism" headerText={Locale.label("donations.fundsPage.don")} editContent={getEditContent()} help="chums/giving">
                 {contents}
               </DisplayBox>
             </Grid>
-            <Grid item md={4} xs={12}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <InputBox headerIcon="filter_alt" headerText={Locale.label("donations.fundsPage.donFilt")} saveFunction={loadDonations} saveText="Filter">
                 <TextField fullWidth label={Locale.label("donations.fundsPage.dateStart")} name="startDate" type="date" data-cy="start-date" value={DateHelper.formatHtml5Date(startDate)} onChange={handleChange} />
                 <TextField fullWidth label={Locale.label("donations.fundsPage.dateEnd")} name="endDate" type="date" data-cy="end-date" value={DateHelper.formatHtml5Date(endDate)} onChange={handleChange} />

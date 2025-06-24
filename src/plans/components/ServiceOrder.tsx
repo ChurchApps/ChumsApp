@@ -62,7 +62,7 @@ export const ServiceOrder = (props: Props) => {
   return (<>
 
     <Grid container spacing={3}>
-      <Grid item md={8} xs={12}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <DisplayBox headerText="Order of Service" headerIcon="album" editContent={getEditContent()}>
           <DndProvider backend={HTML5Backend}>
             {planItems.map((pi, i) => wrapPlanItem(pi, i))}
@@ -70,7 +70,7 @@ export const ServiceOrder = (props: Props) => {
           </DndProvider>
         </DisplayBox>
       </Grid>
-      <Grid item md={4} xs={12}>
+      <Grid size={{ xs: 12, md: 4 }}>
         {editPlanItem && <PlanItemEdit planItem={editPlanItem} onDone={() => { setEditPlanItem(null); loadData() }} />}
       </Grid>
     </Grid>

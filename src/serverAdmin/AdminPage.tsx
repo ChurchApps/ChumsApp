@@ -40,12 +40,12 @@ export const AdminPage = () => {
     <>
       <Banner><h1>{Locale.label("serverAdmin.adminPage.servAdmin")}</h1></Banner>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={2}>
+        <Grid size={{ xs: 12, md: 2 }}>
           <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
             <ul>{getTabs().map((tab) => getItem(tab))}</ul>
           </div>
         </Grid>
-        <Grid item xs={12} md={10}>
+        <Grid size={{ xs: 12, md: 10 }}>
           <div id="mainContent">
             {getCurrentTab()}
           </div>

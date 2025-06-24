@@ -34,7 +34,7 @@ export const NotificationPreferences = () => {
       <InputBox headerText={Locale.label("profile.profilePage.notifPref")} saveFunction={handleNotificationSave}>
         <p>{Locale.label("profile.profilePage.notifMsg")}</p>
         <Grid container spacing={3}>
-          <Grid item sm={6}>
+          <Grid size={{ sm: 6 }}>
             <FormControl fullWidth>
               <InputLabel id="push">{Locale.label("profile.profilePage.notifPush")}</InputLabel>
               <Select fullWidth name="push" labelId="push" label={Locale.label("profile.profilePage.notifPush")} value={pref.allowPush?.toString() || "true"} onChange={handlePrefChange} data-testid="push-notifications-select" aria-label="Push notifications preference">
@@ -43,7 +43,7 @@ export const NotificationPreferences = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item sm={6}>
+          <Grid size={{ sm: 6 }}>
             <FormControl fullWidth>
               <InputLabel id="emailFrequency">{Locale.label("profile.profilePage.freqEmail")}</InputLabel>
               <Select fullWidth name="emailFrequency" labelId="emailFrequency" label={Locale.label("profile.profilePage.freqEmail")} value={pref.emailFrequency || "daily"} onChange={handlePrefChange} data-testid="email-frequency-select" aria-label="Email frequency preference">

@@ -109,11 +109,11 @@ export const PraiseChartsProducts = (props: Props) => {
       </a>
     }
     const result = <Grid container spacing={1} key={product.sku} style={{ marginBottom: 4 }}>
-      <Grid item xs={1}>{expand}</Grid>
-      <Grid item xs={4} style={{ paddingLeft: indent * 20 }}>{product.name}</Grid>
-      <Grid item xs={1}>{product.file_type}</Grid>
-      <Grid item xs={2}>{product.sku}</Grid>
-      <Grid item xs={2}>{getPriceButton(product)}</Grid>
+      <Grid size={{ xs: 1 }}>{expand}</Grid>
+      <Grid size={{ xs: 4 }} style={{ paddingLeft: indent * 20 }}>{product.name}</Grid>
+      <Grid size={{ xs: 1 }}>{product.file_type}</Grid>
+      <Grid size={{ xs: 2 }}>{product.sku}</Grid>
+      <Grid size={{ xs: 2 }}>{getPriceButton(product)}</Grid>
     </Grid>
 
     if (expandedSkus.includes(product.sku)) {

@@ -54,13 +54,13 @@ export const AutomationsPage = () => {
     <h1><Icon>settings_suggest</Icon> {Locale.label("tasks.automationsPage.manageAuto")}</h1>
 
     <Grid container spacing={3}>
-      <Grid item md={8} xs={12}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <DisplayBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationsPage.auto")} editContent={editContent} help="chums/automations">
           {getRows()}
 
         </DisplayBox>
       </Grid>
-      <Grid item md={4} xs={12}>
+      <Grid size={{ xs: 12, md: 4 }}>
         {showAdd && <AutomationEdit automation={{ title: "", active: true, recurs: "never" }} onCancel={() => { setShowAdd(false); }} onSave={handleAdded} />}
         {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} onDelete={handleDelete} />}
       </Grid>

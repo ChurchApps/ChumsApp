@@ -54,11 +54,11 @@ export const GroupPage = () => {
       <Banner><h1>{group?.name}</h1></Banner>
       <div id="mainContent">
         <Grid container spacing={3}>
-          <Grid item md={8} xs={12}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <GroupDetails group={group} updatedFunction={handleGroupUpdated} />
             <Tabs group={group} addedPerson={addedPerson} addedSession={addedSession} addedCallback={handleAddedCallback} sidebarVisibilityFunction={handleSidebarVisibility} />
           </Grid>
-          <Grid item md={4} xs={12}>{getSidebarModules()}</Grid>
+          <Grid size={{ xs: 12, md: 4 }}>{getSidebarModules()}</Grid>
         </Grid>
       </div>
     </>

@@ -125,10 +125,10 @@ export const PlanItemEdit = (props: Props) => {
     {(showLabel) && <TextField fullWidth label={Locale.label("common.name")} id="label" name="label" type="text" value={planItem?.label} onChange={handleChange} data-testid="plan-item-name-input" aria-label="Plan item name" />}
     {(showDesc) && <TextField multiline fullWidth label="Description" id="description" name="description" type="text" value={planItem?.description} onChange={handleChange} data-testid="plan-item-description-input" aria-label="Plan item description" />}
     {(showDuration) && <Grid container>
-      <Grid item xs={6}>
+      <Grid size={{ xs: 6 }}>
         <TextField fullWidth label="Minutes" name="minutes" type="number" value={Math.floor(planItem?.seconds / 60)} onChange={handleChange} data-testid="plan-item-minutes-input" aria-label="Duration minutes" />
       </Grid>
-      <Grid item xs={6}>
+      <Grid size={{ xs: 6 }}>
         <TextField fullWidth label="Seconds" name="seconds" type="number" value={planItem?.seconds % 60} onChange={handleChange} data-testid="plan-item-seconds-input" aria-label="Duration seconds" />
       </Grid>
     </Grid>}

@@ -62,10 +62,10 @@ export const OAuthPage: React.FC = () => {
         </div>
         <div style={{ backgroundColor: "rgb(229, 246, 253)", padding: 10 }}>
           <Grid container spacing={2}>
-            <Grid item xs={6} style={{ textAlign: "center" }}>
+            <Grid size={{ xs: 6 }} style={{ textAlign: "center" }}>
               <Button fullWidth variant="contained" color="error" onClick={() => { window.location.href = redirectUri || "/"; }} data-testid="oauth-deny-button" aria-label="Deny authorization">Deny</Button>
             </Grid>
-            <Grid item xs={6} style={{ textAlign: "center" }}>
+            <Grid size={{ xs: 6 }} style={{ textAlign: "center" }}>
               <Button fullWidth variant="contained" color="primary" onClick={handleAllow} data-testid="oauth-allow-button" aria-label="Allow authorization">Allow</Button>
             </Grid>
           </Grid>

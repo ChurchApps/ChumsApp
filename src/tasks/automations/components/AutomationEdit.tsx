@@ -53,7 +53,7 @@ export const AutomationEdit = (props: Props) => {
     <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationEdit.autoEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={checkDelete} help="chums/automations">
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <TextField fullWidth label={Locale.label("common.title")} value={automation?.title || ""} name="title" onChange={handleChange} data-testid="automation-title-input" aria-label="Automation title" />
           <FormControl fullWidth>
             <InputLabel>{Locale.label("tasks.automationEdit.rep")}</InputLabel>

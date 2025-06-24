@@ -40,7 +40,7 @@ export const Tabs: React.FC<Props> = (props) => {
 
   return (<>
     <Grid container spacing={3}>
-      <Grid item md={8} xs={12}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <Paper>
           <Box>
             <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">

@@ -50,7 +50,7 @@ export const LinkedAccounts = () => {
     <>
       <div style={{ marginBottom: 15 }}><b>{Locale.label("profile.profilePage.linkedAccounts")}</b></div>
       <Grid container spacing={3} style={{ marginBottom: 25 }}>
-        <Grid item sm={3}>
+        <Grid size={{ sm: 3 }}>
           <Card>
             <CardContent sx={{ textAlign: "center" }}>
               <CardMedia component="img" image="/images/praisecharts.png" alt="Praise Charts" />

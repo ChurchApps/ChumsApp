@@ -80,12 +80,12 @@ export const PeoplePage = () => {
       <Banner><h1>{Locale.label("people.peoplePage.searchPpl")}</h1></Banner>
       <div id="mainContent">
         <Grid container spacing={3}>
-          <Grid item md={8} xs={12}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("people.peoplePage.recentPpl")} editContent={getEditContent()} help="chums/adding-people">
               <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} />
             </DisplayBox>
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <PeopleSearch updateSearchResults={(people) => setSearchResults(people)} />
           </Grid>
         </Grid>
