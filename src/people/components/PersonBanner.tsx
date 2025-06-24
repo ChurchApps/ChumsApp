@@ -23,7 +23,7 @@ export const PersonBanner = React.memo((props:Props) => {
           {(email) && <>{email}  &nbsp; </>}
         </div>
       </Grid>
-      <Grid item md={4} xs={12} style={{textAlign:"right", display:"flex", alignItems:"center"}} sx={{display:"flex", justifyContent: {xs:"center", sm:"flex-end"}}}>
+      <Grid item md={4} xs={12} sx={{display:"flex", alignItems:"center", justifyContent: {xs:"center", sm:"flex-end"}}}>
         <Button variant="contained" color="success">{props.person?.membershipStatus}</Button>
       </Grid>
     </Grid>

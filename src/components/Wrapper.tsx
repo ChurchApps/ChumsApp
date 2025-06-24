@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "@mui/material";
 import { Header } from "./Header";
 
 
@@ -8,10 +9,10 @@ export const Wrapper: React.FC<Props> = props =>
   <>
     <Header />
 
-    <div style={{width:"100%"}}>
+    <Box sx={{ width: "100%" }}>
       <div id="appBarSpacer"></div>
       {props.children}
-    </div>
+    </Box>
   </>
   /*
   const [donationError, setDonationError] = React.useState<boolean>(false);

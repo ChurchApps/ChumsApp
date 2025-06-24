@@ -1,18 +1,37 @@
 import { defineConfig, loadEnv, type UserConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
+import path from 'path'
 
 
 // https://vite.dev/config/
-export default defineConfig(({mode}) => {
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), ['PORT', "REACT_APP"]);
   console.log('Vite Environment Variables:', env);
   return {
     plugins: [react()],
+
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom'],
+            mui: ['@mui/material', '@mui/icons-material']
+          }
+        },
+        maxParallelFileOps: 2
+      }
+    },
+    resolve: {
+      alias: {
+        'cropperjs/dist/cropper.css': path.resolve(__dirname, 'node_modules/cropperjs/dist/cropper.css')
+      }
+    },
     server: {
+      host: '0.0.0.0',
       port: Number(env.PORT) ?? 3101,
       strictPort: true,
-      open: true,
-    },    
+      open: false,
+    },
     preview: {
       port: Number(env.PORT) ?? 3101,
       strictPort: true,
