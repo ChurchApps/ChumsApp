@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@churchapps/apphelper": "0.4.1",
+    "@churchapps/apphelper": "0.4.2",
     "@churchapps/helpers": "^1.0.39",
     "@mui/icons-material": "^7.1.2",
     "@mui/material": "^7.1.2",
