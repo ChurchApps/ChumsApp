@@ -33,6 +33,8 @@ const mdTheme = createTheme({
       defaultProps: { margin: "normal" },
       styleOverrides: {
         root: {
+          marginTop: 16,
+          marginBottom: 8,
           '& .MuiOutlinedInput-root': {
             '&:hover fieldset': {
               borderColor: 'rgba(0, 0, 0, 0.23)',
@@ -41,7 +43,15 @@ const mdTheme = createTheme({
         },
       },
     },
-    MuiFormControl: { defaultProps: { margin: "normal" } },
+    MuiFormControl: { 
+      defaultProps: { margin: "normal" },
+      styleOverrides: {
+        root: {
+          marginTop: 16,
+          marginBottom: 8
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root: {
