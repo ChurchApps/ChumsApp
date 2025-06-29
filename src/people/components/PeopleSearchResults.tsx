@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, type JSX } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
-import { PersonHelper, type PersonInterface, Loading, ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Button, Box } from "@mui/material"
+import { PersonHelper, type PersonInterface, Loading, ApiHelper, ArrayHelper, Locale, CreatePerson } from "@churchapps/apphelper";
+import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton } from "@mui/material"
 
 interface Props {
   people: PersonInterface[],
@@ -105,8 +105,8 @@ export function PeopleSearchResults(props: Props) {
         const personForms = data.filter((f: any) => f.contentType === "person");
         if (personForms.length > 0) {
           personForms.forEach((f: any) => {
-            ApiHelper.get("/questions?formId=" + f.id, "MembershipApi").then((q) => setOptionalColumns((prevState) => ([ ...prevState, ...q ])));
-            ApiHelper.get(`/formsubmissions/formId/${f.id}/?include=questions,answers`, "MembershipApi").then((fs) => setFormSubmissions((prevState) => ([ ...prevState, ...fs ])));
+            ApiHelper.get("/questions?formId=" + f.id, "MembershipApi").then((q) => setOptionalColumns((prevState) => ([...prevState, ...q])));
+            ApiHelper.get(`/formsubmissions/formId/${f.id}/?include=questions,answers`, "MembershipApi").then((fs) => setFormSubmissions((prevState) => ([...prevState, ...fs])));
           });
         }
       } else setOptionalColumns([]);
@@ -215,25 +215,12 @@ export function PeopleSearchResults(props: Props) {
     </Table>);
   }
 
-  const handleAddPerson = () => {
-    navigate("/people/add");
-  };
-
   if (!people) return <Loading />;
   return (
     <div>
       {getResults()}
-      <Box sx={{ mt: 2, borderTop: 1, borderColor: 'divider', pt: 2 }}>
-        <Button 
-          variant="contained" 
-          color="primary" 
-          startIcon={<Icon>add</Icon>}
-          onClick={handleAddPerson}
-          sx={{ textTransform: 'none' }}
-        >
-          {Locale.label("people.peopleSearchResults.addPerson") || "Add Person"}
-        </Button>
-      </Box>
+      <hr />
+      <CreatePerson onCreate={(person: PersonInterface) => navigate("/people/" + person.id)} />
     </div>
   )
 }

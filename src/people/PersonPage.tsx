@@ -17,7 +17,8 @@ export const PersonPage = () => {
   const [form, setForm] = useState<FormInterface>(null);
 
   const loadData = () => {
-    if (params.id === "add") {
+    console.log("LOAD DATA", params.id);
+    if (params.id === "add" || !params.id) {
       // Create a new empty person for adding
       const newPerson: PersonInterface = {
         name: { first: "", last: "", middle: "", nick: "", display: "" },
