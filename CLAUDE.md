@@ -33,6 +33,7 @@ npm run deploy-prod     # Deploy to production environment
 ## Architecture Overview
 
 ### Application Structure
+
 - **App.tsx**: Root component with theme, routing, and context providers
 - **ControlPanel.tsx**: Main application controller handling authentication flow
 - **Authenticated.tsx**: Main authenticated routes and layout structure
@@ -51,12 +52,15 @@ npm run deploy-prod     # Deploy to production environment
 5. **Environment-Based Configuration**: EnvironmentHelper manages different configurations for dev/staging/prod environments.
 
 ### Module Structure
+
 Each feature module follows a consistent pattern:
+
 - `[Feature]Page.tsx` - Main page component
 - `components/` - Feature-specific components
 - `index.ts` - Export declarations
 
 Key modules:
+
 - **people/**: Member and visitor management
 - **groups/**: Group management and sessions
 - **donations/**: Financial tracking and reporting
@@ -66,6 +70,7 @@ Key modules:
 - **tasks/**: Task management and automations
 
 ### Dependencies
+
 - **@churchapps/apphelper**: Core authentication, API, and UI helpers
 - **@mui/material**: Material-UI components and theming
 - **react-router-dom**: Client-side routing
@@ -87,3 +92,19 @@ Key modules:
 - Interfaces defined in `helpers/Interfaces.ts` and component-specific files
 - Environment-specific configuration in `EnvironmentHelper.ts`
 - Consistent file naming: PascalCase for components, camelCase for utilities
+
+### Writing Tests
+
+- Add `data-testid` attributes to components for reliable element selection
+- Use descriptive test names and group related tests with `test.describe()`
+- Follow Page Object Model pattern for complex interactions
+- Use `test.beforeEach()` for common setup
+
+### CRITICAL Testing Guidelines
+
+- **NEVER use `page.goto()` after login** - Always click menu items and follow natural navigation flow
+- Always wait for pages to load completely before interacting with elements (`page.waitForTimeout()` after navigation)
+- Use proper selectors and wait for elements to be visible before clicking
+- Follow the actual user journey through the application UI
+- Test the complete flow users would experience, not shortcuts
+- Run the tests in headless mode.

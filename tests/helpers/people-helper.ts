@@ -2,44 +2,55 @@ import { Page } from '@playwright/test';
 
 export class PeopleHelper {
   /**
-   * Navigate to people functionality - works with demo's search-based interface
+   * Navigate to people page - either by clicking People search button or verifying we're in the right place
    */
   static async navigateToPeople(page: Page) {
-    // Check if we're already authenticated and have the dashboard
-    const searchSelectors = [
-      '[data-testid="people-search-input"] input',
-      '[data-testid="dashboard-people-search-input"] input',
-      '#searchText'
-    ];
+    // Check if we can see a People section with search functionality
+    const peopleSection = page.locator('text=People').first();
+    const hasPeopleSection = await peopleSection.isVisible().catch(() => false);
     
-    for (const selector of searchSelectors) {
-      const searchBox = page.locator(selector).first();
-      const hasSearch = await searchBox.isVisible().catch(() => false);
-      if (hasSearch) {
-        console.log('People management available through search interface');
-        return;
+    if (hasPeopleSection) {
+      console.log('✓ Found People section on dashboard');
+      
+      // Click the Search button in the People section to navigate to full people page
+      const searchButton = page.locator('button[aria-label="Search people"], button:has-text("Search")').first();
+      const hasSearchButton = await searchButton.isVisible().catch(() => false);
+      
+      if (hasSearchButton) {
+        console.log('✓ Clicking People search button to navigate to people page');
+        await searchButton.click();
+        await page.waitForLoadState('networkidle');
+        await page.waitForTimeout(2000);
+        console.log('✓ Navigated to People page');
+      } else {
+        console.log('⚠ People section found but no search button visible');
+      }
+    } else {
+      // If not on dashboard, try to find menu navigation
+      const peopleMenuSelectors = [
+        'a[href="/people"]',
+        'button:has-text("People")',
+        'a:has-text("People")'
+      ];
+      
+      let navigationFound = false;
+      for (const selector of peopleMenuSelectors) {
+        const element = page.locator(selector).first();
+        const exists = await element.isVisible().catch(() => false);
+        if (exists) {
+          console.log(`✓ Found People navigation with selector: ${selector}`);
+          await element.click();
+          await page.waitForLoadState('networkidle');
+          await page.waitForTimeout(2000);
+          navigationFound = true;
+          break;
+        }
+      }
+      
+      if (!navigationFound) {
+        throw new Error('Could not find People section or navigation');
       }
     }
-    
-    // If no search box, try to navigate to main dashboard
-    const currentUrl = page.url();
-    if (!currentUrl.includes('chumsdemo.churchapps.org/')) {
-      await page.goto('https://chumsdemo.churchapps.org/');
-      await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(2000);
-    }
-    
-    // Check for search box again
-    for (const selector of searchSelectors) {
-      const searchBox = page.locator(selector).first();
-      const hasSearchAfterNav = await searchBox.isVisible().catch(() => false);
-      if (hasSearchAfterNav) {
-        console.log('Found people search on dashboard');
-        return;
-      }
-    }
-    
-    throw new Error('Could not access people management functionality');
   }
 
   /**
@@ -75,8 +86,7 @@ export class PeopleHelper {
   }
 
   /**
-   * Create a new person with basic information
-   * Note: Demo environment appears to be search-focused, so this simulates the process
+   * Create a new person using the CreatePerson component at bottom of people list
    */
   static async createPerson(page: Page, person: {
     firstName: string;
@@ -85,49 +95,234 @@ export class PeopleHelper {
     phone?: string;
     birthDate?: string;
   }) {
-    console.log(`Simulating creation of person: ${person.firstName} ${person.lastName}`);
+    console.log(`Creating person: ${person.firstName} ${person.lastName}`);
     
-    // In the demo environment, people management seems to be primarily search-based
-    // Rather than having a traditional "Add Person" form, let's verify we can at least
-    // access the search functionality and demonstrate the pattern
+    // Make sure we're on the people page
+    await this.navigateToPeople(page);
     
-    const searchBox = page.locator('[data-testid="people-search-input"], #searchText');
-    const hasSearch = await searchBox.isVisible().catch(() => false);
+    // Scroll to bottom to find the CreatePerson component
+    await page.locator('hr').last().scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000);
     
-    if (!hasSearch) {
-      throw new Error('Search functionality not available for people management');
+    // Look for the CreatePerson form at the bottom (after the <hr />)
+    // Based on apphelper CreatePerson component, fields are likely named "first", "last", "email"
+    const firstNameSelectors = [
+      'input[name="first"]',
+      'input[aria-label="firstName"]', 
+      'input[placeholder*="First"]'
+    ];
+    
+    let firstNameField = null;
+    for (const selector of firstNameSelectors) {
+      const field = page.locator(selector).last(); // Use .last() since we want the CreatePerson form at bottom
+      const exists = await field.isVisible().catch(() => false);
+      if (exists) {
+        console.log(`✓ Found first name field with selector: ${selector}`);
+        firstNameField = field;
+        break;
+      }
     }
     
-    // Search for the person to verify they don't already exist
-    const actualInput = searchBox.locator('input').first();
-    const hasInput = await actualInput.isVisible().catch(() => false);
-    
-    if (hasInput) {
-      await actualInput.fill(`${person.firstName} ${person.lastName}`);
-      await page.keyboard.press('Enter');
-    } else {
-      await searchBox.fill(`${person.firstName} ${person.lastName}`);
-      await page.keyboard.press('Enter');
+    if (!firstNameField) {
+      // Debug: List all input fields to see what's available
+      const inputs = page.locator('input');
+      const inputCount = await inputs.count();
+      console.log(`Debugging: Found ${inputCount} input fields on people page:`);
+      for (let i = Math.max(0, inputCount - 10); i < inputCount; i++) {
+        const input = inputs.nth(i);
+        const name = await input.getAttribute('name').catch(() => 'no-name');
+        const placeholder = await input.getAttribute('placeholder').catch(() => 'no-placeholder');
+        const ariaLabel = await input.getAttribute('aria-label').catch(() => 'no-aria-label');
+        console.log(`  Input ${i}: name="${name}" placeholder="${placeholder}" aria-label="${ariaLabel}"`);
+      }
+      throw new Error('Could not find CreatePerson form at bottom of people list');
     }
+    
+    // Fill the CreatePerson form
+    await firstNameField.fill(person.firstName);
+    
+    // Fill last name
+    const lastNameSelectors = [
+      'input[name="last"]',
+      'input[aria-label="lastName"]',
+      'input[placeholder*="Last"]'
+    ];
+    
+    let lastNameSet = false;
+    for (const selector of lastNameSelectors) {
+      const field = page.locator(selector).last();
+      const exists = await field.isVisible().catch(() => false);
+      if (exists) {
+        await field.fill(person.lastName);
+        lastNameSet = true;
+        console.log(`✓ Set last name with selector: ${selector}`);
+        break;
+      }
+    }
+    
+    if (!lastNameSet) {
+      console.log('⚠ Could not find last name field');
+    }
+    
+    // Fill email if provided
+    if (person.email) {
+      const emailSelectors = [
+        'input[name="email"]',
+        'input[aria-label="email"]',
+        'input[type="email"]'
+      ];
+      
+      let emailSet = false;
+      for (const selector of emailSelectors) {
+        const field = page.locator(selector).last();
+        const exists = await field.isVisible().catch(() => false);
+        if (exists) {
+          await field.fill(person.email);
+          emailSet = true;
+          console.log(`✓ Set email with selector: ${selector}`);
+          break;
+        }
+      }
+      
+      if (!emailSet) {
+        console.log('⚠ Could not find email field');
+      }
+    }
+    
+    // Click the Add button
+    const addButtons = [
+      'button:has-text("Add")',
+      'button[type="submit"]',
+      'button:has-text("Create")',
+      'button:has-text("Save")'
+    ];
+    
+    let buttonClicked = false;
+    for (const selector of addButtons) {
+      const button = page.locator(selector).last();
+      const exists = await button.isVisible().catch(() => false);
+      if (exists) {
+        console.log(`✓ Found and clicking add button with selector: ${selector}`);
+        await button.click();
+        buttonClicked = true;
+        break;
+      }
+    }
+    
+    if (!buttonClicked) {
+      throw new Error('Could not find Add/Submit button in CreatePerson form');
+    }
+    
+    await page.waitForLoadState('networkidle');
     await page.waitForTimeout(2000);
     
-    // Check if person already exists
-    const personExists = await page.locator(`text=${person.firstName} ${person.lastName}`).isVisible().catch(() => false);
+    console.log(`✓ Person ${person.firstName} ${person.lastName} creation submitted`);
+  }
+
+  /**
+   * Alternative method: Create person through search interface
+   */
+  static async createPersonThroughSearch(page: Page, person: {
+    firstName: string;
+    lastName: string;
+    email?: string;
+    phone?: string;
+  }) {
+    // Navigate to people page first
+    await page.goto('/people');
+    await page.waitForLoadState('networkidle');
     
-    if (personExists) {
-      console.log(`Person ${person.firstName} ${person.lastName} already exists`);
-    } else {
-      console.log(`Person ${person.firstName} ${person.lastName} would be created in production`);
-      // In production, this would trigger the add person workflow
-      // For demo, we'll simulate successful creation
+    // Search for the person first to trigger "create new" option
+    await this.searchPerson(page, `${person.firstName} ${person.lastName}`);
+    await page.waitForTimeout(1500);
+    
+    // Look for "Create new person" or CreatePerson component
+    const createButtons = [
+      'button:has-text("Create new person")',
+      'button:has-text("Create Person")',
+      '[data-testid="create-person-button"]',
+      'button:has-text("Add Person")',
+      '.create-person'
+    ];
+    
+    let createClicked = false;
+    for (const selector of createButtons) {
+      const button = page.locator(selector).first();
+      const isVisible = await button.isVisible().catch(() => false);
+      if (isVisible) {
+        await button.click();
+        createClicked = true;
+        console.log(`Found and clicked create button: ${selector}`);
+        break;
+      }
     }
     
-    // Clear search for next operations
-    if (hasInput) {
-      await actualInput.fill('');
-    } else {
-      await searchBox.fill('');
+    if (!createClicked) {
+      // Try to navigate directly to add person page
+      await page.goto('/people/add');
+      await page.waitForLoadState('networkidle');
     }
+    
+    await page.waitForTimeout(1000);
+    
+    // Fill the form using correct selectors
+    await page.fill('[data-testid="first-name-input"], #first', person.firstName);
+    await page.fill('[data-testid="last-name-input"], #last', person.lastName);
+    
+    if (person.email) {
+      await page.fill('[data-testid="email-input"], #email', person.email);
+    }
+    
+    if (person.phone) {
+      // Try different phone field options
+      const phoneSelectors = [
+        '#homePhone input',
+        '#workPhone input', 
+        '#mobilePhone input'
+      ];
+      
+      for (const selector of phoneSelectors) {
+        const phoneInput = page.locator(selector).first();
+        const phoneExists = await phoneInput.isVisible().catch(() => false);
+        if (phoneExists) {
+          await phoneInput.fill(person.phone);
+          break;
+        }
+      }
+    }
+    
+    // Save
+    const saveButton = page.locator('button:has-text("Save"), button[type="submit"]').first();
+    await saveButton.click();
+    await page.waitForLoadState('networkidle');
+    
+    console.log(`✓ Person creation workflow completed`);
+  }
+
+  /**
+   * Get the person ID from the current URL after creation/navigation
+   */
+  static async getCurrentPersonId(page: Page): Promise<string | null> {
+    const url = page.url();
+    const match = url.match(/\/people\/(\d+)/);
+    return match ? match[1] : null;
+  }
+
+  /**
+   * Navigate to person details page by ID
+   */
+  static async navigateToPersonDetails(page: Page, personId: string) {
+    await page.goto(`/people/${personId}`);
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1000);
+  }
+
+  /**
+   * Verify we're on a person details page
+   */
+  static async isOnPersonDetailsPage(page: Page): Promise<boolean> {
+    const url = page.url();
+    return /\/people\/\d+/.test(url);
   }
   
   /**
