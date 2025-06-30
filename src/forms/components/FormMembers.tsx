@@ -35,7 +35,7 @@ export const FormMembers: React.FC<Props> = (props) => {
     updateFilterList(p.id, "add");
   }
 
-  const handleActionChange = (personId: string, action: {}) => {
+  const handleActionChange = (personId: string, action: object) => {
     let member;
     const fm = [...formMembers];
     const fmArray = fm.map((p: MemberPermissionInterface) => {

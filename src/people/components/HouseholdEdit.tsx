@@ -84,7 +84,7 @@ export function HouseholdEdit(props: Props) {
     selectedPerson.contactInfo = PersonHelper.changeOnlyAddress(selectedPerson.contactInfo, props.currentPerson.contactInfo);
     try {
       await ApiHelper.post("/people", [selectedPerson], "MembershipApi");
-    } catch (err) {
+    } catch {
       console.log(`error in updating ${selectedPerson.name.display}"s address`);
     }
     addPerson();

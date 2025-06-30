@@ -88,7 +88,7 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
             <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("settings.roles.custAdd")}
           </MenuItem>
           <Divider />
-          {predefined.map((role, i) => (
+          {predefined.map((role) => (
             <MenuItem key={role.name} onClick={() => {addRole(role); }} title={role.description} data-testid={`add-predefined-role-${role.name.toLowerCase().replace(/\s+/g, '-')}`} aria-label={`Add ${role.name} role`}>
               <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("common.add")} "<b>{role.name}</b>" {Locale.label("settings.roles.role")}
             </MenuItem>

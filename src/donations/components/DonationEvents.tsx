@@ -33,7 +33,7 @@ export const DonationEvents: React.FC = () => {
 
   const handleClick = (id: string, resolved: boolean) => {
     resolved = !resolved;
-    ApiHelper.post("/eventLog", [{ id, resolved }], "GivingApi").then(data => loadData());
+    ApiHelper.post("/eventLog", [{ id, resolved }], "GivingApi").then(() => loadData());
   }
 
   const getPersonName = (personId: string) => {
@@ -70,7 +70,7 @@ export const DonationEvents: React.FC = () => {
     return logs;
   }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!errorLogs.length) return null;
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { ChumsPersonHelper } from ".";
-import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition, PersonInterface, DisplayBox, ApiHelper, FundDonationInterface, Locale } from "@churchapps/apphelper";
+import { ArrayHelper, GroupMemberInterface, InputBox, SearchCondition, PersonInterface, ApiHelper, FundDonationInterface, Locale } from "@churchapps/apphelper";
 import { EditCondition } from "./EditCondition";
 import { Button, Icon, Box } from "@mui/material";
 

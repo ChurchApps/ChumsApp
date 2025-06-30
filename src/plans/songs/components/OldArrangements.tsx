@@ -1,8 +1,8 @@
 import React from "react";
 import { ApiHelper, DisplayBox, SmallButton } from "@churchapps/apphelper";
 
-import { Accordion, AccordionDetails, AccordionSummary, Icon, IconButton, Stack, Table, TableBody, TableCell, TableRow } from "@mui/material";
-import { type ArrangementInterface, type SongDetailInterface, type SongInterface } from "../../../helpers";
+import { Accordion, AccordionDetails, AccordionSummary, Stack } from "@mui/material";
+import { type SongDetailInterface, type SongInterface } from "../../../helpers";
 import { ArrangementEdit } from "./ArrangementEdit";
 import { OldArrangement } from "./OldArrangement";
 
@@ -30,7 +30,6 @@ export const OldArrangements = (props: Props) => {
     else if (arrangements.length === 0) result.push(<p>No arrangements found.</p>);
     else if (arrangements.length === 1) result.push(<OldArrangement arrangement={arrangements[0]} originalKey={props.songDetail?.keySignature} />);
     else {
-      const accordions: JSX.Element[] = [];
       arrangements.forEach((arrangement: any) => {
         result.push(<Accordion key={arrangement.id}>
           <AccordionSummary>
@@ -54,7 +53,7 @@ export const OldArrangements = (props: Props) => {
     </Stack>
   );
 
-  const handleSave = (arrangement: ArrangementInterface) => {
+  const handleSave = () => {
     loadData();
     setEditArrangement(null);
   }

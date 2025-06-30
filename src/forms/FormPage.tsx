@@ -2,14 +2,12 @@ import React from "react";
 import { Tabs } from "./components";
 import { ApiHelper, type FormInterface, type MemberPermissionInterface } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom"
-import UserContext from "../UserContext";
 import { Banner } from "@churchapps/apphelper";
 
 export const FormPage = () => {
   const params = useParams();
   const [form, setForm] = React.useState<FormInterface>({} as FormInterface);
   const [memberPermission, setMemberPermission] = React.useState<MemberPermissionInterface>({} as MemberPermissionInterface);
-  const context = React.useContext(UserContext);
   const loadData = () => {
     ApiHelper.get("/forms/" + params.id, "MembershipApi").then(data => {
       setForm(data);

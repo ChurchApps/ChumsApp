@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function PeopleSearchResults(props: Props) {
-  let { people, columns, selectedColumns } = props;
+  const { people, columns, selectedColumns } = props;
   const navigate = useNavigate();
 
   const [sortDirection, setSortDirection] = useState<boolean | null>(null)
@@ -163,7 +163,6 @@ export function PeopleSearchResults(props: Props) {
     if (props.updateSearchResults) {
       props.updateSearchResults(sortedPeople);
     }
-    people = sortedPeople;
   }, [people, props]);
 
   const rows = useMemo(() => {

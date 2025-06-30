@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { ApiHelper, DisplayBox, UserHelper, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
 import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
 import { GroupAdd } from "../../groups/components";
 

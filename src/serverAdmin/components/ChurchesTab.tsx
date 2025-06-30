@@ -1,7 +1,7 @@
 import React from "react";
 import { ApiHelper, DisplayBox, UserHelper, DateHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
-import { Grid, TextField, Button } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import UserContext from "../../UserContext";
 import { type ChurchInterface } from "@churchapps/apphelper";
 
@@ -76,7 +76,7 @@ export const ChurchesTab = () => {
 
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); loadData(); } }
 
-  React.useEffect(loadData, []);
+  React.useEffect(loadData, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (

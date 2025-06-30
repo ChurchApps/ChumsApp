@@ -134,22 +134,22 @@ export function EditCondition(props: Props) {
         }
         else if (condition.operator === "attendedService") {
           const serviceOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'services' in item)[0]?.services;
-          serviceOptions && serviceOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          if (serviceOptions) serviceOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (serviceOptions?.length > 0) ? JSON.stringify([serviceOptions[0], defaultDateObj]) : "";
         }
         else if (condition.operator === "attendedServiceTime") {
           const serviceTimeOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'serviceTimes' in item)[0]?.serviceTimes;
-          serviceTimeOptions && serviceTimeOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          if (serviceTimeOptions) serviceTimeOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (serviceTimeOptions?.length > 0) ? JSON.stringify([serviceTimeOptions[0], defaultDateObj]) : "";
         }
         else if (condition.operator === "attendedGroup") {
           const groupOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'groups' in item)[0]?.groups;
-          groupOptions && groupOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          if (groupOptions) groupOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (groupOptions?.length > 0) ? JSON.stringify([groupOptions[0], defaultDateObj]) : "";
         }
         else {
           const campusOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter(item => 'campuses' in item)[0]?.campuses;
-          campusOptions && campusOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
+          if (campusOptions) campusOptions.forEach((o, i) => { options.push(<MenuItem key={i} value={JSON.stringify(o)}>{o.text}</MenuItem>); });
           defaultAttendanceValue = (campusOptions?.length > 0) ? JSON.stringify([campusOptions[0], defaultDateObj]) : "";
         }
         setDefaultValue(defaultAttendanceValue);

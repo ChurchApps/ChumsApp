@@ -1,14 +1,11 @@
 import React from "react";
 import { Icon, IconButton, Table, TableBody, TableCell, TableRow } from "@mui/material";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, type GroupInterface, type GroupMemberInterface, Locale, type PlanInterface, type PositionInterface, SmallButton, type TimeInterface, UserHelper, Permissions } from "@churchapps/apphelper";
-import { Link, Navigate } from "react-router-dom";
+import { ApiHelper, ArrayHelper, DisplayBox, type GroupInterface, type GroupMemberInterface, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
+import { Link } from "react-router-dom";
 import { GroupAdd } from "../../groups/components";
 import UserContext from "../../UserContext";
 
-interface Props {
-}
-
-export const MinistryList = (props: Props) => {
+export const MinistryList = () => {
   //const [redirect, setRedirect] = React.useState("");
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
   const [showAdd, setShowAdd] = React.useState<boolean>(false);

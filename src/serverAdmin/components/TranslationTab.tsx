@@ -7,7 +7,6 @@ export const TranslationTab = () => {
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
   const [report, setReport] = React.useState([]);
-  const [errors, setErrors] = React.useState<string[]>([]);
 
   const loadData = async () => {
     const reportData = await ApiHelper.get("/bibles/stats?startDate=" + DateHelper.formatHtml5Date(startDate) + "&endDate=" + DateHelper.formatHtml5Date(endDate), "ContentApi");
@@ -15,7 +14,6 @@ export const TranslationTab = () => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setErrors([]);
     const value = e.target.value;
     switch (e.target.name) {
       case "start": setStartDate(new Date(value)); break;

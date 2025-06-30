@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface } from "../../../helpers";
-import { ApiHelper, ArrayHelper, DisplayBox, LinkInterface, Locale, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DisplayBox, LinkInterface, Locale } from "@churchapps/apphelper";
 import { Alert, Box, Button, Icon, Menu, MenuItem, Tab, Tabs } from "@mui/material";
 import { PraiseChartsProducts } from "./PraiseChartsProducts";
 import { KeyEdit } from "./KeyEdit";
@@ -97,7 +97,7 @@ export const Keys = (props: Props) => {
     </li>))}
   </ul>)
 
-  const getTabs = () => keys.map((k, i) => (
+  const getTabs = () => keys.map((k) => (
     <Tab
       key={k.id}
       value={k.id}
@@ -105,7 +105,7 @@ export const Keys = (props: Props) => {
     />
   ))
 
-  if (editKey) return <KeyEdit arrangementKey={editKey} onSave={(k) => { setEditKey(null); loadData(); }} onCancel={() => setEditKey(null)} />
+  if (editKey) return <KeyEdit arrangementKey={editKey} onSave={() => { setEditKey(null); loadData(); }} onCancel={() => setEditKey(null)} />
   return (<>
     <DisplayBox headerText={Locale.label("songs.keys.title")} headerIcon="music_note" editFunction={(selectedKey) ? () => { setEditKey(selectedKey) } : null}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -133,7 +133,7 @@ export const Keys = (props: Props) => {
         </MenuItem>
       </Menu>
     </DisplayBox>
-    {editLink && <LinkEdit link={editLink} onSave={(l) => { setEditLink(null); loadLinks(); }} onCancel={() => setEditLink(null)} />}
+    {editLink && <LinkEdit link={editLink} onSave={() => { setEditLink(null); loadLinks(); }} onCancel={() => setEditLink(null)} />}
     {showImport && <PraiseChartsProducts praiseChartsId={props.songDetail?.praiseChartsId} keySignature={selectedKey?.keySignature || ""} onHide={() => { setShowImport(false); loadPraiseCharts(); }} />}
   </>)
 }

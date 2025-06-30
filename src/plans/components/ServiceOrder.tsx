@@ -1,15 +1,13 @@
 import React from "react";
-import { Grid, Icon, Menu, MenuItem, Stack, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import { ApiHelper, DisplayBox, PlanInterface, SmallButton } from "@churchapps/apphelper";
 import { type PlanItemInterface } from "../../helpers";
 import { PlanItemEdit } from "./PlanItemEdit";
-import { tableCellClasses } from "@mui/material/TableCell";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { PlanItem } from "./PlanItem";
 import { DraggableWrapper } from "../../components/DraggableWrapper";
 import { DroppableWrapper } from "../../components/DroppableWrapper";
-import { Link } from "react-router-dom";
 
 interface Props {
   plan: PlanInterface

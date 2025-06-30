@@ -40,7 +40,7 @@ export const PaymentEdit: React.FC<Props> = (props) => {
         props.updatedFunction(q)
       }
     });
-  }, [fundId, props.question, props.updatedFunction]);
+  }, [fundId, props.question, props.updatedFunction]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getFundOptions = () => funds.map((fund: FundInterface) => (
     <MenuItem key={fund.id} value={fund.id}>

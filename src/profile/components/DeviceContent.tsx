@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { Checkbox, FormControlLabel, FormGroup, TextField } from "@mui/material";
-import { ApiHelper, ArrayHelper, ErrorMessages, InputBox } from "@churchapps/apphelper";
+import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import { ApiHelper, ArrayHelper } from "@churchapps/apphelper";
 import { type DeviceInterface } from "../DevicesPage";
-import { Api } from "@mui/icons-material";
 
 interface Props { device: DeviceInterface }
 
@@ -34,7 +33,7 @@ export const DeviceContent = (props: Props) => {
     <hr />
     <h3>Associated Content</h3>
     <FormGroup>
-      {classRooms.map((c, i) => (
+      {classRooms.map((c) => (
         <FormControlLabel key={c.id} control={<Checkbox value={c.id} onChange={handleChange} defaultChecked={ArrayHelper.getOne(contents, "contentId", c.id) !== null} data-testid={`classroom-checkbox-${c.id}`} aria-label={`Classroom ${c.name}`} />} label={c.name} />
       ))}
     </FormGroup>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { ApiHelper, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper } from "@churchapps/apphelper";
 import { type SongDetailInterface, type SongDetailLinkInterface } from "../../../helpers";
-import { FormControl, InputLabel, MenuItem, Select, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
+import { Stack } from "@mui/material";
 
 interface Props {
   songDetail: SongDetailInterface;
@@ -18,7 +18,7 @@ export const SongDetailLinks = (props: Props) => {
     }
   }, [props.songDetail]);  
 
-  const getLink = (link: SongDetailLinkInterface, idx: number) => {
+  const getLink = (link: SongDetailLinkInterface) => {
     const logos: { [key: string]: string } = {
       PraiseCharts: "/images/praisecharts.png",
       Spotify: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg",
@@ -43,8 +43,8 @@ export const SongDetailLinks = (props: Props) => {
     <hr />
     <h4>Links</h4>
     <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: 'wrap' }}>
-      {songDetailLinks?.map((sd, i) => getLink(sd, i))}
-      {props.songDetail?.praiseChartsId && getLink({ service: "PraiseCharts", url: `https://www.praisecharts.com/songs/details/${props.songDetail?.praiseChartsId}?XID=churchapps` }, songDetailLinks.length + 1)}
+      {songDetailLinks?.map((sd) => getLink(sd))}
+      {props.songDetail?.praiseChartsId && getLink({ service: "PraiseCharts", url: `https://www.praisecharts.com/songs/details/${props.songDetail?.praiseChartsId}?XID=churchapps` })}
     </Stack>
   </>
 }

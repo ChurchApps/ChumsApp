@@ -49,7 +49,7 @@ export const PositionEdit = (props:Props) => {
 
   const categoryOption = (position?.categoryName === "" && categoryOptions.length > 0) ? categoryOptions[0] : { value: position.categoryName, label: position.categoryName }
 
-  const handleCategoryChange = (newValue: { label: string, value: string }, obj: any) => {
+  const handleCategoryChange = (newValue: { label: string, value: string }) => {
     const p: PositionInterface = { ...position };
     p.categoryName = newValue.value;
     setCategoryInput("");

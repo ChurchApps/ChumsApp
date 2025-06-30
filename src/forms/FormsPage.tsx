@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { FormEdit, EnvironmentHelper } from "./components"
 import { ApiHelper, DisplayBox, type FormInterface, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom"
@@ -12,7 +12,6 @@ export const FormsPage = () => {
   const [selectedFormId, setSelectedFormId] = React.useState("notset");
   const [selectedTab, setSelectedTab] = React.useState("forms");
   const [tabIndex, setTabIndex] = React.useState(0);
-  const isSubscribed = useRef(true);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const loadData = () => {
@@ -52,7 +51,7 @@ export const FormsPage = () => {
     const conf = archive ? window.confirm(Locale.label("forms.formsPage.confirmMsg1")) : window.confirm(Locale.label("forms.formsPage.confirmMsg2"));
     if (!conf) return;
     form.archived = archive;
-    ApiHelper.post("/forms", [form], "MembershipApi").then(data => loadData());
+    ApiHelper.post("/forms", [form], "MembershipApi").then(() => loadData());
   }
 
   const getArchivedRows = () => {

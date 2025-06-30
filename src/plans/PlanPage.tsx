@@ -17,7 +17,7 @@ export const PlanPage = () => {
     ApiHelper.get("/plans/" + params.id, "DoingApi").then(data => { setPlan(data); });
   }
 
-  React.useEffect(() => { loadData(); }, [params.id]);
+  React.useEffect(() => { loadData(); }, [params.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
 
   const getTabs = () => {
@@ -44,7 +44,7 @@ export const PlanPage = () => {
       <Grid size={{ xs: 12, md: 2 }}>
         <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
           <ul>
-            {getTabs().map((tab, index) => getItem(tab))}
+            {getTabs().map((tab) => getItem(tab))}
           </ul>
         </div>
       </Grid>

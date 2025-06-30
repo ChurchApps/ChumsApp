@@ -11,7 +11,7 @@ interface Props {
   updatedFunction: () => void
 }
 
-export const PersonView = ({ id, person, editFunction, updatedFunction }: Props) => {
+export const PersonView = ({ person, editFunction, updatedFunction }: Props) => {
   const getFields = () => {
     if (!person) return <Loading />
     else {

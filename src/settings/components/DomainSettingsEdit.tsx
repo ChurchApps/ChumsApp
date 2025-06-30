@@ -72,7 +72,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
 
   const relink = (e: React.MouseEvent) => {
     e.preventDefault();
-    ApiHelper.get("/domains/caddy", "MembershipApi").then((data) => {
+    ApiHelper.get("/domains/caddy", "MembershipApi").then(() => {
       alert("Done.  Please only click this link once.");
     });
   }

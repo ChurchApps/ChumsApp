@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
 import { type PersonInterface } from "@churchapps/helpers"
 import { Locale, DisplayBox, PersonHelper } from "@churchapps/apphelper";

@@ -11,7 +11,7 @@ export const RolePage = () => {
   const [showAdd, setShowAdd] = React.useState<boolean>(false);
   const [selectedRoleMemberId, setSelectedRoleMemberId] = React.useState<string>("");
   const [roleMembers, setRoleMembers] = useState<RoleMemberInterface[]>([]);
-  const handleShowAdd = (role: RoleInterface) => { setShowAdd(true); }
+  const handleShowAdd = () => { setShowAdd(true); }
   const handleAdd = () => { setShowAdd(false); setSelectedRoleMemberId(""); loadData(); loadRoleMembers(); }
 
   const loadData = () => {
