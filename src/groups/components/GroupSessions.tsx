@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { ApiHelper, ArrayHelper, GroupInterface, DisplayBox, SessionInterface, VisitSessionInterface, PersonInterface, PersonHelper, VisitInterface, UserHelper, ExportLink, Permissions, Loading, SmallButton, Locale } from "@churchapps/apphelper";
+import React, { useCallback, type JSX } from "react";
+import { ApiHelper, ArrayHelper, type GroupInterface, DisplayBox, type SessionInterface, type VisitSessionInterface, type PersonInterface, PersonHelper, type VisitInterface, UserHelper, ExportLink, Permissions, Loading, SmallButton, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, Grid, MenuItem, type SelectChangeEvent } from "@mui/material"
 
 interface Props {
@@ -62,8 +62,8 @@ export const GroupSessions: React.FC<Props> = (props) => {
     for (let i = 0; i < visitSessions.length; i++) {
       const vs = visitSessions[i];
       //let editLink = (canEdit) ? (<a href="about:blank" onClick={handleRemove} className="text-danger" data-personid={vs.visit.personId}><Icon>person_remove</Icon> Remove</a>) : null;
-      const editLink = (canEdit) ? <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(vs)} color="error" data-testid={`remove-session-visitor-button-${vs.id}`} ariaLabel={`Remove ${person?.name?.display || 'visitor'} from session`} /> : <></>
       const person = ArrayHelper.getOne(people, "id", vs.visit.personId);
+      const editLink = (canEdit) ? <SmallButton icon="person_remove" text="Remove" onClick={() => handleRemove(vs)} color="error" data-testid={`remove-session-visitor-button-${vs.id}`} ariaLabel={`Remove ${person?.name?.display || 'visitor'} from session`} /> : <></>
       if (person) {
         result.push(
           <TableRow key={vs.id}>
@@ -121,17 +121,17 @@ export const GroupSessions: React.FC<Props> = (props) => {
     }
   }, [addedPerson?.id, session?.id, loadAttendance, addedCallback]);
 
-  React.useEffect(() => { 
-    if (group.id !== undefined) { 
-      loadSessions(); 
-      addedCallback(""); 
+  React.useEffect(() => {
+    if (group.id !== undefined) {
+      loadSessions();
+      addedCallback("");
     }
   }, [group.id, addedSession?.id, addedCallback, loadSessions]);
 
-  React.useEffect(() => { 
-    if (addedPerson?.id !== undefined) { 
-      handlePersonAdd(); 
-    } 
+  React.useEffect(() => {
+    if (addedPerson?.id !== undefined) {
+      handlePersonAdd();
+    }
   }, [addedPerson?.id, handlePersonAdd]);
 
   React.useEffect(() => { handleSessionSelected(); }, [handleSessionSelected]);
