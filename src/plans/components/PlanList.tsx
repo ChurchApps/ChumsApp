@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from "react";
-import { Grid, Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Icon, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, type GroupInterface, Locale, SmallButton } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
@@ -31,11 +31,11 @@ export const PlanList = (props: Props) => {
     ApiHelper.get("/plans", "DoingApi").then((data: any[]) => { setPlans(ArrayHelper.getAll(data, "ministryId", props.ministry.id)); });
   }, [props.ministry.id]);
 
-  const getRows = () => plans.map((p, i) => (
+  const getRows = () => plans.map((p) => (
     <TableRow key={p.id}>
       <TableCell><Link to={"/plans/" + p.id}>{p.name}</Link></TableCell>
       <TableCell style={{ textAlign: "right" }}>
-        <SmallButton icon="edit" onClick={(e) => { setPlan(p); }} />
+        <SmallButton icon="edit" onClick={() => { setPlan(p); }} />
       </TableCell>
     </TableRow>
   ))

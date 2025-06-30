@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ChurchSettings } from "./"
-import { ChurchInterface, ApiHelper, UserHelper, Permissions, DisplayBox, Locale } from "@churchapps/apphelper"
+import { type ChurchInterface, ApiHelper, UserHelper, Permissions } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 
 export const ChurchSettingsTab = () => {

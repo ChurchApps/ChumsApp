@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { GroupMembers, GroupSessions } from ".";
-import { UserHelper, GroupInterface, SessionInterface, PersonInterface, Permissions, Locale } from "@churchapps/apphelper";
+import { UserHelper, type GroupInterface, type SessionInterface, type PersonInterface, Permissions, Locale } from "@churchapps/apphelper";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 interface Props {

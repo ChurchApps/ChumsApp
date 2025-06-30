@@ -88,7 +88,7 @@ export const FundPage = () => {
     return rows;
   }
 
-  React.useEffect(loadData, [params.id]); //eslint-disable-line
+  React.useEffect(loadData, [params.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return (<></>);
   else {

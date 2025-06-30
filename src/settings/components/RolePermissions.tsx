@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { RoleCheck } from "./";
-import { ApiHelper, DisplayBox, RoleInterface, RolePermissionInterface, PermissionInterface, Locale } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, type RoleInterface, type RolePermissionInterface, type PermissionInterface, Locale } from "@churchapps/apphelper";
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Icon } from "@mui/material";
 
 interface Props { role: RoleInterface }

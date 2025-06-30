@@ -2,14 +2,13 @@ import { TableHead, Table, TableCell, TableRow, TableBody } from "@mui/material"
 import React, { useState } from "react";
 import { ApiHelper, ErrorMessages, Banner, DisplayBox, DateHelper, SmallButton } from "@churchapps/apphelper"
 import { PairScreen } from "./components/PairScreen";
-import { Link } from "react-router-dom";
 import { DeviceEdit } from "./components/DeviceEdit";
 
 export interface DeviceInterface { id: string, appName: string, deviceId: string, personId: string, fcmToken: string, label: string, registrationDate: Date, lastActiveDate: Date, deviceInfo: string }
 
 export const DevicesPage = () => {
 
-  const [errors, setErrors] = useState([]);
+  const [errors] = useState([]);
   const [devices, setDevices] = useState<DeviceInterface[]>([]);
   const [showAdd, setShowAdd] = useState(false);
   const [editDevice, setEditDevice] = useState<DeviceInterface>(null);
@@ -45,7 +44,7 @@ export const DevicesPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {devices.map((device, index) => (
+              {devices.map((device) => (
                 <TableRow key={device.id}>
                   <TableCell>
                     <a href="about:blank" onClick={(e) => { e.preventDefault(); setEditDevice(device) }}>{device.label || "Device"}</a>

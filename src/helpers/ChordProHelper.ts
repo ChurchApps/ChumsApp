@@ -82,7 +82,7 @@ export class ChordProHelper {
     return newRoot + modifier;
   }
 
-  static transposeLyrics = (line: string, halfSteps: number) => {
+  static transposeLyrics = () => {
     const result: string[] = [];
 
     return result.join("\n");
@@ -91,7 +91,7 @@ export class ChordProHelper {
   static formatLyrics = (lyrics: string, keyOffset: number) => {
     const lines = lyrics.split("\n");
     const result: string[] = [];
-    lines.forEach((line, index) => {
+    lines.forEach((line) => {
       let l = line.trim();
       let lineType = "line";
       if (line.startsWith("[") && line.endsWith("]")) lineType = "header";

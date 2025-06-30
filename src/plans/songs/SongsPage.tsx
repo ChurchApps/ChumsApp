@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ApiHelper, DisplayBox, Locale } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
@@ -11,7 +11,6 @@ export const SongsPage = () => {
   const [showSearch, setShowSearch] = React.useState(false)
   const [redirect, setRedirect] = React.useState("")
 
-  const a = true;
   const loadData = async () => {
     ApiHelper.get("/songDetails", "ContentApi").then(data => setSongs(data));
 

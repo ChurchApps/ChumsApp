@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { ChumsPersonHelper, UpdateHouseHold } from "."
-import { PersonHelper, DateHelper, InputBox, ApiHelper, PersonInterface, Loading, ErrorMessages, Locale } from "@churchapps/apphelper"
+import { PersonHelper, DateHelper, InputBox, ApiHelper, type PersonInterface, Loading, ErrorMessages, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material"
@@ -14,6 +14,7 @@ interface Props {
   showMergeSearch: () => void
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function formattedPhoneNumber(value: string) {
   if (!value) return "";
   value = value.split("x")[0];

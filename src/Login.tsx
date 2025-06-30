@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCookies, CookiesProvider } from "react-cookie";
+import { useCookies } from "react-cookie";
 import { ApiHelper, UserHelper } from "@churchapps/apphelper";
 import UserContext from "./UserContext";
 import { LoginPage, Permissions } from "@churchapps/apphelper";

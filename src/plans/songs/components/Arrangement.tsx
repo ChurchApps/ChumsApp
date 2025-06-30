@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 
-
 import { type ArrangementInterface, type SongDetailInterface } from "../../../helpers";
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
 import { ApiHelper, DisplayBox, Locale } from "@churchapps/apphelper";
@@ -8,7 +7,7 @@ import { Grid } from "@mui/material";
 import { SongDetails } from "./SongDetails";
 import { Keys } from "./Keys";
 import { ArrangementEdit } from "./ArrangementEdit";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 interface Props {

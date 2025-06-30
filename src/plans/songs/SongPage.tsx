@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, Locale } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
-import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Icon } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
 import { Arrangement } from "./components/Arrangement";
 import { SongSearchDialog } from "./SongSearchDialog";
 
@@ -22,10 +22,9 @@ export const SongPage = () => {
     if (arrangements.length > 0) setSelectedArrangement(arrangements[0]);
   }
 
-  useEffect(() => { loadData() }, []) //eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { loadData() }, [params.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
 
-  const defaultTab = "details";
 
   const getTabs = () => {
     const tabs: { key: string, icon: string, label: string }[] = [];
@@ -74,7 +73,7 @@ export const SongPage = () => {
       <Grid size={{ xs: 12, md: 2 }}>
         <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
           <ul>
-            {getTabs().map((tab, index) => getItem(tab))}
+            {getTabs().map((tab) => getItem(tab))}
             <li><a href="about:blank" onClick={(e) => { e.preventDefault(); setShowSearch(true); }}><Icon>add</Icon> Add Arrangement</a></li>
           </ul>
         </div>

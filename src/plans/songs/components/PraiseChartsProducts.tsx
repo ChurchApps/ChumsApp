@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { ApiHelper, ArrayHelper, CurrencyHelper, Locale } from "@churchapps/apphelper";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { ApiHelper, CurrencyHelper } from "@churchapps/apphelper";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon } from "@mui/material";
 import { PraiseChartsHelper } from "../../../helpers/PraiseChartsHelper";
 import { Link } from "react-router-dom";
 
@@ -98,7 +98,6 @@ export const PraiseChartsProducts = (props: Props) => {
   }
 
   const getProductRow = (product: any, indent: number) => {
-    const a = 0;
     let expand = <></>;
     if (product.children?.length > 0) {
       if (expandedSkus.includes(product.sku)) expand = <a href="about:blank" onClick={(e) => { e.preventDefault(); setExpandedSkus(expandedSkus.filter(s => s !== product.sku)) }}>

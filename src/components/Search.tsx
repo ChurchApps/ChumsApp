@@ -25,7 +25,7 @@ export const Search: React.FC<Props> = (props) => {
   };
 
   const createRows = () => {
-    const tableRows = props.searchResults?.map((person, index) => (
+    const tableRows = props.searchResults?.map((person) => (
       <TableRow key={person.id}>
         <TableCell style={{paddingLeft: 0}}>
           <img src={PersonHelper.getPhotoUrl(person)} alt="avatar" />
@@ -46,7 +46,7 @@ export const Search: React.FC<Props> = (props) => {
     setRows(tableRows);
   };
 
-  React.useEffect(createRows, [props.searchResults]); //eslint-disable-line
+  React.useEffect(createRows, [props.searchResults, props.buttonText]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

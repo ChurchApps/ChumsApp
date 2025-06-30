@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { ApiHelper, Locale } from "@churchapps/apphelper";
-import { type ArrangementInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
+import { type SongDetailInterface } from "../../helpers";
 import { CreateSongDetail } from "./components/CreateSongDetail";
 
 interface Props {

@@ -13,7 +13,7 @@ export const GroupPage = () => {
   const [selectedTab, setSelectedTab] = React.useState("");
 
   const loadData = () => { ApiHelper.get("/groups/" + params.id, "MembershipApi").then(data => setGroup(data)); }
-  React.useEffect(loadData, []); //eslint-disable-line
+  React.useEffect(loadData, [params.id]);
 
   const handleGroupUpdated = (g: GroupInterface) => {
     setGroup(g);

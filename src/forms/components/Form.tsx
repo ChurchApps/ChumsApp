@@ -1,6 +1,6 @@
 import React from "react";
 import { FormQuestionEdit } from ".";
-import { ApiHelper, DisplayBox, FormInterface, QuestionInterface, Permissions, Loading, UserHelper, Locale } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, type FormInterface, type QuestionInterface, Permissions, Loading, UserHelper, Locale } from "@churchapps/apphelper";
 import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
 
 interface Props { id: string }

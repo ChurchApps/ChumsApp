@@ -1,9 +1,7 @@
 import React from "react";
 
-
 import { type ArrangementInterface } from "../../../helpers";
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
-import { Locale } from "@churchapps/apphelper";
 import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } from "@mui/material";
 
 

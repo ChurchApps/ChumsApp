@@ -12,23 +12,24 @@ type Props = {
 };
 
 export function DroppableWrapper(props: Props) {
+  const { accept, onDrop, dndDeps, updateIsDragging, hideWhenInactive, children } = props;
 
   const [isDragging, setIsDragging] = React.useState(false);
 
   const [{ isOver, canDrop }, drop] = useDrop(
     () => ({
-      accept: props.accept,
-      drop: (data) => props.onDrop(data),
+      accept,
+      drop: (data) => onDrop(data),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
         canDrop: !!monitor.canDrop()
       }),
-    }), [props?.dndDeps]
+    }), [dndDeps]
   );
 
   if (canDrop!==isDragging) setIsDragging(canDrop);
 
-  useEffect(() => { if (props.updateIsDragging) props.updateIsDragging(isDragging) }, [isDragging]); //eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (updateIsDragging) updateIsDragging(isDragging) }, [isDragging, updateIsDragging]);
 
   const droppableStyle:CSSProperties = { width: "100%", zIndex: 1, backgroundColor: (isOver) ? "rgba(25,118,210, 1)" : "rgba(25,118,210, 0.1)" }
 
@@ -36,10 +37,10 @@ export function DroppableWrapper(props: Props) {
     <div style={{ position: "relative" }}>
       <div style={droppableStyle}>
         <div style={{ width: "100%" }} ref={drop as any} data-testid="droppable-wrapper" aria-label="Drop zone">
-          {props.children}
+          {children}
         </div>
       </div>
     </div>
   );
-  else return (props.hideWhenInactive) ? <></> : <>{props.children}</>
+  else return (hideWhenInactive) ? <></> : <>{children}</>
 }

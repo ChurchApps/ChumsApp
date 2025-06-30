@@ -1,6 +1,6 @@
 import React from "react";
 
-import { GroupInterface, PersonInterface, PersonHelper, SessionInterface } from "@churchapps/apphelper";
+import { type GroupInterface, type PersonInterface, PersonHelper, type SessionInterface } from "@churchapps/apphelper";
 import { Grid } from "@mui/material";
 import { PersonAddAdvanced } from "../../people/components/PersonAddAdvanced";
 import { GroupSessions } from "./GroupSessions";

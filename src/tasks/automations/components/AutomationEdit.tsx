@@ -1,6 +1,6 @@
 import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, AutomationInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, type AutomationInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   automation: AutomationInterface,

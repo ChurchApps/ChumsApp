@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrayHelper, DomainInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { ArrayHelper, type DomainInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { TextField, Grid, TableCell, TableBody, TableRow, Table, TableHead } from "@mui/material";
 
 interface Props { churchId: string, saveTrigger: Date | null }
@@ -72,7 +72,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
 
   const relink = (e: React.MouseEvent) => {
     e.preventDefault();
-    ApiHelper.get("/domains/caddy", "MembershipApi").then((data) => {
+    ApiHelper.get("/domains/caddy", "MembershipApi").then(() => {
       alert("Done.  Please only click this link once.");
     });
   }

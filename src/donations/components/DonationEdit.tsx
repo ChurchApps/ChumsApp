@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { ApiHelper, InputBox, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
-import { FundDonations, DonationInterface, FundDonationInterface, FundInterface, PersonInterface } from "@churchapps/apphelper";
+import { FundDonations, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/apphelper";
 
 interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
 
@@ -108,7 +108,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
     }
   }
 
-  React.useEffect(loadData, [props.donationId]); //eslint-disable-line
+  React.useEffect(loadData, [props.donationId, props.batchId, props.funds]);
 
   return (
     <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText={Locale.label("donations.donationEdit.donEdit")} cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">

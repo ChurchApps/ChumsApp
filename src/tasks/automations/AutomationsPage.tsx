@@ -2,7 +2,7 @@ import { Grid, Icon, Table, TableCell, TableRow } from "@mui/material";
 import React from "react";
 import { Locale, SmallButton } from "@churchapps/apphelper";
 import { useMountedState } from "@churchapps/apphelper";
-import { ApiHelper, AutomationInterface, DisplayBox } from "@churchapps/apphelper";
+import { ApiHelper, type AutomationInterface, DisplayBox } from "@churchapps/apphelper";
 import { AutomationDetails } from "./components/AutomationDetails";
 import { AutomationEdit } from "./components/AutomationEdit";
 

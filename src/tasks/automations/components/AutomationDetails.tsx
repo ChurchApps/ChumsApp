@@ -1,5 +1,5 @@
 import React from "react";
-import { SmallButton, ActionInterface, AutomationInterface, ConditionInterface, ConjunctionInterface, Locale } from "@churchapps/apphelper";
+import { SmallButton, type ActionInterface, type AutomationInterface, type ConditionInterface, type ConjunctionInterface, Locale } from "@churchapps/apphelper";
 import { ApiHelper, DisplayBox } from "@churchapps/apphelper";
 import { ActionEdit } from "./ActionEdit";
 import { AutomationEdit } from "./AutomationEdit";
@@ -48,16 +48,16 @@ export const AutomationDetails = (props: Props) => {
     return result;
   }
 
-  React.useEffect(init, [props.automation]); //eslint-disable-line
+  React.useEffect(init, [props.automation]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (editDetails) {
     return <AutomationEdit automation={automation} onDelete={() => { setEditDetails(false); props.onDelete(); }} onCancel={() => { setEditDetails(false); }} onSave={(a: AutomationInterface) => { setEditDetails(false); setAutomation(a); props.onChange(); }} />
   } else if (editAction) {
-    return <ActionEdit action={editAction} onCancel={() => setEditAction(null)} onSave={(a: ActionInterface) => { setEditAction(null); loadData(); }} />
+    return <ActionEdit action={editAction} onCancel={() => setEditAction(null)} onSave={() => { setEditAction(null); loadData(); }} />
   } else if (editConjunction) {
-    return <ConjunctionEdit conjunction={editConjunction} onCancel={() => setEditConjunction(null)} onSave={(c: ConjunctionInterface) => { setEditConjunction(null); loadData(); }} />
+    return <ConjunctionEdit conjunction={editConjunction} onCancel={() => setEditConjunction(null)} onSave={() => { setEditConjunction(null); loadData(); }} />
   } else if (editCondition) {
-    return <ConditionEdit condition={editCondition} onCancel={() => setEditCondition(null)} onSave={(c: ConditionInterface) => { setEditCondition(null); loadData(); }} />
+    return <ConditionEdit condition={editCondition} onCancel={() => setEditCondition(null)} onSave={() => { setEditCondition(null); loadData(); }} />
   }
   else return (
     <DisplayBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationDetails.auto")} help="chums/automations">

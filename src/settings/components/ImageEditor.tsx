@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { SmallButton, InputBox, GenericSettingInterface, ArrayHelper, Locale } from "@churchapps/apphelper";
+import { SmallButton, InputBox, type GenericSettingInterface, ArrayHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   settings: GenericSettingInterface[],

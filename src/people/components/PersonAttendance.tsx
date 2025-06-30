@@ -1,5 +1,5 @@
 import React from "react";
-import { useMountedState, DisplayBox, ArrayHelper, ApiHelper, AttendanceRecordInterface, DateHelper, GroupInterface, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
+import { useMountedState, DisplayBox, ArrayHelper, ApiHelper, type AttendanceRecordInterface, DateHelper, type GroupInterface, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
 

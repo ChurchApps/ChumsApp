@@ -3,7 +3,7 @@ import React from "react";
 // import { UserHelper, EnvironmentHelper } from ".";
 
 interface Props { ts: number }
-export const Preview: React.FC<Props> = (props) => (
+export const Preview: React.FC<Props> = () => (
   <div className="inputBox">
     <div className="header"><i className="calendar_month"></i> {Locale.label("settings.preview.preview")}</div>
     <div className="content">

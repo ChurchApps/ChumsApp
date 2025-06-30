@@ -34,7 +34,7 @@ export const DeviceEdit = (props: Props) => {
 
   const handleSave = () => {
     if (validate()) {
-      ApiHelper.post("/devices", [device], "MessagingApi").then((data) => { props.updatedFunction(); });
+      ApiHelper.post("/devices", [device], "MessagingApi").then(() => { props.updatedFunction(); });
     }
   }
 

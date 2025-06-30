@@ -1,4 +1,4 @@
-import { ApiHelper, GenericSettingInterface, Locale, UniqueIdHelper } from "@churchapps/apphelper";
+import { ApiHelper, type GenericSettingInterface, Locale, UniqueIdHelper } from "@churchapps/apphelper";
 import { Grid, Icon, TextField } from "@mui/material";
 import React from "react";
 

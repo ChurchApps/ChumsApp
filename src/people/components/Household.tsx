@@ -1,6 +1,6 @@
 import React from "react";
 import { HouseholdEdit } from ".";
-import { DisplayBox, ApiHelper, UserHelper, PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper, Locale } from "@churchapps/apphelper";
+import { DisplayBox, ApiHelper, UserHelper, type PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Table, TableBody, TableRow, TableCell } from "@mui/material"
 
@@ -37,7 +37,7 @@ export const Household: React.FC<Props> = (props) => {
   React.useEffect(() => {
     setPhoto(PersonHelper.getPhotoUrl(props.person))
   }, [props.person]);
-  React.useEffect(loadMembers, [household?.id, props.reload]); //eslint-disable-line
+  React.useEffect(loadMembers, [household]);
 
   const getRows = () => {
     const rows = [];

@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, GroupInterface, GroupServiceTimeInterface, Locale } from "@churchapps/apphelper";
+import { ApiHelper, type GroupInterface, type GroupServiceTimeInterface, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell } from "@mui/material";
 interface Props { group: GroupInterface }
 

@@ -1,8 +1,6 @@
 import React from "react";
-import { Person, Groups, Household, Merge } from "./"
-import { UserHelper, ApiHelper, PersonInterface,Permissions, PersonHelper } from "@churchapps/apphelper"
-import { Grid, Icon } from "@mui/material"
-import { useParams } from "react-router-dom";
+import { Person, Household, Merge } from "./"
+import { type PersonInterface, PersonHelper } from "@churchapps/apphelper"
 import { ImageEditor } from "@churchapps/apphelper";
 
 interface Props {
@@ -10,7 +8,6 @@ interface Props {
   loadData: () => void
 }
 export const PersonDetails = (props:Props) => {
-  const params = useParams();
   const [person, setPerson] = React.useState<PersonInterface>(props.person);
   const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
   const [showMergeSearch, setShowMergeSearch] = React.useState<boolean>(false);

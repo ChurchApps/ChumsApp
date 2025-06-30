@@ -1,5 +1,5 @@
 import React from "react";
-import { SmallButton, ArrayHelper, ApiHelper, UserHelper, DonationInterface, DateHelper, CurrencyHelper, DisplayBox, DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, FundInterface, Loading, Locale } from "@churchapps/apphelper";
+import { SmallButton, ArrayHelper, ApiHelper, UserHelper, type DonationInterface, DateHelper, CurrencyHelper, DisplayBox, type DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, type FundInterface, Loading, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 interface Props { batch: DonationBatchInterface, funds: FundInterface[], addFunction: () => void, editFunction: (id: string) => void }

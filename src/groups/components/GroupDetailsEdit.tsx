@@ -3,7 +3,7 @@ import { ServiceTimesEdit } from ".";
 import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, type SelectChangeEvent } from "@mui/material";
-import { useMountedState, GalleryModal, GroupInterface } from "@churchapps/apphelper";
+import { useMountedState, GalleryModal, type GroupInterface } from "@churchapps/apphelper";
 import { MarkdownEditor } from "@churchapps/apphelper";
 import { GroupLabelsEdit } from "./GroupLabelsEdit";
 

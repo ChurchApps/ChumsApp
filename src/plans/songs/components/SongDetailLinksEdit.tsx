@@ -78,7 +78,7 @@ export const SongDetailLinksEdit = (props: Props) => {
     });
   }
 
-  const getRow = (link: SongDetailLinkInterface, idx: number) => <TableRow>
+  const getRow = (link: SongDetailLinkInterface) => <TableRow>
     <TableCell><a href="about:blank" onClick={(e) => { e.preventDefault(); setEditLink(link); }}>{link.service}</a></TableCell>
     <TableCell>{link.serviceKey}</TableCell>
   </TableRow>
@@ -108,7 +108,7 @@ export const SongDetailLinksEdit = (props: Props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {songDetailLinks?.map((sd, i) => getRow(sd, i))}
+          {songDetailLinks?.map((sd) => getRow(sd))}
         </TableBody>
       </Table>
     </DisplayBox>

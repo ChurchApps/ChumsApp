@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Locale, DisplayBox, ApiHelper, type SettingInterface } from "@churchapps/apphelper"
-import { Button, Card, CardContent, CardMedia, Grid, Icon } from "@mui/material";
+import { Locale, ApiHelper, type SettingInterface } from "@churchapps/apphelper"
+import { Button, Card, CardContent, CardMedia, Grid } from "@mui/material";
 
 export const LinkedAccounts = () => {
 
@@ -26,7 +26,7 @@ export const LinkedAccounts = () => {
 
     const handleMessage = async (event: MessageEvent) => {
       if (event.origin !== window.location.origin) return;
-      const { oauth_token, oauth_verifier } = event.data;
+      const { oauth_verifier } = event.data;
       if (popup) popup.close();
 
       try {

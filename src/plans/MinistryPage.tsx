@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Icon, Tabs as MaterialTabs, Tab } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
 import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
 import { useParams } from "react-router-dom";

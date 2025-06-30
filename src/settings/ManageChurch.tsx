@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { type ChurchInterface, ApiHelper, UserHelper, Permissions, DisplayBox, Locale } from "@churchapps/apphelper"
+import { type ChurchInterface, ApiHelper, UserHelper, Permissions, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import { Grid, Icon } from "@mui/material";
 import { Banner } from "@churchapps/apphelper";
@@ -38,8 +38,6 @@ export const ManageChurch = () => {
     const tabs = [];
     tabs.push({ key: "settings", icon: "settings", label: Locale.label("settings.manageChurch.manage")});
     tabs.push({ key: "roles", icon: "lock", label: Locale.label("settings.roles.roles")});
-
-    if (selectedTab === "") setSelectedTab("settings");
     return tabs;
   }
 
@@ -51,6 +49,10 @@ export const ManageChurch = () => {
 
   React.useEffect(loadData, [UserHelper.currentUserChurch.church.id]); //eslint-disable-line
 
+  React.useEffect(() => {
+    if (selectedTab === "") setSelectedTab("settings");
+  }, [selectedTab]);
+
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (
     <>
@@ -59,7 +61,7 @@ export const ManageChurch = () => {
         <Grid size={{ xs: 12, md: 2 }}>
           <div className="sideNav" style={{height:"100vh", borderRight:"1px solid #CCC" }}>
             <ul>
-              {getTabs().map((tab, index) => getItem(tab))}
+              {getTabs().map((tab) => getItem(tab))}
               <li><a href={`https://transfer.chums.org/login?jwt=${jwt}&churchId=${churchId}`} target="_blank" rel="noreferrer noopener"><Icon>play_arrow</Icon> {Locale.label("settings.manageChurch.imEx")}</a></li>
             </ul>
           </div>
