@@ -37,7 +37,7 @@ export const Household: React.FC<Props> = (props) => {
   React.useEffect(() => {
     setPhoto(PersonHelper.getPhotoUrl(props.person))
   }, [props.person]);
-  React.useEffect(loadMembers, [household?.id, props.reload]); //eslint-disable-line
+  React.useEffect(loadMembers, [household]);
 
   const getRows = () => {
     const rows = [];

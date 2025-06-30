@@ -121,7 +121,7 @@ export const PrintDonationPage = () => {
     return result;
   };
 
-  useEffect(loadData, [params.personId]); //eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(loadData, [params.personId, currYear, navigate]);
 
   return (
     <>

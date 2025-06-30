@@ -22,7 +22,7 @@ export const SongPage = () => {
     if (arrangements.length > 0) setSelectedArrangement(arrangements[0]);
   }
 
-  useEffect(() => { loadData() }, []) //eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { loadData() }, [params.id])
 
 
   const defaultTab = "details";

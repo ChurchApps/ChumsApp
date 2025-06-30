@@ -70,7 +70,7 @@ export const DonationEvents: React.FC = () => {
     return logs;
   }
 
-  React.useEffect(loadData, []); //eslint-disable-line
+  React.useEffect(loadData, []);
 
   if (!errorLogs.length) return null;
 

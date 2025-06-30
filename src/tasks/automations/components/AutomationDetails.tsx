@@ -48,7 +48,7 @@ export const AutomationDetails = (props: Props) => {
     return result;
   }
 
-  React.useEffect(init, [props.automation]); //eslint-disable-line
+  React.useEffect(init, [props.automation]);
 
   if (editDetails) {
     return <AutomationEdit automation={automation} onDelete={() => { setEditDetails(false); props.onDelete(); }} onCancel={() => { setEditDetails(false); }} onSave={(a: AutomationInterface) => { setEditDetails(false); setAutomation(a); props.onChange(); }} />

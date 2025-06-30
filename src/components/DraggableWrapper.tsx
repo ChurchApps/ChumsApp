@@ -28,7 +28,7 @@ export function DraggableWrapper(props: Props) {
 
   useEffect(() => {
     if (props.draggingCallback) props.draggingCallback(isDragging);
-  }, [isDragging]); //eslint-disable-line react-hooks/exhaustive-deps
+  }, [isDragging, props.draggingCallback]);
 
   return (
     <div ref={dragRef} style={{ opacity }} className="dragButton" onDoubleClick={props.onDoubleClick} data-testid="draggable-wrapper" aria-label="Draggable item">

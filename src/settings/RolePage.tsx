@@ -43,8 +43,8 @@ export const RolePage = () => {
     }
   }
 
-  React.useEffect(loadData, []); //eslint-disable-line
-  React.useEffect(loadRoleMembers, []); //eslint-disable-line
+  React.useEffect(loadData, [params.roleId]);
+  React.useEffect(loadRoleMembers, [params.roleId]);
 
   if (!UserHelper.checkAccess(Permissions.membershipApi.roles.view)) return (<></>);
   else {

@@ -76,7 +76,7 @@ export const ChurchesTab = () => {
 
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); loadData(); } }
 
-  React.useEffect(loadData, []); //eslint-disable-line
+  React.useEffect(loadData, []);
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (

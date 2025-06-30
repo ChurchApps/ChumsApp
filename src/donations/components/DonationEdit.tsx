@@ -108,7 +108,7 @@ export const DonationEdit: React.FC<Props> = (props) => {
     }
   }
 
-  React.useEffect(loadData, [props.donationId]); //eslint-disable-line
+  React.useEffect(loadData, [props.donationId, props.batchId, props.funds]);
 
   return (
     <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText={Locale.label("donations.donationEdit.donEdit")} cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">

@@ -46,7 +46,7 @@ export const Search: React.FC<Props> = (props) => {
     setRows(tableRows);
   };
 
-  React.useEffect(createRows, [props.searchResults]); //eslint-disable-line
+  React.useEffect(createRows, [props.searchResults, props.selectFunction]);
 
   return (
     <>

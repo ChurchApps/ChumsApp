@@ -38,8 +38,6 @@ export const ManageChurch = () => {
     const tabs = [];
     tabs.push({ key: "settings", icon: "settings", label: Locale.label("settings.manageChurch.manage")});
     tabs.push({ key: "roles", icon: "lock", label: Locale.label("settings.roles.roles")});
-
-    if (selectedTab === "") setSelectedTab("settings");
     return tabs;
   }
 
@@ -50,6 +48,10 @@ export const ManageChurch = () => {
   }
 
   React.useEffect(loadData, [UserHelper.currentUserChurch.church.id]); //eslint-disable-line
+
+  React.useEffect(() => {
+    if (selectedTab === "") setSelectedTab("settings");
+  }, [selectedTab]);
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   else return (

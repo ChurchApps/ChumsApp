@@ -17,7 +17,7 @@ export const PlanPage = () => {
     ApiHelper.get("/plans/" + params.id, "DoingApi").then(data => { setPlan(data); });
   }
 
-  React.useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  React.useEffect(() => { loadData(); }, [params.id]);
 
 
   const getTabs = () => {

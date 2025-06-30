@@ -17,7 +17,7 @@ export const FormPage = () => {
     });
   }
 
-  React.useEffect(loadData, []); //eslint-disable-line
+  React.useEffect(loadData, [params.id]);
 
   return form?.id
     ? <>
