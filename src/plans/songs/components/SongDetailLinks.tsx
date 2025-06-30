@@ -43,7 +43,7 @@ export const SongDetailLinks = (props: Props) => {
     <hr />
     <h4>Links</h4>
     <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: 'wrap' }}>
-      {songDetailLinks?.map((sd) => getLink(sd))}
+      {songDetailLinks?.map((sd) => <React.Fragment key={sd.id}>{getLink(sd)}</React.Fragment>)}
       {props.songDetail?.praiseChartsId && getLink({ service: "PraiseCharts", url: `https://www.praisecharts.com/songs/details/${props.songDetail?.praiseChartsId}?XID=churchapps` })}
     </Stack>
   </>

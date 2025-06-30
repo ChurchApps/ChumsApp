@@ -91,7 +91,7 @@ export function HouseholdEdit(props: Props) {
   }
 
   const rows = members.map((m, index) => (
-    <TableRow key={index}>
+    <TableRow key={m.id || index}>
       <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>
       <TableCell>
         <FormControl fullWidth style={{ marginTop: 0 }}>

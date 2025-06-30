@@ -35,7 +35,7 @@ export const RolePermissions: React.FC<Props> = (props) => {
               <Typography>{p.displaySection}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>{getChecks(p.displaySection)}</Typography>
+              <div>{getChecks(p.displaySection)}</div>
             </AccordionDetails>
           </Accordion>
         );
