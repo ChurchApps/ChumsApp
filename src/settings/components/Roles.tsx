@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { DisplayBox, UserHelper, ApiHelper, Permissions, ChurchInterface, RoleInterface, RolePermissionInterface, Locale } from "@churchapps/apphelper"
+import { DisplayBox, UserHelper, ApiHelper, Permissions, type ChurchInterface, type RoleInterface, type RolePermissionInterface, Locale } from "@churchapps/apphelper"
 import { Divider, Icon, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper"
 

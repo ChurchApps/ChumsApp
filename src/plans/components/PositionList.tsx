@@ -1,6 +1,6 @@
 import React from "react";
 import {  Badge, Table, TableBody, TableCell, TableHead, TableRow,  } from "@mui/material";
-import { ArrayHelper, AssignmentInterface, Locale, PersonHelper, PersonInterface, PositionInterface } from "@churchapps/apphelper";
+import { ArrayHelper, type AssignmentInterface, Locale, PersonHelper, type PersonInterface, type PositionInterface } from "@churchapps/apphelper";
 
 interface Props {
   positions: PositionInterface[],

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {  Roles, RoleEdit } from "./"
-import { ChurchInterface } from "@churchapps/apphelper"
+import { type ChurchInterface } from "@churchapps/apphelper"
 
 interface Props {
   church: ChurchInterface;

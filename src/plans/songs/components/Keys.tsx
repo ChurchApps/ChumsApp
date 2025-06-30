@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface } from "../../../helpers";
-import { ApiHelper, ArrayHelper, DisplayBox, LinkInterface, Locale } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, DisplayBox, type LinkInterface, Locale } from "@churchapps/apphelper";
 import { Alert, Box, Button, Icon, Menu, MenuItem, Tab, Tabs } from "@mui/material";
 import { PraiseChartsProducts } from "./PraiseChartsProducts";
 import { KeyEdit } from "./KeyEdit";

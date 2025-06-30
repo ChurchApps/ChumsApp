@@ -1,4 +1,4 @@
-import { PersonHelper, PersonInterface } from "@churchapps/apphelper";
+import { PersonHelper, type PersonInterface } from "@churchapps/apphelper";
 import { Button, Grid } from "@mui/material";
 import React from "react";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { HouseholdEdit } from ".";
-import { DisplayBox, ApiHelper, UserHelper, PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper, Locale } from "@churchapps/apphelper";
+import { DisplayBox, ApiHelper, UserHelper, type PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Table, TableBody, TableRow, TableCell } from "@mui/material"
 

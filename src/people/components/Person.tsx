@@ -1,6 +1,6 @@
 import React from "react";
 import { PersonView, PersonEdit } from "."
-import { PersonInterface, UserHelper, Permissions } from "@churchapps/apphelper"
+import { type PersonInterface, UserHelper, Permissions } from "@churchapps/apphelper"
 
 interface Props {
   id?: string

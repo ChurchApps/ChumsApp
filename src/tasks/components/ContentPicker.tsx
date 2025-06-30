@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs } from "@mui/material";
 import React from "react";
 import { SelectGroup } from ".";
-import { GroupInterface, Locale, PersonHelper, PersonInterface } from "@churchapps/apphelper";
+import { type GroupInterface, Locale, PersonHelper, type PersonInterface } from "@churchapps/apphelper";
 import { PersonAdd } from "@churchapps/apphelper";
 
 interface Props {

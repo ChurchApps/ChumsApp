@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ApiHelper, GroupInterface, DisplayBox, UserHelper, GroupMemberInterface, PersonHelper, PersonInterface, ExportLink, Permissions, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
+import { ApiHelper, type GroupInterface, DisplayBox, UserHelper, type GroupMemberInterface, PersonHelper, type PersonInterface, ExportLink, Permissions, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";

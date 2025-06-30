@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { Grid, Icon, IconButton, TextField } from "@mui/material";
-import { ApiHelper, ArrayHelper, AssignmentInterface, BlockoutDateInterface, DisplayBox, InputBox, Locale, PersonInterface, PlanInterface, PositionInterface, TimeInterface } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, type AssignmentInterface, type BlockoutDateInterface, DisplayBox, InputBox, Locale, type PersonInterface, type PlanInterface, type PositionInterface, type TimeInterface } from "@churchapps/apphelper";
 import { PositionEdit } from "./PositionEdit";
 import { PositionList } from "./PositionList";
 import { AssignmentEdit } from "./AssignmentEdit";

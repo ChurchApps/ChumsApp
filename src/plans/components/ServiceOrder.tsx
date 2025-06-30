@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Stack } from "@mui/material";
-import { ApiHelper, DisplayBox, PlanInterface, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, type PlanInterface, SmallButton } from "@churchapps/apphelper";
 import { type PlanItemInterface } from "../../helpers";
 import { PlanItemEdit } from "./PlanItemEdit";
 import { DndProvider } from 'react-dnd'

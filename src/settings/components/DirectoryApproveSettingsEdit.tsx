@@ -1,6 +1,6 @@
 import React from "react";
 import { FormControl, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography } from "@mui/material";
-import { ApiHelper, GenericSettingInterface, GroupInterface, Locale, UniqueIdHelper } from "@churchapps/apphelper";
+import { ApiHelper, type GenericSettingInterface, type GroupInterface, Locale, UniqueIdHelper } from "@churchapps/apphelper";
 
 interface Props { churchId: string; saveTrigger: Date | null; }
 

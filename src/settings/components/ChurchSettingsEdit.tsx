@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, ChurchInterface, InputBox, ErrorMessages, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
+import { ApiHelper, type ChurchInterface, InputBox, ErrorMessages, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import { GivingSettingsEdit } from "./GivingSettingsEdit";
 import { TextField, Grid, Divider, Chip } from "@mui/material";
 import { DomainSettingsEdit } from "./DomainSettingsEdit";

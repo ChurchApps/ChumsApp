@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, DisplayBox, UserHelper, Loading, useMountedState, FundInterface, Permissions, SmallButton, Locale } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, UserHelper, Loading, useMountedState, type FundInterface, Permissions, SmallButton, Locale } from "@churchapps/apphelper";
 import { FundEdit } from ".";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { ApiHelper, GroupInterface } from "@churchapps/apphelper";
+import { ApiHelper, type GroupInterface } from "@churchapps/apphelper";
 
 
 interface Props {

@@ -1,6 +1,6 @@
 import { Icon, Menu, MenuItem } from "@mui/material";
 import React from "react";
-import { SmallButton, AutomationInterface, ConditionInterface, ConjunctionInterface, Locale } from "@churchapps/apphelper";
+import { SmallButton, type AutomationInterface, type ConditionInterface, type ConjunctionInterface, Locale } from "@churchapps/apphelper";
 import { ArrayHelper } from "@churchapps/apphelper";
 
 interface Props {

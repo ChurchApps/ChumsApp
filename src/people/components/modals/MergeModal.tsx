@@ -1,5 +1,5 @@
 import React from "react";
-import { PersonInterface, ContactInfoInterface, NameInterface, Locale } from "@churchapps/apphelper";
+import { type PersonInterface, type ContactInfoInterface, type NameInterface, Locale } from "@churchapps/apphelper";
 import { EnvironmentHelper } from "../../../helpers"
 import { Dialog, Button, Container, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { ChumsPersonHelper } from ".";
-import { SearchCondition, PersonInterface, DisplayBox, ApiHelper, Locale } from "@churchapps/apphelper";
+import { type SearchCondition, type PersonInterface, DisplayBox, ApiHelper, Locale } from "@churchapps/apphelper";
 import { Button, OutlinedInput, FormControl, InputLabel } from "@mui/material";
 import { AdvancedPeopleSearch } from "./AdvancedPeopleSearch";
 

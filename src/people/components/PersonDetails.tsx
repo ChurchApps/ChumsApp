@@ -1,6 +1,6 @@
 import React from "react";
 import { Person, Household, Merge } from "./"
-import { PersonInterface, PersonHelper } from "@churchapps/apphelper"
+import { type PersonInterface, PersonHelper } from "@churchapps/apphelper"
 import { ImageEditor } from "@churchapps/apphelper";
 
 interface Props {

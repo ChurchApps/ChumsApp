@@ -1,5 +1,5 @@
 import React from "react";
-import { ApiHelper, RolePermissionInterface } from "@churchapps/apphelper";
+import { ApiHelper, type RolePermissionInterface } from "@churchapps/apphelper";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 
 interface Props {

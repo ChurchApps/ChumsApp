@@ -1,5 +1,5 @@
 import React from "react";
-import { SmallButton, ActionInterface, AutomationInterface, ConditionInterface, ConjunctionInterface, Locale } from "@churchapps/apphelper";
+import { SmallButton, type ActionInterface, type AutomationInterface, type ConditionInterface, type ConjunctionInterface, Locale } from "@churchapps/apphelper";
 import { ApiHelper, DisplayBox } from "@churchapps/apphelper";
 import { ActionEdit } from "./ActionEdit";
 import { AutomationEdit } from "./AutomationEdit";

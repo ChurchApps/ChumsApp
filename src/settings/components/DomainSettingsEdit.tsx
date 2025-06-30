@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrayHelper, DomainInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { ArrayHelper, type DomainInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { TextField, Grid, TableCell, TableBody, TableRow, Table, TableHead } from "@mui/material";
 
 interface Props { churchId: string, saveTrigger: Date | null }
