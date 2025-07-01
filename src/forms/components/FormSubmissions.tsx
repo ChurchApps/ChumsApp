@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, memo, useCallback, useMemo } from "react";
 import { type AnswerInterface, ApiHelper, DateHelper, DisplayBox, ExportLink, type FormSubmissionInterface, Locale, type MemberPermissionInterface, type PersonInterface, type QuestionInterface } from "@churchapps/apphelper";
 import { useReactToPrint } from "react-to-print";
 import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 
 interface Props { formId: string, memberPermissions: MemberPermissionInterface };
 
-export const FormSubmissions: React.FC<Props> = (props) => {
+export const FormSubmissions: React.FC<Props> = memo((props) => {
   const [formSubmissions, setFormSubmissions] = useState<any[]>([]);
   const [summary, setSummary] = useState<any>([]);
   const [summaryCsv, setSummaryCsv] = useState<any>([]);
@@ -16,7 +16,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     content: () => contentRef.current
   });
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     const people = await ApiHelper.get("/people", "MembershipApi");
     const formSubmissions = await ApiHelper.get("/formsubmissions/formId/" + props.formId, "MembershipApi")
 
@@ -43,11 +43,9 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     setSummary(summaryData);
     setFormSubmissions(formSubmissions);
     setSummaryCsv(csv);
+  }, [props.formId, yesNoMap]);
 
-
-  }
-
-  const setSummaryResultData = (summaryData: any, question: QuestionInterface, answer: AnswerInterface) => {
+  const setSummaryResultData = useCallback((summaryData: any, question: QuestionInterface, answer: AnswerInterface) => {
     const match = summaryData.find((result: any) => result.title === question.title);
     if (match) {
       match.values.forEach((resultValue: any) => {
@@ -61,15 +59,15 @@ export const FormSubmissions: React.FC<Props> = (props) => {
       });
     }
     else summaryData.push(setSummaryResultDefault(question, answer));
-  }
+  }, []);
 
-  const getPerson = (people:PersonInterface[], formSubmission: any) => {
+  const getPerson = useCallback((people:PersonInterface[], formSubmission: any) => {
     let result = people.find((person: PersonInterface) => person.id === formSubmission.submittedBy);
     if (formSubmission.contentType==="person") result = people.find((person: PersonInterface) => person.id === formSubmission.contentId);
     return result;
-  }
+  }, []);
 
-  const setFormSubmissionData = (people: PersonInterface[], formSubmission: any) => {
+  const setFormSubmissionData = useCallback((people: PersonInterface[], formSubmission: any) => {
     const submittedBy = getPerson(people, formSubmission);
 
     formSubmission.person = { name: submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon"), id: submittedBy?.id || null };
@@ -77,9 +75,9 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     formSubmission.csvData = [];
     formSubmission.questions = formSubmission.questions.sort((a: QuestionInterface, b: QuestionInterface) => (a.title > b.title ? 1 : -1));
     return formSubmission;
-  }
+  }, [getPerson]);
 
-  const setSummaryResultDefault = (question: QuestionInterface, answer: AnswerInterface) => {
+  const setSummaryResultDefault = useCallback((question: QuestionInterface, answer: AnswerInterface) => {
     const choices: any = [];
     const questionChoices = question.choices || yesNoDefault;
     questionChoices.forEach((choice: any) => {
@@ -95,18 +93,18 @@ export const FormSubmissions: React.FC<Props> = (props) => {
       choices.push(choiceCount);
     });
     return { title: question.title, values: choices };
-  }
+  }, [yesNoDefault]);
 
-  const getResultCount = (summaryValues: any[]) => {
+  const getResultCount = useCallback((summaryValues: any[]) => {
     const results: JSX.Element[] = [];
     summaryValues.forEach((sv: any, i: number) => {
       const key: string = Object.keys(sv)[0];
       results.push(<div key={sv.text + "-" + i}>{`${sv.text}: ${sv[key]}`}</div>);
     });
     return results;
-  }
+  }, []);
 
-  const getSummary = () => {
+  const summaryContent = useMemo(() => {
     const results: JSX.Element[] = [];
     summary.forEach((s: any, i: number) => {
       results.push(
@@ -117,9 +115,9 @@ export const FormSubmissions: React.FC<Props> = (props) => {
       );
     });
     return results;
-  }
+  }, [summary, getResultCount]);
 
-  const getTableHeader = () => {
+  const tableHeader = useMemo(() => {
     const result: JSX.Element[] = [];
     if (formSubmissions.length) {
       result.push(<TableCell key="submittedBy">{(formSubmissions[0].contentType==="person") ? Locale.label("forms.formSubmissions.subFor") : Locale.label("forms.formSubmissions.subBy") }</TableCell>);
@@ -127,9 +125,9 @@ export const FormSubmissions: React.FC<Props> = (props) => {
       formSubmissions[0].questions.forEach((question: QuestionInterface) => result.push(<TableCell key={question.id}>{question.title}</TableCell>));
     }
     return result;
-  }
+  }, [formSubmissions]);
 
-  const getTableRows = () => {
+  const tableRows = useMemo(() => {
     const rows: JSX.Element[] = [];
     formSubmissions.forEach((submission: any, i: number) => {
       rows.push(<TableRow key={i}>
@@ -139,27 +137,27 @@ export const FormSubmissions: React.FC<Props> = (props) => {
       </TableRow>);
     });
     return rows;
-  }
+  }, [formSubmissions, getAnswers]);
 
-  const getAnswers = (formSubmission: FormSubmissionInterface) => {
+  const getAnswers = useCallback((formSubmission: FormSubmissionInterface) => {
     const rows: JSX.Element[] = [];
     formSubmission.questions.forEach((question: QuestionInterface) => {
       const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id);
       rows.push(<TableCell key={question.id}>{answer?.value || "-"}</TableCell>);
     });
     return rows;
-  }
+  }, []);
 
-  const getFormSubmissions = () => (
+  const formSubmissionsTable = useMemo(() => (
     <div style={{width: "100%", overflowX: "scroll"}}>
       <Table>
-        <TableHead><TableRow key="header">{getTableHeader()}</TableRow></TableHead>
-        <TableBody>{getTableRows()}</TableBody>
+        <TableHead><TableRow key="header">{tableHeader}</TableRow></TableHead>
+        <TableBody>{tableRows}</TableBody>
       </Table>
     </div>
-  );
+  ), [tableHeader, tableRows]);
 
-  const getEditLinks = () => {
+  const editLinks = useMemo(() => {
     const formName = formSubmissions.length ? formSubmissions[0].form?.name + ".csv" : "form_submissions.csv";
     return (
       <>
@@ -167,7 +165,7 @@ export const FormSubmissions: React.FC<Props> = (props) => {
         <a aria-label="print-summary" href="about:blank" onClick={(e) => { e.preventDefault(); handleSummaryPrint(); }}><Icon>print</Icon></a>
       </>
     );
-  }
+  }, [formSubmissions, summaryCsv, handleSummaryPrint]);
 
   React.useEffect(() => { loadData() }, [props.formId]); //eslint-disable-line
 
@@ -175,14 +173,14 @@ export const FormSubmissions: React.FC<Props> = (props) => {
     <Grid container spacing={3}>
       <Grid size={{ xs: 12, md: 8 }} className="form-submission-summary">
         <div ref={contentRef} className="form-submission-summary">
-          <DisplayBox headerText={Locale.label("forms.formSubmissions.subSum")} headerIcon="group" editContent={getEditLinks()}>
-            <Grid container spacing={3}>{getSummary()}</Grid>
+          <DisplayBox headerText={Locale.label("forms.formSubmissions.subSum")} headerIcon="group" editContent={editLinks}>
+            <Grid container spacing={3}>{summaryContent}</Grid>
           </DisplayBox>
           <DisplayBox headerText={Locale.label("forms.formSubmissions.subRes")} headerIcon="group" help="chums/forms">
-            {getFormSubmissions()}
+            {formSubmissionsTable}
           </DisplayBox>
         </div>
       </Grid>
     </Grid>
   );
-}
+});

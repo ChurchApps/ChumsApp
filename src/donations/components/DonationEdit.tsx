@@ -1,17 +1,24 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent } from "@mui/material";
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { ApiHelper, InputBox, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
 import { FundDonations, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/apphelper";
 
 interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
 
-export const DonationEdit: React.FC<Props> = (props) => {
+export const DonationEdit = memo((props: Props) => {
 
   const [donation, setDonation] = React.useState<DonationInterface>({});
   const [fundDonations, setFundDonations] = React.useState<FundDonationInterface[]>([]);
   const [showSelectPerson, setShowSelectPerson] = React.useState(false);
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+  
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<any>) => { 
+    if (e.key === "Enter") { 
+      e.preventDefault(); 
+      handleSave(); 
+    } 
+  }, []);
+  
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const d = { ...donation } as DonationInterface;
     const value = e.target.value;
     switch (e.target.name) {
@@ -21,13 +28,24 @@ export const DonationEdit: React.FC<Props> = (props) => {
       case "methodDetails": d.methodDetails = value; break;
     }
     setDonation(d);
-  }
+  }, [donation]);
 
-  const handleCancel = () => { props.updatedFunction(); }
-  const handleDelete = () => { ApiHelper.delete("/donations/" + donation.id, "GivingApi").then(() => { props.updatedFunction() }); }
-  const getDeleteFunction = () => (UniqueIdHelper.isMissing(props.donationId)) ? undefined : handleDelete
+  const handleCancel = useCallback(() => { 
+    props.updatedFunction(); 
+  }, [props.updatedFunction]);
+  
+  const handleDelete = useCallback(() => { 
+    ApiHelper.delete("/donations/" + donation.id, "GivingApi").then(() => { 
+      props.updatedFunction() 
+    }); 
+  }, [donation.id, props.updatedFunction]);
+  
+  const getDeleteFunction = useCallback(() => 
+    (UniqueIdHelper.isMissing(props.donationId)) ? undefined : handleDelete,
+    [props.donationId, handleDelete]
+  );
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     ApiHelper.post("/donations", [donation], "GivingApi").then(data => {
       const id = data[0].id;
       const promises = [];
@@ -42,34 +60,34 @@ export const DonationEdit: React.FC<Props> = (props) => {
       if (fDonations.length > 0) promises.push(ApiHelper.post("/funddonations", fDonations, "GivingApi"));
       Promise.all(promises).then(() => props.updatedFunction());
     });
-  }
+  }, [donation, fundDonations, props.updatedFunction]);
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     if (UniqueIdHelper.isMissing(props.donationId)) {
       setDonation({ donationDate: new Date(), batchId: props.batchId, amount: 0, method: "Check" });
-      const fd: FundDonationInterface = { amount: 0, fundId: props.funds[0].id };
+      const fd: FundDonationInterface = { amount: 0, fundId: props.funds[0]?.id };
       setFundDonations([fd]);
     }
     else {
       ApiHelper.get("/donations/" + props.donationId, "GivingApi").then(data => populatePerson(data));
       ApiHelper.get("/funddonations?donationId=" + props.donationId, "GivingApi").then(data => setFundDonations(data));
     }
-  }
+  }, [props.donationId, props.batchId, props.funds]);
 
-  const populatePerson = async (data: DonationInterface) => {
+  const populatePerson = useCallback(async (data: DonationInterface) => {
     if (!UniqueIdHelper.isMissing(data.personId)) data.person = await ApiHelper.get("/people/" + data.personId.toString(), "MembershipApi");
     setDonation(data);
-  }
+  }, []);
 
-  const getMethodDetails = () => {
+  const methodDetails = useMemo(() => {
     if (donation.method === "Cash") return null;
     const label = (donation.method === "Check") ? Locale.label("donations.donationEdit.checkNum") : Locale.label("donations.donationEdit.lastDig");
     return (
       <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails || ""} onChange={handleChange} />
     );
-  }
+  }, [donation.method, donation.methodDetails, handleChange]);
 
-  const handlePersonAdd = (p: PersonInterface) => {
+  const handlePersonAdd = useCallback((p: PersonInterface) => {
     const d = { ...donation } as DonationInterface;
     if (p === null) {
       d.person = null;
@@ -80,41 +98,54 @@ export const DonationEdit: React.FC<Props> = (props) => {
     }
     setDonation(d);
     setShowSelectPerson(false);
-  }
+  }, [donation]);
 
-  const handleFundDonationsChange = (fd: FundDonationInterface[]) => {
+  const handleFundDonationsChange = useCallback((fd: FundDonationInterface[]) => {
     setFundDonations(fd);
     let totalAmount = 0;
-    for (let i = 0; i < fundDonations.length; i++) totalAmount += fd[i].amount;
+    for (let i = 0; i < fd.length; i++) totalAmount += fd[i].amount;
     if (totalAmount !== donation.amount) {
       const d = { ...donation };
       d.amount = totalAmount;
       setDonation(d);
     }
-  }
+  }, [donation]);
 
-  const getPersonSection = () => {
-    if (showSelectPerson) return (<>
-      <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} />
-      <hr />
-      <a href="about:blank" className="text-decoration" onClick={(e: React.MouseEvent) => { e.preventDefault(); handlePersonAdd(null); }}>{Locale.label("donations.donationEdit.anon")}</a>
-    </>
+  const handlePersonSelect = useCallback((e: React.MouseEvent) => { 
+    e.preventDefault(); 
+    setShowSelectPerson(true); 
+  }, []);
+
+  const handleAnonymousSelect = useCallback((e: React.MouseEvent) => { 
+    e.preventDefault(); 
+    handlePersonAdd(null); 
+  }, [handlePersonAdd]);
+
+  const personSection = useMemo(() => {
+    if (showSelectPerson) return (
+      <>
+        <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} />
+        <hr />
+        <a href="about:blank" className="text-decoration" onClick={handleAnonymousSelect}>{Locale.label("donations.donationEdit.anon")}</a>
+      </>
     );
     else {
       const personText = (donation.person === undefined || donation.person === null) ? (Locale.label("donations.donationEdit.anon")) : donation.person.name.display;
-      return (<div>
-        <a href="about:blank" className="text-decoration" data-cy="donating-person" onClick={(e: React.MouseEvent) => { e.preventDefault(); setShowSelectPerson(true); }}>{personText}</a>
-      </div>);
+      return (
+        <div>
+          <a href="about:blank" className="text-decoration" data-cy="donating-person" onClick={handlePersonSelect}>{personText}</a>
+        </div>
+      );
     }
-  }
+  }, [showSelectPerson, donation.person, handlePersonAdd, handlePersonSelect, handleAnonymousSelect]);
 
-  React.useEffect(loadData, [props.donationId, props.batchId, props.funds]);
+  React.useEffect(loadData, [loadData]);
 
   return (
     <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText={Locale.label("donations.donationEdit.donEdit")} cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
       <Box mb={2}>
         <label>{Locale.label("common.person")}</label>
-        {getPersonSection()}
+        {personSection}
       </Box>
       <TextField fullWidth label={Locale.label("donations.donationEdit.date")} type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="donation-date-input" aria-label="Donation date" />
       <FormControl fullWidth>
@@ -125,10 +156,10 @@ export const DonationEdit: React.FC<Props> = (props) => {
           <MenuItem value="Card">{Locale.label("donations.donationEdit.card")}</MenuItem>
         </Select>
       </FormControl>
-      {getMethodDetails()}
+      {methodDetails}
       <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
       <TextField fullWidth label={Locale.label("common.notes")} data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline data-testid="donation-notes-input" aria-label="Donation notes" />
     </InputBox>
   );
-}
+});
 

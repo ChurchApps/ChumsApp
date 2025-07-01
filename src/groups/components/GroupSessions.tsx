@@ -1,4 +1,4 @@
-import React, { useCallback, type JSX } from "react";
+import React, { useCallback, memo, useMemo, type JSX } from "react";
 import { ApiHelper, ArrayHelper, type GroupInterface, DisplayBox, type SessionInterface, type VisitSessionInterface, type PersonInterface, PersonHelper, type VisitInterface, UserHelper, ExportLink, Permissions, Loading, SmallButton, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, Grid, MenuItem, type SelectChangeEvent } from "@mui/material"
 
@@ -11,7 +11,7 @@ interface Props {
   setHiddenPeople?: (peopleIds: string[]) => void
 }
 
-export const GroupSessions: React.FC<Props> = (props) => {
+export const GroupSessions: React.FC<Props> = memo((props) => {
   const { group, sidebarVisibilityFunction, addedSession, addedPerson, addedCallback, setHiddenPeople } = props;
   const [visitSessions, setVisitSessions] = React.useState<VisitSessionInterface[]>([]);
   const [people, setPeople] = React.useState<PersonInterface[]>([]);
@@ -50,14 +50,18 @@ export const GroupSessions: React.FC<Props> = (props) => {
     }
   }, [group.id]);
 
-  const handleRemove = (vs: VisitSessionInterface) => {
+  const handleRemove = useCallback((vs: VisitSessionInterface) => {
     ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + vs.visit.personId, "AttendanceApi").then(loadAttendance);
-  }
+  }, [session?.id, loadAttendance]);
 
-  const handleAdd = (e: React.MouseEvent) => { e.preventDefault(); sidebarVisibilityFunction("addSession", true); }
+  const handleAdd = useCallback((e: React.MouseEvent) => { 
+    e.preventDefault(); 
+    sidebarVisibilityFunction("addSession", true); 
+  }, [sidebarVisibilityFunction]);
 
-  const getRows = () => {
-    const canEdit = UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit);
+  const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit), []);
+
+  const tableRows = useMemo(() => {
     const result: JSX.Element[] = [];
     for (let i = 0; i < visitSessions.length; i++) {
       const vs = visitSessions[i];
@@ -75,17 +79,17 @@ export const GroupSessions: React.FC<Props> = (props) => {
       }
     }
     return result;
-  }
+  }, [visitSessions, people, canEdit, handleRemove]);
 
-  const selectSession = (e: SelectChangeEvent) => {
+  const selectSession = useCallback((e: SelectChangeEvent) => {
     for (let i = 0; i < sessions.length; i++) if (sessions[i].id === e.target.value) setSession(sessions[i]);
-  }
+  }, [sessions]);
 
-  const getSessionOptions = () => {
+  const sessionOptions = useMemo(() => {
     const result: JSX.Element[] = [];
     for (let i = 0; i < sessions.length; i++) result.push(<MenuItem value={sessions[i].id} key={sessions[i].id}>{sessions[i].displayName}</MenuItem>);
     return result;
-  }
+  }, [sessions]);
 
   const getHeaderSection = () => {
     if (!UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit)) return null;
@@ -95,7 +99,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
           <FormControl style={{ width: 140, marginTop: 0 }} size="small">
             <InputLabel id="sessions">{Locale.label("groups.groupSessions.session")}</InputLabel>
             <Select fullWidth labelId="sessions" label={Locale.label("groups.groupSessions.session")} value={session?.id} onChange={selectSession}>
-              {getSessionOptions()}
+              {sessionOptions}
             </Select>
           </FormControl>
         </Grid>
@@ -154,7 +158,7 @@ export const GroupSessions: React.FC<Props> = (props) => {
       <b data-cy="session-present-msg">{Locale.label("groups.groupSessions.attFor")} {group.name}</b>
       <Table id="groupMemberTable">
         <TableHead><TableRow><th></th><th>{Locale.label("common.name")}</th><th></th></TableRow></TableHead>
-        <TableBody>{getRows()}</TableBody>
+        <TableBody>{tableRows}</TableBody>
       </Table>
     </>);
   }
@@ -175,5 +179,5 @@ export const GroupSessions: React.FC<Props> = (props) => {
   }
 
   return (<DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText={Locale.label("groups.groupSessions.sessions")} headerIcon="calendar_month" editContent={getHeaderSection()}>{content}</DisplayBox>);
-}
+});
 

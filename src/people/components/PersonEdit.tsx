@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo, useCallback, useMemo } from "react";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { ChumsPersonHelper, UpdateHouseHold } from "."
 import { PersonHelper, DateHelper, InputBox, ApiHelper, type PersonInterface, Loading, ErrorMessages, Locale } from "@churchapps/apphelper"
@@ -22,7 +22,7 @@ export function formattedPhoneNumber(value: string) {
   return value;
 }
 
-export function PersonEdit(props: Props) {
+export const PersonEdit = memo((props: Props) => {
   const context = React.useContext(UserContext);
   const [redirect, setRedirect] = useState("");
   const [showUpdateAddressModal, setShowUpdateAddressModal] = useState<boolean>(false)
@@ -39,7 +39,7 @@ export function PersonEdit(props: Props) {
   });
 
   //const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     setErrors([]);
     const p = { ...person } as PersonInterface;
     const value = e.target.value;
@@ -63,32 +63,32 @@ export function PersonEdit(props: Props) {
       case "photo": p.photo = value; break;
     }
     setPerson(p);
-  }
+  }, [person]);
 
-  const handlePhoneChange = (value: string, field: "homePhone" | "workPhone" | "mobilePhone") => {
+  const handlePhoneChange = useCallback((value: string, field: "homePhone" | "workPhone" | "mobilePhone") => {
     setPhoneHasError((prevState) => ({ ...prevState, [field]: !matchIsValidTel(value) }));
     const p: PersonInterface = { ...person };
     p.contactInfo[field] = value;
     setPerson(p);
-  }
+  }, [person]);
 
-  function handleDelete() {
+  const handleDelete = useCallback(() => {
     if (window.confirm(Locale.label("people.personEdit.confirmMsg")))
       ApiHelper.delete("/people/" + person.id.toString(), "MembershipApi").then(() => setRedirect("/people"));
-  }
+  }, [person.id]);
 
-  const validateEmail = (email: string) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email))
+  const validateEmail = useCallback((email: string) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email)), []);
 
-  const validate = () => {
+  const validate = useCallback(() => {
     const result = [];
     if (!person.name.first) result.push(Locale.label("people.personEdit.firstReq"));
     if (!person.name.last) result.push(Locale.label("people.personEdit.lastReq"));
     if (person.contactInfo.email && !validateEmail(person.contactInfo.email)) result.push(Locale.label("people.personEdit.valEmail"));
     setErrors(result);
     return result.length === 0;
-  }
+  }, [person.name.first, person.name.last, person.contactInfo.email, validateEmail]);
 
-  async function handleSave() {
+  const handleSave = useCallback(async () => {
     if (validate()) {
       setIsSubmitting(true)
       const p = JSON.parse(JSON.stringify({ ...person }));
@@ -107,8 +107,9 @@ export function PersonEdit(props: Props) {
 
       await updatePerson(p);
     }
-  }
-  const handleChangeExtention = (e: React.ChangeEvent<HTMLInputElement>) => {
+  }, [validate, person, context, props.person, members]);
+
+  const handleChangeExtention = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const p = { ...person } as PersonInterface;
     const value = e.target.value;
     switch (e.target.name) {
@@ -117,15 +118,15 @@ export function PersonEdit(props: Props) {
       case "contactInfo.mobilePhone": p.contactInfo.mobilePhone = p.contactInfo.mobilePhone?.split('x')[0] + 'x' + value; break;
     }
     setPerson(p);
-  }
+  }, [person]);
 
-  const updatePerson = async (p: PersonInterface) => {
+  const updatePerson = useCallback(async (p: PersonInterface) => {
     await ApiHelper.post("/people/", [p], "MembershipApi");
     props.updatedFunction();
     setIsSubmitting(false)
-  }
+  }, [props.updatedFunction]);
 
-  async function handleYes() {
+  const handleYes = useCallback(async () => {
     setShowUpdateAddressModal(false)
     await Promise.all(
       members.map(async member => {
@@ -138,14 +139,14 @@ export function PersonEdit(props: Props) {
       })
     )
     props.updatedFunction()
-  }
+  }, [members, person.contactInfo, person.name.display, props.updatedFunction]);
 
-  function handleNo() {
+  const handleNo = useCallback(() => {
     setShowUpdateAddressModal(false)
     updatePerson(person)
-  }
+  }, [person, updatePerson]);
 
-  function fetchMembers() {
+  const fetchMembers = useCallback(() => {
     try {
       if (props.person.householdId != null) {
         ApiHelper.get("/people/household/" + props.person.householdId, "MembershipApi").then(data => {
@@ -155,12 +156,12 @@ export function PersonEdit(props: Props) {
     } catch {
       console.log(`Error occured in fetching household members`);
     }
-  }
+  }, [props.person.householdId]);
 
-  function handlePhotoClick(e: React.MouseEvent) {
+  const handlePhotoClick = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     props.togglePhotoEditor(true, person);
-  }
+  }, [props.togglePhotoEditor, person]);
 
   React.useEffect(() => {
     setPerson({
@@ -171,16 +172,16 @@ export function PersonEdit(props: Props) {
     }
   }, [props.person]);
    
-  React.useEffect(fetchMembers, [props.person]);
+  React.useEffect(fetchMembers, [fetchMembers]);
 
-  const ariaLabel = {
+  const ariaLabel = useMemo(() => ({
     "aria-label": "phone-number"
-  }
+  }), []);
 
-  const ariaDesc = {
+  const ariaDesc = useMemo(() => ({
     "aria-describedby": "errorMsg",
     "aria-labelledby": "tel-label errorMsg"
-  }
+  }), []);
 
   const editForm = (
     !person
@@ -316,4 +317,4 @@ export function PersonEdit(props: Props) {
       </>
     )
   }
-}
+});

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton } from "@mui/material";
 import { Info } from "@mui/icons-material";
@@ -6,20 +6,20 @@ import { DisplayBox, PersonAdd, type PersonInterface, ApiHelper, type MemberPerm
 
 interface Props { formId: string }
 
-export const FormMembers: React.FC<Props> = (props) => {
+export const FormMembers: React.FC<Props> = memo((props) => {
   const [filterList, setFilterList] = useState<string[]>([]);
   const [formMembers, setFormMembers] = useState<MemberPermissionInterface[]>([]);
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     ApiHelper.get("/memberpermissions/form/" + props.formId, "MembershipApi").then(results => {
       const filterMembers: string[] = [];
       results.forEach((member: MemberPermissionInterface) => filterMembers.push(member.memberId));
       setFilterList(filterMembers);
       setFormMembers(results);
     });
-  }
+  }, [props.formId]);
 
-  const addPerson = (p: PersonInterface) => {
+  const addPerson = useCallback((p: PersonInterface) => {
     const newMember = {
       memberId: p.id,
       contentType: "form",
@@ -33,9 +33,16 @@ export const FormMembers: React.FC<Props> = (props) => {
       setFormMembers(fm);
     })
     updateFilterList(p.id, "add");
-  }
+  }, [props.formId, formMembers]);
 
-  const handleActionChange = (personId: string, action: object) => {
+  const updateFilterList = useCallback((id: string, action: string) => {
+    let fl = [...filterList];
+    if (action === "add") fl.push(id);
+    if (action === "remove") fl = fl.filter(memberId => memberId !== id);
+    setFilterList(fl);
+  }, [filterList]);
+
+  const handleActionChange = useCallback((personId: string, action: object) => {
     let member;
     const fm = [...formMembers];
     const fmArray = fm.map((p: MemberPermissionInterface) => {
@@ -47,18 +54,17 @@ export const FormMembers: React.FC<Props> = (props) => {
     });
     ApiHelper.post("/memberpermissions?formId=" + props.formId, [member], "MembershipApi");
     setFormMembers(fmArray);
-  }
+  }, [props.formId, formMembers]);
 
-
-  const handleRemoveMember = (personId: string) => {
+  const handleRemoveMember = useCallback((personId: string) => {
     updateFilterList(personId, "remove");
     let fm = [...formMembers];
     fm = fm.filter((p: MemberPermissionInterface) => p.memberId !== personId);
     setFormMembers(fm);
     ApiHelper.delete("/memberpermissions/member/" + personId + "?formId=" + props.formId, "MembershipApi");
-  }
+  }, [props.formId, formMembers, updateFilterList]);
 
-  const getRows = () => {
+  const tableRows = useMemo(() => {
     const rows: JSX.Element[] = [];
     formMembers.forEach(fm => {
       rows.push(
@@ -76,28 +82,21 @@ export const FormMembers: React.FC<Props> = (props) => {
       );
     });
     return rows;
-  }
+  }, [formMembers, handleActionChange, handleRemoveMember]);
 
-  const getTableHeader = () => {
+  const tableHeader = useMemo(() => {
     const rows: JSX.Element[] = [];
     rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th>{Locale.label("common.name")}</th><th>{Locale.label("forms.formMembers.perm")}</th><th>{Locale.label("forms.formMembers.act")}</th><th>{Locale.label("forms.formMembers.emailNotif")}<Tooltip title={Locale.label("forms.formMembers.emailNotifMsg")} arrow><IconButton data-testid="email-notification-info-button" aria-label="Email notification information"><Info fontSize="small" color="primary" /></IconButton></Tooltip></th></TableRow>);
     return rows;
-  }
+  }, []);
 
   const getTable = () => (<Paper sx={{ width: "100%", overflowX: "auto" }}>
     <Table id="formMembersTable" padding="normal">
-      <TableHead>{getTableHeader()}</TableHead>
-      <TableBody sx={{padding: 0}}>{getRows()}</TableBody>
+      <TableHead>{tableHeader}</TableHead>
+      <TableBody sx={{padding: 0}}>{tableRows}</TableBody>
     </Table>
   </Paper>
   );
-
-  const updateFilterList = (id: string, action: string) => {
-    let fl = [...filterList];
-    if (action === "add") fl.push(id);
-    if (action === "remove") fl = fl.filter(memberId => memberId !== id);
-    setFilterList(fl);
-  }
 
   React.useEffect(loadData, [props.formId]);
 
@@ -115,4 +114,4 @@ export const FormMembers: React.FC<Props> = (props) => {
       </Grid>
     </Grid>
   );
-}
+});

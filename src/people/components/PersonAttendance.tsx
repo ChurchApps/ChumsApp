@@ -1,16 +1,16 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { useMountedState, DisplayBox, ArrayHelper, ApiHelper, type AttendanceRecordInterface, DateHelper, type GroupInterface, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 interface Props { personId: string }
 
-export const PersonAttendance: React.FC<Props> = (props) => {
+export const PersonAttendance: React.FC<Props> = memo((props) => {
   const [records, setRecords] = React.useState<AttendanceRecordInterface[]>(null);
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
   const isMounted = useMountedState();
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     if (!UniqueIdHelper.isMissing(props.personId)) {
       ApiHelper.get("/attendancerecords?personId=" + props.personId, "AttendanceApi").then(data => {
         if(isMounted()) {
@@ -21,9 +21,11 @@ export const PersonAttendance: React.FC<Props> = (props) => {
           setGroups(data);
         }});
     }
-  }
+  }, [props.personId, isMounted]);
 
-  const getRows = () => {
+  const tableRows = useMemo(() => {
+    if (!records || !groups) return [];
+    
     const rows: JSX.Element[] = [];
 
     if (records.length === 0) {
@@ -63,22 +65,22 @@ export const PersonAttendance: React.FC<Props> = (props) => {
       else cols.push(<TableCell><Icon>schedule</Icon>{r.serviceTime?.name}</TableCell>);
       if (group === null) cols.push(<TableCell><Icon>group</Icon></TableCell>);
       else cols.push(<TableCell><Icon>group</Icon><Link to={"/groups/" + group.id}>{group.name}</Link></TableCell>)
-      rows.push(<TableRow>{cols}</TableRow>);
+      rows.push(<TableRow key={i}>{cols}</TableRow>);
     }
     return rows;
-  }
+  }, [records, groups]);
 
   React.useEffect(loadData, [props.personId, isMounted]);
 
-  const getTable = () => {
+  const tableContent = useMemo(() => {
     if (!records || !groups) return <Loading />;
-    else return (<Table><TableBody>{getRows()}</TableBody></Table>);
-  }
+    else return (<Table><TableBody>{tableRows}</TableBody></Table>);
+  }, [records, groups, tableRows]);
 
   return (
     <DisplayBox headerIcon="calendar_month" headerText={Locale.label("people.personAttendance.att")}>
-      {getTable()}
+      {tableContent}
     </DisplayBox>
   );
-}
+});
 

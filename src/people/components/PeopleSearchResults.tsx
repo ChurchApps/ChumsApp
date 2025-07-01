@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, type JSX } from "react";
+import React, { useState, useEffect, useCallback, useMemo, memo, type JSX } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
 import { PersonHelper, type PersonInterface, Loading, ApiHelper, ArrayHelper, Locale, CreatePerson } from "@churchapps/apphelper";
@@ -11,7 +11,7 @@ interface Props {
   updateSearchResults?: (people: PersonInterface[]) => void,
 }
 
-export function PeopleSearchResults(props: Props) {
+const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
   const { people, columns, selectedColumns } = props;
   const navigate = useNavigate();
 
@@ -19,6 +19,10 @@ export function PeopleSearchResults(props: Props) {
   const [currentSortedCol, setCurrentSortedCol] = useState<string>("")
   const [optionalColumns, setOptionalColumns] = React.useState<any[]>([]);
   const [formSubmissions, setFormSubmissions] = React.useState<any[]>([]);
+
+  const navigateToPersonCreate = useCallback((person: PersonInterface) => {
+    navigate("/people/" + person.id);
+  }, [navigate]);
 
   const getPhotoJSX = useCallback((p: PersonInterface) => {
     const photoUrl = PersonHelper.getPhotoUrl(p);
@@ -219,7 +223,9 @@ export function PeopleSearchResults(props: Props) {
     <div>
       {getResults()}
       <hr />
-      <CreatePerson onCreate={(person: PersonInterface) => navigate("/people/" + person.id)} />
+      <CreatePerson onCreate={navigateToPersonCreate} />
     </div>
   )
-}
+});
+
+export { PeopleSearchResults };

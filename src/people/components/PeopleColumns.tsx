@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { Grid, FormControlLabel, Checkbox, Dialog, DialogTitle, DialogActions, Button, DialogContent, Tabs, Tab, Box } from "@mui/material";
 import { SmallButton, ApiHelper, Locale } from "@churchapps/apphelper";
 
@@ -8,21 +8,21 @@ interface Props {
   toggleColumn: (key: string) => void
 }
 
-export function PeopleColumns(props: Props) {
+export const PeopleColumns = memo(function PeopleColumns(props: Props) {
   const [open, setOpen] = React.useState(false);
   const [tabValue, setTabValue] = React.useState('standard');
   const [optionalColumns, setOptionalColumns] = React.useState<any[]>([]);
 
-  const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
+  const handleClick = useCallback((e: React.MouseEvent<Element, MouseEvent>) => {
     e.preventDefault();
     setOpen(true);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
-  const getItems = () => {
+  const standardItems = useMemo(() => {
     const result: JSX.Element[] = []
     props.columns.forEach((o, i) => {
       const option = o;
@@ -32,9 +32,9 @@ export function PeopleColumns(props: Props) {
       </Grid>);
     });
     return result;
-  }
+  }, [props.columns, props.selectedColumns, props.toggleColumn]);
 
-  const getOptionalItems = () => {
+  const optionalItems = useMemo(() => {
     const result: JSX.Element[] = [];
     optionalColumns.forEach((oc, i) => {
       const optionalColumn = oc;
@@ -44,14 +44,15 @@ export function PeopleColumns(props: Props) {
       </Grid>)
     });
     return result;
-  }
+  }, [optionalColumns, props.selectedColumns, props.toggleColumn]);
 
-  let currentTab = null;
-  switch(tabValue) {
-    case "standard": currentTab = <Grid container spacing={0.5}>{getItems()}</Grid>; break;
-    //Currently the custom tab only has fields from Forms tied to people
-    case "custom": currentTab = <Grid container spacing={0.5} sx={{ minHeight: 323 }}>{optionalColumns.length > 0 ? <>{getOptionalItems()}</> : <div>{Locale.label("people.peopleColumns.noFilt")}</div>}</Grid>; break;
-  }
+  const currentTab = useMemo(() => {
+    switch(tabValue) {
+      case "standard": return <Grid container spacing={0.5}>{standardItems}</Grid>;
+      case "custom": return <Grid container spacing={0.5} sx={{ minHeight: 323 }}>{optionalColumns.length > 0 ? <>{optionalItems}</> : <div>{Locale.label("people.peopleColumns.noFilt")}</div>}</Grid>;
+      default: return null;
+    }
+  }, [tabValue, standardItems, optionalItems, optionalColumns.length]);
 
   React.useEffect(() => {
     ApiHelper.get("/forms?contentType=person", "MembershipApi").then((data) => {
@@ -88,4 +89,4 @@ export function PeopleColumns(props: Props) {
       </Dialog>
     </>
   )
-}
+});

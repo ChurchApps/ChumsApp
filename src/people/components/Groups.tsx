@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { DisplayBox, ApiHelper, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper"
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableRow, TableCell, Box } from "@mui/material";
@@ -6,11 +6,11 @@ import { useMountedState } from "@churchapps/apphelper";
 
 interface Props { personId: string, title?: string }
 
-export const Groups: React.FC<Props> = (props) => {
+export const Groups: React.FC<Props> = memo((props) => {
   const [groupMembers, setGroupMembers] = React.useState(null);
   const isMounted = useMountedState();
 
-  React.useEffect(() => {
+  const loadData = useCallback(() => {
     if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/groupmembers?personId=" + props.personId, "MembershipApi").then(data => {
       if(isMounted()) {
         setGroupMembers(data);
@@ -18,7 +18,9 @@ export const Groups: React.FC<Props> = (props) => {
     })
   }, [props.personId, isMounted]);
 
-  const getRecords = () => {
+  React.useEffect(loadData, [loadData]);
+
+  const recordsContent = useMemo(() => {
     if (!groupMembers) return <Loading size="sm" />
     else if (groupMembers.length === 0) return (<p>{Locale.label("people.groups.notMemMsg")}</p>)
     else {
@@ -29,7 +31,7 @@ export const Groups: React.FC<Props> = (props) => {
       }
       return (<Table size="small"><TableBody>{items}</TableBody></Table>)
     }
-  }
+  }, [groupMembers]);
 
-  return <DisplayBox headerIcon="group" headerText={props.title || Locale.label("people.groups.groups")} help="chums/groups">{getRecords()}</DisplayBox>
-}
+  return <DisplayBox headerIcon="group" headerText={props.title || Locale.label("people.groups.groups")} help="chums/groups">{recordsContent}</DisplayBox>
+});

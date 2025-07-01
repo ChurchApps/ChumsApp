@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, memo, useMemo } from "react";
 import { ApiHelper, DisplayBox, UserHelper, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box } from "@mui/material"
@@ -7,25 +7,26 @@ import { GroupAdd } from "../../groups/components";
 
 interface Props { ministry: GroupInterface }
 
-export const TeamList = (props:Props) => {
+export const TeamList = memo((props:Props) => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
   const [showAdd, setShowAdd] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const isMounted = useMountedState();
 
-  const getEditContent = () => {
-    if (!UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) return null;
-    else
-      return (
-        <Stack direction="row" alignItems="center">
-          <IconButton aria-label="Add group" color="primary" onClick={() => { setShowAdd(true); }} data-testid="add-team-button">
-            <Icon>add</Icon>
-          </IconButton>
-        </Stack>
-      );
-  };
+  const handleAddClick = useCallback(() => { 
+    setShowAdd(true); 
+  }, []);
 
-  const handleAddUpdated = () => { setShowAdd(false); loadData(); };
+  const editContent = useMemo(() => {
+    if (!UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) return null;
+    return (
+      <Stack direction="row" alignItems="center">
+        <IconButton aria-label="Add group" color="primary" onClick={handleAddClick} data-testid="add-team-button">
+          <Icon>add</Icon>
+        </IconButton>
+      </Stack>
+    );
+  }, [handleAddClick]);
 
   const loadData = useCallback(() => {
     setIsLoading(true)
@@ -38,20 +39,21 @@ export const TeamList = (props:Props) => {
       })
   }, [props.ministry.id, isMounted]);
 
+  const handleAddUpdated = useCallback(() => { 
+    setShowAdd(false); 
+    loadData(); 
+  }, [loadData]);
+
   React.useEffect(loadData, [loadData]);
 
-  const getRows = () => {
-    const rows: JSX.Element[] = [];
-
+  const rows = useMemo(() => {
     if (groups.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>{Locale.label("plans.teamList.noTeam")}</TableCell></TableRow>);
-      return rows;
+      return [<TableRow key="0"><TableCell>{Locale.label("plans.teamList.noTeam")}</TableCell></TableRow>];
     }
 
-    for (let i = 0; i < groups.length; i++) {
-      const g = groups[i];
+    return groups.map((g) => {
       const memberCount = g.memberCount === 1 ? Locale.label("plans.teamList.pers") : g.memberCount?.toString() + Locale.label("plans.teamList.peeps");
-      rows.push(
+      return (
         <TableRow sx={{whiteSpace: "nowrap"}} key={g.id}>
           <TableCell>
             <Box sx={{display: "flex", alignItems: "center"}}>
@@ -62,35 +64,37 @@ export const TeamList = (props:Props) => {
           <TableCell>{memberCount}</TableCell>
         </TableRow>
       );
-    }
-    return rows;
-  };
+    });
+  }, [groups]);
 
-  const getTableHeader = () => {
-    const rows: JSX.Element[] = [];
-    if (groups.length === 0) return rows;
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("common.name")}</th><th>{Locale.label("plans.teamList.ppl")}</th></TableRow>);
-    return rows;
-  }
+  const tableHeader = useMemo(() => {
+    if (groups.length === 0) return [];
+    return [<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("common.name")}</th><th>{Locale.label("plans.teamList.ppl")}</th></TableRow>];
+  }, [groups.length]);
 
-  const addBox = (showAdd) ? <GroupAdd updatedFunction={handleAddUpdated} tags="team" categoryName={props.ministry.id} /> : <></>
+  const addBox = useMemo(() => 
+    showAdd ? <GroupAdd updatedFunction={handleAddUpdated} tags="team" categoryName={props.ministry.id} /> : <></>,
+    [showAdd, handleAddUpdated, props.ministry.id]
+  );
 
-  const getTable = () => {
+  const table = useMemo(() => {
     if (isLoading) return <Loading />
-    else return (<Paper sx={{ width: "100%", overflowX: "auto" }}>
-      <Table>
-        <TableHead>{getTableHeader()}</TableHead>
-        <TableBody>{getRows()}</TableBody>
-      </Table>
-    </Paper>);
-  }
+    return (
+      <Paper sx={{ width: "100%", overflowX: "auto" }}>
+        <Table>
+          <TableHead>{tableHeader}</TableHead>
+          <TableBody>{rows}</TableBody>
+        </Table>
+      </Paper>
+    );
+  }, [isLoading, tableHeader, rows]);
 
   return (
     <>
       {addBox}
-      <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("plans.teamList.teams")} editContent={getEditContent()}>
-        {getTable()}
+      <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("plans.teamList.teams")} editContent={editContent}>
+        {table}
       </DisplayBox>
     </>
   );
-};
+});

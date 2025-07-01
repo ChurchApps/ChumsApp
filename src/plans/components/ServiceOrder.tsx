@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { Grid, Stack } from "@mui/material";
 import { ApiHelper, DisplayBox, type PlanInterface, SmallButton } from "@churchapps/apphelper";
 import { type PlanItemInterface } from "../../helpers";
@@ -13,46 +13,45 @@ interface Props {
   plan: PlanInterface
 }
 
-export const ServiceOrder = (props: Props) => {
+export const ServiceOrder = memo((props: Props) => {
   const [planItems, setPlanItems] = React.useState<PlanItemInterface[]>([]);
   const [editPlanItem, setEditPlanItem] = React.useState<PlanItemInterface>(null);
   const [showHeaderDrop, setShowHeaderDrop] = React.useState(false);
   const [showItemDrop, setShowItemDrop] = React.useState(false);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     if (props.plan?.id) {
       ApiHelper.get("/planItems/plan/" + props.plan.id.toString(), "DoingApi").then(d => { setPlanItems(d); });
     }
-  }
+  }, [props.plan?.id]);
 
-  const addHeader = () => {
+  const addHeader = useCallback(() => {
     setEditPlanItem({ itemType: "header", planId: props.plan.id, sort: planItems?.length + 1 || 1 });
-  }
+  }, [props.plan.id, planItems?.length]);
 
-  const getEditContent = () => (
+  const editContent = useMemo(() => (
     <Stack direction="row">
       <SmallButton href={"/plans/print/" + props.plan?.id} icon="print" />
       <SmallButton onClick={addHeader} icon="add" />
     </Stack>
-  )
+  ), [props.plan?.id, addHeader]);
 
-  const handleDrop = (data: any, sort: number) => {
+  const handleDrop = useCallback((data: any, sort: number) => {
     console.log(JSON.stringify(data));
     console.log("handleDrop Header", data);
     const pi = data.data as PlanItemInterface;
     pi.sort = sort;
     ApiHelper.post("/planItems/sort", pi, "DoingApi").then(() => { loadData() });
-  }
+  }, [loadData]);
 
-  const wrapPlanItem = (pi: PlanItemInterface, index: number) => <>
+  const wrapPlanItem = useCallback((pi: PlanItemInterface, index: number) => <>
     {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, index + 0.5) }}>
       &nbsp;
     </DroppableWrapper>}
     <DraggableWrapper dndType="planItemHeader" data={pi} draggingCallback={(isDragging) => { console.log("isDragging", isDragging); setShowHeaderDrop(isDragging) }}>
       <PlanItem planItem={pi} setEditPlanItem={setEditPlanItem} showItemDrop={showItemDrop} onDragChange={(dragging) => { console.log("Dragging", dragging); setShowItemDrop(dragging) }} onChange={() => { loadData() }} />
     </DraggableWrapper>
-
-  </>
+  </>, [showHeaderDrop, showItemDrop, handleDrop, loadData]);
 
 
   React.useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
@@ -61,7 +60,7 @@ export const ServiceOrder = (props: Props) => {
 
     <Grid container spacing={3}>
       <Grid size={{ xs: 12, md: 8 }}>
-        <DisplayBox headerText="Order of Service" headerIcon="album" editContent={getEditContent()}>
+        <DisplayBox headerText="Order of Service" headerIcon="album" editContent={editContent}>
           <DndProvider backend={HTML5Backend}>
             {planItems.map((pi, i) => wrapPlanItem(pi, i))}
             {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, planItems?.length + 1) }}>&nbsp;</DroppableWrapper>}
@@ -74,5 +73,5 @@ export const ServiceOrder = (props: Props) => {
     </Grid>
 
   </>)
-};
+});
 

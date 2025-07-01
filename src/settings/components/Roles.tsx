@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo, useCallback, useMemo } from "react"
 import { Link } from "react-router-dom"
 import { DisplayBox, UserHelper, ApiHelper, Permissions, type ChurchInterface, type RoleInterface, type RolePermissionInterface, Locale } from "@churchapps/apphelper"
 import { Divider, Icon, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
@@ -10,19 +10,21 @@ interface Props {
   church: ChurchInterface;
 }
 
-export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church }) => {
+export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
 
   const [roles, setRoles] = useState<RoleInterface[]>([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (e: React.MouseEvent) => {
+  
+  const handleClick = useCallback((e: React.MouseEvent) => {
     setAnchorEl(e.currentTarget);
-  };
-  const handleClose = () => {
+  }, []);
+  
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
 
-  const predefined = [
+  const predefined = useMemo(() => [
     { name: Locale.label("settings.roles.acc"), description: Locale.label("settings.roles.accDesc"), permissions: [
       Permissions.membershipApi.people.view,
       Permissions.membershipApi.people.edit,
@@ -51,15 +53,15 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     { name: Locale.label("settings.roles.lesAdmin"), description: Locale.label("settings.roles.lesAdminDesc") + "Lessons.church.", permissions: [
       { api: "LessonsApi", contentType:"Schedules", permission: "Edit" }
     ]}
-  ]
+  ], []);
 
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     if (selectedRoleId !== "notset") return;
     ApiHelper.get(`/roles/church/${church.id}`, "MembershipApi").then(roles => setRoles(roles));
-  }
+  }, [selectedRoleId, church.id]);
 
-  const addRole = async (role:any) => {
+  const addRole = useCallback(async (role:any) => {
     console.log("made it")
     console.log(role);
     handleClose();
@@ -74,17 +76,23 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
       await ApiHelper.post("/rolepermissions/", perms, "MembershipApi");
       loadData();
     }
-  }
+  }, [handleClose, loadData]);
 
-  const getEditContent = () => {
+  const handleAddCustomRole = useCallback(() => {
+    handleClose();
+    selectRoleId("");
+  }, [handleClose, selectRoleId]);
+
+  const editContent = useMemo(() => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.roles.edit)) return null;
-    else {
-      return (<>
+    
+    return (
+      <>
         <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" aria-controls={open ? "add-menu" : undefined} aria-expanded={open ? "true" : undefined} aria-haspopup="true" onClick={handleClick} data-testid="add-role-button">
           <Icon color="primary">add</Icon>
         </IconButton>
         <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuItem data-cy="add-campus" onClick={() => {handleClose(); selectRoleId(""); }} data-testid="add-custom-role-menu-item" aria-label="Add custom role">
+          <MenuItem data-cy="add-campus" onClick={handleAddCustomRole} data-testid="add-custom-role-menu-item" aria-label="Add custom role">
             <Icon sx={{mr: "3px"}}>lock</Icon> {Locale.label("settings.roles.custAdd")}
           </MenuItem>
           <Divider />
@@ -94,19 +102,23 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
             </MenuItem>
           ))}
         </Menu>
-      </>)
-      //return (<SmallButton icon="add" text="Add" onClick={() => { selectRoleId(""); }} />);
-    }
-  }
-
-  const getRows = () => {
-    const result: JSX.Element[] = [];
-    const sortedRoles = [...roles].sort((a, b) => a.name > b.name ? 1 : -1);
-    const canEdit = (
-      UserHelper.checkAccess(Permissions.membershipApi.roles.edit)
-      && UserHelper.checkAccess(Permissions.membershipApi.roles.edit)
-      && UserHelper.checkAccess(Permissions.membershipApi.people.view)
+      </>
     );
+  }, [open, anchorEl, handleClick, handleClose, handleAddCustomRole, predefined, addRole]);
+
+  const sortedRoles = useMemo(() => 
+    [...roles].sort((a, b) => a.name > b.name ? 1 : -1),
+    [roles]
+  );
+
+  const canEdit = useMemo(() => (
+    UserHelper.checkAccess(Permissions.membershipApi.roles.edit)
+    && UserHelper.checkAccess(Permissions.membershipApi.roles.edit)
+    && UserHelper.checkAccess(Permissions.membershipApi.people.view)
+  ), []);
+
+  const rows = useMemo(() => {
+    const result: JSX.Element[] = [];
 
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.edit)) {
       result.push(
@@ -126,16 +138,16 @@ export const Roles: React.FC<Props> = ({ selectRoleId, selectedRoleId, church })
     });
 
     return result;
-  }
+  }, [sortedRoles, canEdit, selectRoleId]);
 
-  useEffect(loadData, [selectedRoleId, church]);  
+  useEffect(loadData, [loadData]);  
 
   return (
-    <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={getEditContent()} help="chums/assigning-roles">
+    <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={editContent} help="chums/assigning-roles">
       <Table id="roleMemberTable">
         <TableHead><TableRow><TableCell>{Locale.label("common.name")}</TableCell><TableCell></TableCell></TableRow></TableHead>
-        <TableBody>{getRows()}</TableBody>
+        <TableBody>{rows}</TableBody>
       </Table>
     </DisplayBox>
   )
-}
+});

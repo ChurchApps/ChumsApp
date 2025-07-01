@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { Grid, Typography } from "@mui/material";
 import { ApiHelper, ArrayHelper, DateHelper, DisplayBox, type GroupMemberInterface, Locale, type TaskInterface, UserHelper } from "@churchapps/apphelper";
 import { SmallButton } from "@churchapps/apphelper";
@@ -9,7 +9,7 @@ import { useMountedState } from "@churchapps/apphelper";
 
 interface Props { compact?: boolean; status: string }
 
-export const TaskList = (props: Props) => {
+export const TaskList = memo((props: Props) => {
   const [showAdd, setShowAdd] = React.useState(false);
   const [tasks, setTasks] = React.useState<TaskInterface[]>([])
   const [groupTasks, setGroupTasks] = React.useState<TaskInterface[]>([])
@@ -19,7 +19,7 @@ export const TaskList = (props: Props) => {
 
   const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true) }} data-testid="add-task-button" ariaLabel="Add task" />
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     if (props.status === Locale.label("tasks.taskPage.closed")) ApiHelper.get("/tasks/closed", "DoingApi").then(data => {
       if (isMounted()) {
         setTasks(data);
@@ -35,9 +35,9 @@ export const TaskList = (props: Props) => {
         setGroupMembers(data);
       }
     });
-  }
+  }, [props.status, isMounted]);
 
-  const loadGroupTasks = () => {
+  const loadGroupTasks = useCallback(() => {
     if (groupMembers?.length > 0) {
       const groupIds = ArrayHelper.getIds(groupMembers, "groupId");
       ApiHelper.post("/tasks/loadForGroups", { groupIds, status: props.status }, "DoingApi").then(d => {
@@ -46,12 +46,12 @@ export const TaskList = (props: Props) => {
         }
       });
     }
-  }
+  }, [groupMembers, props.status, isMounted]);
 
-  React.useEffect(loadData, [props.status, isMounted]);
-  React.useEffect(loadGroupTasks, [groupMembers, props.status, isMounted]);
+  React.useEffect(loadData, [props.status, isMounted, loadData]);
+  React.useEffect(loadGroupTasks, [groupMembers, props.status, isMounted, loadGroupTasks]);
 
-  const getTask = (task: TaskInterface) => (<div key={task.id} style={{ borderTop: "1px solid #CCC", paddingTop: 10, paddingBottom: 10 }}>
+  const getTask = useCallback((task: TaskInterface) => (<div key={task.id} style={{ borderTop: "1px solid #CCC", paddingTop: 10, paddingBottom: 10 }}>
     <Grid container spacing={3}>
       <Grid size={{ xs: (props.compact) ? 12 : 6 }}>
         <b><Link to={"/tasks/" + task.id}>{task.title}</Link></b><br />
@@ -66,7 +66,7 @@ export const TaskList = (props: Props) => {
         </Grid>
       </>)}
     </Grid>
-  </div>)
+  </div>), [props.compact]);
 
   const getHeader = () => {
     if (props.compact) return <></>;
@@ -81,21 +81,32 @@ export const TaskList = (props: Props) => {
     </div>)
   }
 
-  const getAssignedToMyGroups = () => {
+  const assignedToMyGroups = useMemo(() => {
     if (groupMembers?.length > 0) {
       const groupIds = ArrayHelper.getIds(groupMembers, "groupId");
-      const assignedToMyGroups = (groupTasks?.length > 0) ? ArrayHelper.getAllArray(groupTasks, "assignedToId", groupIds) : []
-      if (assignedToMyGroups.length === 0) return <></>
-      else return (<>
-        <h4>{Locale.label("tasks.taskList.assignGroup")}</h4>
-        {getHeader()}
-        {assignedToMyGroups.map(t => getTask(t))}
-      </>);
+      return (groupTasks?.length > 0) ? ArrayHelper.getAllArray(groupTasks, "assignedToId", groupIds) : []
     }
+    return [];
+  }, [groupMembers, groupTasks]);
+
+  const assignedToMe = useMemo(() => {
+    return (tasks?.length > 0) ? ArrayHelper.getAll(tasks, "assignedToId", context.person?.id) : []
+  }, [tasks, context.person?.id]);
+
+  const createdByMe = useMemo(() => {
+    return (tasks?.length > 0) ? ArrayHelper.getAll(tasks, "createdById", context.person?.id) : []
+  }, [tasks, context.person?.id]);
+
+  const getAssignedToMyGroups = () => {
+    if (assignedToMyGroups.length === 0) return <></>
+    else return (<>
+      <h4>{Locale.label("tasks.taskList.assignGroup")}</h4>
+      {getHeader()}
+      {assignedToMyGroups.map(t => getTask(t))}
+    </>);
   }
 
   const getAssignedToMe = () => {
-    const assignedToMe = (tasks?.length > 0) ? ArrayHelper.getAll(tasks, "assignedToId", context.person?.id) : []
     if (assignedToMe.length === 0) return <></>
     else return (<>
       <h4>{Locale.label("tasks.taskList.assignMe")}</h4>
@@ -104,8 +115,7 @@ export const TaskList = (props: Props) => {
     </>);
   }
 
-  const createdByMe = () => {
-    const createdByMe = (tasks?.length > 0) ? ArrayHelper.getAll(tasks, "createdById", context.person?.id) : []
+  const getCreatedByMe = () => {
     if (createdByMe.length === 0) return <></>
     else return (<>
       <h4>{Locale.label("tasks.taskList.reqMe")}</h4>
@@ -119,7 +129,7 @@ export const TaskList = (props: Props) => {
     <DisplayBox headerIcon="list_alt" headerText={Locale.label("tasks.taskList.tasks")} editContent={editContent} help="chums/tasks">
       {getAssignedToMe()}
       {getAssignedToMyGroups()}
-      {createdByMe()}
+      {getCreatedByMe()}
     </DisplayBox>
   </>);
-}
+});

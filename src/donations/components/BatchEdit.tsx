@@ -1,24 +1,40 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { ApiHelper, InputBox, DateHelper, type DonationBatchInterface, UniqueIdHelper, Locale } from "@churchapps/apphelper";
 import { TextField } from "@mui/material";
 
 interface Props { batchId: string, updatedFunction: () => void }
 
-export const BatchEdit: React.FC<Props> = (props) => {
+export const BatchEdit = memo((props: Props) => {
   const [batch, setBatch] = React.useState<DonationBatchInterface>({ batchDate: new Date(), name: "" });
 
-  const handleCancel = () => { props.updatedFunction(); }
-  const handleSave = () => ApiHelper.post("/donationbatches", [batch], "GivingApi").then(() => props.updatedFunction());
-  const getDeleteFunction = () => (!UniqueIdHelper.isMissing(props.batchId)) ? handleDelete : undefined
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-
-  const handleDelete = () => {
+  const handleCancel = useCallback(() => { 
+    props.updatedFunction(); 
+  }, [props.updatedFunction]);
+  
+  const handleSave = useCallback(() => 
+    ApiHelper.post("/donationbatches", [batch], "GivingApi").then(() => props.updatedFunction()),
+    [batch, props.updatedFunction]
+  );
+  
+  const handleDelete = useCallback(() => {
     if (window.confirm(Locale.label("donations.batchEdit.confirmMsg"))) {
       ApiHelper.delete("/donationbatches/" + batch.id, "GivingApi").then(() => props.updatedFunction());
     }
-  }
+  }, [batch.id, props.updatedFunction]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const getDeleteFunction = useCallback(() => 
+    (!UniqueIdHelper.isMissing(props.batchId)) ? handleDelete : undefined,
+    [props.batchId, handleDelete]
+  );
+  
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<any>) => { 
+    if (e.key === "Enter") { 
+      e.preventDefault(); 
+      handleSave(); 
+    } 
+  }, [handleSave]);
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const b = { ...batch } as DonationBatchInterface;
     switch (e.currentTarget.name) {
       case "name": b.name = e.currentTarget.value; break;
@@ -28,14 +44,14 @@ export const BatchEdit: React.FC<Props> = (props) => {
         break;
     }
     setBatch(b);
-  }
+  }, [batch]);
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     if (UniqueIdHelper.isMissing(props.batchId)) setBatch({ batchDate: new Date(), name: "" });
     else ApiHelper.get("/donationbatches/" + props.batchId, "GivingApi").then(data => setBatch(data));
-  }
+  }, [props.batchId]);
 
-  React.useEffect(loadData, [props.batchId]);
+  React.useEffect(loadData, [loadData]);
 
   return (
     <InputBox id="batchBox" headerIcon="volunteer_activism" headerText={Locale.label("common.edit")} cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
@@ -43,5 +59,5 @@ export const BatchEdit: React.FC<Props> = (props) => {
       <TextField fullWidth type="date" data-cy="batch-date" name="date" InputLabelProps={{shrink: true}} label={Locale.label("donations.batchEdit.date")} value={DateHelper.formatHtml5Date(batch.batchDate)} onChange={handleChange} onKeyDown={handleKeyDown} />
     </InputBox>
   );
-}
+});
 

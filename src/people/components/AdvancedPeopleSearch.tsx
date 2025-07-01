@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { ChumsPersonHelper } from ".";
 import { ArrayHelper, type GroupMemberInterface, InputBox, type SearchCondition, type PersonInterface, ApiHelper, type FundDonationInterface, Locale } from "@churchapps/apphelper";
 import { EditCondition } from "./EditCondition";
@@ -9,12 +9,12 @@ interface Props {
   toggleFunction: () => void
 }
 
-export function AdvancedPeopleSearch(props: Props) {
+export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Props) {
   const [conditions, setConditions] = React.useState<SearchCondition[]>([])
   const [showAddCondition, setShowAddCondition] = React.useState(true);
 
 
-  const convertConditions = async () => {
+  const convertConditions = useCallback(async () => {
     const result: SearchCondition[] = [];
     for (const c of conditions) {
       switch (c.field) {
@@ -63,29 +63,40 @@ export function AdvancedPeopleSearch(props: Props) {
       }
     }
     return result;
-  }
+  }, [conditions]);
 
-  const handleAdvancedSearch = async () => {
+  const handleAdvancedSearch = useCallback(async () => {
     const postConditions = await convertConditions();
     ApiHelper.post("/people/advancedSearch", postConditions, "MembershipApi").then(data => {
       props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
     });
+  }, [convertConditions, props]);
 
-  }
 
+  const conditionAddedHandler = useCallback((condition: SearchCondition) => {
+    const c = [...conditions];
+    c.push(condition);
+    setConditions(c);
+    setShowAddCondition(false);
+  }, [conditions]);
 
-  const getAddCondition = () => {
-    if (showAddCondition) return <EditCondition conditionAdded={(condition) => { const c = [...conditions]; c.push(condition); setConditions(c); setShowAddCondition(false) }} />
-    else return <a href="about:blank" style={{display: "flex", alignItems: "center", marginBottom: "10px", justifyContent: "flex-end"}} onClick={(e) => { e.preventDefault(); setShowAddCondition(true); }}><Icon>add</Icon> {Locale.label("people.peopleSearch.addCon")}</a>
-  }
+  const showAddConditionHandler = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowAddCondition(true);
+  }, []);
 
-  const removeCondition = (index: number) => {
+  const addConditionContent = useMemo(() => {
+    if (showAddCondition) return <EditCondition conditionAdded={conditionAddedHandler} />
+    else return <a href="about:blank" style={{display: "flex", alignItems: "center", marginBottom: "10px", justifyContent: "flex-end"}} onClick={showAddConditionHandler}><Icon>add</Icon> {Locale.label("people.peopleSearch.addCon")}</a>
+  }, [showAddCondition, conditionAddedHandler, showAddConditionHandler]);
+
+  const removeCondition = useCallback((index: number) => {
     const c = [...conditions];
     c.splice(index, 1);
     setConditions(c);
-  }
+  }, [conditions]);
 
-  const getDisplayConditions = () => {
+  const displayConditions = useMemo(() => {
     const result: JSX.Element[] = [];
     let idx = 0;
     for (const c of conditions) {
@@ -104,12 +115,12 @@ export function AdvancedPeopleSearch(props: Props) {
       idx++;
     }
     return result;
-  }
+  }, [conditions, removeCondition]);
 
   return (<InputBox id="advancedSearch" headerIcon="person" headerText={Locale.label("people.peopleSearch.advSearch")} headerActionContent={<Button onClick={props.toggleFunction} sx={{ textTransform: "none" }}>{Locale.label("people.peopleSearch.simp")}</Button>} saveFunction={handleAdvancedSearch} saveText="Search" isSubmitting={conditions.length < 1} help="chums/advanced-search">
     <p>{Locale.label("people.peopleSearch.allPeeps")}</p>
-    {getDisplayConditions()}
-    {getAddCondition()}
+    {displayConditions}
+    {addConditionContent}
   </InputBox>)
 
-}
+});

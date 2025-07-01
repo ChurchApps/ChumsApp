@@ -1,34 +1,40 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { ApiHelper, DisplayBox, UserHelper, Loading, useMountedState, type FundInterface, Permissions, SmallButton, Locale } from "@churchapps/apphelper";
 import { FundEdit } from ".";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
 
-export const Funds: React.FC = () => {
+export const Funds: React.FC = memo(() => {
   const [funds, setFunds] = React.useState<FundInterface[]>(null);
   const [editFund, setEditFund] = React.useState<FundInterface>(null);
   const isMounted = useMountedState();
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     ApiHelper.get("/funds", "GivingApi").then(data => {
       if(isMounted()) {
         setFunds(data);
       }});
-  }
-  const handleFundUpdated = () => { loadData(); setEditFund(null); }
-  const getEditSection = () => {
+  }, [isMounted]);
+  
+  const handleFundUpdated = useCallback(() => { loadData(); setEditFund(null); }, [loadData]);
+  const editSection = useMemo(() => {
     if (UserHelper.checkAccess(Permissions.givingApi.donations.edit)) return (<SmallButton onClick={() => { setEditFund({ id: "", name: "", taxDeductible: true }) }} icon="add" data-testid="add-fund-button" ariaLabel="Add fund" />);
     else return null;
-  }
+  }, []);
 
-  const handleEdit = (e: React.MouseEvent) => {
+  const handleEdit = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     const anchor = e.currentTarget as HTMLAnchorElement;
     const idx = parseInt(anchor.getAttribute("data-index"));
     setEditFund(funds[idx]);
-  }
+  }, [funds]);
 
-  const getRows = () => {
+  const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.givingApi.donations.edit), []);
+  const canViewIndividual = useMemo(() => UserHelper.checkAccess(Permissions.givingApi.donations.view), []);
+
+  const tableRows = useMemo(() => {
+    if (!funds) return [];
+    
     const result: JSX.Element[] = [];
 
     if (funds.length === 0) {
@@ -36,8 +42,6 @@ export const Funds: React.FC = () => {
       return result;
     }
 
-    const canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
-    const canViewIndividual = UserHelper.checkAccess(Permissions.givingApi.donations.view);
     for (let i = 0; i < funds.length; i++) {
       const f = funds[i];
       const editLink = (canEdit) ? (<a href="about:blank" data-cy={`edit-${i}`} onClick={handleEdit} data-index={i}><Icon>edit</Icon></a>) : null;
@@ -50,20 +54,23 @@ export const Funds: React.FC = () => {
       </TableBody>)
     }
     return result;
-  }
+  }, [funds, canEdit, canViewIndividual, handleEdit]);
 
   React.useEffect(loadData, [isMounted]);
 
+  const tableContent = useMemo(() => {
+    if (!funds) return <Loading />;
+    return <Table size="small">{tableRows}</Table>;
+  }, [funds, tableRows]);
+
   if (editFund === null) {
-    let contents = <Loading />
-    if (funds) contents = <Table size="small">{getRows()}</Table>
     return (
-      <DisplayBox id="fundsBox" headerIcon="volunteer_activism" data-cy="funds-box" headerText={Locale.label("donations.funds.fund")} editContent={getEditSection()} help="chums/giving">
-        {contents}
+      <DisplayBox id="fundsBox" headerIcon="volunteer_activism" data-cy="funds-box" headerText={Locale.label("donations.funds.fund")} editContent={editSection} help="chums/giving">
+        {tableContent}
       </DisplayBox>
     );
   }
   else return (<FundEdit fund={editFund} updatedFunction={handleFundUpdated} />);
 
-}
+});
 

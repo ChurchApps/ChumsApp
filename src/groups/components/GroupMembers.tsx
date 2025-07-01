@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo, useMemo, useCallback } from "react";
 import { ApiHelper, type GroupInterface, DisplayBox, UserHelper, type GroupMemberInterface, PersonHelper, type PersonInterface, ExportLink, Permissions, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
@@ -10,7 +10,7 @@ interface Props {
   addedCallback?: () => void
 }
 
-export const GroupMembers: React.FC<Props> = (props) => {
+export const GroupMembers: React.FC<Props> = memo((props) => {
   const [groupMembers, setGroupMembers] = useState<GroupMemberInterface[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
@@ -19,34 +19,34 @@ export const GroupMembers: React.FC<Props> = (props) => {
   const [message, setMessage] = useState<string>("");
   const [count, setCount] = useState<number>(0);
 
-  const loadData = React.useCallback(() => {
+  const loadData = useCallback(() => {
     setIsLoading(true);
     ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => {
       setGroupMembers(data)
     }).finally(() => { setIsLoading(false) });
   }, [props.group.id]);
 
-  const handleRemove = (member: GroupMemberInterface) => {
+  const handleRemove = useCallback((member: GroupMemberInterface) => {
     const members = [...groupMembers];
     const idx = members.indexOf(member);
     members.splice(idx, 1);
     setGroupMembers(members);
     ApiHelper.delete("/groupmembers/" + member.id, "MembershipApi");
-  }
+  }, [groupMembers]);
 
-  const handleToggleLeader = (member: GroupMemberInterface) => {
+  const handleToggleLeader = useCallback((member: GroupMemberInterface) => {
     member.leader = !member.leader;
     console.log("Member", member);
     ApiHelper.post("/groupmembers", [member], "MembershipApi").then(() => { loadData() });
-  }
+  }, [loadData]);
 
-  const getMemberByPersonId = React.useCallback((personId: string) => {
+  const getMemberByPersonId = useCallback((personId: string) => {
     let result = null;
     for (let i = 0; i < groupMembers.length; i++) if (groupMembers[i].personId === personId) result = groupMembers[i];
     return result;
   }, [groupMembers]);
 
-  const handleAdd = React.useCallback(() => {
+  const handleAdd = useCallback(() => {
     if (getMemberByPersonId(props.addedPerson.id) === null) {
       const gm = { groupId: props.group.id, personId: props.addedPerson.id, person: props.addedPerson } as GroupMemberInterface
       ApiHelper.post("/groupmembers", [gm], "MembershipApi").then((data) => {
@@ -59,8 +59,9 @@ export const GroupMembers: React.FC<Props> = (props) => {
     }
   }, [props, getMemberByPersonId, groupMembers]);
 
-  const getRows = () => {
-    const canEdit = UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit);
+  const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit), []);
+
+  const tableRows = useMemo(() => {
     const rows: JSX.Element[] = [];
 
     if (groupMembers.length === 0) {
@@ -86,9 +87,9 @@ export const GroupMembers: React.FC<Props> = (props) => {
       );
     }
     return rows;
-  }
+  }, [groupMembers, canEdit, handleToggleLeader, handleRemove]);
 
-  const getTableHeader = () => {
+  const tableHeader = useMemo(() => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) {
       return rows;
@@ -96,7 +97,7 @@ export const GroupMembers: React.FC<Props> = (props) => {
 
     rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th></th><th>{Locale.label("common.name")}</th><th></th></TableRow>);
     return rows;
-  }
+  }, [groupMembers.length]);
 
   const handleTemplateMessage = (templateType: string) => {
     let newMessage = "";
@@ -132,8 +133,8 @@ export const GroupMembers: React.FC<Props> = (props) => {
   const getTable = () => {
     if (isLoading) return <Loading />
     else return (<Table id="groupMemberTable">
-      <TableHead>{getTableHeader()}</TableHead>
-      <TableBody>{getRows()}</TableBody>
+      <TableHead>{tableHeader}</TableHead>
+      <TableBody>{tableRows}</TableBody>
     </Table>);
   }
 
@@ -160,5 +161,5 @@ export const GroupMembers: React.FC<Props> = (props) => {
       {getTable()}
     </DisplayBox>
   );
-}
+});
 
