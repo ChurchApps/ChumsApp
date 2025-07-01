@@ -138,196 +138,133 @@ test.describe('People Management', () => {
 
 // Production environment tests - skipped in demo but ready for full deployment
 test.describe('People Management - Production Patterns', () => {
-  test('complete people CRUD operations', async ({ page }) => {
-    // ✅ AUTHENTICATION FIXED: Proper church selection now working
-    // ✅ NAVIGATION WORKING: Successfully redirects to main dashboard  
-    // ✅ SEARCH INTERFACE AVAILABLE: Can access people search functionality
-    
+  test('complete person CRUD workflow', async ({ page }) => {
+    // Use the login helper instead of manual login steps
     await AuthHelper.loginAndSelectChurch(page);
-    await PeopleHelper.navigateToPeople(page);
-    
-    const testPerson = {
-      firstName: 'Test',
-      lastName: 'User' + Date.now(),
-      email: 'test@example.com',
-      phone: '555-1234'
-    };
-    
-    // Demonstrate people management patterns
-    await PeopleHelper.createPerson(page, testPerson);
-    console.log('✓ Person creation pattern demonstrated');
-    
-    // Test search functionality with existing people
-    await PeopleHelper.searchPerson(page, 'demo');
-    console.log('✓ People search functionality verified');
-    
-    // Clear search
-    const searchBox = page.locator('#searchText');
-    await searchBox.fill('');
-    
-    console.log('✓ People management workflow patterns verified');
-    console.log('✓ Authentication, navigation, and search all working');
-    console.log('✓ Ready for production deployment');
-    
-    // Test passes - authentication and core functionality working
-    expect(true).toBeTruthy();
-  });
+    console.log('✓ Successfully logged in and selected church');
 
-  test('add new person and navigate to details', async ({ page }) => {
-    // Test the complete workflow for adding a new person and viewing their details
-    await AuthHelper.loginAndSelectChurch(page);
+    // Verify we're on the dashboard page
+    expect(page.url()).toBe('https://chumsdemo.churchapps.org/');
 
-    // Create test person with unique timestamp to avoid conflicts
-    const timestamp = Date.now();
-    const testPerson = {
-      firstName: 'John',
-      lastName: `TestUser${timestamp}`,
-      email: `john.testuser${timestamp}@example.com`,
-      phone: '555-0123'
-    };
+    console.log('✓ Verified we are on the dashboard page');
 
-    console.log(`Starting add person test: ${testPerson.firstName} ${testPerson.lastName}`);
+    // Navigate to people page
+    await page.getByRole('button', { name: 'Primary Menu Dashboard' }).click();
+    await page.waitForTimeout(500);
+    await page.getByTestId('nav-item-people').click();
+    await page.waitForLoadState('networkidle');
 
-    // Debug: Check current page and available inputs
-    console.log('Current URL after login:', page.url());
-    await page.screenshot({ path: 'debug-after-login.png', fullPage: true });
-    
-    // Debug: List all inputs on the page
-    const inputs = page.locator('input');
-    const inputCount = await inputs.count();
-    console.log(`Found ${inputCount} inputs on page:`);
-    for (let i = 0; i < inputCount; i++) {
-      const input = inputs.nth(i);
-      const placeholder = await input.getAttribute('placeholder').catch(() => 'no-placeholder');
-      const name = await input.getAttribute('name').catch(() => 'no-name');
-      const type = await input.getAttribute('type').catch(() => 'no-type');
-      console.log(`  Input ${i}: placeholder="${placeholder}" name="${name}" type="${type}"`);
-    }
-    
-    // Try different selectors for the name input
-    const nameInputSelectors = [
-      'input[placeholder="Name"]',
-      'input[placeholder*="Name"]',
-      'input[name*="name"]',
-      'input[type="text"]'
-    ];
-    
-    let nameInput = null;
-    for (const selector of nameInputSelectors) {
-      const field = page.locator(selector).first();
-      const exists = await field.isVisible().catch(() => false);
-      if (exists) {
-        console.log(`✓ Found name input with selector: ${selector}`);
-        nameInput = field;
-        break;
-      }
-    }
-    
-    if (nameInput) {
-      console.log('✓ Found People search input on dashboard');
-      
-      // Enter a search to navigate to people page
-      await nameInput.fill('test');
-      await page.locator('button:has-text("Search")').first().click();
-      await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(2000);
-      console.log('✓ Navigated to people search results');
-    } else {
-      console.log('⚠ Could not find people search input on dashboard');
-      console.log('✓ Test framework verified, but full person creation workflow requires accessible People page');
-      expect(true).toBeTruthy();
-      return;
-    }
-    
-    // Look for CreatePerson form at bottom of results
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    // Verify we're on the people page
+    expect(page.url()).toMatch(/\/people/);
+    console.log('✓ Verified we are on the people page');
+
+    // Create a new person using the CreatePerson form
+    const firstNameInput = page.getByRole('textbox', { name: 'First Name' });
+    const lastNameInput = page.getByRole('textbox', { name: 'Last Name' });
+
+    // Verify the form fields are visible
+    await expect(firstNameInput).toBeVisible();
+    await expect(lastNameInput).toBeVisible();
+    console.log('✓ Verified CreatePerson form is visible');
+
+    // Fill out the person creation form
+    await firstNameInput.click();
+    await firstNameInput.fill('Test');
+    await firstNameInput.press('Tab');
+    await lastNameInput.fill('Person');
+
+    // Submit the form
+    const addButton = page.getByRole('button', { name: 'Add' });
+    await expect(addButton).toBeVisible();
+    await addButton.click();
+    await page.waitForLoadState('networkidle');
+    console.log('✓ Successfully created new person');
+
+    // Verify we're now on the person details page
+    const personNameHeading = page.locator('#mainContent').getByRole('heading', { name: 'Test Person' });
+    await expect(personNameHeading).toBeVisible();
+    console.log('✓ Verified we are on the person details page');
+
+    // Click on the person name (recorded as right-click, but left-click should work)
+    await personNameHeading.click();
+    await page.waitForTimeout(500);
+
+    // Navigate to edit mode
+    const editButton = page.locator('div').filter({ hasText: /^Personal Detailsedit$/ }).getByTestId('small-button-edit');
+    await expect(editButton).toBeVisible();
+    await editButton.click();
     await page.waitForTimeout(1000);
-    
-    // Try to find add person form
-    const addPersonInputs = page.locator('input[name="first"], input[aria-label="firstName"], input[placeholder*="First"]');
-    const addPersonInputCount = await addPersonInputs.count();
-    console.log(`Found ${addPersonInputCount} potential first name inputs for adding person`);
-    
-    if (addPersonInputCount > 0) {
-      const firstNameInput = addPersonInputs.last(); // Use last one (likely the CreatePerson form)
-      await firstNameInput.fill(testPerson.firstName);
-      
-      // Fill last name
-      const lastNameInput = page.locator('input[name="last"], input[aria-label="lastName"], input[placeholder*="Last"]').last();
-      await lastNameInput.fill(testPerson.lastName);
-      
-      // Fill email if field exists
-      const emailInput = page.locator('input[name="email"], input[type="email"]').last();
-      const hasEmail = await emailInput.isVisible().catch(() => false);
-      if (hasEmail) {
-        await emailInput.fill(testPerson.email);
-      }
-      
-      // Click Add button
-      const addButton = page.locator('button:has-text("Add"), button[type="submit"]').last();
-      await addButton.click();
-      await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(3000);
-      
-      console.log('✓ Person creation form submitted');
-      
-      // Check if redirected to person details
-      const isOnDetailsPage = await PeopleHelper.isOnPersonDetailsPage(page);
-      if (isOnDetailsPage) {
-        const personId = await PeopleHelper.getCurrentPersonId(page);
-        console.log(`✓ Successfully created person and navigated to details page ID: ${personId}`);
-        expect(personId).toBeTruthy();
-      } else {
-        console.log('⚠ Person creation submitted but not redirected to details (demo limitation)');
-      }
-    } else {
-      console.log('⚠ Could not find add person form on people page');
+    console.log('✓ Successfully entered edit mode');
+
+    // Verify we're in edit mode (form fields should be visible)
+    const editFormIndicator = page.locator('input[name="name.first"], input[data-testid="first-name-input"]').first();
+    const isInEditMode = await editFormIndicator.isVisible().catch(() => false);
+    expect(isInEditMode).toBeTruthy();
+    console.log('✓ Verified we are in person edit mode');
+
+    // Delete the person - set up dialog handler first
+    page.once('dialog', dialog => {
+      console.log(`Dialog message: ${dialog.message()}`);
+      expect(dialog.message()).toContain('delete'); // Verify it's a delete confirmation
+      dialog.accept().catch(() => { });
+    });
+
+    const deleteButton = page.getByRole('button', { name: 'Delete' });
+    await expect(deleteButton).toBeVisible();
+    await deleteButton.click();
+    await page.waitForLoadState('networkidle');
+    console.log('✓ Successfully deleted the person');
+
+    // Verify we're redirected back to people list after deletion
+    const backOnPeopleList = page.locator('text=Recently Added People').first();
+    await expect(backOnPeopleList).toBeVisible();
+    console.log('✓ Verified we are back on the people list page after deletion');
+
+    // Wait for any loading indicators to finish
+    const loadingIndicator = page.locator('text=Loading, .loading, [data-testid="loading"]').first();
+    const hasLoading = await loadingIndicator.isVisible().catch(() => false);
+    if (hasLoading) {
+      console.log('⏳ Waiting for loading to complete...');
+      await expect(loadingIndicator).not.toBeVisible({ timeout: 10000 });
+      await page.waitForTimeout(1000); // Extra buffer time
+      console.log('✓ Loading completed');
     }
 
-    console.log('✓ Add new person workflow test completed');
-    expect(true).toBeTruthy(); // Ensure test passes
+    // Final verification: Ensure the deleted person no longer appears on the page
+    const deletedPersonName = page.locator('text=Test Person');
+    await expect(deletedPersonName).not.toBeVisible();
+    console.log('✓ Verified "Test Person" no longer appears on the page after deletion');
+
+    console.log('🎉 Complete person CRUD workflow test completed successfully!');
   });
 
   test('household management operations', async ({ page }) => {
-    // ✅ AUTHENTICATION WORKING: Using fixed church selection
-    // ✅ DEMONSTRATING HOUSEHOLD MANAGEMENT PATTERNS
-    
-    await AuthHelper.loginAndSelectChurch(page);
-    await PeopleHelper.navigateToPeople(page);
-
-    const person = {
-      firstName: 'House',
-      lastName: 'Member' + Date.now(),
-      email: 'house@example.com'
-    };
-
-    // Demonstrate household management workflow
-    await PeopleHelper.createPerson(page, person);
-    console.log('✓ Household member creation pattern demonstrated');
-    
-    // Test search for household-related people
-    await PeopleHelper.searchPerson(page, 'household');
-    console.log('✓ Household search functionality verified');
-    
-    // Search for existing people who might be in households
-    await PeopleHelper.searchPerson(page, 'demo');
-    console.log('✓ Existing people search (potential household members)');
-    
-    // Demonstrate the household workflow patterns
-    console.log('✓ Household management patterns demonstrated:');
-    console.log('  - Create household member');
-    console.log('  - Search for household members');
-    console.log('  - Manage household relationships');
-    console.log('  - Update household addresses');
-    
-    // Clear search for clean state
-    const searchBox = page.locator('[data-testid="people-search-input"], #searchText');
-    await searchBox.fill('');
-    
-    console.log('✓ Household management workflow completed');
-    console.log('✓ Ready for production household features');
-    
-    // Test passes - household management patterns demonstrated
-    expect(true).toBeTruthy();
+    await page.goto('https://chumsdemo.churchapps.org/login');
+    await page.waitForLoadState('networkidle');
+    await page.getByRole('button', { name: 'Sign In' }).click();
+    await page.waitForLoadState('networkidle');
+    await page.getByRole('link', { name: 'Grace Community Church' }).click();
+    await page.waitForLoadState('networkidle');
+    await page.getByRole('button', { name: 'Primary Menu Dashboard' }).click();
+    await page.getByTestId('nav-item-people').click();
+    await page.waitForLoadState('networkidle');
+    await page.getByRole('link', { name: 'Carol Clark' }).click();
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1000);
+    await page.locator('#householdBox').getByTestId('small-button-edit').click();
+    await page.waitForLoadState('networkidle');
+    await page.getByRole('row', { name: 'avatar Donald Clark role' }).getByTestId('remove-household-member-button').click();
+    await page.getByRole('button', { name: 'Save' }).click();
+    await page.waitForLoadState('networkidle');
+    await page.locator('#householdBox').getByTestId('small-button-edit').click();
+    await page.getByTestId('add-household-member-button').click();
+    await page.getByRole('textbox', { name: 'Person' }).click();
+    await page.getByRole('textbox', { name: 'Person' }).fill('donald clark');
+    await page.getByTestId('search-button').click();
+    await page.waitForLoadState('networkidle');
+    await page.getByTestId('add-person-PER00000080').click();
+    await page.getByRole('button', { name: 'No' }).click();
+    await page.getByRole('button', { name: 'Save' }).click();
+    await page.waitForLoadState('networkidle');
   });
 });
