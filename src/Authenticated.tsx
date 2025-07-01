@@ -1,40 +1,59 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Routes, Route, useNavigate, Outlet } from "react-router-dom";
 import { Wrapper, ErrorBoundary } from "./components";
 import { UserHelper } from "@churchapps/apphelper";
-import { PeoplePage } from "./people/PeoplePage";
-import { PersonPage } from "./people/PersonPage";
-import { GroupsPage } from "./groups/GroupsPage";
-import { GroupPage } from "./groups/GroupPage";
-import { AttendancePage } from "./attendance/AttendancePage";
-import { DonationsPage } from "./donations/DonationsPage";
-import { DonationBatchPage } from "./donations/DonationBatchPage";
-import { FundPage } from "./donations/FundPage";
-import { FormsPage } from "./forms/FormsPage";
-import { Settings } from "./settings/Settings";
-import { FormPage } from "./forms/FormPage";
-import { ReportsPage } from "./reports/ReportsPage";
-import { ReportPage } from "./reports/ReportPage";
-import { ReportPage as AdminReportPage } from "./serverAdmin/ReportPage";
-import { Box } from "@mui/material";
-import { TasksPage } from "./tasks/TasksPage";
-import { TaskPage } from "./tasks/TaskPage";
-import { AutomationsPage } from "./tasks/automations/AutomationsPage";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import UserContext from "./UserContext";
-import { DashboardPage } from "./dashboard/DashboardPage";
-import { AdminPage } from "./serverAdmin/AdminPage";
-import { ProfilePage } from "./profile/ProfilePage";
-import { PlansPage } from "./plans/PlansPage";
-import { PlanPage } from "./plans/PlanPage";
-import { MinistryPage } from "./plans/MinistryPage";
-import { DonationBatchesPage } from "./donations/DonationBatchesPage";
-import { FundsPage } from "./donations/FundsPage";
-import { SongsPage } from "./plans/songs/SongsPage";
-import { SongPage } from "./plans/songs/SongPage";
-import { PrintPlan } from "./plans/PrintPlan";
-import { DevicesPage } from "./profile/DevicesPage";
-import { PrintDonationPage } from "./donations/PrintDonationPage";
-import { OAuthPage } from "./OAuth";
+
+// Lazy load all page components for code splitting
+const PeoplePage = React.lazy(() => import("./people/PeoplePage").then(module => ({ default: module.PeoplePage })));
+const PersonPage = React.lazy(() => import("./people/PersonPage").then(module => ({ default: module.PersonPage })));
+const GroupsPage = React.lazy(() => import("./groups/GroupsPage").then(module => ({ default: module.GroupsPage })));
+const GroupPage = React.lazy(() => import("./groups/GroupPage").then(module => ({ default: module.GroupPage })));
+const AttendancePage = React.lazy(() => import("./attendance/AttendancePage").then(module => ({ default: module.AttendancePage })));
+const DonationsPage = React.lazy(() => import("./donations/DonationsPage").then(module => ({ default: module.DonationsPage })));
+const DonationBatchPage = React.lazy(() => import("./donations/DonationBatchPage").then(module => ({ default: module.DonationBatchPage })));
+const FundPage = React.lazy(() => import("./donations/FundPage").then(module => ({ default: module.FundPage })));
+const FormsPage = React.lazy(() => import("./forms/FormsPage").then(module => ({ default: module.FormsPage })));
+const Settings = React.lazy(() => import("./settings/Settings").then(module => ({ default: module.Settings })));
+const FormPage = React.lazy(() => import("./forms/FormPage").then(module => ({ default: module.FormPage })));
+const ReportsPage = React.lazy(() => import("./reports/ReportsPage").then(module => ({ default: module.ReportsPage })));
+const ReportPage = React.lazy(() => import("./reports/ReportPage").then(module => ({ default: module.ReportPage })));
+const AdminReportPage = React.lazy(() => import("./serverAdmin/ReportPage").then(module => ({ default: module.ReportPage })));
+const TasksPage = React.lazy(() => import("./tasks/TasksPage").then(module => ({ default: module.TasksPage })));
+const TaskPage = React.lazy(() => import("./tasks/TaskPage").then(module => ({ default: module.TaskPage })));
+const AutomationsPage = React.lazy(() => import("./tasks/automations/AutomationsPage").then(module => ({ default: module.AutomationsPage })));
+const DashboardPage = React.lazy(() => import("./dashboard/DashboardPage").then(module => ({ default: module.DashboardPage })));
+const AdminPage = React.lazy(() => import("./serverAdmin/AdminPage").then(module => ({ default: module.AdminPage })));
+const ProfilePage = React.lazy(() => import("./profile/ProfilePage").then(module => ({ default: module.ProfilePage })));
+const PlansPage = React.lazy(() => import("./plans/PlansPage").then(module => ({ default: module.PlansPage })));
+const PlanPage = React.lazy(() => import("./plans/PlanPage").then(module => ({ default: module.PlanPage })));
+const MinistryPage = React.lazy(() => import("./plans/MinistryPage").then(module => ({ default: module.MinistryPage })));
+const DonationBatchesPage = React.lazy(() => import("./donations/DonationBatchesPage").then(module => ({ default: module.DonationBatchesPage })));
+const FundsPage = React.lazy(() => import("./donations/FundsPage").then(module => ({ default: module.FundsPage })));
+const SongsPage = React.lazy(() => import("./plans/songs/SongsPage").then(module => ({ default: module.SongsPage })));
+const SongPage = React.lazy(() => import("./plans/songs/SongPage").then(module => ({ default: module.SongPage })));
+const PrintPlan = React.lazy(() => import("./plans/PrintPlan").then(module => ({ default: module.PrintPlan })));
+const DevicesPage = React.lazy(() => import("./profile/DevicesPage").then(module => ({ default: module.DevicesPage })));
+const PrintDonationPage = React.lazy(() => import("./donations/PrintDonationPage").then(module => ({ default: module.PrintDonationPage })));
+const OAuthPage = React.lazy(() => import("./OAuth").then(module => ({ default: module.OAuthPage })));
+
+// Loading component for Suspense fallback
+const LoadingFallback: React.FC = () => (
+  <Box 
+    display="flex" 
+    justifyContent="center" 
+    alignItems="center" 
+    minHeight="200px"
+    flexDirection="column"
+    gap={2}
+  >
+    <CircularProgress />
+    <Typography variant="body2" color="text.secondary">
+      Loading...
+    </Typography>
+  </Box>
+);
 
 export const Authenticated: React.FC = () => {
   const navigate = useNavigate()
@@ -49,8 +68,10 @@ export const Authenticated: React.FC = () => {
   const LayoutWithWrapper: React.FC = () => (<Box sx={{ display: "flex" }}>
     <Wrapper>
       <ErrorBoundary>
-        {/* This renders the nested child route */}
-        <Outlet />
+        <Suspense fallback={<LoadingFallback />}>
+          {/* This renders the nested child route */}
+          <Outlet />
+        </Suspense>
       </ErrorBoundary>
     </Wrapper>
   </Box>)
@@ -93,9 +114,9 @@ export const Authenticated: React.FC = () => {
         <Route path="/" element={<DashboardPage />} />
       </Route>
 
-      <Route path="/oauth" element={<OAuthPage />} />
-      <Route path="/donations/print/:personId" element={<PrintDonationPage />} />
-      <Route path="/plans/print/:id" element={<PrintPlan />} />
+      <Route path="/oauth" element={<Suspense fallback={<LoadingFallback />}><OAuthPage /></Suspense>} />
+      <Route path="/donations/print/:personId" element={<Suspense fallback={<LoadingFallback />}><PrintDonationPage /></Suspense>} />
+      <Route path="/plans/print/:id" element={<Suspense fallback={<LoadingFallback />}><PrintPlan /></Suspense>} />
     </Routes>
 
   );
