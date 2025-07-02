@@ -163,7 +163,7 @@
       "don": "Donations",
       "donFilt": "Donation Filter",
       "donor": "Donor",
-      "noDon": "No donations yet"
+      "noDon": "No donations for selected date range"
     }
   },
   "forms": {

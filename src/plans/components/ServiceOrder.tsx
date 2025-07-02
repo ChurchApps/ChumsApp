@@ -1,6 +1,19 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { Grid, Stack } from "@mui/material";
-import { ApiHelper, DisplayBox, type PlanInterface, SmallButton } from "@churchapps/apphelper";
+import { 
+  Grid, 
+  Stack,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Box
+} from "@mui/material";
+import { 
+  Print as PrintIcon,
+  Add as AddIcon,
+  Album as AlbumIcon
+} from "@mui/icons-material";
+import { ApiHelper, type PlanInterface } from "@churchapps/apphelper";
 import { type PlanItemInterface } from "../../helpers";
 import { PlanItemEdit } from "./PlanItemEdit";
 import { DndProvider } from 'react-dnd'
@@ -8,6 +21,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { PlanItem } from "./PlanItem";
 import { DraggableWrapper } from "../../components/DraggableWrapper";
 import { DroppableWrapper } from "../../components/DroppableWrapper";
+import { Link } from "react-router-dom";
 
 interface Props {
   plan: PlanInterface
@@ -30,9 +44,24 @@ export const ServiceOrder = memo((props: Props) => {
   }, [props.plan.id, planItems?.length]);
 
   const editContent = useMemo(() => (
-    <Stack direction="row">
-      <SmallButton href={"/plans/print/" + props.plan?.id} icon="print" />
-      <SmallButton onClick={addHeader} icon="add" />
+    <Stack direction="row" spacing={1}>
+      <Button
+        component={Link}
+        to={`/plans/print/${props.plan?.id}`}
+        variant="outlined"
+        startIcon={<PrintIcon />}
+        size="small"
+      >
+        Print
+      </Button>
+      <Button
+        variant="contained"
+        startIcon={<AddIcon />}
+        onClick={addHeader}
+        size="small"
+      >
+        Add Item
+      </Button>
     </Stack>
   ), [props.plan?.id, addHeader]);
 
@@ -56,22 +85,75 @@ export const ServiceOrder = memo((props: Props) => {
 
   React.useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
-  return (<>
-
+  return (
     <Grid container spacing={3}>
       <Grid size={{ xs: 12, md: 8 }}>
-        <DisplayBox headerText="Order of Service" headerIcon="album" editContent={editContent}>
-          <DndProvider backend={HTML5Backend}>
-            {planItems.map((pi, i) => wrapPlanItem(pi, i))}
-            {showHeaderDrop && <DroppableWrapper accept="planItemHeader" onDrop={(item) => { handleDrop(item, planItems?.length + 1) }}>&nbsp;</DroppableWrapper>}
-          </DndProvider>
-        </DisplayBox>
+        <Card sx={{ borderRadius: 2 }}>
+          <CardContent>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
+              <Typography variant="h6" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
+                <AlbumIcon sx={{ color: 'primary.main' }} />
+                Order of Service
+              </Typography>
+              {editContent}
+            </Stack>
+            
+            <Box sx={{ 
+              minHeight: 200,
+              p: 2,
+              border: '1px dashed',
+              borderColor: 'grey.300',
+              borderRadius: 2,
+              backgroundColor: 'grey.50'
+            }}>
+              <DndProvider backend={HTML5Backend}>
+                {planItems.length === 0 ? (
+                  <Box sx={{ 
+                    textAlign: 'center', 
+                    py: 4,
+                    color: 'text.secondary'
+                  }}>
+                    <AlbumIcon sx={{ fontSize: 48, mb: 2, color: 'grey.400' }} />
+                    <Typography variant="body1">
+                      No service items yet. Add your first item to get started.
+                    </Typography>
+                  </Box>
+                ) : (
+                  <>
+                    {planItems.map((pi, i) => wrapPlanItem(pi, i))}
+                    {showHeaderDrop && (
+                      <DroppableWrapper 
+                        accept="planItemHeader" 
+                        onDrop={(item) => { handleDrop(item, planItems?.length + 1) }}
+                      >
+                        <Box sx={{ 
+                          height: 40, 
+                          border: '2px dashed', 
+                          borderColor: 'primary.main', 
+                          borderRadius: 1,
+                          backgroundColor: 'primary.light',
+                          opacity: 0.3,
+                          mb: 1
+                        }} />
+                      </DroppableWrapper>
+                    )}
+                  </>
+                )}
+              </DndProvider>
+            </Box>
+          </CardContent>
+        </Card>
       </Grid>
+      
       <Grid size={{ xs: 12, md: 4 }}>
-        {editPlanItem && <PlanItemEdit planItem={editPlanItem} onDone={() => { setEditPlanItem(null); loadData() }} />}
+        {editPlanItem && (
+          <PlanItemEdit 
+            planItem={editPlanItem} 
+            onDone={() => { setEditPlanItem(null); loadData() }} 
+          />
+        )}
       </Grid>
     </Grid>
-
-  </>)
+  )
 });
 

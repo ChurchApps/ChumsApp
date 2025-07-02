@@ -1,7 +1,32 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ApiHelper, DateHelper, InputBox, Locale, type PersonInterface, type TaskInterface } from "@churchapps/apphelper";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { ApiHelper, DateHelper, Locale, type PersonInterface, type TaskInterface } from "@churchapps/apphelper";
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableRow,
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+  Box,
+  Button,
+  Paper,
+  Chip,
+  Avatar
+} from "@mui/material";
+import {
+  AssignmentReturn as ChangesIcon,
+  CheckCircle as ApplyIcon,
+  Person as PersonIcon,
+  Email as EmailIcon,
+  Phone as PhoneIcon,
+  Home as AddressIcon,
+  Cake as BirthdayIcon,
+  FamilyRestroom as FamilyIcon
+} from "@mui/icons-material";
 
 interface Props { task: TaskInterface; }
 
@@ -9,15 +34,60 @@ export const RequestedChanges = (props: Props) => {
   const requestedChanges: { field: string; label: string; value: string }[] = JSON.parse(props.task?.data);
   const navigate = useNavigate();
 
+  const getFieldIcon = (field: string) => {
+    if (field.includes("name")) return <PersonIcon sx={{ fontSize: 20, color: 'primary.main' }} />;
+    if (field.includes("email")) return <EmailIcon sx={{ fontSize: 20, color: 'info.main' }} />;
+    if (field.includes("Phone")) return <PhoneIcon sx={{ fontSize: 20, color: 'secondary.main' }} />;
+    if (field.includes("address") || field.includes("city") || field.includes("state") || field.includes("zip")) 
+      return <AddressIcon sx={{ fontSize: 20, color: 'success.main' }} />;
+    if (field === "birthDate") return <BirthdayIcon sx={{ fontSize: 20, color: 'warning.main' }} />;
+    if (field === "familyMember") return <FamilyIcon sx={{ fontSize: 20, color: 'error.main' }} />;
+    return <ChangesIcon sx={{ fontSize: 20, color: 'text.secondary' }} />;
+  };
+
   const getRows = () => {
     const rows: JSX.Element[] = [];
     requestedChanges?.forEach((ch, i) => {
       let val: any = ch.value;
-      if (ch.field === "photo") val = <img src={ch.value} style={{ maxWidth: "70px", maxHeight: "70px" }} alt="New Profile Pic" />
+      if (ch.field === "photo") {
+        val = (
+          <Avatar 
+            src={ch.value} 
+            sx={{ 
+              width: 60, 
+              height: 60,
+              border: '2px solid',
+              borderColor: 'primary.main'
+            }} 
+            alt="New Profile Pic" 
+          />
+        );
+      }
       rows.push(
-        <TableRow key={i}>
-          <TableCell>{ch.label}</TableCell>
-          <TableCell>{val}</TableCell>
+        <TableRow 
+          key={i}
+          sx={{
+            '&:hover': {
+              backgroundColor: 'action.hover'
+            },
+            '& td': {
+              py: 2
+            }
+          }}
+        >
+          <TableCell>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              {getFieldIcon(ch.field)}
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                {ch.label}
+              </Typography>
+            </Stack>
+          </TableCell>
+          <TableCell>
+            <Typography variant="body2" color="text.secondary">
+              {val}
+            </Typography>
+          </TableCell>
         </TableRow>
       );
     });
@@ -64,16 +134,79 @@ export const RequestedChanges = (props: Props) => {
   };
 
   return (
-    <InputBox headerIcon="assignment_return" headerText={Locale.label("tasks.requestedChanges.requestedChanges")} saveText={Locale.label("tasks.requestedChanges.apply")} saveFunction={handleApply} isSubmitting={props.task.status === Locale.label("tasks.taskPage.closed")}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell sx={{ fontWeight: "1000 !important" }}>{Locale.label("tasks.requestedChanges.field")}</TableCell>
-            <TableCell sx={{ fontWeight: "1000 !important" }}>{Locale.label("tasks.requestedChanges.value")}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>{getRows()}</TableBody>
-      </Table>
-    </InputBox>
+    <Card sx={{ 
+      borderRadius: 2,
+      border: '1px solid',
+      borderColor: 'grey.200',
+      mb: 3,
+      transition: 'all 0.2s ease-in-out',
+      '&:hover': {
+        boxShadow: 2
+      }
+    }}>
+      <CardContent>
+        <Stack spacing={3}>
+          {/* Header */}
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <ChangesIcon sx={{ color: 'primary.main' }} />
+              <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                {Locale.label("tasks.requestedChanges.requestedChanges")}
+              </Typography>
+            </Stack>
+            {props.task.status !== Locale.label("tasks.taskPage.closed") && (
+              <Button
+                variant="contained"
+                startIcon={<ApplyIcon />}
+                onClick={handleApply}
+                sx={{
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 600
+                }}
+              >
+                {Locale.label("tasks.requestedChanges.apply")}
+              </Button>
+            )}
+          </Box>
+
+          {/* Changes Table */}
+          <Paper 
+            sx={{ 
+              overflow: 'hidden',
+              border: '1px solid',
+              borderColor: 'grey.200'
+            }}
+          >
+            <Table>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: 'grey.50' }}>
+                  <TableCell sx={{ fontWeight: 600, color: 'text.primary' }}>
+                    {Locale.label("tasks.requestedChanges.field")}
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: 'text.primary' }}>
+                    {Locale.label("tasks.requestedChanges.value")}
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{getRows()}</TableBody>
+            </Table>
+          </Paper>
+
+          {props.task.status === Locale.label("tasks.taskPage.closed") && (
+            <Box sx={{ 
+              p: 2, 
+              backgroundColor: 'success.light',
+              borderRadius: 1,
+              textAlign: 'center'
+            }}>
+              <Typography variant="body2" sx={{ color: 'success.dark', fontWeight: 600 }}>
+                These changes have been applied
+              </Typography>
+            </Box>
+          )}
+        </Stack>
+      </CardContent>
+    </Card>
   );
 };

@@ -1,6 +1,6 @@
-import { FormControl, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent, Stack, Button } from "@mui/material";
 import React, { memo, useCallback, useMemo } from "react";
-import { ApiHelper, InputBox, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
+import { ApiHelper, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
 import { FundDonations, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/apphelper";
 
 interface Props { donationId: string, batchId: string, funds: FundInterface[], updatedFunction: () => void }
@@ -142,24 +142,47 @@ export const DonationEdit = memo((props: Props) => {
   React.useEffect(loadData, [loadData]);
 
   return (
-    <InputBox id="donationBox" data-cy="donation-box" headerIcon="volunteer_activism" headerText={Locale.label("donations.donationEdit.donEdit")} cancelFunction={handleCancel} deleteFunction={getDeleteFunction()} saveFunction={handleSave} help="chums/manual-input">
-      <Box mb={2}>
-        <label>{Locale.label("common.person")}</label>
-        {personSection}
-      </Box>
-      <TextField fullWidth label={Locale.label("donations.donationEdit.date")} type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="donation-date-input" aria-label="Donation date" />
-      <FormControl fullWidth>
-        <InputLabel id="method">{Locale.label("donations.donationEdit.method")}</InputLabel>
-        <Select name="method" labelId="method" label={Locale.label("donations.donationEdit.method")} value={donation.method || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="payment-method-select" aria-label="Payment method">
-          <MenuItem value="Check">{Locale.label("donations.donationEdit.check")}</MenuItem>
-          <MenuItem value="Cash">{Locale.label("donations.donationEdit.cash")}</MenuItem>
-          <MenuItem value="Card">{Locale.label("donations.donationEdit.card")}</MenuItem>
-        </Select>
-      </FormControl>
-      {methodDetails}
-      <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
-      <TextField fullWidth label={Locale.label("common.notes")} data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline data-testid="donation-notes-input" aria-label="Donation notes" />
-    </InputBox>
+    <Box id="donationBox" data-cy="donation-box">
+      <Stack spacing={2}>
+        <Box>
+          <label>{Locale.label("common.person")}</label>
+          {personSection}
+        </Box>
+        <TextField fullWidth label={Locale.label("donations.donationEdit.date")} type="date" name="date" value={DateHelper.formatHtml5Date(donation.donationDate) || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="donation-date-input" aria-label="Donation date" />
+        <FormControl fullWidth>
+          <InputLabel id="method">{Locale.label("donations.donationEdit.method")}</InputLabel>
+          <Select name="method" labelId="method" label={Locale.label("donations.donationEdit.method")} value={donation.method || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="payment-method-select" aria-label="Payment method">
+            <MenuItem value="Check">{Locale.label("donations.donationEdit.check")}</MenuItem>
+            <MenuItem value="Cash">{Locale.label("donations.donationEdit.cash")}</MenuItem>
+            <MenuItem value="Card">{Locale.label("donations.donationEdit.card")}</MenuItem>
+          </Select>
+        </FormControl>
+        {methodDetails}
+        <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
+        <TextField fullWidth label={Locale.label("common.notes")} data-cy="note" name="notes" value={donation.notes || ""} onChange={handleChange} onKeyDown={handleKeyDown} multiline data-testid="donation-notes-input" aria-label="Donation notes" />
+        <Stack direction="row" spacing={1} justifyContent="end" sx={{ mt: 2 }}>
+          <Button onClick={handleCancel} color="warning">
+            {Locale.label("common.cancel")}
+          </Button>
+          {getDeleteFunction() && (
+            <Button 
+              variant="outlined" 
+              onClick={getDeleteFunction()} 
+              color="error"
+            >
+              {Locale.label("common.delete")}
+            </Button>
+          )}
+          <Button 
+            variant="contained" 
+            onClick={handleSave}
+            disableElevation
+          >
+            {Locale.label("common.save")}
+          </Button>
+        </Stack>
+      </Stack>
+    </Box>
   );
 });
 

@@ -1,4 +1,13 @@
-import { FormControl, InputLabel, ListSubheader, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
+import { 
+  FormControl, 
+  InputLabel, 
+  ListSubheader, 
+  MenuItem, 
+  Select, 
+  TextField, 
+  type SelectChangeEvent,
+  Stack
+} from "@mui/material";
 import React from "react";
 import { type ConditionInterface, Locale } from "@churchapps/apphelper";
 import { ConditionHelper } from "../../../helpers"
@@ -43,24 +52,64 @@ export const ConditionDate = (props: Props) => {
 
   const getDateField = () => {
     const label = ConditionHelper.getTitleCase(props.condition.field);
-    return <FormControl fullWidth>
-      <InputLabel>{label}</InputLabel>
-      <TextField fullWidth type="date" value={props.condition.value || ""} name="value" onChange={handleChange} />
-    </FormControl>
+    return (
+      <TextField 
+        fullWidth 
+        type="date" 
+        label={label}
+        value={props.condition.value || ""} 
+        name="value" 
+        onChange={handleChange}
+        variant="outlined"
+        InputLabelProps={{
+          shrink: true,
+        }}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: 'primary.main',
+            }
+          }
+        }}
+      />
+    );
   }
 
   const getNumberField = () => {
     const label = ConditionHelper.getTitleCase(props.condition.field);
-    return <FormControl fullWidth>
-      <InputLabel>{label}</InputLabel>
-      <TextField fullWidth type="number" value={props.condition.value || ""} name="value" onChange={handleChange} data-testid="condition-number-input" aria-label="Number value" />
-    </FormControl>
+    return (
+      <TextField 
+        fullWidth 
+        type="number" 
+        label={label}
+        value={props.condition.value || ""} 
+        name="value" 
+        onChange={handleChange} 
+        data-testid="condition-number-input" 
+        aria-label="Number value"
+        variant="outlined"
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: 'primary.main',
+            }
+          }
+        }}
+      />
+    );
   }
 
   const getDayOfWeek = () => (
-    <FormControl fullWidth>
+    <FormControl fullWidth variant="outlined">
       <InputLabel>{Locale.label("tasks.conditionDate.dayOf")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionDate.dayOf")} value={props.condition.value || ""} name="value" onChange={handleChange} data-testid="day-of-week-select" aria-label="Day of week">
+      <Select 
+        label={Locale.label("tasks.conditionDate.dayOf")} 
+        value={props.condition.value || "1"} 
+        name="value" 
+        onChange={handleChange} 
+        data-testid="day-of-week-select" 
+        aria-label="Day of week"
+      >
         <MenuItem value="1">{Locale.label("tasks.conditionDate.sun")}</MenuItem>
         <MenuItem value="2">{Locale.label("tasks.conditionDate.mon")}</MenuItem>
         <MenuItem value="3">{Locale.label("tasks.conditionDate.tues")}</MenuItem>
@@ -73,9 +122,22 @@ export const ConditionDate = (props: Props) => {
   )
 
   const getMonth = () => (
-    <FormControl fullWidth>
+    <FormControl fullWidth variant="outlined">
       <InputLabel>{Locale.label("tasks.conditionDate.month")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionDate.month")} value={props.condition.value || ""} name="value" onChange={handleChange}>
+      <Select 
+        label={Locale.label("tasks.conditionDate.month")} 
+        value={props.condition.value || "1"} 
+        name="value" 
+        onChange={handleChange}
+        sx={{
+          '& .MuiListSubheader-root': {
+            backgroundColor: 'grey.100',
+            fontWeight: 600,
+            color: 'text.primary',
+            lineHeight: '36px'
+          }
+        }}
+      >
         <ListSubheader>{Locale.label("tasks.conditionDate.absolute")}</ListSubheader>
         <MenuItem value="1">{Locale.label("month.jan")}</MenuItem>
         <MenuItem value="2">{Locale.label("month.feb")}</MenuItem>
@@ -113,28 +175,40 @@ export const ConditionDate = (props: Props) => {
 
   const fieldData = (props.condition.fieldData) ? JSON.parse(props.condition.fieldData) : {}
 
-  return <>
-    <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionDate.datePart")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionDate.datePart")} value={fieldData.datePart || ""} name="datePart" onChange={handleChange}>
-        <MenuItem key="/full" value="full">{Locale.label("tasks.conditionDate.dateFull")}</MenuItem>
-        <MenuItem key="/dayOfWeek" value="dayOfWeek">{Locale.label("tasks.conditionDate.weekDay")}</MenuItem>
-        <MenuItem key="/dayOfMonth" value="dayOfMonth">{Locale.label("tasks.conditionDate.monthDay")}</MenuItem>
-        <MenuItem key="/month" value="month">{Locale.label("tasks.conditionDate.month")}</MenuItem>
-        <MenuItem key="/years" value="years">{Locale.label("tasks.conditionDate.yearsE")}</MenuItem>
-      </Select>
-    </FormControl>
-    <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionDate.op")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionDate.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
-        <MenuItem key="/equals" value="=">=</MenuItem>
-        <MenuItem key="/greaterThan" value=">">&gt;</MenuItem>
-        <MenuItem key="/greaterThanEqual" value=">=">&gt;=</MenuItem>
-        <MenuItem key="/lessThan" value="<">&lt;</MenuItem>
-        <MenuItem key="/lessThanEqual" value="<=">&lt;=</MenuItem>
-        <MenuItem key="/notEquals" value="!=">!=</MenuItem>
-      </Select>
-    </FormControl>
-    {getField()}
-  </>
+  return (
+    <Stack spacing={2}>
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>{Locale.label("tasks.conditionDate.datePart")}</InputLabel>
+        <Select 
+          label={Locale.label("tasks.conditionDate.datePart")} 
+          value={fieldData.datePart || "full"} 
+          name="datePart" 
+          onChange={handleChange}
+        >
+          <MenuItem value="full">{Locale.label("tasks.conditionDate.dateFull")}</MenuItem>
+          <MenuItem value="dayOfWeek">{Locale.label("tasks.conditionDate.weekDay")}</MenuItem>
+          <MenuItem value="dayOfMonth">{Locale.label("tasks.conditionDate.monthDay")}</MenuItem>
+          <MenuItem value="month">{Locale.label("tasks.conditionDate.month")}</MenuItem>
+          <MenuItem value="years">{Locale.label("tasks.conditionDate.yearsE")}</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>{Locale.label("tasks.conditionDate.op")}</InputLabel>
+        <Select 
+          label={Locale.label("tasks.conditionDate.op")} 
+          value={props.condition.operator || "="} 
+          name="operator" 
+          onChange={handleChange}
+        >
+          <MenuItem value="=">=</MenuItem>
+          <MenuItem value=">">&gt;</MenuItem>
+          <MenuItem value=">=">&gt;=</MenuItem>
+          <MenuItem value="<">&lt;</MenuItem>
+          <MenuItem value="<=">&lt;=</MenuItem>
+          <MenuItem value="!=">!=</MenuItem>
+        </Select>
+      </FormControl>
+      {getField()}
+    </Stack>
+  );
 }

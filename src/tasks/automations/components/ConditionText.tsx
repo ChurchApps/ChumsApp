@@ -1,4 +1,12 @@
-import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
+import { 
+  FormControl, 
+  InputLabel, 
+  MenuItem, 
+  Select, 
+  TextField, 
+  type SelectChangeEvent,
+  Stack
+} from "@mui/material";
 import React from "react";
 import { ConditionHelper } from "../../components";
 import { type ConditionInterface, Locale } from "@churchapps/apphelper";
@@ -38,24 +46,52 @@ export const ConditionText = (props: Props) => {
 
   const getTextField = () => {
     const label = ConditionHelper.getTitleCase(props.condition.field);
-    return <TextField fullWidth type="text" label={label} value={props.condition.value || ""} name="value" onChange={handleChange} data-testid="condition-value-input" aria-label="Condition value" />
+    return (
+      <TextField 
+        fullWidth 
+        type="text" 
+        label={label} 
+        value={props.condition.value || ""} 
+        name="value" 
+        onChange={handleChange} 
+        data-testid="condition-value-input" 
+        aria-label="Condition value"
+        variant="outlined"
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: 'primary.main',
+            }
+          }
+        }}
+      />
+    );
   }
 
-  return <>
-    <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionText.op")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionText.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange} data-testid="condition-operator-select" aria-label="Condition operator">
-        <MenuItem key="/equals" value="=">=</MenuItem>
-        <MenuItem key="/contains" value="contains">{Locale.label("tasks.conditionText.contains")}</MenuItem>
-        <MenuItem key="/startsWith" value="startsWith">{Locale.label("tasks.conditionText.startW")}</MenuItem>
-        <MenuItem key="/endsWith" value="endsWith">{Locale.label("tasks.conditionText.endW")}</MenuItem>
-        <MenuItem key="/greaterThan" value=">">&gt;</MenuItem>
-        <MenuItem key="/greaterThanEqual" value=">=">&gt;=</MenuItem>
-        <MenuItem key="/lessThan" value="<">&lt;</MenuItem>
-        <MenuItem key="/lessThanEqual" value="<=">&lt;=</MenuItem>
-        <MenuItem key="/notEquals" value="!=">!=</MenuItem>
-      </Select>
-    </FormControl>
-    {getTextField()}
-  </>
+  return (
+    <Stack spacing={2}>
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>{Locale.label("tasks.conditionText.op")}</InputLabel>
+        <Select 
+          label={Locale.label("tasks.conditionText.op")} 
+          value={props.condition.operator || "="} 
+          name="operator" 
+          onChange={handleChange} 
+          data-testid="condition-operator-select" 
+          aria-label="Condition operator"
+        >
+          <MenuItem value="=">=</MenuItem>
+          <MenuItem value="contains">{Locale.label("tasks.conditionText.contains")}</MenuItem>
+          <MenuItem value="startsWith">{Locale.label("tasks.conditionText.startW")}</MenuItem>
+          <MenuItem value="endsWith">{Locale.label("tasks.conditionText.endW")}</MenuItem>
+          <MenuItem value=">">&gt;</MenuItem>
+          <MenuItem value=">=">&gt;=</MenuItem>
+          <MenuItem value="<">&lt;</MenuItem>
+          <MenuItem value="<=">&lt;=</MenuItem>
+          <MenuItem value="!=">!=</MenuItem>
+        </Select>
+      </FormControl>
+      {getTextField()}
+    </Stack>
+  );
 }

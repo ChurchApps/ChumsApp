@@ -1,6 +1,30 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
+import { 
+  FormControl, 
+  Grid, 
+  InputLabel, 
+  MenuItem, 
+  Select, 
+  TextField, 
+  type SelectChangeEvent,
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+  Box,
+  Button,
+  FormHelperText,
+  Switch,
+  FormControlLabel
+} from "@mui/material";
 import React from "react";
-import { ErrorMessages, InputBox, type AutomationInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { ErrorMessages, type AutomationInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import {
+  SettingsSuggest as AutomationsIcon,
+  Save as SaveIcon,
+  Cancel as CancelIcon,
+  Delete as DeleteIcon,
+  Repeat as RepeatIcon
+} from "@mui/icons-material";
 
 interface Props {
   automation: AutomationInterface,
@@ -49,23 +73,135 @@ export const AutomationEdit = (props: Props) => {
     setAutomation(a);
   }
 
-  return (
-    <InputBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationEdit.autoEdit")} saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={checkDelete} help="chums/automations">
-      <ErrorMessages errors={errors} />
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12 }}>
-          <TextField fullWidth label={Locale.label("common.title")} value={automation?.title || ""} name="title" onChange={handleChange} data-testid="automation-title-input" aria-label="Automation title" />
-          <FormControl fullWidth>
-            <InputLabel>{Locale.label("tasks.automationEdit.rep")}</InputLabel>
-            <Select fullWidth label={Locale.label("tasks.automationEdit.rep")} value={automation?.recurs || ""} name="recurs" onChange={handleChange} data-testid="recurs-select" aria-label="Recurrence">
-              <MenuItem value="never">{Locale.label("tasks.automationEdit.never")}</MenuItem>
-              <MenuItem value="yearly">{Locale.label("tasks.automationEdit.yearly")}</MenuItem>
-              <MenuItem value="monthly">{Locale.label("tasks.automationEdit.monthly")}</MenuItem>
-            </Select>
-          </FormControl>
+  const handleActiveToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const a = { ...automation };
+    a.active = e.target.checked;
+    setAutomation(a);
+  }
 
-        </Grid>
-      </Grid>
-    </InputBox>
+  return (
+    <Card sx={{ 
+      borderRadius: 2,
+      border: '1px solid',
+      borderColor: 'grey.200',
+      transition: 'all 0.2s ease-in-out',
+      '&:hover': {
+        boxShadow: 2
+      }
+    }}>
+      <CardContent>
+        <Stack spacing={3}>
+          {/* Header */}
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <AutomationsIcon sx={{ color: 'primary.main' }} />
+              <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                {Locale.label("tasks.automationEdit.autoEdit")}
+              </Typography>
+            </Stack>
+          </Box>
+
+          {/* Error Messages */}
+          {errors.length > 0 && <ErrorMessages errors={errors} />}
+
+          {/* Form Fields */}
+          <Stack spacing={2}>
+            <TextField 
+              fullWidth 
+              label={Locale.label("common.title")} 
+              value={automation?.title || ""} 
+              name="title" 
+              onChange={handleChange} 
+              data-testid="automation-title-input" 
+              aria-label="Automation title"
+              variant="outlined"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '&:hover fieldset': {
+                    borderColor: 'primary.main',
+                  }
+                }
+              }}
+            />
+            
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>{Locale.label("tasks.automationEdit.rep")}</InputLabel>
+              <Select 
+                label={Locale.label("tasks.automationEdit.rep")} 
+                value={automation?.recurs || "never"} 
+                name="recurs" 
+                onChange={handleChange} 
+                data-testid="recurs-select" 
+                aria-label="Recurrence"
+                startAdornment={<RepeatIcon sx={{ color: 'action.active', ml: 1, mr: 0.5 }} />}
+              >
+                <MenuItem value="never">{Locale.label("tasks.automationEdit.never")}</MenuItem>
+                <MenuItem value="yearly">{Locale.label("tasks.automationEdit.yearly")}</MenuItem>
+                <MenuItem value="monthly">{Locale.label("tasks.automationEdit.monthly")}</MenuItem>
+              </Select>
+              <FormHelperText>How often should this automation run?</FormHelperText>
+            </FormControl>
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={automation?.active || false}
+                  onChange={handleActiveToggle}
+                  color="primary"
+                />
+              }
+              label={
+                <Typography variant="body1" sx={{ fontWeight: automation?.active ? 600 : 400 }}>
+                  {automation?.active ? 'Active' : 'Inactive'}
+                </Typography>
+              }
+            />
+          </Stack>
+
+          {/* Action Buttons */}
+          <Stack direction="row" spacing={2} justifyContent="flex-end">
+            {automation?.id && (
+              <Button
+                variant="outlined"
+                color="error"
+                startIcon={<DeleteIcon />}
+                onClick={handleDelete}
+                sx={{
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 600
+                }}
+              >
+                {Locale.label("common.delete")}
+              </Button>
+            )}
+            <Button
+              variant="outlined"
+              startIcon={<CancelIcon />}
+              onClick={props.onCancel}
+              sx={{
+                borderRadius: 2,
+                textTransform: 'none',
+                fontWeight: 600
+              }}
+            >
+              {Locale.label("common.cancel")}
+            </Button>
+            <Button
+              variant="contained"
+              startIcon={<SaveIcon />}
+              onClick={handleSave}
+              sx={{
+                borderRadius: 2,
+                textTransform: 'none',
+                fontWeight: 600
+              }}
+            >
+              {Locale.label("common.save")}
+            </Button>
+          </Stack>
+        </Stack>
+      </CardContent>
+    </Card>
   );
 }

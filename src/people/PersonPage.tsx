@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Groups, PersonAttendance, PersonNotes, PersonDonations } from "./components"
-import { UserHelper, ApiHelper, type PersonInterface, Permissions, type ConversationInterface, Locale, type FormInterface, ArrayHelper } from "@churchapps/apphelper"
-import { Grid, Icon } from "@mui/material"
+import { ApiHelper, type PersonInterface, type ConversationInterface, Locale, type FormInterface } from "@churchapps/apphelper"
 import { useParams } from "react-router-dom";
 import { PersonBanner } from "./components/PersonBanner";
 import { PersonDetails } from "./components/PersonDetails";
@@ -57,17 +56,8 @@ export const PersonPage = () => {
 
 
 
-  let defaultTab = "details";
+  const defaultTab = "details";
 
-  const getTabs = () => {
-    const tabs: { key: string, icon: string, label: string }[] = [];
-    tabs.push({ key: "details", icon: "person", label: Locale.label("person.person") });
-    if (UserHelper.checkAccess(Permissions.membershipApi.people.edit)) { tabs.push({ key: "notes", icon: "notes", label: Locale.label("common.notes") }); if (defaultTab === "") defaultTab = "notes" }
-    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) { tabs.push({ key: "attendance", icon: "calendar_month", label: Locale.label("people.tabs.att") }); if (defaultTab === "") defaultTab = "attendance"; }
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.view)) { tabs.push({ key: "donations", icon: "volunteer_activism", label: Locale.label("people.tabs.don") }); if (defaultTab === "") defaultTab = "donations"; }
-    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) tabs.push({ key: "groups", icon: "people", label: Locale.label("people.groups.groups") });
-    return tabs;
-  }
 
   React.useEffect(() => {
     if (selectedTab === "" && defaultTab !== "") {
@@ -88,59 +78,27 @@ export const PersonPage = () => {
     }
     return currentTab;
   }
-  const getItem = (tab: any) => {
-    if (tab.key === selectedTab) return (
-      <li key={tab.key} className="active">
-        <a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}>
-          <Icon>{tab.icon}</Icon> {tab.label}
-        </a>
-      </li>
-    );
-    return (
-      <li key={tab.key}>
-        <a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}>
-          <Icon>{tab.icon}</Icon> {tab.label}
-        </a>
-      </li>
-    );
-  }
 
   React.useEffect(loadData, [params.id]);
 
-  const getFormList = () => {
-    const result = allForms?.map((form: FormInterface) => (
-      <li key={form.id}>
-        <a href="about:blank" onClick={(e) => {
-          e.preventDefault();
-          setForm(ArrayHelper.getOne(allForms, "id", form.id));
-          setSelectedTab("form");
-        }}>
-          {form.name}
-        </a>
-      </li>
-    ));
-    if (result) return (<><div className="subhead">Custom Forms</div><ul>{result}</ul></>)
-  }
 
   return (
     <>
-      <PersonBanner person={person} onTabChange={setSelectedTab} togglePhotoEditor={setInPhotoEditMode} onEdit={() => { setEditMode("edit"); setSelectedTab("details"); }} />
-      <Grid container spacing={2}>
-        <Grid size={{ xs: 12, md: 2 }}>
-          <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
-            <ul>{getTabs().map((tab) => getItem(tab))}</ul>
-
-            {getFormList()}
-
-          </div>
-        </Grid>
-        <Grid size={{ xs: 12, md: 10 }}>
-          <div id="mainContent">
-            {getCurrentTab()}
-          </div>
-        </Grid>
-      </Grid>
-
+      <PersonBanner 
+        person={person} 
+        onTabChange={setSelectedTab} 
+        togglePhotoEditor={setInPhotoEditMode} 
+        onEdit={() => { setEditMode("edit"); setSelectedTab("details"); }}
+        allForms={allForms}
+        onFormSelect={(form) => {
+          setForm(form);
+          setSelectedTab("form");
+        }}
+        selectedTab={selectedTab}
+      />
+      <div style={{ padding: "24px" }}>
+        {getCurrentTab()}
+      </div>
     </>
   )
 

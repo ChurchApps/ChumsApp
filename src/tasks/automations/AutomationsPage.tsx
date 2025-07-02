@@ -1,10 +1,31 @@
-import { Grid, Icon, Table, TableCell, TableRow } from "@mui/material";
+import { 
+  Grid, 
+  Typography, 
+  Card, 
+  CardContent, 
+  Stack, 
+  Box, 
+  Container, 
+  Button, 
+  Paper, 
+  List, 
+  ListItem, 
+  ListItemButton, 
+  ListItemIcon, 
+  ListItemText 
+} from "@mui/material";
 import React from "react";
-import { Locale, SmallButton } from "@churchapps/apphelper";
+import { Locale } from "@churchapps/apphelper";
 import { useMountedState } from "@churchapps/apphelper";
-import { ApiHelper, type AutomationInterface, DisplayBox } from "@churchapps/apphelper";
+import { ApiHelper, type AutomationInterface } from "@churchapps/apphelper";
 import { AutomationDetails } from "./components/AutomationDetails";
 import { AutomationEdit } from "./components/AutomationEdit";
+import {
+  SettingsSuggest as AutomationsIcon,
+  Add as AddIcon,
+  PlayCircle as ActiveIcon,
+  PauseCircle as InactiveIcon
+} from "@mui/icons-material";
 
 export const AutomationsPage = () => {
   const isMounted = useMountedState();
@@ -20,19 +41,67 @@ export const AutomationsPage = () => {
     }
   }
 
-  const getRows = () => {
-    if (automations.length > 0) {
-      const result: JSX.Element[] = [];
-      automations.forEach(a => {
-        const automation = a;
-        result.push(<TableRow>
-          <TableCell>
-            <a href="about:blank" onClick={(e) => { e.preventDefault(); setEditAutomation(automation); }}>{a.title}</a>
-          </TableCell>
-        </TableRow>)
-      })
-      return <Table>{result}</Table>
+  const getAutomationsList = () => {
+    if (automations.length === 0) {
+      return (
+        <Paper 
+          sx={{ 
+            p: 4, 
+            textAlign: 'center', 
+            backgroundColor: 'grey.50',
+            border: '1px dashed',
+            borderColor: 'grey.300'
+          }}
+        >
+          <AutomationsIcon sx={{ fontSize: 48, color: 'grey.400', mb: 2 }} />
+          <Typography variant="body1" color="text.secondary">
+            No automations configured. Create your first automation to get started!
+          </Typography>
+        </Paper>
+      );
     }
+
+    return (
+      <List sx={{ p: 0 }}>
+        {automations.map((automation) => (
+          <ListItem key={automation.id} disablePadding>
+            <ListItemButton
+              onClick={() => setEditAutomation(automation)}
+              sx={{
+                borderRadius: 1,
+                mb: 1,
+                border: '1px solid',
+                borderColor: 'grey.200',
+                '&:hover': {
+                  borderColor: 'primary.main',
+                  backgroundColor: 'action.hover'
+                }
+              }}
+            >
+              <ListItemIcon>
+                {automation.active ? (
+                  <ActiveIcon sx={{ color: 'success.main' }} />
+                ) : (
+                  <InactiveIcon sx={{ color: 'grey.400' }} />
+                )}
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="h6" sx={{ fontWeight: 600, fontSize: '1rem' }}>
+                    {automation.title}
+                  </Typography>
+                }
+                secondary={
+                  <Typography variant="body2" color="text.secondary">
+                    {automation.active ? 'Active' : 'Inactive'} • Recurs: {automation.recurs}
+                  </Typography>
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    );
   }
 
   const handleAdded = (automation: AutomationInterface) => {
@@ -48,22 +117,72 @@ export const AutomationsPage = () => {
 
   React.useEffect(loadData, [isMounted]);
 
-  const editContent = <SmallButton icon="add" onClick={() => { setShowAdd(true); setEditAutomation(null); }} />
+  return (
+    <Container maxWidth="lg" sx={{ py: 3 }}>
+      {/* Modern Header */}
+      <Box sx={{ 
+        backgroundColor: 'var(--c1l2)', 
+        color: '#FFF', 
+        p: 3, 
+        borderRadius: 2,
+        mb: 3
+      }}>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <AutomationsIcon sx={{ fontSize: 32 }} />
+          <Typography 
+            variant="h4" 
+            sx={{ 
+              fontWeight: 600,
+              fontSize: { xs: "1.75rem", md: "2.125rem" }
+            }}
+          >
+            {Locale.label("tasks.automationsPage.manageAuto")}
+          </Typography>
+        </Stack>
+      </Box>
 
-  return (<>
-    <h1><Icon>settings_suggest</Icon> {Locale.label("tasks.automationsPage.manageAuto")}</h1>
+      <Grid container spacing={3}>
+        <Grid size={{ xs: 12, md: 8 }}>
+          <Card sx={{ 
+            borderRadius: 2,
+            border: '1px solid',
+            borderColor: 'grey.200'
+          }}>
+            <CardContent>
+              {/* Header */}
+              <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <AutomationsIcon sx={{ color: 'primary.main' }} />
+                  <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                    {Locale.label("tasks.automationsPage.auto")}
+                  </Typography>
+                </Stack>
+                <Button
+                  variant="contained"
+                  size="small"
+                  startIcon={<AddIcon />}
+                  onClick={() => { setShowAdd(true); setEditAutomation(null); }}
+                  sx={{
+                    borderRadius: 2,
+                    textTransform: 'none',
+                    fontWeight: 600
+                  }}
+                >
+                  Add Automation
+                </Button>
+              </Stack>
 
-    <Grid container spacing={3}>
-      <Grid size={{ xs: 12, md: 8 }}>
-        <DisplayBox headerIcon="settings_suggest" headerText={Locale.label("tasks.automationsPage.auto")} editContent={editContent} help="chums/automations">
-          {getRows()}
-
-        </DisplayBox>
+              {/* Content */}
+              {getAutomationsList()}
+            </CardContent>
+          </Card>
+        </Grid>
+        
+        <Grid size={{ xs: 12, md: 4 }}>
+          {showAdd && <AutomationEdit automation={{ title: "", active: true, recurs: "never" }} onCancel={() => { setShowAdd(false); }} onSave={handleAdded} />}
+          {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} onDelete={handleDelete} />}
+        </Grid>
       </Grid>
-      <Grid size={{ xs: 12, md: 4 }}>
-        {showAdd && <AutomationEdit automation={{ title: "", active: true, recurs: "never" }} onCancel={() => { setShowAdd(false); }} onSave={handleAdded} />}
-        {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} onDelete={handleDelete} />}
-      </Grid>
-    </Grid>
-  </>);
+    </Container>
+  );
 };

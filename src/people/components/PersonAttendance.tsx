@@ -11,9 +11,7 @@ import {
   Divider,
   Paper,
   List,
-  ListItem,
-  ListItemIcon,
-  ListItemText
+  ListItem
 } from "@mui/material";
 import {
   CalendarMonth as CalendarIcon,

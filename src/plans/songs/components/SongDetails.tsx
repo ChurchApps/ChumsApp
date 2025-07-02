@@ -1,7 +1,33 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { DisplayBox, Locale } from "@churchapps/apphelper";
+import { Locale } from "@churchapps/apphelper";
 import { type SongDetailInterface } from "../../../helpers";
-import { Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { 
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+  Chip,
+  Avatar,
+  IconButton,
+  Paper,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider
+} from "@mui/material";
+import {
+  Edit as EditIcon,
+  Album as AlbumIcon,
+  Person as ArtistIcon,
+  Schedule as TimeIcon,
+  MusicNote as KeyIcon,
+  Speed as BpmIcon,
+  Language as LanguageIcon,
+  DateRange as DateIcon,
+  Timer as TimerIcon
+} from "@mui/icons-material";
 import { SongDetailsEdit } from "./SongDetailsEdit";
 import { SongDetailLinks } from "./SongDetailLinks";
 
@@ -23,34 +49,93 @@ export const SongDetails = memo((props: Props) => {
     return mins + ":" + (secs < 10 ? "0" : "") + secs;
   }, []);
 
-  const getDetails = useMemo(() => {
-    const result: JSX.Element[] = [];
-    if (!props.songDetail) return result;
+  const songDetailItems = useMemo(() => {
+    const items = [];
+    if (!props.songDetail) return items;
 
-    if (props.songDetail.artist) result.push(<TableRow key="artist"><TableCell><strong>{Locale.label("songs.details.artist")}</strong></TableCell><TableCell>{props.songDetail.artist}</TableCell></TableRow>);
+    if (props.songDetail.artist) {
+      items.push({
+        icon: <ArtistIcon />,
+        label: Locale.label("songs.details.artist") || "Artist",
+        value: props.songDetail.artist,
+        color: 'primary.main'
+      });
+    }
+
+    if (props.songDetail.album) {
+      items.push({
+        icon: <AlbumIcon />,
+        label: Locale.label("songs.details.album") || "Album",
+        value: props.songDetail.album,
+        color: 'secondary.main'
+      });
+    }
+
     if (props.songDetail.releaseDate) {
       const d = new Date(props.songDetail.releaseDate);
-      result.push(<TableRow key="releaseDate"><TableCell><strong>{Locale.label("songs.details.releaseDate")}</strong></TableCell><TableCell>{d.toLocaleDateString()}</TableCell></TableRow>);
+      items.push({
+        icon: <DateIcon />,
+        label: Locale.label("songs.details.releaseDate") || "Release Date",
+        value: d.toLocaleDateString(),
+        color: 'info.main'
+      });
     }
-    if (props.songDetail.album) result.push(<TableRow key="album"><TableCell><strong>{Locale.label("songs.details.album")}</strong></TableCell><TableCell>{props.songDetail.album}</TableCell></TableRow>);
-    if (props.songDetail.language) result.push(<TableRow key="language"><TableCell><strong>{Locale.label("songs.details.language")}</strong></TableCell><TableCell>{props.songDetail.language}</TableCell></TableRow>);
-    if (props.songDetail.bpm) result.push(<TableRow key="bpm"><TableCell><strong>{Locale.label("songs.details.bpm")}</strong></TableCell><TableCell>{props.songDetail.bpm}</TableCell></TableRow>);
-    if (props.songDetail.keySignature) result.push(<TableRow key="keySignature"><TableCell><strong>{Locale.label("songs.details.keySignature")}</strong></TableCell><TableCell>{props.songDetail.keySignature}</TableCell></TableRow>);
-    if (props.songDetail.tones) result.push(<TableRow key="tones"><TableCell><strong>{Locale.label("songs.details.keys")}</strong></TableCell><TableCell>{props.songDetail.tones}</TableCell></TableRow>);
-    if (props.songDetail.meter) result.push(<TableRow key="meter"><TableCell><strong>{Locale.label("songs.details.meter")}</strong></TableCell><TableCell>{props.songDetail.meter}</TableCell></TableRow>);
-    if (props.songDetail.seconds) result.push(<TableRow key="seconds"><TableCell><strong>{Locale.label("songs.details.length")}</strong></TableCell><TableCell>{formatSeconds(props.songDetail.seconds)}</TableCell></TableRow>);
 
-    /*
-    if (props.songDetail.ccliId) result.push(<TableRow><TableCell><strong>CCLI ID</strong></TableCell><TableCell><a target="_blank" rel="noopener noreferrer" href={`https://songselect.ccli.com/songs/${props.songDetail.ccliId}`}>{props.songDetail.ccliId}</a>{props.songDetail.ccliId}</TableCell></TableRow>);
+    if (props.songDetail.language) {
+      items.push({
+        icon: <LanguageIcon />,
+        label: Locale.label("songs.details.language") || "Language",
+        value: props.songDetail.language,
+        color: 'success.main'
+      });
+    }
 
-    if (props.songDetail.geniusId) result.push(<TableRow><TableCell><strong>Genius ID</strong>: <a href={`https://genius.com/songs/${props.songDetail.geniusId}`} target="_blank" rel="noopener noreferrer">{props.songDetail.geniusId}</a></TableCell></TableRow>);
-    if (props.songDetail.appleId) result.push(<TableRow><TableCell><strong>Apple ID</strong>: <a href={`https://music.apple.com/us/song/preview/${props.songDetail.appleId}`} target="_blank" rel="noopener noreferrer">{props.songDetail.appleId}</a></TableCell></TableRow>);
-    if (props.songDetail.youtubeId) result.push(<TableRow><TableCell><strong>YouTube ID</strong>: <a href={`https://youtube.com/watch?v=${props.songDetail.youtubeId}`} target="_blank" rel="noopener noreferrer">{props.songDetail.youtubeId}</a></TableCell></TableRow>);
-    if (props.songDetail.hymnaryId) result.push(<TableRow><TableCell><strong>Hymnary ID</strong>: <a href={`https://hymnary.org/hymn/${props.songDetail.hymnaryId}`} target="_blank" rel="noopener noreferrer">{props.songDetail.hymnaryId}</a></TableCell></TableRow>);
-    */
-    //if (songDetail.musicBrainzId) result.push(<div key="musicBrainzId"><strong>MusicBrainz ID</strong>: {songDetail.musicBrainzId}</div>);
+    if (props.songDetail.bpm) {
+      items.push({
+        icon: <BpmIcon />,
+        label: Locale.label("songs.details.bpm") || "BPM",
+        value: props.songDetail.bpm.toString(),
+        color: 'warning.main'
+      });
+    }
 
-    return result;
+    if (props.songDetail.keySignature) {
+      items.push({
+        icon: <KeyIcon />,
+        label: Locale.label("songs.details.keySignature") || "Key Signature",
+        value: props.songDetail.keySignature,
+        color: 'primary.main'
+      });
+    }
+
+    if (props.songDetail.tones) {
+      items.push({
+        icon: <KeyIcon />,
+        label: Locale.label("songs.details.keys") || "Keys",
+        value: props.songDetail.tones,
+        color: 'secondary.main'
+      });
+    }
+
+    if (props.songDetail.meter) {
+      items.push({
+        icon: <TimeIcon />,
+        label: Locale.label("songs.details.meter") || "Meter",
+        value: props.songDetail.meter,
+        color: 'info.main'
+      });
+    }
+
+    if (props.songDetail.seconds) {
+      items.push({
+        icon: <TimerIcon />,
+        label: Locale.label("songs.details.length") || "Length",
+        value: formatSeconds(props.songDetail.seconds),
+        color: 'success.main'
+      });
+    }
+
+    return items;
   }, [props.songDetail, formatSeconds]);
 
   const handleSave = useCallback(() => {
@@ -68,14 +153,108 @@ export const SongDetails = memo((props: Props) => {
 
   if (editMode) return <SongDetailsEdit songDetail={props.songDetail} onCancel={handleCancel} onSave={handleSave} reload={props.reload} />
 
-  return (<DisplayBox headerText={props.songDetail?.title} headerIcon="album" editFunction={handleEdit}>
-    <img src={props.songDetail?.thumbnail} alt={props.songDetail?.title} style={{ display: "block", marginLeft: "auto", marginRight: "auto" }} onError={handleImageError} />
-    <Table size="small">
-      <TableBody>
-        {getDetails}
-      </TableBody>
-    </Table>
-    <SongDetailLinks songDetail={props.songDetail} />
-  </DisplayBox>);
+  return (
+    <Card sx={{ borderRadius: 2, border: '1px solid', borderColor: 'grey.200' }}>
+      <CardContent>
+        {/* Header */}
+        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <AlbumIcon sx={{ color: 'primary.main', fontSize: 28 }} />
+            <Typography variant="h5" sx={{ fontWeight: 600, color: 'primary.main' }}>
+              {props.songDetail?.title || "Song Details"}
+            </Typography>
+          </Stack>
+          <IconButton
+            onClick={handleEdit}
+            sx={{
+              color: 'primary.main',
+              '&:hover': {
+                backgroundColor: 'primary.light'
+              }
+            }}
+            aria-label="Edit song details"
+          >
+            <EditIcon />
+          </IconButton>
+        </Stack>
+
+        {/* Song Thumbnail */}
+        {props.songDetail?.thumbnail && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+            <Avatar
+              src={props.songDetail.thumbnail}
+              sx={{ 
+                width: 120, 
+                height: 120,
+                bgcolor: 'grey.100',
+                border: '2px solid',
+                borderColor: 'grey.300'
+              }}
+              onError={handleImageError}
+            >
+              <AlbumIcon sx={{ fontSize: 48, color: 'grey.400' }} />
+            </Avatar>
+          </Box>
+        )}
+
+        {/* Song Details */}
+        {songDetailItems.length > 0 ? (
+          <List sx={{ p: 0 }}>
+            {songDetailItems.map((item, index) => (
+              <Box key={index}>
+                <ListItem sx={{ px: 0, py: 1 }}>
+                  <ListItemIcon sx={{ minWidth: 40 }}>
+                    {React.cloneElement(item.icon, { 
+                      sx: { color: item.color, fontSize: 20 } 
+                    })}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 600, minWidth: 100 }}>
+                          {item.label}:
+                        </Typography>
+                        <Chip
+                          label={item.value}
+                          variant="outlined"
+                          size="small"
+                          sx={{
+                            borderColor: item.color,
+                            color: item.color,
+                            fontWeight: 500
+                          }}
+                        />
+                      </Stack>
+                    }
+                  />
+                </ListItem>
+                {index < songDetailItems.length - 1 && <Divider />}
+              </Box>
+            ))}
+          </List>
+        ) : (
+          <Paper 
+            sx={{ 
+              p: 3, 
+              textAlign: 'center', 
+              backgroundColor: 'grey.50',
+              border: '1px dashed',
+              borderColor: 'grey.300'
+            }}
+          >
+            <AlbumIcon sx={{ fontSize: 48, color: 'grey.400', mb: 1 }} />
+            <Typography variant="body2" color="text.secondary">
+              No additional details available for this song.
+            </Typography>
+          </Paper>
+        )}
+
+        {/* Links Section */}
+        <Box sx={{ mt: 3 }}>
+          <SongDetailLinks songDetail={props.songDetail} />
+        </Box>
+      </CardContent>
+    </Card>
+  );
 });
 

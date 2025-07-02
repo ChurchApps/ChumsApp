@@ -1,17 +1,21 @@
-import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper } from "@churchapps/apphelper";
-import { Button, Typography, Chip, IconButton, Avatar, Stack, Box } from "@mui/material";
-import { Edit as EditIcon, Phone as PhoneIcon, Email as EmailIcon, Home as HomeIcon, Group as GroupIcon, VolunteerActivism as DonationIcon, CalendarMonth as AttendanceIcon, Notes as NotesIcon } from "@mui/icons-material";
-import React, { memo, useMemo } from "react";
+import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper, type FormInterface } from "@churchapps/apphelper";
+import { Button, Typography, Chip, IconButton, Avatar, Stack, Box, Menu, MenuItem } from "@mui/material";
+import { Edit as EditIcon, Phone as PhoneIcon, Email as EmailIcon, Home as HomeIcon, Group as GroupIcon, VolunteerActivism as DonationIcon, CalendarMonth as AttendanceIcon, Notes as NotesIcon, Assignment as FormIcon, ExpandMore as ExpandMoreIcon, Person as PersonIcon } from "@mui/icons-material";
+import React, { memo, useMemo, useState } from "react";
 
 interface Props {
   person: PersonInterface
   onTabChange?: (tab: string) => void
   togglePhotoEditor?: (show: boolean) => void
   onEdit?: () => void
+  allForms?: FormInterface[]
+  onFormSelect?: (form: FormInterface) => void
+  selectedTab?: string
 }
 
 export const PersonBanner = memo((props: Props) => {
-  const { person, onTabChange, togglePhotoEditor, onEdit } = props;
+  const { person, onTabChange, togglePhotoEditor, onEdit, allForms, onFormSelect, selectedTab } = props;
+  const [formsMenuAnchor, setFormsMenuAnchor] = useState<null | HTMLElement>(null);
   
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.people.edit), []);
 
@@ -98,11 +102,55 @@ export const PersonBanner = memo((props: Props) => {
   }, [person]);
 
   const quickActions = [
-    { label: "Notes", icon: <NotesIcon />, onClick: () => onTabChange?.("notes"), color: "inherit" },
-    { label: "Groups", icon: <GroupIcon />, onClick: () => onTabChange?.("groups"), color: "inherit" },
-    { label: "Attendance", icon: <AttendanceIcon />, onClick: () => onTabChange?.("attendance"), color: "inherit" },
-    { label: "Donations", icon: <DonationIcon />, onClick: () => onTabChange?.("donations"), color: "inherit" }
+    { 
+      label: "Details", 
+      icon: <PersonIcon />, 
+      onClick: () => onTabChange?.("details"), 
+      color: "inherit",
+      active: selectedTab === "details"
+    },
+    { 
+      label: "Notes", 
+      icon: <NotesIcon />, 
+      onClick: () => onTabChange?.("notes"), 
+      color: "inherit",
+      active: selectedTab === "notes"
+    },
+    { 
+      label: "Groups", 
+      icon: <GroupIcon />, 
+      onClick: () => onTabChange?.("groups"), 
+      color: "inherit",
+      active: selectedTab === "groups"
+    },
+    { 
+      label: "Attendance", 
+      icon: <AttendanceIcon />, 
+      onClick: () => onTabChange?.("attendance"), 
+      color: "inherit",
+      active: selectedTab === "attendance"
+    },
+    { 
+      label: "Donations", 
+      icon: <DonationIcon />, 
+      onClick: () => onTabChange?.("donations"), 
+      color: "inherit",
+      active: selectedTab === "donations"
+    }
   ];
+  
+  const handleFormsMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setFormsMenuAnchor(event.currentTarget);
+  };
+
+  const handleFormsMenuClose = () => {
+    setFormsMenuAnchor(null);
+  };
+
+  const handleFormSelect = (form: FormInterface) => {
+    onFormSelect?.(form);
+    handleFormsMenuClose();
+  };
 
   if (!person) return null;
 
@@ -211,13 +259,15 @@ export const PersonBanner = memo((props: Props) => {
             <Button
               key={action.label}
               size="small"
-              variant="outlined"
+              variant={action.active ? "contained" : "outlined"}
               sx={{ 
-                color: "#FFF", 
-                borderColor: "rgba(255,255,255,0.5)",
+                color: action.active ? "var(--c1l2)" : "#FFF", 
+                backgroundColor: action.active ? "#FFF" : "transparent",
+                borderColor: action.active ? "#FFF" : "rgba(255,255,255,0.5)",
                 "&:hover": {
                   borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)"
+                  backgroundColor: action.active ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
+                  color: action.active ? "var(--c1l2)" : "#FFF"
                 },
                 mb: { xs: 1, md: 0 }
               }}
@@ -227,6 +277,63 @@ export const PersonBanner = memo((props: Props) => {
               {action.label}
             </Button>
           ))}
+          
+          {/* Custom Forms Dropdown */}
+          {allForms && allForms.length > 0 && (
+            <>
+              <Button
+                size="small"
+                variant={selectedTab === "form" ? "contained" : "outlined"}
+                sx={{ 
+                  color: selectedTab === "form" ? "var(--c1l2)" : "#FFF", 
+                  backgroundColor: selectedTab === "form" ? "#FFF" : "transparent",
+                  borderColor: selectedTab === "form" ? "#FFF" : "rgba(255,255,255,0.5)",
+                  "&:hover": {
+                    borderColor: "#FFF",
+                    backgroundColor: selectedTab === "form" ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
+                    color: selectedTab === "form" ? "var(--c1l2)" : "#FFF"
+                  },
+                  mb: { xs: 1, md: 0 }
+                }}
+                startIcon={<FormIcon />}
+                endIcon={<ExpandMoreIcon />}
+                onClick={handleFormsMenuOpen}
+              >
+                Forms
+              </Button>
+              <Menu
+                anchorEl={formsMenuAnchor}
+                open={Boolean(formsMenuAnchor)}
+                onClose={handleFormsMenuClose}
+                PaperProps={{
+                  sx: {
+                    minWidth: 200,
+                    maxHeight: 300,
+                    mt: 1
+                  }
+                }}
+              >
+                {allForms.map((form) => (
+                  <MenuItem
+                    key={form.id}
+                    onClick={() => handleFormSelect(form)}
+                    sx={{
+                      py: 1.5,
+                      px: 2,
+                      "&:hover": {
+                        backgroundColor: "action.hover"
+                      }
+                    }}
+                  >
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <FormIcon sx={{ color: "text.secondary", fontSize: 20 }} />
+                      <Typography variant="body2">{form.name}</Typography>
+                    </Stack>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </>
+          )}
         </Stack>
       </Stack>
     </div>

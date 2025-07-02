@@ -1,7 +1,25 @@
 import React, { useState } from "react";
 import { ApiHelper, type GroupInterface, Locale } from "@churchapps/apphelper";
-import { TextField, Button, Table, TableBody, TableRow, TableCell } from "@mui/material";
-import { SmallButton } from "@churchapps/apphelper";
+import { 
+  TextField, 
+  Button, 
+  Table, 
+  TableBody, 
+  TableRow, 
+  TableCell,
+  InputAdornment,
+  Paper,
+  Typography,
+  Box,
+  Stack,
+  IconButton,
+  TableContainer
+} from "@mui/material";
+import {
+  Search as SearchIcon,
+  Group as GroupIcon,
+  Check as CheckIcon
+} from "@mui/icons-material";
 
 interface Props {
   addFunction: (group: GroupInterface) => void,
@@ -36,21 +54,116 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
     const sr = searchResults[i];
 
     rows.push(
-      <TableRow key={sr.id}>
-        <TableCell>{sr.name}</TableCell>
-        <TableCell style={{ textAlign: "right" }}>
-          <SmallButton color="success" icon="people" text={Locale.label("tasks.selectGroup.sel")} ariaLabel="Select group" onClick={() => handleAdd(sr)} data-testid={`select-group-button-${sr.id}`} />
+      <TableRow 
+        key={sr.id}
+        sx={{
+          '&:hover': {
+            backgroundColor: 'action.hover',
+            cursor: 'pointer'
+          },
+          '&:last-child td': {
+            border: 0
+          }
+        }}
+        onClick={() => handleAdd(sr)}
+      >
+        <TableCell>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <GroupIcon sx={{ color: 'text.secondary', fontSize: 20 }} />
+            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+              {sr.name}
+            </Typography>
+          </Stack>
+        </TableCell>
+        <TableCell align="right">
+          <IconButton 
+            size="small"
+            color="primary"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleAdd(sr);
+            }}
+            data-testid={`select-group-button-${sr.id}`}
+            aria-label="Select group"
+          >
+            <CheckIcon />
+          </IconButton>
         </TableCell>
       </TableRow>
     );
   }
 
   return (
-    <>
-      <TextField fullWidth name="groupSearchText" label={Locale.label("tasks.selectGroup.group")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown}
-        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={handleSearch}>{Locale.label("common.search")}</Button> }}
+    <Stack spacing={2}>
+      <TextField 
+        fullWidth 
+        name="groupSearchText" 
+        label={Locale.label("tasks.selectGroup.group")} 
+        value={searchText} 
+        onChange={handleChange} 
+        onKeyDown={handleKeyDown}
+        variant="outlined"
+        InputProps={{ 
+          endAdornment: (
+            <InputAdornment position="end">
+              <Button 
+                variant="contained" 
+                id="searchButton" 
+                data-cy="search-button" 
+                onClick={handleSearch}
+                startIcon={<SearchIcon />}
+                sx={{
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 600
+                }}
+              >
+                {Locale.label("common.search")}
+              </Button>
+            </InputAdornment>
+          )
+        }}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: 'primary.main',
+            }
+          }
+        }}
       />
-      <Table size="small" id="householdMemberAddTable"><TableBody>{rows}</TableBody></Table>
-    </>
+      
+      {searchResults.length > 0 ? (
+        <TableContainer 
+          component={Paper} 
+          sx={{ 
+            maxHeight: 300,
+            border: '1px solid',
+            borderColor: 'grey.200'
+          }}
+        >
+          <Table size="small" stickyHeader>
+            <TableBody>{rows}</TableBody>
+          </Table>
+        </TableContainer>
+      ) : searchText && (
+        <Paper 
+          sx={{ 
+            p: 3, 
+            textAlign: 'center',
+            backgroundColor: 'grey.50',
+            border: '1px dashed',
+            borderColor: 'grey.300'
+          }}
+        >
+          <GroupIcon sx={{ fontSize: 48, color: 'grey.400', mb: 1 }} />
+          <Typography variant="body2" color="text.secondary">
+            {searchResults.length === 0 && searchText ? 
+              'No groups found matching your search' : 
+              'Search for a group to select'
+            }
+          </Typography>
+        </Paper>
+      )}
+    </Stack>
   );
 }
