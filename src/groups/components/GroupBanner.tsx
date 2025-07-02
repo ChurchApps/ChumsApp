@@ -1,19 +1,29 @@
-import { type GroupInterface, UserHelper, Permissions } from "@churchapps/apphelper";
+import { type GroupInterface, UserHelper, Permissions, ApiHelper, type GroupServiceTimeInterface } from "@churchapps/apphelper";
 import { Button, Typography, Chip, IconButton, Stack, Box } from "@mui/material";
-import { Edit as EditIcon, Schedule as ScheduleIcon, LocationOn as LocationIcon, Group as GroupIcon, CalendarMonth as AttendanceIcon, Assignment as PlanIcon, CheckCircle as CheckIcon, Cancel as CancelIcon } from "@mui/icons-material";
+import { Edit as EditIcon, Schedule as ScheduleIcon, LocationOn as LocationIcon, Group as GroupIcon, CalendarMonth as AttendanceIcon, Assignment as PlanIcon, CheckCircle as CheckIcon, Cancel as CancelIcon, Event as CalendarIcon } from "@mui/icons-material";
 import React, { memo, useMemo } from "react";
 
 interface Props {
   group: GroupInterface
+  selectedTab?: string
   onTabChange?: (tab: string) => void
   togglePhotoEditor?: (show: boolean) => void
   onEdit?: () => void
 }
 
 export const GroupBanner = memo((props: Props) => {
-  const { group, onTabChange, togglePhotoEditor, onEdit } = props;
+  const { group, selectedTab, onTabChange, togglePhotoEditor, onEdit } = props;
+  const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
   
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.groups.edit), []);
+
+  React.useEffect(() => {
+    if (group?.id) {
+      ApiHelper.get("/groupservicetimes?groupId=" + group.id, "AttendanceApi")
+        .then(data => setGroupServiceTimes(data))
+        .catch(() => setGroupServiceTimes([]));
+    }
+  }, [group?.id]);
 
   const isStandard = useMemo(() => 
     group?.tags?.indexOf("standard") > -1, 
@@ -71,8 +81,9 @@ export const GroupBanner = memo((props: Props) => {
       });
     }
 
+
     return stats;
-  }, [group, isStandard]);
+  }, [group, isStandard, groupServiceTimes]);
 
   const attendanceInfo = useMemo(() => {
     if (!group || !isStandard) return [];
@@ -112,11 +123,10 @@ export const GroupBanner = memo((props: Props) => {
   }, [group, isStandard]);
 
   const quickActions = [
-    { label: "Members", icon: <GroupIcon />, onClick: () => onTabChange?.("members"), color: "inherit" },
+    { label: "Members", key: "members", icon: <GroupIcon />, onClick: () => onTabChange?.("members") },
     ...(isStandard && group?.trackAttendance ? [
-      { label: "Sessions", icon: <AttendanceIcon />, onClick: () => onTabChange?.("sessions"), color: "inherit" }
-    ] : []),
-    { label: "Settings", icon: <PlanIcon />, onClick: () => onTabChange?.("settings"), color: "inherit" }
+      { label: "Sessions", key: "sessions", icon: <AttendanceIcon />, onClick: () => onTabChange?.("sessions") }
+    ] : [])
   ];
 
   if (!group) return null;
@@ -348,36 +358,80 @@ export const GroupBanner = memo((props: Props) => {
                 }}
                 useFlexGap
               >
-                {quickActions.map((action) => (
-                  <Button
-                    key={action.label}
-                    size="small"
-                    variant="outlined"
-                    sx={{ 
-                      color: "#FFF", 
-                      borderColor: "rgba(255,255,255,0.5)",
-                      "&:hover": {
-                        borderColor: "#FFF",
-                        backgroundColor: "rgba(255,255,255,0.1)"
-                      },
-                      minWidth: 'auto',
-                      px: 2,
-                      py: 0.5
-                    }}
-                    startIcon={action.icon}
-                    onClick={action.onClick}
-                  >
-                    {action.label}
-                  </Button>
-                ))}
+                {quickActions.map((action) => {
+                  const isActive = selectedTab === action.key;
+                  return (
+                    <Button
+                      key={action.label}
+                      size="small"
+                      variant={isActive ? "contained" : "outlined"}
+                      sx={{ 
+                        color: isActive ? "var(--c1l2)" : "#FFF", 
+                        backgroundColor: isActive ? "#FFF" : "transparent",
+                        borderColor: isActive ? "#FFF" : "rgba(255,255,255,0.5)",
+                        "&:hover": {
+                          borderColor: "#FFF",
+                          backgroundColor: isActive ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
+                          color: isActive ? "var(--c1l2)" : "#FFF"
+                        },
+                        minWidth: 'auto',
+                        px: 2,
+                        py: 0.5,
+                        fontWeight: isActive ? 600 : 400
+                      }}
+                      startIcon={action.icon}
+                      onClick={action.onClick}
+                    >
+                      {action.label}
+                    </Button>
+                  );
+                })}
               </Stack>
             </Stack>
           </Stack>
         </Stack>
         
+        {/* Services Row - Full Width */}
+        {groupServiceTimes.length > 0 && (
+          <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.2)', pt: 1.5 }}>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: "rgba(255,255,255,0.8)", 
+                fontSize: { xs: "0.75rem", md: "0.875rem" },
+                fontWeight: 600,
+                mb: 1,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
+              }}
+            >
+              Associated Services
+            </Typography>
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              {groupServiceTimes.map((gst, idx) => (
+                <Chip
+                  key={idx}
+                  icon={<CalendarIcon sx={{ fontSize: 14 }} />}
+                  label={gst.serviceTime.name}
+                  size="small"
+                  sx={{ 
+                    backgroundColor: "rgba(255,255,255,0.2)", 
+                    color: "#FFF",
+                    fontSize: '0.875rem',
+                    height: 24,
+                    '& .MuiChip-icon': {
+                      color: '#FFF'
+                    }
+                  }}
+                />
+              ))}
+            </Stack>
+          </Box>
+        )}
+
         {/* Bottom Row: Description - Spans All Columns */}
         {isStandard && group.about && (
-          <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.2)', pt: 1.5 }}>
+          <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.2)', pt: 1.5, mt: groupServiceTimes.length > 0 ? 0 : 0 }}>
             <Typography 
               variant="body2" 
               sx={{ 

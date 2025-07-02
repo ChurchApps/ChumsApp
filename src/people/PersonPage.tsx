@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { Groups, PersonAttendance } from "./components"
-import { UserHelper, ApiHelper, type PersonInterface, Permissions, type ConversationInterface, Notes, DonationPage, Locale, type FormInterface, ArrayHelper } from "@churchapps/apphelper"
+import { Groups, PersonAttendance, PersonNotes, PersonDonations } from "./components"
+import { UserHelper, ApiHelper, type PersonInterface, Permissions, type ConversationInterface, Locale, type FormInterface, ArrayHelper } from "@churchapps/apphelper"
 import { Grid, Icon } from "@mui/material"
 import { useParams } from "react-router-dom";
 import { PersonBanner } from "./components/PersonBanner";
@@ -79,9 +79,9 @@ export const PersonPage = () => {
     let currentTab = null;
     switch (selectedTab) {
       case "details": currentTab = <PersonDetails key="details" person={person} loadData={loadData} inPhotoEditMode={inPhotoEditMode} setInPhotoEditMode={setInPhotoEditMode} editMode={editMode} setEditMode={setEditMode} />; break;
-      case "notes": currentTab = <Notes key="notes" context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />; break;
+      case "notes": currentTab = <PersonNotes key="notes" context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />; break;
       case "attendance": currentTab = <PersonAttendance key="attendance" personId={person.id} />; break;
-      case "donations": currentTab = <DonationPage key="donations" personId={person.id} church={UserHelper.currentUserChurch.church} />; break;
+      case "donations": currentTab = <PersonDonations key="donations" personId={person.id} />; break;
       case "groups": currentTab = <Groups key="groups" personId={person?.id} />; break;
       case "form": currentTab = <PersonForm key="form" form={form} contentType={"person"} contentId={person.id} formSubmissions={person.formSubmissions} updatedFunction={() => { loadData() }} />; break;
       default: currentTab = <div key="default">{Locale.label("people.tabs.noImplement")}</div>; break;

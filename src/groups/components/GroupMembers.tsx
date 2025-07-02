@@ -80,7 +80,19 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
 
       rows.push(
         <TableRow key={i}>
-          <TableCell><Avatar src={PersonHelper.getPhotoUrl(gm.person)} sx={{ width: 48, height: 48 }} /></TableCell>
+          <TableCell>
+            <Avatar 
+              src={PersonHelper.getPhotoUrl(gm.person)} 
+              sx={{ 
+                width: 48, 
+                height: 48,
+                '& img': {
+                  objectFit: 'cover',
+                  objectPosition: 'center'
+                }
+              }} 
+            />
+          </TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
           <TableCell style={{ textAlign: "right" }}>{editLinks}</TableCell>
         </TableRow>
