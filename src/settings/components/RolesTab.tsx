@@ -1,19 +1,27 @@
 import React, { useState } from "react";
-import {  Roles, RoleEdit } from "./"
-import { type ChurchInterface } from "@churchapps/apphelper"
+import { Roles, RoleEdit } from "./";
+import { type ChurchInterface } from "@churchapps/apphelper";
 
 interface Props {
   church: ChurchInterface | null;
 }
 
-export const RolesTab = (props:Props) => {
+export const RolesTab = (props: Props) => {
   const [selectedRoleId, setSelectedRoleId] = useState<string>("notset");
 
   const getSidebar = () => {
     const modules: JSX.Element[] = [];
-    if (selectedRoleId !== "notset") modules.push(<RoleEdit key="roleEdit" roleId={selectedRoleId} updatedFunction={() => { setSelectedRoleId("notset") }} />);
+    if (selectedRoleId !== "notset") {
+      modules.push(<RoleEdit
+          key="roleEdit"
+          roleId={selectedRoleId}
+          updatedFunction={() => {
+            setSelectedRoleId("notset");
+          }}
+        />);
+    }
     return modules;
-  }
+  };
 
   return (
     <>
@@ -21,5 +29,4 @@ export const RolesTab = (props:Props) => {
       {props.church && <Roles selectRoleId={setSelectedRoleId} selectedRoleId={selectedRoleId} church={props.church} />}
     </>
   );
-}
-
+};

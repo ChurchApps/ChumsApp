@@ -5,19 +5,17 @@ import { Grid } from "@mui/material";
 import { GroupMembers } from "./GroupMembers";
 import { PersonAddAdvanced } from "../../people/components/PersonAddAdvanced";
 
-
 interface Props {
-  group: GroupInterface
+  group: GroupInterface;
 }
 
-export const GroupMembersTab = (props:Props) => {
+export const GroupMembersTab = (props: Props) => {
   const [addedPerson, setAddedPerson] = React.useState({} as PersonInterface);
   const addPerson = (p: PersonInterface) => setAddedPerson(p);
 
   const handleAddedCallback = () => {
     setAddedPerson(null);
-  }
-
+  };
 
   return (
     <>
@@ -31,4 +29,4 @@ export const GroupMembersTab = (props:Props) => {
       </Grid>
     </>
   );
-}
+};

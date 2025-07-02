@@ -1,19 +1,12 @@
 import React, { memo } from "react";
 import { Question } from "./";
-import { 
-  Grid, 
-  Box, 
-  IconButton, 
-  Tooltip,
-  Typography,
-  Stack
-} from "@mui/material";
+import { Grid, Box, IconButton, Tooltip, Typography, Stack } from "@mui/material";
 import { Edit as EditIcon } from "@mui/icons-material";
 import { type FormSubmissionInterface, Permissions, ApiHelper, UserHelper, UniqueIdHelper, Loading } from "@churchapps/apphelper";
 
 interface Props {
-  formSubmissionId: string,
-  editFunction: (formSubmissionId: string) => void
+  formSubmissionId: string;
+  editFunction: (formSubmissionId: string) => void;
 }
 
 export const FormSubmission: React.FC<Props> = memo((props) => {
@@ -44,7 +37,7 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
       if (answers[i].questionId === questionId) return answers[i];
     }
     return null;
-  }
+  };
 
   React.useEffect(() => {
     loadData();
@@ -56,7 +49,7 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
 
   if (!formSubmission) {
     return (
-      <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 2 }}>
+      <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 2 }}>
         No form submission data available.
       </Typography>
     );
@@ -68,25 +61,27 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
   const secondHalf = questions.slice(halfWay);
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box sx={{ position: "relative" }}>
       {/* Edit Button */}
       {formPermission && (
-        <Box sx={{ 
-          position: 'absolute', 
-          top: 0, 
-          right: 0, 
-          zIndex: 1 
-        }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            zIndex: 1,
+          }}
+        >
           <Tooltip title="Edit form submission">
             <IconButton
               onClick={() => props.editFunction(props.formSubmissionId)}
               size="small"
               sx={{
-                color: 'primary.main',
-                '&:hover': {
-                  backgroundColor: 'primary.light',
-                  color: 'primary.contrastText'
-                }
+                color: "primary.main",
+                "&:hover": {
+                  backgroundColor: "primary.light",
+                  color: "primary.contrastText",
+                },
               }}
               data-testid="edit-form-submission-button"
               aria-label="Edit form submission"
@@ -104,11 +99,7 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
             <Grid size={{ xs: 12, md: questions.length > 1 ? 6 : 12 }}>
               <Stack spacing={2}>
                 {firstHalf.map((question, index) => (
-                  <Question 
-                    key={`first-${question.id || index}`} 
-                    question={question} 
-                    answer={getAnswer(question.id)} 
-                  />
+                  <Question key={`first-${question.id || index}`} question={question} answer={getAnswer(question.id)} />
                 ))}
               </Stack>
             </Grid>
@@ -116,18 +107,14 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
               <Grid size={{ xs: 12, md: 6 }}>
                 <Stack spacing={2}>
                   {secondHalf.map((question, index) => (
-                    <Question 
-                      key={`second-${question.id || index}`} 
-                      question={question} 
-                      answer={getAnswer(question.id)} 
-                    />
+                    <Question key={`second-${question.id || index}`} question={question} answer={getAnswer(question.id)} />
                   ))}
                 </Stack>
               </Grid>
             )}
           </Grid>
         ) : (
-          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 2 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 2 }}>
             No questions found in this form submission.
           </Typography>
         )}
@@ -135,4 +122,3 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
     </Box>
   );
 });
-

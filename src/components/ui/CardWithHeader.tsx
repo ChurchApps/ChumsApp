@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import { Card, Box, Stack, Typography } from '@mui/material';
+import React, { ReactNode } from "react";
+import { Card, Box, Stack, Typography } from "@mui/material";
 
 interface CardWithHeaderProps {
   title: string;
@@ -10,20 +10,13 @@ interface CardWithHeaderProps {
   borderRadius?: number;
 }
 
-export const CardWithHeader: React.FC<CardWithHeaderProps> = ({
-  title,
-  icon,
-  actions,
-  children,
-  borderColor = 'grey.200',
-  borderRadius = 2
-}) => {
+export const CardWithHeader: React.FC<CardWithHeaderProps> = ({ title, icon, actions, children, borderColor = "grey.200", borderRadius = 2 }) => {
   return (
-    <Card 
-      sx={{ 
+    <Card
+      sx={{
         borderRadius,
-        border: '1px solid',
-        borderColor
+        border: "1px solid",
+        borderColor,
       }}
     >
       <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
@@ -35,9 +28,7 @@ export const CardWithHeader: React.FC<CardWithHeaderProps> = ({
           {actions}
         </Stack>
       </Box>
-      <Box sx={{ p: 2 }}>
-        {children}
-      </Box>
+      <Box sx={{ p: 2 }}>{children}</Box>
     </Card>
   );
 };

@@ -1,12 +1,14 @@
-import React from "react"
-import { Search, MergeModal } from "."
-import { InputBox, type PersonInterface, ApiHelper, type GroupMemberInterface, type VisitInterface, type DonationInterface, type FormSubmissionInterface, Locale } from "@churchapps/apphelper"
-import { useNavigate } from "react-router-dom"
+import React from "react";
+import { Search, MergeModal } from ".";
+import {
+ InputBox, type PersonInterface, ApiHelper, type GroupMemberInterface, type VisitInterface, type DonationInterface, type FormSubmissionInterface, Locale 
+} from "@churchapps/apphelper";
+import { useNavigate } from "react-router-dom";
 import { useMountedState } from "@churchapps/apphelper";
 
 interface Props {
-  hideMergeBox: () => void,
-  person: PersonInterface,
+  hideMergeBox: () => void;
+  person: PersonInterface;
 }
 
 export const Merge: React.FunctionComponent<Props> = (props) => {
@@ -19,24 +21,23 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
 
   const handleSave = () => {
     props.hideMergeBox();
-  }
+  };
 
   const handleMerge = (personId: string) => {
-    const person: PersonInterface[] = [...searchResults].filter(p => p.id === personId);
+    const person: PersonInterface[] = [...searchResults].filter((p) => p.id === personId);
     setPersonToMerge(person[0]);
     setShowMergeModal(true);
-  }
+  };
 
   const search = async (searchText: string) => {
     try {
       const results: PersonInterface[] = await ApiHelper.post("/people/search", { term: searchText }, "MembershipApi");
-      const filteredList = results.filter(person => person.id !== props.person.id);
+      const filteredList = results.filter((person) => person.id !== props.person.id);
       setSearchResults(filteredList);
     } catch (err) {
       console.log("Error occured in fetching search results: ", err);
     }
-
-  }
+  };
 
   const fetchHouseholdMembers = async (householdId: string) => {
     try {
@@ -45,7 +46,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     } catch (err) {
       console.log("Error occured in fetching household members: ", err);
     }
-  }
+  };
 
   const fetchGroupMembers = async (personId: string) => {
     try {
@@ -54,7 +55,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     } catch (err) {
       console.log("Error in fetching group's data: ", err);
     }
-  }
+  };
 
   /*
   const fetchNotes = async (contentId: string) => {
@@ -73,7 +74,7 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     } catch (err) {
       console.log("Error in fetching visits: ", err);
     }
-  }
+  };
 
   const fetchDonations = async (personId: string) => {
     try {
@@ -82,16 +83,16 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     } catch (err) {
       console.log("Error in fetching donations: ", err);
     }
-  }
+  };
 
   const fetchFormSubmissions = async (personId: string) => {
     try {
       const formSubmissions: FormSubmissionInterface[] = await ApiHelper.get(`/formsubmissions?personId=${personId}`, "MembershipApi");
       return formSubmissions;
     } catch (err) {
-      console.log("Error in fetching form submissions: ", err)
+      console.log("Error in fetching form submissions: ", err);
     }
-  }
+  };
 
   const merge = async (person: PersonInterface, personToRemove: PersonInterface) => {
     try {
@@ -105,11 +106,11 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
       const formSubmission = await fetchFormSubmissions(id);
 
       const promises = [];
-      householdMembers.forEach(member => {
+      householdMembers.forEach((member) => {
         member.householdId = person.householdId;
         promises.push(ApiHelper.post("/people", [member], "MembershipApi"));
       });
-      groupMembers.forEach(groupMember => {
+      groupMembers.forEach((groupMember) => {
         groupMember.personId = person.id;
         promises.push(ApiHelper.post("/groupmembers", [groupMember], "MembershipApi"));
       });
@@ -119,18 +120,18 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         promises.push(ApiHelper.post("/notes", [note], "MembershipApi"));
       })*/
 
-      visits.forEach(visit => {
+      visits.forEach((visit) => {
         visit.personId = person.id;
         promises.push(ApiHelper.post(`/visits`, [visit], "AttendanceApi"));
-      })
-      donations.forEach(donation => {
+      });
+      donations.forEach((donation) => {
         donation.personId = person.id;
         promises.push(ApiHelper.post("/donations", [donation], "GivingApi"));
-      })
-      formSubmission.forEach(form => {
+      });
+      formSubmission.forEach((form) => {
         form.contentId = person.id;
         promises.push(ApiHelper.post("/formsubmissions", { formSubmissions: [form] }, "MembershipApi"));
-      })
+      });
       promises.push(ApiHelper.post(`/people`, [person], "MembershipApi"));
       promises.push(ApiHelper.delete(`/people/${id}`, "MembershipApi"));
       Promise.all(promises).then(() => {
@@ -141,12 +142,12 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         if (isMounted()) {
           setMergeInProgress(false);
         }
-      })
+      });
     } catch (err) {
       setMergeInProgress(false);
       console.log("Error in merging records...!!", err);
     }
-  }
+  };
 
   const person1 = { ...props.person };
   return (
@@ -156,5 +157,5 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
         <Search handleSearch={search} searchResults={searchResults} buttonText={Locale.label("people.merge.merge")} handleClickAction={handleMerge} />
       </InputBox>
     </>
-  )
-}
+  );
+};

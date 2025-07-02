@@ -49,12 +49,7 @@ export class SettingsHelper {
    */
   static async manageRoles(page: Page) {
     // Look for roles tab or link
-    const rolesSelectors = [
-      'text=Roles',
-      'a[href="/roles"]',
-      'button:has-text("Roles")',
-      'tab:has-text("Roles")'
-    ];
+    const rolesSelectors = ['text=Roles', 'a[href="/roles"]', 'button:has-text("Roles")', 'tab:has-text("Roles")'];
     
     for (const selector of rolesSelectors) {
       const rolesLink = page.locator(selector).first();
@@ -78,12 +73,7 @@ export class SettingsHelper {
    */
   static async manageUsers(page: Page) {
     // Look for users tab or link
-    const usersSelectors = [
-      'text=Users',
-      'a[href="/users"]',
-      'button:has-text("Users")',
-      'tab:has-text("Users")'
-    ];
+    const usersSelectors = ['text=Users', 'a[href="/users"]', 'button:has-text("Users")', 'tab:has-text("Users")'];
     
     for (const selector of usersSelectors) {
       const usersLink = page.locator(selector).first();
@@ -103,12 +93,7 @@ export class SettingsHelper {
    * Search for settings
    */
   static async searchSettings(page: Page, searchTerm: string) {
-    const searchSelectors = [
-      '#searchText',
-      'input[placeholder*="Search"]',
-      'input[name="search"]',
-      'input[placeholder*="Settings"]'
-    ];
+    const searchSelectors = ['#searchText', 'input[placeholder*="Search"]', 'input[name="search"]', 'input[placeholder*="Settings"]'];
     
     for (const selector of searchSelectors) {
       const searchInput = page.locator(selector).first();
@@ -153,11 +138,7 @@ export class SettingsHelper {
     console.log('Simulating church settings update');
     
     // Look for church settings section
-    const settingsSelectors = [
-      'text=Church Settings',
-      'button:has-text("Church Settings")',
-      'tab:has-text("Church")'
-    ];
+    const settingsSelectors = ['text=Church Settings', 'button:has-text("Church Settings")', 'tab:has-text("Church")'];
     
     for (const selector of settingsSelectors) {
       const settingsLink = page.locator(selector).first();
@@ -206,12 +187,7 @@ export class SettingsHelper {
     await this.manageRoles(page);
     
     // Look for add role button
-    const addButtonSelectors = [
-      'button:has-text("Add Role")',
-      'button:has-text("Create Role")',
-      'button:has-text("Add")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Add Role")', 'button:has-text("Create Role")', 'button:has-text("Add")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -250,13 +226,7 @@ export class SettingsHelper {
     await this.manageUsers(page);
     
     // Look for add user button
-    const addButtonSelectors = [
-      'button:has-text("Add User")',
-      'button:has-text("Create User")',
-      'button:has-text("Invite User")',
-      'button:has-text("Add")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Add User")', 'button:has-text("Create User")', 'button:has-text("Invite User")', 'button:has-text("Add")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -294,11 +264,7 @@ export class SettingsHelper {
     console.log('Simulating branding configuration');
     
     // Look for branding section
-    const brandingSelectors = [
-      'text=Branding',
-      'button:has-text("Branding")',
-      'tab:has-text("Appearance")'
-    ];
+    const brandingSelectors = ['text=Branding', 'button:has-text("Branding")', 'tab:has-text("Appearance")'];
     
     for (const selector of brandingSelectors) {
       const brandingLink = page.locator(selector).first();
@@ -356,11 +322,7 @@ export class SettingsHelper {
     console.log('Simulating security configuration');
     
     // Look for security section
-    const securitySelectors = [
-      'text=Security',
-      'button:has-text("Security")',
-      'tab:has-text("Security")'
-    ];
+    const securitySelectors = ['text=Security', 'button:has-text("Security")', 'tab:has-text("Security")'];
     
     for (const selector of securitySelectors) {
       const securityLink = page.locator(selector).first();
@@ -405,11 +367,7 @@ export class SettingsHelper {
     console.log(`Simulating integration configuration: ${integration.name}`);
     
     // Look for integrations section
-    const integrationsSelectors = [
-      'text=Integrations',
-      'button:has-text("Integrations")',
-      'tab:has-text("Integrations")'
-    ];
+    const integrationsSelectors = ['text=Integrations', 'button:has-text("Integrations")', 'tab:has-text("Integrations")'];
     
     for (const selector of integrationsSelectors) {
       const integrationsLink = page.locator(selector).first();
@@ -486,11 +444,7 @@ export class SettingsHelper {
     console.log('Simulating system status view');
     
     // Look for system status section
-    const statusSelectors = [
-      'text=System Status',
-      'button:has-text("Status")',
-      'tab:has-text("System")'
-    ];
+    const statusSelectors = ['text=System Status', 'button:has-text("Status")', 'tab:has-text("System")'];
     
     for (const selector of statusSelectors) {
       const statusLink = page.locator(selector).first();
@@ -608,10 +562,7 @@ export class SettingsHelper {
     await this.searchSettings(page, settingName);
     
     // Look for the setting in search results
-    const settingSelectors = [
-      `text=${settingName}`,
-      'table td, .setting-result, .search-result'
-    ];
+    const settingSelectors = [`text=${settingName}`, 'table td, .setting-result, .search-result'];
     
     for (const selector of settingSelectors) {
       const element = page.locator(selector).first();
@@ -634,11 +585,7 @@ export class SettingsHelper {
     console.log(`Simulating export of settings as ${format}`);
     
     // Look for export functionality
-    const exportSelectors = [
-      'button:has-text("Export")',
-      'button:has-text("Download")',
-      'a[href*="export"]'
-    ];
+    const exportSelectors = ['button:has-text("Export")', 'button:has-text("Download")', 'a[href*="export"]'];
     
     for (const selector of exportSelectors) {
       const exportButton = page.locator(selector).first();

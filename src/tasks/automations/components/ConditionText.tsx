@@ -1,19 +1,11 @@
-import { 
-  FormControl, 
-  InputLabel, 
-  MenuItem, 
-  Select, 
-  TextField, 
-  type SelectChangeEvent,
-  Stack
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent, Stack } from "@mui/material";
 import React from "react";
 import { ConditionHelper } from "../../components";
 import { type ConditionInterface, Locale } from "@churchapps/apphelper";
 
 interface Props {
-  condition: ConditionInterface,
-  onChange: (condition: ConditionInterface) => void
+  condition: ConditionInterface;
+  onChange: (condition: ConditionInterface) => void;
 }
 
 export const ConditionText = (props: Props) => {
@@ -25,7 +17,7 @@ export const ConditionText = (props: Props) => {
     }
     c.label = ConditionHelper.getLabel(c);
     props.onChange(c);
-  }
+  };
 
   React.useEffect(init, [props.condition.field]); //eslint-disable-line
 
@@ -42,42 +34,36 @@ export const ConditionText = (props: Props) => {
     }
     c.label = ConditionHelper.getLabel(c);
     props.onChange(c);
-  }
+  };
 
   const getTextField = () => {
     const label = ConditionHelper.getTitleCase(props.condition.field);
     return (
-      <TextField 
-        fullWidth 
-        type="text" 
-        label={label} 
-        value={props.condition.value || ""} 
-        name="value" 
-        onChange={handleChange} 
-        data-testid="condition-value-input" 
+      <TextField
+        fullWidth
+        type="text"
+        label={label}
+        value={props.condition.value || ""}
+        name="value"
+        onChange={handleChange}
+        data-testid="condition-value-input"
         aria-label="Condition value"
         variant="outlined"
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            '&:hover fieldset': {
-              borderColor: 'primary.main',
-            }
-          }
-        }}
+        sx={{ "& .MuiOutlinedInput-root": { "&:hover fieldset": { borderColor: "primary.main" } } }}
       />
     );
-  }
+  };
 
   return (
     <Stack spacing={2}>
       <FormControl fullWidth variant="outlined">
         <InputLabel>{Locale.label("tasks.conditionText.op")}</InputLabel>
-        <Select 
-          label={Locale.label("tasks.conditionText.op")} 
-          value={props.condition.operator || "="} 
-          name="operator" 
-          onChange={handleChange} 
-          data-testid="condition-operator-select" 
+        <Select
+          label={Locale.label("tasks.conditionText.op")}
+          value={props.condition.operator || "="}
+          name="operator"
+          onChange={handleChange}
+          data-testid="condition-operator-select"
           aria-label="Condition operator"
         >
           <MenuItem value="=">=</MenuItem>
@@ -94,4 +80,4 @@ export const ConditionText = (props: Props) => {
       {getTextField()}
     </Stack>
   );
-}
+};

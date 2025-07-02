@@ -1,7 +1,9 @@
 import React from "react";
 import { type PersonInterface, type ContactInfoInterface, type NameInterface, Locale } from "@churchapps/apphelper";
-import { EnvironmentHelper } from "../../../helpers"
-import { Dialog, Button, Container, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
+import { EnvironmentHelper } from "../../../helpers";
+import {
+ Dialog, Button, Container, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Select, MenuItem 
+} from "@mui/material";
 
 interface Props {
   show: boolean;
@@ -41,18 +43,14 @@ const getDisplayValue = (key: string) => {
 };
 
 export const MergeModal: React.FC<Props> = (props) => {
-  const [aggregatePerson, setAggregatePerson] = React.useState<PersonInterface>(
-    null
-  );
+  const [aggregatePerson, setAggregatePerson] = React.useState<PersonInterface>(null);
   const [conflicts, setConflicts] = React.useState<IConflicts[]>([]);
   const [error, setError] = React.useState<string>(null);
 
   const { person1, person2 } = props;
 
   const merge = () => {
-    if (!person1 || !person2) {
-      return;
-    }
+    if (!person1 || !person2) return;
 
     const keys = Object.keys(person1) as Array<keyof PersonInterface>;
     const aggregate: any = {};
@@ -71,7 +69,7 @@ export const MergeModal: React.FC<Props> = (props) => {
       newConflicts.push({
         value: subKey || key,
         options: [value1, value2],
-        selected: ""
+        selected: "",
       });
     };
 
@@ -81,9 +79,7 @@ export const MergeModal: React.FC<Props> = (props) => {
       // TODO:: CONTACT_INFO & NAME are having almost identical code, lets have a function instead.
       switch (key) {
         case SpecialKeys.CONTACT_INFO:
-          const contactKeys = Object.keys(person1.contactInfo) as Array<
-            keyof ContactInfoInterface
-          >;
+          const contactKeys = Object.keys(person1.contactInfo) as Array<keyof ContactInfoInterface>;
           aggregate[SpecialKeys.CONTACT_INFO] = {};
           contactKeys.forEach((contactKey) => {
             const cv1 = person1.contactInfo[contactKey];
@@ -93,9 +89,7 @@ export const MergeModal: React.FC<Props> = (props) => {
           });
           break;
         case SpecialKeys.NAME:
-          const nameKeys = Object.keys(person1.name) as Array<
-            keyof NameInterface
-          >;
+          const nameKeys = Object.keys(person1.name) as Array<keyof NameInterface>;
           aggregate[SpecialKeys.NAME] = {};
           nameKeys.forEach((nameKey) => {
             const cv1 = person1.name[nameKey];
@@ -118,23 +112,24 @@ export const MergeModal: React.FC<Props> = (props) => {
     });
 
     //set initial values
-    newConflicts.forEach(c => {
-      c.selected = c.options[0]
-    })
+    newConflicts.forEach((c) => {
+      c.selected = c.options[0];
+    });
 
     setAggregatePerson(aggregate);
     setConflicts(newConflicts);
   };
 
   const primitiveCompare = (value1: any, value2: any): boolean => {
-    if (!value2 || !value1 || value1 === value2) {
-      return true;
-    }
+    if (!value2 || !value1 || value1 === value2) return true;
     return false;
   };
 
   const handleSelect = (propertyName: string, value: string) => {
-    const conflictsCopy = conflicts.map((c) => { if (c.value === propertyName) c.selected = value; return c; });
+    const conflictsCopy = conflicts.map((c) => {
+      if (c.value === propertyName) c.selected = value;
+      return c;
+    });
     setConflicts(conflictsCopy);
   };
 
@@ -146,29 +141,27 @@ export const MergeModal: React.FC<Props> = (props) => {
       return;
     }
     let person: PersonInterface = { ...aggregatePerson };
-    const contactkeys = Object.keys(person1.contactInfo) as Array<
-      keyof ContactInfoInterface
-    >;
+    const contactkeys = Object.keys(person1.contactInfo) as Array<keyof ContactInfoInterface>;
     const nameKeys = Object.keys(person1.name) as Array<keyof NameInterface>;
 
     conflicts.forEach((e) => {
       if (contactkeys.some((c) => c === e.value)) {
         person.contactInfo = {
           ...person.contactInfo,
-          [e.value]: e.selected
+          [e.value]: e.selected,
         };
         return;
       }
       if (nameKeys.some((n) => n === e.value)) {
         person.name = {
           ...person.name,
-          [e.value]: e.selected
+          [e.value]: e.selected,
         };
         return;
       }
       person = {
         ...person,
-        [e.value]: e.selected
+        [e.value]: e.selected,
       };
     });
     setAggregatePerson(person);
@@ -177,23 +170,38 @@ export const MergeModal: React.FC<Props> = (props) => {
 
   React.useEffect(merge, [person1, person2]);
 
-  const createConflictRows = () => conflicts.map((outer, i) => (
-    <FormControl key={i} fullWidth>
-      <InputLabel>{getDisplayValue(outer.value)}</InputLabel>
-      <Select name={outer.value} label={getDisplayValue(outer.value)} id={outer.value} value={outer.selected} onChange={(e) => { handleSelect(outer.value, e.target.value) }}>
-        {outer.options.map((name, i) => {
-          const label = outer.value === "photo" ? (<img src={EnvironmentHelper.Common.ContentRoot + name} alt={Locale.label("people.mergeModal.profile")} height="200px" width="200px" />) : name;
-          return (<MenuItem key={i} value={name}>{label}</MenuItem>)
-        })}
-      </Select>
-    </FormControl>
-  ));
+  const createConflictRows = () =>
+    conflicts.map((outer, i) => (
+      <FormControl key={i} fullWidth>
+        <InputLabel>{getDisplayValue(outer.value)}</InputLabel>
+        <Select
+          name={outer.value}
+          label={getDisplayValue(outer.value)}
+          id={outer.value}
+          value={outer.selected}
+          onChange={(e) => {
+            handleSelect(outer.value, e.target.value);
+          }}
+        >
+          {outer.options.map((name, i) => {
+            const label = outer.value === "photo" ? <img src={EnvironmentHelper.Common.ContentRoot + name} alt={Locale.label("people.mergeModal.profile")} height="200px" width="200px" /> : name;
+            return (
+              <MenuItem key={i} value={name}>
+                {label}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+    ));
 
   const { mergeInProgress } = props;
 
   return (
     <Dialog open={props.show} aria-labelledby="contained-modal-title-vcenter" data-cy="merge-modal">
-      <DialogTitle>{Locale.label("people.mergeModal.mergeQuestion")} {person1?.name.display} {Locale.label("people.mergeModal.with")} {person2?.name.display}?</DialogTitle>
+      <DialogTitle>
+        {Locale.label("people.mergeModal.mergeQuestion")} {person1?.name.display} {Locale.label("people.mergeModal.with")} {person2?.name.display}?
+      </DialogTitle>
       <DialogContent>
         {conflicts.length > 0 && (
           <>
@@ -205,8 +213,12 @@ export const MergeModal: React.FC<Props> = (props) => {
         {mergeInProgress && <p style={{ textAlign: "center", fontStyle: "italic", marginBottom: 0 }}>{Locale.label("people.mergeModal.merge")}</p>}
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.onHide} data-cy="cancel-merge">{Locale.label("people.mergeModal.cancel")}</Button>
-        <Button onClick={handleConfirm} data-cy="confirm-merge">{Locale.label("people.mergeModal.confirm")}</Button>
+        <Button onClick={props.onHide} data-cy="cancel-merge">
+          {Locale.label("people.mergeModal.cancel")}
+        </Button>
+        <Button onClick={handleConfirm} data-cy="confirm-merge">
+          {Locale.label("people.mergeModal.confirm")}
+        </Button>
       </DialogActions>
     </Dialog>
   );

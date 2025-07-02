@@ -1,18 +1,16 @@
 import React, { memo } from "react";
-import { 
-  Box, 
-  Typography, 
-  Chip,
-  Divider 
-} from "@mui/material";
+import { Box, Typography, Chip, Divider } from "@mui/material";
 import { DateHelper, type QuestionInterface, type AnswerInterface, Locale } from "@churchapps/apphelper";
 
-interface Props { question: QuestionInterface, answer: AnswerInterface }
+interface Props {
+  question: QuestionInterface;
+  answer: AnswerInterface;
+}
 
 export const Question: React.FC<Props> = memo((props) => {
   const q = props.question;
   const a = props.answer;
-  
+
   // Don't render if no answer (unless it's a heading)
   if (a === null && q.fieldType !== "Heading") return null;
 
@@ -20,12 +18,12 @@ export const Question: React.FC<Props> = memo((props) => {
   if (q.fieldType === "Heading") {
     return (
       <Box sx={{ py: 2 }}>
-        <Typography 
-          variant="h6" 
-          sx={{ 
-            fontWeight: 600, 
-            color: 'primary.main',
-            mb: 1
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 600,
+            color: "primary.main",
+            mb: 1,
           }}
         >
           {q.title}
@@ -38,14 +36,14 @@ export const Question: React.FC<Props> = memo((props) => {
   // Process the answer value based on field type
   let displayValue = "";
   let chipColor: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning" = "default";
-  
+
   switch (q.fieldType) {
     case "Date":
       displayValue = "";
       if (a?.value) {
         try {
           const theDate = new Date(a.value);
-          const localDate = new Date(theDate.getTime() + (theDate.getTimezoneOffset() * 60000));
+          const localDate = new Date(theDate.getTime() + theDate.getTimezoneOffset() * 60000);
           displayValue = DateHelper.getShortDate(localDate);
         } catch (e) {
           console.log(e);
@@ -72,44 +70,46 @@ export const Question: React.FC<Props> = memo((props) => {
   if (!displayValue) return null;
 
   return (
-    <Box sx={{ 
-      py: 1.5, 
-      px: 2, 
-      backgroundColor: 'grey.50', 
-      borderRadius: 1,
-      border: '1px solid',
-      borderColor: 'grey.200'
-    }}>
-      <Typography 
-        variant="subtitle2" 
-        sx={{ 
-          fontWeight: 600, 
-          color: 'text.primary',
+    <Box
+      sx={{
+        py: 1.5,
+        px: 2,
+        backgroundColor: "grey.50",
+        borderRadius: 1,
+        border: "1px solid",
+        borderColor: "grey.200",
+      }}
+    >
+      <Typography
+        variant="subtitle2"
+        sx={{
+          fontWeight: 600,
+          color: "text.primary",
           mb: 0.5,
-          fontSize: '0.875rem'
+          fontSize: "0.875rem",
         }}
       >
         {q.title}
       </Typography>
-      
+
       {q.fieldType === "Yes/No" ? (
         <Chip
           label={displayValue}
           color={chipColor}
           variant="filled"
           size="small"
-          sx={{ 
+          sx={{
             fontWeight: 500,
-            fontSize: '0.75rem'
+            fontSize: "0.75rem",
           }}
         />
       ) : (
-        <Typography 
-          variant="body2" 
-          sx={{ 
-            color: 'text.secondary',
+        <Typography
+          variant="body2"
+          sx={{
+            color: "text.secondary",
             fontWeight: 400,
-            wordBreak: 'break-word'
+            wordBreak: "break-word",
           }}
         >
           {displayValue}

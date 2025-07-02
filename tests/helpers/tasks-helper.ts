@@ -49,13 +49,7 @@ export class TasksHelper {
    */
   static async navigateToAutomations(page: Page) {
     // Look for automations tab or link
-    const automationsSelectors = [
-      'text=Automations',
-      'text=Workflows',
-      'a[href="/automations"]',
-      'button:has-text("Automations")',
-      'tab:has-text("Automations")'
-    ];
+    const automationsSelectors = ['text=Automations', 'text=Workflows', 'a[href="/automations"]', 'button:has-text("Automations")', 'tab:has-text("Automations")'];
     
     for (const selector of automationsSelectors) {
       const automationsLink = page.locator(selector).first();
@@ -78,12 +72,7 @@ export class TasksHelper {
    * Search for tasks
    */
   static async searchTasks(page: Page, searchTerm: string) {
-    const searchSelectors = [
-      '#searchText',
-      'input[placeholder*="Search"]',
-      'input[name="search"]',
-      'input[placeholder*="Tasks"]'
-    ];
+    const searchSelectors = ['#searchText', 'input[placeholder*="Search"]', 'input[name="search"]', 'input[placeholder*="Tasks"]'];
     
     for (const selector of searchSelectors) {
       const searchInput = page.locator(selector).first();
@@ -123,13 +112,7 @@ export class TasksHelper {
     console.log(`Simulating creation of task: ${task.title}`);
     
     // Look for add task button
-    const addButtonSelectors = [
-      'button:has-text("Add Task")',
-      'button:has-text("Create Task")',
-      'button:has-text("New Task")',
-      'button:has-text("Add")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Add Task")', 'button:has-text("Create Task")', 'button:has-text("New Task")', 'button:has-text("Add")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -266,13 +249,7 @@ export class TasksHelper {
     console.log(`Simulating creation of automation: ${automation.name}`);
     
     // Look for add automation button
-    const addButtonSelectors = [
-      'button:has-text("Add Automation")',
-      'button:has-text("Create Automation")',
-      'button:has-text("New Workflow")',
-      'button:has-text("Add")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Add Automation")', 'button:has-text("Create Automation")', 'button:has-text("New Workflow")', 'button:has-text("Add")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -374,12 +351,7 @@ export class TasksHelper {
     console.log('Simulating task analytics dashboard view');
     
     // Look for analytics section
-    const analyticsSelectors = [
-      'text=Analytics',
-      'text=Dashboard',
-      'button:has-text("Analytics")',
-      'tab:has-text("Analytics")'
-    ];
+    const analyticsSelectors = ['text=Analytics', 'text=Dashboard', 'button:has-text("Analytics")', 'tab:has-text("Analytics")'];
     
     for (const selector of analyticsSelectors) {
       const analyticsLink = page.locator(selector).first();
@@ -473,10 +445,7 @@ export class TasksHelper {
     await this.searchTasks(page, taskTitle);
     
     // Look for the task in search results
-    const taskSelectors = [
-      `text=${taskTitle}`,
-      'table td, .task-result, .search-result'
-    ];
+    const taskSelectors = [`text=${taskTitle}`, 'table td, .task-result, .search-result'];
     
     for (const selector of taskSelectors) {
       const element = page.locator(selector).first();

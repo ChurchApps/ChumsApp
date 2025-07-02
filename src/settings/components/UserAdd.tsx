@@ -1,16 +1,29 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { InputBox, type RoleInterface, ApiHelper, type RoleMemberInterface, UserHelper, type LoadCreateUserRequestInterface, type PersonInterface, type HouseholdInterface, ErrorMessages, type UserInterface, type UserChurchInterface, Locale } from "@churchapps/apphelper"
+import {
+  InputBox,
+  type RoleInterface,
+  ApiHelper,
+  type RoleMemberInterface,
+  UserHelper,
+  type LoadCreateUserRequestInterface,
+  type PersonInterface,
+  type HouseholdInterface,
+  ErrorMessages,
+  type UserInterface,
+  type UserChurchInterface,
+  Locale,
+} from "@churchapps/apphelper";
 import { AssociatePerson } from "./";
 import { TextField } from "@mui/material";
 
 interface Props {
-  role: RoleInterface,
-  updatedFunction: () => void,
-  selectedUser: string,
+  role: RoleInterface;
+  updatedFunction: () => void;
+  selectedUser: string;
   roleMembers: RoleMemberInterface[];
 }
 
-const validateEmail = (email: string) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email))
+const validateEmail = (email: string) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email);
 
 export const UserAdd = (props: Props) => {
   const [email, setEmail] = useState("");
@@ -18,7 +31,7 @@ export const UserAdd = (props: Props) => {
   const [lastName, setLastName] = useState<string>("");
   const [fetchedUser, setFetchedUser] = useState<UserInterface>(null);
   const [errors, setErrors] = useState([]);
-  const [linkedPerson, setLinkedPerson] = useState<PersonInterface>(null)
+  const [linkedPerson, setLinkedPerson] = useState<PersonInterface>(null);
   const [selectedPerson, setSelectedPerson] = useState<PersonInterface>(null);
   const [showEmailField, setShowEmailField] = useState<boolean>(false);
   const [showNameFields, setShowNameFields] = useState<boolean>(false);
@@ -37,19 +50,19 @@ export const UserAdd = (props: Props) => {
         await ApiHelper.post("/people", [person], "MembershipApi");
         props.updatedFunction();
       } catch {
-        setErrors([Locale.label("settings.userAdd.errAnother")])
+        setErrors([Locale.label("settings.userAdd.errAnother")]);
       }
     }
-  }
+  };
 
   const saveNewUser = async () => {
     if (validate()) {
       const user = await createUserAndToGroup(firstName, lastName, email);
       const person = await createPerson(user.id);
-      await linkUserAndPerson(user.id, person.id)
+      await linkUserAndPerson(user.id, person.id);
       props.updatedFunction();
     }
-  }
+  };
 
   const saveUserFromPerson = async () => {
     if (showEmailField && !validateEmail(email)) {
@@ -73,13 +86,13 @@ export const UserAdd = (props: Props) => {
     }
 
     props.updatedFunction();
-  }
+  };
 
   const handleSave = async () => {
     if (editMode) saveExistingUser();
     else if (showNameFields) saveNewUser();
     else saveUserFromPerson();
-  }
+  };
 
   const validate = () => {
     const warnings: string[] = [];
@@ -88,11 +101,11 @@ export const UserAdd = (props: Props) => {
     if (!validateEmail(email)) warnings.push(Locale.label("settings.userAdd.valEmailMsg"));
     setErrors(warnings);
     return warnings.length === 0;
-  }
+  };
 
   const linkUserAndPerson = async (userId: string, personId: string) => {
     await ApiHelper.post(`/userchurch?userId=${userId}`, { personId }, "MembershipApi");
-  }
+  };
 
   const createUserAndToGroup = async (firstName: string, lastName: string, userEmail: string) => {
     const userPayload: LoadCreateUserRequestInterface = { firstName, lastName, userEmail };
@@ -101,17 +114,22 @@ export const UserAdd = (props: Props) => {
     await ApiHelper.post("/rolemembers/", [roleMember], "MembershipApi");
 
     return user;
-  }
+  };
 
   const createPerson = async (userId: string) => {
     const house: HouseholdInterface = { name: lastName };
-    const households = await ApiHelper.post("/households", [house], "MembershipApi")
+    const households = await ApiHelper.post("/households", [house], "MembershipApi");
 
-    const personRecord: PersonInterface = { householdId: households[0].id, name: { first: firstName, last: lastName }, userId, contactInfo: { email } }
-    const person: PersonInterface[] = await ApiHelper.post("/people", [personRecord], "MembershipApi")
+    const personRecord: PersonInterface = {
+      householdId: households[0].id,
+      name: { first: firstName, last: lastName },
+      userId,
+      contactInfo: { email },
+    };
+    const person: PersonInterface[] = await ApiHelper.post("/people", [personRecord], "MembershipApi");
 
     return person[0];
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrors([]);
@@ -126,7 +144,7 @@ export const UserAdd = (props: Props) => {
       case "lastName":
         setLastName(val);
     }
-  }
+  };
 
   const handleAssociatePerson = (person: PersonInterface) => {
     setSelectedPerson(person);
@@ -134,17 +152,17 @@ export const UserAdd = (props: Props) => {
     if (!person.contactInfo.email) {
       setShowEmailField(true);
     }
-  }
+  };
 
   const CreateNewUser = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowNameFields(true);
     setShowEmailField(true);
-  }
+  };
 
   const handleSearchStatus = useCallback((value: boolean) => {
     setHasSearched(value);
-  }, [])
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -158,43 +176,48 @@ export const UserAdd = (props: Props) => {
         try {
           const userChurch: UserChurchInterface = await ApiHelper.get(`/userchurch/userid/${user.id}`, "MembershipApi");
           const person = await ApiHelper.get(`/people/${userChurch.personId}`, "MembershipApi");
-          setLinkedPerson(person)
+          setLinkedPerson(person);
         } catch {
           setLinkedPerson(null);
         }
       }
-    })()
+    })();
   }, [props.selectedUser]);
 
-  const message = (!showNameFields && !editMode && hasSearched) && (<span>{Locale.label("settings.userAdd.noAcc")} <a href="about:blank" onClick={CreateNewUser} data-testid="create-new-user-link" aria-label="Create new user">{Locale.label("settings.userAdd.createNew")}</a></span>);
+  const message = !showNameFields && !editMode && hasSearched && (
+    <span>
+      {Locale.label("settings.userAdd.noAcc")}{" "}
+      <a href="about:blank" onClick={CreateNewUser} data-testid="create-new-user-link" aria-label="Create new user">
+        {Locale.label("settings.userAdd.createNew")}
+      </a>
+    </span>
+  );
   const nameField = (showNameFields || editMode) && (
     <>
       <TextField fullWidth name="firstName" label={Locale.label("person.firstName")} value={firstName} onChange={handleChange} data-testid="first-name-input" aria-label="First name" />
       <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} data-testid="last-name-input" aria-label="Last name" />
     </>
-  )
+  );
   const emailField = (showEmailField || editMode) && (
     <TextField type="email" fullWidth name="email" label={Locale.label("person.email")} value={email} onChange={handleChange} data-testid="email-input" aria-label="Email address" />
-  )
+  );
 
   return (
     <InputBox headerIcon="lock" headerText={Locale.label("settings.userAdd.addTo") + props.role.name} saveFunction={handleSave} cancelFunction={props.updatedFunction}>
       <ErrorMessages errors={errors} />
-      {
-        (!showNameFields || editMode) && (
-          <AssociatePerson
-            person={selectedPerson || linkedPerson}
-            handleAssociatePerson={handleAssociatePerson}
-            searchStatus={handleSearchStatus}
-            filterList={props.roleMembers.map(rm => rm.personId)}
-            onChangeClick={() => setShowEmailField(false)}
-            showChangeOption={!editMode}
-          />
-        )
-      }
+      {(!showNameFields || editMode) && (
+        <AssociatePerson
+          person={selectedPerson || linkedPerson}
+          handleAssociatePerson={handleAssociatePerson}
+          searchStatus={handleSearchStatus}
+          filterList={props.roleMembers.map((rm) => rm.personId)}
+          onChangeClick={() => setShowEmailField(false)}
+          showChangeOption={!editMode}
+        />
+      )}
       {nameField}
       {emailField}
       {message}
     </InputBox>
   );
-}
+};

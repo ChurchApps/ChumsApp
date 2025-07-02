@@ -1,10 +1,10 @@
-import { 
-  FormControl, 
-  Grid, 
-  InputLabel, 
-  MenuItem, 
-  Select, 
-  TextField, 
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
   type SelectChangeEvent,
   Card,
   CardContent,
@@ -14,23 +14,17 @@ import {
   Button,
   FormHelperText,
   Switch,
-  FormControlLabel
+  FormControlLabel,
 } from "@mui/material";
 import React from "react";
 import { ErrorMessages, type AutomationInterface, ApiHelper, Locale } from "@churchapps/apphelper";
-import {
-  SettingsSuggest as AutomationsIcon,
-  Save as SaveIcon,
-  Cancel as CancelIcon,
-  Delete as DeleteIcon,
-  Repeat as RepeatIcon
-} from "@mui/icons-material";
+import { SettingsSuggest as AutomationsIcon, Save as SaveIcon, Cancel as CancelIcon, Delete as DeleteIcon, Repeat as RepeatIcon } from "@mui/icons-material";
 
 interface Props {
-  automation: AutomationInterface,
-  onCancel: () => void,
-  onSave: (automation: AutomationInterface) => void,
-  onDelete?: () => void,
+  automation: AutomationInterface;
+  onCancel: () => void;
+  onSave: (automation: AutomationInterface) => void;
+  onDelete?: () => void;
 }
 
 export const AutomationEdit = (props: Props) => {
@@ -39,7 +33,7 @@ export const AutomationEdit = (props: Props) => {
 
   const init = () => {
     setAutomation(props.automation);
-  }
+  };
 
   React.useEffect(init, [props.automation]);
 
@@ -47,16 +41,20 @@ export const AutomationEdit = (props: Props) => {
     const result: string[] = [];
     setErrors(result);
     return result.length === 0;
-  }
+  };
 
   const handleSave = async () => {
     if (validate()) {
-      ApiHelper.post("/automations", [automation], "DoingApi").then(d => {
+      ApiHelper.post("/automations", [automation], "DoingApi").then((d) => {
         props.onSave(d[0]);
       });
     }
-  }
-  const handleDelete = () => { ApiHelper.delete("/automations/" + automation.id, "DoingApi").then(() => { props.onDelete(); }); }
+  };
+  const handleDelete = () => {
+    ApiHelper.delete("/automations/" + automation.id, "DoingApi").then(() => {
+      props.onDelete();
+    });
+  };
   const checkDelete = automation?.id ? handleDelete : undefined;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
@@ -71,31 +69,31 @@ export const AutomationEdit = (props: Props) => {
         break;
     }
     setAutomation(a);
-  }
+  };
 
   const handleActiveToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const a = { ...automation };
     a.active = e.target.checked;
     setAutomation(a);
-  }
+  };
 
   return (
-    <Card sx={{ 
-      borderRadius: 2,
-      border: '1px solid',
-      borderColor: 'grey.200',
-      transition: 'all 0.2s ease-in-out',
-      '&:hover': {
-        boxShadow: 2
-      }
-    }}>
+    <Card
+      sx={{
+        borderRadius: 2,
+        border: "1px solid",
+        borderColor: "grey.200",
+        transition: "all 0.2s ease-in-out",
+        "&:hover": { boxShadow: 2 },
+      }}
+    >
       <CardContent>
         <Stack spacing={3}>
           {/* Header */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <Stack direction="row" alignItems="center" spacing={1}>
-              <AutomationsIcon sx={{ color: 'primary.main' }} />
-              <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+              <AutomationsIcon sx={{ color: "primary.main" }} />
+              <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
                 {Locale.label("tasks.automationEdit.autoEdit")}
               </Typography>
             </Stack>
@@ -106,34 +104,28 @@ export const AutomationEdit = (props: Props) => {
 
           {/* Form Fields */}
           <Stack spacing={2}>
-            <TextField 
-              fullWidth 
-              label={Locale.label("common.title")} 
-              value={automation?.title || ""} 
-              name="title" 
-              onChange={handleChange} 
-              data-testid="automation-title-input" 
+            <TextField
+              fullWidth
+              label={Locale.label("common.title")}
+              value={automation?.title || ""}
+              name="title"
+              onChange={handleChange}
+              data-testid="automation-title-input"
               aria-label="Automation title"
               variant="outlined"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  '&:hover fieldset': {
-                    borderColor: 'primary.main',
-                  }
-                }
-              }}
+              sx={{ "& .MuiOutlinedInput-root": { "&:hover fieldset": { borderColor: "primary.main" } } }}
             />
-            
+
             <FormControl fullWidth variant="outlined">
               <InputLabel>{Locale.label("tasks.automationEdit.rep")}</InputLabel>
-              <Select 
-                label={Locale.label("tasks.automationEdit.rep")} 
-                value={automation?.recurs || "never"} 
-                name="recurs" 
-                onChange={handleChange} 
-                data-testid="recurs-select" 
+              <Select
+                label={Locale.label("tasks.automationEdit.rep")}
+                value={automation?.recurs || "never"}
+                name="recurs"
+                onChange={handleChange}
+                data-testid="recurs-select"
                 aria-label="Recurrence"
-                startAdornment={<RepeatIcon sx={{ color: 'action.active', ml: 1, mr: 0.5 }} />}
+                startAdornment={<RepeatIcon sx={{ color: "action.active", ml: 1, mr: 0.5 }} />}
               >
                 <MenuItem value="never">{Locale.label("tasks.automationEdit.never")}</MenuItem>
                 <MenuItem value="yearly">{Locale.label("tasks.automationEdit.yearly")}</MenuItem>
@@ -143,16 +135,10 @@ export const AutomationEdit = (props: Props) => {
             </FormControl>
 
             <FormControlLabel
-              control={
-                <Switch
-                  checked={automation?.active || false}
-                  onChange={handleActiveToggle}
-                  color="primary"
-                />
-              }
+              control={<Switch checked={automation?.active || false} onChange={handleActiveToggle} color="primary" />}
               label={
                 <Typography variant="body1" sx={{ fontWeight: automation?.active ? 600 : 400 }}>
-                  {automation?.active ? 'Active' : 'Inactive'}
+                  {automation?.active ? "Active" : "Inactive"}
                 </Typography>
               }
             />
@@ -168,8 +154,8 @@ export const AutomationEdit = (props: Props) => {
                 onClick={handleDelete}
                 sx={{
                   borderRadius: 2,
-                  textTransform: 'none',
-                  fontWeight: 600
+                  textTransform: "none",
+                  fontWeight: 600,
                 }}
               >
                 {Locale.label("common.delete")}
@@ -181,8 +167,8 @@ export const AutomationEdit = (props: Props) => {
               onClick={props.onCancel}
               sx={{
                 borderRadius: 2,
-                textTransform: 'none',
-                fontWeight: 600
+                textTransform: "none",
+                fontWeight: 600,
               }}
             >
               {Locale.label("common.cancel")}
@@ -193,8 +179,8 @@ export const AutomationEdit = (props: Props) => {
               onClick={handleSave}
               sx={{
                 borderRadius: 2,
-                textTransform: 'none',
-                fontWeight: 600
+                textTransform: "none",
+                fontWeight: 600,
               }}
             >
               {Locale.label("common.save")}
@@ -204,4 +190,4 @@ export const AutomationEdit = (props: Props) => {
       </CardContent>
     </Card>
   );
-}
+};

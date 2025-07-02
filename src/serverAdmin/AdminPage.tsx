@@ -1,22 +1,9 @@
 import React from "react";
 import { Locale } from "@churchapps/apphelper";
-import { 
-  Grid, 
-  Box, 
-  List, 
-  ListItem, 
-  ListItemButton, 
-  ListItemIcon, 
-  ListItemText,
-  Card,
-  CardContent 
+import {
+ Grid, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Card, CardContent 
 } from "@mui/material";
-import { 
-  Church as ChurchIcon, 
-  ShowChart as UsageIcon, 
-  Book as TranslationIcon,
-  Settings as AdminIcon 
-} from "@mui/icons-material";
+import { Church as ChurchIcon, ShowChart as UsageIcon, Book as TranslationIcon, Settings as AdminIcon } from "@mui/icons-material";
 import { PageHeader } from "../components";
 import { UsageTrendsTab } from "./components/UsageTrendTab";
 import { ChurchesTab } from "./components/ChurchesTab";
@@ -27,39 +14,39 @@ export const AdminPage = () => {
 
   const getCurrentTab = () => {
     switch (selectedTab) {
-      case "churches": return <ChurchesTab key="churches" />;
-      case "usage": return <UsageTrendsTab key="usage" />;
-      case "translation": return <TranslationTab key="translation" />;
-      default: return <div></div>;
+      case "churches":
+        return <ChurchesTab key="churches" />;
+      case "usage":
+        return <UsageTrendsTab key="usage" />;
+      case "translation":
+        return <TranslationTab key="translation" />;
+      default:
+        return <div></div>;
     }
-  }
+  };
 
   const navigationItems = [
-    { 
-      key: "churches", 
-      icon: <ChurchIcon />, 
-      label: Locale.label("serverAdmin.adminPage.churches") 
+    {
+      key: "churches",
+      icon: <ChurchIcon />,
+      label: Locale.label("serverAdmin.adminPage.churches"),
     },
-    { 
-      key: "usage", 
-      icon: <UsageIcon />, 
-      label: Locale.label("serverAdmin.adminPage.usageTrends") 
+    {
+      key: "usage",
+      icon: <UsageIcon />,
+      label: Locale.label("serverAdmin.adminPage.usageTrends"),
     },
-    { 
-      key: "translation", 
-      icon: <TranslationIcon />, 
-      label: "Translation Lookups" 
-    }
+    {
+      key: "translation",
+      icon: <TranslationIcon />,
+      label: "Translation Lookups",
+    },
   ];
 
   return (
     <>
-      <PageHeader
-        icon={<AdminIcon />}
-        title={Locale.label("serverAdmin.adminPage.servAdmin")}
-        subtitle="Manage server administration settings and monitor usage"
-      />
-      
+      <PageHeader icon={<AdminIcon />} title={Locale.label("serverAdmin.adminPage.servAdmin")} subtitle="Manage server administration settings and monitor usage" />
+
       <Box sx={{ p: 3 }}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 3 }}>
@@ -72,21 +59,15 @@ export const AdminPage = () => {
                         selected={selectedTab === item.key}
                         onClick={() => setSelectedTab(item.key)}
                         sx={{
-                          '&.Mui-selected': {
-                            backgroundColor: 'primary.main',
-                            color: 'primary.contrastText',
-                            '&:hover': {
-                              backgroundColor: 'primary.dark',
-                            },
-                            '& .MuiListItemIcon-root': {
-                              color: 'primary.contrastText',
-                            },
+                          "&.Mui-selected": {
+                            backgroundColor: "primary.main",
+                            color: "primary.contrastText",
+                            "&:hover": { backgroundColor: "primary.dark" },
+                            "& .MuiListItemIcon-root": { color: "primary.contrastText" },
                           },
                         }}
                       >
-                        <ListItemIcon>
-                          {item.icon}
-                        </ListItemIcon>
+                        <ListItemIcon>{item.icon}</ListItemIcon>
                         <ListItemText primary={item.label} />
                       </ListItemButton>
                     </ListItem>
@@ -96,12 +77,10 @@ export const AdminPage = () => {
             </Card>
           </Grid>
           <Grid size={{ xs: 12, md: 9 }}>
-            <Box>
-              {getCurrentTab()}
-            </Box>
+            <Box>{getCurrentTab()}</Box>
           </Grid>
         </Grid>
       </Box>
     </>
   );
-}
+};

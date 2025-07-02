@@ -1,37 +1,16 @@
-import { 
-  Button, 
-  Dialog, 
-  DialogActions, 
-  DialogContent, 
-  DialogTitle, 
-  TextField,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Stack,
-  Avatar,
-  IconButton,
-  InputAdornment,
-  Paper,
-  Divider
-} from "@mui/material";
 import {
-  Search as SearchIcon,
-  MusicNote as MusicIcon,
-  Person as ArtistIcon,
-  Close as CloseIcon,
-  Add as AddIcon
-} from "@mui/icons-material";
+ Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Box, Card, CardContent, Typography, Stack, Avatar, IconButton, InputAdornment, Paper, Divider 
+} from "@mui/material";
+import { Search as SearchIcon, MusicNote as MusicIcon, Person as ArtistIcon, Close as CloseIcon, Add as AddIcon } from "@mui/icons-material";
 import React, { useEffect, memo, useCallback, useMemo } from "react";
 import { ApiHelper, Locale, Loading } from "@churchapps/apphelper";
 import { type SongDetailInterface } from "../../helpers";
 import { CreateSongDetail } from "./components/CreateSongDetail";
 
 interface Props {
-  searchText?: string
-  onClose: () => void,
-  onSelect: (songDetail: SongDetailInterface) => void
+  searchText?: string;
+  onClose: () => void;
+  onSelect: (songDetail: SongDetailInterface) => void;
 }
 
 export const SongSearchDialog: React.FC<Props> = memo((props) => {
@@ -63,27 +42,27 @@ export const SongSearchDialog: React.FC<Props> = memo((props) => {
   }, [searchText]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<any>) => {
-    if (e.key === "Enter") { 
-      e.preventDefault(); 
-      handleSearch(); 
-    }
-  }, [handleSearch]);
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSearch();
+      }
+    }, [handleSearch]);
 
   const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.style.display = "none";
   }, []);
 
   const handleSongClick = useCallback(async (songDetail: SongDetailInterface) => {
-    if (!songDetail.id) {
-      songDetail = await ApiHelper.post("/songDetails/create", songDetail, "ContentApi")
-    }
-    props.onSelect(songDetail);
-  }, [props.onSelect]);
+      if (!songDetail.id) {
+        songDetail = await ApiHelper.post("/songDetails/create", songDetail, "ContentApi");
+      }
+      props.onSelect(songDetail);
+    }, [props.onSelect]);
 
   const searchResults = useMemo(() => {
     if (isSearching) {
       return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
           <Loading size="sm" />
         </Box>
       );
@@ -91,16 +70,16 @@ export const SongSearchDialog: React.FC<Props> = memo((props) => {
 
     if (songDetails === null) {
       return (
-        <Paper 
-          sx={{ 
-            p: 4, 
-            textAlign: 'center', 
-            backgroundColor: 'grey.50',
-            border: '1px dashed',
-            borderColor: 'grey.300'
+        <Paper
+          sx={{
+            p: 4,
+            textAlign: "center",
+            backgroundColor: "grey.50",
+            border: "1px dashed",
+            borderColor: "grey.300",
           }}
         >
-          <SearchIcon sx={{ fontSize: 48, color: 'grey.400', mb: 2 }} />
+          <SearchIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
           <Typography variant="body1" color="text.secondary">
             {Locale.label("songs.search.enterQuery") || "Enter a search term to find songs."}
           </Typography>
@@ -110,25 +89,20 @@ export const SongSearchDialog: React.FC<Props> = memo((props) => {
 
     if (songDetails.length === 0) {
       return (
-        <Paper 
-          sx={{ 
-            p: 4, 
-            textAlign: 'center', 
-            backgroundColor: 'grey.50',
-            border: '1px dashed',
-            borderColor: 'grey.300'
+        <Paper
+          sx={{
+            p: 4,
+            textAlign: "center",
+            backgroundColor: "grey.50",
+            border: "1px dashed",
+            borderColor: "grey.300",
           }}
         >
-          <MusicIcon sx={{ fontSize: 48, color: 'grey.400', mb: 2 }} />
+          <MusicIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
           <Typography variant="body1" color="text.secondary" gutterBottom>
             {Locale.label("songs.search.noResults") || "No songs found for your search."}
           </Typography>
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={() => setShowCreate(true)}
-            sx={{ mt: 2 }}
-          >
+          <Button variant="outlined" startIcon={<AddIcon />} onClick={() => setShowCreate(true)} sx={{ mt: 2 }}>
             {Locale.label("songs.search.createManually") || "Create Manually"}
           </Button>
         </Paper>
@@ -138,15 +112,15 @@ export const SongSearchDialog: React.FC<Props> = memo((props) => {
     return (
       <Stack spacing={2}>
         {songDetails.map((songDetail, index) => (
-          <Card 
+          <Card
             key={index}
-            sx={{ 
-              cursor: 'pointer',
-              transition: 'all 0.2s ease-in-out',
-              '&:hover': {
-                transform: 'translateY(-1px)',
-                boxShadow: 2
-              }
+            sx={{
+              cursor: "pointer",
+              transition: "all 0.2s ease-in-out",
+              "&:hover": {
+                transform: "translateY(-1px)",
+                boxShadow: 2,
+              },
             }}
             onClick={() => handleSongClick(songDetail)}
           >
@@ -154,32 +128,32 @@ export const SongSearchDialog: React.FC<Props> = memo((props) => {
               <Stack direction="row" spacing={2} alignItems="center">
                 <Avatar
                   src={songDetail.thumbnail}
-                  sx={{ 
-                    width: 60, 
+                  sx={{
+                    width: 60,
                     height: 60,
-                    bgcolor: 'primary.light'
+                    bgcolor: "primary.light",
                   }}
                   onError={handleImageError}
                 >
-                  <MusicIcon sx={{ fontSize: 28, color: 'primary.main' }} />
+                  <MusicIcon sx={{ fontSize: 28, color: "primary.main" }} />
                 </Avatar>
-                
+
                 <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Typography 
-                    variant="h6" 
-                    sx={{ 
+                  <Typography
+                    variant="h6"
+                    sx={{
                       fontWeight: 600,
-                      fontSize: '1rem',
+                      fontSize: "1rem",
                       mb: 0.5,
-                      color: 'primary.main'
+                      color: "primary.main",
                     }}
                   >
                     {songDetail.title}
                   </Typography>
-                  
+
                   {songDetail.artist && (
                     <Stack direction="row" spacing={1} alignItems="center">
-                      <ArtistIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+                      <ArtistIcon sx={{ fontSize: 16, color: "text.secondary" }} />
                       <Typography variant="body2" color="text.secondary">
                         {songDetail.artist}
                       </Typography>
@@ -188,11 +162,9 @@ export const SongSearchDialog: React.FC<Props> = memo((props) => {
                 </Box>
 
                 <IconButton
-                  sx={{ 
-                    color: 'primary.main',
-                    '&:hover': {
-                      backgroundColor: 'primary.light'
-                    }
+                  sx={{
+                    color: "primary.main",
+                    "&:hover": { backgroundColor: "primary.light" },
                   }}
                   aria-label={`Select ${songDetail.title}`}
                 >
@@ -211,29 +183,27 @@ export const SongSearchDialog: React.FC<Props> = memo((props) => {
       <DialogTitle>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Stack direction="row" spacing={2} alignItems="center">
-            <SearchIcon sx={{ color: 'primary.main' }} />
-            <Typography variant="h6">
-              {Locale.label("songs.search.title") || "Search for a Song"}
-            </Typography>
+            <SearchIcon sx={{ color: "primary.main" }} />
+            <Typography variant="h6">{Locale.label("songs.search.title") || "Search for a Song"}</Typography>
           </Stack>
           <IconButton onClick={props.onClose} size="small">
             <CloseIcon />
           </IconButton>
         </Stack>
       </DialogTitle>
-      
+
       <DialogContent sx={{ pb: 2 }}>
         <Box sx={{ mb: 3 }}>
-          <TextField 
-            fullWidth 
-            label={Locale.label("songs.search.inputLabel") || "Title or Artist"} 
+          <TextField
+            fullWidth
+            label={Locale.label("songs.search.inputLabel") || "Title or Artist"}
             placeholder={Locale.label("songs.search.inputPlaceholder") || "Enter song title or artist name..."}
-            value={searchText} 
-            onChange={handleChange} 
-            onKeyDown={handleKeyDown} 
-            data-testid="song-search-dialog-input" 
+            value={searchText}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            data-testid="song-search-dialog-input"
             aria-label="Song title or artist"
-            InputProps={{ 
+            InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <SearchIcon color="action" />
@@ -241,17 +211,11 @@ export const SongSearchDialog: React.FC<Props> = memo((props) => {
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <Button 
-                    variant="contained" 
-                    onClick={handleSearch}
-                    disabled={!searchText.trim() || isSearching}
-                    data-testid="song-search-dialog-button" 
-                    aria-label="Search songs"
-                  >
+                  <Button variant="contained" onClick={handleSearch} disabled={!searchText.trim() || isSearching} data-testid="song-search-dialog-button" aria-label="Search songs">
                     {Locale.label("common.search") || "Search"}
                   </Button>
                 </InputAdornment>
-              )
+              ),
             }}
             sx={{ mb: 2 }}
           />
@@ -261,37 +225,41 @@ export const SongSearchDialog: React.FC<Props> = memo((props) => {
           {!showCreate ? (
             <Box>
               {searchResults}
-              
+
               {songDetails && songDetails.length > 0 && (
-                <Box sx={{ mt: 3, pt: 2, borderTop: '1px solid', borderColor: 'grey.200' }}>
-                  <Button
-                    variant="text"
-                    startIcon={<AddIcon />}
-                    onClick={() => setShowCreate(true)}
-                    sx={{ color: 'text.secondary' }}
-                  >
+                <Box
+                  sx={{
+                    mt: 3,
+                    pt: 2,
+                    borderTop: "1px solid",
+                    borderColor: "grey.200",
+                  }}
+                >
+                  <Button variant="text" startIcon={<AddIcon />} onClick={() => setShowCreate(true)} sx={{ color: "text.secondary" }}>
                     {Locale.label("songs.search.createManually") || "Create Manually"}
                   </Button>
                 </Box>
               )}
             </Box>
           ) : (
-            <CreateSongDetail onSave={(sd: SongDetailInterface) => { props.onSelect(sd); }} />
+            <CreateSongDetail
+              onSave={(sd: SongDetailInterface) => {
+                props.onSelect(sd);
+              }}
+            />
           )}
         </Box>
       </DialogContent>
-      
+
       <DialogActions sx={{ px: 3, pb: 3 }}>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%' }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: "100%" }}>
           <Typography variant="caption" color="text.secondary">
-            Powered by: <a href="https://www.praisecharts.com/?XID=churchapps" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>PraiseCharts</a>
+            Powered by:{" "}
+            <a href="https://www.praisecharts.com/?XID=churchapps" target="_blank" rel="noopener noreferrer" style={{ color: "inherit" }}>
+              PraiseCharts
+            </a>
           </Typography>
-          <Button 
-            variant="outlined" 
-            onClick={props.onClose} 
-            data-testid="song-search-dialog-close" 
-            aria-label="Close dialog"
-          >
+          <Button variant="outlined" onClick={props.onClose} data-testid="song-search-dialog-close" aria-label="Close dialog">
             {Locale.label("common.close") || "Close"}
           </Button>
         </Stack>

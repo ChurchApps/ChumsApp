@@ -1,62 +1,69 @@
 import { type GroupInterface, UserHelper, Permissions, ApiHelper, type GroupServiceTimeInterface } from "@churchapps/apphelper";
 import { Button, Typography, Chip, IconButton, Stack, Box } from "@mui/material";
-import { Edit as EditIcon, Schedule as ScheduleIcon, LocationOn as LocationIcon, Group as GroupIcon, CalendarMonth as AttendanceIcon, Assignment as PlanIcon, CheckCircle as CheckIcon, Cancel as CancelIcon, Event as CalendarIcon } from "@mui/icons-material";
+import {
+  Edit as EditIcon,
+  Schedule as ScheduleIcon,
+  LocationOn as LocationIcon,
+  Group as GroupIcon,
+  CalendarMonth as AttendanceIcon,
+  Assignment as PlanIcon,
+  CheckCircle as CheckIcon,
+  Cancel as CancelIcon,
+  Event as CalendarIcon,
+} from "@mui/icons-material";
 import React, { memo, useMemo } from "react";
 
 interface Props {
-  group: GroupInterface
-  selectedTab?: string
-  onTabChange?: (tab: string) => void
-  togglePhotoEditor?: (show: boolean) => void
-  onEdit?: () => void
+  group: GroupInterface;
+  selectedTab?: string;
+  onTabChange?: (tab: string) => void;
+  togglePhotoEditor?: (show: boolean) => void;
+  onEdit?: () => void;
 }
 
 export const GroupBanner = memo((props: Props) => {
   const { group, selectedTab, onTabChange, togglePhotoEditor, onEdit } = props;
   const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
-  
+
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.groups.edit), []);
 
   React.useEffect(() => {
     if (group?.id) {
       ApiHelper.get("/groupservicetimes?groupId=" + group.id, "AttendanceApi")
-        .then(data => setGroupServiceTimes(data))
+        .then((data) => setGroupServiceTimes(data))
         .catch(() => setGroupServiceTimes([]));
     }
   }, [group?.id]);
 
-  const isStandard = useMemo(() => 
-    group?.tags?.indexOf("standard") > -1, 
-    [group?.tags]
-  );
+  const isStandard = useMemo(() => group?.tags?.indexOf("standard") > -1, [group?.tags]);
 
   const groupType = useMemo(() => {
     if (!group?.tags) return null;
     if (group.tags.indexOf("team") > -1) {
       return (
-        <Chip 
-          label="Team" 
-          size="small" 
-          sx={{ 
-            backgroundColor: "#e3f2fd", 
+        <Chip
+          label="Team"
+          size="small"
+          sx={{
+            backgroundColor: "#e3f2fd",
             color: "#1565c0",
             fontWeight: 600,
-            fontSize: '0.875rem'
-          }} 
+            fontSize: "0.875rem",
+          }}
         />
       );
     }
     if (group.categoryName) {
       return (
-        <Chip 
-          label={group.categoryName} 
-          size="small" 
-          sx={{ 
-            backgroundColor: "#f3e5f5", 
+        <Chip
+          label={group.categoryName}
+          size="small"
+          sx={{
+            backgroundColor: "#f3e5f5",
             color: "#6a1b9a",
             fontWeight: 600,
-            fontSize: '0.875rem'
-          }} 
+            fontSize: "0.875rem",
+          }}
         />
       );
     }
@@ -66,21 +73,20 @@ export const GroupBanner = memo((props: Props) => {
   const quickStats = useMemo(() => {
     if (!group) return [];
     const stats = [];
-    
+
     if (isStandard && group.meetingTime) {
-      stats.push({ 
-        icon: <ScheduleIcon sx={{ color: "#fff", fontSize: 16, mr: 0.5 }} />, 
-        value: group.meetingTime 
-      });
-    }
-    
-    if (group.meetingLocation) {
-      stats.push({ 
-        icon: <LocationIcon sx={{ color: "#fff", fontSize: 16, mr: 0.5 }} />, 
-        value: group.meetingLocation 
+      stats.push({
+        icon: <ScheduleIcon sx={{ color: "#fff", fontSize: 16, mr: 0.5 }} />,
+        value: group.meetingTime,
       });
     }
 
+    if (group.meetingLocation) {
+      stats.push({
+        icon: <LocationIcon sx={{ color: "#fff", fontSize: 16, mr: 0.5 }} />,
+        value: group.meetingLocation,
+      });
+    }
 
     return stats;
   }, [group, isStandard, groupServiceTimes]);
@@ -88,34 +94,28 @@ export const GroupBanner = memo((props: Props) => {
   const attendanceInfo = useMemo(() => {
     if (!group || !isStandard) return [];
     const info = [];
-    
+
     if (group.trackAttendance !== undefined) {
       info.push({
-        icon: group.trackAttendance ? 
-          <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : 
-          <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
+        icon: group.trackAttendance ? <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
         label: "Track Attendance",
-        value: group.trackAttendance ? "Yes" : "No"
+        value: group.trackAttendance ? "Yes" : "No",
       });
     }
-    
+
     if (group.printNametag !== undefined) {
       info.push({
-        icon: group.printNametag ? 
-          <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : 
-          <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
+        icon: group.printNametag ? <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
         label: "Print Nametag",
-        value: group.printNametag ? "Yes" : "No"
+        value: group.printNametag ? "Yes" : "No",
       });
     }
-    
+
     if (group.parentPickup !== undefined) {
       info.push({
-        icon: group.parentPickup ? 
-          <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : 
-          <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
+        icon: group.parentPickup ? <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
         label: "Parent Pickup",
-        value: group.parentPickup ? "Yes" : "No"
+        value: group.parentPickup ? "Yes" : "No",
       });
     }
 
@@ -123,10 +123,22 @@ export const GroupBanner = memo((props: Props) => {
   }, [group, isStandard]);
 
   const quickActions = [
-    { label: "Members", key: "members", icon: <GroupIcon />, onClick: () => onTabChange?.("members") },
-    ...(isStandard && group?.trackAttendance ? [
-      { label: "Sessions", key: "sessions", icon: <AttendanceIcon />, onClick: () => onTabChange?.("sessions") }
-    ] : [])
+    {
+      label: "Members",
+      key: "members",
+      icon: <GroupIcon />,
+      onClick: () => onTabChange?.("members"),
+    },
+    ...(isStandard && group?.trackAttendance
+      ? [
+          {
+            label: "Sessions",
+            key: "sessions",
+            icon: <AttendanceIcon />,
+            onClick: () => onTabChange?.("sessions"),
+          },
+        ]
+      : []),
   ];
 
   if (!group) return null;
@@ -135,45 +147,42 @@ export const GroupBanner = memo((props: Props) => {
     <div style={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "20px" }}>
       <Stack spacing={2} sx={{ width: "100%" }}>
         {/* Main Layout: Photo on left, Content on right */}
-        <Stack 
-          direction={{ xs: "column", md: "row" }} 
-          spacing={{ xs: 3, md: 4 }} 
-          alignItems={{ xs: "center", md: "flex-start" }} 
-          sx={{ width: "100%" }}
-        >
+        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 3, md: 4 }} alignItems={{ xs: "center", md: "flex-start" }} sx={{ width: "100%" }}>
           {/* Left: Photo */}
           <Box
             sx={{
               width: { xs: 120, md: 160 },
               height: { xs: 68, md: 90 }, // 16:9 aspect ratio
               borderRadius: 2,
-              overflow: 'hidden',
+              overflow: "hidden",
               border: "3px solid #FFF",
               flexShrink: 0,
               cursor: canEdit ? "pointer" : "default",
-              backgroundColor: group.photoUrl ? 'transparent' : 'rgba(255,255,255,0.1)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'relative',
-              '&:hover': canEdit ? {
-                opacity: 0.8,
-                '&::after': {
-                  content: '"Click to edit"',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: 'rgba(0,0,0,0.7)',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '0.875rem',
-                  fontWeight: 600
-                }
-              } : {}
+              backgroundColor: group.photoUrl ? "transparent" : "rgba(255,255,255,0.1)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              "&:hover": canEdit
+                ? {
+                    opacity: 0.8,
+                    "&::after": {
+                      content: '"Click to edit"',
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundColor: "rgba(0,0,0,0.7)",
+                      color: "white",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "0.875rem",
+                      fontWeight: 600,
+                    },
+                  }
+                : {},
             }}
             onClick={() => canEdit && togglePhotoEditor?.(true)}
           >
@@ -182,29 +191,29 @@ export const GroupBanner = memo((props: Props) => {
                 src={group.photoUrl}
                 alt={group.name}
                 style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover'
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
                 }}
               />
             ) : (
-              <GroupIcon sx={{ fontSize: { xs: 32, md: 40 }, color: 'rgba(255,255,255,0.7)' }} />
+              <GroupIcon sx={{ fontSize: { xs: 32, md: 40 }, color: "rgba(255,255,255,0.7)" }} />
             )}
           </Box>
-          
+
           {/* Right: Content Area */}
-          <Stack spacing={1.5} sx={{ flex: 1, width: '100%' }}>
+          <Stack spacing={1.5} sx={{ flex: 1, width: "100%" }}>
             {/* Row 1: Group Name, Category, Edit - Full Width */}
-            <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between" flexWrap="wrap" sx={{ width: '100%' }}>
+            <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between" flexWrap="wrap" sx={{ width: "100%" }}>
               <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap">
-                <Typography 
-                  sx={{ 
-                    color: "#FFF", 
-                    fontWeight: 400, 
+                <Typography
+                  sx={{
+                    color: "#FFF",
+                    fontWeight: 400,
                     mb: 0,
                     wordBreak: "break-word",
                     fontSize: { xs: "1.75rem", md: "2.125rem" },
-                    lineHeight: 1.1
+                    lineHeight: 1.1,
                   }}
                 >
                   {group.name}
@@ -212,34 +221,26 @@ export const GroupBanner = memo((props: Props) => {
                 {groupType}
               </Stack>
               {canEdit && (
-                <IconButton 
-                  size="small" 
-                  sx={{ color: "#FFF" }}
-                  onClick={onEdit}
-                >
+                <IconButton size="small" sx={{ color: "#FFF" }} onClick={onEdit}>
                   <EditIcon fontSize="small" />
                 </IconButton>
               )}
             </Stack>
-            
+
             {/* Row 2: Three Columns */}
-            <Stack 
-              direction={{ xs: "column", md: "row" }} 
-              spacing={{ xs: 1.5, md: 2 }} 
-              sx={{ width: "100%" }}
-            >
+            <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 1.5, md: 2 }} sx={{ width: "100%" }}>
               {/* Column 1: Time/Place */}
               <Stack spacing={1} sx={{ flex: 1 }}>
                 {quickStats.length > 0 && (
-                  <Typography 
-                    variant="body2" 
-                    sx={{ 
-                      color: "rgba(255,255,255,0.8)", 
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "rgba(255,255,255,0.8)",
                       fontSize: { xs: "0.75rem", md: "0.875rem" },
                       fontWeight: 600,
                       mb: 1,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      textTransform: "uppercase",
+                      letterSpacing: "0.5px",
                     }}
                   >
                     Meeting Info
@@ -248,11 +249,11 @@ export const GroupBanner = memo((props: Props) => {
                 {quickStats.map((stat, idx) => (
                   <Stack key={idx} direction="row" alignItems="center">
                     {stat.icon}
-                    <Typography 
-                      variant="body2" 
-                      sx={{ 
-                        color: "#FFF", 
-                        fontSize: { xs: "0.875rem", md: "1rem" }
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "#FFF",
+                        fontSize: { xs: "0.875rem", md: "1rem" },
                       }}
                     >
                       {stat.value}
@@ -265,15 +266,15 @@ export const GroupBanner = memo((props: Props) => {
               <Stack spacing={1.5} sx={{ flex: 1 }}>
                 {attendanceInfo.length > 0 && (
                   <Box>
-                    <Typography 
-                      variant="body2" 
-                      sx={{ 
-                        color: "rgba(255,255,255,0.8)", 
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "rgba(255,255,255,0.8)",
                         fontSize: { xs: "0.75rem", md: "0.875rem" },
                         fontWeight: 600,
                         mb: 1,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px'
+                        textTransform: "uppercase",
+                        letterSpacing: "0.5px",
                       }}
                     >
                       Settings
@@ -282,13 +283,13 @@ export const GroupBanner = memo((props: Props) => {
                       {attendanceInfo.map((info, idx) => (
                         <Stack key={idx} direction="row" alignItems="center" spacing={0.5}>
                           {info.icon}
-                          <Typography 
-                            variant="body2" 
-                            sx={{ 
-                              color: "rgba(255,255,255,0.9)", 
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: "rgba(255,255,255,0.9)",
                               fontSize: { xs: "0.75rem", md: "0.875rem" },
                               fontWeight: 500,
-                              whiteSpace: 'nowrap'
+                              whiteSpace: "nowrap",
                             }}
                           >
                             {info.label}
@@ -298,27 +299,25 @@ export const GroupBanner = memo((props: Props) => {
                     </Stack>
                   </Box>
                 )}
-                
+
                 {/* Labels */}
                 {(() => {
                   // Filter out empty, null, or whitespace-only labels
-                  const validLabels = group.labelArray?.filter(label => 
-                    label && typeof label === 'string' && label.trim() !== ''
-                  ) || [];
-                  
+                  const validLabels = group.labelArray?.filter((label) => label && typeof label === "string" && label.trim() !== "") || [];
+
                   if (validLabels.length === 0) return null;
-                  
+
                   return (
                     <Box>
-                      <Typography 
-                        variant="body2" 
-                        sx={{ 
-                          color: "rgba(255,255,255,0.8)", 
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "rgba(255,255,255,0.8)",
                           fontSize: { xs: "0.75rem", md: "0.875rem" },
                           fontWeight: 600,
                           mb: 1,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.5px'
+                          textTransform: "uppercase",
+                          letterSpacing: "0.5px",
                         }}
                       >
                         Labels
@@ -329,11 +328,11 @@ export const GroupBanner = memo((props: Props) => {
                             key={idx}
                             label={label.trim()}
                             size="small"
-                            sx={{ 
-                              backgroundColor: "rgba(255,255,255,0.2)", 
+                            sx={{
+                              backgroundColor: "rgba(255,255,255,0.2)",
                               color: "#FFF",
-                              fontSize: '0.75rem',
-                              height: 20
+                              fontSize: "0.75rem",
+                              height: 20,
                             }}
                           />
                         ))}
@@ -341,11 +340,11 @@ export const GroupBanner = memo((props: Props) => {
                           <Chip
                             label={`+${validLabels.length - 4} more`}
                             size="small"
-                            sx={{ 
-                              backgroundColor: "rgba(255,255,255,0.1)", 
+                            sx={{
+                              backgroundColor: "rgba(255,255,255,0.1)",
                               color: "rgba(255,255,255,0.7)",
-                              fontSize: '0.75rem',
-                              height: 20
+                              fontSize: "0.75rem",
+                              height: 20,
                             }}
                           />
                         )}
@@ -354,16 +353,16 @@ export const GroupBanner = memo((props: Props) => {
                   );
                 })()}
               </Stack>
-              
+
               {/* Column 3: Action Buttons */}
-              <Stack 
+              <Stack
                 direction="row"
-                spacing={1} 
-                flexWrap="wrap" 
-                sx={{ 
+                spacing={1}
+                flexWrap="wrap"
+                sx={{
                   flex: 1,
                   justifyContent: { xs: "center", md: "flex-end" },
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
                 useFlexGap
               >
@@ -374,19 +373,19 @@ export const GroupBanner = memo((props: Props) => {
                       key={action.label}
                       size="small"
                       variant={isActive ? "contained" : "outlined"}
-                      sx={{ 
-                        color: isActive ? "var(--c1l2)" : "#FFF", 
+                      sx={{
+                        color: isActive ? "var(--c1l2)" : "#FFF",
                         backgroundColor: isActive ? "#FFF" : "transparent",
                         borderColor: isActive ? "#FFF" : "rgba(255,255,255,0.5)",
                         "&:hover": {
                           borderColor: "#FFF",
                           backgroundColor: isActive ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
-                          color: isActive ? "var(--c1l2)" : "#FFF"
+                          color: isActive ? "var(--c1l2)" : "#FFF",
                         },
-                        minWidth: 'auto',
+                        minWidth: "auto",
                         px: 2,
                         py: 0.5,
-                        fontWeight: isActive ? 600 : 400
+                        fontWeight: isActive ? 600 : 400,
                       }}
                       startIcon={action.icon}
                       onClick={action.onClick}
@@ -399,19 +398,19 @@ export const GroupBanner = memo((props: Props) => {
             </Stack>
           </Stack>
         </Stack>
-        
+
         {/* Services Row - Full Width */}
         {groupServiceTimes.length > 0 && (
-          <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.2)', pt: 1.5 }}>
-            <Typography 
-              variant="body2" 
-              sx={{ 
-                color: "rgba(255,255,255,0.8)", 
+          <Box sx={{ borderTop: "1px solid rgba(255,255,255,0.2)", pt: 1.5 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "rgba(255,255,255,0.8)",
                 fontSize: { xs: "0.75rem", md: "0.875rem" },
                 fontWeight: 600,
                 mb: 1,
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
               }}
             >
               Associated Services
@@ -423,14 +422,12 @@ export const GroupBanner = memo((props: Props) => {
                   icon={<CalendarIcon sx={{ fontSize: 14 }} />}
                   label={gst.serviceTime.name}
                   size="small"
-                  sx={{ 
-                    backgroundColor: "rgba(255,255,255,0.2)", 
+                  sx={{
+                    backgroundColor: "rgba(255,255,255,0.2)",
                     color: "#FFF",
-                    fontSize: '0.875rem',
+                    fontSize: "0.875rem",
                     height: 24,
-                    '& .MuiChip-icon': {
-                      color: '#FFF'
-                    }
+                    "& .MuiChip-icon": { color: "#FFF" },
                   }}
                 />
               ))}
@@ -440,17 +437,17 @@ export const GroupBanner = memo((props: Props) => {
 
         {/* Bottom Row: Description - Spans All Columns */}
         {isStandard && group.about && (
-          <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.2)', pt: 1.5, mt: groupServiceTimes.length > 0 ? 0 : 0 }}>
-            <Typography 
-              variant="body2" 
-              sx={{ 
-                color: "rgba(255,255,255,0.9)", 
+          <Box sx={{ borderTop: "1px solid rgba(255,255,255,0.2)", pt: 1.5, mt: groupServiceTimes.length > 0 ? 0 : 0 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "rgba(255,255,255,0.9)",
                 fontSize: { xs: "0.875rem", md: "0.95rem" },
                 lineHeight: 1.4,
-                fontStyle: 'italic'
+                fontStyle: "italic",
               }}
             >
-              {group.about.replace(/[#*_`]/g, '')}
+              {group.about.replace(/[#*_`]/g, "")}
             </Typography>
           </Box>
         )}

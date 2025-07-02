@@ -1,21 +1,8 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { Locale } from "@churchapps/apphelper";
 import { type SongDetailInterface } from "../../../helpers";
-import { 
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Stack,
-  Chip,
-  Avatar,
-  IconButton,
-  Paper,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider
+import {
+ Box, Card, CardContent, Typography, Stack, Chip, Avatar, IconButton, Paper, List, ListItem, ListItemIcon, ListItemText, Divider 
 } from "@mui/material";
 import {
   Edit as EditIcon,
@@ -26,7 +13,7 @@ import {
   Speed as BpmIcon,
   Language as LanguageIcon,
   DateRange as DateIcon,
-  Timer as TimerIcon
+  Timer as TimerIcon,
 } from "@mui/icons-material";
 import { SongDetailsEdit } from "./SongDetailsEdit";
 import { SongDetailLinks } from "./SongDetailLinks";
@@ -58,7 +45,7 @@ export const SongDetails = memo((props: Props) => {
         icon: <ArtistIcon />,
         label: Locale.label("songs.details.artist") || "Artist",
         value: props.songDetail.artist,
-        color: 'primary.main'
+        color: "primary.main",
       });
     }
 
@@ -67,7 +54,7 @@ export const SongDetails = memo((props: Props) => {
         icon: <AlbumIcon />,
         label: Locale.label("songs.details.album") || "Album",
         value: props.songDetail.album,
-        color: 'secondary.main'
+        color: "secondary.main",
       });
     }
 
@@ -77,7 +64,7 @@ export const SongDetails = memo((props: Props) => {
         icon: <DateIcon />,
         label: Locale.label("songs.details.releaseDate") || "Release Date",
         value: d.toLocaleDateString(),
-        color: 'info.main'
+        color: "info.main",
       });
     }
 
@@ -86,7 +73,7 @@ export const SongDetails = memo((props: Props) => {
         icon: <LanguageIcon />,
         label: Locale.label("songs.details.language") || "Language",
         value: props.songDetail.language,
-        color: 'success.main'
+        color: "success.main",
       });
     }
 
@@ -95,7 +82,7 @@ export const SongDetails = memo((props: Props) => {
         icon: <BpmIcon />,
         label: Locale.label("songs.details.bpm") || "BPM",
         value: props.songDetail.bpm.toString(),
-        color: 'warning.main'
+        color: "warning.main",
       });
     }
 
@@ -104,7 +91,7 @@ export const SongDetails = memo((props: Props) => {
         icon: <KeyIcon />,
         label: Locale.label("songs.details.keySignature") || "Key Signature",
         value: props.songDetail.keySignature,
-        color: 'primary.main'
+        color: "primary.main",
       });
     }
 
@@ -113,7 +100,7 @@ export const SongDetails = memo((props: Props) => {
         icon: <KeyIcon />,
         label: Locale.label("songs.details.keys") || "Keys",
         value: props.songDetail.tones,
-        color: 'secondary.main'
+        color: "secondary.main",
       });
     }
 
@@ -122,7 +109,7 @@ export const SongDetails = memo((props: Props) => {
         icon: <TimeIcon />,
         label: Locale.label("songs.details.meter") || "Meter",
         value: props.songDetail.meter,
-        color: 'info.main'
+        color: "info.main",
       });
     }
 
@@ -131,7 +118,7 @@ export const SongDetails = memo((props: Props) => {
         icon: <TimerIcon />,
         label: Locale.label("songs.details.length") || "Length",
         value: formatSeconds(props.songDetail.seconds),
-        color: 'success.main'
+        color: "success.main",
       });
     }
 
@@ -151,26 +138,24 @@ export const SongDetails = memo((props: Props) => {
     setEditMode(true);
   }, []);
 
-  if (editMode) return <SongDetailsEdit songDetail={props.songDetail} onCancel={handleCancel} onSave={handleSave} reload={props.reload} />
+  if (editMode) return <SongDetailsEdit songDetail={props.songDetail} onCancel={handleCancel} onSave={handleSave} reload={props.reload} />;
 
   return (
-    <Card sx={{ borderRadius: 2, border: '1px solid', borderColor: 'grey.200' }}>
+    <Card sx={{ borderRadius: 2, border: "1px solid", borderColor: "grey.200" }}>
       <CardContent>
         {/* Header */}
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
           <Stack direction="row" spacing={2} alignItems="center">
-            <AlbumIcon sx={{ color: 'primary.main', fontSize: 28 }} />
-            <Typography variant="h5" sx={{ fontWeight: 600, color: 'primary.main' }}>
+            <AlbumIcon sx={{ color: "primary.main", fontSize: 28 }} />
+            <Typography variant="h5" sx={{ fontWeight: 600, color: "primary.main" }}>
               {props.songDetail?.title || "Song Details"}
             </Typography>
           </Stack>
           <IconButton
             onClick={handleEdit}
             sx={{
-              color: 'primary.main',
-              '&:hover': {
-                backgroundColor: 'primary.light'
-              }
+              color: "primary.main",
+              "&:hover": { backgroundColor: "primary.light" },
             }}
             aria-label="Edit song details"
           >
@@ -180,19 +165,19 @@ export const SongDetails = memo((props: Props) => {
 
         {/* Song Thumbnail */}
         {props.songDetail?.thumbnail && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
             <Avatar
               src={props.songDetail.thumbnail}
-              sx={{ 
-                width: 120, 
+              sx={{
+                width: 120,
                 height: 120,
-                bgcolor: 'grey.100',
-                border: '2px solid',
-                borderColor: 'grey.300'
+                bgcolor: "grey.100",
+                border: "2px solid",
+                borderColor: "grey.300",
               }}
               onError={handleImageError}
             >
-              <AlbumIcon sx={{ fontSize: 48, color: 'grey.400' }} />
+              <AlbumIcon sx={{ fontSize: 48, color: "grey.400" }} />
             </Avatar>
           </Box>
         )}
@@ -203,11 +188,7 @@ export const SongDetails = memo((props: Props) => {
             {songDetailItems.map((item, index) => (
               <Box key={index}>
                 <ListItem sx={{ px: 0, py: 1 }}>
-                  <ListItemIcon sx={{ minWidth: 40 }}>
-                    {React.cloneElement(item.icon, { 
-                      sx: { color: item.color, fontSize: 20 } 
-                    })}
-                  </ListItemIcon>
+                  <ListItemIcon sx={{ minWidth: 40 }}>{React.cloneElement(item.icon, { sx: { color: item.color, fontSize: 20 } })}</ListItemIcon>
                   <ListItemText
                     primary={
                       <Stack direction="row" spacing={2} alignItems="center">
@@ -221,7 +202,7 @@ export const SongDetails = memo((props: Props) => {
                           sx={{
                             borderColor: item.color,
                             color: item.color,
-                            fontWeight: 500
+                            fontWeight: 500,
                           }}
                         />
                       </Stack>
@@ -233,16 +214,16 @@ export const SongDetails = memo((props: Props) => {
             ))}
           </List>
         ) : (
-          <Paper 
-            sx={{ 
-              p: 3, 
-              textAlign: 'center', 
-              backgroundColor: 'grey.50',
-              border: '1px dashed',
-              borderColor: 'grey.300'
+          <Paper
+            sx={{
+              p: 3,
+              textAlign: "center",
+              backgroundColor: "grey.50",
+              border: "1px dashed",
+              borderColor: "grey.300",
             }}
           >
-            <AlbumIcon sx={{ fontSize: 48, color: 'grey.400', mb: 1 }} />
+            <AlbumIcon sx={{ fontSize: 48, color: "grey.400", mb: 1 }} />
             <Typography variant="body2" color="text.secondary">
               No additional details available for this song.
             </Typography>
@@ -257,4 +238,3 @@ export const SongDetails = memo((props: Props) => {
     </Card>
   );
 });
-

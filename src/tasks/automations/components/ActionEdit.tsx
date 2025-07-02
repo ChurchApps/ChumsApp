@@ -1,34 +1,15 @@
-import { 
-  MenuItem, 
-  Select, 
-  TextField, 
-  type SelectChangeEvent,
-  Card,
-  CardContent,
-  Typography,
-  Stack,
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  InputAdornment,
-  FormHelperText
+import {
+ MenuItem, Select, TextField, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, FormControl, InputLabel, InputAdornment, FormHelperText 
 } from "@mui/material";
 import React from "react";
 import { ErrorMessages, type ActionInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { ContentPicker } from "../../components/ContentPicker";
-import {
-  Task as TaskIcon,
-  Search as SearchIcon,
-  Save as SaveIcon,
-  Cancel as CancelIcon,
-  Assignment as ActionIcon
-} from "@mui/icons-material";
+import { Task as TaskIcon, Search as SearchIcon, Save as SaveIcon, Cancel as CancelIcon, Assignment as ActionIcon } from "@mui/icons-material";
 
 interface Props {
-  action: ActionInterface,
-  onCancel: () => void,
-  onSave: (action: ActionInterface) => void,
+  action: ActionInterface;
+  onCancel: () => void;
+  onSave: (action: ActionInterface) => void;
 }
 
 export const ActionEdit = (props: Props) => {
@@ -43,7 +24,7 @@ export const ActionEdit = (props: Props) => {
       const details = JSON.parse(props.action.actionData);
       setTaskDetails(details);
     }
-  }
+  };
 
   React.useEffect(init, [props.action]);
 
@@ -51,15 +32,15 @@ export const ActionEdit = (props: Props) => {
     const result: string[] = [];
     setErrors(result);
     return result.length === 0;
-  }
+  };
 
   const handleSave = async () => {
     if (validate()) {
-      ApiHelper.post("/actions", [action], "DoingApi").then(d => {
+      ApiHelper.post("/actions", [action], "DoingApi").then((d) => {
         props.onSave(d[0]);
       });
     }
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
@@ -70,7 +51,7 @@ export const ActionEdit = (props: Props) => {
         break;
     }
     setAction(a);
-  }
+  };
 
   const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
@@ -85,13 +66,13 @@ export const ActionEdit = (props: Props) => {
     }
     setTaskDetails(d);
     updateActionData(d);
-  }
+  };
 
   const updateActionData = (d: any) => {
     const a = { ...action };
     a.actionData = JSON.stringify(d);
     setAction(a);
-  }
+  };
 
   const handleContentPicked = (contentType: string, contentId: string, label: string) => {
     const d = { ...taskDetails };
@@ -105,28 +86,30 @@ export const ActionEdit = (props: Props) => {
     setTaskDetails(d);
     updateActionData(d);
     setModalField("");
-  }
+  };
 
-  const handleModalClose = () => { setModalField(""); }
+  const handleModalClose = () => {
+    setModalField("");
+  };
 
-  if (!action) return <></>
+  if (!action) return <></>;
   return (
-    <Card sx={{ 
-      borderRadius: 2,
-      border: '1px solid',
-      borderColor: 'grey.200',
-      transition: 'all 0.2s ease-in-out',
-      '&:hover': {
-        boxShadow: 2
-      }
-    }}>
+    <Card
+      sx={{
+        borderRadius: 2,
+        border: "1px solid",
+        borderColor: "grey.200",
+        transition: "all 0.2s ease-in-out",
+        "&:hover": { boxShadow: 2 },
+      }}
+    >
       <CardContent>
         <Stack spacing={3}>
           {/* Header */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <Stack direction="row" alignItems="center" spacing={1}>
-              <ActionIcon sx={{ color: 'primary.main' }} />
-              <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+              <ActionIcon sx={{ color: "primary.main" }} />
+              <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
                 {Locale.label("tasks.actionEdit.editAct")}
               </Typography>
             </Stack>
@@ -139,88 +122,66 @@ export const ActionEdit = (props: Props) => {
           <Stack spacing={2}>
             <FormControl fullWidth variant="outlined">
               <InputLabel>{Locale.label("tasks.actionEdit.actType")}</InputLabel>
-              <Select 
-                label={Locale.label("tasks.actionEdit.actType")} 
-                value={action?.actionType || "task"} 
+              <Select
+                label={Locale.label("tasks.actionEdit.actType")}
+                value={action?.actionType || "task"}
                 name="actionType"
-                onChange={handleChange} 
-                data-testid="action-type-select" 
+                onChange={handleChange}
+                data-testid="action-type-select"
                 aria-label="Action type"
-                startAdornment={<TaskIcon sx={{ color: 'action.active', ml: 1, mr: 0.5 }} />}
+                startAdornment={<TaskIcon sx={{ color: "action.active", ml: 1, mr: 0.5 }} />}
               >
                 <MenuItem value="task">{Locale.label("tasks.actionEdit.taskAssign")}</MenuItem>
               </Select>
               <FormHelperText>What type of action should be performed?</FormHelperText>
             </FormControl>
-            
-            <TextField 
-              fullWidth 
-              label={Locale.label("tasks.actionEdit.assignTo")} 
-              value={taskDetails.assignedToLabel || ""} 
-              InputProps={{ 
+
+            <TextField
+              fullWidth
+              label={Locale.label("tasks.actionEdit.assignTo")}
+              value={taskDetails.assignedToLabel || ""}
+              InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <SearchIcon sx={{ color: 'action.active' }} />
+                    <SearchIcon sx={{ color: "action.active" }} />
                   </InputAdornment>
                 ),
-                sx: {
-                  '& .MuiInputBase-input': {
-                    cursor: 'pointer'
-                  }
-                }
-              }} 
-              onFocus={(e) => { 
-                e.target.blur(); 
-                setModalField("assignedTo") 
-              }} 
-              data-testid="action-assign-to-input" 
+                sx: { "& .MuiInputBase-input": { cursor: "pointer" } },
+              }}
+              onFocus={(e) => {
+                e.target.blur();
+                setModalField("assignedTo");
+              }}
+              data-testid="action-assign-to-input"
               aria-label="Assign to"
               variant="outlined"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  '&:hover fieldset': {
-                    borderColor: 'primary.main',
-                  }
-                }
-              }}
+              sx={{ "& .MuiOutlinedInput-root": { "&:hover fieldset": { borderColor: "primary.main" } } }}
             />
-            
-            <TextField 
-              fullWidth 
-              label={Locale.label("tasks.actionEdit.taskTitle")} 
-              value={taskDetails?.title || ""} 
-              name="title" 
-              onChange={handleDetailsChange} 
-              data-testid="action-task-title-input" 
+
+            <TextField
+              fullWidth
+              label={Locale.label("tasks.actionEdit.taskTitle")}
+              value={taskDetails?.title || ""}
+              name="title"
+              onChange={handleDetailsChange}
+              data-testid="action-task-title-input"
               aria-label="Task title"
               variant="outlined"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  '&:hover fieldset': {
-                    borderColor: 'primary.main',
-                  }
-                }
-              }}
+              sx={{ "& .MuiOutlinedInput-root": { "&:hover fieldset": { borderColor: "primary.main" } } }}
             />
-            
-            <TextField 
-              fullWidth 
-              label={Locale.label("tasks.actionEdit.taskNote")} 
-              value={taskDetails?.note || ""} 
-              name="note" 
-              onChange={handleDetailsChange} 
+
+            <TextField
+              fullWidth
+              label={Locale.label("tasks.actionEdit.taskNote")}
+              value={taskDetails?.note || ""}
+              name="note"
+              onChange={handleDetailsChange}
               multiline
               rows={4}
-              data-testid="action-task-note-input" 
+              data-testid="action-task-note-input"
               aria-label="Task note"
               variant="outlined"
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  '&:hover fieldset': {
-                    borderColor: 'primary.main',
-                  }
-                }
-              }}
+              sx={{ "& .MuiOutlinedInput-root": { "&:hover fieldset": { borderColor: "primary.main" } } }}
             />
           </Stack>
 
@@ -232,8 +193,8 @@ export const ActionEdit = (props: Props) => {
               onClick={props.onCancel}
               sx={{
                 borderRadius: 2,
-                textTransform: 'none',
-                fontWeight: 600
+                textTransform: "none",
+                fontWeight: 600,
               }}
             >
               {Locale.label("common.cancel")}
@@ -244,8 +205,8 @@ export const ActionEdit = (props: Props) => {
               onClick={handleSave}
               sx={{
                 borderRadius: 2,
-                textTransform: 'none',
-                fontWeight: 600
+                textTransform: "none",
+                fontWeight: 600,
               }}
             >
               {Locale.label("common.save")}
@@ -253,9 +214,9 @@ export const ActionEdit = (props: Props) => {
           </Stack>
         </Stack>
       </CardContent>
-      
+
       {/* Modal */}
-      {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
+      {modalField !== "" && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
     </Card>
   );
-}
+};

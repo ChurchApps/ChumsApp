@@ -14,23 +14,22 @@ export const Header: React.FC = () => {
 
   useEffect(() => {
     if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) {
-      ApiHelper.get("/eventLog/type/failed/", "GivingApi").then(data => {
+      ApiHelper.get("/eventLog/type/failed/", "GivingApi").then((data) => {
         if (data?.length > 0 && data.find((error: any) => !error.resolved)) setDonationError(true);
       });
     }
 
     if (!formPermission && context?.person?.id) {
-      ApiHelper.get("/memberpermissions/member/" + context.person?.id, "MembershipApi").then(data => setIsFormMember(data.length));
+      ApiHelper.get("/memberpermissions/member/" + context.person?.id, "MembershipApi").then((data) => setIsFormMember(data.length));
     }
   }, [formPermission, context?.person?.id]);
 
   const primaryMenu = useMemo(() => {
     const donationIcon = donationError ? "error" : "volunteer_activism";
-    const menuItems: { url: string, icon: string, label: string }[] = []
+    const menuItems: { url: string; icon: string; label: string }[] = [];
     menuItems.push({ url: "/", icon: "home", label: Locale.label("components.wrapper.dash") });
     menuItems.push({ url: "/people", icon: "person", label: Locale.label("components.wrapper.ppl") });
     if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({ url: "/donations", label: Locale.label("components.wrapper.don"), icon: donationIcon });
-
 
     if (UserHelper.checkAccess(Permissions.membershipApi.plans.edit)) menuItems.push({ url: "/plans", label: Locale.label("components.wrapper.serving"), icon: "assignment" });
     else menuItems.push({ url: "/tasks", label: Locale.label("components.wrapper.serving"), icon: "assignment" });
@@ -59,12 +58,24 @@ export const Header: React.FC = () => {
     else if (path.startsWith("/tasks") || path.startsWith("/plans") || window.location.search.indexOf("tag=") > -1) result = Locale.label("components.wrapper.serving");
     else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = Locale.label("components.wrapper.set");
     return result;
-  }
+  };
 
   const secondaryMenu = SecondaryMenuHelper.getSecondaryMenu(window.location.pathname, { formPermission });
 
-  const handleNavigate = (url: string) => { navigate(url); }
+  const handleNavigate = (url: string) => {
+    navigate(url);
+  };
 
   /*<Typography variant="h6" noWrap>{UserHelper.currentUserChurch?.church?.name || ""}</Typography>*/
-  return (<SiteHeader primaryMenuItems={primaryMenu} primaryMenuLabel={getPrimaryLabel()} secondaryMenuItems={secondaryMenu.menuItems} secondaryMenuLabel={secondaryMenu.label} context={context} appName={"CHUMS"} onNavigate={handleNavigate} />);
-}
+  return (
+    <SiteHeader
+      primaryMenuItems={primaryMenu}
+      primaryMenuLabel={getPrimaryLabel()}
+      secondaryMenuItems={secondaryMenu.menuItems}
+      secondaryMenuLabel={secondaryMenu.label}
+      context={context}
+      appName={"CHUMS"}
+      onNavigate={handleNavigate}
+    />
+  );
+};

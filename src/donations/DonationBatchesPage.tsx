@@ -3,7 +3,9 @@ import { BatchEdit, DonationEvents } from "./components";
 import { ApiHelper, DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { useMountedState, type DonationBatchInterface, Permissions } from "@churchapps/apphelper";
-import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button } from "@mui/material";
+import {
+ Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 
+} from "@mui/material";
 import { VolunteerActivism as DonationIcon, Add as AddIcon, FileDownload as ExportIcon, CalendarMonth as DateIcon } from "@mui/icons-material";
 
 export const DonationBatchesPage = () => {
@@ -13,27 +15,30 @@ export const DonationBatchesPage = () => {
   const [currentSortedCol, setCurrentSortedCol] = React.useState<string>("");
   const isMounted = useMountedState();
 
-  const batchUpdated = () => { setEditBatchId("notset"); loadData(); }
+  const batchUpdated = () => {
+    setEditBatchId("notset");
+    loadData();
+  };
 
   const showEditBatch = (e: React.MouseEvent) => {
     e.preventDefault();
     const anchor = e.currentTarget as HTMLAnchorElement;
     const id = anchor.getAttribute("data-id");
     setEditBatchId(id);
-  }
+  };
 
-  const loadData = () => { 
-    ApiHelper.get("/donationbatches", "GivingApi").then(data => {
-      if(isMounted()) {
+  const loadData = () => {
+    ApiHelper.get("/donationbatches", "GivingApi").then((data) => {
+      if (isMounted()) {
         setBatches(data);
       }
-    }); 
-  }
+    });
+  };
 
   const [stats, setStats] = React.useState({
     totalBatches: 0,
     totalDonations: 0,
-    totalAmount: 0
+    totalAmount: 0,
   });
 
   React.useEffect(() => {
@@ -41,36 +46,38 @@ export const DonationBatchesPage = () => {
       const totalBatches = batches.length;
       const totalDonations = batches.reduce((sum, batch) => sum + (batch.donationCount || 0), 0);
       const totalAmount = batches.reduce((sum, batch) => sum + (batch.totalAmount || 0), 0);
-      
+
       setStats({
         totalBatches,
         totalDonations,
-        totalAmount
+        totalAmount,
       });
     }
   }, [batches]);
 
   const getSidebarModules = () => {
     const result = [];
-    if (editBatchId !== "notset") result.push(<BatchEdit key={result.length - 1} batchId={editBatchId} updatedFunction={batchUpdated} />)
+    if (editBatchId !== "notset") result.push(<BatchEdit key={result.length - 1} batchId={editBatchId} updatedFunction={batchUpdated} />);
     return result;
-  }
+  };
 
   const sortTable = (key: string, asc: boolean | null) => {
     if (asc === null) asc = false;
     setCurrentSortedCol(key);
 
-    const sortedBatches = batches.sort(function(a: any, b: any) {
+    const sortedBatches = batches.sort(function (a: any, b: any) {
       if (a[key] === null) return Infinity;
 
       if (key === "batchDate") {
         if (typeof new Date(a[key]).getMonth === "function") {
-          return asc ? (new Date(a[key])?.getTime() - new Date(b[key])?.getTime()) : (new Date(b[key])?.getTime() - new Date(a[key])?.getTime());
+          return asc ? new Date(a[key])?.getTime() - new Date(b[key])?.getTime() : new Date(b[key])?.getTime() - new Date(a[key])?.getTime();
         }
       }
 
       const parsedNum = parseInt(a[key]);
-      if (!isNaN(parsedNum)) { return asc ? (a[key] - b[key]) : (b[key] - a[key]); }
+      if (!isNaN(parsedNum)) {
+        return asc ? a[key] - b[key] : b[key] - a[key];
+      }
 
       const valA = a[key].toUpperCase();
       const valB = b[key].toUpperCase();
@@ -85,60 +92,50 @@ export const DonationBatchesPage = () => {
     });
     setBatches(sortedBatches);
     setSortDirection(!asc);
-  }
+  };
 
   const getSortArrows = (key: string) => (
     <div style={{ display: "flex" }}>
       <div style={{ marginTop: "5px" }} className={`${sortDirection && currentSortedCol === key ? "sortAscActive" : "sortAsc"}`}></div>
       <div style={{ marginTop: "14px" }} className={`${!sortDirection && currentSortedCol === key ? "sortDescActive" : "sortDesc"}`}></div>
     </div>
-  )
+  );
 
   const getRows = () => {
     const result: JSX.Element[] = [];
 
     if (batches.length === 0) {
-      result.push(
-        <TableRow key="0">
-          <TableCell colSpan={5} sx={{ textAlign: 'center', py: 4 }}>
+      result.push(<TableRow key="0">
+          <TableCell colSpan={5} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
-              <DonationIcon sx={{ fontSize: 48, color: 'text.secondary' }} />
+              <DonationIcon sx={{ fontSize: 48, color: "text.secondary" }} />
               <Typography variant="body1" color="text.secondary">
                 {Locale.label("donations.donationsPage.noBatch")}
               </Typography>
             </Stack>
           </TableCell>
-        </TableRow>
-      );
+        </TableRow>);
       return result;
     }
 
     const canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
     const canViewBatch = UserHelper.checkAccess(Permissions.givingApi.donations.view);
-    
+
     for (let i = 0; i < batches.length; i++) {
       const b = batches[i];
-      const editLink = (canEdit) ? (
-        <Button
-          size="small"
-          variant="outlined"
-          startIcon={<Icon>edit</Icon>}
-          data-cy={`edit-${i}`}
-          data-id={b.id}
-          onClick={showEditBatch}
-          sx={{ minWidth: 'auto' }}
-        >
+      const editLink = canEdit ? (
+        <Button size="small" variant="outlined" startIcon={<Icon>edit</Icon>} data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch} sx={{ minWidth: "auto" }}>
           Edit
         </Button>
       ) : null;
-      
-      const batchLink = (canViewBatch) ? (
-        <Link 
-          to={"/donations/batches/" + b.id} 
-          style={{ 
-            textDecoration: 'none', 
-            color: 'var(--c1l2)', 
-            fontWeight: 500 
+
+      const batchLink = canViewBatch ? (
+        <Link
+          to={"/donations/batches/" + b.id}
+          style={{
+            textDecoration: "none",
+            color: "var(--c1l2)",
+            fontWeight: 500,
           }}
         >
           {b.name}
@@ -159,31 +156,28 @@ export const DonationBatchesPage = () => {
         calcDate = new Date(getDateTime + tz);
       }
 
-      result.push(
-        <TableRow 
+      result.push(<TableRow
           key={i}
-          sx={{ 
-            '&:hover': { backgroundColor: 'action.hover' },
-            transition: 'background-color 0.2s ease'
+          sx={{
+            "&:hover": { backgroundColor: "action.hover" },
+            transition: "background-color 0.2s ease",
           }}
         >
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
-              <DonationIcon sx={{ color: 'var(--c1l2)', fontSize: 20 }} />
+              <DonationIcon sx={{ color: "var(--c1l2)", fontSize: 20 }} />
               {batchLink}
             </Stack>
           </TableCell>
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
-              <DateIcon sx={{ color: 'text.secondary', fontSize: 18 }} />
-              <Typography variant="body2">
-                {DateHelper.prettyDate(calcDate)}
-              </Typography>
+              <DateIcon sx={{ color: "text.secondary", fontSize: 18 }} />
+              <Typography variant="body2">{DateHelper.prettyDate(calcDate)}</Typography>
             </Stack>
           </TableCell>
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
-              <Icon sx={{ color: 'text.secondary', fontSize: 18 }}>receipt</Icon>
+              <Icon sx={{ color: "text.secondary", fontSize: 18 }}>receipt</Icon>
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 {b.donationCount}
               </Typography>
@@ -191,18 +185,17 @@ export const DonationBatchesPage = () => {
           </TableCell>
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
-              <Icon sx={{ color: 'success.main', fontSize: 18 }}>attach_money</Icon>
-              <Typography variant="body2" sx={{ fontWeight: 600, color: 'success.main' }}>
+              <Icon sx={{ color: "success.main", fontSize: 18 }}>attach_money</Icon>
+              <Typography variant="body2" sx={{ fontWeight: 600, color: "success.main" }}>
                 {CurrencyHelper.formatCurrency(b.totalAmount)}
               </Typography>
             </Stack>
           </TableCell>
           <TableCell>{editLink}</TableCell>
-        </TableRow>
-      );
+        </TableRow>);
     }
     return result;
-  }
+  };
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
@@ -211,13 +204,12 @@ export const DonationBatchesPage = () => {
       return rows;
     }
 
-    rows.push(
-      <TableRow key="header">
-        <TableCell 
-          sx={{ 
-            fontWeight: 600, 
-            cursor: 'pointer',
-            '&:hover': { backgroundColor: 'action.hover' }
+    rows.push(<TableRow key="header">
+        <TableCell
+          sx={{
+            fontWeight: 600,
+            cursor: "pointer",
+            "&:hover": { backgroundColor: "action.hover" },
           }}
           onClick={() => sortTable("name", sortDirection)}
         >
@@ -228,11 +220,11 @@ export const DonationBatchesPage = () => {
             {getSortArrows("name")}
           </Stack>
         </TableCell>
-        <TableCell 
-          sx={{ 
-            fontWeight: 600, 
-            cursor: 'pointer',
-            '&:hover': { backgroundColor: 'action.hover' }
+        <TableCell
+          sx={{
+            fontWeight: 600,
+            cursor: "pointer",
+            "&:hover": { backgroundColor: "action.hover" },
           }}
           onClick={() => sortTable("batchDate", sortDirection)}
         >
@@ -258,77 +250,71 @@ export const DonationBatchesPage = () => {
             {Locale.label("common.edit")}
           </Typography>
         </TableCell>
-      </TableRow>
-    );
+      </TableRow>);
     return rows;
-  }
+  };
 
   React.useEffect(loadData, [isMounted]);
 
   const getTable = () => {
-    if (!batches) return <Loading />
-    else return (
-      <Table sx={{ minWidth: 650 }}>
-        <TableHead 
-          sx={{ 
-            backgroundColor: 'grey.50',
-            '& .MuiTableCell-root': {
-              borderBottom: '2px solid',
-              borderBottomColor: 'divider'
-            }
-          }}
-        >
-          {getTableHeader()}
-        </TableHead>
-        <TableBody>
-          {getRows()}
-        </TableBody>
-      </Table>
-    );
-  }
+    if (!batches) return <Loading />;
+    else {
+      return (
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead
+            sx={{
+              backgroundColor: "grey.50",
+              "& .MuiTableCell-root": {
+                borderBottom: "2px solid",
+                borderBottomColor: "divider",
+              },
+            }}
+          >
+            {getTableHeader()}
+          </TableHead>
+          <TableBody>{getRows()}</TableBody>
+        </Table>
+      );
+    }
+  };
 
-  if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
-  
+  if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return <></>;
+
   return (
     <>
       {/* Modern Blue Header */}
       <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Stack 
-          direction={{ xs: "column", md: "row" }} 
-          spacing={{ xs: 2, md: 4 }} 
-          alignItems={{ xs: "flex-start", md: "center" }} 
-          sx={{ width: "100%" }}
-        >
+        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
           {/* Left side: Title and Icon */}
           <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-            <Box 
-              sx={{ 
-                backgroundColor: 'rgba(255,255,255,0.2)', 
-                borderRadius: '12px', 
+            <Box
+              sx={{
+                backgroundColor: "rgba(255,255,255,0.2)",
+                borderRadius: "12px",
                 p: 1.5,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <DonationIcon sx={{ fontSize: 32, color: '#FFF' }} />
+              <DonationIcon sx={{ fontSize: 32, color: "#FFF" }} />
             </Box>
             <Box>
-              <Typography 
-                variant="h4" 
-                sx={{ 
-                  fontWeight: 600, 
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 600,
                   mb: 0.5,
-                  fontSize: { xs: '1.75rem', md: '2.125rem' }
+                  fontSize: { xs: "1.75rem", md: "2.125rem" },
                 }}
               >
                 {Locale.label("donations.donations.batches")}
               </Typography>
-              <Typography 
-                variant="body1" 
-                sx={{ 
-                  color: 'rgba(255,255,255,0.9)',
-                  fontSize: { xs: '0.875rem', md: '1rem' }
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "rgba(255,255,255,0.9)",
+                  fontSize: { xs: "0.875rem", md: "1rem" },
                 }}
               >
                 Manage donation batches and track giving records
@@ -341,16 +327,18 @@ export const DonationBatchesPage = () => {
             {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
               <Button
                 variant="outlined"
-                sx={{ 
-                  color: "#FFF", 
+                sx={{
+                  color: "#FFF",
                   borderColor: "rgba(255,255,255,0.5)",
                   "&:hover": {
                     borderColor: "#FFF",
-                    backgroundColor: "rgba(255,255,255,0.1)"
-                  }
+                    backgroundColor: "rgba(255,255,255,0.1)",
+                  },
                 }}
                 startIcon={<AddIcon />}
-                onClick={() => { setEditBatchId("") }}
+                onClick={() => {
+                  setEditBatchId("");
+                }}
                 data-testid="add-batch-button"
               >
                 Add Batch
@@ -360,49 +348,33 @@ export const DonationBatchesPage = () => {
         </Stack>
 
         {/* Statistics Row */}
-        <Stack 
-          direction={{ xs: "column", sm: "row" }} 
-          spacing={3} 
-          flexWrap="wrap" 
-          useFlexGap
-          justifyContent="space-between"
-          sx={{ mt: 3 }}
-        >
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={3} flexWrap="wrap" useFlexGap justifyContent="space-between" sx={{ mt: 3 }}>
           <Stack direction="row" spacing={1} alignItems="center">
             <DonationIcon sx={{ color: "#FFF", fontSize: 20 }} />
             <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
               {stats.totalBatches}
             </Typography>
-            <Typography 
-              variant="body2" 
-              sx={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.875rem' }}
-            >
+            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
               Total Batches
             </Typography>
           </Stack>
-          
+
           <Stack direction="row" spacing={1} alignItems="center">
             <Icon sx={{ color: "#FFF", fontSize: 20 }}>receipt</Icon>
             <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
               {stats.totalDonations}
             </Typography>
-            <Typography 
-              variant="body2" 
-              sx={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.875rem' }}
-            >
+            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
               Total Donations
             </Typography>
           </Stack>
-          
+
           <Stack direction="row" spacing={1} alignItems="center">
             <Icon sx={{ color: "#FFF", fontSize: 20 }}>attach_money</Icon>
             <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {stats.totalAmount.toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              {stats.totalAmount.toLocaleString("en-US", { style: "decimal", minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </Typography>
-            <Typography 
-              variant="body2" 
-              sx={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.875rem' }}
-            >
+            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
               Total Amount
             </Typography>
           </Stack>
@@ -412,44 +384,28 @@ export const DonationBatchesPage = () => {
       {/* Main Content */}
       <Box sx={{ p: 3 }}>
         {/* Edit content appears above when editing */}
-        {editBatchId !== "notset" && (
-          <Box sx={{ mb: 3 }}>
-            {getSidebarModules()}
-          </Box>
-        )}
-        
+        {editBatchId !== "notset" && <Box sx={{ mb: 3 }}>{getSidebarModules()}</Box>}
+
         {/* Main table */}
         <Card>
           <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
               <Stack direction="row" spacing={1} alignItems="center">
                 <DonationIcon />
-                <Typography variant="h6">
-                  {Locale.label("donations.donationsPage.batch")}
-                </Typography>
+                <Typography variant="h6">{Locale.label("donations.donationsPage.batch")}</Typography>
               </Stack>
               <Stack direction="row" spacing={1} alignItems="center">
                 {batches && (
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    startIcon={<ExportIcon />}
-                    component={ExportLink}
-                    data={batches}
-                    filename="donationbatches.csv"
-                    sx={{ mr: 1 }}
-                  >
+                  <Button size="small" variant="outlined" startIcon={<ExportIcon />} component={ExportLink} data={batches} filename="donationbatches.csv" sx={{ mr: 1 }}>
                     Export
                   </Button>
                 )}
               </Stack>
             </Stack>
           </Box>
-          <Box>
-            {getTable()}
-          </Box>
+          <Box>{getTable()}</Box>
         </Card>
-        
+
         {/* Events section */}
         <Box sx={{ mt: 3 }}>
           <DonationEvents />
@@ -457,4 +413,4 @@ export const DonationBatchesPage = () => {
       </Box>
     </>
   );
-}
+};

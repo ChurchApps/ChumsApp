@@ -9,7 +9,6 @@ import { useMountedState } from "@churchapps/apphelper";
 import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 
 export const PeoplePage = memo(() => {
-
   const [searchResults, setSearchResults] = React.useState(null);
   const [selectedColumns, setSelectedColumns] = React.useState<string[]>(["photo", "displayName"]);
   const [isSearchPerformed, setIsSearchPerformed] = React.useState(false);
@@ -35,7 +34,7 @@ export const PeoplePage = memo(() => {
     { key: "maritalStatus", label: Locale.label("person.maritalStatus"), shortName: Locale.label("person.married") },
     { key: "anniversary", label: Locale.label("person.anniversary"), shortName: Locale.label("person.anniversary") },
     { key: "nametagNotes", label: Locale.label("people.peoplePage.nameNote"), shortName: Locale.label("common.notes") },
-    { key: "deleteOption", label: Locale.label("people.peoplePage.deleteOp"), shortName: Locale.label("common.delete") }
+    { key: "deleteOption", label: Locale.label("people.peoplePage.deleteOp"), shortName: Locale.label("common.delete") },
   ];
 
   const handleToggleColumn = (key: string) => {
@@ -45,7 +44,7 @@ export const PeoplePage = memo(() => {
     else sc.splice(index, 1);
     sessionStorage.setItem("selectedColumns", JSON.stringify(sc));
     setSelectedColumns(sc);
-  }
+  };
 
   // Removed getEditContent - functionality moved to header
 
@@ -59,14 +58,14 @@ export const PeoplePage = memo(() => {
 
   React.useEffect(() => {
     const loadData = () => {
-      ApiHelper.get("/people/recent", "MembershipApi").then(data => {
-        if(!isMounted()) {
+      ApiHelper.get("/people/recent", "MembershipApi").then((data) => {
+        if (!isMounted()) {
           return;
         }
         setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
         setIsSearchPerformed(false); // Reset to show this is recent data, not search results
       });
-    }
+    };
 
     loadData();
   }, [isMounted]);
@@ -75,56 +74,45 @@ export const PeoplePage = memo(() => {
     <>
       {/* Modern Blue Header */}
       <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Stack 
-          direction={{ xs: "column", md: "row" }} 
-          spacing={{ xs: 2, md: 4 }} 
-          alignItems={{ xs: "flex-start", md: "center" }} 
-          sx={{ width: "100%" }}
-        >
+        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
           {/* Left side: Title and Stats */}
           <Box sx={{ flex: 1 }}>
-            <Typography 
-              sx={{ 
-                color: "#FFF", 
-                fontWeight: 400, 
+            <Typography
+              sx={{
+                color: "#FFF",
+                fontWeight: 400,
                 mb: 1,
                 fontSize: { xs: "2rem", md: "2.5rem" },
-                lineHeight: 1.1
+                lineHeight: 1.1,
               }}
             >
               {Locale.label("people.peoplePage.searchPpl")}
             </Typography>
             <Typography variant="body1" sx={{ color: "rgba(255,255,255,0.9)" }}>
-              {searchResults ? 
-                (isSearchPerformed ? 
-                  `Found ${searchResults.length} people` : 
-                  `Showing ${searchResults.length} most recent people`
-                ) : "Loading people..."
-              }
+              {searchResults ? (isSearchPerformed ? `Found ${searchResults.length} people` : `Showing ${searchResults.length} most recent people`) : "Loading people..."}
             </Typography>
           </Box>
 
           {/* Center: Search Icon */}
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
-            <SearchIcon 
-              sx={{ 
-                fontSize: 48, 
+            <SearchIcon
+              sx={{
+                fontSize: 48,
                 color: "rgba(255,255,255,0.7)",
                 cursor: "pointer",
                 "&:hover": {
                   color: "#FFF",
-                  transform: "scale(1.1)"
+                  transform: "scale(1.1)",
                 },
-                transition: "all 0.2s ease"
+                transition: "all 0.2s ease",
               }}
               onClick={() => {
-                const searchPanel = document.getElementById('peopleSearch');
+                const searchPanel = document.getElementById("peopleSearch");
                 if (searchPanel) {
-                  searchPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  searchPanel.scrollIntoView({ behavior: "smooth", block: "start" });
                   // Focus on the search input after scrolling
                   setTimeout(() => {
-                    const searchInput = document.getElementById('searchText') || 
-                                     document.querySelector('[data-testid="people-search-input"]');
+                    const searchInput = document.getElementById("searchText") || document.querySelector('[data-testid="people-search-input"]');
                     if (searchInput) {
                       (searchInput as HTMLElement).focus();
                     }
@@ -138,32 +126,30 @@ export const PeoplePage = memo(() => {
           <Stack direction="row" spacing={1} flexWrap="wrap">
             <Button
               variant="outlined"
-              sx={{ 
-                color: "#FFF", 
+              sx={{
+                color: "#FFF",
                 borderColor: "rgba(255,255,255,0.5)",
                 "&:hover": {
                   borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)"
-                }
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                },
               }}
               startIcon={<PersonAddIcon />}
               onClick={() => {
                 // Scroll to the CreatePerson component at the bottom
-                const createPersonSection = document.querySelector('[data-cy="createPerson"]') || 
-                                           document.querySelector('.create-person') ||
-                                           document.getElementById('createPersonForm');
+                const createPersonSection = document.querySelector('[data-cy="createPerson"]') || document.querySelector(".create-person") || document.getElementById("createPersonForm");
                 if (createPersonSection) {
-                  createPersonSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  createPersonSection.scrollIntoView({ behavior: "smooth", block: "start" });
                   // Focus on first input field after scrolling
                   setTimeout(() => {
-                    const firstInput = createPersonSection.querySelector('input') as HTMLElement;
+                    const firstInput = createPersonSection.querySelector("input") as HTMLElement;
                     if (firstInput) {
                       firstInput.focus();
                     }
                   }, 500);
                 } else {
                   // Fallback: scroll to bottom of page
-                  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
                 }
               }}
             >
@@ -177,11 +163,11 @@ export const PeoplePage = memo(() => {
       <Box sx={{ p: 3 }}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 3 }}>
-            <PeopleSearch 
+            <PeopleSearch
               updateSearchResults={(people) => {
                 setSearchResults(people);
                 setIsSearchPerformed(true);
-              }} 
+              }}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 9 }}>
@@ -190,21 +176,11 @@ export const PeoplePage = memo(() => {
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Stack direction="row" spacing={1} alignItems="center">
                     <PeopleIcon />
-                    <Typography variant="h6">
-                      {isSearchPerformed ? "Search Results" : Locale.label("people.peoplePage.recentPpl")}
-                    </Typography>
+                    <Typography variant="h6">{isSearchPerformed ? "Search Results" : Locale.label("people.peoplePage.recentPpl")}</Typography>
                   </Stack>
                   <Stack direction="row" spacing={1} alignItems="center">
                     {searchResults && (
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        startIcon={<ExportIcon />}
-                        component={ExportLink}
-                        data={searchResults}
-                        filename="people.csv"
-                        sx={{ mr: 1 }}
-                      >
+                      <Button size="small" variant="outlined" startIcon={<ExportIcon />} component={ExportLink} data={searchResults} filename="people.csv" sx={{ mr: 1 }}>
                         Export
                       </Button>
                     )}
@@ -221,5 +197,4 @@ export const PeoplePage = memo(() => {
       </Box>
     </>
   );
-
 });

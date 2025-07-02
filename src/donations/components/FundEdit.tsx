@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { ApiHelper, InputBox, type FundInterface, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
 
-interface Props { fund: FundInterface, updatedFunction: () => void }
+interface Props {
+  fund: FundInterface;
+  updatedFunction: () => void;
+}
 export const FundEdit: React.FC<Props> = (props) => {
   const [fund, setFund] = useState<FundInterface>({ id: "", name: "", taxDeductible: true });
   const [errors, setErrors] = useState<string[]>([]);
@@ -21,13 +24,18 @@ export const FundEdit: React.FC<Props> = (props) => {
 
     setFund({ ...fund, name: fund.name.trim() });
     ApiHelper.post("/funds", [fund], "GivingApi").then(() => props.updatedFunction());
-  }
+  };
   const handleDelete = () => {
     if (window.confirm(Locale.label("donations.fundEdit.confirmMsg"))) {
       ApiHelper.delete("/funds/" + fund.id, "GivingApi").then(() => props.updatedFunction());
     }
   };
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
+  const handleKeyDown = (e: React.KeyboardEvent<any>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSave();
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = { ...fund };
@@ -42,18 +50,40 @@ export const FundEdit: React.FC<Props> = (props) => {
         break;
     }
     setFund(f);
-  }
+  };
 
-  React.useEffect(() => { setFund(props.fund); }, [props.fund]);
+  React.useEffect(() => {
+    setFund(props.fund);
+  }, [props.fund]);
 
   return (
-    <InputBox id="fundsBox" headerIcon="volunteer_activism" headerText={Locale.label("common.edit")} cancelFunction={handleCancel} saveFunction={handleSave} deleteFunction={(fund.id === "") ? undefined : handleDelete} help="chums/giving">
+    <InputBox
+      id="fundsBox"
+      headerIcon="volunteer_activism"
+      headerText={Locale.label("common.edit")}
+      cancelFunction={handleCancel}
+      saveFunction={handleSave}
+      deleteFunction={fund.id === "" ? undefined : handleDelete}
+      help="chums/giving"
+    >
       <ErrorMessages errors={errors} />
-      <TextField fullWidth name="fundName" label={Locale.label("common.name")} value={fund.name} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="fund-name-input" aria-label="Fund name" />
-      <FormControlLabel control={<Checkbox sx={{ marginLeft: "5px" }} checked={fund.taxDeductible} onChange={handleChange} name="taxDeductible" data-testid="tax-deductible-checkbox" aria-label="Tax deductible" />} label={Locale.label("donations.fundEdit.taxDeductible")} />
-      <Typography sx={{ fontStyle: "italic", fontSize: "12px", marginLeft: "5px" }}>{fund.taxDeductible ? Locale.label("donations.fundEdit.trackDonations") : Locale.label("donations.fundEdit.trackNonDonations")}</Typography>
+      <TextField
+        fullWidth
+        name="fundName"
+        label={Locale.label("common.name")}
+        value={fund.name}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        data-testid="fund-name-input"
+        aria-label="Fund name"
+      />
+      <FormControlLabel
+        control={<Checkbox sx={{ marginLeft: "5px" }} checked={fund.taxDeductible} onChange={handleChange} name="taxDeductible" data-testid="tax-deductible-checkbox" aria-label="Tax deductible" />}
+        label={Locale.label("donations.fundEdit.taxDeductible")}
+      />
+      <Typography sx={{ fontStyle: "italic", fontSize: "12px", marginLeft: "5px" }}>
+        {fund.taxDeductible ? Locale.label("donations.fundEdit.trackDonations") : Locale.label("donations.fundEdit.trackNonDonations")}
+      </Typography>
     </InputBox>
-
   );
-}
-
+};

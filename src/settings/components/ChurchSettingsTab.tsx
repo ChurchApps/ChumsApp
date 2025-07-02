@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ChurchSettings } from "./"
-import { type ChurchInterface, ApiHelper, UserHelper, Permissions } from "@churchapps/apphelper"
+import { ChurchSettings } from "./";
+import { type ChurchInterface, ApiHelper, UserHelper, Permissions } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 
 export const ChurchSettingsTab = () => {
@@ -11,16 +11,17 @@ export const ChurchSettingsTab = () => {
   const loadData = () => {
     //const churchId = params.id;
     if (!UserHelper.checkAccess(Permissions.membershipApi.settings.edit)) setRedirectUrl("/");
-    ApiHelper.get("/churches/" + churchId + "?include=permissions", "MembershipApi").then(data => setChurch(data));
-  }
+    ApiHelper.get("/churches/" + churchId + "?include=permissions", "MembershipApi").then((data) => setChurch(data));
+  };
 
   React.useEffect(loadData, [UserHelper.currentUserChurch.church.id]); //eslint-disable-line
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
-  else return (
-    <>
-      <ChurchSettings church={church} updatedFunction={loadData} />
-    </>
-  );
-}
-
+  else {
+    return (
+      <>
+        <ChurchSettings church={church} updatedFunction={loadData} />
+      </>
+    );
+  }
+};

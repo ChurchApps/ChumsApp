@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Login } from "./Login"
+import { Login } from "./Login";
 import { UI } from "./ui/Test";
 import { Pingback } from "./Pingback";
 
@@ -13,4 +13,4 @@ export const Unauthenticated = () => (
       <Route path="/" element={<Navigate to="/login" />} />
     </Routes>
   </>
-)
+);

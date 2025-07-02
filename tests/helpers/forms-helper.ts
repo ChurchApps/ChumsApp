@@ -6,12 +6,7 @@ export class FormsHelper {
    */
   static async navigateToForms(page: Page) {
     // Check if we're already on forms page or can access forms search
-    const searchSelectors = [
-      '[data-testid="people-search-input"] input',
-      '[data-testid="dashboard-people-search-input"] input',
-      '#searchText',
-      'input[placeholder*="Search"]'
-    ];
+    const searchSelectors = ['[data-testid="people-search-input"] input', '[data-testid="dashboard-people-search-input"] input', '#searchText', 'input[placeholder*="Search"]'];
     
     for (const selector of searchSelectors) {
       const formsSearchBox = page.locator(selector).first();
@@ -88,12 +83,7 @@ export class FormsHelper {
    * Clear search input
    */
   static async clearSearch(page: Page) {
-    const searchSelectors = [
-      '[data-testid="people-search-input"] input',
-      '[data-testid="dashboard-people-search-input"] input',
-      '#searchText',
-      'input[placeholder*="Search"]'
-    ];
+    const searchSelectors = ['[data-testid="people-search-input"] input', '[data-testid="dashboard-people-search-input"] input', '#searchText', 'input[placeholder*="Search"]'];
     
     for (const selector of searchSelectors) {
       try {
@@ -121,12 +111,7 @@ export class FormsHelper {
     console.log(`Simulating creation of form: ${form.name}`);
     
     // Look for add form button
-    const addButtonSelectors = [
-      'button:has-text("Add Form")',
-      'button:has-text("Create Form")',
-      'button:has-text("Add")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Add Form")', 'button:has-text("Create Form")', 'button:has-text("Add")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -216,12 +201,7 @@ export class FormsHelper {
     await this.searchForms(page, formName);
     
     // Look for submissions tab or link
-    const submissionsSelectors = [
-      'text=Submissions',
-      'tab:has-text("Submissions")',
-      'button:has-text("Submissions")',
-      'a[href*="submission"]'
-    ];
+    const submissionsSelectors = ['text=Submissions', 'tab:has-text("Submissions")', 'button:has-text("Submissions")', 'a[href*="submission"]'];
     
     for (const selector of submissionsSelectors) {
       const submissionsLink = page.locator(selector).first();
@@ -257,11 +237,7 @@ export class FormsHelper {
     console.log(`Simulating export of submissions for ${formName} as ${format}`);
     
     // Look for export functionality
-    const exportSelectors = [
-      'button:has-text("Export")',
-      'button:has-text("Download")',
-      'a[href*="export"]'
-    ];
+    const exportSelectors = ['button:has-text("Export")', 'button:has-text("Download")', 'a[href*="export"]'];
     
     for (const selector of exportSelectors) {
       const exportButton = page.locator(selector).first();
@@ -311,12 +287,7 @@ export class FormsHelper {
     console.log(`Simulating workflow configuration for form: ${formName}`);
     
     // Look for workflow/automation settings
-    const workflowSelectors = [
-      'text=Workflows',
-      'text=Automation',
-      'button:has-text("Workflows")',
-      'tab:has-text("Automation")'
-    ];
+    const workflowSelectors = ['text=Workflows', 'text=Automation', 'button:has-text("Workflows")', 'tab:has-text("Automation")'];
     
     for (const selector of workflowSelectors) {
       const workflowLink = page.locator(selector).first();
@@ -360,12 +331,7 @@ export class FormsHelper {
     console.log(`Simulating payment configuration for form: ${formName}`);
     
     // Look for payment settings
-    const paymentSelectors = [
-      'text=Payments',
-      'text=Payment Settings',
-      'button:has-text("Payments")',
-      'tab:has-text("Payment")'
-    ];
+    const paymentSelectors = ['text=Payments', 'text=Payment Settings', 'button:has-text("Payments")', 'tab:has-text("Payment")'];
     
     for (const selector of paymentSelectors) {
       const paymentLink = page.locator(selector).first();
@@ -390,12 +356,7 @@ export class FormsHelper {
     console.log(`Simulating analytics view for form: ${formName}`);
     
     // Look for analytics section
-    const analyticsSelectors = [
-      'text=Analytics',
-      'text=Reports',
-      'button:has-text("Analytics")',
-      'tab:has-text("Analytics")'
-    ];
+    const analyticsSelectors = ['text=Analytics', 'text=Reports', 'button:has-text("Analytics")', 'tab:has-text("Analytics")'];
     
     for (const selector of analyticsSelectors) {
       const analyticsLink = page.locator(selector).first();
@@ -421,10 +382,7 @@ export class FormsHelper {
     await this.searchForms(page, formName);
     
     // Look for the form in search results
-    const formSelectors = [
-      `text=${formName}`,
-      'table td, .form-result, .search-result'
-    ];
+    const formSelectors = [`text=${formName}`, 'table td, .form-result, .search-result'];
     
     for (const selector of formSelectors) {
       const element = page.locator(selector).first();

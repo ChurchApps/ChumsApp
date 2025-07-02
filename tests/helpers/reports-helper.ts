@@ -48,12 +48,7 @@ export class ReportsHelper {
    * Search for reports
    */
   static async searchReports(page: Page, searchTerm: string) {
-    const searchSelectors = [
-      '#searchText',
-      'input[placeholder*="Search"]',
-      'input[name="search"]',
-      'input[placeholder*="Reports"]'
-    ];
+    const searchSelectors = ['#searchText', 'input[placeholder*="Search"]', 'input[name="search"]', 'input[placeholder*="Reports"]'];
     
     for (const selector of searchSelectors) {
       const searchInput = page.locator(selector).first();
@@ -91,13 +86,7 @@ export class ReportsHelper {
     console.log(`Simulating generation of ${reportType} report`);
     
     // Look for generate/create report button
-    const generateButtonSelectors = [
-      'button:has-text("Generate Report")',
-      'button:has-text("Create Report")',
-      'button:has-text("Run Report")',
-      'button:has-text("Generate")',
-      '[aria-label*="generate"]'
-    ];
+    const generateButtonSelectors = ['button:has-text("Generate Report")', 'button:has-text("Create Report")', 'button:has-text("Run Report")', 'button:has-text("Generate")', '[aria-label*="generate"]'];
     
     let generateButtonFound = false;
     for (const selector of generateButtonSelectors) {
@@ -214,11 +203,7 @@ export class ReportsHelper {
     console.log(`Simulating scheduling of report: ${reportName}`);
     
     // Look for schedule functionality
-    const scheduleSelectors = [
-      'button:has-text("Schedule")',
-      'button:has-text("Automate")',
-      'tab:has-text("Schedule")'
-    ];
+    const scheduleSelectors = ['button:has-text("Schedule")', 'button:has-text("Automate")', 'tab:has-text("Schedule")'];
     
     for (const selector of scheduleSelectors) {
       const scheduleButton = page.locator(selector).first();
@@ -245,12 +230,7 @@ export class ReportsHelper {
     console.log(`Simulating export of report: ${reportName} as ${format}`);
     
     // Look for export functionality
-    const exportSelectors = [
-      'button:has-text("Export")',
-      'button:has-text("Download")',
-      `button:has-text("${format.toUpperCase()}")`,
-      'a[href*="export"]'
-    ];
+    const exportSelectors = ['button:has-text("Export")', 'button:has-text("Download")', `button:has-text("${format.toUpperCase()}")`, 'a[href*="export"]'];
     
     for (const selector of exportSelectors) {
       const exportButton = page.locator(selector).first();
@@ -276,11 +256,7 @@ export class ReportsHelper {
     console.log('Simulating report history view');
     
     // Look for history section
-    const historySelectors = [
-      'text=History',
-      'button:has-text("History")',
-      'tab:has-text("History")'
-    ];
+    const historySelectors = ['text=History', 'button:has-text("History")', 'tab:has-text("History")'];
     
     for (const selector of historySelectors) {
       const historyButton = page.locator(selector).first();
@@ -312,11 +288,7 @@ export class ReportsHelper {
     console.log(`Simulating creation of custom report: ${customReport.name}`);
     
     // Look for custom report creation
-    const customButtonSelectors = [
-      'button:has-text("Custom Report")',
-      'button:has-text("Create Custom")',
-      'button:has-text("Build Report")'
-    ];
+    const customButtonSelectors = ['button:has-text("Custom Report")', 'button:has-text("Create Custom")', 'button:has-text("Build Report")'];
     
     for (const selector of customButtonSelectors) {
       const customButton = page.locator(selector).first();
@@ -498,10 +470,7 @@ export class ReportsHelper {
     await this.searchReports(page, reportName);
     
     // Look for the report in search results
-    const reportSelectors = [
-      `text=${reportName}`,
-      'table td, .report-result, .search-result'
-    ];
+    const reportSelectors = [`text=${reportName}`, 'table td, .report-result, .search-result'];
     
     for (const selector of reportSelectors) {
       const element = page.locator(selector).first();

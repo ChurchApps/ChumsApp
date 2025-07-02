@@ -1,14 +1,6 @@
 import React from "react";
-import { 
-  Box, 
-  Typography, 
-  Stack, 
-  Container, 
-  Grid
-} from "@mui/material";
-import {
-  Dashboard as DashboardIcon
-} from "@mui/icons-material";
+import { Box, Typography, Stack, Container, Grid } from "@mui/material";
+import { Dashboard as DashboardIcon } from "@mui/icons-material";
 import { TaskList } from "../tasks/components/TaskList";
 import { PeopleSearch } from "./components";
 import { Groups } from "../people/components";
@@ -22,28 +14,24 @@ export const DashboardPage = () => {
         {/* Page Header */}
         <Box sx={{ mb: 4 }}>
           <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
-            <DashboardIcon 
-              sx={{ 
-                fontSize: 32, 
-                color: 'primary.main' 
-              }} 
+            <DashboardIcon
+              sx={{
+                fontSize: 32,
+                color: "primary.main",
+              }}
             />
-            <Typography 
-              variant="h4" 
-              component="h1" 
-              sx={{ 
+            <Typography
+              variant="h4"
+              component="h1"
+              sx={{
                 fontWeight: 600,
-                color: 'text.primary' 
+                color: "text.primary",
               }}
             >
               Chums {Locale.label("dashboard.dashboardPage.dash")}
             </Typography>
           </Stack>
-          <Typography 
-            variant="body1" 
-            color="text.secondary" 
-            sx={{ maxWidth: 800 }}
-          >
+          <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 800 }}>
             Welcome to your church management dashboard. Search for people, view your groups, and manage your open tasks.
           </Typography>
         </Box>
@@ -53,21 +41,14 @@ export const DashboardPage = () => {
           <Grid size={{ xs: 12, md: 8 }}>
             <Stack spacing={3}>
               <PeopleSearch />
-              <Groups 
-                personId={UserHelper.person?.id} 
-                title={Locale.label("dashboard.myGroups")} 
-              />
+              <Groups personId={UserHelper.person?.id} title={Locale.label("dashboard.myGroups")} />
             </Stack>
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TaskList 
-              compact={true} 
-              status={Locale.label("tasks.taskPage.open")} 
-            />
+            <TaskList compact={true} status={Locale.label("tasks.taskPage.open")} />
           </Grid>
         </Grid>
       </Box>
     </Container>
   );
 };
-

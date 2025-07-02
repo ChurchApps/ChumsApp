@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { GroupAdd } from "./components";
 import { ApiHelper, DisplayBox, UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box, Chip } from "@mui/material"
+import {
+ Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box, Chip 
+} from "@mui/material";
 import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
 import { Banner } from "@churchapps/apphelper";
 
@@ -14,21 +16,32 @@ export const GroupsPage = () => {
 
   const getEditContent = () => {
     if (!UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) return null;
-    else
+    else {
       return (
         <Stack direction="row" alignItems="center">
           <ExportLink data={groups} spaceAfter={true} filename="groups.csv" />{" "}
-          <IconButton aria-label="addGroup" color="primary" onClick={() => { setShowAdd(true); }} data-testid="add-group-button">
+          <IconButton
+            aria-label="addGroup"
+            color="primary"
+            onClick={() => {
+              setShowAdd(true);
+            }}
+            data-testid="add-group-button"
+          >
             <Icon>add</Icon>
           </IconButton>
         </Stack>
       );
+    }
   };
 
-  const handleAddUpdated = () => { setShowAdd(false); loadData(); };
+  const handleAddUpdated = () => {
+    setShowAdd(false);
+    loadData();
+  };
 
   const loadData = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     ApiHelper.get("/groups/tag/standard", "MembershipApi")
       .then((data) => {
         if (isMounted()) {
@@ -39,7 +52,7 @@ export const GroupsPage = () => {
         if (isMounted()) {
           setIsLoading(false);
         }
-      })
+      });
   };
 
   React.useEffect(loadData, [isMounted]);
@@ -48,38 +61,38 @@ export const GroupsPage = () => {
     const rows: JSX.Element[] = [];
 
     if (groups.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>{Locale.label("groups.groupsPage.noGroupMsg")}</TableCell></TableRow>);
+      rows.push(<TableRow key="0">
+          <TableCell>{Locale.label("groups.groupsPage.noGroupMsg")}</TableCell>
+        </TableRow>);
       return rows;
     }
 
     let lastCat = "";
     for (let i = 0; i < groups.length; i++) {
       const g = groups[i];
-      const cat = (g.categoryName !== lastCat) ? <Box sx={{ display: "flex", alignItems: "center" }}><Icon>folder</Icon> {g.categoryName}</Box> : <></>
+      const cat =
+        g.categoryName !== lastCat ? (
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Icon>folder</Icon> {g.categoryName}
+          </Box>
+        ) : (
+          <></>
+        );
       const memberCount = g.memberCount === 1 ? Locale.label("groups.groupsPage.pers") : g.memberCount.toString() + Locale.label("groups.groupsPage.spPpl");
-      rows.push(
-        <TableRow sx={{ whiteSpace: "nowrap" }} key={g.id}>
+      rows.push(<TableRow sx={{ whiteSpace: "nowrap" }} key={g.id}>
           <TableCell>{cat}</TableCell>
           <TableCell>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Icon sx={{ marginRight: "5px" }}>group</Icon>{" "}
-              <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
+              <Icon sx={{ marginRight: "5px" }}>group</Icon> <Link to={"/groups/" + g.id.toString()}>{g.name}</Link>
             </Box>
           </TableCell>
           <TableCell>
             {g.labelArray.map((label, index) => (
-              <Chip
-                key={`${g.id}-${label}-${index}`}
-                label={label}
-                variant="outlined"
-                size="small"
-                style={{ marginRight: 5 }}
-              />
+              <Chip key={`${g.id}-${label}-${index}`} label={label} variant="outlined" size="small" style={{ marginRight: 5 }} />
             ))}
           </TableCell>
           <TableCell>{memberCount}</TableCell>
-        </TableRow>
-      );
+        </TableRow>);
       lastCat = g.categoryName;
     }
     return rows;
@@ -88,31 +101,41 @@ export const GroupsPage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groups.length === 0) return rows;
-    rows.push(<TableRow sx={{ textAlign: "left" }} key="header"><th>{Locale.label("groups.groupsPage.cat")}</th><th>{Locale.label("common.name")}</th><th>{Locale.label("groups.groupsPage.labels")}</th><th>{Locale.label("groups.groupsPage.ppl")}</th></TableRow>);
+    rows.push(<TableRow sx={{ textAlign: "left" }} key="header">
+        <th>{Locale.label("groups.groupsPage.cat")}</th>
+        <th>{Locale.label("common.name")}</th>
+        <th>{Locale.label("groups.groupsPage.labels")}</th>
+        <th>{Locale.label("groups.groupsPage.ppl")}</th>
+      </TableRow>);
     return rows;
-  }
+  };
 
-  const addBox = (showAdd) ? <GroupAdd updatedFunction={handleAddUpdated} tags="standard" /> : <></>
+  const addBox = showAdd ? <GroupAdd updatedFunction={handleAddUpdated} tags="standard" /> : <></>;
 
   const getTable = () => {
-    if (isLoading) return <Loading />
-    else return (<Paper sx={{ width: "100%", overflowX: "auto" }}>
-      <Table>
-        <TableHead>{getTableHeader()}</TableHead>
-        <TableBody>{getRows()}</TableBody>
-      </Table>
-    </Paper>);
-  }
+    if (isLoading) return <Loading />;
+    else {
+      return (
+        <Paper sx={{ width: "100%", overflowX: "auto" }}>
+          <Table>
+            <TableHead>{getTableHeader()}</TableHead>
+            <TableBody>{getRows()}</TableBody>
+          </Table>
+        </Paper>
+      );
+    }
+  };
 
   return (
     <>
-      <Banner><h1>{Locale.label("groups.groupsPage.groups")}</h1></Banner>
+      <Banner>
+        <h1>{Locale.label("groups.groupsPage.groups")}</h1>
+      </Banner>
       <div id="mainContent">
         {addBox}
         <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("groups.groupsPage.groups")} editContent={getEditContent()} help="chums/groups">
           {getTable()}
         </DisplayBox>
-
       </div>
     </>
   );

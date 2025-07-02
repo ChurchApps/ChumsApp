@@ -1,28 +1,12 @@
 import React, { useState } from "react";
 import { ApiHelper, type GroupInterface, Locale } from "@churchapps/apphelper";
-import { 
-  TextField, 
-  Button, 
-  Table, 
-  TableBody, 
-  TableRow, 
-  TableCell,
-  InputAdornment,
-  Paper,
-  Typography,
-  Box,
-  Stack,
-  IconButton,
-  TableContainer
-} from "@mui/material";
 import {
-  Search as SearchIcon,
-  Group as GroupIcon,
-  Check as CheckIcon
-} from "@mui/icons-material";
+ TextField, Button, Table, TableBody, TableRow, TableCell, InputAdornment, Paper, Typography, Box, Stack, IconButton, TableContainer 
+} from "@mui/material";
+import { Search as SearchIcon, Group as GroupIcon, Check as CheckIcon } from "@mui/icons-material";
 
 interface Props {
-  addFunction: (group: GroupInterface) => void,
+  addFunction: (group: GroupInterface) => void;
 }
 
 export const SelectGroup: React.FC<Props> = (props: Props) => {
@@ -30,53 +14,62 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
   const [searchResults, setSearchResults] = useState<GroupInterface[]>([]);
   const [searchText, setSearchText] = useState("");
 
-  const loadData = () => { ApiHelper.get("/groups", "MembershipApi").then((data) => { setGroups(data); }); };
+  const loadData = () => {
+    ApiHelper.get("/groups", "MembershipApi").then((data) => {
+      setGroups(data);
+    });
+  };
   React.useEffect(loadData, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { e.preventDefault(); setSearchText(e.currentTarget.value); }
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSearch(null); } }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setSearchText(e.currentTarget.value);
+  };
+  const handleKeyDown = (e: React.KeyboardEvent<any>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch(null);
+    }
+  };
 
   const handleSearch = (e: React.MouseEvent) => {
     if (e !== null) e.preventDefault();
     const term = searchText.trim().toLowerCase();
     const result: GroupInterface[] = [];
-    groups.forEach(g => {
+    groups.forEach((g) => {
       if (g.name.toLowerCase().indexOf(term) > -1) result.push(g);
-    })
+    });
     setSearchResults(result);
-  }
+  };
   const handleAdd = (group: GroupInterface) => {
     props.addFunction(group);
-  }
+  };
 
   const rows = [];
   for (let i = 0; i < searchResults.length; i++) {
     const sr = searchResults[i];
 
-    rows.push(
-      <TableRow 
+    rows.push(<TableRow
         key={sr.id}
         sx={{
-          '&:hover': {
-            backgroundColor: 'action.hover',
-            cursor: 'pointer'
+          "&:hover": {
+            backgroundColor: "action.hover",
+            cursor: "pointer",
           },
-          '&:last-child td': {
-            border: 0
-          }
+          "&:last-child td": { border: 0 },
         }}
         onClick={() => handleAdd(sr)}
       >
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={1}>
-            <GroupIcon sx={{ color: 'text.secondary', fontSize: 20 }} />
+            <GroupIcon sx={{ color: "text.secondary", fontSize: 20 }} />
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
               {sr.name}
             </Typography>
           </Stack>
         </TableCell>
         <TableCell align="right">
-          <IconButton 
+          <IconButton
             size="small"
             color="primary"
             onClick={(e) => {
@@ -89,81 +82,73 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
             <CheckIcon />
           </IconButton>
         </TableCell>
-      </TableRow>
-    );
+      </TableRow>);
   }
 
   return (
     <Stack spacing={2}>
-      <TextField 
-        fullWidth 
-        name="groupSearchText" 
-        label={Locale.label("tasks.selectGroup.group")} 
-        value={searchText} 
-        onChange={handleChange} 
+      <TextField
+        fullWidth
+        name="groupSearchText"
+        label={Locale.label("tasks.selectGroup.group")}
+        value={searchText}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
         variant="outlined"
-        InputProps={{ 
+        InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <Button 
-                variant="contained" 
-                id="searchButton" 
-                data-cy="search-button" 
+              <Button
+                variant="contained"
+                id="searchButton"
+                data-cy="search-button"
                 onClick={handleSearch}
                 startIcon={<SearchIcon />}
                 sx={{
                   borderRadius: 2,
-                  textTransform: 'none',
-                  fontWeight: 600
+                  textTransform: "none",
+                  fontWeight: 600,
                 }}
               >
                 {Locale.label("common.search")}
               </Button>
             </InputAdornment>
-          )
+          ),
         }}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            '&:hover fieldset': {
-              borderColor: 'primary.main',
-            }
-          }
-        }}
+        sx={{ "& .MuiOutlinedInput-root": { "&:hover fieldset": { borderColor: "primary.main" } } }}
       />
-      
+
       {searchResults.length > 0 ? (
-        <TableContainer 
-          component={Paper} 
-          sx={{ 
+        <TableContainer
+          component={Paper}
+          sx={{
             maxHeight: 300,
-            border: '1px solid',
-            borderColor: 'grey.200'
+            border: "1px solid",
+            borderColor: "grey.200",
           }}
         >
           <Table size="small" stickyHeader>
             <TableBody>{rows}</TableBody>
           </Table>
         </TableContainer>
-      ) : searchText && (
-        <Paper 
-          sx={{ 
-            p: 3, 
-            textAlign: 'center',
-            backgroundColor: 'grey.50',
-            border: '1px dashed',
-            borderColor: 'grey.300'
-          }}
-        >
-          <GroupIcon sx={{ fontSize: 48, color: 'grey.400', mb: 1 }} />
-          <Typography variant="body2" color="text.secondary">
-            {searchResults.length === 0 && searchText ? 
-              'No groups found matching your search' : 
-              'Search for a group to select'
-            }
-          </Typography>
-        </Paper>
+      ) : (
+        searchText && (
+          <Paper
+            sx={{
+              p: 3,
+              textAlign: "center",
+              backgroundColor: "grey.50",
+              border: "1px dashed",
+              borderColor: "grey.300",
+            }}
+          >
+            <GroupIcon sx={{ fontSize: 48, color: "grey.400", mb: 1 }} />
+            <Typography variant="body2" color="text.secondary">
+              {searchResults.length === 0 && searchText ? "No groups found matching your search" : "Search for a group to select"}
+            </Typography>
+          </Paper>
+        )
       )}
     </Stack>
   );
-}
+};

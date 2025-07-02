@@ -50,12 +50,7 @@ test.describe('Reports Management', () => {
     await ReportsHelper.navigateToReports(page);
     
     // Test various report types
-    const reportTypes = [
-      'membership-summary',
-      'attendance-trends',
-      'financial-overview',
-      'group-participation'
-    ];
+    const reportTypes = ['membership-summary', 'attendance-trends', 'financial-overview', 'group-participation'];
     
     for (const reportType of reportTypes) {
       await ReportsHelper.generateReport(page, reportType, {
@@ -230,12 +225,7 @@ test.describe('Reports Management - Production Patterns', () => {
       {
         name: 'Leadership Dashboard',
         type: 'dashboard',
-        widgets: [
-          { type: 'metric', title: 'Total Members', source: 'membership', calculation: 'count' },
-          { type: 'chart', title: 'Monthly Attendance', source: 'attendance', chartType: 'line' },
-          { type: 'metric', title: 'YTD Giving', source: 'donations', calculation: 'sum' },
-          { type: 'chart', title: 'Group Participation', source: 'groups', chartType: 'pie' }
-        ],
+        widgets: [{ type: 'metric', title: 'Total Members', source: 'membership', calculation: 'count' }, { type: 'chart', title: 'Monthly Attendance', source: 'attendance', chartType: 'line' }, { type: 'metric', title: 'YTD Giving', source: 'donations', calculation: 'sum' }, { type: 'chart', title: 'Group Participation', source: 'groups', chartType: 'pie' }],
         refreshInterval: 'daily'
       },
       {
@@ -253,12 +243,7 @@ test.describe('Reports Management - Production Patterns', () => {
       {
         name: 'Outreach Effectiveness',
         type: 'analytical',
-        metrics: [
-          'visitor-conversion-rate',
-          'invitation-response-rate',
-          'event-attendance-correlation',
-          'community-engagement-score'
-        ],
+        metrics: ['visitor-conversion-rate', 'invitation-response-rate', 'event-attendance-correlation', 'community-engagement-score'],
         comparisons: ['year-over-year', 'seasonal'],
         includeRecommendations: true
       }

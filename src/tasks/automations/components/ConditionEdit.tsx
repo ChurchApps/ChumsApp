@@ -1,17 +1,5 @@
-import { 
-  FormControl, 
-  InputLabel, 
-  ListSubheader, 
-  MenuItem, 
-  Select, 
-  type SelectChangeEvent,
-  Card,
-  CardContent,
-  Typography,
-  Stack,
-  Box,
-  Button,
-  Divider
+import {
+ FormControl, InputLabel, ListSubheader, MenuItem, Select, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, Divider 
 } from "@mui/material";
 import React from "react";
 import { ErrorMessages, ApiHelper, type ConditionInterface, Locale } from "@churchapps/apphelper";
@@ -19,17 +7,12 @@ import { ConditionAttendance } from "./ConditionAttendance";
 import { ConditionDate } from "./ConditionDate";
 import { ConditionSelect } from "./ConditionSelect";
 import { ConditionText } from "./ConditionText";
-import {
-  Rule as ConditionIcon,
-  Save as SaveIcon,
-  Cancel as CancelIcon,
-  Delete as DeleteIcon
-} from "@mui/icons-material";
+import { Rule as ConditionIcon, Save as SaveIcon, Cancel as CancelIcon, Delete as DeleteIcon } from "@mui/icons-material";
 
 interface Props {
-  condition: ConditionInterface,
-  onCancel: () => void,
-  onSave: (condition: ConditionInterface) => void,
+  condition: ConditionInterface;
+  onCancel: () => void;
+  onSave: (condition: ConditionInterface) => void;
 }
 
 export const ConditionEdit = (props: Props) => {
@@ -38,7 +21,7 @@ export const ConditionEdit = (props: Props) => {
 
   const init = () => {
     setCondition(props.condition);
-  }
+  };
 
   React.useEffect(init, [props.condition]);
 
@@ -46,15 +29,15 @@ export const ConditionEdit = (props: Props) => {
     const result: string[] = [];
     setErrors(result);
     return result.length === 0;
-  }
+  };
 
   const handleSave = async () => {
     if (validate()) {
-      ApiHelper.post("/conditions", [condition], "DoingApi").then(d => {
+      ApiHelper.post("/conditions", [condition], "DoingApi").then((d) => {
         props.onSave(d[0]);
       });
     }
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
@@ -67,52 +50,52 @@ export const ConditionEdit = (props: Props) => {
         break;
     }
     setCondition(c);
-  }
+  };
 
   const getQuestionDetails = () => {
-    let result = <ConditionText condition={condition} onChange={(c) => setCondition(c)} />
+    let result = <ConditionText condition={condition} onChange={(c) => setCondition(c)} />;
     switch (condition?.field) {
       case "today":
       case "birthDate":
       case "anniversary":
-        result = <ConditionDate condition={condition} onChange={(c) => setCondition(c)} />
+        result = <ConditionDate condition={condition} onChange={(c) => setCondition(c)} />;
         break;
       case "attended":
-        result = <ConditionAttendance condition={condition} onChange={(c) => setCondition(c)} />
+        result = <ConditionAttendance condition={condition} onChange={(c) => setCondition(c)} />;
         break;
       case "membershipStatus":
       case "maritalStatus":
       case "gender":
-        result = <ConditionSelect condition={condition} onChange={(c) => setCondition(c)} />
+        result = <ConditionSelect condition={condition} onChange={(c) => setCondition(c)} />;
     }
     return result;
-  }
+  };
 
   const handleDelete = async () => {
     const conf = window.confirm(Locale.label("tasks.conditionEdit.confirmMsg"));
     if (!conf) return;
-    await ApiHelper.delete("/conditions/" + condition.id, "DoingApi")
+    await ApiHelper.delete("/conditions/" + condition.id, "DoingApi");
     props.onSave(null);
-  }
+  };
 
-  if (!condition) return <></>
+  if (!condition) return <></>;
   return (
-    <Card sx={{ 
-      borderRadius: 2,
-      border: '1px solid',
-      borderColor: 'grey.200',
-      transition: 'all 0.2s ease-in-out',
-      '&:hover': {
-        boxShadow: 2
-      }
-    }}>
+    <Card
+      sx={{
+        borderRadius: 2,
+        border: "1px solid",
+        borderColor: "grey.200",
+        transition: "all 0.2s ease-in-out",
+        "&:hover": { boxShadow: 2 },
+      }}
+    >
       <CardContent>
         <Stack spacing={3}>
           {/* Header */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <Stack direction="row" alignItems="center" spacing={1}>
-              <ConditionIcon sx={{ color: 'primary.main' }} />
-              <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+              <ConditionIcon sx={{ color: "primary.main" }} />
+              <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
                 {Locale.label("tasks.conditionEdit.conEdit")}
               </Typography>
             </Stack>
@@ -125,20 +108,20 @@ export const ConditionEdit = (props: Props) => {
           <Stack spacing={2}>
             <FormControl fullWidth variant="outlined">
               <InputLabel>{Locale.label("tasks.conditionEdit.conType")}</InputLabel>
-              <Select 
-                label={Locale.label("tasks.conditionEdit.conType")} 
-                value={condition.field || ""} 
-                name="field" 
-                onChange={handleChange} 
-                data-testid="condition-type-select" 
+              <Select
+                label={Locale.label("tasks.conditionEdit.conType")}
+                value={condition.field || ""}
+                name="field"
+                onChange={handleChange}
+                data-testid="condition-type-select"
                 aria-label="Condition type"
                 sx={{
-                  '& .MuiListSubheader-root': {
-                    backgroundColor: 'grey.100',
+                  "& .MuiListSubheader-root": {
+                    backgroundColor: "grey.100",
                     fontWeight: 600,
-                    color: 'text.primary',
-                    lineHeight: '36px'
-                  }
+                    color: "text.primary",
+                    lineHeight: "36px",
+                  },
                 }}
               >
                 <ListSubheader>{Locale.label("tasks.conditionEdit.gen")}</ListSubheader>
@@ -169,10 +152,10 @@ export const ConditionEdit = (props: Props) => {
             </FormControl>
 
             <Divider />
-            
+
             {/* Condition Details */}
             <Box>
-              <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 2, color: 'text.secondary' }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 2, color: "text.secondary" }}>
                 Condition Details
               </Typography>
               {getQuestionDetails()}
@@ -189,8 +172,8 @@ export const ConditionEdit = (props: Props) => {
                 onClick={handleDelete}
                 sx={{
                   borderRadius: 2,
-                  textTransform: 'none',
-                  fontWeight: 600
+                  textTransform: "none",
+                  fontWeight: 600,
                 }}
               >
                 {Locale.label("common.delete")}
@@ -202,8 +185,8 @@ export const ConditionEdit = (props: Props) => {
               onClick={props.onCancel}
               sx={{
                 borderRadius: 2,
-                textTransform: 'none',
-                fontWeight: 600
+                textTransform: "none",
+                fontWeight: 600,
               }}
             >
               {Locale.label("common.cancel")}
@@ -214,8 +197,8 @@ export const ConditionEdit = (props: Props) => {
               onClick={handleSave}
               sx={{
                 borderRadius: 2,
-                textTransform: 'none',
-                fontWeight: 600
+                textTransform: "none",
+                fontWeight: 600,
               }}
             >
               {Locale.label("common.save")}
@@ -225,7 +208,7 @@ export const ConditionEdit = (props: Props) => {
       </CardContent>
     </Card>
   );
-}
+};
 /*
 <ListSubheader>Coming Soon</ListSubheader>
           <MenuItem value="attended">Attended...</MenuItem>

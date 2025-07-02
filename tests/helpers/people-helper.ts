@@ -27,11 +27,7 @@ export class PeopleHelper {
       }
     } else {
       // If not on dashboard, try to find menu navigation
-      const peopleMenuSelectors = [
-        'a[href="/people"]',
-        'button:has-text("People")',
-        'a:has-text("People")'
-      ];
+      const peopleMenuSelectors = ['a[href="/people"]', 'button:has-text("People")', 'a:has-text("People")'];
       
       let navigationFound = false;
       for (const selector of peopleMenuSelectors) {
@@ -58,13 +54,7 @@ export class PeopleHelper {
    */
   static async searchPerson(page: Page, searchTerm: string) {
     // Try to fill the first available search input
-    const searchInputs = [
-      '[data-testid="people-search-input"] input',
-      '[data-testid="dashboard-people-search-input"] input',
-      '#searchText',
-      'input[placeholder*="Search"]',
-      'input[name="search"]'
-    ];
+    const searchInputs = ['[data-testid="people-search-input"] input', '[data-testid="dashboard-people-search-input"] input', '#searchText', 'input[placeholder*="Search"]', 'input[name="search"]'];
     
     for (const selector of searchInputs) {
       try {
@@ -106,11 +96,7 @@ export class PeopleHelper {
     
     // Look for the CreatePerson form at the bottom (after the <hr />)
     // Based on apphelper CreatePerson component, fields are likely named "first", "last", "email"
-    const firstNameSelectors = [
-      'input[name="first"]',
-      'input[aria-label="firstName"]', 
-      'input[placeholder*="First"]'
-    ];
+    const firstNameSelectors = ['input[name="first"]', 'input[aria-label="firstName"]', 'input[placeholder*="First"]'];
     
     let firstNameField = null;
     for (const selector of firstNameSelectors) {
@@ -142,11 +128,7 @@ export class PeopleHelper {
     await firstNameField.fill(person.firstName);
     
     // Fill last name
-    const lastNameSelectors = [
-      'input[name="last"]',
-      'input[aria-label="lastName"]',
-      'input[placeholder*="Last"]'
-    ];
+    const lastNameSelectors = ['input[name="last"]', 'input[aria-label="lastName"]', 'input[placeholder*="Last"]'];
     
     let lastNameSet = false;
     for (const selector of lastNameSelectors) {
@@ -166,11 +148,7 @@ export class PeopleHelper {
     
     // Fill email if provided
     if (person.email) {
-      const emailSelectors = [
-        'input[name="email"]',
-        'input[aria-label="email"]',
-        'input[type="email"]'
-      ];
+      const emailSelectors = ['input[name="email"]', 'input[aria-label="email"]', 'input[type="email"]'];
       
       let emailSet = false;
       for (const selector of emailSelectors) {
@@ -190,12 +168,7 @@ export class PeopleHelper {
     }
     
     // Click the Add button
-    const addButtons = [
-      'button:has-text("Add")',
-      'button[type="submit"]',
-      'button:has-text("Create")',
-      'button:has-text("Save")'
-    ];
+    const addButtons = ['button:has-text("Add")', 'button[type="submit"]', 'button:has-text("Create")', 'button:has-text("Save")'];
     
     let buttonClicked = false;
     for (const selector of addButtons) {
@@ -237,13 +210,7 @@ export class PeopleHelper {
     await page.waitForTimeout(1500);
     
     // Look for "Create new person" or CreatePerson component
-    const createButtons = [
-      'button:has-text("Create new person")',
-      'button:has-text("Create Person")',
-      '[data-testid="create-person-button"]',
-      'button:has-text("Add Person")',
-      '.create-person'
-    ];
+    const createButtons = ['button:has-text("Create new person")', 'button:has-text("Create Person")', '[data-testid="create-person-button"]', 'button:has-text("Add Person")', '.create-person'];
     
     let createClicked = false;
     for (const selector of createButtons) {
@@ -275,11 +242,7 @@ export class PeopleHelper {
     
     if (person.phone) {
       // Try different phone field options
-      const phoneSelectors = [
-        '#homePhone input',
-        '#workPhone input', 
-        '#mobilePhone input'
-      ];
+      const phoneSelectors = ['#homePhone input', '#workPhone input', '#mobilePhone input'];
       
       for (const selector of phoneSelectors) {
         const phoneInput = page.locator(selector).first();
@@ -464,12 +427,7 @@ export class PeopleHelper {
     await this.searchPerson(page, `${firstName} ${lastName}`);
     
     // Look for the person in search results
-    const personSelectors = [
-      `text=${firstName} ${lastName}`,
-      `text=${firstName}`,
-      `text=${lastName}`,
-      'table td, .person-result, .search-result'
-    ];
+    const personSelectors = [`text=${firstName} ${lastName}`, `text=${firstName}`, `text=${lastName}`, 'table td, .person-result, .search-result'];
     
     for (const selector of personSelectors) {
       const element = page.locator(selector).first();

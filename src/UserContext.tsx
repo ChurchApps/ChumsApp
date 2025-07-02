@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { type LoginUserChurchInterface, type PersonInterface, type UserContextInterface, type UserInterface } from "@churchapps/apphelper";
 
 const UserContext = React.createContext<UserContextInterface | undefined>(undefined);
@@ -13,16 +13,22 @@ export const UserProvider = ({ children }: Props) => {
   const [userChurch, setUserChurch] = React.useState<LoginUserChurchInterface>(null);
   const [userChurches, setUserChurches] = React.useState<LoginUserChurchInterface[]>(null);
 
-  return <UserContext.Provider value={{
-    user,
-    setUser,
-    userChurch,
-    setUserChurch,
-    userChurches,
-    setUserChurches,
-    person,
-    setPerson
-  }}>{children} </UserContext.Provider>
+  return (
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        userChurch,
+        setUserChurch,
+        userChurches,
+        setUserChurches,
+        person,
+        setPerson,
+      }}
+    >
+      {children}{" "}
+    </UserContext.Provider>
+  );
 };
 
 export default UserContext;

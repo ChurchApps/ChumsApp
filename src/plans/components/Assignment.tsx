@@ -1,22 +1,19 @@
 import React, { useCallback } from "react";
-import { 
-  Grid, 
-  TextField,
-  Card,
-  CardContent,
-  Box,
-  Typography,
-  Stack,
-  Button,
-  Alert
+import {
+ Grid, TextField, Card, CardContent, Box, Typography, Stack, Button, Alert 
 } from "@mui/material";
-import { 
-  PublishedWithChanges as AutoAssignIcon,
-  Add as AddIcon,
-  StickyNote2 as NotesIcon,
-  Save as SaveIcon
-} from "@mui/icons-material";
-import { ApiHelper, ArrayHelper, type AssignmentInterface, type BlockoutDateInterface, Locale, type PersonInterface, type PlanInterface, type PositionInterface, type TimeInterface } from "@churchapps/apphelper";
+import { PublishedWithChanges as AutoAssignIcon, Add as AddIcon, StickyNote2 as NotesIcon, Save as SaveIcon } from "@mui/icons-material";
+import {
+  ApiHelper,
+  ArrayHelper,
+  type AssignmentInterface,
+  type BlockoutDateInterface,
+  Locale,
+  type PersonInterface,
+  type PlanInterface,
+  type PositionInterface,
+  type TimeInterface,
+} from "@churchapps/apphelper";
 import { PositionEdit } from "./PositionEdit";
 import { PositionList } from "./PositionList";
 import { AssignmentEdit } from "./AssignmentEdit";
@@ -24,7 +21,7 @@ import { TimeList } from "./TimeList";
 import { PlanValidation } from "./PlanValidation";
 
 interface Props {
-  plan: PlanInterface
+  plan: PlanInterface;
 }
 
 export const Assignment = (props: Props) => {
@@ -37,7 +34,6 @@ export const Assignment = (props: Props) => {
   const [times, setTimes] = React.useState<TimeInterface[]>([]);
   const [blockoutDates, setBlockoutDates] = React.useState<BlockoutDateInterface[]>([]);
 
-
   const getAddPositionActions = () => (
     <Stack direction="row" spacing={1}>
       <Button
@@ -47,9 +43,9 @@ export const Assignment = (props: Props) => {
         data-testid="auto-assign-button"
         size="small"
         sx={{
-          textTransform: 'none',
+          textTransform: "none",
           borderRadius: 2,
-          fontWeight: 600
+          fontWeight: 600,
         }}
       >
         Auto Assign
@@ -57,20 +53,20 @@ export const Assignment = (props: Props) => {
       <Button
         variant="contained"
         startIcon={<AddIcon />}
-        onClick={() => { 
+        onClick={() => {
           setPosition({
-            categoryName: (positions?.length > 0) ? positions[0].categoryName : "Band", 
-            name: "", 
-            planId: props.plan?.id, 
-            count: 1
-          }) 
+            categoryName: positions?.length > 0 ? positions[0].categoryName : "Band",
+            name: "",
+            planId: props.plan?.id,
+            count: 1,
+          });
         }}
         data-testid="add-position-button"
         size="small"
         sx={{
-          textTransform: 'none',
+          textTransform: "none",
           borderRadius: 2,
-          fontWeight: 600
+          fontWeight: 600,
         }}
       >
         Add Position
@@ -81,96 +77,104 @@ export const Assignment = (props: Props) => {
   const handleAssignmentSelect = (p: PositionInterface, a: AssignmentInterface) => {
     setAssignment(a);
     setPosition(p);
-  }
+  };
 
-  const handleAssignmentUpdate = (done:boolean) => {
+  const handleAssignmentUpdate = (done: boolean) => {
     if (done) {
       setAssignment(null);
       setPosition(null);
     }
     loadData();
-  }
+  };
 
   const loadData = useCallback(async () => {
     setPlan(props.plan);
-    ApiHelper.get("/positions/plan/" + props.plan?.id, "DoingApi").then(data => { setPositions(data); });
-    ApiHelper.get("/times/plan/" + props.plan?.id, "DoingApi").then(data => { setTimes(data); });
-    ApiHelper.get("/blockoutDates/upcoming", "DoingApi").then(data => { setBlockoutDates(data); });
+    ApiHelper.get("/positions/plan/" + props.plan?.id, "DoingApi").then((data) => {
+      setPositions(data);
+    });
+    ApiHelper.get("/times/plan/" + props.plan?.id, "DoingApi").then((data) => {
+      setTimes(data);
+    });
+    ApiHelper.get("/blockoutDates/upcoming", "DoingApi").then((data) => {
+      setBlockoutDates(data);
+    });
     const d = await ApiHelper.get("/assignments/plan/" + props.plan?.id, "DoingApi");
     setAssignments(d);
     const peopleIds = ArrayHelper.getUniqueValues(d, "personId");
-    if (peopleIds.length > 0) ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi").then((data: PersonInterface[]) => { setPeople(data); });
+    if (peopleIds.length > 0) {
+      ApiHelper.get("/people/ids?ids=" + peopleIds.join(","), "MembershipApi").then((data: PersonInterface[]) => {
+        setPeople(data);
+      });
+    }
   }, [props.plan]);
 
   const handleSave = () => {
     ApiHelper.post("/plans", [plan], "DoingApi");
     // Show success message - you could replace alert with a snackbar/toast
     alert(Locale.label("plans.planPage.noteSave"));
-  }
+  };
 
   const handleAutoAssign = async () => {
     const groupIds = ArrayHelper.getUniqueValues(positions, "groupId");
     const groupMembers = await ApiHelper.get("/groupMembers/?groupIds=" + groupIds.join(","), "MembershipApi");
-    const teams:{positionId:string, personIds:string[]}[] = [];
-    positions.forEach(p => {
+    const teams: { positionId: string; personIds: string[] }[] = [];
+    positions.forEach((p) => {
       const filteredMembers = ArrayHelper.getAll(groupMembers, "groupId", p.groupId);
-      teams.push({positionId:p.id, personIds:filteredMembers.map(m => m.personId) || []});
+      teams.push({ positionId: p.id, personIds: filteredMembers.map((m) => m.personId) || [] });
     });
-    ApiHelper.post("/plans/autofill/" + props.plan.id, { teams }, "DoingApi").then(() => { loadData(); });
-  }
+    ApiHelper.post("/plans/autofill/" + props.plan.id, { teams }, "DoingApi").then(() => {
+      loadData();
+    });
+  };
 
-  React.useEffect(() => { loadData(); }, [props.plan?.id, loadData]);
-  console.log("Position", position, "Assignment", assignment)
+  React.useEffect(() => {
+    loadData();
+  }, [props.plan?.id, loadData]);
+  console.log("Position", position, "Assignment", assignment);
 
   return (
     <Grid container spacing={3}>
       <Grid size={{ xs: 12, md: 8 }}>
         {/* Assignments Section */}
-        <Card sx={{ 
-          mb: 3, 
-          borderRadius: 2,
-          border: '1px solid',
-          borderColor: 'grey.200',
-          transition: 'all 0.2s ease-in-out',
-          '&:hover': {
-            boxShadow: 2
-          }
-        }}>
+        <Card
+          sx={{
+            mb: 3,
+            borderRadius: 2,
+            border: "1px solid",
+            borderColor: "grey.200",
+            transition: "all 0.2s ease-in-out",
+            "&:hover": { boxShadow: 2 },
+          }}
+        >
           <CardContent>
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
               <Stack direction="row" alignItems="center" spacing={1}>
-                <AutoAssignIcon sx={{ color: 'primary.main', fontSize: 28 }} />
-                <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                <AutoAssignIcon sx={{ color: "primary.main", fontSize: 28 }} />
+                <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
                   {Locale.label("plans.planPage.assign") || "Team Assignments"}
                 </Typography>
               </Stack>
               {getAddPositionActions()}
             </Stack>
-            <PositionList 
-              positions={positions} 
-              assignments={assignments} 
-              people={people} 
-              onSelect={p => setPosition(p)} 
-              onAssignmentSelect={handleAssignmentSelect} 
-            />
+            <PositionList positions={positions} assignments={assignments} people={people} onSelect={(p) => setPosition(p)} onAssignmentSelect={handleAssignmentSelect} />
           </CardContent>
         </Card>
 
         {/* Notes Section */}
-        <Card sx={{ 
-          borderRadius: 2,
-          border: '1px solid',
-          borderColor: 'grey.200',
-          transition: 'all 0.2s ease-in-out',
-          '&:hover': {
-            boxShadow: 2
-          }
-        }}>
+        <Card
+          sx={{
+            borderRadius: 2,
+            border: "1px solid",
+            borderColor: "grey.200",
+            transition: "all 0.2s ease-in-out",
+            "&:hover": { boxShadow: 2 },
+          }}
+        >
           <CardContent>
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
               <Stack direction="row" alignItems="center" spacing={1}>
-                <NotesIcon sx={{ color: 'primary.main', fontSize: 28 }} />
-                <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                <NotesIcon sx={{ color: "primary.main", fontSize: 28 }} />
+                <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
                   {Locale.label("common.notes") || "Plan Notes"}
                 </Typography>
               </Stack>
@@ -180,35 +184,33 @@ export const Assignment = (props: Props) => {
                 onClick={handleSave}
                 size="small"
                 sx={{
-                  textTransform: 'none',
+                  textTransform: "none",
                   borderRadius: 2,
-                  fontWeight: 600
+                  fontWeight: 600,
                 }}
               >
                 Save Notes
               </Button>
             </Stack>
-            <TextField 
-              fullWidth 
-              multiline 
-              rows={4} 
-              value={plan?.notes || ''} 
-              onChange={(e) => { setPlan({ ...plan, notes: e.target.value }) }} 
-              data-testid="plan-notes-input" 
+            <TextField
+              fullWidth
+              multiline
+              rows={4}
+              value={plan?.notes || ""}
+              onChange={(e) => {
+                setPlan({ ...plan, notes: e.target.value });
+              }}
+              data-testid="plan-notes-input"
               aria-label="Plan notes"
               placeholder="Add notes for this service plan..."
               variant="outlined"
               sx={{
-                '& .MuiOutlinedInput-root': {
+                "& .MuiOutlinedInput-root": {
                   borderRadius: 2,
-                  backgroundColor: 'grey.50',
-                  '&:hover': {
-                    backgroundColor: '#FFF'
-                  },
-                  '&.Mui-focused': {
-                    backgroundColor: '#FFF'
-                  }
-                }
+                  backgroundColor: "grey.50",
+                  "&:hover": { backgroundColor: "#FFF" },
+                  "&.Mui-focused": { backgroundColor: "#FFF" },
+                },
               }}
             />
           </CardContent>
@@ -219,18 +221,21 @@ export const Assignment = (props: Props) => {
         <Stack spacing={3}>
           {/* Position/Assignment Edit */}
           {position && !assignment && (
-            <PositionEdit 
-              position={position} 
-              categoryNames={(positions?.length > 0) ? ArrayHelper.getUniqueValues(positions, "categoryName") : [Locale.label("plans.planPage.band")]} 
-              updatedFunction={() => {setPosition(null); loadData()}} 
+            <PositionEdit
+              position={position}
+              categoryNames={positions?.length > 0 ? ArrayHelper.getUniqueValues(positions, "categoryName") : [Locale.label("plans.planPage.band")]}
+              updatedFunction={() => {
+                setPosition(null);
+                loadData();
+              }}
             />
           )}
           {assignment && position && (
-            <AssignmentEdit 
-              position={position} 
-              assignment={assignment} 
-              peopleNeeded={position.count - ArrayHelper.getAll(assignments, "positionId", position.id).length} 
-              updatedFunction={handleAssignmentUpdate} 
+            <AssignmentEdit
+              position={position}
+              assignment={assignment}
+              peopleNeeded={position.count - ArrayHelper.getAll(assignments, "positionId", position.id).length}
+              updatedFunction={handleAssignmentUpdate}
             />
           )}
 
@@ -238,18 +243,9 @@ export const Assignment = (props: Props) => {
           <TimeList times={times} positions={positions} plan={plan} onUpdate={loadData} />
 
           {/* Plan Validation */}
-          <PlanValidation 
-            plan={plan} 
-            positions={positions} 
-            assignments={assignments} 
-            people={people} 
-            times={times} 
-            blockoutDates={blockoutDates} 
-            onUpdate={loadData} 
-          />
+          <PlanValidation plan={plan} positions={positions} assignments={assignments} people={people} times={times} blockoutDates={blockoutDates} onUpdate={loadData} />
         </Stack>
       </Grid>
     </Grid>
-  )
+  );
 };
-

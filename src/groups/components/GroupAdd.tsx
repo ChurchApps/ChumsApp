@@ -2,20 +2,26 @@ import { TextField } from "@mui/material";
 import React from "react";
 import { ApiHelper, type GroupInterface, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 
-interface Props { updatedFunction: () => void, tags: string, categoryName?:string}
+interface Props {
+  updatedFunction: () => void;
+  tags: string;
+  categoryName?: string;
+}
 
 export const GroupAdd: React.FC<Props> = (props) => {
   const [group, setGroup] = React.useState<GroupInterface>({ categoryName: props.categoryName || "", name: "", tags: props.tags });
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  const handleCancel = () => { props.updatedFunction(); };
+  const handleCancel = () => {
+    props.updatedFunction();
+  };
   const handleAdd = () => {
     if (validate()) {
       setIsSubmitting(true);
       ApiHelper.post("/groups", [group], "MembershipApi").finally(() => {
-        setIsSubmitting(false)
-        props.updatedFunction()
+        setIsSubmitting(false);
+        props.updatedFunction();
       });
     }
   };
@@ -25,11 +31,15 @@ export const GroupAdd: React.FC<Props> = (props) => {
     const g = { ...group } as GroupInterface;
     const value = e.target.value;
     switch (e.target.name) {
-      case "name": g.name = value; break;
-      case "categoryName": g.categoryName = value; break;
+      case "name":
+        g.name = value;
+        break;
+      case "categoryName":
+        g.categoryName = value;
+        break;
     }
     setGroup(g);
-  }
+  };
 
   const validate = () => {
     const result = [];
@@ -37,18 +47,39 @@ export const GroupAdd: React.FC<Props> = (props) => {
     if (!group.name) result.push(Locale.label("groups.groupAdd.groupReq"));
     setErrors(result);
     return result.length === 0;
-  }
+  };
 
   let label = Locale.label("groups.groupAdd.group");
-  if (props.tags==="team") label = Locale.label("groups.groupAdd.team");
-  else if (props.tags==="ministry") label = Locale.label("groups.groupAdd.ministry");
-
+  if (props.tags === "team") label = Locale.label("groups.groupAdd.team");
+  else if (props.tags === "ministry") label = Locale.label("groups.groupAdd.ministry");
 
   return (
     <InputBox headerText={Locale.label("groups.groupAdd.new") + label} headerIcon="group" cancelFunction={handleCancel} saveFunction={handleAdd} saveText="Add" isSubmitting={isSubmitting}>
       <ErrorMessages errors={errors} />
-      {(props.tags==="standard") && <TextField fullWidth={true} label={Locale.label("groups.groupAdd.catName")} type="text" id="categoryName" name="categoryName" value={group.categoryName} onChange={handleChange} data-testid="add-category-name-input" aria-label="Category name" />}
-      <TextField fullWidth={true} label={Locale.label("common.name")} type="text" id="groupName" name="name" value={group.name} onChange={handleChange} data-testid="add-group-name-input" aria-label="Group name" />
+      {props.tags === "standard" && (
+        <TextField
+          fullWidth={true}
+          label={Locale.label("groups.groupAdd.catName")}
+          type="text"
+          id="categoryName"
+          name="categoryName"
+          value={group.categoryName}
+          onChange={handleChange}
+          data-testid="add-category-name-input"
+          aria-label="Category name"
+        />
+      )}
+      <TextField
+        fullWidth={true}
+        label={Locale.label("common.name")}
+        type="text"
+        id="groupName"
+        name="name"
+        value={group.name}
+        onChange={handleChange}
+        data-testid="add-group-name-input"
+        aria-label="Group name"
+      />
     </InputBox>
   );
-}
+};

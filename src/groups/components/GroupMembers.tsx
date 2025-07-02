@@ -1,13 +1,28 @@
 import React, { useState, memo, useMemo, useCallback } from "react";
-import { ApiHelper, type GroupInterface, DisplayBox, UserHelper, type GroupMemberInterface, PersonHelper, type PersonInterface, ExportLink, Permissions, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
+import {
+  ApiHelper,
+  type GroupInterface,
+  DisplayBox,
+  UserHelper,
+  type GroupMemberInterface,
+  PersonHelper,
+  type PersonInterface,
+  ExportLink,
+  Permissions,
+  Loading,
+  ArrayHelper,
+  Locale,
+} from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, Avatar } from "@mui/material";
+import {
+ Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, Avatar 
+} from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
-  group: GroupInterface,
-  addedPerson?: PersonInterface,
-  addedCallback?: () => void
+  group: GroupInterface;
+  addedPerson?: PersonInterface;
+  addedCallback?: () => void;
 }
 
 export const GroupMembers: React.FC<Props> = memo((props) => {
@@ -21,34 +36,40 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
 
   const loadData = useCallback(() => {
     setIsLoading(true);
-    ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi").then(data => {
-      setGroupMembers(data)
-    }).finally(() => { setIsLoading(false) });
+    ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi")
+      .then((data) => {
+        setGroupMembers(data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [props.group.id]);
 
   const handleRemove = useCallback((member: GroupMemberInterface) => {
-    const members = [...groupMembers];
-    const idx = members.indexOf(member);
-    members.splice(idx, 1);
-    setGroupMembers(members);
-    ApiHelper.delete("/groupmembers/" + member.id, "MembershipApi");
-  }, [groupMembers]);
+      const members = [...groupMembers];
+      const idx = members.indexOf(member);
+      members.splice(idx, 1);
+      setGroupMembers(members);
+      ApiHelper.delete("/groupmembers/" + member.id, "MembershipApi");
+    }, [groupMembers]);
 
   const handleToggleLeader = useCallback((member: GroupMemberInterface) => {
-    member.leader = !member.leader;
-    console.log("Member", member);
-    ApiHelper.post("/groupmembers", [member], "MembershipApi").then(() => { loadData() });
-  }, [loadData]);
+      member.leader = !member.leader;
+      console.log("Member", member);
+      ApiHelper.post("/groupmembers", [member], "MembershipApi").then(() => {
+        loadData();
+      });
+    }, [loadData]);
 
   const getMemberByPersonId = useCallback((personId: string) => {
-    let result = null;
-    for (let i = 0; i < groupMembers.length; i++) if (groupMembers[i].personId === personId) result = groupMembers[i];
-    return result;
-  }, [groupMembers]);
+      let result = null;
+      for (let i = 0; i < groupMembers.length; i++) if (groupMembers[i].personId === personId) result = groupMembers[i];
+      return result;
+    }, [groupMembers]);
 
   const handleAdd = useCallback(() => {
     if (getMemberByPersonId(props.addedPerson.id) === null) {
-      const gm = { groupId: props.group.id, personId: props.addedPerson.id, person: props.addedPerson } as GroupMemberInterface
+      const gm = { groupId: props.group.id, personId: props.addedPerson.id, person: props.addedPerson } as GroupMemberInterface;
       ApiHelper.post("/groupmembers", [gm], "MembershipApi").then((data) => {
         gm.id = data[0].id;
       });
@@ -65,38 +86,64 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
     const rows: JSX.Element[] = [];
 
     if (groupMembers.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>{Locale.label("groups.groupMembers.noMem")}</TableCell></TableRow>)
+      rows.push(<TableRow key="0">
+          <TableCell>{Locale.label("groups.groupMembers.noMem")}</TableCell>
+        </TableRow>);
       return rows;
     }
 
     for (let i = 0; i < groupMembers.length; i++) {
       const gm = groupMembers[i];
-      const editLinks = []
+      const editLinks = [];
       if (canEdit) {
-        if (gm.leader) editLinks.push(<SmallButton icon="key_off" toolTip="Remove Leader Access" onClick={() => handleToggleLeader(gm)} color="error" data-testid={`remove-leader-button-${gm.id}`} ariaLabel={`Remove leader access for ${gm.person.name.display}`} />);
-        else editLinks.push(<SmallButton icon="key" toolTip="Promote to Leader" onClick={() => handleToggleLeader(gm)} color="success" data-testid={`promote-leader-button-${gm.id}`} ariaLabel={`Promote ${gm.person.name.display} to leader`} />);
-        editLinks.push(<SmallButton icon="person_remove" toolTip="Remove" onClick={() => handleRemove(gm)} color="error" data-testid={`remove-member-button-${gm.id}`} ariaLabel={`Remove ${gm.person.name.display} from group`} />);
+        if (gm.leader) {
+          editLinks.push(<SmallButton
+              icon="key_off"
+              toolTip="Remove Leader Access"
+              onClick={() => handleToggleLeader(gm)}
+              color="error"
+              data-testid={`remove-leader-button-${gm.id}`}
+              ariaLabel={`Remove leader access for ${gm.person.name.display}`}
+            />);
+        } else {
+          editLinks.push(<SmallButton
+              icon="key"
+              toolTip="Promote to Leader"
+              onClick={() => handleToggleLeader(gm)}
+              color="success"
+              data-testid={`promote-leader-button-${gm.id}`}
+              ariaLabel={`Promote ${gm.person.name.display} to leader`}
+            />);
+        }
+        editLinks.push(<SmallButton
+            icon="person_remove"
+            toolTip="Remove"
+            onClick={() => handleRemove(gm)}
+            color="error"
+            data-testid={`remove-member-button-${gm.id}`}
+            ariaLabel={`Remove ${gm.person.name.display} from group`}
+          />);
       }
 
-      rows.push(
-        <TableRow key={i}>
+      rows.push(<TableRow key={i}>
           <TableCell>
-            <Avatar 
-              src={PersonHelper.getPhotoUrl(gm.person)} 
-              sx={{ 
-                width: 48, 
+            <Avatar
+              src={PersonHelper.getPhotoUrl(gm.person)}
+              sx={{
+                width: 48,
                 height: 48,
-                '& img': {
-                  objectFit: 'cover',
-                  objectPosition: 'center'
-                }
-              }} 
+                "& img": {
+                  objectFit: "cover",
+                  objectPosition: "center",
+                },
+              }}
             />
           </TableCell>
-          <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
+          <TableCell>
+            <Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link>
+          </TableCell>
           <TableCell style={{ textAlign: "right" }}>{editLinks}</TableCell>
-        </TableRow>
-      );
+        </TableRow>);
     }
     return rows;
   }, [groupMembers, canEdit, handleToggleLeader, handleRemove]);
@@ -107,7 +154,11 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
       return rows;
     }
 
-    rows.push(<TableRow key="header" sx={{textAlign: "left"}}><th></th><th>{Locale.label("common.name")}</th><th></th></TableRow>);
+    rows.push(<TableRow key="header" sx={{ textAlign: "left" }}>
+        <th></th>
+        <th>{Locale.label("common.name")}</th>
+        <th></th>
+      </TableRow>);
     return rows;
   }, [groupMembers.length]);
 
@@ -115,63 +166,142 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
     let newMessage = "";
     if (templateType !== "") {
       switch (templateType) {
-        case "welcome_volunteers": newMessage = Locale.label("groups.groupMembers.templates.welcome_volunteers.message"); break;
-        default: newMessage = ""; break;
+        case "welcome_volunteers":
+          newMessage = Locale.label("groups.groupMembers.templates.welcome_volunteers.message");
+          break;
+        default:
+          newMessage = "";
+          break;
       }
     }
     setMessage(newMessage);
-  }
+  };
 
-  const getEditContent = () => (<>
-    {UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit) && <SmallButton icon="edit_square" toolTip={Locale.label("groups.groupMembers.sendMemMsg")} onClick={() => { setCount(0); setShow(!show) }} data-testid="send-message-button" ariaLabel="Send message to members"></SmallButton>}
-    <ExportLink data={groupMembers} spaceAfter={true} filename="groupmembers.csv" />
-  </>);
+  const getEditContent = () => (
+    <>
+      {UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit) && (
+        <SmallButton
+          icon="edit_square"
+          toolTip={Locale.label("groups.groupMembers.sendMemMsg")}
+          onClick={() => {
+            setCount(0);
+            setShow(!show);
+          }}
+          data-testid="send-message-button"
+          ariaLabel="Send message to members"
+        ></SmallButton>
+      )}
+      <ExportLink data={groupMembers} spaceAfter={true} filename="groupmembers.csv" />
+    </>
+  );
 
   const handleSend = async () => {
     const peopleIds = ArrayHelper.getIds(groupMembers, "personId");
-    const ids = peopleIds.filter(id => id !== UserHelper.person.id); //remove the one that is sending the message.
-    const data: any = { peopleIds: ids, contentType: "groupMessage", contentId: props.group.id, message: `Message from ${UserHelper.person.name.first}: ${message}` };
+    const ids = peopleIds.filter((id) => id !== UserHelper.person.id); //remove the one that is sending the message.
+    const data: any = {
+      peopleIds: ids,
+      contentType: "groupMessage",
+      contentId: props.group.id,
+      message: `Message from ${UserHelper.person.name.first}: ${message}`,
+    };
     await ApiHelper.post("/notifications/create", data, "MessagingApi");
-  }
+  };
 
   React.useEffect(() => {
-    if (props.group.id !== undefined) { loadData() };
+    if (props.group.id !== undefined) {
+      loadData();
+    }
   }, [props.group, loadData]);
 
   React.useEffect(() => {
-    if (props.addedPerson?.id !== undefined) { handleAdd() };
+    if (props.addedPerson?.id !== undefined) {
+      handleAdd();
+    }
   }, [props.addedPerson, handleAdd]);
 
   const getTable = () => {
-    if (isLoading) return <Loading />
-    else return (<Table id="groupMemberTable">
-      <TableHead>{tableHeader}</TableHead>
-      <TableBody>{tableRows}</TableBody>
-    </Table>);
-  }
+    if (isLoading) return <Loading />;
+    else {
+      return (
+        <Table id="groupMemberTable">
+          <TableHead>{tableHeader}</TableHead>
+          <TableBody>{tableRows}</TableBody>
+        </Table>
+      );
+    }
+  };
 
   return (
     <DisplayBox id="groupMembersBox" data-cy="group-members-tab" headerText={Locale.label("groups.groupMembers.groupMem")} headerIcon="group" editContent={getEditContent()} help="chums/groups">
       {show === true && (
         <div style={{ marginTop: "18px", marginBottom: "18px" }}>
-          {(showTemplates === true)
-            ? (<FormControl fullWidth>
+          {showTemplates === true ? (
+            <FormControl fullWidth>
               <InputLabel id="message_templates">{Locale.label("groups.groupMembers.templates.templates")}</InputLabel>
-              <Select name="templates" labelId="message_templates" label={Locale.label("groups.groupMembers.templates.templates")} value={selectedTemplate} onChange={(e) => { setSelectedTemplate(e.target.value); handleTemplateMessage(e.target.value); }}>
+              <Select
+                name="templates"
+                labelId="message_templates"
+                label={Locale.label("groups.groupMembers.templates.templates")}
+                value={selectedTemplate}
+                onChange={(e) => {
+                  setSelectedTemplate(e.target.value);
+                  handleTemplateMessage(e.target.value);
+                }}
+              >
                 <MenuItem value="">{Locale.label("groups.groupMembers.templates.none")}</MenuItem>
                 <MenuItem value="welcome_volunteers">{Locale.label("groups.groupMembers.templates.welcome_volunteers.heading")}</MenuItem>
               </Select>
-            </FormControl>)
-            : (<a href="about:blank" onClick={(e) => { e.preventDefault(); setShowTemplates(!showTemplates); }} style={{ paddingLeft: "5px" }}>{Locale.label("groups.groupMembers.showTemplates")}</a>)
-          }
-          <TextField fullWidth multiline helperText={(selectedTemplate) ? "" : (count + "/140")} inputProps={{ maxLength: (selectedTemplate) ? null : 140 }} value={message} onChange={(e) => { setCount(e.target.value.length); setMessage(e.target.value); }} sx={{ margin: 0, marginTop: 1 }} />
-          <div style={{ display: "flex", justifyContent: "end", alignItems: "center", marginTop: "15px" }}>
-            <Button size="small" variant="contained" endIcon={<Icon fontSize="small">send</Icon>} onClick={() => { handleSend(); setShow(false); setMessage(""); setShowTemplates(false); setSelectedTemplate(""); }}>{Locale.label("groups.groupMembers.send")}</Button>
+            </FormControl>
+          ) : (
+            <a
+              href="about:blank"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowTemplates(!showTemplates);
+              }}
+              style={{ paddingLeft: "5px" }}
+            >
+              {Locale.label("groups.groupMembers.showTemplates")}
+            </a>
+          )}
+          <TextField
+            fullWidth
+            multiline
+            helperText={selectedTemplate ? "" : count + "/140"}
+            inputProps={{ maxLength: selectedTemplate ? null : 140 }}
+            value={message}
+            onChange={(e) => {
+              setCount(e.target.value.length);
+              setMessage(e.target.value);
+            }}
+            sx={{ margin: 0, marginTop: 1 }}
+          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+              marginTop: "15px",
+            }}
+          >
+            <Button
+              size="small"
+              variant="contained"
+              endIcon={<Icon fontSize="small">send</Icon>}
+              onClick={() => {
+                handleSend();
+                setShow(false);
+                setMessage("");
+                setShowTemplates(false);
+                setSelectedTemplate("");
+              }}
+            >
+              {Locale.label("groups.groupMembers.send")}
+            </Button>
           </div>
-        </div>)
-      }
+        </div>
+      )}
       {getTable()}
     </DisplayBox>
   );
 });
-

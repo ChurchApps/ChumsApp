@@ -1,21 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { ReportWithFilter, type ReportInterface, ApiHelper, Locale } from "@churchapps/apphelper";
-import { 
-  Box, 
-  Typography, 
-  Stack, 
-  Container, 
-  Card,
-  CardContent,
-  Skeleton,
-  Breadcrumbs,
-  Link as MuiLink
-} from "@mui/material";
 import {
-  Summarize as SummarizeIcon,
-  ArrowBack as BackIcon
-} from "@mui/icons-material";
+ Box, Typography, Stack, Container, Card, CardContent, Skeleton, Breadcrumbs, Link as MuiLink 
+} from "@mui/material";
+import { Summarize as SummarizeIcon, ArrowBack as BackIcon } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 
 export const ReportPage = () => {
@@ -28,7 +17,7 @@ export const ReportPage = () => {
     if (params.keyName) {
       setLoading(true);
       ApiHelper.get("/reports/" + params.keyName, "ReportingApi")
-        .then(data => {
+        .then((data) => {
           setReport(data);
           setLoading(false);
         })
@@ -44,75 +33,60 @@ export const ReportPage = () => {
     <Container maxWidth="xl">
       <Box sx={{ py: 3 }}>
         {/* Breadcrumbs */}
-        <Breadcrumbs 
-          sx={{ mb: 3 }}
-          separator="›"
-        >
+        <Breadcrumbs sx={{ mb: 3 }} separator="›">
           <MuiLink
             component={Link}
             to="/reports"
-            sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              textDecoration: 'none',
-              color: 'primary.main',
-              '&:hover': {
-                textDecoration: 'underline'
-              }
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+              color: "primary.main",
+              "&:hover": { textDecoration: "underline" },
             }}
           >
             <BackIcon sx={{ mr: 0.5, fontSize: 16 }} />
             {Locale.label("reports.reportsPage.reports")}
           </MuiLink>
-          <Typography color="text.primary">
-            {loading ? <Skeleton width={150} /> : (report?.displayName || Locale.label("reports.reportPage.report"))}
-          </Typography>
+          <Typography color="text.primary">{loading ? <Skeleton width={150} /> : report?.displayName || Locale.label("reports.reportPage.report")}</Typography>
         </Breadcrumbs>
 
         {/* Page Header */}
         <Box sx={{ mb: 4 }}>
           <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
-            <SummarizeIcon 
-              sx={{ 
-                fontSize: 32, 
-                color: 'primary.main' 
-              }} 
+            <SummarizeIcon
+              sx={{
+                fontSize: 32,
+                color: "primary.main",
+              }}
             />
-            <Typography 
-              variant="h4" 
-              component="h1" 
-              sx={{ 
+            <Typography
+              variant="h4"
+              component="h1"
+              sx={{
                 fontWeight: 600,
-                color: 'text.primary' 
+                color: "text.primary",
               }}
             >
-              {loading ? (
-                <Skeleton width={300} />
-              ) : (
-                report?.displayName || Locale.label("reports.reportPage.report")
-              )}
+              {loading ? <Skeleton width={300} /> : report?.displayName || Locale.label("reports.reportPage.report")}
             </Typography>
           </Stack>
-          
+
           {!loading && report?.description && (
-            <Typography 
-              variant="body1" 
-              color="text.secondary" 
-              sx={{ maxWidth: 800 }}
-            >
+            <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 800 }}>
               {report.description}
             </Typography>
           )}
         </Box>
 
         {/* Report Content */}
-        <Card 
+        <Card
           elevation={2}
-          sx={{ 
+          sx={{
             borderRadius: 2,
-            border: '1px solid',
-            borderColor: 'divider',
-            minHeight: 400
+            border: "1px solid",
+            borderColor: "divider",
+            minHeight: 400,
           }}
         >
           <CardContent sx={{ p: 0 }}>
@@ -128,11 +102,8 @@ export const ReportPage = () => {
                 </Stack>
               </Box>
             ) : (
-              <Box sx={{ '& .report-container': { p: 0 } }}>
-                <ReportWithFilter 
-                  keyName={params.keyName} 
-                  autoRun={false} 
-                />
+              <Box sx={{ "& .report-container": { p: 0 } }}>
+                <ReportWithFilter keyName={params.keyName} autoRun={false} />
               </Box>
             )}
           </CardContent>
@@ -140,4 +111,4 @@ export const ReportPage = () => {
       </Box>
     </Container>
   );
-}
+};

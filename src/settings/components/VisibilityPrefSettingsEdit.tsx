@@ -1,5 +1,7 @@
 import { ApiHelper, type GenericSettingInterface, Locale, UniqueIdHelper, type VisibilityPreferenceInterface } from "@churchapps/apphelper";
-import { FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography, type SelectChangeEvent } from "@mui/material";
+import {
+ FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography, type SelectChangeEvent 
+} from "@mui/material";
 import React, { useState } from "react";
 
 interface Props {
@@ -41,9 +43,15 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
     const p = { ...pref } as VisibilityPreferenceInterface;
     const value = e.target.value;
     switch (e.target.name) {
-      case "address": p.address = value; break;
-      case "phoneNumber": p.phoneNumber = value; break;
-      case "email": p.email = value; break;
+      case "address":
+        p.address = value;
+        break;
+      case "phoneNumber":
+        p.phoneNumber = value;
+        break;
+      case "email":
+        p.email = value;
+        break;
     }
     setPref(p);
   };
@@ -65,33 +73,26 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
     if (props.saveTrigger !== null) save();
   };
 
-  React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData(); }, [props.churchId]); //eslint-disable-line
+  React.useEffect(() => {
+    if (!UniqueIdHelper.isMissing(props.churchId)) loadData();
+  }, [props.churchId]); //eslint-disable-line
   React.useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
   return (
     <div style={{ marginBottom: 10 }}>
       <Stack direction="row" alignItems="center">
         <Typography>{Locale.label("settings.visibilityPrefSettingsEdit.visibilityPreference")}</Typography>
-        <Tooltip
-          title={Locale.label("settings.visibilityPrefSettingsEdit.forceMsg")}
-          arrow
-        >
-          <Icon fontSize="small" sx={{ cursor: "pointer", color: "#757575", paddingLeft: "2px" }}>help</Icon>
+        <Tooltip title={Locale.label("settings.visibilityPrefSettingsEdit.forceMsg")} arrow>
+          <Icon fontSize="small" sx={{ cursor: "pointer", color: "#757575", paddingLeft: "2px" }}>
+            help
+          </Icon>
         </Tooltip>
       </Stack>
       <Grid container spacing={{ xs: 0, sm: 1, md: 2 }}>
         <Grid xs={12} sm={6} md={4}>
           <FormControl fullWidth>
             <InputLabel id="address">{Locale.label("settings.visibilityPrefSettingsEdit.address")}</InputLabel>
-            <Select
-              fullWidth
-              labelId="address"
-              label={Locale.label("settings.visibilityPrefSettingsEdit.address")}
-              name="address"
-              value={pref.address}
-              defaultValue=""
-              onChange={handlePrefChange}
-            >
+            <Select fullWidth labelId="address" label={Locale.label("settings.visibilityPrefSettingsEdit.address")} name="address" value={pref.address} defaultValue="" onChange={handlePrefChange}>
               <MenuItem value="everyone">{Locale.label("settings.visibilityPrefSettingsEdit.everyone")}</MenuItem>
               <MenuItem value="members">{Locale.label("settings.visibilityPrefSettingsEdit.members")}</MenuItem>
               <MenuItem value="groups">{Locale.label("settings.visibilityPrefSettingsEdit.groups")}</MenuItem>
@@ -119,15 +120,7 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
         <Grid xs={12} sm={12} md={4}>
           <FormControl fullWidth>
             <InputLabel id="email">{Locale.label("settings.visibilityPrefSettingsEdit.email")}</InputLabel>
-            <Select
-              fullWidth
-              labelId="email"
-              label={Locale.label("settings.visibilityPrefSettingsEdit.email")}
-              name="email"
-              value={pref.email}
-              defaultValue=""
-              onChange={handlePrefChange}
-            >
+            <Select fullWidth labelId="email" label={Locale.label("settings.visibilityPrefSettingsEdit.email")} name="email" value={pref.email} defaultValue="" onChange={handlePrefChange}>
               <MenuItem value="everyone">{Locale.label("settings.visibilityPrefSettingsEdit.everyone")}</MenuItem>
               <MenuItem value="members">{Locale.label("settings.visibilityPrefSettingsEdit.members")}</MenuItem>
               <MenuItem value="groups">{Locale.label("settings.visibilityPrefSettingsEdit.groups")}</MenuItem>

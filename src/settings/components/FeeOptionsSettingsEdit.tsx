@@ -2,14 +2,22 @@ import { ApiHelper, type GenericSettingInterface, Locale, UniqueIdHelper } from 
 import { Grid, Icon, TextField } from "@mui/material";
 import React from "react";
 
-interface Props { churchId: string; saveTrigger: Date | null; }
+interface Props {
+  churchId: string;
+  saveTrigger: Date | null;
+}
 
 export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
   const [flatRateCC, setFlatRateCC] = React.useState<GenericSettingInterface>(null);
   const [transFeeCC, setTransFeeCC] = React.useState<GenericSettingInterface>(null);
   const [flatRateACH, setFlatRateACH] = React.useState<GenericSettingInterface>(null);
   const [hardLimitACH, setHardLimitACH] = React.useState<GenericSettingInterface>(null);
-  const [options, setOptions] = React.useState({ flatRateCC: "0.30", transFeeCC: "2.9", flatRateACH: "0.8", hardLimitACH: "5" });
+  const [options, setOptions] = React.useState({
+    flatRateCC: "0.30",
+    transFeeCC: "2.9",
+    flatRateACH: "0.8",
+    hardLimitACH: "5",
+  });
 
   const loadData = async () => {
     const o = { ...options };
@@ -45,10 +53,18 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
     const o = { ...options };
     const value = e.target.value;
     switch (e.target.name) {
-      case "creditCardFlatRate": o.flatRateCC = value; break;
-      case "creditCardTransactionFee": o.transFeeCC = value; break;
-      case "achFlatRate": o.flatRateACH = value;  break;
-      case "achHardLimit": o.hardLimitACH = value; break;
+      case "creditCardFlatRate":
+        o.flatRateCC = value;
+        break;
+      case "creditCardTransactionFee":
+        o.transFeeCC = value;
+        break;
+      case "achFlatRate":
+        o.flatRateACH = value;
+        break;
+      case "achHardLimit":
+        o.hardLimitACH = value;
+        break;
     }
     setOptions(o);
   };
@@ -73,7 +89,9 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
     if (props.saveTrigger !== null) save();
   };
 
-  React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData(); }, [props.churchId]); //eslint-disable-line
+  React.useEffect(() => {
+    if (!UniqueIdHelper.isMissing(props.churchId)) loadData();
+  }, [props.churchId]); //eslint-disable-line
   React.useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
   return (
@@ -89,9 +107,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           value={options.flatRateCC}
           defaultValue=""
           // helperText="Credit Card"
-          InputProps={{
-            startAdornment: <Icon fontSize="small">attach_money</Icon>,
-          }}
+          InputProps={{ startAdornment: <Icon fontSize="small">attach_money</Icon> }}
         />
       </Grid>
       <Grid xs={12} md={6}>
@@ -99,17 +115,13 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           fullWidth
           margin="dense"
           type="number"
-          label={Locale.label(
-            "settings.feeOptionsSettings.creditCardTransactionFee"
-          )}
+          label={Locale.label("settings.feeOptionsSettings.creditCardTransactionFee")}
           name="creditCardTransactionFee"
           onChange={handleChange}
           value={options.transFeeCC}
           defaultValue=""
           // helperText="Credit Card"
-          InputProps={{
-            endAdornment: <Icon fontSize="small">percent</Icon>,
-          }}
+          InputProps={{ endAdornment: <Icon fontSize="small">percent</Icon> }}
         />
       </Grid>
       <Grid xs={12} md={6}>
@@ -123,9 +135,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           value={options.flatRateACH}
           defaultValue=""
           // helperText="ACH"
-          InputProps={{
-            endAdornment: <Icon fontSize="small">percent</Icon>,
-          }}
+          InputProps={{ endAdornment: <Icon fontSize="small">percent</Icon> }}
         />
       </Grid>
       <Grid xs={12} md={6}>
@@ -139,9 +149,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           value={options.hardLimitACH}
           defaultValue=""
           // helperText="ACH"
-          InputProps={{
-            startAdornment: <Icon fontSize="small">attach_money</Icon>,
-          }}
+          InputProps={{ startAdornment: <Icon fontSize="small">attach_money</Icon> }}
         />
       </Grid>
     </Grid>

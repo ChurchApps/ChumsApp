@@ -11,14 +11,13 @@ interface Props {
 }
 
 export const PraiseChartsProducts = (props: Props) => {
-
   const [products, setProducts] = React.useState<any[]>([]);
   const [expandedSkus, setExpandedSkus] = React.useState<string[]>([]);
   const [hasAccount, setHasAccount] = React.useState<boolean>(true);
 
   const loadData = async () => {
     if (props.praiseChartsId) {
-      let url = "/praiseCharts/products/" + props.praiseChartsId
+      let url = "/praiseCharts/products/" + props.praiseChartsId;
       if (props.keySignature) url += "?keys=" + props.keySignature;
       const data = await ApiHelper.get(url, "ContentApi");
       const tree = buildTree(data);
@@ -30,7 +29,7 @@ export const PraiseChartsProducts = (props: Props) => {
 
       setProducts(tree);
     }
-  }
+  };
 
   const addChildren = (product: any, allProducts: any[]) => {
     if (product?.child_products) {
@@ -41,7 +40,7 @@ export const PraiseChartsProducts = (props: Props) => {
         addChildren(c, allProducts);
       });
     }
-  }
+  };
 
   const buildTree = (allProducts: any[]) => {
     const rootExcludedSkus: string[] = [];
@@ -65,55 +64,118 @@ export const PraiseChartsProducts = (props: Props) => {
       }
     });
     return result;
+  };
 
-  }
-
-  useEffect(() => { loadData() }, [props.praiseChartsId, props.keySignature]) //eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    loadData();
+  }, [props.praiseChartsId, props.keySignature]); //eslint-disable-line react-hooks/exhaustive-deps
 
   const download = async (product: any) => {
     PraiseChartsHelper.download(product.sku, product.file_name, "");
-  }
+  };
 
   const purchase = async (sku: string) => {
-    const returnUrl = window.location.origin + "/pingback"
+    const returnUrl = window.location.origin + "/pingback";
     const purchaseUrl = `https://www.praisecharts.com/buynow?sku=${sku}&XID=churchapps&return_url=${encodeURIComponent(returnUrl)}`;
-    const popup = window.open(purchaseUrl, 'oauth', 'width=600,height=700');
+    const popup = window.open(purchaseUrl, "oauth", "width=600,height=700");
 
-    window.addEventListener('message', async (event) => {
+    window.addEventListener("message", async (event) => {
       if (event.origin !== window.location.origin) return;
       popup.close();
       loadData();
     });
   };
 
-
   const getPriceButton = (product: any) => {
-    let result = <></>
+    let result = <></>;
     if (product.price) {
-      if (product.permissions?.can_download) result = <Button variant="contained" size="small" color="primary" onClick={(e) => { e.preventDefault(); download(product); }}><Icon>download</Icon></Button>
-      else if (product.price.price === 0) result = <Button variant="contained" size="small" color="success" onClick={(e) => { e.preventDefault(); purchase(product.sku); }}>Free</Button>
-      else result = <Button variant="contained" size="small" color="error" onClick={(e) => { e.preventDefault(); purchase(product.sku); }}>{CurrencyHelper.formatCurrency(product.price.price)}</Button>
+      if (product.permissions?.can_download) {
+        result = (
+          <Button
+            variant="contained"
+            size="small"
+            color="primary"
+            onClick={(e) => {
+              e.preventDefault();
+              download(product);
+            }}
+          >
+            <Icon>download</Icon>
+          </Button>
+        );
+      } else if (product.price.price === 0) {
+        result = (
+          <Button
+            variant="contained"
+            size="small"
+            color="success"
+            onClick={(e) => {
+              e.preventDefault();
+              purchase(product.sku);
+            }}
+          >
+            Free
+          </Button>
+        );
+      } else {
+        result = (
+          <Button
+            variant="contained"
+            size="small"
+            color="error"
+            onClick={(e) => {
+              e.preventDefault();
+              purchase(product.sku);
+            }}
+          >
+            {CurrencyHelper.formatCurrency(product.price.price)}
+          </Button>
+        );
+      }
     }
     return result;
-  }
+  };
 
   const getProductRow = (product: any, indent: number) => {
     let expand = <></>;
     if (product.children?.length > 0) {
-      if (expandedSkus.includes(product.sku)) expand = <a href="about:blank" onClick={(e) => { e.preventDefault(); setExpandedSkus(expandedSkus.filter(s => s !== product.sku)) }}>
-        <Icon>expand_less</Icon>
-      </a>
-      else expand = <a href="about:blank" onClick={(e) => { e.preventDefault(); setExpandedSkus([...expandedSkus, product.sku]) }}>
-        <Icon>expand_more</Icon>
-      </a>
+      if (expandedSkus.includes(product.sku)) {
+        expand = (
+          <a
+            href="about:blank"
+            onClick={(e) => {
+              e.preventDefault();
+              setExpandedSkus(expandedSkus.filter((s) => s !== product.sku));
+            }}
+          >
+            <Icon>expand_less</Icon>
+          </a>
+        );
+      } else {
+        expand = (
+          <a
+            href="about:blank"
+            onClick={(e) => {
+              e.preventDefault();
+              setExpandedSkus([...expandedSkus, product.sku]);
+            }}
+          >
+            <Icon>expand_more</Icon>
+          </a>
+        );
+      }
     }
-    const result = <Grid container spacing={1} key={product.sku} style={{ marginBottom: 4 }}>
-      <Grid size={{ xs: 1 }}>{expand}</Grid>
-      <Grid size={{ xs: 4 }} style={{ paddingLeft: indent * 20 }}>{product.name}</Grid>
-      <Grid size={{ xs: 1 }}>{product.file_type}</Grid>
-      <Grid size={{ xs: 2 }}>{product.sku}</Grid>
-      <Grid size={{ xs: 2 }}>{getPriceButton(product)}</Grid>
-    </Grid>
+    const result = (
+      <Grid container spacing={1} key={product.sku} style={{ marginBottom: 4 }}>
+        <Grid size={{ xs: 1 }}>{expand}</Grid>
+        <Grid size={{ xs: 4 }} style={{ paddingLeft: indent * 20 }}>
+          {product.name}
+        </Grid>
+        <Grid size={{ xs: 1 }}>{product.file_type}</Grid>
+        <Grid size={{ xs: 2 }}>{product.sku}</Grid>
+        <Grid size={{ xs: 2 }}>{getPriceButton(product)}</Grid>
+      </Grid>
+    );
 
     if (expandedSkus.includes(product.sku)) {
       const items = [result];
@@ -124,17 +186,24 @@ export const PraiseChartsProducts = (props: Props) => {
     }
 
     return result;
-  }
+  };
 
-  return (<Dialog open={true} fullWidth={true} maxWidth="lg">
-    <DialogTitle>Add Products from PraiseCharts</DialogTitle>
-    <DialogContent>
-      {products.map((product: any) => getProductRow(product, 0))}
-      {!hasAccount && <p>You do not have a linked PraiseCharts account.  Go to your <Link to="/profile">profile</Link> to link an account. </p>}
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={props.onHide} data-cy="cancel-merge">Close</Button>
-    </DialogActions>
-  </Dialog>)
-}
-
+  return (
+    <Dialog open={true} fullWidth={true} maxWidth="lg">
+      <DialogTitle>Add Products from PraiseCharts</DialogTitle>
+      <DialogContent>
+        {products.map((product: any) => getProductRow(product, 0))}
+        {!hasAccount && (
+          <p>
+            You do not have a linked PraiseCharts account. Go to your <Link to="/profile">profile</Link> to link an account.{" "}
+          </p>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={props.onHide} data-cy="cancel-merge">
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};

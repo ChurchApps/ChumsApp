@@ -14,7 +14,7 @@ export const OAuthPage: React.FC = () => {
 
   React.useEffect(() => {
     if (clientId) {
-      ApiHelper.get(`/oauth/clients/clientId/${clientId}`, "MembershipApi").then(client => {
+      ApiHelper.get(`/oauth/clients/clientId/${clientId}`, "MembershipApi").then((client) => {
         if (client) setClientName(client.name);
       });
     }
@@ -22,13 +22,7 @@ export const OAuthPage: React.FC = () => {
 
   const handleAllow = async () => {
     try {
-      const response = await ApiHelper.post("/oauth/authorize", {
-        client_id: clientId,
-        redirect_uri: redirectUri,
-        response_type: responseType,
-        scope: scope,
-        state: state
-      }, "MembershipApi");
+      const response = await ApiHelper.post("/oauth/authorize", { client_id: clientId, redirect_uri: redirectUri, response_type: responseType, scope: scope, state: state }, "MembershipApi");
 
       if (response?.code) {
         // Redirect back to the client with the authorization code
@@ -42,37 +36,65 @@ export const OAuthPage: React.FC = () => {
     }
   };
 
-  return (<Box sx={{ display: "flex", backgroundColor: "#EEE", minHeight: "100vh" }}>
-    <div style={{ marginLeft: "auto", marginRight: "auto", paddingTop: 20 }}>
-      <Box sx={{ width: 500, minHeight: 100, backgroundColor: "#FFF", border: "1px solid #CCC", borderRadius: "5px", padding: "10px" }} px="16px" mx="auto">
-
-        <div style={{ textAlign: "center", margin: 50 }}><img src={"/images/logo-login.png"} alt="logo" /></div>
-        <Alert severity="info" style={{ fontWeight: "bold" }}>AUTHORIZATION REQUIRED</Alert>
-        <div style={{ marginLeft: 50, marginRight: 50 }}>
-          <div style={{ textAlign: "center" }}>
-
-            <Icon style={{ fontSize: 120, marginTop: 30, color: "#777" }}>lock</Icon>
-            <h2>{clientName || "Loading..."}</h2>
-            <p>Would you like to access the following data from <b>{UserHelper.currentUserChurch.church.name}</b> in the above application?</p>
+  return (
+    <Box sx={{ display: "flex", backgroundColor: "#EEE", minHeight: "100vh" }}>
+      <div style={{ marginLeft: "auto", marginRight: "auto", paddingTop: 20 }}>
+        <Box
+          sx={{
+            width: 500,
+            minHeight: 100,
+            backgroundColor: "#FFF",
+            border: "1px solid #CCC",
+            borderRadius: "5px",
+            padding: "10px",
+          }}
+          px="16px"
+          mx="auto"
+        >
+          <div style={{ textAlign: "center", margin: 50 }}>
+            <img src={"/images/logo-login.png"} alt="logo" />
           </div>
+          <Alert severity="info" style={{ fontWeight: "bold" }}>
+            AUTHORIZATION REQUIRED
+          </Alert>
+          <div style={{ marginLeft: 50, marginRight: 50 }}>
+            <div style={{ textAlign: "center" }}>
+              <Icon style={{ fontSize: 120, marginTop: 30, color: "#777" }}>lock</Icon>
+              <h2>{clientName || "Loading..."}</h2>
+              <p>
+                Would you like to access the following data from <b>{UserHelper.currentUserChurch.church.name}</b> in the above application?
+              </p>
+            </div>
 
-          <ul>
-            <li>Plans</li>
-          </ul>
-        </div>
-        <div style={{ backgroundColor: "rgb(229, 246, 253)", padding: 10 }}>
-          <Grid container spacing={2}>
-            <Grid size={{ xs: 6 }} style={{ textAlign: "center" }}>
-              <Button fullWidth variant="contained" color="error" onClick={() => { window.location.href = redirectUri || "/"; }} data-testid="oauth-deny-button" aria-label="Deny authorization">Deny</Button>
+            <ul>
+              <li>Plans</li>
+            </ul>
+          </div>
+          <div style={{ backgroundColor: "rgb(229, 246, 253)", padding: 10 }}>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 6 }} style={{ textAlign: "center" }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    window.location.href = redirectUri || "/";
+                  }}
+                  data-testid="oauth-deny-button"
+                  aria-label="Deny authorization"
+                >
+                  Deny
+                </Button>
+              </Grid>
+              <Grid size={{ xs: 6 }} style={{ textAlign: "center" }}>
+                <Button fullWidth variant="contained" color="primary" onClick={handleAllow} data-testid="oauth-allow-button" aria-label="Allow authorization">
+                  Allow
+                </Button>
+              </Grid>
             </Grid>
-            <Grid size={{ xs: 6 }} style={{ textAlign: "center" }}>
-              <Button fullWidth variant="contained" color="primary" onClick={handleAllow} data-testid="oauth-allow-button" aria-label="Allow authorization">Allow</Button>
-            </Grid>
-          </Grid>
-        </div>
-
-
-      </Box>
-    </div>
-  </Box>);
+          </div>
+        </Box>
+      </div>
+    </Box>
+  );
 };
