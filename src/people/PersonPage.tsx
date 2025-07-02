@@ -15,6 +15,8 @@ export const PersonPage = () => {
   const params = useParams();
   const [allForms, setAllForms] = useState(null);
   const [form, setForm] = useState<FormInterface>(null);
+  const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
+  const [editMode, setEditMode] = React.useState<string>("display");
 
   const loadData = () => {
     console.log("LOAD DATA", params.id);
@@ -76,7 +78,7 @@ export const PersonPage = () => {
   const getCurrentTab = () => {
     let currentTab = null;
     switch (selectedTab) {
-      case "details": currentTab = <PersonDetails key="details" person={person} loadData={loadData} />; break;
+      case "details": currentTab = <PersonDetails key="details" person={person} loadData={loadData} inPhotoEditMode={inPhotoEditMode} setInPhotoEditMode={setInPhotoEditMode} editMode={editMode} setEditMode={setEditMode} />; break;
       case "notes": currentTab = <Notes key="notes" context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />; break;
       case "attendance": currentTab = <PersonAttendance key="attendance" personId={person.id} />; break;
       case "donations": currentTab = <DonationPage key="donations" personId={person.id} church={UserHelper.currentUserChurch.church} />; break;
@@ -122,7 +124,7 @@ export const PersonPage = () => {
 
   return (
     <>
-      <PersonBanner person={person} />
+      <PersonBanner person={person} onTabChange={setSelectedTab} togglePhotoEditor={setInPhotoEditMode} onEdit={() => { setEditMode("edit"); setSelectedTab("details"); }} />
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 2 }}>
           <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
