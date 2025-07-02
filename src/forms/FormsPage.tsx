@@ -1,11 +1,11 @@
 import React from "react";
 import { FormEdit, EnvironmentHelper } from "./components"
-import { ApiHelper, DisplayBox, type FormInterface, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
+import { ApiHelper, type FormInterface, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom"
-import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Paper, Tabs, Tab, Typography, Stack, Button, Card, Divider } from "@mui/material";
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Stack, Button, Card, Tab } from "@mui/material";
 import { Description as DescriptionIcon, Add as AddIcon, Archive as ArchiveIcon } from "@mui/icons-material";
 import { SmallButton } from "@churchapps/apphelper";
-import { Banner } from "@churchapps/apphelper";
+import { PageHeader } from "../components";
 
 export const FormsPage = () => {
   const [forms, setForms] = React.useState<FormInterface[]>(null);
@@ -80,17 +80,11 @@ export const FormsPage = () => {
     if (selectedTab === "forms") return (<FormEdit formId={selectedFormId} updatedFunction={handleUpdate}></FormEdit>)
   }
 
-  const getEditContent = () => {
-    if (!formPermission || selectedTab === "archived") return null;
-    else return (<button aria-label="addForm" className="no-default-style" onClick={() => { setSelectedFormId(""); }}><Icon>add</Icon></button>);
-  }
 
   React.useEffect(loadData, []);
 
   if (!forms && !archivedForms) return (<></>);
   else {
-    const title = (selectedTab === "forms") ? Locale.label("forms.formsPage.forms") : Locale.label("forms.formsPage.archForms");
-    const icon = (selectedTab === "forms") ? "format_align_left" : "archive";
     let contents = <Loading />
     if (forms && archivedForms) {
       contents = (<Table>
@@ -100,7 +94,7 @@ export const FormsPage = () => {
     }
 
     const getTab = (index: number, keyName: string, icon: string, text: string) => (
-      <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
+      <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); }} label={<>{text}</>} />
     )
 
     const tabs = [];
@@ -111,117 +105,65 @@ export const FormsPage = () => {
 
     return (
       <>
-        {/* Modern Banner Header */}
-        <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-          <Stack 
-            direction={{ xs: "column", md: "row" }} 
-            spacing={{ xs: 2, md: 4 }} 
-            alignItems={{ xs: "flex-start", md: "center" }} 
-            sx={{ width: "100%" }}
+        <PageHeader
+          icon={<DescriptionIcon />}
+          title={Locale.label("forms.formsPage.forms")}
+          subtitle="Create and manage custom forms"
+        >
+          {formPermission && selectedTab !== "archived" && (
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={() => { setSelectedFormId(""); }}
+              sx={{
+                backgroundColor: "#FFF",
+                color: "var(--c1l2)",
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.9)"
+                }
+              }}
+              data-testid="add-form-button"
+            >
+              {Locale.label("forms.formsPage.addForm") || "Add Form"}
+            </Button>
+          )}
+          <Button
+            variant="outlined"
+            onClick={() => { setSelectedTab("forms"); setTabIndex(0); }}
+            sx={{
+              color: "#FFF",
+              backgroundColor: "transparent",
+              borderColor: "#FFF",
+              fontWeight: selectedTab === "forms" ? 600 : 400,
+              "&:hover": {
+                backgroundColor: "rgba(255,255,255,0.1)",
+                color: "#FFF",
+                borderColor: "#FFF"
+              }
+            }}
           >
-            {/* Left side: Title and Icon */}
-            <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-              <Box 
-                sx={{ 
-                  backgroundColor: 'rgba(255,255,255,0.2)', 
-                  borderRadius: '12px', 
-                  p: 1.5,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              >
-                <DescriptionIcon sx={{ fontSize: 32, color: '#FFF' }} />
-              </Box>
-              <Box>
-                <Typography 
-                  variant="h4" 
-                  sx={{ 
-                    fontWeight: 600, 
-                    mb: 0.5,
-                    fontSize: { xs: '1.75rem', md: '2.125rem' }
-                  }}
-                >
-                  {Locale.label("forms.formsPage.forms")}
-                </Typography>
-                <Typography 
-                  variant="body1" 
-                  sx={{ 
-                    color: 'rgba(255,255,255,0.9)',
-                    fontSize: { xs: '0.875rem', md: '1rem' }
-                  }}
-                >
-                  Create and manage custom forms
-                </Typography>
-              </Box>
-            </Stack>
-            
-            {/* Right side: Add Button and Tab Buttons */}
-            <Stack 
-              direction="row" 
-              spacing={1} 
-              sx={{ 
-                flexShrink: 0,
-                justifyContent: { xs: "flex-start", md: "flex-end" },
-                width: { xs: "100%", md: "auto" }
+            {Locale.label("forms.formsPage.forms")}
+          </Button>
+          {archivedForms?.length > 0 && (
+            <Button
+              variant="outlined"
+              onClick={() => { setSelectedTab("archived"); setTabIndex(1); }}
+              sx={{
+                color: "#FFF",
+                backgroundColor: "transparent",
+                borderColor: "#FFF",
+                fontWeight: selectedTab === "archived" ? 600 : 400,
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  color: "#FFF",
+                  borderColor: "#FFF"
+                }
               }}
             >
-              {formPermission && selectedTab !== "archived" && (
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
-                  onClick={() => { setSelectedFormId(""); }}
-                  sx={{
-                    backgroundColor: "#FFF",
-                    color: "var(--c1l2)",
-                    "&:hover": {
-                      backgroundColor: "rgba(255,255,255,0.9)"
-                    }
-                  }}
-                  data-testid="add-form-button"
-                >
-                  {Locale.label("forms.formsPage.addForm") || "Add Form"}
-                </Button>
-              )}
-              <Button
-                variant="outlined"
-                onClick={() => { setSelectedTab("forms"); setTabIndex(0); }}
-                sx={{
-                  color: "#FFF",
-                  backgroundColor: "transparent",
-                  borderColor: "#FFF",
-                  fontWeight: selectedTab === "forms" ? 600 : 400,
-                  "&:hover": {
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                    color: "#FFF",
-                    borderColor: "#FFF"
-                  }
-                }}
-              >
-                {Locale.label("forms.formsPage.forms")}
-              </Button>
-              {archivedForms?.length > 0 && (
-                <Button
-                  variant="outlined"
-                  onClick={() => { setSelectedTab("archived"); setTabIndex(1); }}
-                  sx={{
-                    color: "#FFF",
-                    backgroundColor: "transparent",
-                    borderColor: "#FFF",
-                    fontWeight: selectedTab === "archived" ? 600 : 400,
-                    "&:hover": {
-                      backgroundColor: "rgba(255,255,255,0.1)",
-                      color: "#FFF",
-                      borderColor: "#FFF"
-                    }
-                  }}
-                >
-                  {Locale.label("forms.formsPage.archForms")}
-                </Button>
-              )}
-            </Stack>
-          </Stack>
-        </Box>
+              {Locale.label("forms.formsPage.archForms")}
+            </Button>
+          )}
+        </PageHeader>
 
         {/* Tab Content */}
         <Box sx={{ p: 3 }}>

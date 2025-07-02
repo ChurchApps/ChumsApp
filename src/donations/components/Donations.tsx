@@ -2,6 +2,7 @@ import React from "react";
 import { ArrayHelper, ApiHelper, UserHelper, type DonationInterface, DateHelper, CurrencyHelper, type DonationBatchInterface, ExportLink, Permissions, UniqueIdHelper, type FundInterface, Loading, Locale } from "@churchapps/apphelper";
 import { Table, TableBody, TableCell, TableRow, TableHead, Typography, Stack, Icon, Button, Box } from "@mui/material";
 import { Edit as EditIcon, Person as PersonIcon, CalendarMonth as DateIcon, AttachMoney as MoneyIcon, FileDownload as ExportIcon, VolunteerActivism as DonationIcon } from "@mui/icons-material";
+import { IconText, EmptyState } from "../../components";
 
 interface Props { batch: DonationBatchInterface, funds: FundInterface[], editFunction: (id: string) => void }
 
@@ -106,14 +107,12 @@ export const Donations: React.FC<Props> = (props) => {
     if (props.funds.length === 0) {
       rows.push(
         <TableRow key="0">
-          <TableCell colSpan={5} sx={{ textAlign: 'center', py: 4 }}>
-            <Stack spacing={2} alignItems="center">
-              <DonationIcon sx={{ fontSize: 48, color: 'text.secondary' }} />
-              <Typography variant="body1" color="text.secondary" data-cy="error-message">
-                {Locale.label("donations.donations.errMsg")}
-              </Typography>
-            </Stack>
-          </TableCell>
+          <EmptyState
+            variant="table"
+            colSpan={5}
+            icon={<DonationIcon />}
+            title={Locale.label("donations.donations.errMsg")}
+          />
         </TableRow>
       );
       return rows;
@@ -122,14 +121,12 @@ export const Donations: React.FC<Props> = (props) => {
     if (!donations || donations.length === 0) {
       rows.push(
         <TableRow key="0">
-          <TableCell colSpan={5} sx={{ textAlign: 'center', py: 4 }}>
-            <Stack spacing={2} alignItems="center">
-              <DonationIcon sx={{ fontSize: 48, color: 'text.secondary' }} />
-              <Typography variant="body1" color="text.secondary">
-                {Locale.label("donations.donations.noDonMsg")}
-              </Typography>
-            </Stack>
-          </TableCell>
+          <EmptyState
+            variant="table"
+            colSpan={5}
+            icon={<DonationIcon />}
+            title={Locale.label("donations.donations.noDonMsg")}
+          />
         </TableRow>
       );
       return rows;
@@ -161,36 +158,45 @@ export const Donations: React.FC<Props> = (props) => {
           }}
         >
           <TableCell>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Icon sx={{ color: 'var(--c1l2)', fontSize: 20 }}>receipt</Icon>
-              <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.primary' }}>
-                {d.id}
-              </Typography>
-            </Stack>
+            <IconText 
+              icon={<Icon>receipt</Icon>} 
+              iconSize={20} 
+              iconColor="var(--c1l2)"
+              variant="body2"
+            >
+              <span style={{ fontWeight: 500, color: 'text.primary' }}>{d.id}</span>
+            </IconText>
           </TableCell>
           <TableCell>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <PersonIcon sx={{ color: 'text.secondary', fontSize: 18 }} />
-              <Typography variant="body2">
-                {d.person?.name.display || Locale.label("donations.donations.anon")}
-              </Typography>
-            </Stack>
+            <IconText 
+              icon={<PersonIcon />} 
+              iconSize={18} 
+              iconColor="text.secondary"
+              variant="body2"
+            >
+              {d.person?.name.display || Locale.label("donations.donations.anon")}
+            </IconText>
           </TableCell>
           <TableCell>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <DateIcon sx={{ color: 'text.secondary', fontSize: 18 }} />
-              <Typography variant="body2">
-                {DateHelper.prettyDate(new Date(d.donationDate))}
-              </Typography>
-            </Stack>
+            <IconText 
+              icon={<DateIcon />} 
+              iconSize={18} 
+              iconColor="text.secondary"
+              variant="body2"
+            >
+              {DateHelper.prettyDate(new Date(d.donationDate))}
+            </IconText>
           </TableCell>
           <TableCell>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <MoneyIcon sx={{ color: 'success.main', fontSize: 18 }} />
-              <Typography variant="body2" sx={{ fontWeight: 600, color: 'success.main' }}>
-                {CurrencyHelper.formatCurrency(d.amount)}
-              </Typography>
-            </Stack>
+            <IconText 
+              icon={<MoneyIcon />} 
+              iconSize={18} 
+              iconColor="success.main"
+              variant="body2"
+              color="success.main"
+            >
+              <span style={{ fontWeight: 600 }}>{CurrencyHelper.formatCurrency(d.amount)}</span>
+            </IconText>
           </TableCell>
           {canEdit && <TableCell>{editButton}</TableCell>}
         </TableRow>

@@ -2,6 +2,7 @@ import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper
 import { Button, Typography, Chip, IconButton, Avatar, Stack, Box, Menu, MenuItem } from "@mui/material";
 import { Edit as EditIcon, Phone as PhoneIcon, Email as EmailIcon, Home as HomeIcon, Group as GroupIcon, VolunteerActivism as DonationIcon, CalendarMonth as AttendanceIcon, Notes as NotesIcon, Assignment as FormIcon, ExpandMore as ExpandMoreIcon, Person as PersonIcon } from "@mui/icons-material";
 import React, { memo, useMemo, useState } from "react";
+import { StatusChip } from "../../components";
 
 interface Props {
   person: PersonInterface
@@ -21,24 +22,7 @@ export const PersonBanner = memo((props: Props) => {
 
   const membershipStatus = useMemo(() => {
     if (!person?.membershipStatus) return null;
-    const colors: Record<string, any> = {
-      "Member": { bg: "#e8f5e9", color: "#2e7d32" },
-      "Visitor": { bg: "#fff3e0", color: "#e65100" },
-      "Staff": { bg: "#e3f2fd", color: "#1565c0" }
-    };
-    const status = colors[person.membershipStatus] || { bg: "#f5f5f5", color: "#616161" };
-    return (
-      <Chip 
-        label={person.membershipStatus} 
-        size="small" 
-        sx={{ 
-          backgroundColor: status.bg, 
-          color: status.color,
-          fontWeight: 600,
-          fontSize: '0.875rem'
-        }} 
-      />
-    );
+    return <StatusChip status={person.membershipStatus} size="small" />;
   }, [person?.membershipStatus]);
 
   const quickStats = useMemo(() => {

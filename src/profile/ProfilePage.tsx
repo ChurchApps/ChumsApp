@@ -1,9 +1,26 @@
-import { Grid, Icon, TextField, Checkbox, Typography, Button, InputAdornment, IconButton } from "@mui/material";
+import { 
+  Grid, 
+  Icon, 
+  TextField, 
+  Checkbox, 
+  Typography, 
+  Button, 
+  InputAdornment, 
+  IconButton,
+  Box,
+  Card,
+  CardContent,
+  Alert,
+  Stack,
+  FormControlLabel
+} from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { InputBox, ApiHelper, ErrorMessages, UserHelper, Locale, Banner } from "@churchapps/apphelper"
+import { ApiHelper, UserHelper, Locale } from "@churchapps/apphelper"
 import { NotificationPreferences } from "./components/NotificationPreferences";
 import { LinkedAccounts } from "./components/LinkedAccounts";
+import { Person as PersonIcon } from "@mui/icons-material";
+import { PageHeader, LoadingButton } from "../components";
 
 export const ProfilePage = () => {
   const [password, setPassword] = useState<string>("");
@@ -14,6 +31,8 @@ export const ProfilePage = () => {
   const [optedOut, setOptedOut] = useState<boolean>(false);
   const [errors, setErrors] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
   const navigate = useNavigate();
 
   const initData = () => {
@@ -28,34 +47,43 @@ export const ProfilePage = () => {
     }
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (validate()) {
-      const promises: Promise<any>[] = [];
+      setLoading(true);
+      setSaveMessage("");
+      try {
+        const promises: Promise<any>[] = [];
 
-      if (password.length >= 8) {
-        promises.push(ApiHelper.post("/users/updatePassword", { newPassword: password }, "MembershipApi"));
-      }
+        if (password.length >= 8) {
+          promises.push(ApiHelper.post("/users/updatePassword", { newPassword: password }, "MembershipApi"));
+        }
 
-      if (areNamesChanged()) {
-        promises.push(ApiHelper.post("/users/setDisplayName", { firstName, lastName }, "MembershipApi"));
-      }
+        if (areNamesChanged()) {
+          promises.push(ApiHelper.post("/users/setDisplayName", { firstName, lastName }, "MembershipApi"));
+        }
 
-      if (email !== UserHelper.user.email) {
-        promises.push(ApiHelper.post("/users/updateEmail", { email }, "MembershipApi"));
-      }
+        if (email !== UserHelper.user.email) {
+          promises.push(ApiHelper.post("/users/updateEmail", { email }, "MembershipApi"));
+        }
 
-      promises.push(ApiHelper.post("/users/updateOptedOut", {
-        personId: UserHelper.person.id,
-        optedOut
-      }, "MembershipApi"));
+        promises.push(ApiHelper.post("/users/updateOptedOut", {
+          personId: UserHelper.person.id,
+          optedOut
+        }, "MembershipApi"));
 
-      Promise.all(promises).then(() => {
+        await Promise.all(promises);
+        
         UserHelper.user.firstName = firstName;
         UserHelper.user.lastName = lastName;
         UserHelper.user.email = email;
         UserHelper.person.optedOut = optedOut;
-        alert(Locale.label("profile.profilePage.saveChange"));
-      });
+        setSaveMessage(Locale.label("profile.profilePage.saveChange"));
+      } catch (error) {
+        console.error("Error saving profile:", error);
+        setSaveMessage("An error occurred while saving your profile.");
+      } finally {
+        setLoading(false);
+      }
     }
   }
 
@@ -121,40 +149,171 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <Banner>
-        <h1>{Locale.label("profile.profilePage.profEdit")}</h1>
-      </Banner>
-      <div id="mainContent">
-        <ErrorMessages errors={errors} />
-        <InputBox headerText={Locale.label("profile.profilePage.profEdit")} saveFunction={handleSave}>
-          <Grid container spacing={3}>
-            <Grid item>
-              <TextField fullWidth type="email" name="email" label={Locale.label("person.email")} value={email} onChange={handleChange} />
-              <TextField type={showPassword ? "text" : "password"} fullWidth name="password" label={Locale.label("profile.profilePage.passNew")} value={password} onChange={handleChange} InputProps={{
-                endAdornment: (<InputAdornment position="end"><IconButton aria-label="toggle password visibility" onClick={() => { setShowPassword(!showPassword) }}>{showPassword ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}</IconButton></InputAdornment>)
-              }} />
-            </Grid>
-            <Grid item>
-              <TextField fullWidth name="firstName" label={Locale.label("person.firstName")} value={firstName} onChange={handleChange} />
-              <TextField type={showPassword ? "text" : "password"} fullWidth name="passwordVerify" label={Locale.label("profile.profilePage.passVer")} value={passwordVerify} onChange={handleChange} InputProps={{
-                endAdornment: (<InputAdornment position="end"><IconButton aria-label="toggle password visibility" onClick={() => { setShowPassword(!showPassword) }}>{showPassword ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}</IconButton></InputAdornment>)
-              }} />
-            </Grid>
-            <Grid item>
-              <TextField fullWidth name="lastName" label={Locale.label("person.lastName")} value={lastName} onChange={handleChange} />
-              <Checkbox name="optedOut" checked={optedOut} onChange={handleChange} data-testid="opt-out-checkbox" aria-label="Opt out of direct messages" /> <label htmlFor="optedOut">{Locale.label("profile.profilePage.noDirect")}</label>
-            </Grid>
-          </Grid>
-        </InputBox>
+      <PageHeader
+        icon={<PersonIcon />}
+        title={Locale.label("profile.profilePage.profEdit")}
+        subtitle="Manage your personal information and account settings"
+      />
 
-        <LinkedAccounts />
-        <NotificationPreferences />
+      <Box sx={{ p: 3 }}>
+        <Stack spacing={3}>
+          {/* Display errors if any */}
+          {errors.length > 0 && (
+            <Alert severity="error">
+              <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </Alert>
+          )}
 
-        <InputBox headerText={Locale.label("profile.profilePage.accDel")} saveFunction={null}>
-          <Typography color="GrayText">{Locale.label("profile.profilePage.permWarn")}</Typography>
-          <Button variant="outlined" color="error" sx={{ marginTop: 4 }} onClick={handleAccountDelete} data-testid="delete-account-button" aria-label="Delete account">{Locale.label("profile.profilePage.delAcc")}</Button>
-        </InputBox>
-      </div>
+          {/* Display success message if any */}
+          {saveMessage && (
+            <Alert severity="success">{saveMessage}</Alert>
+          )}
+
+          {/* Profile Information Card */}
+          <Card>
+            <CardContent>
+              <Stack spacing={2}>
+                <Typography variant="h6" gutterBottom>
+                  {Locale.label("profile.profilePage.profEdit")}
+                </Typography>
+                
+                <Grid container spacing={3}>
+                  <Grid size={{ xs: 12, md: 6 }}>
+                    <Stack spacing={2}>
+                      <TextField 
+                        fullWidth 
+                        type="email" 
+                        name="email" 
+                        label={Locale.label("person.email")} 
+                        value={email} 
+                        onChange={handleChange} 
+                      />
+                      <TextField 
+                        type={showPassword ? "text" : "password"} 
+                        fullWidth 
+                        name="password" 
+                        label={Locale.label("profile.profilePage.passNew")} 
+                        value={password} 
+                        onChange={handleChange}
+                        helperText="Leave blank to keep current password"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton 
+                                aria-label="toggle password visibility" 
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                {showPassword ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}
+                              </IconButton>
+                            </InputAdornment>
+                          )
+                        }} 
+                      />
+                    </Stack>
+                  </Grid>
+                  
+                  <Grid size={{ xs: 12, md: 6 }}>
+                    <Stack spacing={2}>
+                      <TextField 
+                        fullWidth 
+                        name="firstName" 
+                        label={Locale.label("person.firstName")} 
+                        value={firstName} 
+                        onChange={handleChange} 
+                      />
+                      <TextField 
+                        type={showPassword ? "text" : "password"} 
+                        fullWidth 
+                        name="passwordVerify" 
+                        label={Locale.label("profile.profilePage.passVer")} 
+                        value={passwordVerify} 
+                        onChange={handleChange}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton 
+                                aria-label="toggle password visibility" 
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                {showPassword ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>}
+                              </IconButton>
+                            </InputAdornment>
+                          )
+                        }} 
+                      />
+                    </Stack>
+                  </Grid>
+                  
+                  <Grid size={{ xs: 12 }}>
+                    <Stack spacing={2}>
+                      <TextField 
+                        fullWidth 
+                        name="lastName" 
+                        label={Locale.label("person.lastName")} 
+                        value={lastName} 
+                        onChange={handleChange} 
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox 
+                            name="optedOut" 
+                            checked={optedOut} 
+                            onChange={handleChange} 
+                            data-testid="opt-out-checkbox"
+                          />
+                        }
+                        label={Locale.label("profile.profilePage.noDirect")}
+                      />
+                    </Stack>
+                  </Grid>
+                </Grid>
+                
+                <Box sx={{ pt: 2 }}>
+                  <LoadingButton
+                    variant="contained"
+                    color="primary"
+                    loading={loading}
+                    onClick={handleSave}
+                  >
+                    Save Changes
+                  </LoadingButton>
+                </Box>
+              </Stack>
+            </CardContent>
+          </Card>
+
+          <LinkedAccounts />
+          <NotificationPreferences />
+
+          {/* Account Deletion Card */}
+          <Card>
+            <CardContent>
+              <Stack spacing={2}>
+                <Typography variant="h6" color="error" gutterBottom>
+                  {Locale.label("profile.profilePage.accDel")}
+                </Typography>
+                <Typography color="text.secondary">
+                  {Locale.label("profile.profilePage.permWarn")}
+                </Typography>
+                <Box>
+                  <Button 
+                    variant="outlined" 
+                    color="error" 
+                    onClick={handleAccountDelete} 
+                    data-testid="delete-account-button"
+                  >
+                    {Locale.label("profile.profilePage.delAcc")}
+                  </Button>
+                </Box>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Stack>
+      </Box>
     </>
   );
 }

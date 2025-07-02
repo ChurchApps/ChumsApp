@@ -293,6 +293,22 @@ This document defines the design patterns, components, and styling conventions u
     borderColor: 'primary.main'
   }
 }}>
+
+// Card with Header Section
+<Card>
+  <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
+    <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Icon />
+        <Typography variant="h6">{title}</Typography>
+      </Stack>
+      {actionButtons}
+    </Stack>
+  </Box>
+  <Box sx={{ p: 2 }}>
+    {content}
+  </Box>
+</Card>
 ```
 
 ### Buttons
@@ -377,6 +393,86 @@ This document defines the design patterns, components, and styling conventions u
     borderColor: 'grey.400',
     fontSize: '0.75rem'
   }}
+/>
+
+// Header Chips (on blue background)
+<Chip
+  label="Status"
+  size="small"
+  sx={{ 
+    backgroundColor: "rgba(255,255,255,0.2)", 
+    color: "#FFF",
+    fontSize: '0.75rem',
+    height: 20
+  }}
+/>
+```
+
+### Statistics Display
+
+```tsx
+// Statistics in Header
+<Stack direction="row" spacing={1} alignItems="center">
+  <Icon sx={{ color: "#FFF", fontSize: 20 }} />
+  <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
+    {value}
+  </Typography>
+  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.875rem' }}>
+    {label}
+  </Typography>
+</Stack>
+```
+
+### Icon with Text Pattern
+
+```tsx
+// Standard Icon + Text Combination
+<Stack direction="row" spacing={1} alignItems="center">
+  <Icon sx={{ color: 'var(--c1l2)', fontSize: 18 }} />
+  <Typography variant="body2">
+    {content}
+  </Typography>
+</Stack>
+
+// Contact Information Display
+<Stack direction="row" spacing={1} alignItems="center">
+  <ContactIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+  <Typography variant="body2" color="text.secondary">
+    {contactInfo}
+  </Typography>
+</Stack>
+```
+
+### Avatar Patterns
+
+```tsx
+// Standard Person Avatar
+<Avatar 
+  src={PersonHelper.getPhotoUrl(person)} 
+  sx={{ 
+    width: 48, 
+    height: 48,
+    '& img': {
+      objectFit: 'cover',
+      objectPosition: 'center'
+    }
+  }} 
+/>
+
+// Avatar with fallback to initials
+<Avatar sx={{ width: 56, height: 56, backgroundColor: 'primary.main' }}>
+  {person.firstName?.[0]}{person.lastName?.[0]}
+</Avatar>
+
+// Editable Avatar with hover effect
+<Avatar 
+  sx={{ 
+    width: 100, 
+    height: 100,
+    cursor: 'pointer',
+    '&:hover': { opacity: 0.8 }
+  }}
+  onClick={handleEdit}
 />
 ```
 
@@ -665,6 +761,146 @@ export const ExamplePage = () => {
   );
 };
 ```
+
+## Reusable Component Opportunities
+
+Based on analysis of the codebase, the following patterns appear frequently and are candidates for extraction into reusable components:
+
+### High Priority Components (High Impact, Low Effort)
+
+#### 1. **PageHeader** Component
+**Usage**: Found in 15+ pages across all modules
+```tsx
+interface PageHeaderProps {
+  icon: ReactNode;
+  title: string;
+  subtitle?: string;
+  children?: ReactNode; // For action buttons or tabs
+  statistics?: Array<{ icon: ReactNode; value: string; label: string }>;
+}
+```
+
+#### 2. **IconText** Component  
+**Usage**: Found in 50+ locations in table cells and lists
+```tsx
+interface IconTextProps {
+  icon: ReactNode;
+  children: ReactNode;
+  iconSize?: number;
+  iconColor?: string;
+  spacing?: number;
+}
+```
+
+#### 3. **StatusChip** Component
+**Usage**: Found in 20+ locations for membership, status displays
+```tsx
+interface StatusChipProps {
+  status: 'Member' | 'Visitor' | 'Staff' | 'Active' | 'Pending' | string;
+  variant?: 'standard' | 'header';
+  size?: 'small' | 'medium';
+}
+```
+
+#### 4. **EmptyState** Component
+**Usage**: Found in 15+ locations across tables and cards
+```tsx
+interface EmptyStateProps {
+  icon: ReactNode;
+  title: string;
+  description?: string;
+  action?: ReactNode;
+  variant?: 'table' | 'card';
+}
+```
+
+### Medium Priority Components (Good ROI)
+
+#### 5. **CardWithHeader** Component
+**Usage**: Found in 10+ locations
+```tsx
+interface CardWithHeaderProps {
+  title: string;
+  icon?: ReactNode;
+  actions?: ReactNode;
+  children: ReactNode;
+}
+```
+
+#### 6. **PersonAvatar** Component
+**Usage**: Found throughout person-related components
+```tsx
+interface PersonAvatarProps {
+  person: PersonInterface;
+  size: 'small' | 'medium' | 'large' | 'xlarge';
+  editable?: boolean;
+  onClick?: () => void;
+}
+```
+
+#### 7. **LoadingButton** Component
+**Usage**: Used in all forms
+```tsx
+interface LoadingButtonProps extends ButtonProps {
+  loading: boolean;
+  loadingText?: string;
+}
+```
+
+#### 8. **ConfirmDialog** Component
+**Usage**: Needed for delete operations across modules
+```tsx
+interface ConfirmDialogProps {
+  open: boolean;
+  title: string;
+  message: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+  confirmText?: string;
+  variant?: 'warning' | 'danger';
+}
+```
+
+### Lower Priority Components (Specific Use Cases)
+
+#### 9. **DataTable** Component
+**Usage**: Complex but used frequently
+```tsx
+interface DataTableProps<T> {
+  data: T[];
+  columns: Array<{ key: keyof T; label: string; render?: (item: T) => ReactNode }>;
+  onRowClick?: (item: T) => void;
+  emptyState?: ReactNode;
+  loading?: boolean;
+}
+```
+
+#### 10. **ContactDisplay** Component
+**Usage**: Person contact information displays
+```tsx
+interface ContactDisplayProps {
+  email?: string;
+  phone?: string;
+  address?: string;
+  orientation?: 'horizontal' | 'vertical';
+}
+```
+
+### Implementation Strategy
+
+1. **Start with High Priority**: Implement PageHeader, IconText, StatusChip, EmptyState first
+2. **Create in src/components/ui/**: Organize by category (display, forms, layout, feedback)
+3. **Maintain backward compatibility**: Keep existing patterns working during transition
+4. **Update documentation**: Add new components to this style guide
+5. **Gradual migration**: Update components as they're touched for other reasons
+
+### Benefits of Component Extraction
+
+- **Consistency**: Standardized styling across the application
+- **Maintainability**: Single source of truth for component styling
+- **Performance**: Reduced bundle size through component reuse
+- **Developer Experience**: Faster development with pre-built components
+- **Quality**: Better testing coverage for reused components
 
 ---
 

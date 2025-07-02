@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { type ChurchInterface, ApiHelper, UserHelper, Permissions, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import { Box, Typography, Stack, Button } from "@mui/material";
-import { Settings as SettingsIcon, Lock as LockIcon, PlayArrow as PlayArrowIcon } from "@mui/icons-material";
+import { Settings as SettingsIcon, Lock as LockIcon, PlayArrow as PlayArrowIcon, Language as LanguageIcon, LocationOn as LocationOnIcon } from "@mui/icons-material";
 import { RolesTab } from "./components/RolesTab";
 
 export const ManageChurch = () => {
@@ -93,26 +93,40 @@ export const ManageChurch = () => {
               >
                 {church?.name}
               </Typography>
-              <Typography 
-                variant="body1" 
-                sx={{ 
-                  color: 'rgba(255,255,255,0.9)',
-                  fontSize: { xs: '0.875rem', md: '1rem' },
-                  mb: 0.5
-                }}
+              <Stack 
+                direction="row" 
+                spacing={1} 
+                alignItems="center"
+                sx={{ mb: 0.5 }}
               >
-                {church?.subDomain ? `${church.subDomain}.churchapps.org` : 'Church Management'}
-              </Typography>
-              {getDisplayAddress() && (
+                <LanguageIcon sx={{ fontSize: 16, color: 'rgba(255,255,255,0.9)' }} />
                 <Typography 
-                  variant="body2" 
+                  variant="body1" 
                   sx={{ 
-                    color: 'rgba(255,255,255,0.8)',
-                    fontSize: { xs: '0.75rem', md: '0.875rem' }
+                    color: 'rgba(255,255,255,0.9)',
+                    fontSize: { xs: '0.875rem', md: '1rem' }
                   }}
                 >
-                  {getDisplayAddress()}
+                  {church?.subDomain ? `${church.subDomain}.churchapps.org` : 'Church Management'}
                 </Typography>
+              </Stack>
+              {getDisplayAddress() && (
+                <Stack 
+                  direction="row" 
+                  spacing={1} 
+                  alignItems="center"
+                >
+                  <LocationOnIcon sx={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }} />
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: 'rgba(255,255,255,0.8)',
+                      fontSize: { xs: '0.75rem', md: '0.875rem' }
+                    }}
+                  >
+                    {getDisplayAddress()}
+                  </Typography>
+                </Stack>
               )}
             </Box>
           </Stack>
