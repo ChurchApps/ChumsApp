@@ -118,71 +118,113 @@ export const AutomationsPage = () => {
   React.useEffect(loadData, [isMounted]);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 3 }}>
-      {/* Modern Header */}
-      <Box sx={{ 
-        backgroundColor: 'var(--c1l2)', 
-        color: '#FFF', 
-        p: 3, 
-        borderRadius: 2,
-        mb: 3
-      }}>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <AutomationsIcon sx={{ fontSize: 32 }} />
-          <Typography 
-            variant="h4" 
+    <>
+      {/* Modern Blue Header */}
+      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
+        <Stack 
+          direction={{ xs: "column", md: "row" }} 
+          spacing={{ xs: 2, md: 4 }} 
+          alignItems={{ xs: "flex-start", md: "center" }} 
+          sx={{ width: "100%" }}
+        >
+          {/* Left side: Title and Icon */}
+          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
+            <Box 
+              sx={{ 
+                backgroundColor: 'rgba(255,255,255,0.2)', 
+                borderRadius: '12px', 
+                p: 1.5,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <AutomationsIcon sx={{ fontSize: 32, color: '#FFF' }} />
+            </Box>
+            <Box>
+              <Typography 
+                variant="h4" 
+                sx={{ 
+                  fontWeight: 600, 
+                  mb: 0.5,
+                  fontSize: { xs: '1.75rem', md: '2.125rem' }
+                }}
+              >
+                {Locale.label("tasks.automationsPage.manageAuto") || "Automations"}
+              </Typography>
+              <Typography 
+                variant="body1" 
+                sx={{ 
+                  color: 'rgba(255,255,255,0.9)',
+                  fontSize: { xs: '0.875rem', md: '1rem' }
+                }}
+              >
+                Automate tasks and workflows for your organization
+              </Typography>
+            </Box>
+          </Stack>
+          
+          {/* Right side: Action Buttons */}
+          <Stack 
+            direction="row" 
+            spacing={1} 
             sx={{ 
-              fontWeight: 600,
-              fontSize: { xs: "1.75rem", md: "2.125rem" }
+              flexShrink: 0,
+              justifyContent: { xs: "flex-start", md: "flex-end" },
+              width: { xs: "100%", md: "auto" }
             }}
           >
-            {Locale.label("tasks.automationsPage.manageAuto")}
-          </Typography>
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={() => { setShowAdd(true); setEditAutomation(null); }}
+              sx={{
+                color: '#FFF',
+                borderColor: 'rgba(255,255,255,0.5)',
+                '&:hover': {
+                  borderColor: '#FFF',
+                  backgroundColor: 'rgba(255,255,255,0.1)'
+                }
+              }}
+            >
+              Add Automation
+            </Button>
+          </Stack>
         </Stack>
       </Box>
 
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 8 }}>
-          <Card sx={{ 
-            borderRadius: 2,
-            border: '1px solid',
-            borderColor: 'grey.200'
-          }}>
-            <CardContent>
-              {/* Header */}
-              <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
-                <Stack direction="row" alignItems="center" spacing={1}>
+      {/* Automations Content */}
+      <Box sx={{ p: 3 }}>
+        <Grid container spacing={3}>
+          <Grid size={{ xs: 12, md: editAutomation || showAdd ? 8 : 12 }}>
+            <Card sx={{ 
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'grey.200'
+            }}>
+              <CardContent>
+                {/* Header */}
+                <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>
                   <AutomationsIcon sx={{ color: 'primary.main' }} />
                   <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
-                    {Locale.label("tasks.automationsPage.auto")}
+                    {Locale.label("tasks.automationsPage.auto") || "Automated Tasks"}
                   </Typography>
                 </Stack>
-                <Button
-                  variant="contained"
-                  size="small"
-                  startIcon={<AddIcon />}
-                  onClick={() => { setShowAdd(true); setEditAutomation(null); }}
-                  sx={{
-                    borderRadius: 2,
-                    textTransform: 'none',
-                    fontWeight: 600
-                  }}
-                >
-                  Add Automation
-                </Button>
-              </Stack>
 
-              {/* Content */}
-              {getAutomationsList()}
-            </CardContent>
-          </Card>
+                {/* Content */}
+                {getAutomationsList()}
+              </CardContent>
+            </Card>
+          </Grid>
+          
+          {(showAdd || editAutomation) && (
+            <Grid size={{ xs: 12, md: 4 }}>
+              {showAdd && <AutomationEdit automation={{ title: "", active: true, recurs: "never" }} onCancel={() => { setShowAdd(false); }} onSave={handleAdded} />}
+              {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} onDelete={handleDelete} />}
+            </Grid>
+          )}
         </Grid>
-        
-        <Grid size={{ xs: 12, md: 4 }}>
-          {showAdd && <AutomationEdit automation={{ title: "", active: true, recurs: "never" }} onCancel={() => { setShowAdd(false); }} onSave={handleAdded} />}
-          {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} onDelete={handleDelete} />}
-        </Grid>
-      </Grid>
-    </Container>
+      </Box>
+    </>
   );
 };

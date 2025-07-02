@@ -62,31 +62,31 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
     <InputBox id="campusBox" cancelFunction={props.updatedFunction} saveFunction={handleSave} headerText={church.name} headerIcon="church">
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
-        <Grid size={{ xs: 6 }}>
+        <Grid xs={6}>
           <TextField fullWidth name="churchName" label={Locale.label("settings.churchSettingsEdit.churchName")} value={church?.name || ""} onChange={(handleChange)} data-testid="church-name-input" aria-label="Church name" />
         </Grid>
-        <Grid size={{ xs: 6 }}>
+        <Grid xs={6}>
           <TextField fullWidth name="subDomain" label={Locale.label("settings.churchSettingsEdit.subdom")} value={church?.subDomain || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="subdomain-input" aria-label="Subdomain" />
         </Grid>
       </Grid>
 
       <Grid container spacing={3}>
-        <Grid size={{ xs: 6 }}>
+        <Grid xs={6}>
           <TextField fullWidth name="address1" label={Locale.label("settings.churchSettingsEdit.address1")} value={church?.address1 || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="address1-input" aria-label="Address line 1" />
         </Grid>
-        <Grid size={{ xs: 6 }}>
+        <Grid xs={6}>
           <TextField fullWidth name="address2" label={Locale.label("settings.churchSettingsEdit.address2")} value={church?.address2 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
       </Grid>
 
       <Grid container spacing={3}>
-        <Grid size={{ xs: 6 }}>
+        <Grid xs={6}>
           <TextField fullWidth name="city" label={Locale.label("person.city")} value={church?.city || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
-        <Grid size={{ xs: 3 }}>
+        <Grid xs={3}>
           <TextField fullWidth name="state" label={Locale.label("person.state")} value={church?.state || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
-        <Grid size={{ xs: 3 }}>
+        <Grid xs={3}>
           <TextField fullWidth name="zip" label={Locale.label("person.zip")} value={church?.zip || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
         </Grid>
       </Grid>

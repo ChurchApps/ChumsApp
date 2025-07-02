@@ -1,6 +1,5 @@
 import React, { useEffect, memo, useMemo, useCallback } from "react";
 import { ApiHelper, Loading, Locale } from "@churchapps/apphelper";
-import { Banner } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
 import { 
   Button, 
@@ -33,6 +32,7 @@ export const SongsPage = memo(() => {
   const [showSearch, setShowSearch] = React.useState(false)
   const [redirect, setRedirect] = React.useState("")
   const [searchFilter, setSearchFilter] = React.useState("")
+  const [showSearchField, setShowSearchField] = React.useState(false)
 
   const loadData = useCallback(async () => {
     ApiHelper.get("/songDetails", "ContentApi").then(data => setSongs(data));
@@ -70,6 +70,12 @@ export const SongsPage = memo(() => {
   const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.style.display = "none";
   }, []);
+
+  // Get the first song with album art for the header
+  const headerAlbumArt = useMemo(() => {
+    if (!songs || songs.length === 0) return null;
+    return songs.find(song => song.thumbnail)?.thumbnail || null;
+  }, [songs]);
 
   const formatSeconds = useCallback((seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -256,54 +262,155 @@ export const SongsPage = memo(() => {
   
   return (
     <>
-      <Banner>
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-          <Typography variant="h4" component="h1" sx={{ fontWeight: 600, color: '#FFF' }}>
-            {Locale.label("songs.title") || "Songs"}
-          </Typography>
-          <Button 
-            onClick={() => setShowSearch(true)} 
-            variant="contained" 
-            color="success" 
-            startIcon={<AddIcon />}
-            data-testid="add-song-button" 
-            aria-label="Add song"
+      {/* Modern Blue Header */}
+      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
+        <Stack 
+          direction={{ xs: "column", md: "row" }} 
+          spacing={{ xs: 2, md: 4 }} 
+          alignItems={{ xs: "flex-start", md: "center" }} 
+          sx={{ width: "100%" }}
+        >
+          {/* Left side: Title and Icon/Album Art */}
+          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
+            {headerAlbumArt ? (
+              <Avatar
+                src={headerAlbumArt}
+                sx={{ 
+                  width: 64, 
+                  height: 64,
+                  bgcolor: 'rgba(255,255,255,0.2)',
+                  border: '2px solid rgba(255,255,255,0.3)'
+                }}
+              >
+                <LibraryIcon sx={{ fontSize: 32, color: '#FFF' }} />
+              </Avatar>
+            ) : (
+              <Box 
+                sx={{ 
+                  backgroundColor: 'rgba(255,255,255,0.2)', 
+                  borderRadius: '12px', 
+                  p: 1.5,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <LibraryIcon sx={{ fontSize: 32, color: '#FFF' }} />
+              </Box>
+            )}
+            <Box>
+              <Typography 
+                variant="h4" 
+                sx={{ 
+                  fontWeight: 600, 
+                  mb: 0.5,
+                  fontSize: { xs: '1.75rem', md: '2.125rem' }
+                }}
+              >
+                {Locale.label("songs.title") || "Songs"}
+              </Typography>
+              <Typography 
+                variant="body1" 
+                sx={{ 
+                  color: 'rgba(255,255,255,0.9)',
+                  fontSize: { xs: '0.875rem', md: '1rem' }
+                }}
+              >
+                Manage your song library and arrangements
+              </Typography>
+            </Box>
+          </Stack>
+          
+          {/* Right side: Action Buttons */}
+          <Stack 
+            direction="row" 
+            spacing={1} 
             sx={{ 
-              fontWeight: 600,
-              '&:hover': {
-                backgroundColor: 'success.dark'
-              }
+              flexShrink: 0,
+              justifyContent: { xs: "flex-start", md: "flex-end" },
+              width: { xs: "100%", md: "auto" }
             }}
           >
-            {Locale.label("songs.addSong") || "Add Song"}
-          </Button>
+            <Button
+              variant="outlined"
+              startIcon={<SearchIcon />}
+              onClick={() => setShowSearchField(!showSearchField)}
+              sx={{
+                color: '#FFF',
+                borderColor: 'rgba(255,255,255,0.5)',
+                '&:hover': {
+                  borderColor: '#FFF',
+                  backgroundColor: 'rgba(255,255,255,0.1)'
+                }
+              }}
+            >
+              Search
+            </Button>
+            <Button 
+              onClick={() => setShowSearch(true)} 
+              variant="outlined"
+              startIcon={<AddIcon />}
+              data-testid="add-song-button" 
+              aria-label="Add song"
+              sx={{ 
+                color: '#FFF',
+                borderColor: 'rgba(255,255,255,0.5)',
+                '&:hover': {
+                  borderColor: '#FFF',
+                  backgroundColor: 'rgba(255,255,255,0.1)'
+                }
+              }}
+            >
+              {Locale.label("songs.addSong") || "Add Song"}
+            </Button>
+          </Stack>
         </Stack>
-      </Banner>
+      </Box>
       
       <Box sx={{ p: 3 }}>
-        <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3 }}>
-          <LibraryIcon sx={{ color: 'primary.main', fontSize: 28 }} />
-          <Typography variant="h5" sx={{ fontWeight: 600, color: 'primary.main' }}>
-            {Locale.label("songs.library.title") || "Song Library"}
-          </Typography>
-        </Stack>
-        
-        {songs && songs.length > 0 && (
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder={Locale.label("songs.search.placeholder") || "Search songs by title or artist..."}
-            value={searchFilter}
-            onChange={(e) => setSearchFilter(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon color="action" />
-                </InputAdornment>
-              ),
-            }}
-            sx={{ mb: 3 }}
-          />
+        {(showSearchField || searchFilter) && songs && songs.length > 0 && (
+          <Card sx={{ 
+            mb: 3,
+            borderRadius: 2,
+            border: '1px solid',
+            borderColor: 'grey.200'
+          }}>
+            <CardContent sx={{ pb: '16px !important' }}>
+              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
+                <SearchIcon sx={{ color: 'primary.main', fontSize: 24 }} />
+                <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                  Search Songs
+                </Typography>
+              </Stack>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder={Locale.label("songs.search.placeholder") || "Search songs by title or artist..."}
+                value={searchFilter}
+                onChange={(e) => setSearchFilter(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon color="action" />
+                    </InputAdornment>
+                  ),
+                }}
+                autoFocus={showSearchField}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 2,
+                    backgroundColor: 'grey.50',
+                    '&:hover': {
+                      backgroundColor: '#FFF'
+                    },
+                    '&.Mui-focused': {
+                      backgroundColor: '#FFF'
+                    }
+                  }
+                }}
+              />
+            </CardContent>
+          </Card>
         )}
         
         {songsContent}

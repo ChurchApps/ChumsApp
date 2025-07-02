@@ -36,10 +36,11 @@ export const ConditionDetails = (props: Props) => {
   const [parentId, setParentId] = React.useState<string>(null);
 
   const buildTree = (parentId: string) => {
+    if (!props.conjunctions) return [];
     const conjunctions: ConjunctionInterface[] = ArrayHelper.getAll(props.conjunctions, "parentId", parentId)
     for (const c of conjunctions) {
       c.conjunctions = buildTree(c.id);
-      c.conditions = ArrayHelper.getAll(props.conditions, "conjunctionId", c.id);
+      c.conditions = props.conditions ? ArrayHelper.getAll(props.conditions, "conjunctionId", c.id) : [];
     }
     return conjunctions;
   }
@@ -197,7 +198,7 @@ export const ConditionDetails = (props: Props) => {
         </Button>
       </Stack>
       
-      {tree.length === 0 && conditions.length === 0 ? (
+      {tree.length === 0 && (!props.conditions || props.conditions.length === 0) ? (
         <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', textAlign: 'center', py: 2 }}>
           No conditions configured
         </Typography>

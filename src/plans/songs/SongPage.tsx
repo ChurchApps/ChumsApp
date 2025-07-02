@@ -1,6 +1,5 @@
 import React, { useEffect, memo, useCallback, useMemo } from "react";
 import { ApiHelper, ArrayHelper } from "@churchapps/apphelper";
-import { Banner } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { 
@@ -17,19 +16,34 @@ import {
   ListItemText,
   Divider,
   Button,
-  Paper
+  Paper,
+  Avatar,
+  Chip
 } from "@mui/material";
 import {
   LibraryMusic as MusicIcon,
   Add as AddIcon,
-  QueueMusic as ArrangementIcon
+  QueueMusic as ArrangementIcon,
+  MusicNote as NoteIcon,
+  Person as ArtistIcon,
+  Album as AlbumIcon,
+  Timer as TimerIcon,
+  MusicOff as KeyIcon,
+  Speed as BpmIcon,
+  Edit as EditIcon,
+  Language as LanguageIcon,
+  DateRange as DateIcon,
+  Schedule as TimeIcon
 } from "@mui/icons-material";
 import { Arrangement } from "./components/Arrangement";
 import { SongSearchDialog } from "./SongSearchDialog";
+import { SongDetailsEdit } from "./components/SongDetailsEdit";
 
 export const SongPage = memo(() => {
   const [song, setSong] = React.useState<SongInterface>(null)
+  const [songDetail, setSongDetail] = React.useState<SongDetailInterface>(null)
   const [showSearch, setShowSearch] = React.useState(false)
+  const [editSongDetails, setEditSongDetails] = React.useState(false)
   const [arrangements, setArrangements] = React.useState<ArrangementInterface[]>([]);
   const [selectedArrangement, setSelectedArrangement] = React.useState(null);
   const params = useParams();
@@ -40,7 +54,14 @@ export const SongPage = memo(() => {
     setSong(s);
     const arrangements = await ApiHelper.get("/arrangements/song/" + s.id, "ContentApi");
     setArrangements(arrangements);
-    if (arrangements.length > 0) setSelectedArrangement(arrangements[0]);
+    if (arrangements.length > 0) {
+      setSelectedArrangement(arrangements[0]);
+      // Load song details from the first arrangement if available
+      if (arrangements[0].songDetailId) {
+        const songDetail = await ApiHelper.get("/songDetails/" + arrangements[0].songDetailId, "ContentApi");
+        setSongDetail(songDetail);
+      }
+    }
   }, [params.id]);
 
   useEffect(() => { loadData() }, [loadData])
@@ -167,24 +188,246 @@ export const SongPage = memo(() => {
   }, [selectedArrangement, loadData]);
 
 
+  const formatSeconds = useCallback((seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return mins + ":" + (secs < 10 ? "0" : "") + secs;
+  }, []);
+
+
   return (
     <>
-      <Banner>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 600, color: '#FFF' }}>
-          {song?.name || "Loading..."}
-        </Typography>
-      </Banner>
+      {/* Modern Blue Header */}
+      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
+        <Stack 
+          direction={{ xs: "column", md: "row" }} 
+          spacing={{ xs: 2, md: 4 }} 
+          alignItems={{ xs: "flex-start", md: "center" }} 
+          sx={{ width: "100%" }}
+        >
+          {/* Left side: Album Art, Title and Details */}
+          <Stack direction="row" spacing={3} alignItems="center" sx={{ flex: 1 }}>
+            {/* Album Art */}
+            <Avatar
+              src={songDetail?.thumbnail}
+              sx={{ 
+                width: 80, 
+                height: 80,
+                bgcolor: 'rgba(255,255,255,0.2)',
+                border: '2px solid rgba(255,255,255,0.3)'
+              }}
+            >
+              <MusicIcon sx={{ fontSize: 40, color: '#FFF' }} />
+            </Avatar>
+            
+            {/* Song Info */}
+            <Box>
+              <Typography 
+                variant="h4" 
+                sx={{ 
+                  fontWeight: 600, 
+                  mb: 0.5,
+                  fontSize: { xs: '1.75rem', md: '2.125rem' }
+                }}
+              >
+                {songDetail?.title || song?.name || "Loading..."}
+              </Typography>
+              
+              {/* Song Stats - All Details */}
+              <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mt: 1, gap: 1 }}>
+                {songDetail?.artist && (
+                  <Chip
+                    icon={<ArtistIcon />}
+                    label={songDetail.artist}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: '#FFF',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                )}
+                
+                {songDetail?.album && (
+                  <Chip
+                    icon={<AlbumIcon />}
+                    label={songDetail.album}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: '#FFF',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                )}
+                
+                {songDetail?.releaseDate && (
+                  <Chip
+                    icon={<DateIcon />}
+                    label={new Date(songDetail.releaseDate).toLocaleDateString()}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: '#FFF',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                )}
+                
+                {songDetail?.language && (
+                  <Chip
+                    icon={<LanguageIcon />}
+                    label={songDetail.language}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: '#FFF',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                )}
+                
+                {songDetail?.seconds && (
+                  <Chip
+                    icon={<TimerIcon />}
+                    label={formatSeconds(songDetail.seconds)}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: '#FFF',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                )}
+                
+                {songDetail?.keySignature && (
+                  <Chip
+                    icon={<KeyIcon />}
+                    label={`Key: ${songDetail.keySignature}`}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: '#FFF',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                )}
+                
+                {songDetail?.tones && (
+                  <Chip
+                    icon={<NoteIcon />}
+                    label={`Tones: ${songDetail.tones}`}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: '#FFF',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                )}
+                
+                {songDetail?.meter && (
+                  <Chip
+                    icon={<TimeIcon />}
+                    label={`Meter: ${songDetail.meter}`}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: '#FFF',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                )}
+                
+                {songDetail?.bpm && (
+                  <Chip
+                    icon={<BpmIcon />}
+                    label={`${songDetail.bpm} BPM`}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: '#FFF',
+                      border: '1px solid rgba(255,255,255,0.3)',
+                      fontSize: '0.75rem'
+                    }}
+                  />
+                )}
+              </Stack>
+            </Box>
+          </Stack>
+          
+          {/* Right side: Action Buttons */}
+          <Stack 
+            direction="row" 
+            spacing={1} 
+            sx={{ 
+              flexShrink: 0,
+              justifyContent: { xs: "flex-start", md: "flex-end" },
+              width: { xs: "100%", md: "auto" }
+            }}
+          >
+            <Button
+              variant="outlined"
+              startIcon={<EditIcon />}
+              onClick={() => setEditSongDetails(true)}
+              sx={{
+                color: '#FFF',
+                borderColor: 'rgba(255,255,255,0.5)',
+                '&:hover': {
+                  borderColor: '#FFF',
+                  backgroundColor: 'rgba(255,255,255,0.1)'
+                }
+              }}
+              title="Edit Song Details"
+            >
+              Edit Details
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={() => setShowSearch(true)}
+              sx={{
+                color: '#FFF',
+                borderColor: 'rgba(255,255,255,0.5)',
+                '&:hover': {
+                  borderColor: '#FFF',
+                  backgroundColor: 'rgba(255,255,255,0.1)'
+                }
+              }}
+            >
+              Add Arrangement
+            </Button>
+          </Stack>
+        </Stack>
+      </Box>
       
       <Box sx={{ p: 3 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 3 }}>
-            {arrangementNavigation}
+        {editSongDetails ? (
+          <SongDetailsEdit 
+            songDetail={songDetail} 
+            onCancel={() => setEditSongDetails(false)} 
+            onSave={() => { setEditSongDetails(false); loadData(); }} 
+            reload={loadData}
+          />
+        ) : (
+          <Grid container spacing={3}>
+            <Grid size={{ xs: 12, md: 3 }}>
+              {arrangementNavigation}
+            </Grid>
+            
+            <Grid size={{ xs: 12, md: 9 }}>
+              {currentContent}
+            </Grid>
           </Grid>
-          
-          <Grid size={{ xs: 12, md: 9 }}>
-            {currentContent}
-          </Grid>
-        </Grid>
+        )}
       </Box>
       
       {showSearch && (

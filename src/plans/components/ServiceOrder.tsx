@@ -1,12 +1,11 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { 
-  Grid, 
   Stack,
-  Card,
-  CardContent,
   Typography,
   Button,
-  Box
+  Box,
+  Card,
+  CardContent
 } from "@mui/material";
 import { 
   Print as PrintIcon,
@@ -51,6 +50,11 @@ export const ServiceOrder = memo((props: Props) => {
         variant="outlined"
         startIcon={<PrintIcon />}
         size="small"
+        sx={{
+          textTransform: 'none',
+          borderRadius: 2,
+          fontWeight: 600
+        }}
       >
         Print
       </Button>
@@ -59,6 +63,11 @@ export const ServiceOrder = memo((props: Props) => {
         startIcon={<AddIcon />}
         onClick={addHeader}
         size="small"
+        sx={{
+          textTransform: 'none',
+          borderRadius: 2,
+          fontWeight: 600
+        }}
       >
         Add Item
       </Button>
@@ -86,74 +95,82 @@ export const ServiceOrder = memo((props: Props) => {
   React.useEffect(() => { loadData(); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Grid container spacing={3}>
-      <Grid size={{ xs: 12, md: 8 }}>
-        <Card sx={{ borderRadius: 2 }}>
-          <CardContent>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
-              <Typography variant="h6" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
-                <AlbumIcon sx={{ color: 'primary.main' }} />
-                Order of Service
-              </Typography>
-              {editContent}
-            </Stack>
-            
-            <Box sx={{ 
-              minHeight: 200,
-              p: 2,
-              border: '1px dashed',
-              borderColor: 'grey.300',
-              borderRadius: 2,
-              backgroundColor: 'grey.50'
-            }}>
-              <DndProvider backend={HTML5Backend}>
-                {planItems.length === 0 ? (
-                  <Box sx={{ 
-                    textAlign: 'center', 
-                    py: 4,
-                    color: 'text.secondary'
-                  }}>
-                    <AlbumIcon sx={{ fontSize: 48, mb: 2, color: 'grey.400' }} />
-                    <Typography variant="body1">
-                      No service items yet. Add your first item to get started.
-                    </Typography>
-                  </Box>
-                ) : (
-                  <>
-                    {planItems.map((pi, i) => wrapPlanItem(pi, i))}
-                    {showHeaderDrop && (
-                      <DroppableWrapper 
-                        accept="planItemHeader" 
-                        onDrop={(item) => { handleDrop(item, planItems?.length + 1) }}
-                      >
-                        <Box sx={{ 
-                          height: 40, 
-                          border: '2px dashed', 
-                          borderColor: 'primary.main', 
-                          borderRadius: 1,
-                          backgroundColor: 'primary.light',
-                          opacity: 0.3,
-                          mb: 1
-                        }} />
-                      </DroppableWrapper>
-                    )}
-                  </>
-                )}
-              </DndProvider>
-            </Box>
-          </CardContent>
-        </Card>
-      </Grid>
-      
-      <Grid size={{ xs: 12, md: 4 }}>
-        {editPlanItem && (
+    <Box>
+      {editPlanItem && (
+        <Box sx={{ mb: 3 }}>
           <PlanItemEdit 
             planItem={editPlanItem} 
             onDone={() => { setEditPlanItem(null); loadData() }} 
           />
-        )}
-      </Grid>
-    </Grid>
+        </Box>
+      )}
+      
+      <Card sx={{ 
+        borderRadius: 2,
+        border: '1px solid',
+        borderColor: 'grey.200',
+        transition: 'all 0.2s ease-in-out',
+        '&:hover': {
+          boxShadow: 2
+        }
+      }}>
+        <CardContent>
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <AlbumIcon sx={{ color: 'primary.main', fontSize: 28 }} />
+              <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                Order of Service
+              </Typography>
+            </Stack>
+            {editContent}
+          </Stack>
+          
+          <Box sx={{ 
+            minHeight: 200,
+            p: 3,
+            border: '1px dashed',
+            borderColor: 'grey.300',
+            borderRadius: 2,
+            backgroundColor: 'grey.50'
+          }}>
+            <DndProvider backend={HTML5Backend}>
+              {planItems.length === 0 ? (
+                <Box sx={{ 
+                  textAlign: 'center', 
+                  py: 4,
+                  color: 'text.secondary'
+                }}>
+                  <AlbumIcon sx={{ fontSize: 48, mb: 2, color: 'grey.400' }} />
+                  <Typography variant="body1">
+                    No service items yet. Add your first item to get started.
+                  </Typography>
+                </Box>
+              ) : (
+                <>
+                  {planItems.map((pi, i) => wrapPlanItem(pi, i))}
+                  {showHeaderDrop && (
+                    <DroppableWrapper 
+                      accept="planItemHeader" 
+                      onDrop={(item) => { handleDrop(item, planItems?.length + 1) }}
+                    >
+                      <Box sx={{ 
+                        height: 40, 
+                        border: '2px dashed', 
+                        borderColor: 'primary.main', 
+                        borderRadius: 1,
+                        backgroundColor: 'primary.light',
+                        opacity: 0.3,
+                        mb: 1
+                      }} />
+                    </DroppableWrapper>
+                  )}
+                </>
+              )}
+            </DndProvider>
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
   )
 });
 

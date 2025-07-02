@@ -4,13 +4,20 @@ import { Locale } from "@churchapps/apphelper";
 import { 
   Box, 
   Typography, 
-  Stack
+  Stack,
+  Button
 } from "@mui/material";
 import { 
-  Assignment as AssignmentIcon 
+  Assignment as AssignmentIcon,
+  Add as AddIcon
 } from "@mui/icons-material";
 
 export const PlansPage = () => {
+  const [showAdd, setShowAdd] = React.useState(false);
+
+  const handleShowAdd = () => setShowAdd(true);
+  const handleCloseAdd = () => setShowAdd(false);
+
   return (
     <>
       {/* Modern Blue Header */}
@@ -57,12 +64,29 @@ export const PlansPage = () => {
               </Typography>
             </Box>
           </Stack>
+          
+          {/* Right side: Add Button */}
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={handleShowAdd}
+            sx={{
+              color: '#FFF',
+              borderColor: 'rgba(255,255,255,0.5)',
+              '&:hover': {
+                borderColor: '#FFF',
+                backgroundColor: 'rgba(255,255,255,0.1)'
+              }
+            }}
+          >
+            Add Ministry
+          </Button>
         </Stack>
       </Box>
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>
-        <MinistryList />
+        <MinistryList showAdd={showAdd} onCloseAdd={handleCloseAdd} />
       </Box>
     </>
   );

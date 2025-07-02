@@ -1,18 +1,15 @@
 import React from "react";
 import { 
-  Container,
   Box,
   Typography,
-  Breadcrumbs,
-  Link as MuiLink,
   Stack,
-  Button
+  Button,
+  Container
 } from "@mui/material";
 import { 
   Assignment as AssignmentIcon,
   People as PeopleIcon,
-  Group as GroupIcon,
-  NavigateNext as NavigateNextIcon
+  Group as GroupIcon
 } from "@mui/icons-material";
 import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
@@ -63,38 +60,12 @@ export const MinistryPage = () => {
     <>
       {/* Modern Banner Header */}
       <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Box sx={{ maxWidth: "1200px", margin: "0 auto" }}>
-          {/* Breadcrumbs */}
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize="small" />}
-            sx={{ mb: 2 }}
-          >
-            <MuiLink
-              component={Link}
-              to="/plans"
-              sx={{ 
-                color: "rgba(255,255,255,0.8)", 
-                display: 'flex', 
-                alignItems: 'center',
-                textDecoration: 'none',
-                '&:hover': { color: '#FFF' }
-              }}
-            >
-              <AssignmentIcon sx={{ mr: 0.5, fontSize: 20 }} />
-              Plans
-            </MuiLink>
-            <Typography sx={{ color: "#FFF", display: 'flex', alignItems: 'center' }}>
-              <GroupIcon sx={{ mr: 0.5, fontSize: 20 }} />
-              {ministry.name}
-            </Typography>
-          </Breadcrumbs>
-          
-          <Stack 
-            direction={{ xs: "column", md: "row" }} 
-            spacing={{ xs: 2, md: 4 }} 
-            alignItems={{ xs: "flex-start", md: "center" }} 
-            sx={{ width: "100%" }}
-          >
+        <Stack 
+          direction={{ xs: "column", md: "row" }} 
+          spacing={{ xs: 2, md: 4 }} 
+          alignItems={{ xs: "flex-start", md: "center" }} 
+          sx={{ width: "100%" }}
+        >
             {/* Left side: Title and Icon */}
             <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
               <Box 
@@ -163,8 +134,7 @@ export const MinistryPage = () => {
                 </Button>
               ))}
             </Stack>
-          </Stack>
-        </Box>
+        </Stack>
       </Box>
 
       {/* Tab Content */}

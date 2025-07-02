@@ -25,10 +25,12 @@ import {
   RadioButtonUnchecked as OpenIcon,
   Add as AddIcon,
   AssignmentInd as AssignedIcon,
-  AssignmentTurnedIn as CreatedIcon
+  AssignmentTurnedIn as CreatedIcon,
+  CheckBoxOutlined as OpenTasksIcon,
+  CheckBox as ClosedTasksIcon
 } from "@mui/icons-material";
 
-interface Props { compact?: boolean; status: string }
+interface Props { compact?: boolean; status: string; onStatusChange?: (status: string) => void }
 
 export const TaskList = memo((props: Props) => {
   const [showAdd, setShowAdd] = React.useState(false);
@@ -89,17 +91,18 @@ export const TaskList = memo((props: Props) => {
   React.useEffect(loadGroupTasks, [groupMembers, props.status, isMounted, loadGroupTasks]);
 
   const getTask = useCallback((task: TaskInterface) => (
-    <Card 
+    <Box
       key={task.id} 
       sx={{ 
         mb: 2,
+        p: 2,
         transition: 'all 0.2s ease-in-out',
         borderRadius: 2,
         border: '1px solid',
-        borderColor: 'grey.200',
+        borderColor: 'grey.300',
+        backgroundColor: 'grey.50',
         '&:hover': {
-          transform: 'translateY(-1px)',
-          boxShadow: 2,
+          backgroundColor: 'grey.100',
           borderColor: 'primary.main'
         },
         '&:last-child': {
@@ -107,7 +110,6 @@ export const TaskList = memo((props: Props) => {
         }
       }}
     >
-      <CardContent sx={{ pb: '16px !important' }}>
         <Stack spacing={2}>
           {/* Task Header */}
           <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 2 }}>
@@ -183,8 +185,7 @@ export const TaskList = memo((props: Props) => {
             </>
           )}
         </Stack>
-      </CardContent>
-    </Card>
+    </Box>
   ), [props.compact]);
 
   const getSectionHeader = useCallback((title: string, icon: React.ReactNode, count: number) => (
@@ -276,7 +277,42 @@ export const TaskList = memo((props: Props) => {
                 {Locale.label("tasks.taskList.tasks")}
               </Typography>
             </Stack>
-            {editContent}
+            <Stack direction="row" spacing={1} alignItems="center">
+              {props.onStatusChange && (
+                props.status === "Open" ? (
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<ClosedTasksIcon />}
+                    onClick={() => props.onStatusChange("Closed")}
+                    data-testid="show-closed-tasks-button"
+                    aria-label="Show closed tasks"
+                    sx={{
+                      textTransform: 'none',
+                      fontWeight: 600
+                    }}
+                  >
+                    {Locale.label("tasks.tasksPage.showClosed") || "Show Closed"}
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<OpenTasksIcon />}
+                    onClick={() => props.onStatusChange("Open")}
+                    data-testid="show-open-tasks-button"
+                    aria-label="Show open tasks"
+                    sx={{
+                      textTransform: 'none',
+                      fontWeight: 600
+                    }}
+                  >
+                    {Locale.label("tasks.tasksPage.showOpen") || "Show Open"}
+                  </Button>
+                )
+              )}
+              {editContent}
+            </Stack>
           </Stack>
 
           {/* Content */}

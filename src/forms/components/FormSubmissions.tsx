@@ -108,7 +108,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     const results: JSX.Element[] = [];
     summary.forEach((s: any, i: number) => {
       results.push(
-        <Grid size={{ xs: 12, md: 6 }} key={s.id + "-" + i}>
+        <Grid xs={12} md={6} key={s.id + "-" + i}>
           <h4>{s.title}</h4>
           {getResultCount(s.values)}
         </Grid>
@@ -127,6 +127,15 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     return result;
   }, [formSubmissions]);
 
+  const getAnswers = useCallback((formSubmission: FormSubmissionInterface) => {
+    const rows: JSX.Element[] = [];
+    formSubmission.questions.forEach((question: QuestionInterface) => {
+      const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id);
+      rows.push(<TableCell key={question.id}>{answer?.value || "-"}</TableCell>);
+    });
+    return rows;
+  }, []);
+
   const tableRows = useMemo(() => {
     const rows: JSX.Element[] = [];
     formSubmissions.forEach((submission: any, i: number) => {
@@ -138,15 +147,6 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     });
     return rows;
   }, [formSubmissions, getAnswers]);
-
-  const getAnswers = useCallback((formSubmission: FormSubmissionInterface) => {
-    const rows: JSX.Element[] = [];
-    formSubmission.questions.forEach((question: QuestionInterface) => {
-      const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id);
-      rows.push(<TableCell key={question.id}>{answer?.value || "-"}</TableCell>);
-    });
-    return rows;
-  }, []);
 
   const formSubmissionsTable = useMemo(() => (
     <div style={{width: "100%", overflowX: "scroll"}}>
@@ -171,7 +171,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid size={{ xs: 12, md: 8 }} className="form-submission-summary">
+      <Grid xs={12} md={8} className="form-submission-summary">
         <div ref={contentRef} className="form-submission-summary">
           <DisplayBox headerText={Locale.label("forms.formSubmissions.subSum")} headerIcon="group" editContent={editLinks}>
             <Grid container spacing={3}>{summaryContent}</Grid>

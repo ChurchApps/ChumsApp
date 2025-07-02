@@ -91,7 +91,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
         {Locale.label("settings.domainSettingsEdit.domMsg4")}
       </p>
       <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid xs={12} md={6}>
           <Table>
             <TableHead>
               <TableRow>

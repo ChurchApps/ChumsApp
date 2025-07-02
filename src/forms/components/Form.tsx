@@ -1,7 +1,7 @@
 import React from "react";
 import { FormQuestionEdit } from ".";
 import { ApiHelper, DisplayBox, type FormInterface, type QuestionInterface, Permissions, Loading, UserHelper, Locale } from "@churchapps/apphelper";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead } from "@mui/material"
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Card, Typography, Stack } from "@mui/material";
 
 interface Props { id: string }
 
@@ -90,14 +90,49 @@ export const Form: React.FC<Props> = (props) => {
     }
     return (
       <>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 8 }}>
-            <DisplayBox id="questionsBox" headerText={Locale.label("forms.form.questions")} headerIcon="help" editContent={getEditContent()} help="chums/forms">
-              {contents}
-            </DisplayBox>
-          </Grid>
-          <Grid size={{ xs: 12, md: 4 }}>{getSidebarModules()}</Grid>
-        </Grid>
+        {/* Edit Question Content - Appears above when editing */}
+        {getSidebarModules()}
+        
+        {/* Main Questions Content - Full Width Card */}
+        <Card sx={{ width: "100%" }}>
+          {/* Card Header */}
+          <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Icon>help</Icon>
+                <Typography variant="h6">
+                  {Locale.label("forms.form.questions")}
+                </Typography>
+              </Stack>
+              {formPermission && (
+                <button 
+                  className="no-default-style" 
+                  aria-label="addQuestion" 
+                  onClick={() => { setEditQuestionId(""); }}
+                  style={{ 
+                    padding: '8px',
+                    borderRadius: '4px',
+                    backgroundColor: 'var(--c1l2)',
+                    color: 'white',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                >
+                  <Icon>add</Icon>
+                  Add Question
+                </button>
+              )}
+            </Stack>
+          </Box>
+          
+          {/* Card Content */}
+          <Box sx={{ p: 0 }}>
+            {contents}
+          </Box>
+        </Card>
       </>
     );
   }

@@ -69,13 +69,11 @@ export const TasksPage = () => {
           <Stack 
             direction="row" 
             spacing={1} 
-            flexWrap="wrap" 
             sx={{ 
               flexShrink: 0,
               justifyContent: { xs: "flex-start", md: "flex-end" },
               width: { xs: "100%", md: "auto" }
             }}
-            useFlexGap
           >
             <Button
               component={Link}
@@ -95,51 +93,13 @@ export const TasksPage = () => {
             >
               {Locale.label("tasks.tasksPage.auto")}
             </Button>
-            
-            {status === "Open" ? (
-              <Button
-                variant="outlined"
-                startIcon={<ClosedIcon />}
-                onClick={() => setStatus("Closed")}
-                data-testid="show-closed-tasks-button"
-                aria-label="Show closed tasks"
-                sx={{
-                  color: '#FFF',
-                  borderColor: 'rgba(255,255,255,0.5)',
-                  '&:hover': {
-                    borderColor: '#FFF',
-                    backgroundColor: 'rgba(255,255,255,0.1)'
-                  }
-                }}
-              >
-                {Locale.label("tasks.tasksPage.showClosed")}
-              </Button>
-            ) : (
-              <Button
-                variant="outlined"
-                startIcon={<OpenIcon />}
-                onClick={() => setStatus("Open")}
-                data-testid="show-open-tasks-button"
-                aria-label="Show open tasks"
-                sx={{
-                  color: '#FFF',
-                  borderColor: 'rgba(255,255,255,0.5)',
-                  '&:hover': {
-                    borderColor: '#FFF',
-                    backgroundColor: 'rgba(255,255,255,0.1)'
-                  }
-                }}
-              >
-                {Locale.label("tasks.tasksPage.showOpen")}
-              </Button>
-            )}
           </Stack>
         </Stack>
       </Box>
 
       {/* Task List */}
       <Box sx={{ p: 3 }}>
-        <TaskList status={status} />
+        <TaskList status={status} onStatusChange={setStatus} />
       </Box>
     </>
   );

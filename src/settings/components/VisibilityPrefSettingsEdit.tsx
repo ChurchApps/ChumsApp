@@ -80,7 +80,7 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
         </Tooltip>
       </Stack>
       <Grid container spacing={{ xs: 0, sm: 1, md: 2 }}>
-        <Grid size={{ xs: 12 }} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={4}>
           <FormControl fullWidth>
             <InputLabel id="address">{Locale.label("settings.visibilityPrefSettingsEdit.address")}</InputLabel>
             <Select
@@ -98,7 +98,7 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid size={{ xs: 12 }} sm={6} md={4}>
+        <Grid xs={12} sm={6} md={4}>
           <FormControl fullWidth>
             <InputLabel id="phone">{Locale.label("settings.visibilityPrefSettingsEdit.phoneNum")}</InputLabel>
             <Select
@@ -116,7 +116,7 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid size={{ xs: 12 }} sm={12} md={4}>
+        <Grid xs={12} sm={12} md={4}>
           <FormControl fullWidth>
             <InputLabel id="email">{Locale.label("settings.visibilityPrefSettingsEdit.email")}</InputLabel>
             <Select

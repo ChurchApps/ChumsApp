@@ -3,7 +3,6 @@ import { type ArrangementInterface, type SongDetailInterface } from "../../../he
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
 import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { 
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -15,7 +14,6 @@ import {
   Edit as EditIcon,
   QueueMusic as ArrangementIcon
 } from "@mui/icons-material";
-import { SongDetails } from "./SongDetails";
 import { Keys } from "./Keys";
 import { ArrangementEdit } from "./ArrangementEdit";
 import { useNavigate } from "react-router-dom";
@@ -126,23 +124,16 @@ export const Arrangement = memo((props: Props) => {
   ), [props.arrangement]);
 
   return (
-    <Grid container spacing={3}>
-      <Grid size={{ md: 8 }}>
-        <Stack spacing={3}>
-          <Keys arrangement={props.arrangement} songDetail={songDetail} importLyrics={importLyrics} />
-          {!edit ? arrangementCard : (
-            <ArrangementEdit 
-              arrangement={props.arrangement} 
-              onSave={handleSave}
-              onCancel={() => setEdit(false)}
-            />
-          )}
-        </Stack>
-      </Grid>
-      <Grid size={{ md: 4 }}>
-        <SongDetails songDetail={songDetail} reload={loadData} />
-      </Grid>
-    </Grid>
+    <Stack spacing={3}>
+      <Keys arrangement={props.arrangement} songDetail={songDetail} importLyrics={importLyrics} />
+      {!edit ? arrangementCard : (
+        <ArrangementEdit 
+          arrangement={props.arrangement} 
+          onSave={handleSave}
+          onCancel={() => setEdit(false)}
+        />
+      )}
+    </Stack>
   );
 });
 

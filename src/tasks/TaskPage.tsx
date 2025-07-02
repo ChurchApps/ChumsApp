@@ -99,46 +99,126 @@ export const TaskPage = () => {
 
   if (!task) return <></>
   else return (
-    <Container maxWidth="lg" sx={{ py: 3 }}>
-      {/* Modern Task Header */}
-      <Box sx={{ 
-        backgroundColor: 'var(--c1l2)', 
-        color: '#FFF', 
-        p: 3, 
-        borderRadius: 2,
-        mb: 3
-      }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2} flexWrap="wrap">
-          <Stack direction="row" alignItems="center" spacing={2} sx={{ minWidth: 0, flex: 1 }}>
-            <TaskIcon sx={{ fontSize: 32, flexShrink: 0 }} />
-            <Box sx={{ minWidth: 0 }}>
+    <>
+      {/* Modern Blue Header */}
+      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
+        <Stack 
+          direction={{ xs: "column", md: "row" }} 
+          spacing={{ xs: 2, md: 4 }} 
+          alignItems={{ xs: "flex-start", md: "center" }} 
+          sx={{ width: "100%" }}
+        >
+          {/* Left side: Title and Icon */}
+          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
+            <Box 
+              sx={{ 
+                backgroundColor: 'rgba(255,255,255,0.2)', 
+                borderRadius: '12px', 
+                p: 1.5,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <TaskIcon sx={{ fontSize: 32, color: '#FFF' }} />
+            </Box>
+            <Box>
               <Typography 
                 variant="h4" 
                 sx={{ 
-                  fontWeight: 600,
-                  fontSize: { xs: "1.5rem", md: "2rem" },
-                  wordBreak: "break-word"
+                  fontWeight: 600, 
+                  mb: 0.5,
+                  fontSize: { xs: '1.75rem', md: '2.125rem' }
                 }}
               >
                 #{task.taskNumber} - {task?.title}
               </Typography>
+              <Stack direction="row" spacing={3} flexWrap="wrap" sx={{ mt: 1 }}>
+                <Box>
+                  <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                    Created {DateHelper.getDisplayDuration(DateHelper.toDate(task?.dateCreated))} ago by {task.createdByLabel}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                    Associated: {task.associatedWithLabel || 'Not specified'}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                    Assigned: {task.assignedToLabel || 'Unassigned'}
+                  </Typography>
+                </Box>
+              </Stack>
             </Box>
           </Stack>
           
-          <Chip
-            icon={task.status === "Open" ? <OpenIcon /> : <CompletedIcon />}
-            label={task.status}
-            clickable
-            onClick={(e) => setAnchorEl(e.currentTarget)}
-            sx={{
-              backgroundColor: task.status === "Open" ? "warning.main" : "success.main",
-              color: "#FFF",
-              fontWeight: 600,
-              '&:hover': {
-                backgroundColor: task.status === "Open" ? "warning.dark" : "success.dark"
-              }
+          {/* Right side: Status and Actions */}
+          <Stack 
+            direction="row" 
+            spacing={1} 
+            sx={{ 
+              flexShrink: 0,
+              justifyContent: { xs: "flex-start", md: "flex-end" },
+              width: { xs: "100%", md: "auto" }
             }}
-          />
+          >
+            <Button
+              variant={task.status === "Open" ? "contained" : "outlined"}
+              startIcon={task.status === "Open" ? <OpenIcon /> : <CompletedIcon />}
+              onClick={(e) => setAnchorEl(e.currentTarget)}
+              sx={{
+                color: task.status === "Open" ? '#FFF' : '#FFF',
+                backgroundColor: task.status === "Open" ? '#f57c00' : 'transparent',
+                borderColor: task.status === "Open" ? '#f57c00' : '#4caf50',
+                '&:hover': {
+                  backgroundColor: task.status === "Open" ? '#ef6c00' : 'rgba(76, 175, 80, 0.2)',
+                  borderColor: task.status === "Open" ? '#ef6c00' : '#4caf50'
+                },
+                textTransform: 'none',
+                fontWeight: 600
+              }}
+            >
+              {task.status}
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<PersonIcon />}
+              onClick={() => setModalField("assignedTo")}
+              sx={{
+                color: '#FFF',
+                borderColor: 'rgba(255,255,255,0.5)',
+                minWidth: 'auto',
+                '&:hover': {
+                  borderColor: '#FFF',
+                  backgroundColor: 'rgba(255,255,255,0.1)'
+                }
+              }}
+              title="Edit Assigned To"
+            >
+              Assign
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<GroupIcon />}
+              onClick={() => setModalField("associatedWith")}
+              sx={{
+                color: '#FFF',
+                borderColor: 'rgba(255,255,255,0.5)',
+                minWidth: 'auto',
+                '&:hover': {
+                  borderColor: '#FFF',
+                  backgroundColor: 'rgba(255,255,255,0.1)'
+                }
+              }}
+              title="Edit Associated With"
+            >
+              Associate
+            </Button>
+          </Stack>
+          
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closeStatusMenu}>
             <MenuItem onClick={() => { handleStatusChange("Open"); closeStatusMenu() }}>
               <OpenIcon sx={{ mr: 1 }} /> {Locale.label("tasks.taskPage.open")}
@@ -150,127 +230,13 @@ export const TaskPage = () => {
         </Stack>
       </Box>
 
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 8 }}>
-          {task.taskType === "directoryUpdate" && <RequestedChanges task={task} />}
-          <Notes context={context} conversationId={task?.conversationId} createConversation={handleCreateConversation} />
-        </Grid>
-        
-        <Grid size={{ xs: 12, md: 4 }}>
-          <Card sx={{ 
-            borderRadius: 2,
-            border: '1px solid',
-            borderColor: 'grey.200'
-          }}>
-            <CardContent>
-              <Stack spacing={3}>
-                {/* Task Details Header */}
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
-                    {Locale.label("tasks.taskPage.taskDet")}
-                  </Typography>
-                </Box>
-
-                <Divider />
-
-                {/* Date Information */}
-                <Box>
-                  <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-                    <CalendarIcon sx={{ color: 'primary.main', fontSize: 20 }} />
-                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                      {Locale.label("tasks.taskPage.dateCreated")}
-                    </Typography>
-                  </Stack>
-                  <Typography variant="body2" color="text.secondary">
-                    {DateHelper.prettyDate(DateHelper.toDate(task?.dateCreated))}
-                  </Typography>
-                  
-                  {task?.dateClosed && (
-                    <Box sx={{ mt: 2 }}>
-                      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-                        <CompletedIcon sx={{ color: 'success.main', fontSize: 20 }} />
-                        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                          Date Closed
-                        </Typography>
-                      </Stack>
-                      <Typography variant="body2" color="text.secondary">
-                        {DateHelper.prettyDate(DateHelper.toDate(task?.dateClosed))}
-                      </Typography>
-                    </Box>
-                  )}
-                </Box>
-
-                <Divider />
-
-                {/* Created By */}
-                <Box>
-                  <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-                    <PersonIcon sx={{ color: 'info.main', fontSize: 20 }} />
-                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                      {Locale.label("tasks.taskPage.createdBy")}
-                    </Typography>
-                  </Stack>
-                  <Typography variant="body2" color="text.secondary">
-                    {getContentLink(task.createdByType, task.createdById, task.createdByLabel)}
-                  </Typography>
-                </Box>
-
-                <Divider />
-
-                {/* Associated With */}
-                <Box>
-                  <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                      <GroupIcon sx={{ color: 'secondary.main', fontSize: 20 }} />
-                      <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        {Locale.label("tasks.taskPage.associateW")}
-                      </Typography>
-                    </Stack>
-                    <IconButton 
-                      size="small" 
-                      onClick={() => setModalField("associatedWith")}
-                      data-testid="change-associated-with-button"
-                      aria-label="Change associated with"
-                    >
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                  </Stack>
-                  <Typography variant="body2" color="text.secondary">
-                    {getContentLink(task.associatedWithType, task.associatedWithId, task.associatedWithLabel)}
-                  </Typography>
-                </Box>
-
-                <Divider />
-
-                {/* Assigned To */}
-                <Box>
-                  <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                      <PersonIcon sx={{ color: 'warning.main', fontSize: 20 }} />
-                      <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        {Locale.label("tasks.taskPage.assignTo")}
-                      </Typography>
-                    </Stack>
-                    <IconButton 
-                      size="small" 
-                      onClick={() => setModalField("assignedTo")}
-                      data-testid="change-assigned-to-button"
-                      aria-label="Change assigned to"
-                    >
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                  </Stack>
-                  <Typography variant="body2" color="text.secondary">
-                    {getContentLink(task.assignedToType, task.assignedToId, task.assignedToLabel)}
-                  </Typography>
-                </Box>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      {/* Task Content */}
+      <Box sx={{ p: 3 }}>
+        {task.taskType === "directoryUpdate" && <RequestedChanges task={task} />}
+        <Notes context={context} conversationId={task?.conversationId} createConversation={handleCreateConversation} />
+      </Box>
       
       {(modalField !== "") && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}
-    </Container>
+    </>
   );
 }

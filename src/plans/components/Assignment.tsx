@@ -46,6 +46,11 @@ export const Assignment = (props: Props) => {
         onClick={handleAutoAssign}
         data-testid="auto-assign-button"
         size="small"
+        sx={{
+          textTransform: 'none',
+          borderRadius: 2,
+          fontWeight: 600
+        }}
       >
         Auto Assign
       </Button>
@@ -62,6 +67,11 @@ export const Assignment = (props: Props) => {
         }}
         data-testid="add-position-button"
         size="small"
+        sx={{
+          textTransform: 'none',
+          borderRadius: 2,
+          fontWeight: 600
+        }}
       >
         Add Position
       </Button>
@@ -116,13 +126,24 @@ export const Assignment = (props: Props) => {
     <Grid container spacing={3}>
       <Grid size={{ xs: 12, md: 8 }}>
         {/* Assignments Section */}
-        <Card sx={{ mb: 3, borderRadius: 2 }}>
+        <Card sx={{ 
+          mb: 3, 
+          borderRadius: 2,
+          border: '1px solid',
+          borderColor: 'grey.200',
+          transition: 'all 0.2s ease-in-out',
+          '&:hover': {
+            boxShadow: 2
+          }
+        }}>
           <CardContent>
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
-              <Typography variant="h6" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
-                <AutoAssignIcon sx={{ color: 'primary.main' }} />
-                {Locale.label("plans.planPage.assign")}
-              </Typography>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <AutoAssignIcon sx={{ color: 'primary.main', fontSize: 28 }} />
+                <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                  {Locale.label("plans.planPage.assign") || "Team Assignments"}
+                </Typography>
+              </Stack>
               {getAddPositionActions()}
             </Stack>
             <PositionList 
@@ -136,18 +157,33 @@ export const Assignment = (props: Props) => {
         </Card>
 
         {/* Notes Section */}
-        <Card sx={{ borderRadius: 2 }}>
+        <Card sx={{ 
+          borderRadius: 2,
+          border: '1px solid',
+          borderColor: 'grey.200',
+          transition: 'all 0.2s ease-in-out',
+          '&:hover': {
+            boxShadow: 2
+          }
+        }}>
           <CardContent>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
-              <Typography variant="h6" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
-                <NotesIcon sx={{ color: 'primary.main' }} />
-                {Locale.label("common.notes")}
-              </Typography>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <NotesIcon sx={{ color: 'primary.main', fontSize: 28 }} />
+                <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                  {Locale.label("common.notes") || "Plan Notes"}
+                </Typography>
+              </Stack>
               <Button
                 variant="contained"
                 startIcon={<SaveIcon />}
                 onClick={handleSave}
                 size="small"
+                sx={{
+                  textTransform: 'none',
+                  borderRadius: 2,
+                  fontWeight: 600
+                }}
               >
                 Save Notes
               </Button>
@@ -164,7 +200,14 @@ export const Assignment = (props: Props) => {
               variant="outlined"
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2
+                  borderRadius: 2,
+                  backgroundColor: 'grey.50',
+                  '&:hover': {
+                    backgroundColor: '#FFF'
+                  },
+                  '&.Mui-focused': {
+                    backgroundColor: '#FFF'
+                  }
                 }
               }}
             />

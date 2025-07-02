@@ -5,7 +5,6 @@ import {
   CardContent, 
   Typography, 
   Stack, 
-  Fab, 
   Paper,
   Chip,
   Avatar
@@ -22,14 +21,20 @@ import { Link } from "react-router-dom";
 import { GroupAdd } from "../../groups/components";
 import UserContext from "../../UserContext";
 
-export const MinistryList = () => {
+interface Props {
+  showAdd?: boolean;
+  onCloseAdd?: () => void;
+}
+
+export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
-  const [showAdd, setShowAdd] = React.useState<boolean>(false);
   const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([]);
   const context = React.useContext(UserContext);
 
-  const handleAdd = () => { setShowAdd(true); }
-  const handleAddUpdated = () => { setShowAdd(false); loadData(); };
+  const handleAddUpdated = () => { 
+    onCloseAdd?.(); 
+    loadData(); 
+  };
 
   const loadData = async () => {
     const groups: GroupInterface[] = await ApiHelper.get("/groups/tag/ministry", "MembershipApi");
@@ -47,47 +52,24 @@ export const MinistryList = () => {
 
   if (groups.length === 0) {
     return (
-      <Box sx={{ position: 'relative' }}>
-        <Paper 
-          sx={{ 
-            p: 6, 
-            textAlign: 'center', 
-            backgroundColor: 'grey.50',
-            border: '1px dashed',
-            borderColor: 'grey.300',
-            borderRadius: 2
-          }}
-        >
-          <AssignmentIcon sx={{ fontSize: 64, color: 'grey.400', mb: 2 }} />
-          <Typography variant="h6" color="text.secondary" gutterBottom>
-            {Locale.label("plans.ministryList.noMinMsg")}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Get started by creating your first ministry
-          </Typography>
-        </Paper>
-        
-        {UserHelper.checkAccess(Permissions.membershipApi.groups.edit) && (
-          <Fab
-            color="primary"
-            aria-label="Add ministry"
-            onClick={handleAdd}
-            data-testid="add-ministry-button"
-            sx={{ 
-              position: 'absolute', 
-              bottom: -28, 
-              right: 16,
-              boxShadow: 3,
-              '&:hover': {
-                transform: 'scale(1.05)',
-                boxShadow: 4
-              }
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        )}
-      </Box>
+      <Paper 
+        sx={{ 
+          p: 6, 
+          textAlign: 'center', 
+          backgroundColor: 'grey.50',
+          border: '1px dashed',
+          borderColor: 'grey.300',
+          borderRadius: 2
+        }}
+      >
+        <AssignmentIcon sx={{ fontSize: 64, color: 'grey.400', mb: 2 }} />
+        <Typography variant="h6" color="text.secondary" gutterBottom>
+          {Locale.label("plans.ministryList.noMinMsg")}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Get started by creating your first ministry
+        </Typography>
+      </Paper>
     );
   }
 
@@ -204,27 +186,6 @@ export const MinistryList = () => {
         })}
       </Stack>
 
-      {UserHelper.checkAccess(Permissions.membershipApi.groups.edit) && (
-        <Fab
-          color="primary"
-          aria-label="Add ministry"
-          onClick={handleAdd}
-          data-testid="add-ministry-button"
-          sx={{ 
-            position: 'fixed', 
-            bottom: 24, 
-            right: 24,
-            boxShadow: 3,
-            '&:hover': {
-              transform: 'scale(1.05)',
-              boxShadow: 4
-            },
-            zIndex: 1000
-          }}
-        >
-          <AddIcon />
-        </Fab>
-      )}
     </Box>
   );
 }

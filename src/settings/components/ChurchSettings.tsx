@@ -36,11 +36,11 @@ export const ChurchSettings: React.FC<Props> = (props) => {
     return (
       <DisplayBox headerIcon="church" headerText={Locale.label("settings.churchSettings.churchSet")} editFunction={getEditFunction()}>
         <Grid container>
-          <Grid size={{ xs: 6 }}>
+          <Grid xs={6}>
             <label>{Locale.label("common.name")}</label><br />
             {props.church?.name}<br /><br />
           </Grid>
-          <Grid size={{ xs: 6 }}>
+          <Grid xs={6}>
             <label>{Locale.label("settings.churchSettings.subdom")}</label><br />
             {props.church?.subDomain}
           </Grid>

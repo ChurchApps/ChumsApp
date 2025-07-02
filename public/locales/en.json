@@ -973,6 +973,8 @@
     }
   },
   "songs": {
+    "title": "Songs",
+    "addSong": "Add Song",
     "arrangement": {
       "title": "Arrangement",
       "enterLyrics": "Manually enter lyrics or import from PraiseCharts",

@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const BigLinkButton: React.FC<Props> = React.memo((props) => (
-  <Grid size={{ xs: 6, md: 3 }}>
+  <Grid xs={6} md={3}>
     <LinkType href={props.href} outsideLink={props.outsideLink}>
       <Card>
         <CardContent sx={{ textAlign: "center" }}>
