@@ -184,15 +184,17 @@ export const FormsPage = () => {
                 </Button>
               )}
               <Button
-                variant={selectedTab === "forms" ? "contained" : "outlined"}
+                variant="outlined"
                 onClick={() => { setSelectedTab("forms"); setTabIndex(0); }}
                 sx={{
-                  color: selectedTab === "forms" ? "var(--c1l2)" : "#FFF",
-                  backgroundColor: selectedTab === "forms" ? "#FFF" : "transparent",
+                  color: "#FFF",
+                  backgroundColor: "transparent",
                   borderColor: "#FFF",
+                  fontWeight: selectedTab === "forms" ? 600 : 400,
                   "&:hover": {
-                    backgroundColor: selectedTab === "forms" ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
-                    color: selectedTab === "forms" ? "var(--c1l2)" : "#FFF"
+                    backgroundColor: "rgba(255,255,255,0.1)",
+                    color: "#FFF",
+                    borderColor: "#FFF"
                   }
                 }}
               >
@@ -200,15 +202,17 @@ export const FormsPage = () => {
               </Button>
               {archivedForms?.length > 0 && (
                 <Button
-                  variant={selectedTab === "archived" ? "contained" : "outlined"}
+                  variant="outlined"
                   onClick={() => { setSelectedTab("archived"); setTabIndex(1); }}
                   sx={{
-                    color: selectedTab === "archived" ? "var(--c1l2)" : "#FFF",
-                    backgroundColor: selectedTab === "archived" ? "#FFF" : "transparent",
+                    color: "#FFF",
+                    backgroundColor: "transparent",
                     borderColor: "#FFF",
+                    fontWeight: selectedTab === "archived" ? 600 : 400,
                     "&:hover": {
-                      backgroundColor: selectedTab === "archived" ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
-                      color: selectedTab === "archived" ? "var(--c1l2)" : "#FFF"
+                      backgroundColor: "rgba(255,255,255,0.1)",
+                      color: "#FFF",
+                      borderColor: "#FFF"
                     }
                   }}
                 >

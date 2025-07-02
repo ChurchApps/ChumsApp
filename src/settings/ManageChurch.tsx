@@ -7,7 +7,7 @@ import { RolesTab } from "./components/RolesTab";
 
 export const ManageChurch = () => {
   const [selectedTab, setSelectedTab] = React.useState("roles");
-  const [church, setChurch] = useState<ChurchInterface>(null);
+  const [church, setChurch] = useState<ChurchInterface | null>(null);
   const [redirectUrl, setRedirectUrl] = useState<string>("");
 
 
@@ -56,7 +56,9 @@ export const ManageChurch = () => {
   }, [selectedTab]);
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
-  else return (
+  if (!church) return <div>Loading...</div>;
+  
+  return (
     <>
       {/* Modern Banner Header */}
       <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>

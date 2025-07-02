@@ -3,7 +3,7 @@ import {  Roles, RoleEdit } from "./"
 import { type ChurchInterface } from "@churchapps/apphelper"
 
 interface Props {
-  church: ChurchInterface;
+  church: ChurchInterface | null;
 }
 
 export const RolesTab = (props:Props) => {

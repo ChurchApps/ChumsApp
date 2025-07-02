@@ -300,50 +300,59 @@ export const GroupBanner = memo((props: Props) => {
                 )}
                 
                 {/* Labels */}
-                {group.labelArray && group.labelArray.length > 0 && (
-                  <Box>
-                    <Typography 
-                      variant="body2" 
-                      sx={{ 
-                        color: "rgba(255,255,255,0.8)", 
-                        fontSize: { xs: "0.75rem", md: "0.875rem" },
-                        fontWeight: 600,
-                        mb: 1,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px'
-                      }}
-                    >
-                      Labels
-                    </Typography>
-                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                      {group.labelArray.slice(0, 4).map((label, idx) => (
-                        <Chip
-                          key={idx}
-                          label={label}
-                          size="small"
-                          sx={{ 
-                            backgroundColor: "rgba(255,255,255,0.2)", 
-                            color: "#FFF",
-                            fontSize: '0.75rem',
-                            height: 20
-                          }}
-                        />
-                      ))}
-                      {group.labelArray.length > 4 && (
-                        <Chip
-                          label={`+${group.labelArray.length - 4} more`}
-                          size="small"
-                          sx={{ 
-                            backgroundColor: "rgba(255,255,255,0.1)", 
-                            color: "rgba(255,255,255,0.7)",
-                            fontSize: '0.75rem',
-                            height: 20
-                          }}
-                        />
-                      )}
-                    </Stack>
-                  </Box>
-                )}
+                {(() => {
+                  // Filter out empty, null, or whitespace-only labels
+                  const validLabels = group.labelArray?.filter(label => 
+                    label && typeof label === 'string' && label.trim() !== ''
+                  ) || [];
+                  
+                  if (validLabels.length === 0) return null;
+                  
+                  return (
+                    <Box>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          color: "rgba(255,255,255,0.8)", 
+                          fontSize: { xs: "0.75rem", md: "0.875rem" },
+                          fontWeight: 600,
+                          mb: 1,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px'
+                        }}
+                      >
+                        Labels
+                      </Typography>
+                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                        {validLabels.slice(0, 4).map((label, idx) => (
+                          <Chip
+                            key={idx}
+                            label={label.trim()}
+                            size="small"
+                            sx={{ 
+                              backgroundColor: "rgba(255,255,255,0.2)", 
+                              color: "#FFF",
+                              fontSize: '0.75rem',
+                              height: 20
+                            }}
+                          />
+                        ))}
+                        {validLabels.length > 4 && (
+                          <Chip
+                            label={`+${validLabels.length - 4} more`}
+                            size="small"
+                            sx={{ 
+                              backgroundColor: "rgba(255,255,255,0.1)", 
+                              color: "rgba(255,255,255,0.7)",
+                              fontSize: '0.75rem',
+                              height: 20
+                            }}
+                          />
+                        )}
+                      </Stack>
+                    </Box>
+                  );
+                })()}
               </Stack>
               
               {/* Column 3: Action Buttons */}

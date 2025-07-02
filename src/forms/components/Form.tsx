@@ -1,7 +1,7 @@
 import React from "react";
 import { FormQuestionEdit } from ".";
 import { ApiHelper, DisplayBox, type FormInterface, type QuestionInterface, Permissions, Loading, UserHelper, Locale } from "@churchapps/apphelper";
-import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Card, Typography, Stack } from "@mui/material";
+import { Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Card, Typography, Stack, Button } from "@mui/material";
 
 interface Props { id: string }
 
@@ -46,18 +46,77 @@ export const Form: React.FC<Props> = (props) => {
   const getRows = () => {
     const rows: JSX.Element[] = [];
     if (questions.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>{Locale.label("forms.form.noCustomMsg")}</TableCell></TableRow>);
+      rows.push(
+        <TableRow key="0">
+          <TableCell colSpan={4} sx={{ textAlign: 'center', py: 4 }}>
+            <Stack spacing={2} alignItems="center">
+              <Icon sx={{ fontSize: 48, color: 'text.secondary' }}>help</Icon>
+              <Typography variant="body1" color="text.secondary">
+                {Locale.label("forms.form.noCustomMsg")}
+              </Typography>
+            </Stack>
+          </TableCell>
+        </TableRow>
+      );
       return rows;
     }
     for (let i = 0; i < questions.length; i++) {
-      const upArrow = (i === 0) ? <span style={{ display: "inline-block", width: 20 }} /> : <button className="no-default-style" aria-label="moveUp" onClick={moveUp}><Icon>arrow_upward</Icon></button>
-      const downArrow = (i === questions.length - 1) ? <></> : <> &nbsp; <button className="no-default-style" aria-label="moveDown" onClick={moveDown}><Icon>arrow_downward</Icon></button></>
+      const upArrow = (i === 0) ? <span style={{ display: "inline-block", width: 20 }} /> : 
+        <Button 
+          size="small" 
+          onClick={moveUp}
+          sx={{ minWidth: 'auto', p: 0.5, mr: 0.5 }}
+          aria-label="moveUp"
+        >
+          <Icon sx={{ fontSize: 18 }}>arrow_upward</Icon>
+        </Button>
+      const downArrow = (i === questions.length - 1) ? <></> : 
+        <Button 
+          size="small" 
+          onClick={moveDown}
+          sx={{ minWidth: 'auto', p: 0.5 }}
+          aria-label="moveDown"
+        >
+          <Icon sx={{ fontSize: 18 }}>arrow_downward</Icon>
+        </Button>
       rows.push(
-        <TableRow key={i} data-index={i}>
-          <TableCell><a href="about:blank" onClick={handleClick}>{questions[i].title}</a></TableCell>
-          <TableCell>{questions[i].fieldType}</TableCell>
-          <TableCell style={{ textAlign: "left" }}>{upArrow}{downArrow}</TableCell>
-          <TableCell>{questions[i].required ? Locale.label("common.yes") : Locale.label("common.no")}</TableCell>
+        <TableRow 
+          key={i} 
+          data-index={i}
+          sx={{ 
+            '&:hover': { backgroundColor: 'action.hover' },
+            transition: 'background-color 0.2s ease'
+          }}
+        >
+          <TableCell>
+            <a 
+              href="about:blank" 
+              onClick={handleClick}
+              style={{ 
+                textDecoration: 'none', 
+                color: 'var(--c1l2)', 
+                fontWeight: 500 
+              }}
+            >
+              {questions[i].title}
+            </a>
+          </TableCell>
+          <TableCell>
+            <Typography variant="body2">
+              {questions[i].fieldType}
+            </Typography>
+          </TableCell>
+          <TableCell>
+            <Stack direction="row" spacing={0.5} alignItems="center">
+              {upArrow}
+              {downArrow}
+            </Stack>
+          </TableCell>
+          <TableCell>
+            <Typography variant="body2">
+              {questions[i].required ? Locale.label("common.yes") : Locale.label("common.no")}
+            </Typography>
+          </TableCell>
         </TableRow>
       );
     }
@@ -68,7 +127,30 @@ export const Form: React.FC<Props> = (props) => {
     if (questions.length === 0) {
       return rows;
     }
-    rows.push(<TableRow sx={{textAlign: "left"}} key="header"><th>{Locale.label("forms.form.question")}</th><th>{Locale.label("forms.form.type")}</th><th>{Locale.label("forms.form.act")}</th><th>{Locale.label("forms.form.req")}</th></TableRow>);
+    rows.push(
+      <TableRow key="header">
+        <TableCell sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+            {Locale.label("forms.form.question")}
+          </Typography>
+        </TableCell>
+        <TableCell sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+            {Locale.label("forms.form.type")}
+          </Typography>
+        </TableCell>
+        <TableCell sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+            {Locale.label("forms.form.act")}
+          </Typography>
+        </TableCell>
+        <TableCell sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+            {Locale.label("forms.form.req")}
+          </Typography>
+        </TableCell>
+      </TableRow>
+    );
     return rows;
   }
   const getSidebarModules = () => {
@@ -83,10 +165,22 @@ export const Form: React.FC<Props> = (props) => {
   else {
     let contents = <Loading />
     if (questions) {
-      contents = (<Table>
-        <TableHead>{getTableHeader()}</TableHead>
-        <TableBody>{getRows()}</TableBody>
-      </Table>);
+      contents = (
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead 
+            sx={{ 
+              backgroundColor: 'grey.50',
+              '& .MuiTableCell-root': {
+                borderBottom: '2px solid',
+                borderBottomColor: 'divider'
+              }
+            }}
+          >
+            {getTableHeader()}
+          </TableHead>
+          <TableBody>{getRows()}</TableBody>
+        </Table>
+      );
     }
     return (
       <>
@@ -105,25 +199,15 @@ export const Form: React.FC<Props> = (props) => {
                 </Typography>
               </Stack>
               {formPermission && (
-                <button 
-                  className="no-default-style" 
-                  aria-label="addQuestion" 
+                <Button
+                  variant="contained"
+                  startIcon={<Icon>add</Icon>}
                   onClick={() => { setEditQuestionId(""); }}
-                  style={{ 
-                    padding: '8px',
-                    borderRadius: '4px',
-                    backgroundColor: 'var(--c1l2)',
-                    color: 'white',
-                    border: 'none',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px'
-                  }}
+                  size="small"
+                  aria-label="addQuestion"
                 >
-                  <Icon>add</Icon>
                   Add Question
-                </button>
+                </Button>
               )}
             </Stack>
           </Box>

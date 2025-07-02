@@ -57,7 +57,7 @@ export const DonationsPage = () => {
       </Box>
 
       {/* Main Content */}
-      <Box sx={{ px: { xs: 2, md: 3 } }}>
+      <Box sx={{ p: 3 }}>
         <ReportWithFilter keyName="donationSummary" autoRun={true} />
       </Box>
     </>

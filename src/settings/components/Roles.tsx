@@ -7,7 +7,7 @@ import { SmallButton } from "@churchapps/apphelper"
 interface Props {
   selectRoleId: (id: string) => void;
   selectedRoleId: string;
-  church: ChurchInterface;
+  church: ChurchInterface | null;
 }
 
 export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
@@ -57,9 +57,9 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
 
 
   const loadData = useCallback(() => {
-    if (selectedRoleId !== "notset") return;
+    if (selectedRoleId !== "notset" || !church) return;
     ApiHelper.get(`/roles/church/${church.id}`, "MembershipApi").then(roles => setRoles(roles));
-  }, [selectedRoleId, church.id]);
+  }, [selectedRoleId, church]);
 
   const addRole = useCallback(async (role:any) => {
     console.log("made it")
