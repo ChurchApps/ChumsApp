@@ -80,39 +80,6 @@ export const AttendanceSetup = memo(() => {
     a.categoryName.localeCompare(b.categoryName) || a.name.localeCompare(b.name), []
   );
 
-  const getRows = () => {
-    const rows: JSX.Element[] = [];
-
-    if (attendance.length === 0) {
-      rows.push(<TableRow key="0"><TableCell>{Locale.label("attendance.attendancePage.groupAttMsg")}</TableCell></TableRow>);
-      return rows;
-    }
-
-    attendance.forEach((a, i) => {
-      const filteredGroups = (a.serviceTime === undefined) ? [] : getGroups(a.serviceTime.id);
-      const sortedGroups = filteredGroups.sort(compare);
-      if (sortedGroups.length > 0) sortedGroups.forEach(g => { rows.push(getRow(a.campus, a.service, a.serviceTime, g, g.id.toString())); });
-      else rows.push(getRow(a.campus, a.service, a.serviceTime, undefined, "index" + i.toString()));
-    })
-    getUnassignedGroups().forEach(g => { rows.push(getRow({ name: "Unassigned" }, undefined, undefined, g, g.id.toString())); });
-    return rows;
-  }
-
-  const getRow = (campus: CampusInterface, service: ServiceInterface, serviceTime: ServiceTimeInterface, group: GroupInterface, key: string) => {
-    const campusHtml = (campus === undefined || campus?.name === lastCampus) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>church</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectCampus(campus); }}>{campus.name}</a></Box>
-    const serviceHtml = (service === undefined || service?.name === lastService) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>calendar_month</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectService(service); }}>{service.name}</a></Box>
-    const serviceTimeHtml = (serviceTime === undefined || serviceTime?.name === lastServiceTime) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>schedule</Icon><a href="about:blank" onClick={(e) => { e.preventDefault(); selectServiceTime(serviceTime); }}>{serviceTime.name}</a></Box>
-    const categoryHtml = (group === undefined || group?.categoryName === lastCategory) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>folder</Icon>{group.categoryName}</Box>
-    const groupHtml = (group === undefined) ? <></> : <Box sx={{display: "flex", alignItems: "center"}}><Icon>list</Icon><Link to={"/groups/" + group.id}>{group.name}</Link></Box>
-
-    const result = (<TableRow key={key}><TableCell>{campusHtml}</TableCell><TableCell>{serviceHtml}</TableCell><TableCell>{serviceTimeHtml}</TableCell><TableCell>{categoryHtml}</TableCell><TableCell>{groupHtml}</TableCell></TableRow>)
-
-    lastCampus = campus?.name;
-    lastService = service?.name;
-    lastServiceTime = serviceTime?.name;
-    lastCategory = group?.categoryName;
-    return result;
-  }
 
   const unassignedGroups = useMemo(() => {
     const result: GroupInterface[] = [];

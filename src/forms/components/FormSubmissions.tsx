@@ -10,7 +10,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
   const [summary, setSummary] = useState<any>([]);
   const [summaryCsv, setSummaryCsv] = useState<any>([]);
   const yesNoMap: any = { True: Locale.label("common.yes"), False: Locale.label("common.no") };
-  const yesNoDefault = [{ value: "Yes", text: Locale.label("common.yes") }, { value: "No", text: Locale.label("common.no") }];
+  const yesNoDefault = useMemo(() => [{ value: "Yes", text: Locale.label("common.yes") }, { value: "No", text: Locale.label("common.no") }], []);
   const contentRef: any = useRef<HTMLDivElement>(null);
   const handleSummaryPrint = useReactToPrint({
     content: () => contentRef.current
