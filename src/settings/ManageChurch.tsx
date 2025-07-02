@@ -15,7 +15,7 @@ export const ManageChurch = () => {
   const churchId = UserHelper.currentUserChurch.church.id;
 
   const loadData = () => {
-    if (!UserHelper.checkAccess(Permissions.membershipApi.settings.view)) setRedirectUrl("/");
+    if (!UserHelper.checkAccess(Permissions.membershipApi.settings.edit)) setRedirectUrl("/");
     ApiHelper.get("/churches/" + churchId + "?include=permissions", "MembershipApi").then((data) => setChurch(data));
   };
 
@@ -47,11 +47,6 @@ export const ManageChurch = () => {
 
   const isEmpty = (value: any) => value === undefined || value === null || value === "";
 
-  const loadData = () => {
-    //const churchId = params.id;
-    if (!UserHelper.checkAccess(Permissions.membershipApi.settings.edit)) setRedirectUrl("/");
-    ApiHelper.get("/churches/" + churchId + "?include=permissions", "MembershipApi").then((data) => setChurch(data));
-  };
 
   React.useEffect(loadData, [UserHelper.currentUserChurch.church.id]); //eslint-disable-line
 
