@@ -54,6 +54,7 @@
 		"notes": "Mga Tala",
 		"remove": "Alisin",
 		"search": "Maghanap",
+		"searching": "Searching...",
 		"title": "Pamagat",
 		"yes": "Oo"
 	},
@@ -155,6 +156,9 @@
 		}
 	},
 	"forms": {
+		"formsPage": {
+			"addForm": "Add Form"
+		},
 		"choicesEdit": {
 			"act": "Aksyon",
 			"choices": "Mga Pagpipilian",
@@ -330,6 +334,11 @@
 		"sep": "Setyembre"
 	},
 	"people": {
+		"personForm": {
+			"addForm": "Add Form",
+			"form": "Form",
+			"noFormMsg": "No form submission found for this person"
+		},
 		"editCondition": {
 			"act": "Aktibidad",
 			"anniMonth": "Buwan ng Anibersaryo",
@@ -500,6 +509,9 @@
 		"zip": "ZIP"
 	},
 	"plans": {
+		"planPage": {
+			"assign": "Team Assignments"
+		},
 		"assignmentEdit": {
 			"assignPos": "Italaga ang Posisyon",
 			"done": "Tapos na",
@@ -785,6 +797,23 @@
 		}
 	},
 	"songs": {
+		"library": {
+			"empty": {
+				"title": "No Songs Found",
+				"message": "Get started by adding your first song to the library.",
+				"action": "Add First Song"
+			},
+			"noResults": "No songs match your search criteria."
+		},
+		"search": {
+			"placeholder": "Search songs by title or artist...",
+			"enterQuery": "Enter a search term to find songs.",
+			"noResults": "No songs found for your search.",
+			"createManually": "Create Manually",
+			"title": "Search for a Song",
+			"inputLabel": "Title or Artist",
+			"inputPlaceholder": "Enter song title or artist name..."
+		}
 		"arrangement": {
 			"title": "Arrangement",
 			"enterLyrics": "Ipasok ang mga lyrics nang manu-mano o i-import mula sa PraiseCharts",

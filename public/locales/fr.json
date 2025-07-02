@@ -54,6 +54,7 @@
 		"notes": "Notes",
 		"remove": "Retirer",
 		"search": "Recherche",
+		"searching": "Searching...",
 		"title": "Titre",
 		"yes": "Oui"
 	},
@@ -155,6 +156,9 @@
 		}
 	},
 	"forms": {
+		"formsPage": {
+			"addForm": "Add Form"
+		},
 		"choicesEdit": {
 			"act": "Action",
 			"choices": "Choix",
@@ -330,6 +334,11 @@
 		"sep": "Septembre"
 	},
 	"people": {
+		"personForm": {
+			"addForm": "Add Form",
+			"form": "Form",
+			"noFormMsg": "No form submission found for this person"
+		},
 		"editCondition": {
 			"act": "Activité",
 			"anniMonth": "Mois d'anniversaire",
@@ -500,6 +509,9 @@
 		"zip": "Code postal"
 	},
 	"plans": {
+		"planPage": {
+			"assign": "Team Assignments"
+		},
 		"assignmentEdit": {
 			"assignPos": "Attribuer un poste",
 			"done": "Terminé",
@@ -785,6 +797,23 @@
 		}
 	},
 	"songs": {
+		"library": {
+			"empty": {
+				"title": "No Songs Found",
+				"message": "Get started by adding your first song to the library.",
+				"action": "Add First Song"
+			},
+			"noResults": "No songs match your search criteria."
+		},
+		"search": {
+			"placeholder": "Search songs by title or artist...",
+			"enterQuery": "Enter a search term to find songs.",
+			"noResults": "No songs found for your search.",
+			"createManually": "Create Manually",
+			"title": "Search for a Song",
+			"inputLabel": "Title or Artist",
+			"inputPlaceholder": "Enter song title or artist name..."
+		}
 		"arrangement": {
 			"title": "Arrangement",
 			"enterLyrics": "Entrer les paroles manuellement ou importer depuis PraiseCharts",

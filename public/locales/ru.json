@@ -54,6 +54,7 @@
     "notes": "Примечания",
     "remove": "Удалять",
     "search": "Поиск",
+    "searching": "Searching...",
     "title": "Заголовок",
     "yes": "Да"
   },
@@ -155,6 +156,9 @@
     }
   },
   "forms": {
+    "formsPage": {
+      "addForm": "Add Form"
+    },
     "choicesEdit": {
       "act": "Действие",
       "choices": "Выбор",
@@ -330,6 +334,11 @@
     "sep": "Сентябрь"
   },
   "people": {
+    "personForm": {
+      "addForm": "Add Form",
+      "form": "Form",
+      "noFormMsg": "No form submission found for this person"
+    },
     "editCondition": {
       "act": "Активность",
       "anniMonth": "Юбилейный месяц",
@@ -500,6 +509,9 @@
     "zip": "Почтовый/Почтовый"
   },
   "plans": {
+    "planPage": {
+      "assign": "Team Assignments"
+    },
     "assignmentEdit": {
       "assignPos": "Назначить позицию",
       "done": "Сделанный",
@@ -785,6 +797,23 @@
     }
   },
   "songs": {
+    "library": {
+      "empty": {
+        "title": "No Songs Found",
+        "message": "Get started by adding your first song to the library.",
+        "action": "Add First Song"
+      },
+      "noResults": "No songs match your search criteria."
+    },
+    "search": {
+      "placeholder": "Search songs by title or artist...",
+      "enterQuery": "Enter a search term to find songs.",
+      "noResults": "No songs found for your search.",
+      "createManually": "Create Manually",
+      "title": "Search for a Song",
+      "inputLabel": "Title or Artist",
+      "inputPlaceholder": "Enter song title or artist name..."
+    },
     "arrangement": {
       "title": "Аранжировка",
       "enterLyrics": "Введите текст вручную или импортируйте из PraiseCharts",

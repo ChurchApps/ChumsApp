@@ -54,6 +54,7 @@
     "notes": "笔记",
     "remove": "消除",
     "search": "搜索",
+    "searching": "Searching...",
     "title": "标题",
     "yes": "是的"
   },
@@ -155,6 +156,9 @@
     }
   },
   "forms": {
+    "formsPage": {
+      "addForm": "Add Form"
+    },
     "choicesEdit": {
       "act": "行动",
       "choices": "选择",
@@ -330,6 +334,11 @@
     "sep": "九月"
   },
   "people": {
+    "personForm": {
+      "addForm": "Add Form",
+      "form": "Form",
+      "noFormMsg": "No form submission found for this person"
+    },
     "editCondition": {
       "act": "活动",
       "anniMonth": "周年纪念月",
@@ -500,6 +509,9 @@
     "zip": "邮政/邮政"
   },
   "plans": {
+    "planPage": {
+      "assign": "Team Assignments"
+    },
     "assignmentEdit": {
       "assignPos": "分配位置",
       "done": "完毕",
@@ -927,6 +939,23 @@
     }
   },
   "songs": {
+    "library": {
+      "empty": {
+        "title": "No Songs Found",
+        "message": "Get started by adding your first song to the library.",
+        "action": "Add First Song"
+      },
+      "noResults": "No songs match your search criteria."
+    },
+    "search": {
+      "placeholder": "Search songs by title or artist...",
+      "enterQuery": "Enter a search term to find songs.",
+      "noResults": "No songs found for your search.",
+      "createManually": "Create Manually",
+      "title": "Search for a Song",
+      "inputLabel": "Title or Artist",
+      "inputPlaceholder": "Enter song title or artist name..."
+    },
     "arrangement": {
       "title": "编曲",
       "enterLyrics": "手动输入歌词或从PraiseCharts导入",
