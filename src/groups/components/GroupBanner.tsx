@@ -1,0 +1,397 @@
+import { type GroupInterface, UserHelper, Permissions } from "@churchapps/apphelper";
+import { Button, Typography, Chip, IconButton, Stack, Box } from "@mui/material";
+import { Edit as EditIcon, Schedule as ScheduleIcon, LocationOn as LocationIcon, Group as GroupIcon, CalendarMonth as AttendanceIcon, Assignment as PlanIcon, CheckCircle as CheckIcon, Cancel as CancelIcon } from "@mui/icons-material";
+import React, { memo, useMemo } from "react";
+
+interface Props {
+  group: GroupInterface
+  onTabChange?: (tab: string) => void
+  togglePhotoEditor?: (show: boolean) => void
+  onEdit?: () => void
+}
+
+export const GroupBanner = memo((props: Props) => {
+  const { group, onTabChange, togglePhotoEditor, onEdit } = props;
+  
+  const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.groups.edit), []);
+
+  const isStandard = useMemo(() => 
+    group?.tags?.indexOf("standard") > -1, 
+    [group?.tags]
+  );
+
+  const groupType = useMemo(() => {
+    if (!group?.tags) return null;
+    if (group.tags.indexOf("team") > -1) {
+      return (
+        <Chip 
+          label="Team" 
+          size="small" 
+          sx={{ 
+            backgroundColor: "#e3f2fd", 
+            color: "#1565c0",
+            fontWeight: 600,
+            fontSize: '0.875rem'
+          }} 
+        />
+      );
+    }
+    if (group.categoryName) {
+      return (
+        <Chip 
+          label={group.categoryName} 
+          size="small" 
+          sx={{ 
+            backgroundColor: "#f3e5f5", 
+            color: "#6a1b9a",
+            fontWeight: 600,
+            fontSize: '0.875rem'
+          }} 
+        />
+      );
+    }
+    return null;
+  }, [group?.tags, group?.categoryName]);
+
+  const quickStats = useMemo(() => {
+    if (!group) return [];
+    const stats = [];
+    
+    if (isStandard && group.meetingTime) {
+      stats.push({ 
+        icon: <ScheduleIcon sx={{ color: "#fff", fontSize: 16, mr: 0.5 }} />, 
+        value: group.meetingTime 
+      });
+    }
+    
+    if (group.meetingLocation) {
+      stats.push({ 
+        icon: <LocationIcon sx={{ color: "#fff", fontSize: 16, mr: 0.5 }} />, 
+        value: group.meetingLocation 
+      });
+    }
+
+    return stats;
+  }, [group, isStandard]);
+
+  const attendanceInfo = useMemo(() => {
+    if (!group || !isStandard) return [];
+    const info = [];
+    
+    if (group.trackAttendance !== undefined) {
+      info.push({
+        icon: group.trackAttendance ? 
+          <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : 
+          <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
+        label: "Track Attendance",
+        value: group.trackAttendance ? "Yes" : "No"
+      });
+    }
+    
+    if (group.printNametag !== undefined) {
+      info.push({
+        icon: group.printNametag ? 
+          <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : 
+          <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
+        label: "Print Nametag",
+        value: group.printNametag ? "Yes" : "No"
+      });
+    }
+    
+    if (group.parentPickup !== undefined) {
+      info.push({
+        icon: group.parentPickup ? 
+          <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : 
+          <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
+        label: "Parent Pickup",
+        value: group.parentPickup ? "Yes" : "No"
+      });
+    }
+
+    return info;
+  }, [group, isStandard]);
+
+  const quickActions = [
+    { label: "Members", icon: <GroupIcon />, onClick: () => onTabChange?.("members"), color: "inherit" },
+    ...(isStandard && group?.trackAttendance ? [
+      { label: "Sessions", icon: <AttendanceIcon />, onClick: () => onTabChange?.("sessions"), color: "inherit" }
+    ] : []),
+    { label: "Settings", icon: <PlanIcon />, onClick: () => onTabChange?.("settings"), color: "inherit" }
+  ];
+
+  if (!group) return null;
+
+  return (
+    <div style={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "20px" }}>
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        {/* Main Layout: Photo on left, Content on right */}
+        <Stack 
+          direction={{ xs: "column", md: "row" }} 
+          spacing={{ xs: 3, md: 4 }} 
+          alignItems={{ xs: "center", md: "flex-start" }} 
+          sx={{ width: "100%" }}
+        >
+          {/* Left: Photo */}
+          <Box
+            sx={{
+              width: { xs: 120, md: 160 },
+              height: { xs: 68, md: 90 }, // 16:9 aspect ratio
+              borderRadius: 2,
+              overflow: 'hidden',
+              border: "3px solid #FFF",
+              flexShrink: 0,
+              cursor: canEdit ? "pointer" : "default",
+              backgroundColor: group.photoUrl ? 'transparent' : 'rgba(255,255,255,0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative',
+              '&:hover': canEdit ? {
+                opacity: 0.8,
+                '&::after': {
+                  content: '"Click to edit"',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: 'rgba(0,0,0,0.7)',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.875rem',
+                  fontWeight: 600
+                }
+              } : {}
+            }}
+            onClick={() => canEdit && togglePhotoEditor?.(true)}
+          >
+            {group.photoUrl ? (
+              <img
+                src={group.photoUrl}
+                alt={group.name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
+            ) : (
+              <GroupIcon sx={{ fontSize: { xs: 32, md: 40 }, color: 'rgba(255,255,255,0.7)' }} />
+            )}
+          </Box>
+          
+          {/* Right: Content Area */}
+          <Stack spacing={1.5} sx={{ flex: 1, width: '100%' }}>
+            {/* Row 1: Group Name, Category, Edit - Full Width */}
+            <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between" flexWrap="wrap" sx={{ width: '100%' }}>
+              <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap">
+                <Typography 
+                  sx={{ 
+                    color: "#FFF", 
+                    fontWeight: 400, 
+                    mb: 0,
+                    wordBreak: "break-word",
+                    fontSize: { xs: "1.75rem", md: "2.125rem" },
+                    lineHeight: 1.1
+                  }}
+                >
+                  {group.name}
+                </Typography>
+                {groupType}
+              </Stack>
+              {canEdit && (
+                <IconButton 
+                  size="small" 
+                  sx={{ color: "#FFF" }}
+                  onClick={onEdit}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              )}
+            </Stack>
+            
+            {/* Row 2: Three Columns */}
+            <Stack 
+              direction={{ xs: "column", md: "row" }} 
+              spacing={{ xs: 1.5, md: 2 }} 
+              sx={{ width: "100%" }}
+            >
+              {/* Column 1: Time/Place */}
+              <Stack spacing={1} sx={{ flex: 1 }}>
+                {quickStats.length > 0 && (
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: "rgba(255,255,255,0.8)", 
+                      fontSize: { xs: "0.75rem", md: "0.875rem" },
+                      fontWeight: 600,
+                      mb: 1,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    Meeting Info
+                  </Typography>
+                )}
+                {quickStats.map((stat, idx) => (
+                  <Stack key={idx} direction="row" alignItems="center">
+                    {stat.icon}
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: "#FFF", 
+                        fontSize: { xs: "0.875rem", md: "1rem" }
+                      }}
+                    >
+                      {stat.value}
+                    </Typography>
+                  </Stack>
+                ))}
+              </Stack>
+
+              {/* Column 2: Settings and Labels */}
+              <Stack spacing={1.5} sx={{ flex: 1 }}>
+                {attendanceInfo.length > 0 && (
+                  <Box>
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: "rgba(255,255,255,0.8)", 
+                        fontSize: { xs: "0.75rem", md: "0.875rem" },
+                        fontWeight: 600,
+                        mb: 1,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}
+                    >
+                      Settings
+                    </Typography>
+                    <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
+                      {attendanceInfo.map((info, idx) => (
+                        <Stack key={idx} direction="row" alignItems="center" spacing={0.5}>
+                          {info.icon}
+                          <Typography 
+                            variant="body2" 
+                            sx={{ 
+                              color: "rgba(255,255,255,0.9)", 
+                              fontSize: { xs: "0.75rem", md: "0.875rem" },
+                              fontWeight: 500,
+                              whiteSpace: 'nowrap'
+                            }}
+                          >
+                            {info.label}
+                          </Typography>
+                        </Stack>
+                      ))}
+                    </Stack>
+                  </Box>
+                )}
+                
+                {/* Labels */}
+                {group.labelArray && group.labelArray.length > 0 && (
+                  <Box>
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: "rgba(255,255,255,0.8)", 
+                        fontSize: { xs: "0.75rem", md: "0.875rem" },
+                        fontWeight: 600,
+                        mb: 1,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px'
+                      }}
+                    >
+                      Labels
+                    </Typography>
+                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                      {group.labelArray.slice(0, 4).map((label, idx) => (
+                        <Chip
+                          key={idx}
+                          label={label}
+                          size="small"
+                          sx={{ 
+                            backgroundColor: "rgba(255,255,255,0.2)", 
+                            color: "#FFF",
+                            fontSize: '0.75rem',
+                            height: 20
+                          }}
+                        />
+                      ))}
+                      {group.labelArray.length > 4 && (
+                        <Chip
+                          label={`+${group.labelArray.length - 4} more`}
+                          size="small"
+                          sx={{ 
+                            backgroundColor: "rgba(255,255,255,0.1)", 
+                            color: "rgba(255,255,255,0.7)",
+                            fontSize: '0.75rem',
+                            height: 20
+                          }}
+                        />
+                      )}
+                    </Stack>
+                  </Box>
+                )}
+              </Stack>
+              
+              {/* Column 3: Action Buttons */}
+              <Stack 
+                direction="row"
+                spacing={1} 
+                flexWrap="wrap" 
+                sx={{ 
+                  flex: 1,
+                  justifyContent: { xs: "center", md: "flex-end" },
+                  alignItems: "center"
+                }}
+                useFlexGap
+              >
+                {quickActions.map((action) => (
+                  <Button
+                    key={action.label}
+                    size="small"
+                    variant="outlined"
+                    sx={{ 
+                      color: "#FFF", 
+                      borderColor: "rgba(255,255,255,0.5)",
+                      "&:hover": {
+                        borderColor: "#FFF",
+                        backgroundColor: "rgba(255,255,255,0.1)"
+                      },
+                      minWidth: 'auto',
+                      px: 2,
+                      py: 0.5
+                    }}
+                    startIcon={action.icon}
+                    onClick={action.onClick}
+                  >
+                    {action.label}
+                  </Button>
+                ))}
+              </Stack>
+            </Stack>
+          </Stack>
+        </Stack>
+        
+        {/* Bottom Row: Description - Spans All Columns */}
+        {isStandard && group.about && (
+          <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.2)', pt: 1.5 }}>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: "rgba(255,255,255,0.9)", 
+                fontSize: { xs: "0.875rem", md: "0.95rem" },
+                lineHeight: 1.4,
+                fontStyle: 'italic'
+              }}
+            >
+              {group.about.replace(/[#*_`]/g, '')}
+            </Typography>
+          </Box>
+        )}
+      </Stack>
+    </div>
+  );
+});

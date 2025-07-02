@@ -1,5 +1,5 @@
 import React from "react";
-import {  Badge, Table, TableBody, TableCell, TableHead, TableRow,  } from "@mui/material";
+import {  Badge, Table, TableBody, TableCell, TableHead, TableRow, Avatar  } from "@mui/material";
 import { ArrayHelper, type AssignmentInterface, Locale, PersonHelper, type PersonInterface, type PositionInterface } from "@churchapps/apphelper";
 
 interface Props {
@@ -16,7 +16,7 @@ export const PositionList = (props:Props) => {
   const getPersonLink = (assignment: AssignmentInterface, position:PositionInterface) => {
     const person = ArrayHelper.getOne(props.people, "id", assignment.personId)
     if (person) {
-      const image = <span><img src={PersonHelper.getPhotoUrl(person)} alt="avatar" className={assignment.status?.toLowerCase()} /></span>
+      const image = <span><Avatar src={PersonHelper.getPhotoUrl(person)} sx={{ width: 32, height: 32 }} /></span>
       let wrappedImage = image;
       if (assignment.status === "Accepted") wrappedImage = (<Badge color="success" variant="dot">{image}</Badge>);
       else if (assignment.status === "Declined") wrappedImage = (<Badge color="error" variant="dot">{image}</Badge>);

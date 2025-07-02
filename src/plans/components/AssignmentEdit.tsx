@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Table, TableCell, TableRow } from "@mui/material";
+import { Table, TableCell, TableRow, Avatar } from "@mui/material";
 import { ApiHelper, type AssignmentInterface, type GroupMemberInterface, InputBox, Locale, PersonHelper, type PositionInterface } from "@churchapps/apphelper";
 
 interface Props { assignment: AssignmentInterface, position:PositionInterface, peopleNeeded:number, updatedFunction: (done:boolean) => void }
@@ -36,7 +36,7 @@ export const AssignmentEdit = (props:Props) => {
       const gm = groupMembers[i];
       rows.push(
         <TableRow key={i}>
-          <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" style={{height:30}} /></TableCell>
+          <TableCell><Avatar src={PersonHelper.getPhotoUrl(gm.person)} sx={{ width: 32, height: 32 }} /></TableCell>
           <TableCell style={{width:"80%"}}><a href="about:blank" onClick={(e) => { e.preventDefault(); selectPerson(gm); }}>{gm.person.name.display}</a></TableCell>
         </TableRow>
       );

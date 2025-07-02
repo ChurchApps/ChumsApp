@@ -1,7 +1,7 @@
 import React, { useState, memo, useMemo, useCallback } from "react";
 import { ApiHelper, type GroupInterface, DisplayBox, UserHelper, type GroupMemberInterface, PersonHelper, type PersonInterface, ExportLink, Permissions, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
+import { Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, Avatar } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
@@ -80,7 +80,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
 
       rows.push(
         <TableRow key={i}>
-          <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
+          <TableCell><Avatar src={PersonHelper.getPhotoUrl(gm.person)} sx={{ width: 48, height: 48 }} /></TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
           <TableCell style={{ textAlign: "right" }}>{editLinks}</TableCell>
         </TableRow>

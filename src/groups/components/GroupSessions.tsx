@@ -1,6 +1,6 @@
 import React, { useCallback, memo, useMemo, type JSX } from "react";
 import { ApiHelper, ArrayHelper, type GroupInterface, DisplayBox, type SessionInterface, type VisitSessionInterface, type PersonInterface, PersonHelper, type VisitInterface, UserHelper, ExportLink, Permissions, Loading, SmallButton, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, Grid, MenuItem, type SelectChangeEvent } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, Grid, MenuItem, Avatar, type SelectChangeEvent } from "@mui/material"
 
 interface Props {
   group: GroupInterface,
@@ -71,7 +71,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
       if (person) {
         result.push(
           <TableRow key={vs.id}>
-            <TableCell><img className="personPhoto" src={PersonHelper.getPhotoUrl(person)} alt="avatar" /></TableCell>
+            <TableCell><Avatar src={PersonHelper.getPhotoUrl(person)} sx={{ width: 48, height: 48 }} /></TableCell>
             <TableCell><a className="personName" href={"/people/person.aspx?id=" + vs.visit.personId}>{person?.name?.display}</a></TableCell>
             <TableCell style={{ textAlign: "right" }}>{editLink}</TableCell>
           </TableRow>

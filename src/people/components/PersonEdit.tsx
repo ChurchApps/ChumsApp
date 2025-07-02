@@ -4,7 +4,7 @@ import { ChumsPersonHelper, UpdateHouseHold } from "."
 import { PersonHelper, DateHelper, InputBox, ApiHelper, type PersonInterface, Loading, ErrorMessages, Locale } from "@churchapps/apphelper"
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material"
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Avatar, Box, type SelectChangeEvent } from "@mui/material"
 
 interface Props {
   id?: string,
@@ -191,9 +191,24 @@ export const PersonEdit = memo((props: Props) => {
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             <Grid size={{ sm: 3 }} className="my-auto">
-              <a href="about:blank" onClick={handlePhotoClick}>
-                <img src={PersonHelper.getPhotoUrl(person)} className="w-100 profilePic" id="imgPreview" alt="avatar" />
-              </a>
+              <Box sx={{ textAlign: 'center' }}>
+                <Avatar 
+                  src={PersonHelper.getPhotoUrl(person)} 
+                  sx={{ 
+                    width: 120, 
+                    height: 120, 
+                    border: "3px solid #fff", 
+                    boxShadow: 2,
+                    cursor: 'pointer',
+                    margin: '0 auto',
+                    '&:hover': {
+                      opacity: 0.8
+                    }
+                  }}
+                  id="imgPreview"
+                  onClick={handlePhotoClick}
+                />
+              </Box>
             </Grid>
             <Grid size={{ sm: 1 }}>
             </Grid>

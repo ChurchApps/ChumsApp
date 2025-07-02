@@ -1,7 +1,7 @@
 import React from "react";
 import { UpdateHouseHold } from ".";
 import { InputBox, PersonAdd, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, type SelectChangeEvent } from "@mui/material";
+import { Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, Avatar, type SelectChangeEvent } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props { updatedFunction: () => void, household: HouseholdInterface, currentMembers: PersonInterface[], currentPerson: PersonInterface }
@@ -92,7 +92,7 @@ export function HouseholdEdit(props: Props) {
 
   const rows = members.map((m, index) => (
     <TableRow key={m.id || index}>
-      <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>
+      <TableCell><Avatar src={PersonHelper.getPhotoUrl(m)} sx={{ width: 48, height: 48 }} /></TableCell>
       <TableCell>
         <FormControl fullWidth style={{ marginTop: 0 }}>
           <InputLabel id="household-role">{m.name.display}</InputLabel>

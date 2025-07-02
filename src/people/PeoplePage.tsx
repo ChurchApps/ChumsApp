@@ -1,17 +1,18 @@
-import React from "react";
+import React, { memo } from "react";
 import { Locale, type PersonInterface } from "@churchapps/apphelper";
 import { PeopleSearchResults, PeopleColumns } from "./components";
-import { ApiHelper, DisplayBox, ExportLink } from "@churchapps/apphelper";
-import { Grid } from "@mui/material"
+import { ApiHelper, ExportLink } from "@churchapps/apphelper";
+import { Grid, Box, Typography, Card, Stack, Button } from "@mui/material";
 import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
 import { useMountedState } from "@churchapps/apphelper";
-import { Banner } from "@churchapps/apphelper";
+import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 
-export const PeoplePage = () => {
+export const PeoplePage = memo(() => {
 
   const [searchResults, setSearchResults] = React.useState(null);
   const [selectedColumns, setSelectedColumns] = React.useState<string[]>(["photo", "displayName"]);
+  const [isSearchPerformed, setIsSearchPerformed] = React.useState(false);
   const isMounted = useMountedState();
 
   const columns = [
@@ -46,13 +47,7 @@ export const PeoplePage = () => {
     setSelectedColumns(sc);
   }
 
-  const getEditContent = () => {
-    if (searchResults == null) return <></>;
-    else return (<>
-      <ExportLink data={searchResults} filename="people.csv" /> &nbsp;
-      <PeopleColumns selectedColumns={selectedColumns} toggleColumn={handleToggleColumn} columns={columns} />
-    </>);
-  }
+  // Removed getEditContent - functionality moved to header
 
   React.useEffect(() => {
     if (sessionStorage.getItem("selectedColumns")) {
@@ -68,7 +63,8 @@ export const PeoplePage = () => {
         if(!isMounted()) {
           return;
         }
-        setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
+        setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
+        setIsSearchPerformed(false); // Reset to show this is recent data, not search results
       });
     }
 
@@ -77,19 +73,153 @@ export const PeoplePage = () => {
 
   return (
     <>
-      <Banner><h1>{Locale.label("people.peoplePage.searchPpl")}</h1></Banner>
-      <div id="mainContent">
+      {/* Modern Blue Header */}
+      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
+        <Stack 
+          direction={{ xs: "column", md: "row" }} 
+          spacing={{ xs: 2, md: 4 }} 
+          alignItems={{ xs: "flex-start", md: "center" }} 
+          sx={{ width: "100%" }}
+        >
+          {/* Left side: Title and Stats */}
+          <Box sx={{ flex: 1 }}>
+            <Typography 
+              sx={{ 
+                color: "#FFF", 
+                fontWeight: 400, 
+                mb: 1,
+                fontSize: { xs: "2rem", md: "2.5rem" },
+                lineHeight: 1.1
+              }}
+            >
+              {Locale.label("people.peoplePage.searchPpl")}
+            </Typography>
+            <Typography variant="body1" sx={{ color: "rgba(255,255,255,0.9)" }}>
+              {searchResults ? 
+                (isSearchPerformed ? 
+                  `Found ${searchResults.length} people` : 
+                  `Showing ${searchResults.length} most recent people`
+                ) : "Loading people..."
+              }
+            </Typography>
+          </Box>
+
+          {/* Center: Search Icon */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
+            <SearchIcon 
+              sx={{ 
+                fontSize: 48, 
+                color: "rgba(255,255,255,0.7)",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "#FFF",
+                  transform: "scale(1.1)"
+                },
+                transition: "all 0.2s ease"
+              }}
+              onClick={() => {
+                const searchPanel = document.getElementById('peopleSearch');
+                if (searchPanel) {
+                  searchPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  // Focus on the search input after scrolling
+                  setTimeout(() => {
+                    const searchInput = document.getElementById('searchText') || 
+                                     document.querySelector('[data-testid="people-search-input"]');
+                    if (searchInput) {
+                      (searchInput as HTMLElement).focus();
+                    }
+                  }, 500);
+                }
+              }}
+            />
+          </Box>
+
+          {/* Right side: Quick Actions */}
+          <Stack direction="row" spacing={1} flexWrap="wrap">
+            <Button
+              variant="outlined"
+              sx={{ 
+                color: "#FFF", 
+                borderColor: "rgba(255,255,255,0.5)",
+                "&:hover": {
+                  borderColor: "#FFF",
+                  backgroundColor: "rgba(255,255,255,0.1)"
+                }
+              }}
+              startIcon={<PersonAddIcon />}
+              onClick={() => {
+                // Scroll to the CreatePerson component at the bottom
+                const createPersonSection = document.querySelector('[data-cy="createPerson"]') || 
+                                           document.querySelector('.create-person') ||
+                                           document.getElementById('createPersonForm');
+                if (createPersonSection) {
+                  createPersonSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  // Focus on first input field after scrolling
+                  setTimeout(() => {
+                    const firstInput = createPersonSection.querySelector('input') as HTMLElement;
+                    if (firstInput) {
+                      firstInput.focus();
+                    }
+                  }, 500);
+                } else {
+                  // Fallback: scroll to bottom of page
+                  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }
+              }}
+            >
+              Add Person
+            </Button>
+          </Stack>
+        </Stack>
+      </Box>
+
+      {/* Main Content */}
+      <Box sx={{ p: 3 }}>
         <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 8 }}>
-            <DisplayBox id="peopleBox" headerIcon="person" headerText={Locale.label("people.peoplePage.recentPpl")} editContent={getEditContent()} help="chums/adding-people">
-              <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} />
-            </DisplayBox>
+          <Grid size={{ xs: 12, md: 3 }}>
+            <PeopleSearch 
+              updateSearchResults={(people) => {
+                setSearchResults(people);
+                setIsSearchPerformed(true);
+              }} 
+            />
           </Grid>
-          <Grid size={{ xs: 12, md: 4 }}>
-            <PeopleSearch updateSearchResults={(people) => setSearchResults(people)} />
+          <Grid size={{ xs: 12, md: 9 }}>
+            <Card>
+              <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <PeopleIcon />
+                    <Typography variant="h6">
+                      {isSearchPerformed ? "Search Results" : Locale.label("people.peoplePage.recentPpl")}
+                    </Typography>
+                  </Stack>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    {searchResults && (
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<ExportIcon />}
+                        component={ExportLink}
+                        data={searchResults}
+                        filename="people.csv"
+                        sx={{ mr: 1 }}
+                      >
+                        Export
+                      </Button>
+                    )}
+                    <PeopleColumns selectedColumns={selectedColumns} toggleColumn={handleToggleColumn} columns={columns} />
+                  </Stack>
+                </Stack>
+              </Box>
+              <Box>
+                <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} />
+              </Box>
+            </Card>
           </Grid>
         </Grid>
-      </div>
+      </Box>
     </>
   );
-}
+
+});

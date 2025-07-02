@@ -2,24 +2,25 @@ import React from "react";
 import { ServiceTimesEdit } from ".";
 import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, type SelectChangeEvent } from "@mui/material";
-import { useMountedState, GalleryModal, type GroupInterface } from "@churchapps/apphelper";
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Box, Typography, Icon, type SelectChangeEvent } from "@mui/material";
+import { useMountedState, type GroupInterface } from "@churchapps/apphelper";
 import { MarkdownEditor } from "@churchapps/apphelper";
 import { GroupLabelsEdit } from "./GroupLabelsEdit";
 
 interface Props {
+  id?: string;
   group: GroupInterface;
-  updatedFunction: (group: GroupInterface) => void;
+  updatedFunction: () => void;
+  togglePhotoEditor: (show: boolean, inProgressEditGroup: GroupInterface) => void;
 }
 
 export const GroupDetailsEdit: React.FC<Props> = (props) => {
   const [group, setGroup] = React.useState<GroupInterface>({} as GroupInterface);
   const [errors, setErrors] = React.useState([]);
   const [redirect, setRedirect] = React.useState("");
-  const [selectPhotoField, setSelectPhotoField] = React.useState<string>(null);
   const isMounted = useMountedState();
 
-  const handleCancel = () => props.updatedFunction(group);
+  const handleCancel = () => props.updatedFunction();
   const handleKeyDown = (e: React.KeyboardEvent<any>) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -49,12 +50,6 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     setGroup(g);
   };
 
-  const handlePhotoSelected = (image: string) => {
-    const g = { ...group };
-    g.photoUrl = image;
-    setGroup(g);
-    setSelectPhotoField(null);
-  };
 
   const handleMarkdownChange = (newValue: string) => {
     if (group.id) {
@@ -76,7 +71,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     if (validate()) {
       ApiHelper.post("/groups", [group], "MembershipApi").then((data) => {
         setGroup(data);
-        props.updatedFunction(data);
+        props.updatedFunction();
       });
     }
   };
@@ -162,12 +157,58 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                 <MarkdownEditor value={group.about || ""} onChange={(val) => handleMarkdownChange(val)} style={{ maxHeight: 200, overflowY: "scroll" }} placeholder={Locale.label("groups.groupDetailsEdit.groupDesc")} data-testid="group-description-editor" ariaLabel="Group description" />
               </Grid>
               <Grid size={{ xs: 12, md: 6 }}>
-                {group.photoUrl && (<>
-                  <img src={group.photoUrl} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="group" />
-                  <br />
-                </>)}
-                {!group.photoUrl && <InputLabel>{Locale.label("groups.groupDetailsEdit.groupImg")}</InputLabel>}
-                <Button variant="contained" onClick={() => setSelectPhotoField("photoUrl")} data-testid="select-image-button" aria-label="Select group image">{Locale.label("groups.groupDetailsEdit.selImg")}</Button>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Box
+                    sx={{
+                      width: '100%',
+                      maxWidth: 280,
+                      height: 158, // 16:9 aspect ratio
+                      borderRadius: 2,
+                      overflow: 'hidden',
+                      mx: 'auto',
+                      mb: 2,
+                      backgroundColor: group.photoUrl ? 'transparent' : 'grey.100',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '1px solid',
+                      borderColor: 'grey.300',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        borderColor: 'primary.main'
+                      }
+                    }}
+                    onClick={(e) => { e.preventDefault(); props.togglePhotoEditor(true, group); }}
+                  >
+                    {group.photoUrl ? (
+                      <img
+                        src={group.photoUrl}
+                        alt="group"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                      />
+                    ) : (
+                      <Stack alignItems="center" spacing={1} sx={{ color: 'grey.500' }}>
+                        <Icon sx={{ fontSize: 32 }}>photo_camera</Icon>
+                        <Typography variant="body2" color="grey.500">
+                          Click to add photo
+                        </Typography>
+                      </Stack>
+                    )}
+                  </Box>
+                  <Button 
+                    variant="outlined" 
+                    onClick={(e) => { e.preventDefault(); props.togglePhotoEditor(true, group); }} 
+                    data-testid="change-photo-button" 
+                    aria-label="Change group photo"
+                    size="small"
+                  >
+                    {group.photoUrl ? Locale.label("common.changePhoto") : "Add Photo"}
+                  </Button>
+                </Box>
               </Grid>
 
               <Grid size={{ xs: 12, md: 6 }}>
@@ -183,14 +224,6 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
           }
           {getAttendance()}
         </InputBox>
-
-        {selectPhotoField && (
-          <GalleryModal
-            onClose={() => setSelectPhotoField(null)}
-            onSelect={handlePhotoSelected}
-            aspectRatio={1.78}
-          />
-        )}
       </>
     );
 };

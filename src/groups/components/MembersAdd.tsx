@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ApiHelper, type GroupInterface, DisplayBox, type GroupMemberInterface, PersonHelper, type PersonInterface, Loading, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, TableHead, Avatar } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props { group: GroupInterface, addFunction: (person: PersonInterface) => void, hiddenPeople?: string[] }
@@ -42,7 +42,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
       const gm = filtered[i];
       rows.push(
         <TableRow key={i}>
-          <TableCell><img src={PersonHelper.getPhotoUrl(gm.person)} alt="avatar" /></TableCell>
+          <TableCell><Avatar src={PersonHelper.getPhotoUrl(gm.person)} sx={{ width: 48, height: 48 }} /></TableCell>
           <TableCell><Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link></TableCell>
           <TableCell><SmallButton icon="person_add" text={Locale.label("common.add")} onClick={() => addMember(gm)} color="success" data-testid="add-member-button" ariaLabel="Add member to group" /></TableCell>
         </TableRow>

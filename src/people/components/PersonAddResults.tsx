@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import { type PersonInterface } from "@churchapps/helpers"
-import { Table, TableBody, TableRow, TableCell } from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, Avatar } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 
@@ -35,7 +35,7 @@ export const PersonAddResults: React.FC<Props> = (props:Props) => {
 
     rows.push(
       <TableRow key={sr.id}>
-        <TableCell><img src={props.getPhotoUrl(sr)} alt="avatar" /></TableCell>
+        <TableCell><Avatar src={props.getPhotoUrl(sr)} sx={{ width: 48, height: 48 }} /></TableCell>
         <TableCell>{sr.name.display}{props.includeEmail && (<><br /><i style={{ color: "#999" }}>{sr.contactInfo.email}</i></>)}</TableCell>
         <TableCell>
           <SmallButton color="success" icon="person" text={props.actionLabel || "Add"} ariaLabel={`Add person ${sr.name.display}`} onClick={() => handleAdd(sr)} data-testid={`add-person-button-${sr.id || 'new'}`} />

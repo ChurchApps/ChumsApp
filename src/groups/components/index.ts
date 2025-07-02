@@ -1,5 +1,6 @@
 export * from "../../components"
 export { GroupAdd } from "./GroupAdd"
+export { GroupBanner } from "./GroupBanner"
 export { GroupDetails } from "./GroupDetails"
 export { GroupDetailsEdit } from "./GroupDetailsEdit"
 export { GroupMembers } from "./GroupMembers"

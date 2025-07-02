@@ -1,6 +1,6 @@
 import React from "react";
 import { type PersonInterface, PersonHelper, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box, Avatar } from "@mui/material"
 
 interface Props {
   handleSearch: (text: string) => void,
@@ -28,7 +28,7 @@ export const Search: React.FC<Props> = (props) => {
     const tableRows = props.searchResults?.map((person) => (
       <TableRow key={person.id}>
         <TableCell style={{paddingLeft: 0}}>
-          <img src={PersonHelper.getPhotoUrl(person)} alt="avatar" />
+          <Avatar src={PersonHelper.getPhotoUrl(person)} sx={{ width: 48, height: 48 }} />
         </TableCell>
         <TableCell>{person.name.display}</TableCell>
         <TableCell style={{paddingRight: 0}}>

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo, memo, type JSX } from
 import { Link, useNavigate } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
 import { PersonHelper, type PersonInterface, Loading, ApiHelper, ArrayHelper, Locale, CreatePerson } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton } from "@mui/material"
+import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Avatar, Typography, Stack, Box, Chip, Card } from "@mui/material";
+import { Email as EmailIcon, Phone as PhoneIcon } from "@mui/icons-material";
 
 interface Props {
   people: PersonInterface[],
@@ -26,11 +27,24 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
 
   const getPhotoJSX = useCallback((p: PersonInterface) => {
     const photoUrl = PersonHelper.getPhotoUrl(p);
-    if (photoUrl === "/images/sample-profile.png") {
-      return <img src={photoUrl} alt="avatar" />
-    } else {
-      return <Tooltip componentsProps={{ tooltip: { sx: { padding: "0" } } }} title={<div dangerouslySetInnerHTML={{ __html: '<img src="' + photoUrl + '" style="max-width: 200px"/>' }} />} arrow placement="right"><a href={photoUrl} target="_blank" rel="noopener noreferrer"><img src={photoUrl} alt="avatar" /></a></Tooltip>
-    }
+    return (
+      <Avatar 
+        src={photoUrl} 
+        sx={{ 
+          width: 56, 
+          height: 56,
+          '& img': {
+            width: '100% !important',
+            height: '100% !important',
+            borderRadius: '50% !important'
+          }
+        }}
+        component={photoUrl !== "/images/sample-profile.png" ? "a" : "div"}
+        href={photoUrl !== "/images/sample-profile.png" ? photoUrl : undefined}
+        target={photoUrl !== "/images/sample-profile.png" ? "_blank" : undefined}
+        rel={photoUrl !== "/images/sample-profile.png" ? "noopener noreferrer" : undefined}
+      />
+    );
   }, []);
 
   const getAnswer = useCallback((p: PersonInterface, key: string) => {
@@ -61,7 +75,30 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
     let result = <></>;
     switch (key) {
       case "photo": result = (getPhotoJSX(p)); break;
-      case "displayName": result = (<Link to={"/people/" + p.id.toString()}>{p.name.display}</Link>); break;
+      case "displayName": result = (
+        <Box>
+          <Link to={"/people/" + p.id.toString()} style={{ textDecoration: 'none' }}>
+            <Typography variant="h6" sx={{ color: 'primary.main', '&:hover': { textDecoration: 'underline' } }}>
+              {p.name.display}
+            </Typography>
+          </Link>
+          {p.membershipStatus && (
+            <Chip 
+              label={p.membershipStatus} 
+              size="small" 
+              variant="outlined"
+              sx={{ 
+                fontSize: '0.75rem', 
+                mt: 0.5,
+                backgroundColor: p.membershipStatus === 'Member' ? '#e8f5e9' : 
+                                p.membershipStatus === 'Visitor' ? '#fff3e0' : '#f5f5f5',
+                color: p.membershipStatus === 'Member' ? '#2e7d32' : 
+                       p.membershipStatus === 'Visitor' ? '#e65100' : '#616161'
+              }}
+            />
+          )}
+        </Box>
+      ); break;
       case "lastName": result = (<>{p.name.last}</>); break;
       case "firstName": result = (<>{p.name.first}</>); break;
       case "middleName": result = (<>{p.name.middle}</>); break;
@@ -69,13 +106,48 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
       case "city": result = (<>{p.contactInfo.city}</>); break;
       case "state": result = (<>{p.contactInfo.state}</>); break;
       case "zip": result = (<>{p.contactInfo.zip}</>); break;
-      case "email": result = (<>{p.contactInfo.email}</>); break;
-      case "phone": result = (<>{p.contactInfo.mobilePhone || p.contactInfo.homePhone || p.contactInfo.workPhone}</>); break;
+      case "email": result = (
+        <Stack direction="row" spacing={1} alignItems="center">
+          {p.contactInfo.email && (
+            <>
+              <EmailIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+              <Typography variant="body2">{p.contactInfo.email}</Typography>
+            </>
+          )}
+        </Stack>
+      ); break;
+      case "phone": result = (
+        <Stack direction="row" spacing={1} alignItems="center">
+          {(p.contactInfo.mobilePhone || p.contactInfo.homePhone || p.contactInfo.workPhone) && (
+            <>
+              <PhoneIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+              <Typography variant="body2">{p.contactInfo.mobilePhone || p.contactInfo.homePhone || p.contactInfo.workPhone}</Typography>
+            </>
+          )}
+        </Stack>
+      ); break;
       case "birthDate": result = (<>{(p.birthDate === null) ? "" : ChumsPersonHelper.getDateStringFromDate(p.birthDate)}</>); break;
       case "birthDay": result = (<>{ChumsPersonHelper.getBirthDay(p)}</>); break;
-      case "age": result = (<>{(p.birthDate === null) ? "" : PersonHelper.getAge(p.birthDate).split(" ")[0]}</>); break;
+      case "age": result = (
+        <Typography variant="body2" color="text.secondary">
+          {(p.birthDate === null) ? "" : PersonHelper.getAge(p.birthDate)}
+        </Typography>
+      ); break;
       case "gender": result = (<>{p.gender}</>); break;
-      case "membershipStatus": result = (<>{p.membershipStatus}</>); break;
+      case "membershipStatus": result = (
+        <Chip 
+          label={p.membershipStatus || 'Unknown'} 
+          size="small" 
+          variant="outlined"
+          sx={{ 
+            fontSize: '0.75rem',
+            backgroundColor: p.membershipStatus === 'Member' ? '#e8f5e9' : 
+                            p.membershipStatus === 'Visitor' ? '#fff3e0' : '#f5f5f5',
+            color: p.membershipStatus === 'Member' ? '#2e7d32' : 
+                   p.membershipStatus === 'Visitor' ? '#e65100' : '#616161'
+          }}
+        />
+      ); break;
       case "maritalStatus": result = (<>{p.maritalStatus}</>); break;
       case "anniversary": result = (<>{(p.anniversary === null) ? "" : ChumsPersonHelper.getDateStringFromDate(p.anniversary)}</>); break;
       case "nametagNotes": result = (<>{p.nametagNotes}</>); break;
@@ -171,11 +243,18 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
 
   const rows = useMemo(() => {
     return people?.map(p => (
-      <TableRow key={p.id}>
+      <TableRow 
+        key={p.id} 
+        sx={{ 
+          '&:hover': { backgroundColor: 'rgba(0,0,0,0.04)' },
+          cursor: 'pointer'
+        }}
+        onClick={() => navigate(`/people/${p.id}`)}
+      >
         {getColumns(p)}
       </TableRow>
     )) || [];
-  }, [people, getColumns]);
+  }, [people, getColumns, navigate]);
 
   const headers = useMemo(() => {
     const result: JSX.Element[] = [];
@@ -211,20 +290,46 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
   }, [columns, selectedColumns, optionalColumns, sortDirection, currentSortedCol, sortTableByKey]);
 
   const getResults = () => {
-    if (people.length === 0) return <p>{Locale.label("people.peopleSearchResults.noResMsg")}</p>
-    else return (<Table id="peopleTable">
-      {headers}
-      <TableBody>{rows}</TableBody>
-    </Table>);
+    if (people.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 4 }}>
+          <Typography variant="h6" color="text.secondary">
+            {Locale.label("people.peopleSearchResults.noResMsg")}
+          </Typography>
+        </Box>
+      );
+    }
+    
+    return (
+      <Table 
+        id="peopleTable" 
+        sx={{ 
+          '& .MuiTableCell-root': { 
+            borderBottom: '1px solid rgba(224, 224, 224, 1)',
+            py: 2
+          },
+          '& .MuiTableHead-root .MuiTableCell-root': {
+            backgroundColor: '#fafafa',
+            fontWeight: 600
+          }
+        }}
+      >
+        {headers}
+        <TableBody>{rows}</TableBody>
+      </Table>
+    );
   }
 
   if (!people) return <Loading />;
   return (
-    <div>
+    <Box>
       {getResults()}
-      <hr />
-      <CreatePerson onCreate={navigateToPersonCreate} />
-    </div>
+      <Card sx={{ mt: 3 }} id="createPersonForm">
+        <Box sx={{ p: 3 }}>
+          <CreatePerson onCreate={navigateToPersonCreate} />
+        </Box>
+      </Card>
+    </Box>
   )
 });
 

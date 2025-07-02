@@ -2,7 +2,6 @@ import React, { memo } from "react";
 import { Household, Merge, PersonEdit } from "./"
 import { type PersonInterface, PersonHelper } from "@churchapps/apphelper"
 import { ImageEditor } from "@churchapps/apphelper";
-import { Grid } from "@mui/material";
 
 interface Props {
   person: PersonInterface

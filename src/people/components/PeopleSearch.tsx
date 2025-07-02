@@ -28,7 +28,7 @@ export function PeopleSearch(props: Props) {
   }
 
   const getSimpleSearch = () => (
-    <DisplayBox headerIcon="person" headerText={Locale.label("people.peopleSearch.simpSearch")} help="chums/advanced-search" editContent={<Button onClick={(e) => {e.preventDefault(); toggleAdvanced() }} sx={{ textTransform: "none" }} data-testid="toggle-advanced-search-button" aria-label="Toggle advanced search">{Locale.label("people.peopleSearch.adv")}</Button>}>
+    <DisplayBox id="peopleSearch" headerIcon="person" headerText={Locale.label("people.peopleSearch.simpSearch")} help="chums/advanced-search" editContent={<Button onClick={(e) => {e.preventDefault(); toggleAdvanced() }} sx={{ textTransform: "none" }} data-testid="toggle-advanced-search-button" aria-label="Toggle advanced search">{Locale.label("people.peopleSearch.adv")}</Button>}>
       <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
         <InputLabel htmlFor="searchText">{Locale.label("common.name")}</InputLabel>
         <OutlinedInput id="searchText" aria-label="searchBox" name="searchText" type="text" label={Locale.label("common.name")} value={searchText} onChange={handleChange} data-testid="people-search-input"

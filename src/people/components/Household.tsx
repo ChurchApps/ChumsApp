@@ -53,7 +53,15 @@ export const Household: React.FC<Props> = memo((props) => {
           <TableCell sx={{ width: '120px', p: 3 }}>
             <Avatar 
               src={PersonHelper.getPhotoUrl(m)} 
-              sx={{ width: 80, height: 80 }}
+              sx={{ 
+                width: 80, 
+                height: 80,
+                '& img': {
+                  width: '100% !important',
+                  height: '100% !important',
+                  borderRadius: '50% !important'
+                }
+              }}
             />
           </TableCell>
           <TableCell sx={{ p: 3, width: '30%' }}>

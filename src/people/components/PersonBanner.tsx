@@ -1,5 +1,5 @@
 import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper } from "@churchapps/apphelper";
-import { Button, Grid, Typography, Chip, IconButton, Avatar, Stack, Box } from "@mui/material";
+import { Button, Typography, Chip, IconButton, Avatar, Stack, Box } from "@mui/material";
 import { Edit as EditIcon, Phone as PhoneIcon, Email as EmailIcon, Home as HomeIcon, Group as GroupIcon, VolunteerActivism as DonationIcon, CalendarMonth as AttendanceIcon, Notes as NotesIcon } from "@mui/icons-material";
 import React, { memo, useMemo } from "react";
 
