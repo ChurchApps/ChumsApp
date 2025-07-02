@@ -11,3 +11,4 @@ export { ImageEditor } from "./ImageEditor";
 export { Preview } from "./Preview";
 export { AssociatePerson } from "./AssociatePerson";
 export { Roles } from "./Roles";
+export { RolesTab } from "./RolesTab";

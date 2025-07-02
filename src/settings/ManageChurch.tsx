@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import { type ChurchInterface, ApiHelper, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
-import { Box, Typography, Stack, Button } from "@mui/material";
-import { Settings as SettingsIcon, Lock as LockIcon, PlayArrow as PlayArrowIcon, Language as LanguageIcon, LocationOn as LocationOnIcon } from "@mui/icons-material";
-import { RolesTab } from "./components/RolesTab";
+import { Box, Typography, Stack, Button, IconButton } from "@mui/material";
+import { Settings as SettingsIcon, Lock as LockIcon, PlayArrow as PlayArrowIcon, Language as LanguageIcon, LocationOn as LocationOnIcon, Edit as EditIcon } from "@mui/icons-material";
+import { RolesTab, ChurchSettings } from "./components";
 
 export const ManageChurch = () => {
   const [selectedTab, setSelectedTab] = React.useState("roles");
+  const [showChurchSettings, setShowChurchSettings] = React.useState(false);
   const [church, setChurch] = useState<ChurchInterface | null>(null);
   const [redirectUrl, setRedirectUrl] = useState<string>("");
 
   const jwt = ApiHelper.getConfig("MembershipApi").jwt;
   const churchId = UserHelper.currentUserChurch.church.id;
+
+  const loadData = () => {
+    if (!UserHelper.checkAccess(Permissions.membershipApi.settings.view)) setRedirectUrl("/");
+    ApiHelper.get("/churches/" + churchId + "?include=permissions", "MembershipApi").then((data) => setChurch(data));
+  };
 
   const getCurrentTab = () => {
     if (church) {
@@ -76,16 +82,33 @@ export const ManageChurch = () => {
               <SettingsIcon sx={{ fontSize: 32, color: "#FFF" }} />
             </Box>
             <Box>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 600,
-                  mb: 0.5,
-                  fontSize: { xs: "1.75rem", md: "2.125rem" },
-                }}
-              >
-                {church?.name}
-              </Typography>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: 600,
+                    mb: 0.5,
+                    fontSize: { xs: "1.75rem", md: "2.125rem" },
+                  }}
+                >
+                  {church?.name}
+                </Typography>
+                {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
+                  <IconButton
+                    size="small"
+                    onClick={() => setShowChurchSettings(true)}
+                    sx={{
+                      color: "rgba(255,255,255,0.8)",
+                      "&:hover": {
+                        color: "#FFF",
+                        backgroundColor: "rgba(255,255,255,0.1)",
+                      },
+                    }}
+                  >
+                    <EditIcon sx={{ fontSize: 18 }} />
+                  </IconButton>
+                )}
+              </Stack>
               <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
                 <LanguageIcon sx={{ fontSize: 16, color: "rgba(255,255,255,0.9)" }} />
                 <Typography
@@ -167,6 +190,13 @@ export const ManageChurch = () => {
 
       {/* Tab Content */}
       {selectedTab === "roles" && <Box sx={{ p: 3 }}>{getCurrentTab()}</Box>}
+      
+      {/* Church Settings Modal/Component */}
+      {showChurchSettings && (
+        <Box sx={{ p: 3 }}>
+          <ChurchSettings church={church} updatedFunction={() => { loadData(); setShowChurchSettings(false); }} />
+        </Box>
+      )}
     </>
   );
 };

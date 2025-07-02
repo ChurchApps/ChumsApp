@@ -7,6 +7,7 @@ import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
 import { useMountedState } from "@churchapps/apphelper";
 import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
+import { PageHeader } from "../components/ui";
 
 export const PeoplePage = memo(() => {
   const [searchResults, setSearchResults] = React.useState(null);
@@ -72,92 +73,69 @@ export const PeoplePage = memo(() => {
 
   return (
     <>
-      {/* Modern Blue Header */}
-      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
-          {/* Left side: Title and Stats */}
-          <Box sx={{ flex: 1 }}>
-            <Typography
-              sx={{
-                color: "#FFF",
-                fontWeight: 400,
-                mb: 1,
-                fontSize: { xs: "2rem", md: "2.5rem" },
-                lineHeight: 1.1,
-              }}
-            >
-              {Locale.label("people.peoplePage.searchPpl")}
-            </Typography>
-            <Typography variant="body1" sx={{ color: "rgba(255,255,255,0.9)" }}>
-              {searchResults ? (isSearchPerformed ? `Found ${searchResults.length} people` : `Showing ${searchResults.length} most recent people`) : "Loading people..."}
-            </Typography>
-          </Box>
-
-          {/* Center: Search Icon */}
-          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
-            <SearchIcon
-              sx={{
-                fontSize: 48,
-                color: "rgba(255,255,255,0.7)",
-                cursor: "pointer",
-                "&:hover": {
-                  color: "#FFF",
-                  transform: "scale(1.1)",
-                },
-                transition: "all 0.2s ease",
-              }}
-              onClick={() => {
-                const searchPanel = document.getElementById("peopleSearch");
-                if (searchPanel) {
-                  searchPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-                  // Focus on the search input after scrolling
-                  setTimeout(() => {
-                    const searchInput = document.getElementById("searchText") || document.querySelector('[data-testid="people-search-input"]');
-                    if (searchInput) {
-                      (searchInput as HTMLElement).focus();
-                    }
-                  }, 500);
+      <PageHeader
+        icon={<PeopleIcon />}
+        title={Locale.label("people.peoplePage.searchPpl")}
+        subtitle={searchResults ? (isSearchPerformed ? `Found ${searchResults.length} people` : `Showing ${searchResults.length} most recent people`) : "Loading people..."}
+      >
+        <SearchIcon
+          sx={{
+            fontSize: 32,
+            color: "rgba(255,255,255,0.8)",
+            cursor: "pointer",
+            "&:hover": {
+              color: "#FFF",
+              transform: "scale(1.1)",
+            },
+            transition: "all 0.2s ease",
+            mr: 2,
+          }}
+          onClick={() => {
+            const searchPanel = document.getElementById("peopleSearch");
+            if (searchPanel) {
+              searchPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+              // Focus on the search input after scrolling
+              setTimeout(() => {
+                const searchInput = document.getElementById("searchText") || document.querySelector('[data-testid="people-search-input"]');
+                if (searchInput) {
+                  (searchInput as HTMLElement).focus();
                 }
-              }}
-            />
-          </Box>
-
-          {/* Right side: Quick Actions */}
-          <Stack direction="row" spacing={1} flexWrap="wrap">
-            <Button
-              variant="outlined"
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                },
-              }}
-              startIcon={<PersonAddIcon />}
-              onClick={() => {
-                // Scroll to the CreatePerson component at the bottom
-                const createPersonSection = document.querySelector('[data-cy="createPerson"]') || document.querySelector(".create-person") || document.getElementById("createPersonForm");
-                if (createPersonSection) {
-                  createPersonSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                  // Focus on first input field after scrolling
-                  setTimeout(() => {
-                    const firstInput = createPersonSection.querySelector("input") as HTMLElement;
-                    if (firstInput) {
-                      firstInput.focus();
-                    }
-                  }, 500);
-                } else {
-                  // Fallback: scroll to bottom of page
-                  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+              }, 500);
+            }
+          }}
+        />
+        <Button
+          variant="outlined"
+          sx={{
+            color: "#FFF",
+            borderColor: "rgba(255,255,255,0.5)",
+            "&:hover": {
+              borderColor: "#FFF",
+              backgroundColor: "rgba(255,255,255,0.1)",
+            },
+          }}
+          startIcon={<PersonAddIcon />}
+          onClick={() => {
+            // Scroll to the CreatePerson component at the bottom
+            const createPersonSection = document.querySelector('[data-cy="createPerson"]') || document.querySelector(".create-person") || document.getElementById("createPersonForm");
+            if (createPersonSection) {
+              createPersonSection.scrollIntoView({ behavior: "smooth", block: "start" });
+              // Focus on first input field after scrolling
+              setTimeout(() => {
+                const firstInput = createPersonSection.querySelector("input") as HTMLElement;
+                if (firstInput) {
+                  firstInput.focus();
                 }
-              }}
-            >
-              Add Person
-            </Button>
-          </Stack>
-        </Stack>
-      </Box>
+              }, 500);
+            } else {
+              // Fallback: scroll to bottom of page
+              window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+            }
+          }}
+        >
+          Add Person
+        </Button>
+      </PageHeader>
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>

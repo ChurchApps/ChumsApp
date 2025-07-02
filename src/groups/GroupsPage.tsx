@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { GroupAdd } from "./components";
-import { ApiHelper, DisplayBox, UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
+import { ApiHelper, UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import {
- Icon, Table, TableBody, TableCell, TableRow, TableHead, Stack, IconButton, Paper, Box, Chip 
+ Table, TableBody, TableCell, TableRow, TableHead, Stack, Paper, Box, Chip, Button 
 } from "@mui/material";
+import { Groups as GroupsIcon, Add as AddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
-import { Banner } from "@churchapps/apphelper";
+import { PageHeader } from "../components/ui";
 
 export const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
@@ -14,26 +15,6 @@ export const GroupsPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const isMounted = useMountedState();
 
-  const getEditContent = () => {
-    if (!UserHelper.checkAccess(Permissions.membershipApi.groups.edit)) return null;
-    else {
-      return (
-        <Stack direction="row" alignItems="center">
-          <ExportLink data={groups} spaceAfter={true} filename="groups.csv" />{" "}
-          <IconButton
-            aria-label="addGroup"
-            color="primary"
-            onClick={() => {
-              setShowAdd(true);
-            }}
-            data-testid="add-group-button"
-          >
-            <Icon>add</Icon>
-          </IconButton>
-        </Stack>
-      );
-    }
-  };
 
   const handleAddUpdated = () => {
     setShowAdd(false);
@@ -128,15 +109,56 @@ export const GroupsPage = () => {
 
   return (
     <>
-      <Banner>
-        <h1>{Locale.label("groups.groupsPage.groups")}</h1>
-      </Banner>
-      <div id="mainContent">
+      <PageHeader
+        icon={<GroupsIcon />}
+        title={Locale.label("groups.groupsPage.groups")}
+        subtitle={groups.length > 0 ? `Manage ${groups.length} groups and their members` : "Create and organize groups for your church community"}
+      >
+        {UserHelper.checkAccess(Permissions.membershipApi.groups.edit) && (
+          <>
+            <Button
+              variant="outlined"
+              startIcon={<ExportIcon />}
+              component={ExportLink}
+              data={groups}
+              filename="groups.csv"
+              sx={{
+                color: "#FFF",
+                borderColor: "rgba(255,255,255,0.5)",
+                "&:hover": {
+                  borderColor: "#FFF",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                },
+                mr: 1,
+              }}
+            >
+              Export
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={() => setShowAdd(true)}
+              sx={{
+                color: "#FFF",
+                borderColor: "rgba(255,255,255,0.5)",
+                "&:hover": {
+                  borderColor: "#FFF",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                },
+              }}
+              data-testid="add-group-button"
+            >
+              Add Group
+            </Button>
+          </>
+        )}
+      </PageHeader>
+
+      {/* Main Content */}
+      <Box sx={{ p: 3 }}>
         {addBox}
-        <DisplayBox id="groupsBox" headerIcon="group" headerText={Locale.label("groups.groupsPage.groups")} editContent={getEditContent()} help="chums/groups">
-          {getTable()}
-        </DisplayBox>
-      </div>
+        {getTable()}
+      </Box>
     </>
   );
 };

@@ -46,7 +46,7 @@ export const Household: React.FC<Props> = memo((props) => {
   const getRows = useMemo(() => {
     if (!members) return [];
 
-    return members.map((m) => {
+    return members.filter(m => m.id !== props.person.id).map((m) => {
       const age = m.birthDate ? PersonHelper.getAge(m.birthDate) : null;
       const email = m.contactInfo?.email;
       const phone = m.contactInfo?.mobilePhone || m.contactInfo?.homePhone || m.contactInfo?.workPhone;

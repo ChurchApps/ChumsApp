@@ -14,9 +14,13 @@ export const SongsPage = memo(() => {
   const [redirect, setRedirect] = React.useState("");
   const [searchFilter, setSearchFilter] = React.useState("");
   const [showSearchField, setShowSearchField] = React.useState(false);
+  const [failedImages, setFailedImages] = React.useState<Set<string>>(new Set());
 
   const loadData = useCallback(async () => {
-    ApiHelper.get("/songDetails", "ContentApi").then((data) => setSongs(data));
+    ApiHelper.get("/songDetails", "ContentApi").then((data) => {
+      setSongs(data);
+      setFailedImages(new Set()); // Reset failed images when loading new data
+    });
   }, []);
 
   const handleAdd = useCallback(async (songDetail: SongDetailInterface) => {
@@ -60,14 +64,16 @@ export const SongsPage = memo(() => {
   }, [loadData]);
 
   const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.style.display = "none";
+    const imgSrc = e.currentTarget.src;
+    setFailedImages(prev => new Set(prev).add(imgSrc));
   }, []);
 
   // Get the first song with album art for the header
   const headerAlbumArt = useMemo(() => {
     if (!songs || songs.length === 0) return null;
-    return songs.find((song) => song.thumbnail)?.thumbnail || null;
-  }, [songs]);
+    const songWithThumbnail = songs.find((song) => song.thumbnail && !failedImages.has(song.thumbnail));
+    return songWithThumbnail?.thumbnail || null;
+  }, [songs, failedImages]);
 
   const formatSeconds = useCallback((seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -156,7 +162,7 @@ export const SongsPage = memo(() => {
                 <Stack direction="row" spacing={2} alignItems="center">
                   {/* Thumbnail/Avatar */}
                   <Avatar
-                    src={songDetail.thumbnail}
+                    src={songDetail.thumbnail && !failedImages.has(songDetail.thumbnail) ? songDetail.thumbnail : undefined}
                     sx={{
                       width: 60,
                       height: 60,
@@ -259,6 +265,7 @@ export const SongsPage = memo(() => {
                   bgcolor: "rgba(255,255,255,0.2)",
                   border: "2px solid rgba(255,255,255,0.3)",
                 }}
+                onError={handleImageError}
               >
                 <LibraryIcon sx={{ fontSize: 32, color: "#FFF" }} />
               </Avatar>

@@ -60,7 +60,7 @@ export const ServiceOrder = memo((props: Props) => {
             fontWeight: 600,
           }}
         >
-          Add Item
+          Add Section
         </Button>
       </Stack>
     ), [props.plan?.id, addHeader]);

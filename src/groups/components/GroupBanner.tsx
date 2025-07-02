@@ -247,7 +247,7 @@ export const GroupBanner = memo((props: Props) => {
                   </Typography>
                 )}
                 {quickStats.map((stat, idx) => (
-                  <Stack key={idx} direction="row" alignItems="center">
+                  <Stack key={`quickstat-${stat.value}-${idx}`} direction="row" alignItems="center">
                     {stat.icon}
                     <Typography
                       variant="body2"
@@ -281,7 +281,7 @@ export const GroupBanner = memo((props: Props) => {
                     </Typography>
                     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
                       {attendanceInfo.map((info, idx) => (
-                        <Stack key={idx} direction="row" alignItems="center" spacing={0.5}>
+                        <Stack key={`attendance-${info.label}-${idx}`} direction="row" alignItems="center" spacing={0.5}>
                           {info.icon}
                           <Typography
                             variant="body2"
@@ -325,7 +325,7 @@ export const GroupBanner = memo((props: Props) => {
                       <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                         {validLabels.slice(0, 4).map((label, idx) => (
                           <Chip
-                            key={idx}
+                            key={`label-${label.trim()}-${idx}`}
                             label={label.trim()}
                             size="small"
                             sx={{
@@ -418,7 +418,7 @@ export const GroupBanner = memo((props: Props) => {
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
               {groupServiceTimes.map((gst, idx) => (
                 <Chip
-                  key={idx}
+                  key={`servicetime-${gst.serviceTime.name}-${idx}`}
                   icon={<CalendarIcon sx={{ fontSize: 14 }} />}
                   label={gst.serviceTime.name}
                   size="small"

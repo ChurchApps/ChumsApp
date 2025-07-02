@@ -2,12 +2,13 @@ import React, { useEffect, memo, useMemo } from "react";
 import { ApiHelper } from "@churchapps/apphelper";
 import { type SongDetailInterface, type SongDetailLinkInterface } from "../../../helpers";
 import {
- Stack, Box, Card, CardContent, Typography, Avatar, Chip, Link as MuiLink, Divider, Paper 
+ Stack, Box, Card, CardContent, Typography, Avatar, Chip, Link as MuiLink, Divider, Paper, Button, IconButton 
 } from "@mui/material";
-import { Link as LinkIcon, OpenInNew as ExternalLinkIcon } from "@mui/icons-material";
+import { Link as LinkIcon, OpenInNew as ExternalLinkIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 
 interface Props {
   songDetail: SongDetailInterface;
+  onEdit?: () => void;
 }
 
 export const SongDetailLinks = memo((props: Props) => {
@@ -66,8 +67,9 @@ export const SongDetailLinks = memo((props: Props) => {
         <Card
           key={link.id || index}
           sx={{
-            minWidth: 120,
-            maxWidth: 160,
+            flex: "0 0 calc(50% - 8px)",
+            minHeight: 64,
+            maxHeight: 64,
             transition: "all 0.2s ease-in-out",
             cursor: "pointer",
             "&:hover": {
@@ -81,88 +83,95 @@ export const SongDetailLinks = memo((props: Props) => {
           rel="noopener noreferrer"
           style={{ textDecoration: "none" }}
         >
-          <CardContent sx={{ p: 2, textAlign: "center", "&:last-child": { pb: 2 } }}>
+          <CardContent sx={{ p: 2, textAlign: "center", "&:last-child": { pb: 2 }, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
             {logo ? (
-              <Box
-                sx={{
-                  height: 40,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  mb: 1,
+              <img
+                src={logo}
+                alt={link.service}
+                style={{
+                  maxHeight: 40,
+                  maxWidth: 40,
+                  objectFit: "contain",
                 }}
-              >
-                <img
-                  src={logo}
-                  alt={link.service}
-                  style={{
-                    maxHeight: 30,
-                    maxWidth: "100%",
-                    objectFit: "contain",
-                  }}
-                />
-              </Box>
+              />
             ) : (
               <Avatar
                 sx={{
                   bgcolor: color,
                   width: 40,
                   height: 40,
-                  mx: "auto",
-                  mb: 1,
                 }}
               >
-                <LinkIcon sx={{ color: "white" }} />
+                <LinkIcon sx={{ color: "white", fontSize: 24 }} />
               </Avatar>
             )}
-
-            <Typography
-              variant="caption"
-              sx={{
-                fontWeight: 600,
-                color: "text.primary",
-                display: "block",
-              }}
-            >
-              {link.service}
-            </Typography>
-
-            <ExternalLinkIcon
-              sx={{
-                fontSize: 12,
-                color: "text.secondary",
-                mt: 0.5,
-              }}
-            />
           </CardContent>
         </Card>
       );
     });
   }, [allLinks, serviceLogos, serviceColors]);
 
-  if (!allLinks || allLinks.length === 0) return null;
-
   return (
     <Box>
-      <Divider sx={{ mb: 2 }} />
-      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
-        <LinkIcon sx={{ color: "primary.main", fontSize: 20 }} />
-        <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
-          External Links
-        </Typography>
+      <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <LinkIcon sx={{ color: "primary.main", fontSize: 20 }} />
+          <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
+            External Links
+          </Typography>
+        </Stack>
+        {props.onEdit && (
+          <IconButton
+            onClick={props.onEdit}
+            size="small"
+            sx={{
+              color: "primary.main",
+              "&:hover": { backgroundColor: "primary.light" },
+            }}
+          >
+            <EditIcon fontSize="small" />
+          </IconButton>
+        )}
       </Stack>
 
-      <Stack
-        direction="row"
-        spacing={2}
-        useFlexGap
-        sx={{
-          flexWrap: "wrap",
-          justifyContent: { xs: "center", sm: "flex-start" },
-        }}
-      >
-        {linkCards}
-      </Stack>
+      {(!allLinks || allLinks.length === 0) ? (
+        <Paper
+          sx={{
+            p: 3,
+            textAlign: "center",
+            backgroundColor: "grey.50",
+            border: "1px dashed",
+            borderColor: "grey.300",
+          }}
+        >
+          <LinkIcon sx={{ fontSize: 48, color: "grey.400", mb: 1 }} />
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+            No external links added yet
+          </Typography>
+          {props.onEdit && (
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={props.onEdit}
+              size="small"
+            >
+              Add First Link
+            </Button>
+          )}
+        </Paper>
+      ) : (
+        <Stack
+          direction="row"
+          spacing={2}
+          useFlexGap
+          sx={{
+            flexWrap: "wrap",
+            justifyContent: { xs: "center", sm: "flex-start" },
+          }}
+        >
+          {linkCards}
+        </Stack>
+      )}
     </Box>
   );
 });

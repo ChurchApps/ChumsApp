@@ -125,7 +125,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
           />);
       }
 
-      rows.push(<TableRow key={i}>
+      rows.push(<TableRow key={gm.id}>
           <TableCell>
             <Avatar
               src={PersonHelper.getPhotoUrl(gm.person)}

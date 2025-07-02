@@ -3,6 +3,7 @@ import { Locale, UserHelper, Permissions } from "@churchapps/apphelper";
 interface MenuItem {
   url: string;
   label: string;
+  icon?: string;
 }
 
 export class SecondaryMenuHelper {
@@ -21,9 +22,9 @@ export class SecondaryMenuHelper {
   static getPeopleMenu = (path: string) => {
     const menuItems: MenuItem[] = [];
     let label: string = "";
-    menuItems.push({ url: "/groups", label: Locale.label("components.wrapper.groups") });
-    menuItems.push({ url: "/people", label: Locale.label("components.wrapper.ppl") });
-    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) menuItems.push({ url: "/attendance", label: Locale.label("components.wrapper.att") });
+    menuItems.push({ url: "/groups", label: Locale.label("components.wrapper.groups"), icon: "groups" });
+    menuItems.push({ url: "/people", label: Locale.label("components.wrapper.ppl"), icon: "person" });
+    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.viewSummary)) menuItems.push({ url: "/attendance", label: Locale.label("components.wrapper.att"), icon: "calendar_month" });
 
     if (path.startsWith("/groups")) label = Locale.label("components.wrapper.groups");
     else if (path.startsWith("/people")) label = Locale.label("components.wrapper.ppl");
@@ -35,9 +36,9 @@ export class SecondaryMenuHelper {
   static getSettingsMenu = (path: string, data: any) => {
     const menuItems: MenuItem[] = [];
     let label: string = "";
-    if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) menuItems.push({ url: "/settings", label: Locale.label("components.wrapper.set") });
-    if (UserHelper.checkAccess(Permissions.membershipApi.server.admin)) menuItems.push({ url: "/admin", label: Locale.label("components.wrapper.servAdmin") });
-    if (data.formPermission) menuItems.push({ url: "/forms", label: Locale.label("components.wrapper.forms") });
+    if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) menuItems.push({ url: "/settings", label: Locale.label("components.wrapper.set"), icon: "settings" });
+    if (UserHelper.checkAccess(Permissions.membershipApi.server.admin)) menuItems.push({ url: "/admin", label: Locale.label("components.wrapper.servAdmin"), icon: "admin_panel_settings" });
+    if (data.formPermission) menuItems.push({ url: "/forms", label: Locale.label("components.wrapper.forms"), icon: "description" });
 
     if (path.startsWith("/settings")) label = Locale.label("components.wrapper.set");
     else if (path.startsWith("/admin")) label = Locale.label("components.wrapper.servAdmin");
@@ -49,8 +50,8 @@ export class SecondaryMenuHelper {
   static getProfileMenu = () => {
     const menuItems: MenuItem[] = [];
     const label: string = "";
-    menuItems.push({ url: "/profile", label: "Profile" });
-    menuItems.push({ url: "/profile/devices", label: "Devices" });
+    menuItems.push({ url: "/profile", label: "Profile", icon: "person" });
+    menuItems.push({ url: "/profile/devices", label: "Devices", icon: "devices" });
     return { menuItems, label };
   };
 
@@ -58,10 +59,10 @@ export class SecondaryMenuHelper {
     const menuItems: MenuItem[] = [];
     let label: string = "";
     if (UserHelper.checkAccess(Permissions.membershipApi.plans.edit)) {
-      menuItems.push({ url: "/plans", label: Locale.label("components.wrapper.plans") });
-      menuItems.push({ url: "/plans/songs", label: Locale.label("components.wrapper.songs") });
+      menuItems.push({ url: "/plans", label: Locale.label("components.wrapper.plans"), icon: "assignment" });
+      menuItems.push({ url: "/plans/songs", label: Locale.label("components.wrapper.songs"), icon: "music_note" });
     }
-    menuItems.push({ url: "/tasks", label: Locale.label("components.wrapper.tasks") });
+    menuItems.push({ url: "/tasks", label: Locale.label("components.wrapper.tasks"), icon: "list_alt" });
 
     if (path.startsWith("/plans/songs")) label = Locale.label("components.wrapper.songs");
     else if (path.startsWith("/plans")) label = Locale.label("components.wrapper.plans");
@@ -73,9 +74,9 @@ export class SecondaryMenuHelper {
   static getDonationsMenu = (path: string) => {
     const menuItems: MenuItem[] = [];
     let label: string = "";
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({ url: "/donations", label: Locale.label("donations.donations.summary") });
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({ url: "/donations/batches", label: Locale.label("donations.donations.batches") });
-    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({ url: "/donations/funds", label: Locale.label("donations.donations.funds") });
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({ url: "/donations", label: Locale.label("donations.donations.summary"), icon: "volunteer_activism" });
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({ url: "/donations/batches", label: Locale.label("donations.donations.batches"), icon: "folder" });
+    if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({ url: "/donations/funds", label: Locale.label("donations.donations.funds"), icon: "account_balance" });
 
     if (path.startsWith("/donations/funds")) label = Locale.label("donations.donations.funds");
     else if (path.startsWith("/donations/batches")) label = Locale.label("donations.donations.batches");
@@ -87,7 +88,7 @@ export class SecondaryMenuHelper {
   static getDashboardMenu = (path: string) => {
     const menuItems: MenuItem[] = [];
     let label: string = "";
-    menuItems.push({ url: "/", label: Locale.label("components.wrapper.dash") });
+    menuItems.push({ url: "/", label: Locale.label("components.wrapper.dash"), icon: "dashboard" });
 
     if (path === "/") label = Locale.label("components.wrapper.dash");
 

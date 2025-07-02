@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { ApiHelper, DisplayBox, InputBox, SmallButton } from "@churchapps/apphelper";
 import { type SongDetailLinkInterface } from "../../../helpers";
 import {
- FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, type SelectChangeEvent 
+ FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, type SelectChangeEvent, Stack, Typography, Box, Button, IconButton 
 } from "@mui/material";
+import { Link as LinkIcon, Done as DoneIcon, Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
 
 interface Props {
   songDetailId: string;
@@ -159,19 +160,48 @@ export const SongDetailLinksEdit = (props: Props) => {
     );
   } else {
     return (
-      <>
-        <DisplayBox headerText="Links" headerIcon="link" editContent={<SmallButton icon="add" onClick={handleAdd} />}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Service</TableCell>
-                <TableCell>Key</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{songDetailLinks?.map((sd) => getRow(sd))}</TableBody>
-          </Table>
-        </DisplayBox>
-      </>
+      <Box>
+        <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <LinkIcon sx={{ color: "primary.main", fontSize: 20 }} />
+            <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
+              External Links
+            </Typography>
+          </Stack>
+          <Stack direction="row" spacing={1}>
+            <IconButton
+              onClick={handleAdd}
+              size="small"
+              sx={{
+                color: "primary.main",
+                "&:hover": { backgroundColor: "primary.light" },
+              }}
+            >
+              <AddIcon fontSize="small" />
+            </IconButton>
+            <IconButton
+              onClick={props.reload}
+              size="small"
+              sx={{
+                color: "success.main",
+                "&:hover": { backgroundColor: "success.light" },
+              }}
+            >
+              <DoneIcon fontSize="small" />
+            </IconButton>
+          </Stack>
+        </Stack>
+
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Service</TableCell>
+              <TableCell>Key</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>{songDetailLinks?.map((sd) => getRow(sd))}</TableBody>
+        </Table>
+      </Box>
     );
   }
 };

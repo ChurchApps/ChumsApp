@@ -3,7 +3,7 @@ import { ApiHelper, ArrayHelper } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import {
- Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, Avatar, Chip 
+ Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, Avatar, Chip, IconButton 
 } from "@mui/material";
 import {
   LibraryMusic as MusicIcon,
@@ -23,12 +23,15 @@ import {
 import { Arrangement } from "./components/Arrangement";
 import { SongSearchDialog } from "./SongSearchDialog";
 import { SongDetailsEdit } from "./components/SongDetailsEdit";
+import { SongDetailLinks } from "./components/SongDetailLinks";
+import { SongDetailLinksEdit } from "./components/SongDetailLinksEdit";
 
 export const SongPage = memo(() => {
   const [song, setSong] = React.useState<SongInterface>(null);
   const [songDetail, setSongDetail] = React.useState<SongDetailInterface>(null);
   const [showSearch, setShowSearch] = React.useState(false);
   const [editSongDetails, setEditSongDetails] = React.useState(false);
+  const [editLinks, setEditLinks] = React.useState(false);
   const [arrangements, setArrangements] = React.useState<ArrangementInterface[]>([]);
   const [selectedArrangement, setSelectedArrangement] = React.useState(null);
   const params = useParams();
@@ -76,72 +79,96 @@ export const SongPage = memo(() => {
     }, [song?.id, loadData]);
 
   const arrangementNavigation = useMemo(() => (
-      <Card sx={{ height: "fit-content", borderRadius: 2 }}>
-        <CardContent>
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
-            <MusicIcon sx={{ color: "primary.main" }} />
-            <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
-              Arrangements
-            </Typography>
-          </Stack>
+      <Stack spacing={3}>
+        <Card sx={{ height: "fit-content", borderRadius: 2 }}>
+          <CardContent>
+            <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>
+              <MusicIcon sx={{ color: "primary.main" }} />
+              <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
+                Arrangements
+              </Typography>
+            </Stack>
 
-          <List sx={{ p: 0 }}>
-            {arrangements.map((arrangement, index) => (
-              <Box key={arrangement.id}>
-                <ListItem sx={{ px: 0 }}>
-                  <ListItemButton
-                    selected={selectedArrangement?.id === arrangement.id}
-                    onClick={() => selectArrangement(arrangement.id)}
-                    sx={{
-                      borderRadius: 1,
-                      "&.Mui-selected": {
-                        backgroundColor: "primary.light",
-                        "&:hover": { backgroundColor: "primary.light" },
-                      },
-                      "&:hover": { backgroundColor: "action.hover" },
-                    }}
-                  >
-                    <ListItemIcon sx={{ minWidth: 36 }}>
-                      <ArrangementIcon sx={{ color: selectedArrangement?.id === arrangement.id ? "primary.main" : "text.secondary" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={arrangement.name}
-                      primaryTypographyProps={{
-                        sx: {
-                          fontWeight: selectedArrangement?.id === arrangement.id ? 600 : 400,
-                          color: selectedArrangement?.id === arrangement.id ? "primary.main" : "text.primary",
+            <List sx={{ p: 0 }}>
+              {arrangements.map((arrangement, index) => (
+                <Box key={arrangement.id}>
+                  <ListItem sx={{ px: 0 }}>
+                    <ListItemButton
+                      selected={selectedArrangement?.id === arrangement.id}
+                      onClick={() => selectArrangement(arrangement.id)}
+                      sx={{
+                        borderRadius: 1,
+                        "&.Mui-selected": {
+                          backgroundColor: "primary.light",
+                          "&:hover": { backgroundColor: "primary.light" },
                         },
+                        "&:hover": { backgroundColor: "action.hover" },
                       }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-                {index < arrangements.length - 1 && <Divider sx={{ my: 0.5 }} />}
-              </Box>
-            ))}
-          </List>
+                    >
+                      <ListItemIcon sx={{ minWidth: 36 }}>
+                        <ArrangementIcon sx={{ color: selectedArrangement?.id === arrangement.id ? "primary.main" : "text.secondary" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={arrangement.name}
+                        primaryTypographyProps={{
+                          sx: {
+                            fontWeight: selectedArrangement?.id === arrangement.id ? 600 : 400,
+                            color: selectedArrangement?.id === arrangement.id ? "primary.main" : "text.primary",
+                          },
+                        }}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                  {index < arrangements.length - 1 && <Divider sx={{ my: 0.5 }} />}
+                </Box>
+              ))}
+            </List>
 
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={() => setShowSearch(true)}
-            fullWidth
-            sx={{
-              mt: 2,
-              borderStyle: "dashed",
-              color: "text.secondary",
-              borderColor: "grey.400",
-              "&:hover": {
-                borderColor: "primary.main",
-                color: "primary.main",
-                backgroundColor: "primary.light",
-              },
-            }}
-          >
-            Add Arrangement
-          </Button>
-        </CardContent>
-      </Card>
-    ), [arrangements, selectedArrangement, selectArrangement]);
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={() => setShowSearch(true)}
+              fullWidth
+              sx={{
+                mt: 2,
+                borderStyle: "dashed",
+                color: "text.secondary",
+                borderColor: "grey.400",
+                "&:hover": {
+                  borderColor: "primary.main",
+                  color: "primary.main",
+                  backgroundColor: "primary.light",
+                },
+              }}
+            >
+              Add Arrangement
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* External Links Card */}
+        <Card sx={{ height: "fit-content", borderRadius: 2 }}>
+          <CardContent>
+            {songDetail && (
+              editLinks ? (
+                <SongDetailLinksEdit
+                  songDetailId={songDetail.id}
+                  reload={() => {
+                    setEditLinks(false);
+                    loadData();
+                  }}
+                />
+              ) : (
+                <SongDetailLinks
+                  songDetail={songDetail}
+                  onEdit={() => setEditLinks(true)}
+                />
+              )
+            )}
+          </CardContent>
+        </Card>
+      </Stack>
+    ), [arrangements, selectedArrangement, selectArrangement, songDetail, editLinks, loadData]);
 
   const currentContent = useMemo(() => {
     if (!selectedArrangement) {
@@ -197,16 +224,30 @@ export const SongPage = memo(() => {
 
             {/* Song Info */}
             <Box>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 600,
-                  mb: 0.5,
-                  fontSize: { xs: "1.75rem", md: "2.125rem" },
-                }}
-              >
-                {songDetail?.title || song?.name || "Loading..."}
-              </Typography>
+              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: "1.75rem", md: "2.125rem" },
+                  }}
+                >
+                  {songDetail?.title || song?.name || "Loading..."}
+                </Typography>
+                <IconButton
+                  onClick={() => setEditSongDetails(true)}
+                  sx={{
+                    color: "rgba(255,255,255,0.8)",
+                    "&:hover": {
+                      color: "#FFF",
+                      backgroundColor: "rgba(255,255,255,0.1)",
+                    },
+                  }}
+                  size="small"
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </Stack>
 
               {/* Song Stats - All Details */}
               <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mt: 1, gap: 1 }}>
@@ -349,22 +390,6 @@ export const SongPage = memo(() => {
               width: { xs: "100%", md: "auto" },
             }}
           >
-            <Button
-              variant="outlined"
-              startIcon={<EditIcon />}
-              onClick={() => setEditSongDetails(true)}
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                },
-              }}
-              title="Edit Song Details"
-            >
-              Edit Details
-            </Button>
             <Button
               variant="outlined"
               startIcon={<AddIcon />}

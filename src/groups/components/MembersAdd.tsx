@@ -48,7 +48,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
     }
     for (let i = 0; i < filtered.length; i++) {
       const gm = filtered[i];
-      rows.push(<TableRow key={i}>
+      rows.push(<TableRow key={gm.personId}>
           <TableCell>
             <Avatar src={PersonHelper.getPhotoUrl(gm.person)} sx={{ width: 48, height: 48 }} />
           </TableCell>
