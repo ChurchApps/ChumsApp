@@ -45,5 +45,5 @@ jobs:
       - name: Deploy
         run:
           |
-          npm ci
+          npm ci --force
           npm run deploy-prod
