@@ -54,6 +54,7 @@
 		"notes": "Notater",
 		"remove": "Fjern",
 		"search": "Søk",
+		"searching": "Searching...",
 		"title": "Tittel",
 		"yes": "Ja"
 	},
@@ -155,6 +156,9 @@
 		}
 	},
 	"forms": {
+		"formsPage": {
+			"addForm": "Add Form"
+		},
 		"choicesEdit": {
 			"act": "Handling",
 			"choices": "Valg",
@@ -330,6 +334,11 @@
 		"sep": "September"
 	},
 	"people": {
+		"personForm": {
+			"addForm": "Add Form",
+			"form": "Form",
+			"noFormMsg": "No form submission found for this person"
+		},
 		"editCondition": {
 			"act": "Aktivitet",
 			"anniMonth": "Jubileumsmåned",
@@ -500,6 +509,9 @@
 		"zip": "Postnummer"
 	},
 	"plans": {
+		"planPage": {
+			"assign": "Team Assignments"
+		},
 		"assignmentEdit": {
 			"assignPos": "Tildel posisjon",
 			"done": "Ferdig",
@@ -785,6 +797,23 @@
 		}
 	},
 	"songs": {
+		"library": {
+			"empty": {
+				"title": "No Songs Found",
+				"message": "Get started by adding your first song to the library.",
+				"action": "Add First Song"
+			},
+			"noResults": "No songs match your search criteria."
+		},
+		"search": {
+			"placeholder": "Search songs by title or artist...",
+			"enterQuery": "Enter a search term to find songs.",
+			"noResults": "No songs found for your search.",
+			"createManually": "Create Manually",
+			"title": "Search for a Song",
+			"inputLabel": "Title or Artist",
+			"inputPlaceholder": "Enter song title or artist name..."
+		}
 		"arrangement": {
 			"title": "Arrangement",
 			"enterLyrics": "Skriv inn tekster manuelt eller importer fra PraiseCharts",

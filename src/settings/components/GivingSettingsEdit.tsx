@@ -1,11 +1,16 @@
 import React from "react";
-import { FormControl, InputLabel, MenuItem, Select, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton, type SelectChangeEvent } from "@mui/material";
-import HelpIcon from '@mui/icons-material/Help';
+import {
+ FormControl, InputLabel, MenuItem, Select, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton, type SelectChangeEvent 
+} from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
 import { ApiHelper, Locale, UniqueIdHelper } from "@churchapps/apphelper";
 import { type PaymentGatewaysInterface } from "../../helpers";
 import { FeeOptionsSettingsEdit } from "./FeeOptionsSettingsEdit";
 
-interface Props { churchId: string, saveTrigger: Date | null }
+interface Props {
+  churchId: string;
+  saveTrigger: Date | null;
+}
 
 export const GivingSettingsEdit: React.FC<Props> = (props) => {
   const [gateway, setGateway] = React.useState<PaymentGatewaysInterface>(null);
@@ -17,45 +22,55 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     e.preventDefault();
     switch (e.target.name) {
-      case "provider": setProvider(e.target.value); break;
-      case "publicKey": setPublicKey(e.target.value); break;
-      case "privateKey": setPrivateKey(e.target.value); break;
+      case "provider":
+        setProvider(e.target.value);
+        break;
+      case "publicKey":
+        setPublicKey(e.target.value);
+        break;
+      case "privateKey":
+        setPrivateKey(e.target.value);
+        break;
     }
-  }
+  };
 
   const getKeys = () => {
     if (provider === "") return null;
-    else return (<>
-      <Grid size={{ xs: 12, md: 4 }}>
-        <TextField fullWidth name="publicKey" label={Locale.label("settings.givingSettingsEdit.pubKey")} value={publicKey} onChange={handleChange} />
-      </Grid>
-      <Grid size={{ xs: 12, md: 4 }}>
-        <TextField fullWidth name="privateKey" label={Locale.label("settings.givingSettingsEdit.secKey")} value={privateKey} placeholder="********" type="password" onChange={handleChange} />
-      </Grid>
-      <Grid size={{ xs: 12 }}>
-        <Stack direction="row" alignItems="center">
-          <Typography>{Locale.label("settings.givingSettingsEdit.transFee")}</Typography>
-          <Tooltip title={Locale.label("settings.givingSettingsEdit.forceMsg")} arrow>
-            <IconButton data-testid="force-ssl-help-button" aria-label="Force SSL help">
-              <HelpIcon />
-            </IconButton>
-          </Tooltip>
-          <Switch
-            checked={payFees === true}
-            onChange={(e) => {
-              setPayFees(e.target.checked);
-            }}
-          />
-        </Stack>
-      </Grid>
-    </>);
-  }
+    else {
+      return (
+        <>
+          <Grid xs={12} md={4}>
+            <TextField fullWidth name="publicKey" label={Locale.label("settings.givingSettingsEdit.pubKey")} value={publicKey} onChange={handleChange} />
+          </Grid>
+          <Grid xs={12} md={4}>
+            <TextField fullWidth name="privateKey" label={Locale.label("settings.givingSettingsEdit.secKey")} value={privateKey} placeholder="********" type="password" onChange={handleChange} />
+          </Grid>
+          <Grid xs={12}>
+            <Stack direction="row" alignItems="center">
+              <Typography>{Locale.label("settings.givingSettingsEdit.transFee")}</Typography>
+              <Tooltip title={Locale.label("settings.givingSettingsEdit.forceMsg")} arrow>
+                <IconButton data-testid="force-ssl-help-button" aria-label="Force SSL help">
+                  <HelpIcon />
+                </IconButton>
+              </Tooltip>
+              <Switch
+                checked={payFees === true}
+                onChange={(e) => {
+                  setPayFees(e.target.checked);
+                }}
+              />
+            </Stack>
+          </Grid>
+        </>
+      );
+    }
+  };
 
   const save = () => {
     if (provider === "") {
       if (!UniqueIdHelper.isMissing(gateway?.id)) ApiHelper.delete("/gateways/" + gateway.id, "GivingApi");
     } else {
-      const gw: PaymentGatewaysInterface = (gateway === null) ? { churchId: props.churchId } : gateway;
+      const gw: PaymentGatewaysInterface = gateway === null ? { churchId: props.churchId } : gateway;
       if (privateKey !== "") {
         gw.provider = provider;
         gw.publicKey = publicKey;
@@ -64,13 +79,13 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
         ApiHelper.post("/gateways", [gw], "GivingApi");
       }
       if (gw.payFees !== payFees) {
-        ApiHelper.patch(`/gateways/${gateway.id}`, { payFees : payFees }, "GivingApi");
+        ApiHelper.patch(`/gateways/${gateway.id}`, { payFees: payFees }, "GivingApi");
       }
     }
-  }
+  };
 
   const checkSave = () => {
-    if (props.saveTrigger !== null) save()
+    if (props.saveTrigger !== null) save();
   };
 
   const loadData = async () => {
@@ -80,24 +95,25 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
       setProvider("");
       setPublicKey("");
       setPayFees(false);
-    }
-    else {
+    } else {
       setGateway(gateways[0]);
       setProvider(gateways[0].provider);
       setPublicKey(gateways[0].publicKey);
-      setPayFees(gateways[0].payFees)
+      setPayFees(gateways[0].payFees);
     }
     setPrivateKey("");
-  }
+  };
 
-  React.useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData() }, [props.churchId]);  
+  React.useEffect(() => {
+    if (!UniqueIdHelper.isMissing(props.churchId)) loadData();
+  }, [props.churchId]);
   React.useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
   return (
     <>
       {/* <div className="subHead">{Locale.label("settings.givingSettingsEdit.giving")}</div> */}
       <Grid container spacing={3} marginBottom={2}>
-        <Grid size={{ xs: 12, md: 4 }}>
+        <Grid xs={12} md={4}>
           <FormControl fullWidth>
             <InputLabel>{Locale.label("settings.givingSettingsEdit.prov")}</InputLabel>
             <Select name="provider" label={Locale.label("settings.givingSettingsEdit.prov")} value={provider} onChange={handleChange}>
@@ -111,6 +127,4 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
       <FeeOptionsSettingsEdit churchId={props.churchId} saveTrigger={props.saveTrigger} />
     </>
   );
-
-}
-
+};

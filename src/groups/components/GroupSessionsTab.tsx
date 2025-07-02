@@ -7,9 +7,8 @@ import { GroupSessions } from "./GroupSessions";
 import { MembersAdd } from "./MembersAdd";
 import { SessionAdd } from "./SessionAdd";
 
-
 interface Props {
-  group: GroupInterface
+  group: GroupInterface;
 }
 
 export const GroupSessionsTab = (props: Props) => {
@@ -22,28 +21,40 @@ export const GroupSessionsTab = (props: Props) => {
 
   const handleAddedCallback = () => {
     setAddedPerson(null);
-  }
+  };
 
   const handleSidebarVisibility = (name: string, visible: boolean) => {
     if (name === "addSession") setAddSessionVisible(visible);
-  }
+  };
 
-  const handleSessionAdd = (session: SessionInterface) => { setAddedSession(session); setAddSessionVisible(false); }
+  const handleSessionAdd = (session: SessionInterface) => {
+    setAddedSession(session);
+    setAddSessionVisible(false);
+  };
 
   return (
     <>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 8 }}>
-          <GroupSessions group={props.group} sidebarVisibilityFunction={handleSidebarVisibility} addedSession={addedSession} addedPerson={addedPerson} addedCallback={handleAddedCallback} setHiddenPeople={setHiddenPeople} />
+          <GroupSessions
+            group={props.group}
+            sidebarVisibilityFunction={handleSidebarVisibility}
+            addedSession={addedSession}
+            addedPerson={addedPerson}
+            addedCallback={handleAddedCallback}
+            setHiddenPeople={setHiddenPeople}
+          />
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
           {addSessionVisible && <SessionAdd key="sessionAdd" group={props.group} updatedFunction={handleSessionAdd} />}
-          {!addSessionVisible && <>
-            <PersonAddAdvanced getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} showCreatePersonOnNotFound />
-            <MembersAdd key="membersAdd" group={props.group} addFunction={addPerson} hiddenPeople={hiddenPeople} />
-          </>}
+          {!addSessionVisible && (
+            <>
+              <PersonAddAdvanced getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} showCreatePersonOnNotFound />
+              <MembersAdd key="membersAdd" group={props.group} addFunction={addPerson} hiddenPeople={hiddenPeople} />
+            </>
+          )}
         </Grid>
       </Grid>
     </>
   );
-}
+};

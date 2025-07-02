@@ -9,26 +9,14 @@ export class SelectorHelper {
    * Create a search input locator with data-testid preference
    */
   static searchInput(page: Page): Locator {
-    return page.locator([
-      '[data-testid="people-search-input"] input',
-      '[data-testid="dashboard-people-search-input"] input',
-      '#searchText',
-      'input[placeholder*="Search"]',
-      'input[name="search"]'
-    ].join(', '));
+    return page.locator(['[data-testid="people-search-input"] input', '[data-testid="dashboard-people-search-input"] input', '#searchText', 'input[placeholder*="Search"]', 'input[name="search"]'].join(', '));
   }
 
   /**
    * Create a search button locator with data-testid preference
    */
   static searchButton(page: Page): Locator {
-    return page.locator([
-      '[data-testid="people-search-button"]',
-      '[data-testid="dashboard-search-button"]',
-      '[data-testid="search-button"]',
-      'button[type="submit"]',
-      'button:has-text("Search")'
-    ].join(', '));
+    return page.locator(['[data-testid="people-search-button"]', '[data-testid="dashboard-search-button"]', '[data-testid="search-button"]', 'button[type="submit"]', 'button:has-text("Search")'].join(', '));
   }
 
   /**
@@ -36,28 +24,10 @@ export class SelectorHelper {
    */
   static formInput(page: Page, fieldType: 'first-name' | 'last-name' | 'email' | 'phone'): Locator {
     const selectors = {
-      'first-name': [
-        '[data-testid="first-name-input"]',
-        'input[name="firstName"]',
-        'input[placeholder*="First"]'
-      ],
-      'last-name': [
-        '[data-testid="last-name-input"]',
-        'input[name="lastName"]',
-        'input[placeholder*="Last"]'
-      ],
-      'email': [
-        '[data-testid="email-input"]',
-        'input[name="email"]',
-        'input[type="email"]',
-        'input[placeholder*="Email"]'
-      ],
-      'phone': [
-        '[data-testid="phone-input"]',
-        'input[name="phone"]',
-        'input[type="tel"]',
-        'input[placeholder*="Phone"]'
-      ]
+      'first-name': ['[data-testid="first-name-input"]', 'input[name="firstName"]', 'input[placeholder*="First"]'],
+      'last-name': ['[data-testid="last-name-input"]', 'input[name="lastName"]', 'input[placeholder*="Last"]'],
+      'email': ['[data-testid="email-input"]', 'input[name="email"]', 'input[type="email"]', 'input[placeholder*="Email"]'],
+      'phone': ['[data-testid="phone-input"]', 'input[name="phone"]', 'input[type="tel"]', 'input[placeholder*="Phone"]']
     };
 
     return page.locator(selectors[fieldType].join(', '));
@@ -81,37 +51,21 @@ export class SelectorHelper {
    * Create edit button locator with data-testid preference
    */
   static editButton(page: Page): Locator {
-    return page.locator([
-      '[data-testid="edit-button"]',
-      'button:has-text("Edit")',
-      '[aria-label*="Edit"]',
-      '.edit-button'
-    ].join(', '));
+    return page.locator(['[data-testid="edit-button"]', 'button:has-text("Edit")', '[aria-label*="Edit"]', '.edit-button'].join(', '));
   }
 
   /**
    * Create save button locator with data-testid preference
    */
   static saveButton(page: Page): Locator {
-    return page.locator([
-      '[data-testid="save-button"]',
-      'button:has-text("Save")',
-      'button[type="submit"]',
-      '[aria-label*="Save"]',
-      '.save-button'
-    ].join(', '));
+    return page.locator(['[data-testid="save-button"]', 'button:has-text("Save")', 'button[type="submit"]', '[aria-label*="Save"]', '.save-button'].join(', '));
   }
 
   /**
    * Create delete button locator with data-testid preference
    */
   static deleteButton(page: Page): Locator {
-    return page.locator([
-      '[data-testid="delete-button"]',
-      'button:has-text("Delete")',
-      '[aria-label*="Delete"]',
-      '.delete-button'
-    ].join(', '));
+    return page.locator(['[data-testid="delete-button"]', 'button:has-text("Delete")', '[aria-label*="Delete"]', '.delete-button'].join(', '));
   }
 
   /**

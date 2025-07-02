@@ -4,8 +4,8 @@ import "cropperjs/dist/cropper.css";
 import { SmallButton, InputBox, type GenericSettingInterface, ArrayHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
-  settings: GenericSettingInterface[],
-  updatedFunction: (dataUrl: string) => void,
+  settings: GenericSettingInterface[];
+  updatedFunction: (dataUrl: string) => void;
   aspectRatio: number;
   name: string;
 }
@@ -26,18 +26,28 @@ export const ImageEditor: React.FC<Props> = (props) => {
       setDataUrl(url);
     };
     reader.readAsDataURL(files[0]);
-  }
+  };
 
-  const getHeaderButton = () => (<div>
-    <input type="file" onChange={handleUpload} id="fileUpload" accept="image/*" style={{ display: "none" }} />
-    <SmallButton onClick={() => { document.getElementById("fileUpload").click(); }} text={Locale.label("settings.imageEditor.upload")} icon="upload" data-testid="upload-image-button" ariaLabel="Upload image" />
-  </div>)
+  const getHeaderButton = () => (
+    <div>
+      <input type="file" onChange={handleUpload} id="fileUpload" accept="image/*" style={{ display: "none" }} />
+      <SmallButton
+        onClick={() => {
+          document.getElementById("fileUpload").click();
+        }}
+        text={Locale.label("settings.imageEditor.upload")}
+        icon="upload"
+        data-testid="upload-image-button"
+        ariaLabel="Upload image"
+      />
+    </div>
+  );
 
   const cropper = React.useRef(null);
 
   const onCropperInit = (c: any) => {
     cropper.current = c;
-  }
+  };
 
   const cropCallback = () => {
     if (cropper.current !== null) {
@@ -47,7 +57,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
       const url = cropper.current.getCroppedCanvas({ width: width, height: 300 }).toDataURL();
       setDataUrl(url);
     }
-  }
+  };
 
   const handleCrop = () => {
     if (timeout !== null) {
@@ -55,27 +65,32 @@ export const ImageEditor: React.FC<Props> = (props) => {
       timeout = null;
     }
     timeout = window.setTimeout(cropCallback, 200);
-  }
+  };
 
-  const handleSave = () => { props.updatedFunction(dataUrl); }
-  const handleCancel = () => { props.updatedFunction(null); }
+  const handleSave = () => {
+    props.updatedFunction(dataUrl);
+  };
+  const handleCancel = () => {
+    props.updatedFunction(null);
+  };
   const init = useCallback(() => {
-    const startingUrl = (ArrayHelper.getOne(props.settings, "keyName", props.name))?.value;
+    const startingUrl = ArrayHelper.getOne(props.settings, "keyName", props.name)?.value;
     setCurrentUrl(startingUrl);
   }, [props.settings, props.name]);
 
   React.useEffect(init, [init]);
 
   return (
-    <InputBox id="cropperBox" headerIcon="" headerText={Locale.label("settings.imageEditor.crop")} saveFunction={handleSave} saveText={"Update"} cancelFunction={handleCancel} headerActionContent={getHeaderButton()}>
-      <Cropper
-        onInitialized={onCropperInit}
-        src={currentUrl}
-        style={{ height: 150, width: "100%" }}
-        aspectRatio={props.aspectRatio}
-        guides={false}
-        crop={handleCrop} />
+    <InputBox
+      id="cropperBox"
+      headerIcon=""
+      headerText={Locale.label("settings.imageEditor.crop")}
+      saveFunction={handleSave}
+      saveText={"Update"}
+      cancelFunction={handleCancel}
+      headerActionContent={getHeaderButton()}
+    >
+      <Cropper onInitialized={onCropperInit} src={currentUrl} style={{ height: 150, width: "100%" }} aspectRatio={props.aspectRatio} guides={false} crop={handleCrop} />
     </InputBox>
   );
-}
-
+};

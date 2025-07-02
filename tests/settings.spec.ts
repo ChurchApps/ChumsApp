@@ -58,11 +58,7 @@ test.describe('Settings & Administration', () => {
     console.log('✓ User management navigation completed');
     
     // Test permission configuration
-    await SettingsHelper.configurePermissions(page, 'Staff Role', [
-      'people.view',
-      'groups.manage',
-      'attendance.record'
-    ]);
+    await SettingsHelper.configurePermissions(page, 'Staff Role', ['people.view', 'groups.manage', 'attendance.record']);
     console.log('✓ Permission configuration verified');
     
     // Verify we're authenticated and have settings access
@@ -184,34 +180,19 @@ test.describe('Settings & Administration - Production Patterns', () => {
       {
         name: 'Staff Member',
         description: 'Church staff with ministry responsibilities',
-        permissions: [
-          'people.view',
-          'groups.manage',
-          'attendance.record',
-          'forms.manage',
-          'tasks.manage'
-        ],
+        permissions: ['people.view', 'groups.manage', 'attendance.record', 'forms.manage', 'tasks.manage'],
         level: 7
       },
       {
         name: 'Volunteer Leader',
         description: 'Ministry leaders with specific responsibilities',
-        permissions: [
-          'groups.view',
-          'attendance.record',
-          'people.view',
-          'tasks.view'
-        ],
+        permissions: ['groups.view', 'attendance.record', 'people.view', 'tasks.view'],
         level: 5
       },
       {
         name: 'Volunteer',
         description: 'Basic volunteer access',
-        permissions: [
-          'groups.view',
-          'people.view.limited',
-          'attendance.record.own'
-        ],
+        permissions: ['groups.view', 'people.view.limited', 'attendance.record.own'],
         level: 3
       }
     ];
@@ -359,10 +340,7 @@ test.describe('Settings & Administration - Production Patterns', () => {
     // Demonstrate API management
     await SettingsHelper.manageAPIAccess(page, {
       enablePublicAPI: false,
-      apiKeys: [
-        { name: 'Website Integration', permissions: ['people.read', 'events.read'], status: 'active' },
-        { name: 'Mobile App', permissions: ['attendance.write', 'groups.read'], status: 'active' }
-      ],
+      apiKeys: [{ name: 'Website Integration', permissions: ['people.read', 'events.read'], status: 'active' }, { name: 'Mobile App', permissions: ['attendance.write', 'groups.read'], status: 'active' }],
       rateLimiting: {
         requestsPerMinute: 100,
         enableThrottling: true

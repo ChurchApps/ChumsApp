@@ -12,22 +12,28 @@ interface Props {
 export const KeyEdit = (props: Props) => {
   const [key, setKey] = React.useState<ArrangementKeyInterface>(props.arrangementKey);
 
-  useEffect(() => { setKey(props.arrangementKey); }, [props.arrangementKey]);
+  useEffect(() => {
+    setKey(props.arrangementKey);
+  }, [props.arrangementKey]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const k = { ...key };
     switch (e.target.name) {
-      case "keySignature": k.keySignature = e.target.value; break;
-      case "shortDescription": k.shortDescription = e.target.value; break;
+      case "keySignature":
+        k.keySignature = e.target.value;
+        break;
+      case "shortDescription":
+        k.shortDescription = e.target.value;
+        break;
     }
     setKey(k);
-  }
+  };
 
   const handleSave = () => {
-    ApiHelper.post("/arrangementKeys", [key], "ContentApi").then(data => {
+    ApiHelper.post("/arrangementKeys", [key], "ContentApi").then((data) => {
       props.onSave(data[0]);
     });
-  }
+  };
 
   const handleDelete = () => {
     if (window.confirm(Locale.label("songs.key.deleteConfirm"))) {
@@ -35,10 +41,26 @@ export const KeyEdit = (props: Props) => {
         props.onSave(null);
       });
     }
-  }
+  };
 
-  return (<InputBox headerText={props.arrangementKey?.keySignature || Locale.label("songs.key.edit")} headerIcon="library_music" saveFunction={handleSave} cancelFunction={props.onCancel} deleteFunction={(key?.id) ? handleDelete : null}>
-    <TextField label={Locale.label("songs.key.signature")} name="keySignature" value={key?.keySignature} onChange={handleChange} fullWidth />
-    <TextField label={Locale.label("songs.key.label")} multiline name="shortDescription" value={key?.shortDescription} onChange={handleChange} fullWidth placeholder={Locale.label("songs.key.defaultLabel")} />
-  </InputBox>);
-}
+  return (
+    <InputBox
+      headerText={props.arrangementKey?.keySignature || Locale.label("songs.key.edit")}
+      headerIcon="library_music"
+      saveFunction={handleSave}
+      cancelFunction={props.onCancel}
+      deleteFunction={key?.id ? handleDelete : null}
+    >
+      <TextField label={Locale.label("songs.key.signature")} name="keySignature" value={key?.keySignature} onChange={handleChange} fullWidth />
+      <TextField
+        label={Locale.label("songs.key.label")}
+        multiline
+        name="shortDescription"
+        value={key?.shortDescription}
+        onChange={handleChange}
+        fullWidth
+        placeholder={Locale.label("songs.key.defaultLabel")}
+      />
+    </InputBox>
+  );
+};

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Alert, AlertTitle, Button, Typography, Box } from '@mui/material';
+import React from "react";
+import { Alert, AlertTitle, Button, Typography, Box } from "@mui/material";
 
 interface Props {
   children: React.ReactNode;
@@ -24,7 +24,7 @@ const DefaultErrorFallback: React.FC<ErrorInfo> = ({ error, resetError }) => (
     <Alert severity="error">
       <AlertTitle>Something went wrong</AlertTitle>
       <Typography variant="body2" sx={{ mt: 1, mb: 2 }}>
-        {error?.message || 'An unexpected error occurred'}
+        {error?.message || "An unexpected error occurred"}
       </Typography>
       <Button variant="outlined" onClick={resetError} size="small" data-testid="error-retry-button" aria-label="Try again">
         Try again
@@ -44,7 +44,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
     this.setState({ error, errorInfo });
   }
 
@@ -55,13 +55,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.hasError) {
       const ErrorComponent = this.props.fallback || DefaultErrorFallback;
-      return (
-        <ErrorComponent
-          error={this.state.error}
-          errorInfo={this.state.errorInfo}
-          resetError={this.resetError}
-        />
-      );
+      return <ErrorComponent error={this.state.error} errorInfo={this.state.errorInfo} resetError={this.resetError} />;
     }
 
     return this.props.children;

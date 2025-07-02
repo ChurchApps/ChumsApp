@@ -1,7 +1,10 @@
 import React from "react";
 import { Locale } from "@churchapps/apphelper";
-import { Grid, Icon } from "@mui/material";
-import { Banner } from "@churchapps/apphelper";
+import {
+ Grid, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Card, CardContent 
+} from "@mui/material";
+import { Church as ChurchIcon, ShowChart as UsageIcon, Book as TranslationIcon, Settings as AdminIcon } from "@mui/icons-material";
+import { PageHeader } from "../components";
 import { UsageTrendsTab } from "./components/UsageTrendTab";
 import { ChurchesTab } from "./components/ChurchesTab";
 import { TranslationTab } from "./components/TranslationTab";
@@ -10,47 +13,74 @@ export const AdminPage = () => {
   const [selectedTab, setSelectedTab] = React.useState("churches");
 
   const getCurrentTab = () => {
-    let currentTab = <div></div>;
     switch (selectedTab) {
-      case "churches": currentTab = <ChurchesTab key="churches" />; break;
-      case "usage": currentTab = <UsageTrendsTab key="usage" />; break;
-      case "translation": currentTab = <TranslationTab key="translation" />; break;
+      case "churches":
+        return <ChurchesTab key="churches" />;
+      case "usage":
+        return <UsageTrendsTab key="usage" />;
+      case "translation":
+        return <TranslationTab key="translation" />;
+      default:
+        return <div></div>;
     }
-    return currentTab;
-  }
+  };
 
-
-  const getItem = (tab: any) => {
-    if (tab.key === selectedTab) return (
-      <li key={tab.key} className="active">
-        <a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
-    return (<li key={tab.key}><a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}><Icon>{tab.icon}</Icon> {tab.label}</a></li>)
-  }
-
-  const getTabs = () => {
-    const tabs = [];
-    tabs.push({ key: "churches", icon: "church", label: Locale.label("serverAdmin.adminPage.churches") });
-    tabs.push({ key: "usage", icon: "show_chart", label: Locale.label("serverAdmin.adminPage.usageTrends") });
-    tabs.push({ key: "translation", icon: "book", label: "Translation Lookups" });
-
-    return tabs;
-  }
+  const navigationItems = [
+    {
+      key: "churches",
+      icon: <ChurchIcon />,
+      label: Locale.label("serverAdmin.adminPage.churches"),
+    },
+    {
+      key: "usage",
+      icon: <UsageIcon />,
+      label: Locale.label("serverAdmin.adminPage.usageTrends"),
+    },
+    {
+      key: "translation",
+      icon: <TranslationIcon />,
+      label: "Translation Lookups",
+    },
+  ];
 
   return (
     <>
-      <Banner><h1>{Locale.label("serverAdmin.adminPage.servAdmin")}</h1></Banner>
-      <Grid container spacing={2}>
-        <Grid size={{ xs: 12, md: 2 }}>
-          <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
-            <ul>{getTabs().map((tab) => getItem(tab))}</ul>
-          </div>
+      <PageHeader icon={<AdminIcon />} title={Locale.label("serverAdmin.adminPage.servAdmin")} subtitle="Manage server administration settings and monitor usage" />
+
+      <Box sx={{ p: 3 }}>
+        <Grid container spacing={3}>
+          <Grid size={{ xs: 12, md: 3 }}>
+            <Card>
+              <CardContent sx={{ p: 0 }}>
+                <List sx={{ py: 0 }}>
+                  {navigationItems.map((item) => (
+                    <ListItem key={item.key} disablePadding>
+                      <ListItemButton
+                        selected={selectedTab === item.key}
+                        onClick={() => setSelectedTab(item.key)}
+                        sx={{
+                          "&.Mui-selected": {
+                            backgroundColor: "primary.main",
+                            color: "primary.contrastText",
+                            "&:hover": { backgroundColor: "primary.dark" },
+                            "& .MuiListItemIcon-root": { color: "primary.contrastText" },
+                          },
+                        }}
+                      >
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItemText primary={item.label} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 12, md: 9 }}>
+            <Box>{getCurrentTab()}</Box>
+          </Grid>
         </Grid>
-        <Grid size={{ xs: 12, md: 10 }}>
-          <div id="mainContent">
-            {getCurrentTab()}
-          </div>
-        </Grid>
-      </Grid>
+      </Box>
     </>
   );
-}
+};

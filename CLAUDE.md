@@ -93,6 +93,20 @@ Key modules:
 - Environment-specific configuration in `EnvironmentHelper.ts`
 - Consistent file naming: PascalCase for components, camelCase for utilities
 
+### Code Style Preferences
+
+- **Single-line statements preferred**: Use `if (condition) return value;` instead of multi-line blocks when possible
+- **Compact object returns**: `if (condition) return { prop1: val1, prop2: val2 };` on one line
+- **Ternary operators**: Format with each branch on its own line but content inline:
+  ```typescript
+  {condition 
+    ? (<Component prop1={value1} prop2={value2} />) 
+    : (<OtherComponent prop={value} />)
+  }
+  ```
+- **Avoid unnecessary line breaks**: Keep related code compact and readable
+- **No curly braces for single statements**: Omit braces when the block contains only one statement
+
 ### Writing Tests
 
 - Add `data-testid` attributes to components for reliable element selection

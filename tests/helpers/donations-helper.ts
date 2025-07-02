@@ -40,12 +40,7 @@ export class DonationsHelper {
    */
   static async navigateToFunds(page: Page) {
     // Look for funds tab or link
-    const fundsSelectors = [
-      'text=Funds',
-      'a[href="/funds"]',
-      'button:has-text("Funds")',
-      'tab:has-text("Funds")'
-    ];
+    const fundsSelectors = ['text=Funds', 'a[href="/funds"]', 'button:has-text("Funds")', 'tab:has-text("Funds")'];
     
     for (const selector of fundsSelectors) {
       const fundsLink = page.locator(selector).first();
@@ -133,12 +128,7 @@ export class DonationsHelper {
     console.log(`Simulating creation of donation: $${donation.amount} from ${donation.donorName}`);
     
     // Look for add donation button
-    const addButtonSelectors = [
-      'button:has-text("Add Donation")',
-      'button:has-text("Add")',
-      'button:has-text("Record Donation")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Add Donation")', 'button:has-text("Add")', 'button:has-text("Record Donation")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -240,12 +230,7 @@ export class DonationsHelper {
     console.log(`Simulating generation of ${reportType} report`);
     
     // Look for reports section
-    const reportsSelectors = [
-      'text=Reports',
-      'a[href="/reports"]',
-      'button:has-text("Reports")',
-      'tab:has-text("Reports")'
-    ];
+    const reportsSelectors = ['text=Reports', 'a[href="/reports"]', 'button:has-text("Reports")', 'tab:has-text("Reports")'];
     
     for (const selector of reportsSelectors) {
       const reportsLink = page.locator(selector).first();
@@ -282,11 +267,7 @@ export class DonationsHelper {
     await this.searchDonations(page, donorName);
     
     // Look for the donation in search results
-    const donationSelectors = [
-      `text=${donorName}`,
-      `text=$${amount}`,
-      'table td, .donation-result, .search-result'
-    ];
+    const donationSelectors = [`text=${donorName}`, `text=$${amount}`, 'table td, .donation-result, .search-result'];
     
     for (const selector of donationSelectors) {
       const element = page.locator(selector).first();

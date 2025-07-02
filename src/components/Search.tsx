@@ -1,12 +1,14 @@
 import React from "react";
 import { type PersonInterface, PersonHelper, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box } from "@mui/material"
+import {
+ Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box, Avatar 
+} from "@mui/material";
 
 interface Props {
-  handleSearch: (text: string) => void,
-  searchResults: PersonInterface[],
-  buttonText: string,
-  handleClickAction: (id: string) => void,
+  handleSearch: (text: string) => void;
+  searchResults: PersonInterface[];
+  buttonText: string;
+  handleClickAction: (id: string) => void;
 }
 
 export const Search: React.FC<Props> = (props) => {
@@ -27,16 +29,23 @@ export const Search: React.FC<Props> = (props) => {
   const createRows = () => {
     const tableRows = props.searchResults?.map((person) => (
       <TableRow key={person.id}>
-        <TableCell style={{paddingLeft: 0}}>
-          <img src={PersonHelper.getPhotoUrl(person)} alt="avatar" />
+        <TableCell style={{ paddingLeft: 0 }}>
+          <Avatar src={PersonHelper.getPhotoUrl(person)} sx={{ width: 48, height: 48 }} />
         </TableCell>
         <TableCell>{person.name.display}</TableCell>
-        <TableCell style={{paddingRight: 0}}>
-          <button type="button" className="no-default-style" onClick={() => {
-            props.handleClickAction(person.id);
-          }} data-testid="select-person-button" aria-label="Select person">
-            <Box sx={{display: "flex", alignItems: "center"}}>
-              <Icon sx={{marginRight: "5px"}}>person</Icon>{props.buttonText}
+        <TableCell style={{ paddingRight: 0 }}>
+          <button
+            type="button"
+            className="no-default-style"
+            onClick={() => {
+              props.handleClickAction(person.id);
+            }}
+            data-testid="select-person-button"
+            aria-label="Select person"
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Icon sx={{ marginRight: "5px" }}>person</Icon>
+              {props.buttonText}
             </Box>
           </button>
         </TableCell>
@@ -50,8 +59,22 @@ export const Search: React.FC<Props> = (props) => {
 
   return (
     <>
-      <TextField fullWidth name="personAddText" label={Locale.label("common.person")} value={searchText} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="person-search-input" aria-label="Search for person"
-        InputProps={{ endAdornment: <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => props.handleSearch(searchText)} data-testid="search-button" aria-label="Search">{Locale.label("common.search")}</Button> }}
+      <TextField
+        fullWidth
+        name="personAddText"
+        label={Locale.label("common.person")}
+        value={searchText}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        data-testid="person-search-input"
+        aria-label="Search for person"
+        InputProps={{
+          endAdornment: (
+            <Button variant="contained" id="searchButton" data-cy="search-button" onClick={() => props.handleSearch(searchText)} data-testid="search-button" aria-label="Search">
+              {Locale.label("common.search")}
+            </Button>
+          ),
+        }}
       />
       <Table size="small" id="searchResults">
         <TableBody>{rows}</TableBody>

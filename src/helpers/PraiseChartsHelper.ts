@@ -2,7 +2,6 @@ import { ApiHelper } from "@churchapps/apphelper";
 import { EnvironmentHelper } from "./EnvironmentHelper";
 
 export class PraiseChartsHelper {
-
   static async download(sku: string, fileName: string, keys: string) {
     let url = `/praiseCharts/download?skus=${sku}&keys=${keys}&file_name=${encodeURIComponent(fileName)}`;
     if (keys) url += "&keys=" + keys;
@@ -44,5 +43,4 @@ export class PraiseChartsHelper {
 
   }
     */
-
 }

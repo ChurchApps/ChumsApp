@@ -54,4 +54,4 @@ export const StateOptions = () => (
     <option value="WV">WV</option>
     <option value="WY">WY</option>
   </>
-)
+);

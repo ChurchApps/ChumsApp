@@ -1,27 +1,37 @@
-import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
+import {
+ Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent 
+} from "@mui/material";
 import React, { useState } from "react";
 import { ChoicesEdit } from ".";
 import { useMountedState, type QuestionInterface, ApiHelper, InputBox, UniqueIdHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { PaymentEdit } from "./PaymentEdit";
 
 interface Props {
-  questionId: string,
-  formId: string,
-  updatedFunction: () => void
+  questionId: string;
+  formId: string;
+  updatedFunction: () => void;
 }
 
 export function FormQuestionEdit(props: Props) {
-  const [question, setQuestion] = useState<QuestionInterface>({ title: "", fieldType: "Textbox", placeholder: "", required: false, description: "", choices: null } as QuestionInterface);
+  const [question, setQuestion] = useState<QuestionInterface>({
+    title: "",
+    fieldType: "Textbox",
+    placeholder: "",
+    required: false,
+    description: "",
+    choices: null,
+  } as QuestionInterface);
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const isMounted = useMountedState();
 
   function loadData() {
-    if(!isMounted()) {
+    if (!isMounted()) {
       return;
     }
-    if (props.questionId) ApiHelper.get("/questions/" + props.questionId + "?formId=" + props.formId, "MembershipApi").then((data: QuestionInterface) => setQuestion(data));
-    else setQuestion({ formId: props.formId, fieldType: "Textbox" } as QuestionInterface);
+    if (props.questionId) {
+      ApiHelper.get("/questions/" + props.questionId + "?formId=" + props.formId, "MembershipApi").then((data: QuestionInterface) => setQuestion(data));
+    } else setQuestion({ formId: props.formId, fieldType: "Textbox" } as QuestionInterface);
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
@@ -29,20 +39,28 @@ export function FormQuestionEdit(props: Props) {
     const q = { ...question } as QuestionInterface;
     const value = e.target.value;
     switch (e.target.name) {
-      case "fieldType": q.fieldType = value; break;
-      case "title": q.title = value; break;
-      case "description": q.description = value; break;
-      case "placeholder": q.placeholder = value; break;
+      case "fieldType":
+        q.fieldType = value;
+        break;
+      case "title":
+        q.title = value;
+        break;
+      case "description":
+        q.description = value;
+        break;
+      case "placeholder":
+        q.placeholder = value;
+        break;
     }
     setQuestion(q);
-  }
+  };
 
   const handleCheckChange = (e: React.SyntheticEvent<Element | Event>, checked: boolean) => {
     setErrors([]);
     const q = { ...question } as QuestionInterface;
     q.required = checked;
     setQuestion(q);
-  }
+  };
 
   const getChoices = (fieldType: string) => {
     let result = <></>;
@@ -55,11 +73,13 @@ export function FormQuestionEdit(props: Props) {
         result = <PaymentEdit question={question} updatedFunction={setQuestion} />;
         break;
       default:
-        result = <TextField fullWidth label={Locale.label("forms.formQuestionEdit.plcOp")} id="placeholder" type="text" name="placeholder" value={question.placeholder || ""} onChange={handleChange} />;
+        result = (
+          <TextField fullWidth label={Locale.label("forms.formQuestionEdit.plcOp")} id="placeholder" type="text" name="placeholder" value={question.placeholder || ""} onChange={handleChange} />
+        );
         break;
     }
     return result;
-  }
+  };
 
   const validate = () => {
     const result = [];
@@ -67,12 +87,16 @@ export function FormQuestionEdit(props: Props) {
     if (!question.fieldType) result.push(Locale.label("forms.formQuestionEdit.fieldReq"));
     setErrors(result);
     return result.length === 0;
-  }
+  };
 
   function handleSave() {
     if (validate()) {
       setIsSubmitting(true);
-      ApiHelper.post("/questions/", [question], "MembershipApi").then(() => props.updatedFunction()).finally(() => { setIsSubmitting(false) });
+      ApiHelper.post("/questions/", [question], "MembershipApi")
+        .then(() => props.updatedFunction())
+        .finally(() => {
+          setIsSubmitting(false);
+        });
     }
   }
 
@@ -85,7 +109,16 @@ export function FormQuestionEdit(props: Props) {
   React.useEffect(loadData, [props.questionId || props.formId]); //eslint-disable-line
 
   return (
-    <InputBox id="questionBox" headerIcon="help" headerText={Locale.label("forms.formQuestionEdit.questionEdit")} saveFunction={handleSave} cancelFunction={props.updatedFunction} isSubmitting={isSubmitting} deleteFunction={(!UniqueIdHelper.isMissing(question.id)) ? handleDelete : undefined} help="chums/forms">
+    <InputBox
+      id="questionBox"
+      headerIcon="help"
+      headerText={Locale.label("forms.formQuestionEdit.questionEdit")}
+      saveFunction={handleSave}
+      cancelFunction={props.updatedFunction}
+      isSubmitting={isSubmitting}
+      deleteFunction={!UniqueIdHelper.isMissing(question.id) ? handleDelete : undefined}
+      help="chums/forms"
+    >
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel id="provider">{Locale.label("forms.formQuestionEdit.prov")}</InputLabel>
@@ -104,11 +137,39 @@ export function FormQuestionEdit(props: Props) {
         </Select>
       </FormControl>
 
-      <TextField fullWidth label={Locale.label("common.title")} id="title" type="text" name="title" value={question.title || ""} onChange={handleChange} data-testid="question-title-input" aria-label="Question title" />
-      <TextField fullWidth label={Locale.label("forms.formQuestionEdit.desc")} id="description" type="text" name="description" value={question.description || ""} onChange={handleChange} data-testid="question-description-input" aria-label="Question description" />
+      <TextField
+        fullWidth
+        label={Locale.label("common.title")}
+        id="title"
+        type="text"
+        name="title"
+        value={question.title || ""}
+        onChange={handleChange}
+        data-testid="question-title-input"
+        aria-label="Question title"
+      />
+      <TextField
+        fullWidth
+        label={Locale.label("forms.formQuestionEdit.desc")}
+        id="description"
+        type="text"
+        name="description"
+        value={question.description || ""}
+        onChange={handleChange}
+        data-testid="question-description-input"
+        aria-label="Question description"
+      />
 
       {getChoices(question.fieldType)}
-      {question.fieldType !== "Payment" && <FormControlLabel control={<Checkbox data-testid="question-required-checkbox" aria-label="Question required" />} label={Locale.label("forms.formQuestionEdit.ansReq")} name="required" checked={!!question.required} onChange={handleCheckChange} />}
+      {question.fieldType !== "Payment" && (
+        <FormControlLabel
+          control={<Checkbox data-testid="question-required-checkbox" aria-label="Question required" />}
+          label={Locale.label("forms.formQuestionEdit.ansReq")}
+          name="required"
+          checked={!!question.required}
+          onChange={handleCheckChange}
+        />
+      )}
     </InputBox>
   );
 }

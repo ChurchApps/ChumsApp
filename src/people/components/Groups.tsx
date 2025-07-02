@@ -1,37 +1,169 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { DisplayBox, ApiHelper, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper"
+import { ApiHelper, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { Icon, Table, TableBody, TableRow, TableCell, Box } from "@mui/material";
+import {
+ Box, Card, CardContent, Typography, Stack, Chip, Paper, ListItem, ListItemIcon, ListItemText, ListItemButton, Avatar 
+} from "@mui/material";
+import { Group as GroupIcon, Groups as GroupsIcon, SupervisorAccount as LeaderIcon } from "@mui/icons-material";
 import { useMountedState } from "@churchapps/apphelper";
 
-interface Props { personId: string, title?: string }
+interface Props {
+  personId: string;
+  title?: string;
+}
 
 export const Groups: React.FC<Props> = memo((props) => {
   const [groupMembers, setGroupMembers] = React.useState(null);
   const isMounted = useMountedState();
 
   const loadData = useCallback(() => {
-    if (!UniqueIdHelper.isMissing(props.personId)) ApiHelper.get("/groupmembers?personId=" + props.personId, "MembershipApi").then(data => {
-      if(isMounted()) {
-        setGroupMembers(data);
-      }
-    })
+    if (!UniqueIdHelper.isMissing(props.personId)) {
+      ApiHelper.get("/groupmembers?personId=" + props.personId, "MembershipApi").then((data) => {
+        if (isMounted()) {
+          setGroupMembers(data);
+        }
+      });
+    }
   }, [props.personId, isMounted]);
 
   React.useEffect(loadData, [loadData]);
 
   const recordsContent = useMemo(() => {
-    if (!groupMembers) return <Loading size="sm" />
-    else if (groupMembers.length === 0) return (<p>{Locale.label("people.groups.notMemMsg")}</p>)
-    else {
-      const items = [];
-      for (let i = 0; i < groupMembers.length; i++) {
-        const gm = groupMembers[i];
-        items.push(<TableRow key={gm.id}><TableCell><Box sx={{display: "flex", alignItems: "center"}}><Icon sx={{marginRight: "5px"}}>group</Icon><Link to={"/groups/" + gm.groupId}>{gm.group.name}</Link></Box></TableCell></TableRow>);
-      }
-      return (<Table size="small"><TableBody>{items}</TableBody></Table>)
+    if (!groupMembers) return <Loading size="sm" />;
+
+    if (groupMembers.length === 0) {
+      return (
+        <Paper
+          sx={{
+            p: 4,
+            textAlign: "center",
+            backgroundColor: "grey.50",
+            border: "1px dashed",
+            borderColor: "grey.300",
+          }}
+        >
+          <GroupsIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
+          <Typography variant="body1" color="text.secondary">
+            {Locale.label("people.groups.notMemMsg")}
+          </Typography>
+        </Paper>
+      );
     }
+
+    return (
+      <Box
+        sx={{
+          "& .MuiCard-root": {
+            borderRadius: 2,
+            border: "1px solid",
+            borderColor: "grey.200",
+          },
+        }}
+      >
+        <Stack spacing={2}>
+          {groupMembers.map((gm) => (
+            <Card
+              key={gm.id}
+              sx={{
+                transition: "all 0.2s ease-in-out",
+                "&:hover": {
+                  transform: "translateY(-1px)",
+                  boxShadow: 2,
+                },
+              }}
+            >
+              <CardContent sx={{ pb: "16px !important" }}>
+                <ListItem sx={{ px: 0, py: 0 }}>
+                  <ListItemButton
+                    component={Link}
+                    to={`/groups/${gm.groupId}`}
+                    sx={{
+                      px: 0,
+                      py: 1,
+                      borderRadius: 1,
+                      "&:hover": { backgroundColor: "action.hover" },
+                    }}
+                  >
+                    <ListItemIcon sx={{ minWidth: 56 }}>
+                      {gm.group?.photoUrl ? (
+                        <Avatar
+                          src={gm.group.photoUrl}
+                          sx={{
+                            width: 40,
+                            height: 40,
+                            bgcolor: "primary.light",
+                          }}
+                        >
+                          <GroupIcon sx={{ color: "primary.main" }} />
+                        </Avatar>
+                      ) : (
+                        <Avatar
+                          sx={{
+                            width: 40,
+                            height: 40,
+                            bgcolor: "primary.light",
+                          }}
+                        >
+                          <GroupIcon sx={{ color: "primary.main" }} />
+                        </Avatar>
+                      )}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontWeight: 600,
+                            color: "primary.main",
+                            fontSize: "1rem",
+                          }}
+                        >
+                          {gm.group?.name || "Unknown Group"}
+                        </Typography>
+                      }
+                      secondary={
+                        <Box sx={{ mt: 1 }}>
+                          <Stack direction="row" spacing={1} flexWrap="wrap">
+                            {/* Group Type/Category if available */}
+                            {gm.group?.categoryName && (
+                              <Chip
+                                label={gm.group.categoryName}
+                                variant="outlined"
+                                size="small"
+                                sx={{
+                                  color: "text.secondary",
+                                  borderColor: "grey.400",
+                                  fontSize: "0.75rem",
+                                }}
+                              />
+                            )}
+                            {/* Leader indicator */}
+                            {gm.leader && (
+                              <Chip
+                                icon={<LeaderIcon />}
+                                label="Leader"
+                                variant="filled"
+                                size="small"
+                                color="secondary"
+                                sx={{
+                                  fontSize: "0.75rem",
+                                  fontWeight: 600,
+                                }}
+                              />
+                            )}
+                          </Stack>
+                        </Box>
+                      }
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </CardContent>
+            </Card>
+          ))}
+        </Stack>
+      </Box>
+    );
   }, [groupMembers]);
 
-  return <DisplayBox headerIcon="group" headerText={props.title || Locale.label("people.groups.groups")} help="chums/groups">{recordsContent}</DisplayBox>
+  return recordsContent;
 });

@@ -55,6 +55,7 @@
     "notes": "Notes",
     "remove": "Remove",
     "search": "Search",
+    "searching": "Searching...",
     "title": "Title",
     "yes": "Yes"
   },
@@ -163,7 +164,7 @@
       "don": "Donations",
       "donFilt": "Donation Filter",
       "donor": "Donor",
-      "noDon": "No donations yet"
+      "noDon": "No donations for selected date range"
     }
   },
   "forms": {
@@ -231,6 +232,7 @@
       "yesNo": "Yes/No"
     },
     "formsPage": {
+      "addForm": "Add Form",
       "archForms": "Archived Forms",
       "confirmMsg1": "Are you sure you want to archive this form?",
       "confirmMsg2": "Are you sure you want to restore this form?",
@@ -500,6 +502,11 @@
     },
     "updateHouseHold": {
       "update": "Update Address"
+    },
+    "personForm": {
+      "addForm": "Add Form",
+      "form": "Form",
+      "noFormMsg": "No form submission found for this person"
     }
   },
   "person": {
@@ -571,6 +578,7 @@
       "plans": "Plans"
     },
     "planPage": {
+      "assign": "Team Assignments",
       "assignments": "Assignments",
       "serviceOrder": "Service Order",
       "servicePlan": "Service Plan"
@@ -973,6 +981,8 @@
     }
   },
   "songs": {
+    "title": "Songs",
+    "addSong": "Add Song",
     "arrangement": {
       "title": "Arrangement",
       "enterLyrics": "Manually enter lyrics or import from PraiseCharts",
@@ -1021,6 +1031,23 @@
       "meter": "Meter",
       "length": "Length",
       "key": "Key"
+    },
+    "library": {
+      "empty": {
+        "title": "No Songs Found",
+        "message": "Get started by adding your first song to the library.",
+        "action": "Add First Song"
+      },
+      "noResults": "No songs match your search criteria."
+    },
+    "search": {
+      "placeholder": "Search songs by title or artist...",
+      "enterQuery": "Enter a search term to find songs.",
+      "noResults": "No songs found for your search.",
+      "createManually": "Create Manually",
+      "title": "Search for a Song",
+      "inputLabel": "Title or Artist",
+      "inputPlaceholder": "Enter song title or artist name..."
     }
   }
 }

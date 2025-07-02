@@ -49,12 +49,7 @@ export class PlansHelper {
    */
   static async navigateToMinistries(page: Page) {
     // Look for ministries tab or link
-    const ministriesSelectors = [
-      'text=Ministries',
-      'a[href="/ministries"]',
-      'button:has-text("Ministries")',
-      'tab:has-text("Ministries")'
-    ];
+    const ministriesSelectors = ['text=Ministries', 'a[href="/ministries"]', 'button:has-text("Ministries")', 'tab:has-text("Ministries")'];
     
     for (const selector of ministriesSelectors) {
       const ministriesLink = page.locator(selector).first();
@@ -78,12 +73,7 @@ export class PlansHelper {
    */
   static async navigateToSongs(page: Page) {
     // Look for songs tab or link
-    const songsSelectors = [
-      'text=Songs',
-      'a[href="/songs"]',
-      'button:has-text("Songs")',
-      'tab:has-text("Songs")'
-    ];
+    const songsSelectors = ['text=Songs', 'a[href="/songs"]', 'button:has-text("Songs")', 'tab:has-text("Songs")'];
     
     for (const selector of songsSelectors) {
       const songsLink = page.locator(selector).first();
@@ -106,13 +96,7 @@ export class PlansHelper {
    * Search for service plans
    */
   static async searchPlans(page: Page, searchTerm: string) {
-    const searchSelectors = [
-      '#searchText',
-      'input[placeholder*="Search"]',
-      'input[name="search"]',
-      'input[placeholder*="Plans"]',
-      'input[placeholder*="Service"]'
-    ];
+    const searchSelectors = ['#searchText', 'input[placeholder*="Search"]', 'input[name="search"]', 'input[placeholder*="Plans"]', 'input[placeholder*="Service"]'];
     
     for (const selector of searchSelectors) {
       const searchInput = page.locator(selector).first();
@@ -135,12 +119,7 @@ export class PlansHelper {
     // Navigate to songs first
     await this.navigateToSongs(page);
     
-    const searchSelectors = [
-      '#searchText',
-      'input[placeholder*="Search"]',
-      'input[name="search"]',
-      'input[placeholder*="Songs"]'
-    ];
+    const searchSelectors = ['#searchText', 'input[placeholder*="Search"]', 'input[name="search"]', 'input[placeholder*="Songs"]'];
     
     for (const selector of searchSelectors) {
       const searchInput = page.locator(selector).first();
@@ -179,13 +158,7 @@ export class PlansHelper {
     console.log(`Simulating creation of service plan: ${plan.name}`);
     
     // Look for add plan button
-    const addButtonSelectors = [
-      'button:has-text("Add Plan")',
-      'button:has-text("Create Plan")',
-      'button:has-text("New Service")',
-      'button:has-text("Add")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Add Plan")', 'button:has-text("Create Plan")', 'button:has-text("New Service")', 'button:has-text("Add")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -291,12 +264,7 @@ export class PlansHelper {
     console.log(`Simulating team schedule view for: ${teamName}`);
     
     // Look for team/schedule section
-    const teamSelectors = [
-      'text=Teams',
-      'text=Schedule',
-      'button:has-text("Teams")',
-      'tab:has-text("Schedule")'
-    ];
+    const teamSelectors = ['text=Teams', 'text=Schedule', 'button:has-text("Teams")', 'tab:has-text("Schedule")'];
     
     for (const selector of teamSelectors) {
       const teamLink = page.locator(selector).first();
@@ -318,11 +286,7 @@ export class PlansHelper {
     console.log(`Simulating position management for: ${serviceName}`);
     
     // Look for positions section
-    const positionsSelectors = [
-      'text=Positions',
-      'button:has-text("Positions")',
-      'tab:has-text("Positions")'
-    ];
+    const positionsSelectors = ['text=Positions', 'button:has-text("Positions")', 'tab:has-text("Positions")'];
     
     for (const selector of positionsSelectors) {
       const positionsLink = page.locator(selector).first();
@@ -383,12 +347,7 @@ export class PlansHelper {
     await this.navigateToSongs(page);
     
     // Look for add song button
-    const addButtonSelectors = [
-      'button:has-text("Add Song")',
-      'button:has-text("Create Song")',
-      'button:has-text("Add")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Add Song")', 'button:has-text("Create Song")', 'button:has-text("Add")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -461,11 +420,7 @@ export class PlansHelper {
     console.log(`Simulating chord chart generation for: ${songTitle}`);
     
     // Look for chord chart functionality
-    const chartSelectors = [
-      'text=Chord Chart',
-      'button:has-text("Chord Chart")',
-      'button:has-text("Generate Chart")'
-    ];
+    const chartSelectors = ['text=Chord Chart', 'button:has-text("Chord Chart")', 'button:has-text("Generate Chart")'];
     
     for (const selector of chartSelectors) {
       const chartButton = page.locator(selector).first();
@@ -487,10 +442,7 @@ export class PlansHelper {
     await this.searchPlans(page, planName);
     
     // Look for the plan in search results
-    const planSelectors = [
-      `text=${planName}`,
-      'table td, .plan-result, .search-result'
-    ];
+    const planSelectors = [`text=${planName}`, 'table td, .plan-result, .search-result'];
     
     for (const selector of planSelectors) {
       const element = page.locator(selector).first();
@@ -533,11 +485,7 @@ export class PlansHelper {
     await this.searchPlans(page, planName);
     
     // Look for print functionality
-    const printSelectors = [
-      'button:has-text("Print")',
-      'button:has-text("Generate Bulletin")',
-      'a[href*="print"]'
-    ];
+    const printSelectors = ['button:has-text("Print")', 'button:has-text("Generate Bulletin")', 'a[href*="print"]'];
     
     for (const selector of printSelectors) {
       const printButton = page.locator(selector).first();

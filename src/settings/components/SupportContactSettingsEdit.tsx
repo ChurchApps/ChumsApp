@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Icon, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { type GenericSettingInterface, UniqueIdHelper, ApiHelper, Locale } from "@churchapps/apphelper";
 
-interface Props { churchId: string; saveTrigger: Date | null; }
+interface Props {
+  churchId: string;
+  saveTrigger: Date | null;
+}
 
 export const SupportContactSettingsEdit: React.FC<Props> = (props) => {
   const [value, setValue] = useState<string>("");
@@ -27,7 +30,9 @@ export const SupportContactSettingsEdit: React.FC<Props> = (props) => {
     }
   };
 
-  useEffect(() => { if (!UniqueIdHelper.isMissing(props.churchId)) loadData(); }, [props.churchId]);  
+  useEffect(() => {
+    if (!UniqueIdHelper.isMissing(props.churchId)) loadData();
+  }, [props.churchId]);
   useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
   return (
@@ -35,7 +40,9 @@ export const SupportContactSettingsEdit: React.FC<Props> = (props) => {
       <Stack direction="row" alignItems="center">
         <Typography>{Locale.label("settings.supportContactSettingsEdit.supportContact")}</Typography>
         <Tooltip arrow title={Locale.label("settings.supportContactSettingsEdit.forceMsg")}>
-          <Icon fontSize="small" sx={{ cursor: "pointer", color: "#757575", paddingLeft: "2px" }}>help</Icon>
+          <Icon fontSize="small" sx={{ cursor: "pointer", color: "#757575", paddingLeft: "2px" }}>
+            help
+          </Icon>
         </Tooltip>
       </Stack>
       <TextField
@@ -43,7 +50,10 @@ export const SupportContactSettingsEdit: React.FC<Props> = (props) => {
         name="supportContact"
         label={Locale.label("settings.supportContactSettingsEdit.link")}
         value={value || ""}
-        onChange={(e) => { e.preventDefault(); setValue(e.target.value); }}
+        onChange={(e) => {
+          e.preventDefault();
+          setValue(e.target.value);
+        }}
         helperText={Locale.label("settings.supportContactSettingsEdit.linkHelperText")}
       />
     </div>

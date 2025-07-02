@@ -54,6 +54,7 @@
 		"notes": "टिप्पणियाँ",
 		"remove": "निकालें",
 		"search": "खोज",
+		"searching": "Searching...",
 		"title": "शीर्षक",
 		"yes": "हाँ"
 	},
@@ -155,6 +156,9 @@
 		}
 	},
 	"forms": {
+		"formsPage": {
+			"addForm": "Add Form"
+		},
 		"choicesEdit": {
 			"act": "कार्रवाई",
 			"choices": "विकल्प",
@@ -330,6 +334,11 @@
 		"sep": "सितंबर"
 	},
 	"people": {
+		"personForm": {
+			"addForm": "Add Form",
+			"form": "Form",
+			"noFormMsg": "No form submission found for this person"
+		},
 		"editCondition": {
 			"act": "क्रिया",
 			"anniMonth": "सालगिरह माह",
@@ -500,6 +509,9 @@
 		"zip": "ज़िप/डाक"
 	},
 	"plans": {
+		"planPage": {
+			"assign": "Team Assignments"
+		},
 		"assignmentEdit": {
 			"assignPos": "पद निर्दिष्ट करें",
 			"done": "हो गया",
@@ -785,6 +797,23 @@
 		}
 	},
 	"songs": {
+		"library": {
+			"empty": {
+				"title": "No Songs Found",
+				"message": "Get started by adding your first song to the library.",
+				"action": "Add First Song"
+			},
+			"noResults": "No songs match your search criteria."
+		},
+		"search": {
+			"placeholder": "Search songs by title or artist...",
+			"enterQuery": "Enter a search term to find songs.",
+			"noResults": "No songs found for your search.",
+			"createManually": "Create Manually",
+			"title": "Search for a Song",
+			"inputLabel": "Title or Artist",
+			"inputPlaceholder": "Enter song title or artist name..."
+		}
 		"arrangement": {
 			"title": "व्यवस्था",
 			"enterLyrics": "मैन्युअल रूप से गीत दर्ज करें या PraiseCharts से आयात करें",

@@ -50,11 +50,7 @@ test.describe('Attendance Management', () => {
     await AttendanceHelper.navigateToAttendance(page);
     
     // Test different date ranges for reports
-    const dateRanges = [
-      { start: '2024-01-01', end: '2024-01-31', label: 'January 2024' },
-      { start: '2024-06-01', end: '2024-06-30', label: 'June 2024' },
-      { start: '2024-12-01', end: '2024-12-31', label: 'December 2024' }
-    ];
+    const dateRanges = [{ start: '2024-01-01', end: '2024-01-31', label: 'January 2024' }, { start: '2024-06-01', end: '2024-06-30', label: 'June 2024' }, { start: '2024-12-01', end: '2024-12-31', label: 'December 2024' }];
     
     for (const range of dateRanges) {
       await AttendanceHelper.generateReport(page, 'trends', {
@@ -65,9 +61,7 @@ test.describe('Attendance Management', () => {
     }
     
     // Test service comparison reports
-    await AttendanceHelper.generateReport(page, 'service-comparison', {
-      serviceTypes: ['Sunday Morning', 'Sunday Evening', 'Wednesday']
-    });
+    await AttendanceHelper.generateReport(page, 'service-comparison', { serviceTypes: ['Sunday Morning', 'Sunday Evening', 'Wednesday'] });
     console.log('✓ Service comparison reporting verified');
     
     // Verify we're authenticated and have attendance access
@@ -97,11 +91,7 @@ test.describe('Attendance Management - Production Patterns', () => {
     console.log('✓ Campus setup pattern demonstrated');
     
     // Demonstrate service configuration
-    const testServices = [
-      { name: 'Sunday Morning Service', time: '10:00 AM', type: 'Worship' },
-      { name: 'Sunday Evening Service', time: '6:00 PM', type: 'Worship' },
-      { name: 'Wednesday Bible Study', time: '7:00 PM', type: 'Study' }
-    ];
+    const testServices = [{ name: 'Sunday Morning Service', time: '10:00 AM', type: 'Worship' }, { name: 'Sunday Evening Service', time: '6:00 PM', type: 'Worship' }, { name: 'Wednesday Bible Study', time: '7:00 PM', type: 'Study' }];
     
     for (const service of testServices) {
       await AttendanceHelper.setupService(page, service);
@@ -134,12 +124,7 @@ test.describe('Attendance Management - Production Patterns', () => {
     const attendanceData = {
       serviceDate: new Date().toISOString().split('T')[0],
       serviceName: 'Sunday Morning Service',
-      attendees: [
-        { name: 'John Doe', age: 35, memberType: 'Member' },
-        { name: 'Jane Smith', age: 28, memberType: 'Visitor' },
-        { name: 'Bob Johnson', age: 45, memberType: 'Member' },
-        { name: 'Alice Brown', age: 32, memberType: 'Regular Attendee' }
-      ]
+      attendees: [{ name: 'John Doe', age: 35, memberType: 'Member' }, { name: 'Jane Smith', age: 28, memberType: 'Visitor' }, { name: 'Bob Johnson', age: 45, memberType: 'Member' }, { name: 'Alice Brown', age: 32, memberType: 'Regular Attendee' }]
     };
     
     // Demonstrate individual attendance recording

@@ -6,12 +6,7 @@ export class AttendanceHelper {
    */
   static async navigateToAttendance(page: Page) {
     // Check if we're already on attendance page or can access attendance search
-    const searchSelectors = [
-      '[data-testid="people-search-input"] input',
-      '[data-testid="dashboard-people-search-input"] input',
-      '#searchText',
-      'input[placeholder*="Search"]'
-    ];
+    const searchSelectors = ['[data-testid="people-search-input"] input', '[data-testid="dashboard-people-search-input"] input', '#searchText', 'input[placeholder*="Search"]'];
     
     for (const selector of searchSelectors) {
       const attendanceSearchBox = page.locator(selector).first();
@@ -99,13 +94,7 @@ export class AttendanceHelper {
     console.log(`Simulating attendance recording for: ${attendanceData.attendeeName}`);
     
     // Look for add/record attendance button
-    const addButtonSelectors = [
-      'button:has-text("Record Attendance")',
-      'button:has-text("Add Attendance")',
-      'button:has-text("Check In")',
-      'button:has-text("Add")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Record Attendance")', 'button:has-text("Add Attendance")', 'button:has-text("Check In")', 'button:has-text("Add")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -158,12 +147,7 @@ export class AttendanceHelper {
     console.log(`Simulating campus setup: ${campus.name}`);
     
     // Look for campus management
-    const campusSelectors = [
-      'text=Campus',
-      'text=Campuses',
-      'button:has-text("Add Campus")',
-      'a[href*="campus"]'
-    ];
+    const campusSelectors = ['text=Campus', 'text=Campuses', 'button:has-text("Add Campus")', 'a[href*="campus"]'];
     
     for (const selector of campusSelectors) {
       const campusLink = page.locator(selector).first();
@@ -192,11 +176,7 @@ export class AttendanceHelper {
     console.log(`Simulating service setup: ${service.name}`);
     
     // Look for service management
-    const serviceSelectors = [
-      'text=Services',
-      'button:has-text("Add Service")',
-      'a[href*="service"]'
-    ];
+    const serviceSelectors = ['text=Services', 'button:has-text("Add Service")', 'a[href*="service"]'];
     
     for (const selector of serviceSelectors) {
       const serviceLink = page.locator(selector).first();
@@ -226,12 +206,7 @@ export class AttendanceHelper {
     console.log('Simulating check-in system configuration');
     
     // Look for check-in settings
-    const checkinSelectors = [
-      'text=Check-in',
-      'text=Kiosk',
-      'button:has-text("Settings")',
-      'a[href*="checkin"]'
-    ];
+    const checkinSelectors = ['text=Check-in', 'text=Kiosk', 'button:has-text("Settings")', 'a[href*="checkin"]'];
     
     for (const selector of checkinSelectors) {
       const checkinLink = page.locator(selector).first();
@@ -263,12 +238,7 @@ export class AttendanceHelper {
     console.log(`Simulating generation of ${reportType} attendance report`);
     
     // Look for reports section
-    const reportsSelectors = [
-      'text=Reports',
-      'a[href="/reports"]',
-      'button:has-text("Reports")',
-      'tab:has-text("Reports")'
-    ];
+    const reportsSelectors = ['text=Reports', 'a[href="/reports"]', 'button:has-text("Reports")', 'tab:has-text("Reports")'];
     
     for (const selector of reportsSelectors) {
       const reportsLink = page.locator(selector).first();
@@ -292,12 +262,7 @@ export class AttendanceHelper {
    * Clear search input
    */
   static async clearSearch(page: Page) {
-    const searchSelectors = [
-      '[data-testid="people-search-input"] input',
-      '[data-testid="dashboard-people-search-input"] input',
-      '#searchText',
-      'input[placeholder*="Search"]'
-    ];
+    const searchSelectors = ['[data-testid="people-search-input"] input', '[data-testid="dashboard-people-search-input"] input', '#searchText', 'input[placeholder*="Search"]'];
     
     for (const selector of searchSelectors) {
       try {
@@ -321,10 +286,7 @@ export class AttendanceHelper {
     await this.searchAttendance(page, date);
     
     // Look for attendance records
-    const attendanceSelectors = [
-      `text=${date}`,
-      'table td, .attendance-result, .search-result'
-    ];
+    const attendanceSelectors = [`text=${date}`, 'table td, .attendance-result, .search-result'];
     
     if (serviceName) {
       attendanceSelectors.push(`text=${serviceName}`);
@@ -369,12 +331,7 @@ export class AttendanceHelper {
     console.log(`Simulating attendance trends view for ${period} period`);
     
     // Look for analytics/trends section
-    const trendsSelectors = [
-      'text=Trends',
-      'text=Analytics',
-      'button:has-text("Trends")',
-      'a[href*="trend"]'
-    ];
+    const trendsSelectors = ['text=Trends', 'text=Analytics', 'button:has-text("Trends")', 'a[href*="trend"]'];
     
     for (const selector of trendsSelectors) {
       const trendsLink = page.locator(selector).first();

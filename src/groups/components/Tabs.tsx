@@ -4,11 +4,11 @@ import { UserHelper, type GroupInterface, type SessionInterface, type PersonInte
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 interface Props {
-  group: GroupInterface
-  addedPerson?: PersonInterface,
-  addedSession?: SessionInterface,
-  addedCallback: () => void,
-  sidebarVisibilityFunction: (name: string, visible: boolean) => void
+  group: GroupInterface;
+  addedPerson?: PersonInterface;
+  addedSession?: SessionInterface;
+  addedCallback: () => void;
+  sidebarVisibilityFunction: (name: string, visible: boolean) => void;
 }
 
 export const Tabs: React.FC<Props> = (props) => {
@@ -16,8 +16,16 @@ export const Tabs: React.FC<Props> = (props) => {
   const [tabIndex, setTabIndex] = React.useState(0);
 
   const getTab = (index: number, keyName: string, icon: string, text: string) => (
-    <Tab key={index} style={{ textTransform: "none", color: "#000" }} onClick={() => { setSelectedTab(keyName); setTabIndex(index); }} label={<>{text}</>} />
-  )
+    <Tab
+      key={index}
+      style={{ textTransform: "none", color: "#000" }}
+      onClick={() => {
+        setSelectedTab(keyName);
+        setTabIndex(index);
+      }}
+      label={<>{text}</>}
+    />
+  );
 
   const setVisibilityState = useCallback(() => {
     if (selectedTab === "members" && UserHelper.checkAccess(Permissions.membershipApi.groupMembers.edit)) props.sidebarVisibilityFunction("addPerson", true);
@@ -25,38 +33,60 @@ export const Tabs: React.FC<Props> = (props) => {
       props.sidebarVisibilityFunction("addPerson", true);
       props.sidebarVisibilityFunction("addMember", true);
     }
-  }, [props, selectedTab]
-  )
+  }, [props, selectedTab]);
   const getCurrentTab = () => {
-
     let currentTab = null;
     switch (selectedTab) {
-      case "members": currentTab = <GroupMembers group={props.group} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />; break;
-      case "sessions": currentTab = <GroupSessions group={props.group} sidebarVisibilityFunction={props.sidebarVisibilityFunction} addedSession={props.addedSession} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />; break;
-      default: currentTab = <div>{Locale.label("groups.tabs.noImplement")}</div>; break;
+      case "members":
+        currentTab = <GroupMembers group={props.group} addedPerson={props.addedPerson} addedCallback={props.addedCallback} />;
+        break;
+      case "sessions":
+        currentTab = (
+          <GroupSessions
+            group={props.group}
+            sidebarVisibilityFunction={props.sidebarVisibilityFunction}
+            addedSession={props.addedSession}
+            addedPerson={props.addedPerson}
+            addedCallback={props.addedCallback}
+          />
+        );
+        break;
+      default:
+        currentTab = <div>{Locale.label("groups.tabs.noImplement")}</div>;
+        break;
     }
-    return currentTab
-  }
+    return currentTab;
+  };
 
   const getTabs = () => {
     if (props.group === null || props.group.id === undefined) return null;
     const tabs = [];
-    let defaultTab = ""
+    let defaultTab = "";
 
-    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) { tabs.push(getTab(0, "members", "people", Locale.label("groups.tabs.mem"))); defaultTab = "members"; }
-    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && props.group?.trackAttendance) { tabs.push(getTab(1, "sessions", "calendar_month", Locale.label("groups.tabs.ses"))); if (defaultTab === "") defaultTab = "sessions"; }
+    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) {
+      tabs.push(getTab(0, "members", "people", Locale.label("groups.tabs.mem")));
+      defaultTab = "members";
+    }
+    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && props.group?.trackAttendance) {
+      tabs.push(getTab(1, "sessions", "calendar_month", Locale.label("groups.tabs.ses")));
+      if (defaultTab === "") defaultTab = "sessions";
+    }
     if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
     return tabs;
-  }
+  };
 
-  React.useEffect(() => { setVisibilityState() }, [selectedTab, setVisibilityState]);
+  React.useEffect(() => {
+    setVisibilityState();
+  }, [selectedTab, setVisibilityState]);
 
-  return (<Paper>
-    <Box>
-      <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
-        {getTabs()}
-      </MaterialTabs>
-      {getCurrentTab()}
-    </Box>
-  </Paper>);
-}
+  return (
+    <Paper>
+      <Box>
+        <MaterialTabs value={tabIndex} style={{ borderBottom: "1px solid #CCC" }} data-cy="group-tabs">
+          {getTabs()}
+        </MaterialTabs>
+        {getCurrentTab()}
+      </Box>
+    </Paper>
+  );
+};

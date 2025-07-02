@@ -1,69 +1,106 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { ApiHelper, DisplayBox, UserHelper, type RoleMemberInterface, type RoleInterface, Permissions, SmallButton, Locale } from "@churchapps/apphelper";
+import {
+ ApiHelper, DisplayBox, UserHelper, type RoleMemberInterface, type RoleInterface, Permissions, SmallButton, Locale 
+} from "@churchapps/apphelper";
 import { Stack, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 interface Props {
-  role: RoleInterface,
-  addFunction: (role: RoleInterface) => void,
-  setSelectedRoleMember: (id: string) => void,
-  roleMembers: RoleMemberInterface[],
-  updatedFunction: () => void,
+  role: RoleInterface;
+  addFunction: (role: RoleInterface) => void;
+  setSelectedRoleMember: (id: string) => void;
+  roleMembers: RoleMemberInterface[];
+  updatedFunction: () => void;
 }
 
 export const RoleMembers: React.FC<Props> = memo((props) => {
   const { roleMembers } = props;
   const isRoleEveryone = props.role.id === null;
-  
+
   const handleAdd = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    props.addFunction(props.role);
-  }, [props]);
-  
+      e.preventDefault();
+      props.addFunction(props.role);
+    }, [props]);
+
   const editContent = useMemo(() => {
     if (isRoleEveryone) return null;
-    return <SmallButton onClick={handleAdd} icon="add" text={Locale.label("common.add")} data-testid="add-role-member-button" ariaLabel="Add role member" />
+    return <SmallButton onClick={handleAdd} icon="add" text={Locale.label("common.add")} data-testid="add-role-member-button" ariaLabel="Add role member" />;
   }, [isRoleEveryone, handleAdd]);
 
   const handleRemove = useCallback((roleMember: RoleMemberInterface) => {
-    if (window.confirm(`${Locale.label("settings.roleMembers.confirmMsg")} ${props.role.name}?`)) {
-      ApiHelper.delete("/rolemembers/" + roleMember.id, "MembershipApi").then(() => props.updatedFunction());
-    }
-  }, [props.role.name, props.updatedFunction]);
+      if (window.confirm(`${Locale.label("settings.roleMembers.confirmMsg")} ${props.role.name}?`)) {
+        ApiHelper.delete("/rolemembers/" + roleMember.id, "MembershipApi").then(() => props.updatedFunction());
+      }
+    }, [props.role.name, props.updatedFunction]);
 
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.roles.edit), []);
-  const canDelete = useMemo(() => (props.role.name === "Domain Admins") ? (canEdit && roleMembers.length > 1) : canEdit, [props.role.name, canEdit, roleMembers.length]);
+  const canDelete = useMemo(() => (props.role.name === "Domain Admins" ? canEdit && roleMembers.length > 1 : canEdit), [props.role.name, canEdit, roleMembers.length]);
 
   const tableRows = useMemo(() => {
     const rows: JSX.Element[] = [];
     if (isRoleEveryone) {
-      rows.push(<TableRow key="0"><TableCell>{Locale.label("settings.roleMembers.roleAppMsg")}</TableCell></TableRow>)
+      rows.push(<TableRow key="0">
+          <TableCell>{Locale.label("settings.roleMembers.roleAppMsg")}</TableCell>
+        </TableRow>);
       return rows;
     }
 
     for (let i = 0; i < roleMembers.length; i++) {
       const rm = roleMembers[i];
-      const removeLink = (canDelete) ? (<SmallButton icon="delete" color="error" toolTip={Locale.label("common.delete")} onClick={() => { handleRemove(rm) }} data-testid={`remove-role-member-button-${rm.id}`} ariaLabel={`Remove role member ${rm.user?.firstName} ${rm.user?.lastName}`} />) : null;
-      const editLink = (canEdit) ? (<SmallButton icon="edit" toolTip={Locale.label("common.edit")} onClick={() => { props.setSelectedRoleMember(rm.userId) }} data-testid={`edit-role-member-button-${rm.id}`} ariaLabel={`Edit role member ${rm.user?.firstName} ${rm.user?.lastName}`} />) : null;
+      const removeLink = canDelete ? (
+        <SmallButton
+          icon="delete"
+          color="error"
+          toolTip={Locale.label("common.delete")}
+          onClick={() => {
+            handleRemove(rm);
+          }}
+          data-testid={`remove-role-member-button-${rm.id}`}
+          ariaLabel={`Remove role member ${rm.user?.firstName} ${rm.user?.lastName}`}
+        />
+      ) : null;
+      const editLink = canEdit ? (
+        <SmallButton
+          icon="edit"
+          toolTip={Locale.label("common.edit")}
+          onClick={() => {
+            props.setSelectedRoleMember(rm.userId);
+          }}
+          data-testid={`edit-role-member-button-${rm.id}`}
+          ariaLabel={`Edit role member ${rm.user?.firstName} ${rm.user?.lastName}`}
+        />
+      ) : null;
 
       const { firstName, lastName } = rm.user;
-      rows.push(
-        <TableRow key={i}>
+      rows.push(<TableRow key={i}>
           <TableCell>{`${firstName} ${lastName}`}</TableCell>
           <TableCell>{rm.user.email}</TableCell>
           <TableCell>
             <Stack direction="row" spacing={1} justifyContent="end">
-              {editLink}{removeLink}
+              {editLink}
+              {removeLink}
             </Stack>
           </TableCell>
-        </TableRow>
-      );
+        </TableRow>);
     }
     return rows;
-  }, [isRoleEveryone, roleMembers, canEdit, canDelete, handleRemove, props.setSelectedRoleMember]);
+  }, [
+isRoleEveryone,
+roleMembers,
+canEdit,
+canDelete,
+handleRemove,
+props.setSelectedRoleMember
+]);
 
   const tableHeader = useMemo(() => {
     if (isRoleEveryone) return null;
-    return (<TableRow><TableCell>{Locale.label("common.name")}</TableCell><TableCell>{Locale.label("person.email")}</TableCell><TableCell></TableCell></TableRow>);
+    return (
+      <TableRow>
+        <TableCell>{Locale.label("common.name")}</TableCell>
+        <TableCell>{Locale.label("person.email")}</TableCell>
+        <TableCell></TableCell>
+      </TableRow>
+    );
   }, [isRoleEveryone]);
 
   return (
@@ -74,6 +111,4 @@ export const RoleMembers: React.FC<Props> = memo((props) => {
       </Table>
     </DisplayBox>
   );
-
 });
-

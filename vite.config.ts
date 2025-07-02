@@ -1,6 +1,6 @@
-import { defineConfig, loadEnv, type UserConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig, loadEnv, type UserConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
 
 // https://vite.dev/config/
@@ -50,11 +50,7 @@ export default defineConfig(({ mode }) => {
       minify: 'esbuild',
       target: 'es2020'
     },
-    resolve: {
-      alias: {
-        'cropperjs/dist/cropper.css': path.resolve(__dirname, 'node_modules/cropperjs/dist/cropper.css')
-      }
-    },
+    resolve: { alias: { 'cropperjs/dist/cropper.css': path.resolve(__dirname, 'node_modules/cropperjs/dist/cropper.css') } },
     server: {
       host: '0.0.0.0',
       port: Number(env.PORT) ?? 3101,
@@ -97,5 +93,5 @@ export default defineConfig(({ mode }) => {
       'process.env.NEXT_PUBLIC_CHUMS_ROOT': JSON.stringify(env.REACT_APP_CHUMS_ROOT),
       'process.env.NEXT_PUBLIC_LESSONS_ROOT': JSON.stringify(env.REACT_APP_LESSONS_ROOT),
     },
-  } satisfies UserConfig
-})
+  } satisfies UserConfig;
+});

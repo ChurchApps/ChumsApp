@@ -2,10 +2,12 @@ import React from "react";
 import { Box } from "@mui/material";
 import { Header } from "./Header";
 
+interface Props {
+  pageTitle?: string;
+  children: React.ReactNode;
+}
 
-interface Props { pageTitle?: string, children: React.ReactNode }
-
-export const Wrapper: React.FC<Props> = props =>
+export const Wrapper: React.FC<Props> = (props) => (
   <>
     <Header />
 
@@ -14,7 +16,8 @@ export const Wrapper: React.FC<Props> = props =>
       {props.children}
     </Box>
   </>
-  /*
+);
+/*
   const [donationError, setDonationError] = React.useState<boolean>(false);
   const [isFormMember, setIsFormMember] = React.useState<boolean>(false);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
@@ -66,4 +69,3 @@ export const Wrapper: React.FC<Props> = props =>
 
   return <SiteWrapper navContent={navContent} context={context} appName="CHUMS" appearance={{wrapperBackground:"#333"}}>{props.children}</SiteWrapper>
   */
-;

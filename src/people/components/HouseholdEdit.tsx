@@ -1,17 +1,26 @@
 import React from "react";
 import { UpdateHouseHold } from ".";
-import { InputBox, PersonAdd, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale } from "@churchapps/apphelper";
-import { Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, type SelectChangeEvent } from "@mui/material";
+import {
+ InputBox, PersonAdd, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale 
+} from "@churchapps/apphelper";
+import {
+ Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, Avatar, type SelectChangeEvent 
+} from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
-interface Props { updatedFunction: () => void, household: HouseholdInterface, currentMembers: PersonInterface[], currentPerson: PersonInterface }
+interface Props {
+  updatedFunction: () => void;
+  household: HouseholdInterface;
+  currentMembers: PersonInterface[];
+  currentPerson: PersonInterface;
+}
 
 export function HouseholdEdit(props: Props) {
   const [members, setMembers] = React.useState<PersonInterface[]>([...props.currentMembers]);
   const [showAdd, setShowAdd] = React.useState(false);
-  const [showUpdateAddressModal, setShowUpdateAddressModal] = React.useState<boolean>(false)
+  const [showUpdateAddressModal, setShowUpdateAddressModal] = React.useState<boolean>(false);
   const [text, setText] = React.useState("");
-  const [selectedPerson, setSelectedPerson] = React.useState<PersonInterface>(null)
+  const [selectedPerson, setSelectedPerson] = React.useState<PersonInterface>(null);
   const [household, setHousehold] = React.useState<HouseholdInterface>({ name: "" });
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -27,10 +36,12 @@ export function HouseholdEdit(props: Props) {
     const h = { ...household } as HouseholdInterface;
     const value = e.target.value;
     switch (e.target.name) {
-      case "name": h.name = value; break;
+      case "name":
+        h.name = value;
+        break;
     }
     setHousehold(h);
-  }
+  };
 
   function handleChangeRole(e: SelectChangeEvent, index: number) {
     const m = [...members];
@@ -62,7 +73,7 @@ export function HouseholdEdit(props: Props) {
     if (!household.name) result.push(Locale.label("people.householdEdit.blankMsg"));
     setErrors(result);
     return result.length === 0;
-  }
+  };
 
   function handleSave() {
     if (validate()) {
@@ -70,7 +81,9 @@ export function HouseholdEdit(props: Props) {
       const promises = [];
       promises.push(ApiHelper.post("/households", [household], "MembershipApi"));
       promises.push(ApiHelper.post("/people/household/" + household.id, members, "MembershipApi"));
-      Promise.all(promises).then(() => props.updatedFunction()).finally(() => setIsSubmitting(false));
+      Promise.all(promises)
+        .then(() => props.updatedFunction())
+        .finally(() => setIsSubmitting(false));
     }
   }
 
@@ -92,11 +105,21 @@ export function HouseholdEdit(props: Props) {
 
   const rows = members.map((m, index) => (
     <TableRow key={m.id || index}>
-      <TableCell><img src={PersonHelper.getPhotoUrl(m)} alt="avatar" /></TableCell>
+      <TableCell>
+        <Avatar src={PersonHelper.getPhotoUrl(m)} sx={{ width: 48, height: 48 }} />
+      </TableCell>
       <TableCell>
         <FormControl fullWidth style={{ marginTop: 0 }}>
           <InputLabel id="household-role">{m.name.display}</InputLabel>
-          <Select aria-label="role" value={m.householdRole || ""} size="small" label={m.name.display} labelId="household-role" onChange={(e: SelectChangeEvent) => handleChangeRole(e, index)} data-testid="household-role-select">
+          <Select
+            aria-label="role"
+            value={m.householdRole || ""}
+            size="small"
+            label={m.name.display}
+            labelId="household-role"
+            onChange={(e: SelectChangeEvent) => handleChangeRole(e, index)}
+            data-testid="household-role-select"
+          >
             <MenuItem value="Head">{Locale.label("people.householdEdit.head")}</MenuItem>
             <MenuItem value="Spouse">{Locale.label("people.householdEdit.spouse")}</MenuItem>
             <MenuItem value="Child">{Locale.label("people.householdEdit.child")}</MenuItem>
@@ -108,22 +131,34 @@ export function HouseholdEdit(props: Props) {
         <SmallButton icon="person_remove" text={Locale.label("common.remove")} onClick={() => handleRemove(index)} data-testid="remove-household-member-button" ariaLabel="Remove household member" />
       </TableCell>
     </TableRow>
-  ))
+  ));
 
-  React.useEffect(() => {
-    setHousehold(props.household);
-    return () => {
-      setHousehold(null);
-    };
-  }, [props.household]);
+  React.useEffect(() => { setHousehold(props.household); return () => { setHousehold(null); }; }, [props.household]);
 
-  const personAdd = (showAdd) ? <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={props.currentPerson} showCreatePersonOnNotFound={true} /> : null;
+  const personAdd = showAdd ? <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={props.currentPerson} showCreatePersonOnNotFound={true} /> : null;
   return (
     <>
       <UpdateHouseHold show={showUpdateAddressModal} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} text={text} />
-      <InputBox id="householdBox" headerIcon="group" headerText={household?.name + Locale.label("people.householdEdit.house")} isSubmitting={isSubmitting} saveFunction={handleSave} cancelFunction={props.updatedFunction}>
+      <InputBox
+        id="householdBox"
+        headerIcon="group"
+        headerText={household?.name + Locale.label("people.householdEdit.house")}
+        isSubmitting={isSubmitting}
+        saveFunction={handleSave}
+        cancelFunction={props.updatedFunction}
+      >
         <ErrorMessages errors={errors} />
-        <TextField fullWidth name="name" id="name" type="text" value={household?.name} onChange={handleChange} label={Locale.label("people.householdEdit.houseName")} data-testid="household-name-input" aria-label="Household name" />
+        <TextField
+          fullWidth
+          name="name"
+          id="name"
+          type="text"
+          value={household?.name}
+          onChange={handleChange}
+          label={Locale.label("people.householdEdit.houseName")}
+          data-testid="household-name-input"
+          aria-label="Household name"
+        />
         <Table size="small" id="householdMemberTable">
           <TableBody>
             {rows}

@@ -98,11 +98,7 @@ test.describe('Donations Management - Production Patterns', () => {
     console.log('✓ Donation search verification completed');
     
     // Demonstrate batch entry
-    const batchDonations = [
-      { donorName: 'Batch Donor 1', amount: 50.00, fund: 'General Fund' },
-      { donorName: 'Batch Donor 2', amount: 75.00, fund: 'Building Fund' },
-      { donorName: 'Batch Donor 3', amount: 25.00, fund: 'Missions Fund' }
-    ];
+    const batchDonations = [{ donorName: 'Batch Donor 1', amount: 50.00, fund: 'General Fund' }, { donorName: 'Batch Donor 2', amount: 75.00, fund: 'Building Fund' }, { donorName: 'Batch Donor 3', amount: 25.00, fund: 'Missions Fund' }];
     
     await DonationsHelper.createBatchDonations(page, batchDonations);
     console.log('✓ Batch donation entry demonstrated');
@@ -138,12 +134,7 @@ test.describe('Donations Management - Production Patterns', () => {
     console.log('✓ Fund search verification completed');
     
     // Demonstrate reporting capabilities
-    const reportTypes = [
-      'donor-statements',
-      'fund-performance',
-      'giving-trends',
-      'tax-receipts'
-    ];
+    const reportTypes = ['donor-statements', 'fund-performance', 'giving-trends', 'tax-receipts'];
     
     for (const reportType of reportTypes) {
       await DonationsHelper.generateReport(page, reportType, {

@@ -1,18 +1,19 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { ChumsPersonHelper } from ".";
-import { ArrayHelper, type GroupMemberInterface, InputBox, type SearchCondition, type PersonInterface, ApiHelper, type FundDonationInterface, Locale } from "@churchapps/apphelper";
+import {
+ ArrayHelper, type GroupMemberInterface, InputBox, type SearchCondition, type PersonInterface, ApiHelper, type FundDonationInterface, Locale 
+} from "@churchapps/apphelper";
 import { EditCondition } from "./EditCondition";
 import { Button, Icon, Box } from "@mui/material";
 
 interface Props {
-  updateSearchResults: (people: PersonInterface[]) => void
-  toggleFunction: () => void
+  updateSearchResults: (people: PersonInterface[]) => void;
+  toggleFunction: () => void;
 }
 
 export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Props) {
-  const [conditions, setConditions] = React.useState<SearchCondition[]>([])
+  const [conditions, setConditions] = React.useState<SearchCondition[]>([]);
   const [showAddCondition, setShowAddCondition] = React.useState(true);
-
 
   const convertConditions = useCallback(async () => {
     const result: SearchCondition[] = [];
@@ -32,7 +33,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
           } else {
             memberDonations = await ApiHelper.get(`/funddonations?fundId=${fundVal[0].value}&startDate=${fundVal[1].from}&endDate=${fundVal[1].to}`, "GivingApi");
           }
-          const memberIds = ArrayHelper.getUniqueValues(memberDonations, "donation.personId").filter(f => f !== null);
+          const memberIds = ArrayHelper.getUniqueValues(memberDonations, "donation.personId").filter((f) => f !== null);
           result.push({ field: "id", operator: c.operator, value: memberIds.join(",") });
           break;
         case "memberAttendance":
@@ -41,17 +42,13 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
           const dateParams = `startDate=${attendanceValue[1].from}&endDate=${attendanceValue[1].to}`;
           if (c.operator === "attendedCampus") {
             attendees = await ApiHelper.get(`/attendancerecords/search?campusId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
-          }
-          else if (c.operator === "attendedService") {
+          } else if (c.operator === "attendedService") {
             attendees = await ApiHelper.get(`/attendancerecords/search?serviceId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
-          }
-          else if (c.operator === "attendedServiceTime") {
+          } else if (c.operator === "attendedServiceTime") {
             attendees = await ApiHelper.get(`/attendancerecords/search?serviceTimeId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
-          }
-          else if (c.operator === "attendedGroup") {
+          } else if (c.operator === "attendedGroup") {
             attendees = await ApiHelper.get(`/attendancerecords/search?groupId=${attendanceValue[0].value}&${dateParams}`, "AttendanceApi");
-          }
-          else {
+          } else {
             attendees = await ApiHelper.get(`/attendancerecords/search?${dateParams}`, "AttendanceApi");
           }
           const attendeeIds = ArrayHelper.getIds(attendees, "personId");
@@ -67,18 +64,17 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
 
   const handleAdvancedSearch = useCallback(async () => {
     const postConditions = await convertConditions();
-    ApiHelper.post("/people/advancedSearch", postConditions, "MembershipApi").then(data => {
-      props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)))
+    ApiHelper.post("/people/advancedSearch", postConditions, "MembershipApi").then((data) => {
+      props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
     });
   }, [convertConditions, props]);
 
-
   const conditionAddedHandler = useCallback((condition: SearchCondition) => {
-    const c = [...conditions];
-    c.push(condition);
-    setConditions(c);
-    setShowAddCondition(false);
-  }, [conditions]);
+      const c = [...conditions];
+      c.push(condition);
+      setConditions(c);
+      setShowAddCondition(false);
+    }, [conditions]);
 
   const showAddConditionHandler = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -86,41 +82,97 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
   }, []);
 
   const addConditionContent = useMemo(() => {
-    if (showAddCondition) return <EditCondition conditionAdded={conditionAddedHandler} />
-    else return <a href="about:blank" style={{display: "flex", alignItems: "center", marginBottom: "10px", justifyContent: "flex-end"}} onClick={showAddConditionHandler}><Icon>add</Icon> {Locale.label("people.peopleSearch.addCon")}</a>
+    if (showAddCondition) return <EditCondition conditionAdded={conditionAddedHandler} />;
+    else {
+      return (
+        <a
+          href="about:blank"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "10px",
+            justifyContent: "flex-end",
+          }}
+          onClick={showAddConditionHandler}
+        >
+          <Icon>add</Icon> {Locale.label("people.peopleSearch.addCon")}
+        </a>
+      );
+    }
   }, [showAddCondition, conditionAddedHandler, showAddConditionHandler]);
 
   const removeCondition = useCallback((index: number) => {
-    const c = [...conditions];
-    c.splice(index, 1);
-    setConditions(c);
-  }, [conditions]);
+      const c = [...conditions];
+      c.splice(index, 1);
+      setConditions(c);
+    }, [conditions]);
 
   const displayConditions = useMemo(() => {
     const result: JSX.Element[] = [];
     let idx = 0;
     for (const c of conditions) {
-      const displayField = c.field.split(/(?=[A-Z])/).map(word => (word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
-      const displayOperator = c.operator.replace("lessThanEqual", "<=").replace("greaterThan", ">").replace("equals", "=").replace("lessThan", "<").replace("greaterThanEqual", ">=").replace("notIn", Locale.label("people.peopleSearch.notIn")).replace("donatedToAny", Locale.label("people.peopleSearch.madeTo")).replace("donatedTo", Locale.label("people.peopleSearch.madeTo")).replace("attendedCampus", Locale.label("people.peopleSearch.for")).replace("attendedAny", Locale.label("people.peopleSearch.for")).replace("attendedServiceTime", Locale.label("people.peopleSearch.for")).replace("attendedService", Locale.label("people.peopleSearch.for")).replace("attendedGroup", Locale.label("people.peopleSearch.for"));
+      const displayField = c.field
+        .split(/(?=[A-Z])/)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+      const displayOperator = c.operator
+        .replace("lessThanEqual", "<=")
+        .replace("greaterThan", ">")
+        .replace("equals", "=")
+        .replace("lessThan", "<")
+        .replace("greaterThanEqual", ">=")
+        .replace("notIn", Locale.label("people.peopleSearch.notIn"))
+        .replace("donatedToAny", Locale.label("people.peopleSearch.madeTo"))
+        .replace("donatedTo", Locale.label("people.peopleSearch.madeTo"))
+        .replace("attendedCampus", Locale.label("people.peopleSearch.for"))
+        .replace("attendedAny", Locale.label("people.peopleSearch.for"))
+        .replace("attendedServiceTime", Locale.label("people.peopleSearch.for"))
+        .replace("attendedService", Locale.label("people.peopleSearch.for"))
+        .replace("attendedGroup", Locale.label("people.peopleSearch.for"));
       const index = idx;
-      let displayValue = (c.value.indexOf('"value":') > -1) ? JSON.parse(c.value).text : c.value;
+      let displayValue = c.value.indexOf('"value":') > -1 ? JSON.parse(c.value).text : c.value;
       if (c.field === "memberAttendance" || c.field === "memberDonations") {
         const parsedValue = JSON.parse(c.value);
         displayValue = `${parsedValue[0]?.text} [${parsedValue[1]?.from} - ${parsedValue[1]?.to}]`;
       }
-      result.push(<Box key={index} sx={{display: "flex", alignItems: "center"}} mb={1}>
-        <a href="about:blank" style={{display: "flex"}} onClick={(e) => { e.preventDefault(); removeCondition(index) }}><Icon sx={{ marginRight: "5px" }}>delete</Icon></a>
-        <Box><b>{displayField}</b> {displayOperator} <i>{displayValue}</i></Box>
-      </Box>);
+      result.push(<Box key={index} sx={{ display: "flex", alignItems: "center" }} mb={1}>
+          <a
+            href="about:blank"
+            style={{ display: "flex" }}
+            onClick={(e) => {
+              e.preventDefault();
+              removeCondition(index);
+            }}
+          >
+            <Icon sx={{ marginRight: "5px" }}>delete</Icon>
+          </a>
+          <Box>
+            <b>{displayField}</b> {displayOperator} <i>{displayValue}</i>
+          </Box>
+        </Box>);
       idx++;
     }
     return result;
   }, [conditions, removeCondition]);
 
-  return (<InputBox id="advancedSearch" headerIcon="person" headerText={Locale.label("people.peopleSearch.advSearch")} headerActionContent={<Button onClick={props.toggleFunction} sx={{ textTransform: "none" }}>{Locale.label("people.peopleSearch.simp")}</Button>} saveFunction={handleAdvancedSearch} saveText="Search" isSubmitting={conditions.length < 1} help="chums/advanced-search">
-    <p>{Locale.label("people.peopleSearch.allPeeps")}</p>
-    {displayConditions}
-    {addConditionContent}
-  </InputBox>)
-
+  return (
+    <InputBox
+      id="advancedSearch"
+      headerIcon="person"
+      headerText={Locale.label("people.peopleSearch.advSearch")}
+      headerActionContent={
+        <Button onClick={props.toggleFunction} sx={{ textTransform: "none" }}>
+          {Locale.label("people.peopleSearch.simp")}
+        </Button>
+      }
+      saveFunction={handleAdvancedSearch}
+      saveText="Search"
+      isSubmitting={conditions.length < 1}
+      help="chums/advanced-search"
+    >
+      <p>{Locale.label("people.peopleSearch.allPeeps")}</p>
+      {displayConditions}
+      {addConditionContent}
+    </InputBox>
+  );
 });

@@ -108,12 +108,7 @@ test.describe('People Management', () => {
     }
 
     // Test 3: Navigation options
-    const navSelectors = [
-      'a[href="/people"]',
-      'button:has-text("People")',
-      'nav a:has-text("People")',
-      '[aria-label*="People"]'
-    ];
+    const navSelectors = ['a[href="/people"]', 'button:has-text("People")', 'nav a:has-text("People")', '[aria-label*="People"]'];
 
     let navFound = false;
     for (const selector of navSelectors) {

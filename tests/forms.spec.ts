@@ -102,7 +102,11 @@ test.describe('Forms & Workflows - Production Patterns', () => {
       { type: 'text', label: 'Full Name', required: true },
       { type: 'email', label: 'Email Address', required: true },
       { type: 'phone', label: 'Phone Number', required: false },
-      { type: 'select', label: 'Age Group', options: ['Child', 'Teen', 'Adult', 'Senior'] },
+      {
+ type: 'select',
+label: 'Age Group',
+options: ['Child', 'Teen', 'Adult', 'Senior'] 
+},
       { type: 'checkbox', label: 'Dietary Restrictions', options: ['Vegetarian', 'Vegan', 'Gluten-Free'] },
       { type: 'textarea', label: 'Special Requests', required: false }
     ];

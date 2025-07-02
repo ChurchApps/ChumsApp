@@ -48,12 +48,7 @@ export class GroupsHelper {
    * Search for groups by name or keyword
    */
   static async searchGroups(page: Page, searchTerm: string) {
-    const searchSelectors = [
-      '#searchText',
-      'input[placeholder*="Search"]',
-      'input[name="search"]',
-      'input[placeholder*="Groups"]'
-    ];
+    const searchSelectors = ['#searchText', 'input[placeholder*="Search"]', 'input[name="search"]', 'input[placeholder*="Groups"]'];
     
     for (const selector of searchSelectors) {
       const searchInput = page.locator(selector).first();
@@ -93,12 +88,7 @@ export class GroupsHelper {
     console.log(`Simulating creation of group: ${group.name}`);
     
     // Look for add group button
-    const addButtonSelectors = [
-      'button:has-text("Add Group")',
-      'button:has-text("Add")',
-      'button:has-text("Create Group")',
-      '[aria-label*="add"]'
-    ];
+    const addButtonSelectors = ['button:has-text("Add Group")', 'button:has-text("Add")', 'button:has-text("Create Group")', '[aria-label*="add"]'];
     
     let addButtonFound = false;
     for (const selector of addButtonSelectors) {
@@ -239,10 +229,7 @@ export class GroupsHelper {
     await this.searchGroups(page, groupName);
     
     // Look for the group in search results
-    const groupSelectors = [
-      `text=${groupName}`,
-      'table td, .group-result, .search-result'
-    ];
+    const groupSelectors = [`text=${groupName}`, 'table td, .group-result, .search-result'];
     
     for (const selector of groupSelectors) {
       const element = page.locator(selector).first();

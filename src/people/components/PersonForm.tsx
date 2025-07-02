@@ -1,43 +1,119 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { FormSubmission } from "./";
-import { Button, Icon } from "@mui/material";
-import { type FormSubmissionInterface, FormSubmissionEdit, DisplayBox, type FormInterface } from "@churchapps/apphelper";
+import { Button, Box, Card, CardContent, Typography, Paper } from "@mui/material";
+import { Description as DescriptionIcon, Add as AddIcon } from "@mui/icons-material";
+import { type FormSubmissionInterface, FormSubmissionEdit, DisplayBox, type FormInterface, Locale } from "@churchapps/apphelper";
 
 interface Props {
-  contentType: string,
-  contentId: string,
-  form: FormInterface,
-  formSubmissions: FormSubmissionInterface[],
-  updatedFunction: () => void
+  contentType: string;
+  contentId: string;
+  form: FormInterface;
+  formSubmissions: FormSubmissionInterface[];
+  updatedFunction: () => void;
 }
 
-export const PersonForm: React.FC<Props> = (props) => {
+export const PersonForm: React.FC<Props> = memo((props) => {
   const [mode, setMode] = useState("display");
   const [editFormSubmissionId, setEditFormSubmissionId] = useState("");
 
-  let submission:FormSubmissionInterface = null;
-  props.formSubmissions?.forEach(fs => {
-    if (fs.formId===props.form?.id) submission = fs;
+  let submission: FormSubmissionInterface = null;
+  props.formSubmissions?.forEach((fs) => {
+    if (fs.formId === props.form?.id) submission = fs;
   });
 
-  const handleEdit = (formSubmissionId: string) => { setMode("edit"); setEditFormSubmissionId(formSubmissionId); }
+  const handleEdit = (formSubmissionId: string) => {
+    setMode("edit");
+    setEditFormSubmissionId(formSubmissionId);
+  };
 
   const handleUpdate = () => {
     setMode("display");
     setEditFormSubmissionId("");
     props.updatedFunction();
+  };
+
+  const handleAdd = () => {
+    setMode("edit");
+  };
+
+  if (mode === "edit") {
+    return (
+      <FormSubmissionEdit
+        formSubmissionId={editFormSubmissionId}
+        updatedFunction={handleUpdate}
+        addFormId={props.form?.id}
+        contentType={props.contentType}
+        contentId={props.contentId}
+        personId={props.contentId}
+      />
+    );
   }
 
-  const handleAdd = () => { setMode("edit"); }
+  const content = submission ? (
+    <Box
+      sx={{
+        "& .MuiCard-root": {
+          borderRadius: 2,
+          border: "1px solid",
+          borderColor: "grey.200",
+        },
+      }}
+    >
+      <Card
+        sx={{
+          transition: "all 0.2s ease-in-out",
+          "&:hover": {
+            transform: "translateY(-1px)",
+            boxShadow: 2,
+          },
+        }}
+      >
+        <CardContent sx={{ pb: "16px !important" }}>
+          <FormSubmission formSubmissionId={submission.id} editFunction={handleEdit} />
+        </CardContent>
+      </Card>
+    </Box>
+  ) : (
+    <Paper
+      sx={{
+        p: 4,
+        textAlign: "center",
+        backgroundColor: "grey.50",
+        border: "1px dashed",
+        borderColor: "grey.300",
+      }}
+    >
+      <DescriptionIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
+      <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+        {Locale.label("people.personForm.noFormMsg") || "No form submission found for this person"}
+      </Typography>
+      <Button
+        variant="contained"
+        onClick={handleAdd}
+        startIcon={<AddIcon />}
+        sx={{
+          transition: "all 0.2s ease-in-out",
+          "&:hover": {
+            transform: "translateY(-1px)",
+            boxShadow: 2,
+          },
+        }}
+        data-testid="add-form-button"
+        aria-label={`Add ${props.form?.name || "form"} submission`}
+      >
+        {Locale.label("people.personForm.addForm") || "Add Form"}
+      </Button>
+    </Paper>
+  );
 
-  if (mode === "edit") return <FormSubmissionEdit formSubmissionId={editFormSubmissionId} updatedFunction={handleUpdate} addFormId={props.form?.id} contentType={props.contentType} contentId={props.contentId} personId={props.contentId} />;
-
-  if (submission) return (<DisplayBox headerText={props.form.name} headerIcon="description">
-    <FormSubmission formSubmissionId={submission.id} editFunction={handleEdit} />
-  </DisplayBox>);
-  else return (<DisplayBox headerText={props.form.name} headerIcon="description">
-    <Button variant="text" onClick={() => handleAdd()}><Icon>add</Icon> Add Form</Button>
-  </DisplayBox>);
-
-
-}
+  return (
+    <DisplayBox
+      headerText={props.form?.name || Locale.label("people.personForm.form") || "Form"}
+      headerIcon="description"
+      help="chums/forms"
+      ariaLabel={`${props.form?.name || "form"} submission details`}
+    >
+      {content}
+    </DisplayBox>
+  );
+});

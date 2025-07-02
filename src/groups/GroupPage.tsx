@@ -1,10 +1,10 @@
 import React from "react";
-import { GroupDetails } from "./components";
-import { ApiHelper, Banner, type GroupInterface, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
+import { GroupBanner } from "./components";
+import { ApiHelper, type GroupInterface } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
-import { Grid, Icon } from "@mui/material"
 import { GroupMembersTab } from "./components/GroupMembersTab";
 import { GroupSessionsTab } from "./components/GroupSessionsTab";
+import { Grid } from "@mui/material";
 
 export const GroupPage = () => {
   const params = useParams();
@@ -12,75 +12,46 @@ export const GroupPage = () => {
   const [group, setGroup] = React.useState({} as GroupInterface);
   const [selectedTab, setSelectedTab] = React.useState("");
 
-  const loadData = () => { ApiHelper.get("/groups/" + params.id, "MembershipApi").then(data => setGroup(data)); }
+  const loadData = () => {
+    ApiHelper.get("/groups/" + params.id, "MembershipApi").then((data) => setGroup(data));
+  };
   React.useEffect(loadData, [params.id]);
 
   const handleGroupUpdated = (g: GroupInterface) => {
     setGroup(g);
     loadData();
-  }
-
-
-
-  const defaultTab = "settings";
-
-  const getTabs = () => {
-    const tabs: { key: string, icon: string, label: string }[] = [];
-    tabs.push({ key: "settings", icon: "settings", label: Locale.label("components.wrapper.set") });
-    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) tabs.push({ key: "members", icon: "people", label: Locale.label("groups.tabs.mem") });
-    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && group?.trackAttendance) tabs.push({ key: "sessions", icon: "calendar_month", label: Locale.label("groups.tabs.ses") });
-
-    return tabs;
-  }
+  };
 
   React.useEffect(() => {
-    if (selectedTab === "" && defaultTab !== "") {
-      setSelectedTab(defaultTab);
+    if (selectedTab === "") {
+      setSelectedTab("members");
     }
-  }, [selectedTab, defaultTab]);
+  }, [selectedTab]);
 
   const getCurrentTab = () => {
     let currentTab = null;
     switch (selectedTab) {
-      case "settings": currentTab = <GroupDetails key="settings" group={group} updatedFunction={handleGroupUpdated} />; break;
-      case "members": currentTab = <GroupMembersTab key="members" group={group} />; break;
-      case "sessions": currentTab = <GroupSessionsTab key="sessions" group={group} />; break;
+      case "members":
+        currentTab = <GroupMembersTab key="members" group={group} />;
+        break;
+      case "sessions":
+        currentTab = <GroupSessionsTab key="sessions" group={group} />;
+        break;
+      default:
+        currentTab = <GroupMembersTab key="members" group={group} />;
+        break;
     }
     return currentTab;
-  }
-
-  const getItem = (tab: any) => {
-    if (tab.key === selectedTab) return (
-      <li key={tab.key} className="active">
-        <a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}>
-          <Icon>{tab.icon}</Icon> {tab.label}
-        </a>
-      </li>
-    );
-    return (
-      <li key={tab.key}>
-        <a href="about:blank" onClick={(e) => { e.preventDefault(); setSelectedTab(tab.key); }}>
-          <Icon>{tab.icon}</Icon> {tab.label}
-        </a>
-      </li>
-    );
-  }
+  };
 
   return (
     <>
-      <Banner><h1>{group?.name}</h1></Banner>
+      <GroupBanner group={group} selectedTab={selectedTab} onTabChange={setSelectedTab} togglePhotoEditor={() => {}} onEdit={() => {}} />
       <Grid container spacing={2}>
-        <Grid size={{ xs: 12, md: 2 }}>
-          <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
-            <ul>{getTabs().map((tab) => getItem(tab))}</ul>
-          </div>
-        </Grid>
-        <Grid size={{ xs: 12, md: 10 }}>
-          <div id="mainContent">
-            {getCurrentTab()}
-          </div>
+        <Grid size={{ xs: 12 }}>
+          <div id="mainContent">{getCurrentTab()}</div>
         </Grid>
       </Grid>
     </>
   );
-}
+};

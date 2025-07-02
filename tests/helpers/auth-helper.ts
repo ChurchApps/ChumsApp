@@ -99,12 +99,7 @@ export class AuthHelper {
    * Check if user is currently logged in
    */
   static async isLoggedIn(page: Page) {
-    const loginIndicators = [
-      '.MuiAvatar-root',
-      'h1:has-text("Chums")',
-      '[id="peopleBox"]',
-      'text=Tasks'
-    ];
+    const loginIndicators = ['.MuiAvatar-root', 'h1:has-text("Chums")', '[id="peopleBox"]', 'text=Tasks'];
     
     for (const selector of loginIndicators) {
       const isVisible = await page.locator(selector).first().isVisible().catch(() => false);

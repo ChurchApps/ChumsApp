@@ -9,9 +9,7 @@ export default defineConfig({
   workers: 4,
   reporter: 'html',
   timeout: 30 * 1000,
-  expect: {
-    timeout: 5 * 1000,
-  },
+  expect: { timeout: 5 * 1000 },
 
   use: {
     baseURL: 'https://chumsdemo.churchapps.org',

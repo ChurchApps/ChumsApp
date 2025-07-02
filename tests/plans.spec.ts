@@ -213,11 +213,7 @@ test.describe('Service Planning - Production Patterns', () => {
     // Demonstrate worship set creation
     const worshipSet = {
       name: 'Grace Theme Set',
-      songs: [
-        { title: 'Amazing Grace', key: 'G', duration: 4 },
-        { title: 'Grace Like Rain', key: 'D', duration: 5 },
-        { title: 'Your Grace is Enough', key: 'A', duration: 6 }
-      ]
+      songs: [{ title: 'Amazing Grace', key: 'G', duration: 4 }, { title: 'Grace Like Rain', key: 'D', duration: 5 }, { title: 'Your Grace is Enough', key: 'A', duration: 6 }]
     };
     
     await PlansHelper.createWorshipSet(page, worshipSet);

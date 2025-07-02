@@ -54,6 +54,7 @@
 		"notes": "Notas",
 		"remove": "Remover",
 		"search": "Buscar",
+		"searching": "Searching...",
 		"title": "Título",
 		"yes": "Sí"
 	},
@@ -216,6 +217,7 @@
 			"yesNo": "Sí/No"
 		},
 		"formsPage": {
+			"addForm": "Add Form",
 			"archForms": "Formularios Archivados",
 			"confirmMsg1": "¿Está seguro de que desea archivar este formulario?",
 			"confirmMsg2": "¿Está seguro de que desea restaurar este formulario?",
@@ -455,6 +457,11 @@
 			"persDet": "Detalles Personales",
 			"work": "Trabajo"
 		},
+		"personForm": {
+			"addForm": "Add Form",
+			"form": "Form",
+			"noFormMsg": "No form submission found for this person"
+		},
 		"tabs": {
 			"att": "Asistencia",
 			"don": "Donaciones",
@@ -529,6 +536,7 @@
 			"plans": "Planes"
 		},
 		"planPage": {
+			"assign": "Team Assignments",
 			"assignments": "Asignaciones",
 			"serviceOrder": "Orden de Servicio",
 			"servicePlan": "Plan de Servicio"
@@ -833,6 +841,23 @@
 			"meter": "Compás",
 			"length": "Duración",
 			"key": "Tonalidad"
+		},
+		"library": {
+			"empty": {
+				"title": "No Songs Found",
+				"message": "Get started by adding your first song to the library.",
+				"action": "Add First Song"
+			},
+			"noResults": "No songs match your search criteria."
+		},
+		"search": {
+			"placeholder": "Search songs by title or artist...",
+			"enterQuery": "Enter a search term to find songs.",
+			"noResults": "No songs found for your search.",
+			"createManually": "Create Manually",
+			"title": "Search for a Song",
+			"inputLabel": "Title or Artist",
+			"inputPlaceholder": "Enter song title or artist name..."
 		}
 	},
 	"tasks": {

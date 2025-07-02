@@ -1,18 +1,345 @@
 import React from "react";
-import { Funds } from "./components";
-import { UserHelper, Locale } from "@churchapps/apphelper";
-import { Permissions } from "@churchapps/apphelper";
-import { Banner } from "@churchapps/apphelper";
+import { FundEdit } from "./components";
+import { ApiHelper, UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
+import { Link } from "react-router-dom";
+import { useMountedState, type FundInterface, Permissions } from "@churchapps/apphelper";
+import {
+ Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 
+} from "@mui/material";
+import { VolunteerActivism as FundIcon, Add as AddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 
 export const FundsPage = () => {
+  const [editFundId, setEditFundId] = React.useState("notset");
+  const [funds, setFunds] = React.useState<FundInterface[]>(null);
+  const [sortDirection, setSortDirection] = React.useState<boolean | null>(null);
+  const [currentSortedCol, setCurrentSortedCol] = React.useState<string>("");
+  const isMounted = useMountedState();
 
-  if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
-  else return (
+  const fundUpdated = () => {
+    setEditFundId("notset");
+    loadData();
+  };
+
+  const showEditFund = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const anchor = e.currentTarget as HTMLAnchorElement;
+    const id = anchor.getAttribute("data-id");
+    setEditFundId(id);
+  };
+
+  const loadData = () => {
+    ApiHelper.get("/funds", "GivingApi").then((data) => {
+      if (isMounted()) {
+        setFunds(data);
+      }
+    });
+  };
+
+  const [stats, setStats] = React.useState({ totalFunds: 0 });
+
+  React.useEffect(() => {
+    if (funds) {
+      const totalFunds = funds.length;
+
+      setStats({ totalFunds });
+    }
+  }, [funds]);
+
+  const getSidebarModules = () => {
+    const result = [];
+    if (editFundId !== "notset") {
+      const fund = editFundId === "" ? { id: "", name: "", taxDeductible: true } : funds.find((f) => f.id === editFundId);
+      result.push(<FundEdit key={result.length - 1} fund={fund} updatedFunction={fundUpdated} />);
+    }
+    return result;
+  };
+
+  const sortTable = (key: string, asc: boolean | null) => {
+    if (asc === null) asc = false;
+    setCurrentSortedCol(key);
+
+    const sortedFunds = funds.sort(function (a: any, b: any) {
+      if (a[key] === null) return Infinity;
+
+      const parsedNum = parseInt(a[key]);
+      if (!isNaN(parsedNum)) {
+        return asc ? a[key] - b[key] : b[key] - a[key];
+      }
+
+      const valA = a[key].toUpperCase();
+      const valB = b[key].toUpperCase();
+      if (valA < valB) {
+        return asc ? 1 : -1;
+      }
+      if (valA > valB) {
+        return asc ? -1 : 1;
+      }
+
+      return 0;
+    });
+    setFunds(sortedFunds);
+    setSortDirection(!asc);
+  };
+
+  const getSortArrows = (key: string) => (
+    <div style={{ display: "flex" }}>
+      <div style={{ marginTop: "5px" }} className={`${sortDirection && currentSortedCol === key ? "sortAscActive" : "sortAsc"}`}></div>
+      <div style={{ marginTop: "14px" }} className={`${!sortDirection && currentSortedCol === key ? "sortDescActive" : "sortDesc"}`}></div>
+    </div>
+  );
+
+  const getRows = () => {
+    const result: JSX.Element[] = [];
+
+    if (funds.length === 0) {
+      result.push(<TableRow key="0">
+          <TableCell colSpan={3} sx={{ textAlign: "center", py: 4 }}>
+            <Stack spacing={2} alignItems="center">
+              <FundIcon sx={{ fontSize: 48, color: "text.secondary" }} />
+              <Typography variant="body1" color="text.secondary">
+                {Locale.label("donations.funds.noFund")}
+              </Typography>
+            </Stack>
+          </TableCell>
+        </TableRow>);
+      return result;
+    }
+
+    const canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
+    const canViewFund = UserHelper.checkAccess(Permissions.givingApi.donations.view);
+
+    for (let i = 0; i < funds.length; i++) {
+      const f = funds[i];
+      const editLink = canEdit ? (
+        <Button size="small" variant="outlined" startIcon={<Icon>edit</Icon>} data-cy={`edit-${i}`} data-id={f.id} onClick={showEditFund} sx={{ minWidth: "auto" }}>
+          Edit
+        </Button>
+      ) : null;
+
+      const fundLink = canViewFund ? (
+        <Link
+          to={"/donations/funds/" + f.id}
+          style={{
+            textDecoration: "none",
+            color: "var(--c1l2)",
+            fontWeight: 500,
+          }}
+        >
+          {f.name}
+        </Link>
+      ) : (
+        <Typography variant="body2" sx={{ fontWeight: 500 }}>
+          {f.name}
+        </Typography>
+      );
+
+      result.push(<TableRow
+          key={i}
+          sx={{
+            "&:hover": { backgroundColor: "action.hover" },
+            transition: "background-color 0.2s ease",
+          }}
+        >
+          <TableCell>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <FundIcon sx={{ color: "var(--c1l2)", fontSize: 20 }} />
+              {fundLink}
+            </Stack>
+          </TableCell>
+          <TableCell>
+            <Stack direction="row" spacing={1} alignItems="center">
+              {f.taxDeductible ? (
+                <>
+                  <Icon sx={{ color: "success.main", fontSize: 18 }}>check_circle</Icon>
+                  <Typography variant="body2" sx={{ color: "success.main", fontWeight: 500 }}>
+                    Tax Deductible
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Icon sx={{ color: "warning.main", fontSize: 18 }}>info</Icon>
+                  <Typography variant="body2" sx={{ color: "warning.main", fontWeight: 500 }}>
+                    Non-Deductible
+                  </Typography>
+                </>
+              )}
+            </Stack>
+          </TableCell>
+          <TableCell>{editLink}</TableCell>
+        </TableRow>);
+    }
+    return result;
+  };
+
+  const getTableHeader = () => {
+    const rows: JSX.Element[] = [];
+
+    if (funds.length === 0) {
+      return rows;
+    }
+
+    rows.push(<TableRow key="header">
+        <TableCell
+          sx={{
+            fontWeight: 600,
+            cursor: "pointer",
+            "&:hover": { backgroundColor: "action.hover" },
+          }}
+          onClick={() => sortTable("name", sortDirection)}
+        >
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+              {Locale.label("common.name")}
+            </Typography>
+            {getSortArrows("name")}
+          </Stack>
+        </TableCell>
+        <TableCell sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+            Tax Status
+          </Typography>
+        </TableCell>
+        <TableCell sx={{ fontWeight: 600 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+            {Locale.label("common.edit")}
+          </Typography>
+        </TableCell>
+      </TableRow>);
+    return rows;
+  };
+
+  React.useEffect(loadData, [isMounted]);
+
+  const getTable = () => {
+    if (!funds) return <Loading />;
+    else {
+      return (
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead
+            sx={{
+              backgroundColor: "grey.50",
+              "& .MuiTableCell-root": {
+                borderBottom: "2px solid",
+                borderBottomColor: "divider",
+              },
+            }}
+          >
+            {getTableHeader()}
+          </TableHead>
+          <TableBody>{getRows()}</TableBody>
+        </Table>
+      );
+    }
+  };
+
+  if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return <></>;
+
+  return (
     <>
-      <Banner><h1>{Locale.label("donations.donations.funds")}</h1></Banner>
-      <div id="mainContent">
-        <Funds />
-      </div>
+      {/* Modern Blue Header */}
+      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
+        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
+          {/* Left side: Title and Icon */}
+          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
+            <Box
+              sx={{
+                backgroundColor: "rgba(255,255,255,0.2)",
+                borderRadius: "12px",
+                p: 1.5,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <FundIcon sx={{ fontSize: 32, color: "#FFF" }} />
+            </Box>
+            <Box>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 600,
+                  mb: 0.5,
+                  fontSize: { xs: "1.75rem", md: "2.125rem" },
+                }}
+              >
+                {Locale.label("donations.donations.funds")}
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "rgba(255,255,255,0.9)",
+                  fontSize: { xs: "0.875rem", md: "1rem" },
+                }}
+              >
+                Manage donation funds and track giving categories
+              </Typography>
+            </Box>
+          </Stack>
+
+          {/* Right side: Quick Actions */}
+          <Stack direction="row" spacing={1} flexWrap="wrap">
+            {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
+              <Button
+                variant="outlined"
+                sx={{
+                  color: "#FFF",
+                  borderColor: "rgba(255,255,255,0.5)",
+                  "&:hover": {
+                    borderColor: "#FFF",
+                    backgroundColor: "rgba(255,255,255,0.1)",
+                  },
+                }}
+                startIcon={<AddIcon />}
+                onClick={() => {
+                  setEditFundId("");
+                }}
+                data-testid="add-fund-button"
+              >
+                Add Fund
+              </Button>
+            )}
+          </Stack>
+        </Stack>
+
+        {/* Statistics Row */}
+        <Stack direction="row" spacing={3} flexWrap="wrap" useFlexGap justifyContent="flex-start" sx={{ mt: 3 }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <FundIcon sx={{ color: "#FFF", fontSize: 20 }} />
+            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
+              {stats.totalFunds}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
+              Total Funds
+            </Typography>
+          </Stack>
+        </Stack>
+      </Box>
+
+      {/* Main Content */}
+      <Box sx={{ p: 3 }}>
+        {/* Edit content appears above when editing */}
+        {editFundId !== "notset" && <Box sx={{ mb: 3 }}>{getSidebarModules()}</Box>}
+
+        {/* Main table */}
+        <Card>
+          <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Stack direction="row" spacing={1} alignItems="center">
+                <FundIcon />
+                <Typography variant="h6">{Locale.label("donations.funds.fund")}</Typography>
+              </Stack>
+              <Stack direction="row" spacing={1} alignItems="center">
+                {funds && (
+                  <Button size="small" variant="outlined" startIcon={<ExportIcon />} component={ExportLink} data={funds} filename="funds.csv" sx={{ mr: 1 }}>
+                    Export
+                  </Button>
+                )}
+              </Stack>
+            </Stack>
+          </Box>
+          <Box>{getTable()}</Box>
+        </Card>
+      </Box>
     </>
   );
-}
+};

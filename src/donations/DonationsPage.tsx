@@ -1,18 +1,20 @@
 import React from "react";
-import { UserHelper,Locale } from "@churchapps/apphelper";
-import { ReportWithFilter,  Permissions } from "@churchapps/apphelper";
-
-import { Banner } from "@churchapps/apphelper";
+import { UserHelper, Locale, ReportWithFilter, Permissions } from "@churchapps/apphelper";
+import { Box } from "@mui/material";
+import { VolunteerActivism as DonationIcon } from "@mui/icons-material";
+import { PageHeader } from "../components";
 
 export const DonationsPage = () => {
+  if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return <></>;
 
-  if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return (<></>);
-  else return (
+  return (
     <>
-      <Banner><h1>{Locale.label("donations.donationsPage.don")}</h1></Banner>
-      <div id="mainContent">
+      <PageHeader icon={<DonationIcon />} title={Locale.label("donations.donationsPage.don")} subtitle="View donation summaries and analyze giving trends" />
+
+      {/* Main Content */}
+      <Box sx={{ p: 3 }}>
         <ReportWithFilter keyName="donationSummary" autoRun={true} />
-      </div>
+      </Box>
     </>
   );
-}
+};

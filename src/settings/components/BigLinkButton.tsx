@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Grid, Card, CardContent, Icon } from "@mui/material"
+import { Grid, Card, CardContent, Icon } from "@mui/material";
 
 interface Props {
   href: string;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const BigLinkButton: React.FC<Props> = React.memo((props) => (
-  <Grid size={{ xs: 6, md: 3 }}>
+  <Grid xs={6} md={3}>
     <LinkType href={props.href} outsideLink={props.outsideLink}>
       <Card>
         <CardContent sx={{ textAlign: "center" }}>
@@ -30,6 +30,11 @@ interface LinkTypeProps {
 }
 
 const LinkType: React.FC<LinkTypeProps> = React.memo((props) => {
-  if (props.outsideLink) return <a href={props.href} className="text-decoration" target="_blank" rel="noopener noreferrer">{props.children}</a>
-  else return <Link to={props.href}>{props.children}</Link>
+  if (props.outsideLink) {
+    return (
+      <a href={props.href} className="text-decoration" target="_blank" rel="noopener noreferrer">
+        {props.children}
+      </a>
+    );
+  } else return <Link to={props.href}>{props.children}</Link>;
 });

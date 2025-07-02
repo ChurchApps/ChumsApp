@@ -1,15 +1,14 @@
-import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent, Stack } from "@mui/material";
 import React from "react";
 import { type ConditionInterface, Locale } from "@churchapps/apphelper";
 
 interface Props {
-  condition: ConditionInterface,
-  onChange: (condition: ConditionInterface) => void
+  condition: ConditionInterface;
+  onChange: (condition: ConditionInterface) => void;
 }
 
 export const ConditionAttendance = (props: Props) => {
-
-  const fieldData: any = (props.condition.fieldData) ? JSON.parse(props.condition.fieldData) : {}
+  const fieldData: any = props.condition.fieldData ? JSON.parse(props.condition.fieldData) : {};
 
   const init = () => {
     const c = { ...props.condition };
@@ -21,7 +20,7 @@ export const ConditionAttendance = (props: Props) => {
       c.fieldData = JSON.stringify(fieldData);
     }
     props.onChange(c);
-  }
+  };
 
   React.useEffect(init, [props.condition.field]); //eslint-disable-line
 
@@ -37,7 +36,7 @@ export const ConditionAttendance = (props: Props) => {
         break;
     }
     props.onChange(c);
-  }
+  };
 
   const handleFieldDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;
@@ -52,7 +51,7 @@ export const ConditionAttendance = (props: Props) => {
     const c = { ...props.condition };
     c.fieldData = JSON.stringify(fieldData);
     props.onChange(c);
-  }
+  };
   /*
     const getCampus = () => (
       <FormControl fullWidth>
@@ -65,23 +64,25 @@ export const ConditionAttendance = (props: Props) => {
       </FormControl>
     )
   */
-  return <>
-    <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionAttendance.op")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionAttendance.op")} value={props.condition.operator || ""} name="operator" onChange={handleChange}>
-        <MenuItem value=">">{Locale.label("tasks.conditionAttendance.hasAtt")}</MenuItem>
-        <MenuItem value="=">{Locale.label("tasks.conditionAttendance.hasNoAtt")}</MenuItem>
-      </Select>
-    </FormControl>
-    <FormControl fullWidth>
-      <InputLabel>{Locale.label("tasks.conditionAttendance.eventType")}</InputLabel>
-      <Select fullWidth label={Locale.label("tasks.conditionAttendance.eventType")} value={fieldData.eventType || ""} name="eventType" onChange={handleFieldDataChange}>
-        <MenuItem value="any">{Locale.label("tasks.conditionAttendance.anywhere")}</MenuItem>
-        <MenuItem value="campus">{Locale.label("tasks.conditionAttendance.campus")}</MenuItem>
-        <MenuItem value="service">{Locale.label("tasks.conditionAttendance.serv")}</MenuItem>
-        <MenuItem value="serviceTime">{Locale.label("tasks.conditionAttendance.servTime")}</MenuItem>
-        <MenuItem value="group">{Locale.label("tasks.conditionAttendance.group")}</MenuItem>
-      </Select>
-    </FormControl>
-  </>
-}
+  return (
+    <Stack spacing={2}>
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>{Locale.label("tasks.conditionAttendance.op")}</InputLabel>
+        <Select label={Locale.label("tasks.conditionAttendance.op")} value={props.condition.operator || ">"} name="operator" onChange={handleChange}>
+          <MenuItem value=">">{Locale.label("tasks.conditionAttendance.hasAtt")}</MenuItem>
+          <MenuItem value="=">{Locale.label("tasks.conditionAttendance.hasNoAtt")}</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>{Locale.label("tasks.conditionAttendance.eventType")}</InputLabel>
+        <Select label={Locale.label("tasks.conditionAttendance.eventType")} value={fieldData.eventType || "any"} name="eventType" onChange={handleFieldDataChange}>
+          <MenuItem value="any">{Locale.label("tasks.conditionAttendance.anywhere")}</MenuItem>
+          <MenuItem value="campus">{Locale.label("tasks.conditionAttendance.campus")}</MenuItem>
+          <MenuItem value="service">{Locale.label("tasks.conditionAttendance.serv")}</MenuItem>
+          <MenuItem value="serviceTime">{Locale.label("tasks.conditionAttendance.servTime")}</MenuItem>
+          <MenuItem value="group">{Locale.label("tasks.conditionAttendance.group")}</MenuItem>
+        </Select>
+      </FormControl>
+    </Stack>
+  );
+};

@@ -2,7 +2,7 @@ import React from "react";
 import { MembersAdd, GroupDetails, Tabs, SessionAdd } from "./components";
 import { ApiHelper, type GroupInterface, type PersonInterface, type SessionInterface, PersonHelper } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
-import { Grid } from "@mui/material"
+import { Grid } from "@mui/material";
 import { PersonAddAdvanced } from "../people/components/PersonAddAdvanced";
 import { Banner } from "@churchapps/apphelper";
 
@@ -17,8 +17,13 @@ export const GroupPage = () => {
   const [addMemberVisible, setAddMemberVisible] = React.useState(false);
 
   const addPerson = (p: PersonInterface) => setAddedPerson(p);
-  const loadData = () => { ApiHelper.get("/groups/" + params.id, "MembershipApi").then(data => setGroup(data)); }
-  const handleSessionAdd = (session: SessionInterface) => { setAddedSession(session); setAddSessionVisible(false); }
+  const loadData = () => {
+    ApiHelper.get("/groups/" + params.id, "MembershipApi").then((data) => setGroup(data));
+  };
+  const handleSessionAdd = (session: SessionInterface) => {
+    setAddedSession(session);
+    setAddSessionVisible(false);
+  };
 
   React.useEffect(loadData, []); //eslint-disable-line
 
@@ -26,7 +31,7 @@ export const GroupPage = () => {
     if (name === "addPerson") setAddPersonVisible(visible);
     else if (name === "addSession") setAddSessionVisible(visible);
     else if (name === "addMember") setAddMemberVisible(visible);
-  }
+  };
 
   const getSidebarModules = () => {
     const result = [] as JSX.Element[];
@@ -34,24 +39,26 @@ export const GroupPage = () => {
     if (addPersonVisible) result.push(<PersonAddAdvanced getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} showCreatePersonOnNotFound />);
     if (addMemberVisible) result.push(<MembersAdd key="membersAdd" group={group} addFunction={addPerson} />);
     return result;
-  }
+  };
 
   const handleAddedCallback = () => {
     setAddedPerson(null);
 
     setAddedSession(null);
-  }
+  };
 
   const handleGroupUpdated = (g: GroupInterface) => {
     setGroup(g);
     loadData();
-  }
+  };
 
-  console.log("GROUP", group)
+  console.log("GROUP", group);
 
   return (
     <>
-      <Banner><h1>{group?.name}</h1></Banner>
+      <Banner>
+        <h1>{group?.name}</h1>
+      </Banner>
       <div id="mainContent">
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 8 }}>
@@ -63,4 +70,4 @@ export const GroupPage = () => {
       </div>
     </>
   );
-}
+};

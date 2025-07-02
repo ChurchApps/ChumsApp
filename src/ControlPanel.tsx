@@ -11,23 +11,22 @@ import { AnalyticsHelper, UserHelper, ErrorHelper, type ErrorLogInterface, type 
 import { UI } from "./ui/Test";
 import { Pingback } from "./Pingback";
 
-
 export const ControlPanel = () => {
   const [errors] = React.useState([]);
 
-  const location = (typeof (window) === "undefined") ? null : window.location;
+  const location = typeof window === "undefined" ? null : window.location;
   AnalyticsHelper.init();
-  React.useEffect(() => { AnalyticsHelper.logPageView() }, [location]);
+  React.useEffect(() => { AnalyticsHelper.logPageView(); }, [location]);
 
   const getErrorAppData = () => {
     const result: ErrrorAppDataInterface = {
       churchId: UserHelper.currentUserChurch?.church?.id || "",
       userId: UserHelper.user?.id || "",
       originUrl: location?.toString(),
-      application: "CHUMS"
-    }
+      application: "CHUMS",
+    };
     return result;
-  }
+  };
 
   const customErrorHandler = (error: ErrorLogInterface) => {
     console.log("customErrorHandler", error);
@@ -38,8 +37,7 @@ export const ControlPanel = () => {
       case "401": setErrors(["Access denied when loading " + error.message]); break;
       case "500": setErrors(["Server error when loading " + error.message]); break;
     }*/
-
-  }
+  };
 
   ErrorHelper.init(getErrorAppData, customErrorHandler);
 
@@ -60,11 +58,10 @@ export const ControlPanel = () => {
 };
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const location = useLocation()
+  const location = useLocation();
   if (!ApiHelper.isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return children
-}
-
+  return children;
+};

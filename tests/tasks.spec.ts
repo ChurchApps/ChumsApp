@@ -130,29 +130,17 @@ test.describe('Tasks Management - Production Patterns', () => {
       {
         name: 'New Member Welcome Workflow',
         trigger: 'Person Added to Members Group',
-        actions: [
-          { type: 'Create Task', target: 'Welcome Team', description: 'Send welcome packet' },
-          { type: 'Send Email', target: 'New Member', template: 'Welcome Email' },
-          { type: 'Schedule Follow-up', target: 'Pastor', days: 7 }
-        ]
+        actions: [{ type: 'Create Task', target: 'Welcome Team', description: 'Send welcome packet' }, { type: 'Send Email', target: 'New Member', template: 'Welcome Email' }, { type: 'Schedule Follow-up', target: 'Pastor', days: 7 }]
       },
       {
         name: 'Visitor Follow-up Workflow',
         trigger: 'First-time Visitor Check-in',
-        actions: [
-          { type: 'Create Task', target: 'Connect Team', description: 'Call within 24 hours' },
-          { type: 'Add to Group', target: 'Visitors Group', description: 'Track visitor engagement' },
-          { type: 'Send Email', target: 'Visitor', template: 'Thank You for Visiting' }
-        ]
+        actions: [{ type: 'Create Task', target: 'Connect Team', description: 'Call within 24 hours' }, { type: 'Add to Group', target: 'Visitors Group', description: 'Track visitor engagement' }, { type: 'Send Email', target: 'Visitor', template: 'Thank You for Visiting' }]
       },
       {
         name: 'Donation Thank You Workflow',
         trigger: 'Donation Received',
-        actions: [
-          { type: 'Send Email', target: 'Donor', template: 'Thank You Email' },
-          { type: 'Create Task', target: 'Financial Team', description: 'Update donor records' },
-          { type: 'Generate Receipt', target: 'Donor', description: 'Tax receipt if needed' }
-        ]
+        actions: [{ type: 'Send Email', target: 'Donor', template: 'Thank You Email' }, { type: 'Create Task', target: 'Financial Team', description: 'Update donor records' }, { type: 'Generate Receipt', target: 'Donor', description: 'Tax receipt if needed' }]
       }
     ];
     
@@ -221,12 +209,7 @@ test.describe('Tasks Management - Production Patterns', () => {
     console.log('✓ Task progress tracking demonstrated');
     
     // Demonstrate task reporting
-    const reportTypes = [
-      'overdue-tasks',
-      'completed-this-week',
-      'tasks-by-assignee',
-      'task-completion-trends'
-    ];
+    const reportTypes = ['overdue-tasks', 'completed-this-week', 'tasks-by-assignee', 'task-completion-trends'];
     
     for (const reportType of reportTypes) {
       await TasksHelper.generateTaskReport(page, reportType, {
@@ -295,13 +278,7 @@ test.describe('Tasks Management - Production Patterns', () => {
     const taskTemplates = [
       {
         name: 'New Member Welcome Template',
-        steps: [
-          'Send welcome email',
-          'Add to church directory',
-          'Schedule meet and greet',
-          'Assign connection partner',
-          'Follow up after 2 weeks'
-        ],
+        steps: ['Send welcome email', 'Add to church directory', 'Schedule meet and greet', 'Assign connection partner', 'Follow up after 2 weeks'],
         defaultAssignee: 'Welcome Team',
         estimatedDuration: 14
       },
