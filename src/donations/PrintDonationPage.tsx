@@ -47,7 +47,7 @@ export const PrintDonationPage = () => {
     setTimeout(() => {
       window.print();
       navigate(-1);
-    }, 1000);
+    }, 1500);
   };
 
   const getDate = () => {
@@ -91,7 +91,7 @@ export const PrintDonationPage = () => {
         result.push({ fund: fd.fund, total: fd.amount });
       }
     });
-    const tableValues: JSX.Element[] = [];
+    const tableValues: React.ReactElement[] = [];
 
     result.forEach((tv) => {
       tableValues.push(<tr style={{ height: "24px" }}>
@@ -125,7 +125,7 @@ export const PrintDonationPage = () => {
   };
 
   const tableDonations = () => {
-    const result: JSX.Element[] = [];
+    const result: React.ReactElement[] = [];
     fundDonations.forEach((fd) => {
       const donation = ArrayHelper.getOne(donations, "id", fd.donationId);
       const fund = ArrayHelper.getOne(funds, "id", fd.fundId);
