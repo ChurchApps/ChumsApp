@@ -1,6 +1,5 @@
 import {
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -55,7 +54,6 @@ export const AutomationEdit = (props: Props) => {
       props.onDelete();
     });
   };
-  const checkDelete = automation?.id ? handleDelete : undefined;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const val = e.target.value;

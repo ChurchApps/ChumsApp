@@ -5,7 +5,20 @@ export class PeopleHelper {
    * Navigate to people page - either by clicking People search button or verifying we're in the right place
    */
   static async navigateToPeople(page: Page) {
-    // Check if we can see a People section with search functionality
+    // First try using the data-testid attribute
+    const peopleNavItem = page.locator('[data-testid="nav-item-people"]').first();
+    const hasTestId = await peopleNavItem.isVisible().catch(() => false);
+    
+    if (hasTestId) {
+      console.log('✓ Found People navigation with data-testid');
+      await peopleNavItem.click();
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(2000);
+      console.log('✓ Navigated to People page');
+      return;
+    }
+    
+    // Fallback: Check if we can see a People section with search functionality
     const peopleSection = page.locator('text=People').first();
     const hasPeopleSection = await peopleSection.isVisible().catch(() => false);
     
@@ -26,8 +39,8 @@ export class PeopleHelper {
         console.log('⚠ People section found but no search button visible');
       }
     } else {
-      // If not on dashboard, try to find menu navigation
-      const peopleMenuSelectors = ['a[href="/people"]', 'button:has-text("People")', 'a:has-text("People")'];
+      // If not on dashboard, try to find menu navigation using data-testid first
+      const peopleMenuSelectors = ['[data-testid="nav-item-people"]', 'a[href="/people"]', 'button:has-text("People")', 'a:has-text("People")'];
       
       let navigationFound = false;
       for (const selector of peopleMenuSelectors) {

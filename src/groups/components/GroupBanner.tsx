@@ -6,7 +6,6 @@ import {
   LocationOn as LocationIcon,
   Group as GroupIcon,
   CalendarMonth as AttendanceIcon,
-  Assignment as PlanIcon,
   CheckCircle as CheckIcon,
   Cancel as CancelIcon,
   Event as CalendarIcon,

@@ -1,19 +1,14 @@
 import React, { useContext } from "react";
-import {
- Grid, Menu, MenuItem, Typography, Box, Container, Card, CardContent, Stack, Chip, Button, IconButton, Divider 
-} from "@mui/material";
+import { Menu, MenuItem, Typography, Box, Stack, Button } from "@mui/material";
 import { ApiHelper, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale } from "@churchapps/apphelper";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
 import UserContext from "../UserContext";
 import { RequestedChanges } from "./components/RequestedChanges";
 import {
   Assignment as TaskIcon,
-  CalendarToday as CalendarIcon,
   Person as PersonIcon,
   Group as GroupIcon,
-  Edit as EditIcon,
-  MoreVert as MoreIcon,
   CheckCircle as CompletedIcon,
   RadioButtonUnchecked as OpenIcon,
 } from "@mui/icons-material";
@@ -66,27 +61,6 @@ export const TaskPage = () => {
     setAnchorEl(null);
   };
 
-  const getContentLink = (contentType: string, contentId: string, contentLabel: string) => {
-    if (contentType === "system") return <span>{contentLabel}</span>;
-    else if (contentType === "group") return <Link to={"/groups/" + contentId}>{contentLabel}</Link>;
-    else return <Link to={"/people/" + contentId}>{contentLabel}</Link>;
-  };
-
-  const getDateClosed = () => {
-    if (task?.dateClosed) {
-      return (
-        <>
-          <div>
-            <Typography variant="subtitle1">{Locale.label("tasks.taskPage.dateCreated")}</Typography>
-          </div>
-          <div>
-            <Typography variant="caption">{DateHelper.prettyDate(DateHelper.toDate(task?.dateCreated))}</Typography>
-          </div>
-          <hr />
-        </>
-      );
-    }
-  };
 
   const handleCreateConversation = async () => {
     const conv: ConversationInterface = {

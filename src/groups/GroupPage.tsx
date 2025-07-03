@@ -17,10 +17,6 @@ export const GroupPage = () => {
   };
   React.useEffect(loadData, [params.id]);
 
-  const handleGroupUpdated = (g: GroupInterface) => {
-    setGroup(g);
-    loadData();
-  };
 
   React.useEffect(() => {
     if (selectedTab === "") {

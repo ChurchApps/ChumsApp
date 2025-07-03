@@ -2,9 +2,9 @@ import React, { useEffect, memo, useMemo } from "react";
 import { ApiHelper } from "@churchapps/apphelper";
 import { type SongDetailInterface, type SongDetailLinkInterface } from "../../../helpers";
 import {
- Stack, Box, Card, CardContent, Typography, Avatar, Chip, Link as MuiLink, Divider, Paper, Button, IconButton 
+ Stack, Box, Card, CardContent, Typography, Avatar, Paper, Button, IconButton 
 } from "@mui/material";
-import { Link as LinkIcon, OpenInNew as ExternalLinkIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
+import { Link as LinkIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 
 interface Props {
   songDetail: SongDetailInterface;

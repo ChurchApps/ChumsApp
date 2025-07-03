@@ -10,7 +10,6 @@ export const FormPage = () => {
   const [form, setForm] = React.useState<FormInterface>({} as FormInterface);
   const [memberPermission, setMemberPermission] = React.useState<MemberPermissionInterface>({} as MemberPermissionInterface);
   const [selectedTab, setSelectedTab] = React.useState("");
-  const [tabIndex, setTabIndex] = React.useState(0);
 
   const loadData = () => {
     ApiHelper.get("/forms/" + params.id, "MembershipApi").then((data) => {

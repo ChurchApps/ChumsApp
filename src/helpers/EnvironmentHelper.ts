@@ -27,56 +27,56 @@ export class EnvironmentHelper {
         keyName: "AttendanceApi",
         url: EnvironmentHelper.Common.AttendanceApi,
         jwt: "",
-        permisssions: [],
+        permissions: [],
       },
       {
         keyName: "GivingApi",
         url: EnvironmentHelper.Common.GivingApi,
         jwt: "",
-        permisssions: [],
+        permissions: [],
       },
       {
         keyName: "MembershipApi",
         url: EnvironmentHelper.Common.MembershipApi,
         jwt: "",
-        permisssions: [],
+        permissions: [],
       },
       {
         keyName: "ReportingApi",
         url: EnvironmentHelper.Common.ReportingApi,
         jwt: "",
-        permisssions: [],
+        permissions: [],
       },
       {
         keyName: "DoingApi",
         url: EnvironmentHelper.Common.DoingApi,
         jwt: "",
-        permisssions: [],
+        permissions: [],
       },
       {
         keyName: "MessagingApi",
         url: EnvironmentHelper.Common.MessagingApi,
         jwt: "",
-        permisssions: [],
+        permissions: [],
       },
       {
         keyName: "ContentApi",
         url: EnvironmentHelper.Common.ContentApi,
         jwt: "",
-        permisssions: [],
+        permissions: [],
       },
       {
         keyName: "LessonsApi",
         url: EnvironmentHelper.LessonsApi,
         jwt: "",
-        permisssions: [],
+        permissions: [],
       },
     ];
 
     await Locale.init([`/locales/{{lng}}.json?v=1`, `/apphelper/locales/{{lng}}.json`]);
   };
 
-  static initLocal = async () => {};
+  static initLocal = async () => { };
 
   static initDev = () => {
     this.initStaging();

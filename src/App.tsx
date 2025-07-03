@@ -46,12 +46,7 @@ const mdTheme = createTheme({
         },
       },
     },
-    MuiButton: {
-      styleOverrides: {
-        root: { textTransform: "none", // Disable uppercase transformation for better UX
-        },
-      },
-    },
+    MuiButton: { styleOverrides: { root: { textTransform: "none" } } }, // Disable uppercase transformation for better UX
     MuiCard: { styleOverrides: { root: { borderRadius: 8 } } },
   },
   typography: {

@@ -762,14 +762,22 @@ export const ExamplePage = () => {
 };
 ```
 
-## Reusable Component Opportunities
+## Reusable UI Components
 
-Based on analysis of the codebase, the following patterns appear frequently and are candidates for extraction into reusable components:
+The following reusable UI components have been implemented and are available in `src/components/ui/`. These components ensure consistency across the application and should be used instead of duplicating similar patterns.
 
-### High Priority Components (High Impact, Low Effort)
+### Implemented Components
 
-#### 1. **PageHeader** Component
-**Usage**: Found in 15+ pages across all modules
+All components can be imported from `@/components/ui`:
+
+```tsx
+import { PageHeader, IconText, StatusChip, EmptyState, CardWithHeader, LoadingButton, PersonAvatar } from '@/components/ui';
+```
+
+#### 1. **PageHeader** Component ✅ **IMPLEMENTED**
+**Location**: `src/components/ui/PageHeader.tsx`  
+**Usage**: Used across all major pages for consistent header styling
+
 ```tsx
 interface PageHeaderProps {
   icon: ReactNode;
@@ -778,10 +786,27 @@ interface PageHeaderProps {
   children?: ReactNode; // For action buttons or tabs
   statistics?: Array<{ icon: ReactNode; value: string; label: string }>;
 }
+
+// Usage Example
+<PageHeader
+  icon={<PeopleIcon />}
+  title="People"
+  subtitle="Manage church members and visitors"
+  statistics={[
+    { icon: <PersonIcon />, value: "156", label: "Members" },
+    { icon: <VisitorIcon />, value: "23", label: "Recent Visitors" }
+  ]}
+>
+  <Button variant="outlined" startIcon={<AddIcon />}>
+    Add Person
+  </Button>
+</PageHeader>
 ```
 
-#### 2. **IconText** Component  
-**Usage**: Found in 50+ locations in table cells and lists
+#### 2. **IconText** Component ✅ **IMPLEMENTED**
+**Location**: `src/components/ui/IconText.tsx`  
+**Usage**: Used throughout the app for consistent icon + text displays
+
 ```tsx
 interface IconTextProps {
   icon: ReactNode;
@@ -789,118 +814,170 @@ interface IconTextProps {
   iconSize?: number;
   iconColor?: string;
   spacing?: number;
+  variant?: "body1" | "body2" | "caption";
+  color?: string;
 }
+
+// Usage Examples
+<IconText icon={<EmailIcon />} iconSize={16} iconColor="text.secondary">
+  john@example.com
+</IconText>
+
+<IconText icon={<PhoneIcon />} variant="body2" color="text.secondary">
+  (555) 123-4567
+</IconText>
 ```
 
-#### 3. **StatusChip** Component
-**Usage**: Found in 20+ locations for membership, status displays
+#### 3. **StatusChip** Component ✅ **IMPLEMENTED**
+**Location**: `src/components/ui/StatusChip.tsx`  
+**Usage**: Standardized status displays with automatic color coding
+
 ```tsx
 interface StatusChipProps {
-  status: 'Member' | 'Visitor' | 'Staff' | 'Active' | 'Pending' | string;
-  variant?: 'standard' | 'header';
-  size?: 'small' | 'medium';
+  status: string;
+  variant?: "standard" | "header";
+  size?: "small" | "medium";
 }
+
+// Automatic color coding for common statuses:
+// - Member/Active: Green
+// - Visitor/Pending: Orange  
+// - Staff: Blue
+// - Other: Outlined gray
+
+// Usage Examples
+<StatusChip status="Member" />
+<StatusChip status="Visitor" variant="header" />
+<StatusChip status="Staff" size="medium" />
 ```
 
-#### 4. **EmptyState** Component
-**Usage**: Found in 15+ locations across tables and cards
+#### 4. **EmptyState** Component ✅ **IMPLEMENTED**
+**Location**: `src/components/ui/EmptyState.tsx`  
+**Usage**: Consistent empty state displays for tables and cards
+
 ```tsx
 interface EmptyStateProps {
   icon: ReactNode;
   title: string;
   description?: string;
   action?: ReactNode;
-  variant?: 'table' | 'card';
+  variant?: "table" | "card";
+  colSpan?: number; // Required for table variant
 }
+
+// Usage Examples
+<EmptyState
+  icon={<PeopleIcon />}
+  title="No people found"
+  description="Get started by adding your first person."
+  action={<Button variant="contained">Add Person</Button>}
+  variant="card"
+/>
+
+<EmptyState
+  icon={<GroupIcon />}
+  title="No groups available"
+  variant="table"
+  colSpan={4}
+/>
 ```
 
-### Medium Priority Components (Good ROI)
+#### 5. **CardWithHeader** Component ✅ **IMPLEMENTED**
+**Location**: `src/components/ui/CardWithHeader.tsx`  
+**Usage**: Cards with consistent header styling
 
-#### 5. **CardWithHeader** Component
-**Usage**: Found in 10+ locations
 ```tsx
 interface CardWithHeaderProps {
   title: string;
   icon?: ReactNode;
   actions?: ReactNode;
   children: ReactNode;
+  borderColor?: string;
+  borderRadius?: number;
 }
+
+// Usage Example
+<CardWithHeader
+  title="Contact Information"
+  icon={<ContactIcon />}
+  actions={<Button size="small">Edit</Button>}
+>
+  <Typography>Card content goes here</Typography>
+</CardWithHeader>
 ```
 
-#### 6. **PersonAvatar** Component
-**Usage**: Found throughout person-related components
-```tsx
-interface PersonAvatarProps {
-  person: PersonInterface;
-  size: 'small' | 'medium' | 'large' | 'xlarge';
-  editable?: boolean;
-  onClick?: () => void;
-}
-```
+#### 6. **LoadingButton** Component ✅ **IMPLEMENTED**
+**Location**: `src/components/ui/LoadingButton.tsx`  
+**Usage**: Buttons with loading states for form submissions
 
-#### 7. **LoadingButton** Component
-**Usage**: Used in all forms
 ```tsx
 interface LoadingButtonProps extends ButtonProps {
   loading: boolean;
   loadingText?: string;
 }
+
+// Usage Example
+<LoadingButton
+  loading={isSubmitting}
+  loadingText="Saving..."
+  variant="contained"
+  type="submit"
+>
+  Save Changes
+</LoadingButton>
 ```
 
-#### 8. **ConfirmDialog** Component
-**Usage**: Needed for delete operations across modules
+#### 7. **PersonAvatar** Component ✅ **IMPLEMENTED**
+**Location**: `src/components/ui/PersonAvatar.tsx`  
+**Usage**: Consistent person avatar displays with photo handling
+
 ```tsx
-interface ConfirmDialogProps {
-  open: boolean;
-  title: string;
-  message: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-  confirmText?: string;
-  variant?: 'warning' | 'danger';
+interface PersonAvatarProps {
+  person: PersonInterface;
+  size: "small" | "medium" | "large" | "xlarge";
+  editable?: boolean;
+  onClick?: () => void;
 }
+
+// Sizes:
+// - small: 48px
+// - medium: 56px  
+// - large: 80px
+// - xlarge: 100px
+
+// Usage Examples
+<PersonAvatar person={person} size="medium" />
+<PersonAvatar person={person} size="large" editable onClick={handleEditPhoto} />
 ```
 
-### Lower Priority Components (Specific Use Cases)
+### Migration Status
 
-#### 9. **DataTable** Component
-**Usage**: Complex but used frequently
-```tsx
-interface DataTableProps<T> {
-  data: T[];
-  columns: Array<{ key: keyof T; label: string; render?: (item: T) => ReactNode }>;
-  onRowClick?: (item: T) => void;
-  emptyState?: ReactNode;
-  loading?: boolean;
-}
-```
+**✅ Completed**: All high-priority reusable components have been implemented and are being used throughout the application. The components provide:
 
-#### 10. **ContactDisplay** Component
-**Usage**: Person contact information displays
-```tsx
-interface ContactDisplayProps {
-  email?: string;
-  phone?: string;
-  address?: string;
-  orientation?: 'horizontal' | 'vertical';
-}
-```
-
-### Implementation Strategy
-
-1. **Start with High Priority**: Implement PageHeader, IconText, StatusChip, EmptyState first
-2. **Create in src/components/ui/**: Organize by category (display, forms, layout, feedback)
-3. **Maintain backward compatibility**: Keep existing patterns working during transition
-4. **Update documentation**: Add new components to this style guide
-5. **Gradual migration**: Update components as they're touched for other reasons
-
-### Benefits of Component Extraction
-
-- **Consistency**: Standardized styling across the application
-- **Maintainability**: Single source of truth for component styling
-- **Performance**: Reduced bundle size through component reuse
+- **Consistency**: Standardized styling across all pages
+- **Maintainability**: Single source of truth for common UI patterns  
+- **Performance**: Reduced code duplication
 - **Developer Experience**: Faster development with pre-built components
-- **Quality**: Better testing coverage for reused components
+
+### Future Component Opportunities
+
+The following components could be implemented in future iterations:
+
+#### **ConfirmDialog** Component
+For standardized delete/destructive action confirmations
+
+#### **DataTable** Component  
+For consistent table styling and behavior
+
+#### **ContactDisplay** Component
+For person contact information layouts
+
+### Usage Guidelines
+
+1. **Always use these components** instead of creating custom implementations
+2. **Import from the ui barrel export**: `import { ComponentName } from '@/components/ui'`
+3. **Follow the established prop interfaces** - don't extend them without updating the component
+4. **Report missing features** - if a component doesn't meet your needs, enhance the existing component rather than creating a new one
 
 ---
 

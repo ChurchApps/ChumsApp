@@ -3,7 +3,7 @@ import { Box, Typography, Stack, Button, Container } from "@mui/material";
 import { Assignment as AssignmentIcon, People as PeopleIcon, Group as GroupIcon } from "@mui/icons-material";
 import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ApiHelper, type GroupInterface, Locale } from "@churchapps/apphelper";
 
 export const MinistryPage = () => {
@@ -19,9 +19,6 @@ export const MinistryPage = () => {
 
   React.useEffect(loadData, [params.id]);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setSelectedTab(newValue);
-  };
 
   const tabs = [
     {

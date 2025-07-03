@@ -5,7 +5,6 @@ import { Assignment } from "./components/Assignment";
 import { Box, Typography, Stack, Button, Container } from "@mui/material";
 import { Assignment as AssignmentIcon, Album as AlbumIcon } from "@mui/icons-material";
 import { ServiceOrder } from "./components/ServiceOrder";
-import { Link, useNavigate } from "react-router-dom";
 
 export interface PlanInterface {
   id?: string;
@@ -19,7 +18,6 @@ export interface PlanInterface {
 
 export const PlanPage = () => {
   const params = useParams();
-  const navigate = useNavigate();
   const [plan, setPlan] = React.useState<PlanInterface>(null);
   const [selectedTab, setSelectedTab] = React.useState(0);
 
@@ -33,9 +31,6 @@ export const PlanPage = () => {
     loadData();
   }, [params.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setSelectedTab(newValue);
-  };
 
   // Available tabs based on plan configuration
   const availableTabs = React.useMemo(() => {

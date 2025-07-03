@@ -1,5 +1,5 @@
 import {
- Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, Stack, Paper 
+ Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, Paper 
 } from "@mui/material";
 import React from "react";
 import { SelectGroup } from ".";

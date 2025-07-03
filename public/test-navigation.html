@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Navigation Data-TestID Checker</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .results { margin-top: 20px; }
+        .found { color: green; }
+        .not-found { color: red; }
+        button { padding: 10px 20px; margin: 10px 0; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Navigation Data-TestID Checker</h1>
+    <p>This page helps verify that data-testid attributes are being added to navigation elements.</p>
+    
+    <button onclick="checkNavigation()">Check Navigation Elements</button>
+    <button onclick="window.open('/', '_blank')">Open CHUMS App</button>
+    
+    <div id="results" class="results"></div>
+
+    <script>
+    function checkNavigation() {
+        const expectedTestIds = [
+            'nav-item-dashboard',
+            'nav-item-people', 
+            'nav-item-groups',
+            'nav-item-donations',
+            'nav-item-plans',
+            'nav-item-tasks',
+            'nav-item-settings',
+            'nav-item-attendance',
+            'nav-item-forms',
+            'nav-item-admin',
+            'nav-item-batches',
+            'nav-item-funds',
+            'nav-item-songs',
+            'nav-item-profile',
+            'nav-item-devices'
+        ];
+
+        const results = document.getElementById('results');
+        results.innerHTML = '<h3>Checking for Navigation Data-TestID Attributes:</h3>';
+
+        expectedTestIds.forEach(testId => {
+            const element = document.querySelector(`[data-testid="${testId}"]`);
+            const found = element !== null;
+            const className = found ? 'found' : 'not-found';
+            const status = found ? '✓ Found' : '✗ Not Found';
+            
+            results.innerHTML += `<div class="${className}">${testId}: ${status}</div>`;
+        });
+
+        // Also check for any elements with data-testid starting with 'nav-item-'
+        const allNavElements = document.querySelectorAll('[data-testid^="nav-item-"]');
+        results.innerHTML += `<h4>Total navigation elements with data-testid: ${allNavElements.length}</h4>`;
+
+        if (allNavElements.length === 0) {
+            results.innerHTML += '<div class="not-found">⚠ No navigation elements found. Make sure you are on the CHUMS app page and logged in.</div>';
+            results.innerHTML += '<div>This checker needs to be run from within the CHUMS application context.</div>';
+        }
+    }
+
+    // Auto-check if we're in an iframe or if navigation elements exist
+    setTimeout(() => {
+        if (document.querySelector('[data-testid^="nav-item-"]')) {
+            checkNavigation();
+        } else {
+            document.getElementById('results').innerHTML = 
+                '<div>No navigation elements detected. Please open the CHUMS app and run the check from there.</div>';
+        }
+    }, 1000);
+    </script>
+</body>
+</html>

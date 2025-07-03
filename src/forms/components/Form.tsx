@@ -1,10 +1,8 @@
 import React from "react";
 import { FormQuestionEdit } from ".";
+import { ApiHelper, type FormInterface, type QuestionInterface, Permissions, Loading, UserHelper, Locale } from "@churchapps/apphelper";
 import {
- ApiHelper, DisplayBox, type FormInterface, type QuestionInterface, Permissions, Loading, UserHelper, Locale 
-} from "@churchapps/apphelper";
-import {
- Grid, Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Card, Typography, Stack, Button 
+ Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Stack, Button 
 } from "@mui/material";
 
 interface Props {
@@ -25,17 +23,6 @@ export const Form: React.FC<Props> = (props) => {
     loadQuestions();
   };
   const loadQuestions = () => ApiHelper.get("/questions?formId=" + props.id, "MembershipApi").then((data) => setQuestions(data));
-  const getEditContent = () => (
-    <button
-      className="no-default-style"
-      aria-label="addQuestion"
-      onClick={() => {
-        setEditQuestionId("");
-      }}
-    >
-      <Icon>add</Icon>
-    </button>
-  );
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const anchor = e.currentTarget as HTMLAnchorElement;

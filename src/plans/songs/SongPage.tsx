@@ -168,7 +168,14 @@ export const SongPage = memo(() => {
           </CardContent>
         </Card>
       </Stack>
-    ), [arrangements, selectedArrangement, selectArrangement, songDetail, editLinks, loadData]);
+    ), [
+arrangements,
+selectedArrangement,
+selectArrangement,
+songDetail,
+editLinks,
+loadData
+]);
 
   const currentContent = useMemo(() => {
     if (!selectedArrangement) {

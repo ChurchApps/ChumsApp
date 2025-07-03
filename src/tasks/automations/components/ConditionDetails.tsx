@@ -4,7 +4,7 @@ import {
 import React from "react";
 import { type AutomationInterface, type ConditionInterface, type ConjunctionInterface, Locale } from "@churchapps/apphelper";
 import { ArrayHelper } from "@churchapps/apphelper";
-import { Add as AddIcon, Edit as EditIcon, Done as ConditionIcon, AccountTree as ConjunctionIcon, Rule as RuleIcon } from "@mui/icons-material";
+import { Add as AddIcon, Edit as EditIcon, Done as ConditionIcon, AccountTree as ConjunctionIcon } from "@mui/icons-material";
 
 interface Props {
   automation: AutomationInterface;

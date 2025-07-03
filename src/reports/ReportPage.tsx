@@ -5,11 +5,10 @@ import {
  Box, Typography, Stack, Container, Card, CardContent, Skeleton, Breadcrumbs, Link as MuiLink 
 } from "@mui/material";
 import { Summarize as SummarizeIcon, ArrowBack as BackIcon } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const ReportPage = () => {
   const params = useParams();
-  const navigate = useNavigate();
   const [report, setReport] = React.useState<ReportInterface>(null);
   const [loading, setLoading] = React.useState(true);
 

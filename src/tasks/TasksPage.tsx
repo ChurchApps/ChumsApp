@@ -2,7 +2,7 @@ import React from "react";
 import { Locale } from "@churchapps/apphelper";
 import { TaskList } from "./components/TaskList";
 import { Box, Typography, Stack, Button } from "@mui/material";
-import { Assignment as TaskIcon, SettingsSuggest as AutomationsIcon, CheckBoxOutlined as OpenIcon, CheckBox as ClosedIcon } from "@mui/icons-material";
+import { Assignment as TaskIcon, SettingsSuggest as AutomationsIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 export const TasksPage = () => {

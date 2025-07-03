@@ -14,7 +14,6 @@ export const FormsPage = () => {
   const [archivedForms, setArchivedForms] = React.useState<FormInterface[]>(null);
   const [selectedFormId, setSelectedFormId] = React.useState("notset");
   const [selectedTab, setSelectedTab] = React.useState("forms");
-  const [tabIndex, setTabIndex] = React.useState(0);
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
   const loadData = () => {

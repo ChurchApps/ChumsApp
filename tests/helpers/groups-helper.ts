@@ -5,7 +5,20 @@ export class GroupsHelper {
    * Navigate to groups functionality
    */
   static async navigateToGroups(page: Page) {
-    // Check if we're already on groups page or can access groups search
+    // First try using the data-testid attribute
+    const groupsNavItem = page.locator('[data-testid="nav-item-groups"]').first();
+    const hasTestId = await groupsNavItem.isVisible().catch(() => false);
+    
+    if (hasTestId) {
+      console.log('✓ Found Groups navigation with data-testid');
+      await groupsNavItem.click();
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(2000);
+      console.log('✓ Navigated to Groups page');
+      return;
+    }
+    
+    // Fallback: Check if we're already on groups page or can access groups search
     const groupsSearchBox = page.locator('[data-testid="people-search-input"], #searchText, input[placeholder*="Search"]');
     const hasSearch = await groupsSearchBox.isVisible().catch(() => false);
     
@@ -33,15 +46,8 @@ export class GroupsHelper {
       }
     }
     
-    // Try direct navigation
-    const currentUrl = page.url();
-    if (!currentUrl.includes('/groups')) {
-      await page.goto('https://chumsdemo.churchapps.org/groups');
-      await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(2000);
-    }
-    
-    console.log('Groups navigation completed');
+    // DO NOT use page.goto() - follow the CRITICAL Testing Guidelines
+    console.log('Could not find Groups navigation - ensure you are logged in and have proper permissions');
   }
 
   /**

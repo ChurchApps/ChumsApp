@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ApiHelper, type GroupInterface, Locale } from "@churchapps/apphelper";
 import {
- TextField, Button, Table, TableBody, TableRow, TableCell, InputAdornment, Paper, Typography, Box, Stack, IconButton, TableContainer 
+ TextField, Button, Table, TableBody, TableRow, TableCell, InputAdornment, Paper, Typography, Stack, IconButton, TableContainer 
 } from "@mui/material";
 import { Search as SearchIcon, Group as GroupIcon, Check as CheckIcon } from "@mui/icons-material";
 

@@ -4,7 +4,7 @@ import { ReportWithFilter, type ReportInterface, ApiHelper, Locale } from "@chur
 import {
  Box, Typography, Stack, Container, Card, CardContent, Skeleton, Breadcrumbs, Link as MuiLink, Chip 
 } from "@mui/material";
-import { Summarize as SummarizeIcon, AdminPanelSettings as AdminIcon, ArrowBack as BackIcon } from "@mui/icons-material";
+import { AdminPanelSettings as AdminIcon, ArrowBack as BackIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 export const ReportPage = () => {

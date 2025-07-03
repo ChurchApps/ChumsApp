@@ -5,7 +5,20 @@ export class DonationsHelper {
    * Navigate to donations functionality
    */
   static async navigateToDonations(page: Page) {
-    // Try navigating through menu
+    // First try using the data-testid attribute
+    const donationsNavItem = page.locator('[data-testid="nav-item-donations"]').first();
+    const hasTestId = await donationsNavItem.isVisible().catch(() => false);
+    
+    if (hasTestId) {
+      console.log('✓ Found Donations navigation with data-testid');
+      await donationsNavItem.click();
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(2000);
+      console.log('✓ Navigated to Donations page');
+      return;
+    }
+    
+    // Fallback: Try navigating through menu
     const menuButton = page.locator('button[aria-label*="menu"], .MuiIconButton-root').first();
     const hasMenu = await menuButton.isVisible().catch(() => false);
     
@@ -24,22 +37,28 @@ export class DonationsHelper {
       }
     }
     
-    // Try direct navigation
-    const currentUrl = page.url();
-    if (!currentUrl.includes('/donations')) {
-      await page.goto('https://chumsdemo.churchapps.org/donations');
-      await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(2000);
-    }
-    
-    console.log('Donations navigation completed');
+    // DO NOT use page.goto() - follow the CRITICAL Testing Guidelines
+    console.log('Could not find Donations navigation - ensure you are logged in and have proper permissions');
   }
 
   /**
    * Navigate to funds management
    */
   static async navigateToFunds(page: Page) {
-    // Look for funds tab or link
+    // First try using the data-testid attribute
+    const fundsNavItem = page.locator('[data-testid="nav-item-funds"]').first();
+    const hasTestId = await fundsNavItem.isVisible().catch(() => false);
+    
+    if (hasTestId) {
+      console.log('✓ Found Funds navigation with data-testid');
+      await fundsNavItem.click();
+      await page.waitForLoadState('networkidle');
+      await page.waitForTimeout(1500);
+      console.log('✓ Navigated to Funds page');
+      return;
+    }
+    
+    // Fallback: Look for funds tab or link
     const fundsSelectors = ['text=Funds', 'a[href="/funds"]', 'button:has-text("Funds")', 'tab:has-text("Funds")'];
     
     for (const selector of fundsSelectors) {

@@ -1,6 +1,6 @@
 import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper, type FormInterface } from "@churchapps/apphelper";
 import {
- Button, Typography, Chip, IconButton, Avatar, Stack, Box, Menu, MenuItem 
+ Button, Typography, IconButton, Avatar, Stack, Box, Menu, MenuItem 
 } from "@mui/material";
 import {
   Edit as EditIcon,

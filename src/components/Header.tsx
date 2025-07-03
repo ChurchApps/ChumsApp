@@ -66,6 +66,80 @@ export const Header: React.FC = () => {
     navigate(url);
   };
 
+  // Add data-testid attributes to navigation elements after render
+  useEffect(() => {
+    const addTestIds = () => {
+      // Map URLs to test IDs
+      const urlToTestId: Record<string, string> = {
+        "/": "nav-item-dashboard",
+        "/people": "nav-item-people",
+        "/groups": "nav-item-groups",
+        "/donations": "nav-item-donations",
+        "/plans": "nav-item-plans",
+        "/tasks": "nav-item-tasks",
+        "/settings": "nav-item-settings",
+        "/attendance": "nav-item-attendance",
+        "/forms": "nav-item-forms",
+        "/admin": "nav-item-admin",
+        "/donations/batches": "nav-item-batches",
+        "/donations/funds": "nav-item-funds",
+        "/plans/songs": "nav-item-songs",
+        "/profile": "nav-item-profile",
+        "/profile/devices": "nav-item-devices"
+      };
+
+      // Find all navigation links
+      const navLinks = document.querySelectorAll('a[href^="/"], button[role="menuitem"]');
+      navLinks.forEach((link) => {
+        const href = link.getAttribute("href");
+        if (href && urlToTestId[href]) {
+          link.setAttribute("data-testid", urlToTestId[href]);
+        }
+        
+        // Also check for button text content for menu items
+        const text = link.textContent?.toLowerCase();
+        if (text) {
+          const textToTestId: Record<string, string> = {
+            "dashboard": "nav-item-dashboard",
+            "people": "nav-item-people",
+            "groups": "nav-item-groups",
+            "donations": "nav-item-donations",
+            "plans": "nav-item-plans",
+            "tasks": "nav-item-tasks",
+            "settings": "nav-item-settings",
+            "attendance": "nav-item-attendance",
+            "forms": "nav-item-forms",
+            "server admin": "nav-item-admin",
+            "batches": "nav-item-batches",
+            "funds": "nav-item-funds",
+            "songs": "nav-item-songs",
+            "profile": "nav-item-profile",
+            "devices": "nav-item-devices"
+          };
+          
+          for (const [key, testId] of Object.entries(textToTestId)) {
+            if (text.includes(key)) {
+              link.setAttribute("data-testid", testId);
+              break;
+            }
+          }
+        }
+      });
+    };
+
+    // Add test IDs after a short delay to ensure DOM is ready
+    const timer = setTimeout(addTestIds, 100);
+    
+    // Also add test IDs when menu items change
+    const observer = new MutationObserver(addTestIds);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [primaryMenu, secondaryMenu]);
+
   /*<Typography variant="h6" noWrap>{UserHelper.currentUserChurch?.church?.name || ""}</Typography>*/
   return (
     <SiteHeader
