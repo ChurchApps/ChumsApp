@@ -4,7 +4,8 @@ import {
  Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton 
 } from "@mui/material";
 import { Info } from "@mui/icons-material";
-import { DisplayBox, PersonAdd, type PersonInterface, ApiHelper, type MemberPermissionInterface, PersonHelper, Locale } from "@churchapps/apphelper";
+import { PersonAdd } from "../../components";
+import { DisplayBox, type PersonInterface, ApiHelper, type MemberPermissionInterface, PersonHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   formId: string;

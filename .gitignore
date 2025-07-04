@@ -1,6 +1,7 @@
 *.bat
 /build
 /public/apphelper
+/test-results.json
 
 # Logs
 logs

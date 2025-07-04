@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableRow, Avatar } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { SmallButton, type PersonInterface, PersonAdd, PersonHelper, Locale } from "@churchapps/apphelper";
+import { PersonAdd } from "../../components";
+import { SmallButton, type PersonInterface, PersonHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   person: PersonInterface;

@@ -1,5 +1,6 @@
 import React, { memo } from "react";
-import { DonationPage, UserHelper } from "@churchapps/apphelper";
+import { DonationPage } from "../../donationComponents";
+import { UserHelper } from "@churchapps/apphelper";
 import { Box } from "@mui/material";
 
 interface Props {

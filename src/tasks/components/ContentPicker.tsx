@@ -4,7 +4,7 @@ import {
 import React from "react";
 import { SelectGroup } from ".";
 import { type GroupInterface, Locale, PersonHelper, type PersonInterface } from "@churchapps/apphelper";
-import { PersonAdd } from "@churchapps/apphelper";
+import { PersonAdd } from "../../components";
 import { Person as PersonIcon, Group as GroupIcon, Close as CloseIcon } from "@mui/icons-material";
 
 interface Props {

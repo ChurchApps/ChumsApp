@@ -2,8 +2,10 @@ import {
  FormControl, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent, Stack, Button 
 } from "@mui/material";
 import React, { memo, useCallback, useMemo } from "react";
-import { ApiHelper, PersonAdd, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
-import { FundDonations, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/apphelper";
+import { PersonAdd } from "../../components";
+import { ApiHelper, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
+import { FundDonations } from "../../donationComponents/components";
+import { type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/apphelper";
 
 interface Props {
   donationId: string;
