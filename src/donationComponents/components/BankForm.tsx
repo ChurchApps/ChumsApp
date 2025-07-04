@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material"
-import type { SelectChangeEvent } from "@mui/material"
+import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import type { SelectChangeEvent } from "@mui/material";
 import { useStripe } from "@stripe/react-stripe-js";
 import { InputBox, ErrorMessages } from "@churchapps/apphelper";
 import { ApiHelper, Locale } from "../../helpers";
@@ -18,17 +18,17 @@ export const BankForm: React.FC<Props> = (props) => {
   const [verifyBankData, setVerifyBankData] = React.useState<StripeBankAccountVerifyInterface>({ paymentMethodId: props.bank.id, customerId: props.customerId, amountData: { amounts: [] } });
   const [showSave, setShowSave] = React.useState<boolean>(true);
   const [errorMessage, setErrorMessage] = React.useState<string>(null);
-  const saveDisabled = () => { }
-  const handleCancel = () => { props.setMode("display"); }
-  const handleDelete = () => { props.deletePayment(); }
+  const saveDisabled = () => { };
+  const handleCancel = () => { props.setMode("display"); };
+  const handleDelete = () => { props.deletePayment(); };
   const handleSave = () => {
     setShowSave(false);
     if (props.showVerifyForm) verifyBank();
     else props.bank.id ? updateBank() : createBank();
-  }
+  };
 
   const createBank = async () => {
-    if (!bankAccount.routing_number || !bankAccount.account_number) setErrorMessage(Locale.label("donation.bankForm.validate.accountNumber"))
+    if (!bankAccount.routing_number || !bankAccount.account_number) setErrorMessage(Locale.label("donation.bankForm.validate.accountNumber"));
     else {
       await stripe.createToken("bank_account", bankAccount).then(response => {
         if (response?.error?.message) setErrorMessage(response.error.message);
@@ -46,12 +46,12 @@ export const BankForm: React.FC<Props> = (props) => {
       });
     }
     setShowSave(true);
-  }
+  };
 
   const updateBank = () => {
     if (bankAccount.account_holder_name === "") setErrorMessage(Locale.label("donation.bankForm.validate.holderName"));
     else {
-      let bank = { ...updateBankData };
+      const bank = { ...updateBankData };
       bank.bankData.account_holder_name = bankAccount.account_holder_name;
       bank.bankData.account_holder_type = bankAccount.account_holder_type;
       ApiHelper.post("/paymentmethods/updatebank", bank, "GivingApi").then(response => {
@@ -63,7 +63,7 @@ export const BankForm: React.FC<Props> = (props) => {
       });
     }
     setShowSave(true);
-  }
+  };
 
   const verifyBank = () => {
     const amounts = verifyBankData?.amountData?.amounts;
@@ -75,33 +75,32 @@ export const BankForm: React.FC<Props> = (props) => {
           props.setMode("display");
         }
       });
-    }
-    else setErrorMessage("Both deposit amounts are required.");
+    } else setErrorMessage("Both deposit amounts are required.");
     setShowSave(true);
-  }
+  };
 
   const getHeaderText = () => props.bank.id
     ? `${props.bank.name.toUpperCase()} ****${props.bank.last4}`
-    : "Add New Bank Account"
+    : "Add New Bank Account";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const bankData = { ...bankAccount };
     const inputData = { [e.target.name]: e.target.value };
     setBankAccount({ ...bankData, ...inputData });
     setShowSave(true);
-  }
+  };
 
   const handleKeyPress = (e: React.KeyboardEvent<any>) => {
     const pattern = /^\d+$/;
     if (!pattern.test(e.key)) e.preventDefault();
-  }
+  };
 
   const handleVerify = (e: React.ChangeEvent<HTMLInputElement>) => {
     const verifyData = { ...verifyBankData };
     if (e.currentTarget.name === "amount1") verifyData.amountData.amounts[0] = e.currentTarget.value;
     if (e.currentTarget.name === "amount2") verifyData.amountData.amounts[1] = e.currentTarget.value;
     setVerifyBankData(verifyData);
-  }
+  };
 
   const getForm = () => {
     if (props.showVerifyForm) {
@@ -118,8 +117,9 @@ export const BankForm: React.FC<Props> = (props) => {
       </>);
 
     } else {
-      let accountDetails = <></>
-      if (!props.bank.id) accountDetails = (
+      let accountDetails = <></>;
+      if (!props.bank.id) {
+accountDetails = (
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6 }} style={{ marginBottom: "20px" }}>
             <TextField fullWidth label={Locale.label("donation.bankForm.routingNumber")} type="number" name="routing_number" aria-label="routing-number" placeholder="Routing Number" className="form-control" onChange={handleChange} />
@@ -129,6 +129,7 @@ export const BankForm: React.FC<Props> = (props) => {
           </Grid>
         </Grid>
       );
+}
       return (<>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6 }} style={{ marginBottom: "20px" }}>
@@ -147,7 +148,7 @@ export const BankForm: React.FC<Props> = (props) => {
         {accountDetails}
       </>);
     }
-  }
+  };
 
   return (
     <InputBox headerIcon="volunteer_activism" headerText={getHeaderText()} ariaLabelSave="save-button" ariaLabelDelete="delete-button" cancelFunction={handleCancel} saveFunction={showSave ? handleSave : saveDisabled} deleteFunction={props.bank.id && !props.showVerifyForm ? handleDelete : undefined}>
@@ -159,4 +160,4 @@ export const BankForm: React.FC<Props> = (props) => {
     </InputBox>
   );
 
-}
+};

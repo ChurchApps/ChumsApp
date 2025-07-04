@@ -2,8 +2,8 @@
 
 import React from "react";
 import { FundDonationInterface, FundInterface } from "@churchapps/helpers";
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material"
-import type { SelectChangeEvent } from "@mui/material"
+import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import type { SelectChangeEvent } from "@mui/material";
 import { Locale } from "../../helpers";
 
 interface Props {
@@ -17,16 +17,16 @@ interface Props {
 export const FundDonation: React.FC<Props> = (props) => {
 
   const getOptions = () => {
-    let result = [];
+    const result = [];
     for (let i = 0; i < props.funds.length; i++) {
       const getDisabled = (props?.params?.fundId && props.params.fundId !== "") ? props.params.fundId !== props.funds[i].id : false;
       result.push(<MenuItem key={i} value={props.funds[i].id} disabled={getDisabled}>{props.funds[i].name}</MenuItem>);
     }
     return result;
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
-    let fd = { ...props.fundDonation }
+    const fd = { ...props.fundDonation };
     switch (e.target.name) {
       case "amount":
         fd.amount = parseFloat(e.target.value.replace("$", "").replace(",", ""));
@@ -36,7 +36,7 @@ export const FundDonation: React.FC<Props> = (props) => {
         break;
     }
     props.updatedFunction(fd, props.index);
-  }
+  };
 
   return (
     <>
@@ -55,5 +55,5 @@ export const FundDonation: React.FC<Props> = (props) => {
       </Grid>
     </>
   );
-}
+};
 

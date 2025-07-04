@@ -9,28 +9,28 @@ interface Props { fundDonations: FundDonationInterface[], funds: FundInterface[]
 
 export const FundDonations: React.FC<Props> = (props) => {
   const handleUpdated = (fundDonation: FundDonationInterface, index: number) => {
-    let fundDonations = [...props.fundDonations];
+    const fundDonations = [...props.fundDonations];
     fundDonations[index] = fundDonation;
     props.updatedFunction(fundDonations);
-  }
+  };
 
   const addRow = (e: React.MouseEvent) => {
     e.preventDefault();
-    let fundDonations = [...props.fundDonations];
-    let fd = { fundId: props.funds[0].id } as FundDonationInterface;
+    const fundDonations = [...props.fundDonations];
+    const fd = { fundId: props.funds[0].id } as FundDonationInterface;
     fundDonations.push(fd);
     props.updatedFunction(fundDonations);
-  }
+  };
 
   const getRows = () => {
-    let result = [];
+    const result = [];
     for (let i = 0; i < props.fundDonations.length; i++) {
-      let fd = props.fundDonations[i];
-      result.push(<FundDonation fundDonation={fd} funds={props.funds} updatedFunction={handleUpdated} params={props?.params} key={i} index={i} />)
+      const fd = props.fundDonations[i];
+      result.push(<FundDonation fundDonation={fd} funds={props.funds} updatedFunction={handleUpdated} params={props?.params} key={i} index={i} />);
     }
 
     return result;
-  }
+  };
 
   return (
     <>
@@ -40,5 +40,5 @@ export const FundDonations: React.FC<Props> = (props) => {
       }
     </>
   );
-}
+};
 

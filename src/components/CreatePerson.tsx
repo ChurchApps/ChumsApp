@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react"
+import React from "react";
 import { UserHelper, ApiHelper, Locale } from "../helpers";
 import { Permissions, PersonInterface, HouseholdInterface } from "@churchapps/helpers";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from "@mui/material"
-import { ErrorMessages } from "@churchapps/apphelper"
-import { useMountedState } from "@churchapps/apphelper"
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from "@mui/material";
+import { ErrorMessages } from "@churchapps/apphelper";
+import { useMountedState } from "@churchapps/apphelper";
 
 interface CommonProps {
 	onCreate?: (person: PersonInterface) => void;
@@ -21,7 +21,7 @@ export function CreatePerson({ onCreate = () => { }, showInModal = false, ...pro
 	const [person, setPerson] = React.useState<PersonInterface>({ name: { first: "", last: "" }, contactInfo: {} });
 	const [errors, setErrors] = React.useState<string[]>([]);
 	const [isSubmitting, setIsSubmitting] = React.useState(false);
-	const isMounted = useMountedState()
+	const isMounted = useMountedState();
 
 	const validate = () => {
 		const result = [];
@@ -29,29 +29,29 @@ export function CreatePerson({ onCreate = () => { }, showInModal = false, ...pro
 		if (!person.name?.last) result.push("Please enter a last name.");
 		setErrors(result);
 		return result.length === 0;
-	}
+	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 		setErrors([]);
 		const p = { ...person } as PersonInterface;
-		let value = e.target.value;
+		const value = e.target.value;
 		switch (e.target.name) {
 			case "first": p.name.first = value; break;
 			case "last": p.name.last = value; break;
 			case "email": p.contactInfo.email = value; break;
 		}
 		setPerson(p);
-	}
+	};
 
 	const validateEmail = (email: string) => (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(email));
 
 	const checkExistingEmail = async () => {
 		const result = await ApiHelper.get("/people/search?email=" + person.contactInfo.email, "MembershipApi");
 		return result[0];
-	}
+	};
 
 	const handleSave = () => {
-		let household = { name: person.name.last } as HouseholdInterface;
+		const household = { name: person.name.last } as HouseholdInterface;
 
 		setIsSubmitting(true);
 		ApiHelper.post("/households", [household], "MembershipApi").then(data => {
@@ -59,7 +59,7 @@ export function CreatePerson({ onCreate = () => { }, showInModal = false, ...pro
 			person.householdId = household.id;
 			person.name.display = [person.name.first, person.name.last].join(" ");
 			ApiHelper.post("/people", [person], "MembershipApi").then(data => {
-				person.id = data[0].id
+				person.id = data[0].id;
 				onCreate(person);
 				setPerson({ ...person, name: { first: "", last: "" }, contactInfo: { email: "" } });
 			}).finally(() => {
@@ -69,7 +69,7 @@ export function CreatePerson({ onCreate = () => { }, showInModal = false, ...pro
 				}
 			});
 		});
-	}
+	};
 
 	async function handleSubmit() {
 		if (validate()) {
@@ -110,7 +110,7 @@ export function CreatePerson({ onCreate = () => { }, showInModal = false, ...pro
 					</DialogActions>
 				</Dialog>
 			</>
-		)
+		);
 	}
 	return (
 		<div>
@@ -131,5 +131,5 @@ export function CreatePerson({ onCreate = () => { }, showInModal = false, ...pro
 				</Grid>
 			</Grid>
 		</div>
-	)
+	);
 }

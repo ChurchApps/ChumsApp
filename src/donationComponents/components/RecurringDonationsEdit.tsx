@@ -4,9 +4,9 @@ import React from "react";
 import { ApiHelper, Locale } from "../../helpers";
 import { InputBox } from "@churchapps/apphelper";
 import { StripePaymentMethod, SubscriptionInterface } from "@churchapps/helpers";
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material"
-import type { SelectChangeEvent } from "@mui/material"
-import { DonationHelper } from "../../helpers"
+import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import type { SelectChangeEvent } from "@mui/material";
+import { DonationHelper } from "../../helpers";
 
 interface Props { subscriptionUpdated: (message?: string) => void, customerId: string, paymentMethods: StripePaymentMethod[], editSubscription: SubscriptionInterface };
 
@@ -14,33 +14,33 @@ export const RecurringDonationsEdit: React.FC<Props> = (props) => {
   const [editSubscription, setEditSubscription] = React.useState<SubscriptionInterface>(props.editSubscription);
   const [interval, setInterval] = React.useState("one_month");
 
-  const handleCancel = () => { props.subscriptionUpdated(); }
+  const handleCancel = () => { props.subscriptionUpdated(); };
   const handleSave = () => {
-    let sub = { ...editSubscription } as SubscriptionInterface;
+    const sub = { ...editSubscription } as SubscriptionInterface;
     const pmFound = props.paymentMethods.find((pm: StripePaymentMethod) => pm.id === sub.id);
     if (!pmFound) {
-      let pm = props.paymentMethods[0];
+      const pm = props.paymentMethods[0];
       sub.default_payment_method = pm.type === "card" ? pm.id : null;
       sub.default_source = pm.type === "bank" ? pm.id : null;
     }
-    ApiHelper.post("/subscriptions", [sub], "GivingApi").then(() => props.subscriptionUpdated(Locale.label("donation.donationForm.recurringUpdated")))
-  }
+    ApiHelper.post("/subscriptions", [sub], "GivingApi").then(() => props.subscriptionUpdated(Locale.label("donation.donationForm.recurringUpdated")));
+  };
 
   const handleDelete = () => {
     const conf = window.confirm(Locale.label("donation.donationForm.confirmDelete"));
     if (!conf) return;
-    let promises = [];
+    const promises = [];
     promises.push(ApiHelper.delete("/subscriptions/" + props.editSubscription.id, "GivingApi"));
     promises.push(ApiHelper.delete("/subscriptionfunds/subscription/" + props.editSubscription.id, "GivingApi"));
     Promise.all(promises).then(() => props.subscriptionUpdated(Locale.label("donation.donationForm.cancelled")));
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
-    let sub = { ...editSubscription } as SubscriptionInterface;
-    let value = e.target.value;
+    const sub = { ...editSubscription } as SubscriptionInterface;
+    const value = e.target.value;
     switch (e.target.name) {
       case "method":
-        let pm = props.paymentMethods.find((pm: StripePaymentMethod) => pm.id === value);
+        const pm = props.paymentMethods.find((pm: StripePaymentMethod) => pm.id === value);
         sub.default_payment_method = pm.type === "card" ? value : null;
         sub.default_source = pm.type === "bank" ? value : null;
         break;
@@ -52,7 +52,7 @@ export const RecurringDonationsEdit: React.FC<Props> = (props) => {
         break;
     }
     setEditSubscription(sub);
-  }
+  };
 
   const getFields = () => (
     <>
@@ -79,7 +79,7 @@ export const RecurringDonationsEdit: React.FC<Props> = (props) => {
         </Grid>
       </Grid>
     </>
-  )
+  );
 
   React.useEffect(() => {
     if (props.editSubscription) {
@@ -93,4 +93,4 @@ export const RecurringDonationsEdit: React.FC<Props> = (props) => {
       {getFields()}
     </InputBox>
   );
-}
+};

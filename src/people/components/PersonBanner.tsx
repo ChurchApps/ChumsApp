@@ -1,5 +1,7 @@
 import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper, type FormInterface } from "@churchapps/apphelper";
-import { Button, Typography, IconButton, Avatar, Stack, Box, Menu, MenuItem, Card, CardContent, Chip, CardHeader } from "@mui/material";
+import {
+ Button, Typography, IconButton, Avatar, Stack, Menu, MenuItem 
+} from "@mui/material";
 import {
   Edit as EditIcon,
   Phone as PhoneIcon,
@@ -82,9 +84,7 @@ export const PersonBanner = memo((props: Props) => {
     }
 
     if (person.contactInfo.address1) {
-      const addressParts = [person.contactInfo.address1, person.contactInfo.address2, [person.contactInfo.city, person.contactInfo.state, person.contactInfo.zip].filter(Boolean).join(", ")].filter(
-        Boolean
-      );
+      const addressParts = [person.contactInfo.address1, person.contactInfo.address2, [person.contactInfo.city, person.contactInfo.state, person.contactInfo.zip].filter(Boolean).join(", ")].filter(Boolean);
 
       info.push({
         icon: <HomeIcon sx={{ color: "#fff", fontSize: 16 }} />,

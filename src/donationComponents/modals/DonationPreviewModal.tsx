@@ -3,7 +3,9 @@
 import React from "react";
 import { DateHelper, CurrencyHelper, Locale } from "../../helpers";
 import { StripeDonationInterface } from "@churchapps/helpers";
-import { Table, TableBody, TableRow, TableCell, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material"
+import {
+ Table, TableBody, TableRow, TableCell, Dialog, DialogTitle, DialogContent, DialogActions, Button 
+} from "@mui/material";
 
 interface Props {
   show: boolean;
@@ -25,14 +27,14 @@ export const DonationPreviewModal: React.FC<Props> = (props) => {
     let message = "Thank you for your donation.";
     if (props.donationType === "recurring") message = "Recurring donation created. " + message;
     props.handleDonate(message);
-  }
+  };
 
   const formatInterval = () => {
     const count = props.donation.interval.interval_count;
     const interval = props.donation.interval.interval;
-    let result = `${count} ${interval}`;
+    const result = `${count} ${interval}`;
     return count > 1 ? result + "s" : result;
-  }
+  };
 
   return (
     <Dialog open={props.show} {...props}>
@@ -65,4 +67,4 @@ export const DonationPreviewModal: React.FC<Props> = (props) => {
       </DialogActions>
     </Dialog>
   );
-}
+};

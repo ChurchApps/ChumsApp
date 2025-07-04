@@ -79,6 +79,12 @@
       "tasks": "Tasks"
     }
   },
+  "createPerson": {
+    "addNewPerson": "Add New Person",
+    "email": "Email",
+    "firstName": "First Name",
+    "lastName": "Last Name"
+  },
   "dashboard": {
     "dashboardPage": {
       "dash": "Dashboard"
@@ -92,8 +98,108 @@
     "tasks": "Tasks"
   },
   "donation": {
+    "page": {
+      "amount": "Amount",
+      "batch": "Batch",
+      "date": "Date",
+      "fund": "Fund",
+      "method": "Method",
+      "willAppear": "Donations will appear here once they have been made."
+    },
+    "bankForm": {
+      "accountNumber": "Account Number",
+      "added": "Bank account has been added successfully.",
+      "company": "Company",
+      "firstDeposit": "First Deposit Amount",
+      "individual": "Individual",
+      "name": "Account Holder Name",
+      "needVerified": "This bank account needs to be verified before it can be used.",
+      "routingNumber": "Routing Number",
+      "secondDeposit": "Second Deposit Amount",
+      "twoDeposits": "Two small deposits have been made to your account. Please enter the amounts below to verify.",
+      "updated": "Bank account has been updated successfully.",
+      "verified": "This bank account has been verified and can be used for donations.",
+      "validate": {
+        "accountNumber": "Account number is required.",
+        "holderName": "Account holder name is required."
+      }
+    },
+    "cardForm": {
+      "addNew": "Add New Card",
+      "added": "Credit card has been added successfully.",
+      "expirationMonth": "Expiration Month",
+      "expirationYear": "Expiration Year",
+      "updated": "Credit card has been updated successfully."
+    },
+    "common": {
+      "cancel": "Cancel",
+      "error": "An error occurred while processing your request."
+    },
+    "donationForm": {
+      "annually": "Annually",
+      "biWeekly": "Bi-Weekly",
+      "cancelled": "Recurring donation has been cancelled.",
+      "confirmDelete": "Are you sure you want to cancel this recurring donation?",
+      "cover": "Cover Transaction Fees",
+      "donate": "Donate",
+      "editRecurring": "Edit Recurring Donation",
+      "fees": "Fees",
+      "frequency": "Frequency",
+      "fund": "Fund",
+      "funds": "Funds",
+      "make": "Make a Donation",
+      "makeRecurring": "Make this a recurring donation",
+      "method": "Payment Method",
+      "monthly": "Monthly",
+      "notes": "Notes",
+      "preview": "Preview Donation",
+      "quarterly": "Quarterly",
+      "recurringUpdated": "Recurring donation has been updated.",
+      "startDate": "Start Date",
+      "thankYou": "Thank you for your donation!",
+      "tooLow": "Donation amount is too low.",
+      "total": "Total",
+      "weekly": "Weekly",
+      "validate": {
+        "amount": "Please enter a donation amount.",
+        "email": "Email is required.",
+        "firstName": "First name is required.",
+        "lastName": "Last name is required.",
+        "validEmail": "Please enter a valid email address."
+      }
+    },
+    "fundDonations": {
+      "addMore": "Add Another Fund",
+      "amount": "Amount",
+      "fund": "Fund"
+    },
     "paymentMethods": {
-      "noMethod": "Please select a payment method."
+      "addBank": "Add Bank Account",
+      "addCard": "Add Credit Card",
+      "confirmDelete": "Are you sure you want to delete this payment method?",
+      "deleted": "Payment method has been deleted.",
+      "noMethod": "Please select a payment method.",
+      "verify": "Verify"
+    },
+    "preview": {
+      "date": "Date",
+      "donate": "Complete Donation",
+      "every": "Every",
+      "fee": "Transaction Fee",
+      "funds": "Funds",
+      "method": "Payment Method",
+      "startingOn": "Starting on",
+      "total": "Total",
+      "type": "Type",
+      "weekly": "week"
+    },
+    "recurring": {
+      "amount": "Amount",
+      "every": "Every",
+      "interval": "Interval",
+      "notFound": "No recurring donations found.",
+      "paymentMethod": "Payment Method",
+      "startDate": "Start Date"
     }
   },
   "donations": {

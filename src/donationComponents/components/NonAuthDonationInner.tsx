@@ -7,8 +7,10 @@ import { ErrorMessages, InputBox } from "@churchapps/apphelper";
 import { ApiHelper, DateHelper, CurrencyHelper, Locale, DonationHelper } from "../../helpers";
 import { FundDonationInterface, FundInterface, PersonInterface, StripeDonationInterface, StripePaymentMethod, UserInterface, ChurchInterface } from "@churchapps/helpers";
 import { FundDonations } from "./FundDonations";
-import { Grid, Alert, TextField, Button, FormControl, InputLabel, Select, MenuItem, FormGroup, FormControlLabel, Checkbox, Typography } from "@mui/material"
-import type { PaperProps } from "@mui/material/Paper"
+import {
+ Grid, Alert, TextField, Button, FormControl, InputLabel, Select, MenuItem, FormGroup, FormControlLabel, Checkbox, Typography 
+} from "@mui/material";
+import type { PaperProps } from "@mui/material/Paper";
 
 interface Props { churchId: string, mainContainerCssProps?: PaperProps, showHeader?: boolean, recaptchaSiteKey: string, churchLogo?: string }
 
@@ -40,7 +42,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
       if (typeof window === "undefined") return null;
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(param);
-    }
+    };
     
     const init = () => {
     const fundId = getUrlParam("fundId");
@@ -52,7 +54,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
       if (fundId && fundId !== "") {
         const selectedFund = data.find((f: FundInterface) => f.id === fundId);
         if (selectedFund) {
-          setFundDonations([{ fundId: selectedFund.id, amount: (amount && amount !== "") ? parseFloat(amount) : 0}]);
+          setFundDonations([{ fundId: selectedFund.id, amount: (amount && amount !== "") ? parseFloat(amount) : 0 }]);
         }
       } else if (data.length) {
         setFundDonations([{ fundId: data[0].id }]);
@@ -64,17 +66,17 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
     ApiHelper.get("/gateways/churchId/" + props.churchId, "GivingApi").then(data => {
       if (data.length !== 0) setGateway(data[0]);
     });
-  }
+  };
 
   const handleCaptchaChange = (value: string) => {
     const captchaToken = captchaRef.current.getValue();
-    ApiHelper.postAnonymous("/donate/captcha-verify", { token: captchaToken }, "GivingApi").then((data) => { setCaptchaResponse(data.response); })
-  }
+    ApiHelper.postAnonymous("/donate/captcha-verify", { token: captchaToken }, "GivingApi").then((data) => { setCaptchaResponse(data.response); });
+  };
 
   const handleCheckChange = (e: React.SyntheticEvent<Element, Event>, checked: boolean) => {
-    let totalPayAmount = checked ? fundsTotal + transactionFee : fundsTotal;
+    const totalPayAmount = checked ? fundsTotal + transactionFee : fundsTotal;
     setTotal(totalPayAmount);
-  }
+  };
 
   // const handleAutoPayFee = () => {
   //   let totalPayAmount = fundsTotal + transactionFee;
@@ -88,18 +90,17 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
         .catch(ex => { setErrors([ex.toString()]); setProcessing(false); })
         .then(async userData => {
           const personData = { churchId: props.churchId, firstName, lastName, email };
-          const person = await ApiHelper.post("/people/loadOrCreate", personData, "MembershipApi")
-          saveCard(userData, person)
+          const person = await ApiHelper.post("/people/loadOrCreate", personData, "MembershipApi");
+          saveCard(userData, person);
         });
     }
-  }
+  };
 
   const saveCard = async (user: UserInterface, person: PersonInterface) => {
     const cardData = elements.getElement(CardElement);
     const stripePM = await stripe.createPaymentMethod({ type: "card", card: cardData });
-    if (stripePM.error) { setErrors([stripePM.error.message]); setProcessing(false); }
-    else {
-      const pm = { id: stripePM.paymentMethod.id, personId: person.id, email: email, name: person.name.display, churchId: props.churchId }
+    if (stripePM.error) { setErrors([stripePM.error.message]); setProcessing(false); } else {
+      const pm = { id: stripePM.paymentMethod.id, personId: person.id, email: email, name: person.name.display, churchId: props.churchId };
       await ApiHelper.post("/paymentmethods/addcard", pm, "GivingApi").then(result => {
         if (result?.raw?.message) {
           setErrors([result.raw.message]);
@@ -110,10 +111,10 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
         }
       });
     }
-  }
+  };
 
   const saveDonation = async (paymentMethod: StripePaymentMethod, customerId: string, person?: PersonInterface) => {
-    let donation: StripeDonationInterface = {
+    const donation: StripeDonationInterface = {
       amount: total,
       id: paymentMethod.id,
       customerId: customerId,
@@ -125,7 +126,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
         email: person?.contactInfo?.email,
         name: person?.name?.display
       }
-    }
+    };
 
     if (donationType === "recurring") {
       donation.billing_cycle_anchor = + new Date(startDate);
@@ -133,7 +134,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
     }
 
     for (const fundDonation of fundDonations) {
-      let fund = funds.find((fund: FundInterface) => fund.id === fundDonation.fundId);
+      const fund = funds.find((fund: FundInterface) => fund.id === fundDonation.fundId);
       donation.funds.push({ id: fundDonation.fundId, amount: fundDonation.amount || 0, name: fund.name });
     }
 
@@ -142,21 +143,21 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
       subDomain: church.subDomain,
       churchURL: typeof window !== "undefined" && window.location.origin,
       logo: props?.churchLogo
-    }
+    };
 
     let results;
     if (donationType === "once") results = await ApiHelper.post("/donate/charge/", { ...donation, church: churchObj }, "GivingApi");
     if (donationType === "recurring") results = await ApiHelper.post("/donate/subscribe/", { ...donation, church: churchObj }, "GivingApi");
 
     if (results?.status === "succeeded" || results?.status === "pending" || results?.status === "active") {
-      setDonationComplete(true)
+      setDonationComplete(true);
     }
     if (results?.raw?.message) {
       setErrors([results?.raw?.message]);
       setProcessing(false);
     }
     setProcessing(false);
-  }
+  };
 
   const validate = () => {
     const result = [];
@@ -170,7 +171,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
     //Todo - make sure the account doesn't exist. (loadOrCreate?)
     setErrors(result);
     return result.length === 0;
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const val = e.currentTarget.value;
@@ -181,15 +182,15 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
       case "startDate": setStartDate(val); break;
       case "interval": setInterval(val); break;
     }
-  }
+  };
 
   const handleFundDonationsChange = async (fd: FundDonationInterface[]) => {
     setFundDonations(fd);
     let totalAmount = 0;
-    let selectedFunds: any = [];
+    const selectedFunds: any = [];
     for (const fundDonation of fd) {
       totalAmount += fundDonation.amount || 0;
-      let fund = funds.find((fund: FundInterface) => fund.id === fundDonation.fundId);
+      const fund = funds.find((fund: FundInterface) => fund.id === fundDonation.fundId);
       selectedFunds.push({ id: fundDonation.fundId, amount: fundDonation.amount || 0, name: fund.name });
     }
     setFundsTotal(totalAmount);
@@ -201,7 +202,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
     if (gateway && gateway.payFees === true) {
       setTotal(totalAmount + fee);
     }
-  }
+  };
 
   const getTransactionFee = async (amount: number) => {
     if (amount > 0) {
@@ -215,22 +216,25 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
     } else {
       return 0;
     }
-  }
+  };
 
   const getFundList = () => {
-    if (funds) return (<>
+    if (funds) {
+return (<>
       <hr />
       <h4>{Locale.label("donation.donationForm.funds")}</h4>
       <FundDonations fundDonations={fundDonations} funds={funds} params={searchParams} updatedFunction={handleFundDonationsChange} />
     </>);
-  }
+}
+  };
 
   React.useEffect(init, []); //eslint-disable-line
 
   // React.useEffect(() => { gateway && gateway.payFees === true && handleAutoPayFee() }, [fundDonations]);
 
-  if (donationComplete) return <Alert severity="success">{Locale.label("donation.donationForm.thankYou")}</Alert>
-  else return (
+  if (donationComplete) return <Alert severity="success">{Locale.label("donation.donationForm.thankYou")}</Alert>;
+  else {
+return (
     <InputBox headerIcon={showHeader ? "volunteer_activism" : ""} headerText={showHeader ? "Donate" : ""} saveFunction={handleSave} saveText="Donate" isSubmitting={processing || !captchaResponse || captchaResponse === "robot"} mainContainerCssProps={mainContainerCssProps}>
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
@@ -261,7 +265,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
           <Grid size={{ xs: 12, md: 6 }}>
             <FormControl fullWidth>
               <InputLabel>{Locale.label("donation.donationForm.frequency")}</InputLabel>
-              <Select label="Frequency" name="interval" aria-label="interval" value={interval} onChange={(e) => { setInterval(e.target.value) }}>
+              <Select label="Frequency" name="interval" aria-label="interval" value={interval} onChange={(e) => { setInterval(e.target.value); }}>
                 <MenuItem value="one_week">{Locale.label("donation.donationForm.weekly")}</MenuItem>
                 <MenuItem value="two_week">{Locale.label("donation.donationForm.biWeekly")}</MenuItem>
                 <MenuItem value="one_month">{Locale.label("donation.donationForm.monthly")}</MenuItem>
@@ -293,3 +297,4 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
     </InputBox>
   );
 }
+};

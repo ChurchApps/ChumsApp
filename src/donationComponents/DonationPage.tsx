@@ -8,7 +8,9 @@ import { DisplayBox, ExportLink, Loading } from "@churchapps/apphelper";
 import { ApiHelper, DateHelper, UniqueIdHelper, CurrencyHelper, Locale } from "../helpers";
 import { DonationInterface, PersonInterface, StripePaymentMethod, ChurchInterface } from "@churchapps/helpers";
 // import { Link } from "react-router-dom"
-import { Table, TableBody, TableRow, TableCell, TableHead, Alert, Button, Icon, Link, Menu, MenuItem } from "@mui/material"
+import {
+ Table, TableBody, TableRow, TableCell, TableHead, Alert, Button, Icon, Link, Menu, MenuItem 
+} from "@mui/material";
 import { useMountedState } from "@churchapps/apphelper";
 
 interface Props { personId: string, appName?: string, church?: ChurchInterface, churchLogo?: string }
@@ -27,7 +29,7 @@ export const DonationPage: React.FC<Props> = (props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
 
   const loadPaymentMethods = async () => {
     try {
@@ -45,7 +47,7 @@ export const DonationPage: React.FC<Props> = (props) => {
       console.error("Error loading payment methods:", error);
       setPaymentMethods([]);
     }
-  }
+  };
 
   const loadPersonData = async () => {
     try {
@@ -54,7 +56,7 @@ export const DonationPage: React.FC<Props> = (props) => {
     } catch (error) {
       console.error("Error loading person data:", error);
     }
-  }
+  };
 
   const loadStripeData = async (gatewayData: any) => {
     if (!gatewayData.length || !gatewayData[0]?.publicKey) {
@@ -67,17 +69,14 @@ export const DonationPage: React.FC<Props> = (props) => {
       // loadPersonData(),
       loadPaymentMethods()
     ]);
-  }
+  };
 
   const loadData = async () => {
     if (props?.appName) setAppName(props.appName);
     if (UniqueIdHelper.isMissing(props.personId)) return;
     
     try {
-      const [donationsData, gatewaysData] = await Promise.all([
-        ApiHelper.get("/donations?personId=" + props.personId, "GivingApi"),
-        ApiHelper.get("/gateways", "GivingApi")
-      ]);
+      const [donationsData, gatewaysData] = await Promise.all([ApiHelper.get("/donations?personId=" + props.personId, "GivingApi"), ApiHelper.get("/gateways", "GivingApi")]);
       
       setDonations(donationsData);
       await loadPersonData(); //moved this outside of loadStripeData to fix issue with person data not loading when there's no gateway data
@@ -87,13 +86,13 @@ export const DonationPage: React.FC<Props> = (props) => {
       setDonations([]);
       setPaymentMethods([]);
     }
-  }
+  };
 
   const handleDataUpdate = (message?: string) => {
-    setMessage(message)
+    setMessage(message);
     setPaymentMethods(null);
     loadData();
-  }
+  };
 
   const getEditContent = () => {
     const result: React.ReactElement[] = [];
@@ -103,13 +102,7 @@ export const DonationPage: React.FC<Props> = (props) => {
 
     const current_year = (donations.length>0) ? donations.filter(d => new Date(d.donationDate || "2000-01-01").getFullYear() === currentY) : [];
     const last_year = (donations.length>0) ? donations.filter(d => new Date(d.donationDate || "2000-01-01").getFullYear() === lastY) : [];
-    const customHeaders = [
-      { label: "amount", key: "amount" },
-      { label: "donationDate", key: "donationDate" },
-      { label: "fundName", key: "fund.name" },
-      { label: "method", key: "method"},
-      { label: "methodDetails", key: "methodDetails"},
-    ]
+    const customHeaders = [{ label: "amount", key: "amount" }, { label: "donationDate", key: "donationDate" }, { label: "fundName", key: "fund.name" }, { label: "method", key: "method" }, { label: "methodDetails", key: "methodDetails" }];
 
     result.push(<>
       <Button
@@ -138,10 +131,10 @@ export const DonationPage: React.FC<Props> = (props) => {
     </>);
 
     return result;
-  }
+  };
 
   const getRows = () => {
-    let rows: React.ReactElement[] = [];
+    const rows: React.ReactElement[] = [];
 
     if (donations.length === 0) {
       rows.push(<TableRow key="0"><TableCell>{Locale.label("donation.page.willAppear")}</TableCell></TableRow>);
@@ -149,37 +142,33 @@ export const DonationPage: React.FC<Props> = (props) => {
     }
 
     for (let i = 0; i < donations.length; i++) {
-      let d = donations[i];
-      rows.push(
-        <TableRow key={i}>
+      const d = donations[i];
+      rows.push(<TableRow key={i}>
           {appName !== "B1App" && <TableCell><Link href={"/donations/" + d.batchId}>{d.batchId}</Link></TableCell>}
           <TableCell>{DateHelper.prettyDate(new Date(d.donationDate))}</TableCell>
           <TableCell>{d.method} - {d.methodDetails}</TableCell>
           <TableCell>{d.fund.name}</TableCell>
           <TableCell>{CurrencyHelper.formatCurrency(d.fund.amount)}</TableCell>
-        </TableRow>
-      );
+        </TableRow>);
     }
     return rows;
-  }
+  };
 
   const getTableHeader = () => {
-    const rows: React.ReactElement[] = []
+    const rows: React.ReactElement[] = [];
 
     if (donations.length > 0) {
-      rows.push(
-        <TableRow key="header" sx={{textAlign: "left"}}>
+      rows.push(<TableRow key="header" sx={{ textAlign: "left" }}>
           {appName !== "B1App" && <th>{Locale.label("donation.page.batch")}</th>}
           <th>{Locale.label("donation.page.date")}</th>
           <th>{Locale.label("donation.page.method")}</th>
           <th>{Locale.label("donation.page.fund")}</th>
           <th>{Locale.label("donation.page.amount")}</th>
-        </TableRow>
-      );
+        </TableRow>);
     }
 
     return rows;
-  }
+  };
 
   React.useEffect(() => {
     loadData();
@@ -187,15 +176,18 @@ export const DonationPage: React.FC<Props> = (props) => {
 
   const getTable = () => {
     if (!donations) return <Loading />;
-    else return (<Table>
+    else {
+return (<Table>
       <TableHead>{getTableHeader()}</TableHead>
       <TableBody>{getRows()}</TableBody>
     </Table>);
-  }
+}
+  };
 
   const getPaymentMethodComponents = () => {
     if (!paymentMethods || !donations) return <Loading />;
-    else return (
+    else {
+return (
       <>
         <DonationForm person={person} customerId={customerId} paymentMethods={paymentMethods} stripePromise={stripePromise} donationSuccess={handleDataUpdate} church={props?.church} churchLogo={props?.churchLogo} />
         <DisplayBox headerIcon="payments" headerText="Donations" editContent={getEditContent()}>
@@ -205,7 +197,8 @@ export const DonationPage: React.FC<Props> = (props) => {
         <PaymentMethods person={person} customerId={customerId} paymentMethods={paymentMethods} appName={appName} stripePromise={stripePromise} dataUpdate={handleDataUpdate} />
       </>
     );
-  }
+}
+  };
 
   return (
     <>
@@ -213,4 +206,4 @@ export const DonationPage: React.FC<Props> = (props) => {
       {getPaymentMethodComponents()}
     </>
   );
-}
+};

@@ -19,7 +19,7 @@ export const NonAuthDonation: React.FC<Props> = ({ mainContainerCssProps, showHe
         setStripe(loadStripe(data[0].publicKey));
       }
     });
-  }
+  };
 
   React.useEffect(init, []); //eslint-disable-line
 
@@ -30,5 +30,5 @@ export const NonAuthDonation: React.FC<Props> = ({ mainContainerCssProps, showHe
       </Elements>
     </>
   );
-}
+};
 
