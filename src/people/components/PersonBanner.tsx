@@ -1,7 +1,5 @@
 import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper, type FormInterface } from "@churchapps/apphelper";
-import {
- Button, Typography, IconButton, Avatar, Stack, Box, Menu, MenuItem 
-} from "@mui/material";
+import { Button, Typography, IconButton, Avatar, Stack, Box, Menu, MenuItem, Card, CardContent, Chip, CardHeader } from "@mui/material";
 import {
   Edit as EditIcon,
   Phone as PhoneIcon,
@@ -45,7 +43,7 @@ export const PersonBanner = memo((props: Props) => {
 
     if (person.birthDate) {
       const age = PersonHelper.getAge(person.birthDate);
-      stats.push({ label: "Age", value: `${age} years` });
+      stats.push({ label: "Age", value: `${age}` });
     }
 
     if (person.gender && person.gender !== "Unspecified") {
@@ -84,7 +82,9 @@ export const PersonBanner = memo((props: Props) => {
     }
 
     if (person.contactInfo.address1) {
-      const addressParts = [person.contactInfo.address1, person.contactInfo.address2, [person.contactInfo.city, person.contactInfo.state, person.contactInfo.zip].filter(Boolean).join(", ")].filter(Boolean);
+      const addressParts = [person.contactInfo.address1, person.contactInfo.address2, [person.contactInfo.city, person.contactInfo.state, person.contactInfo.zip].filter(Boolean).join(", ")].filter(
+        Boolean
+      );
 
       info.push({
         icon: <HomeIcon sx={{ color: "#fff", fontSize: 16 }} />,
@@ -150,83 +150,77 @@ export const PersonBanner = memo((props: Props) => {
 
   return (
     <div style={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-      <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
+      <Stack direction={{ xs: "column", lg: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
         {/* Column 1: Avatar + Name + Badge + Personal Info */}
-        <Stack direction="row" spacing={3} alignItems="center" sx={{ flex: 1 }}>
-          <Avatar
-            src={PersonHelper.getPhotoUrl(person)}
-            sx={{
-              width: { xs: 80, md: 100 },
-              height: { xs: 80, md: 100 },
-              cursor: canEdit ? "pointer" : "default",
-              border: "3px solid #FFF",
-              flexShrink: 0,
-            }}
-            onClick={() => canEdit && togglePhotoEditor?.(true)}
-          />
-
-          <Box>
-            <Stack direction="row" spacing={2} alignItems="center" mb={1} flexWrap="wrap">
+        <Card sx={{ backgroundColor: "#78a2e1", width: "100%" }}>
+          <CardHeader
+            avatar={
+              <Avatar
+                src={PersonHelper.getPhotoUrl(person)}
+                sx={{
+                  width: { xs: 70, sm: 80, md: 100 },
+                  height: { xs: 70, sm: 80, md: 100 },
+                  cursor: canEdit ? "pointer" : "default",
+                  border: "3px solid #FFF",
+                  flexShrink: 0,
+                  borderRadius: "25%",
+                }}
+                onClick={() => canEdit && togglePhotoEditor?.(true)}
+              />
+            }
+            title={
               <Typography
                 sx={{
                   color: "#FFF",
                   fontWeight: 400,
                   mb: 0,
                   wordBreak: "break-word",
-                  fontSize: { xs: "2rem", md: "2.5rem" },
+                  fontSize: { xs: "1.7rem", sm: "2rem", md: "2.5rem" },
                   lineHeight: 1.1,
                 }}
               >
                 {person.name.display}
               </Typography>
-              {membershipStatus}
-              {canEdit && (
+            }
+            action={
+              canEdit && (
                 <IconButton size="small" sx={{ color: "#FFF" }} onClick={onEdit}>
                   <EditIcon fontSize="small" />
                 </IconButton>
-              )}
-            </Stack>
-
-            <Stack direction="row" spacing={2} flexWrap="wrap">
+              )
+            }
+          />
+          <CardContent>
+            <Stack direction="row" flexWrap="wrap" gap={1} sx={{ marginBottom: 2 }}>
+              {membershipStatus}
               {quickStats.map((stat, idx) => (
-                <Typography
-                  key={idx}
-                  variant="body2"
-                  sx={{
-                    color: "#FFF",
-                    fontSize: { xs: "0.875rem", md: "1rem" },
-                  }}
-                >
-                  {stat.value}
-                </Typography>
+                <Chip label={stat.value} key={idx} variant="outlined" sx={{ color: "#FFF", borderColor: "#FFF", fontWeight: "semibold" }} size="small" />
               ))}
             </Stack>
-          </Box>
-        </Stack>
 
-        {/* Column 2: Contact Info */}
-        <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Stack spacing={1}>
-            {contactInfo.map((info, idx) => (
-              <Stack key={idx} direction="row" spacing={1} alignItems="center" sx={{ minWidth: 0 }}>
-                {info.icon}
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "#FFF",
-                    cursor: info.action ? "pointer" : "default",
-                    "&:hover": info.action ? { textDecoration: "underline" } : {},
-                    wordBreak: "break-word",
-                    fontSize: { xs: "0.875rem", md: "1rem" },
-                  }}
-                  onClick={info.action}
-                >
-                  {info.value}
-                </Typography>
-              </Stack>
-            ))}
-          </Stack>
-        </Box>
+            {/* Column 2: Contact Info */}
+            <Box>
+              {contactInfo.map((info, idx) => (
+                <Stack key={idx} direction="row" spacing={1} alignItems="center" sx={{ minWidth: 0 }}>
+                  {info.icon}
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#FFF",
+                      cursor: info.action ? "pointer" : "default",
+                      "&:hover": info.action ? { textDecoration: "underline" } : {},
+                      wordBreak: "break-word",
+                      fontSize: { xs: "0.875rem", md: "1rem" },
+                    }}
+                    onClick={info.action}
+                  >
+                    {info.value}
+                  </Typography>
+                </Stack>
+              ))}
+            </Box>
+          </CardContent>
+        </Card>
 
         {/* Column 3: Action Buttons */}
         <Stack
