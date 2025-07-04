@@ -90,7 +90,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
       cancelFunction={handleCancel}
       headerActionContent={getHeaderButton()}
     >
-      <Cropper onInitialized={onCropperInit} src={currentUrl} style={{ height: 150, width: "100%" }} aspectRatio={props.aspectRatio} guides={false} crop={handleCrop} />
+      <Cropper onReady={onCropperInit} src={currentUrl} style={{ height: 150, width: "100%" }} aspectRatio={props.aspectRatio} guides={false} crop={handleCrop} />
     </InputBox>
   );
 };
