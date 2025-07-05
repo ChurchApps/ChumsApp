@@ -4,9 +4,10 @@ import { ChumsPersonHelper } from ".";
 import { CreatePerson } from "../../components";
 import { PersonHelper, type PersonInterface, Loading, ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
 import {
- Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Avatar, Typography, Stack, Box, Chip, Card 
+ Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Typography, Stack, Box, Chip, Card 
 } from "@mui/material";
 import { Email as EmailIcon, Phone as PhoneIcon } from "@mui/icons-material";
+import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   people: PersonInterface[];
@@ -30,24 +31,17 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
 
   const getPhotoJSX = useCallback((p: PersonInterface) => {
     const photoUrl = PersonHelper.getPhotoUrl(p);
-    return (
-      <Avatar
-        src={photoUrl}
-        sx={{
-          width: 56,
-          height: 56,
-          "& img": {
-            width: "100% !important",
-            height: "100% !important",
-            borderRadius: "50% !important",
-          },
-        }}
-        component={photoUrl !== "/images/sample-profile.png" ? "a" : "div"}
-        href={photoUrl !== "/images/sample-profile.png" ? photoUrl : undefined}
-        target={photoUrl !== "/images/sample-profile.png" ? "_blank" : undefined}
-        rel={photoUrl !== "/images/sample-profile.png" ? "noopener noreferrer" : undefined}
-      />
-    );
+    const hasCustomPhoto = photoUrl !== "/images/sample-profile.png";
+    
+    if (hasCustomPhoto) {
+      return (
+        <a href={photoUrl} target="_blank" rel="noopener noreferrer">
+          <PersonAvatar person={p} size="medium" />
+        </a>
+      );
+    }
+    
+    return <PersonAvatar person={p} size="medium" />;
   }, []);
 
   const getAnswer = useCallback((p: PersonInterface, key: string) => {

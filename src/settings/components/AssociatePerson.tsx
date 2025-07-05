@@ -1,7 +1,8 @@
-import { Table, TableBody, TableCell, TableRow, Avatar } from "@mui/material";
+import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { PersonAdd } from "../../components";
 import { SmallButton, type PersonInterface, PersonHelper, Locale } from "@churchapps/apphelper";
+import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   person: PersonInterface;
@@ -42,7 +43,7 @@ export const AssociatePerson = ({ person, handleAssociatePerson, searchStatus, f
       <TableBody>
         <TableRow>
           <TableCell>
-            <Avatar src={PersonHelper.getPhotoUrl(person)} sx={{ width: 48, height: 48 }} />
+            <PersonAvatar person={person} size="small" />
           </TableCell>
           <TableCell className="border-0">{person?.name?.display}</TableCell>
           {showChangeOption && (

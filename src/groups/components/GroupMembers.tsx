@@ -15,9 +15,10 @@ import {
 } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import {
- Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, Avatar 
+ Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField 
 } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
+import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   group: GroupInterface;
@@ -127,17 +128,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
 
       rows.push(<TableRow key={gm.id}>
           <TableCell>
-            <Avatar
-              src={PersonHelper.getPhotoUrl(gm.person)}
-              sx={{
-                width: 48,
-                height: 48,
-                "& img": {
-                  objectFit: "cover",
-                  objectPosition: "center",
-                },
-              }}
-            />
+            <PersonAvatar person={gm.person} size="small" />
           </TableCell>
           <TableCell>
             <Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link>

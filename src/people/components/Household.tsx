@@ -5,9 +5,10 @@ import {
 } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import {
- Table, TableBody, TableRow, TableCell, Avatar, Typography, Stack, Box, Chip 
+ Table, TableBody, TableRow, TableCell, Typography, Stack, Box, Chip 
 } from "@mui/material";
 import { Email as EmailIcon, Phone as PhoneIcon } from "@mui/icons-material";
+import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   person: PersonInterface;
@@ -54,18 +55,7 @@ export const Household: React.FC<Props> = memo((props) => {
       return (
         <TableRow key={m.id} sx={{ "&:hover": { backgroundColor: "rgba(0,0,0,0.04)" } }}>
           <TableCell sx={{ width: "120px", p: 3 }}>
-            <Avatar
-              src={PersonHelper.getPhotoUrl(m)}
-              sx={{
-                width: 80,
-                height: 80,
-                "& img": {
-                  width: "100% !important",
-                  height: "100% !important",
-                  borderRadius: "50% !important",
-                },
-              }}
-            />
+            <PersonAvatar person={m} size="large" />
           </TableCell>
           <TableCell sx={{ p: 3, width: "30%" }}>
             <Box>

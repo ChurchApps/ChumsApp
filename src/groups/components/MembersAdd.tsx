@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import {
  ApiHelper, type GroupInterface, DisplayBox, type GroupMemberInterface, PersonHelper, type PersonInterface, Loading, Locale 
 } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Avatar } from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
+import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   group: GroupInterface;
@@ -50,7 +51,7 @@ export const MembersAdd: React.FC<Props> = (props) => {
       const gm = filtered[i];
       rows.push(<TableRow key={gm.personId}>
           <TableCell>
-            <Avatar src={PersonHelper.getPhotoUrl(gm.person)} sx={{ width: 48, height: 48 }} />
+            <PersonAvatar person={gm.person} size="small" />
           </TableCell>
           <TableCell>
             <Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link>

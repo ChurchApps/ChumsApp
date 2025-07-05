@@ -7,8 +7,9 @@ import {
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
 import {
- Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Avatar, Box, type SelectChangeEvent 
+ Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent 
 } from "@mui/material";
+import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   id?: string;
@@ -262,20 +263,14 @@ export const PersonEdit = memo((props: Props) => {
       <Grid container spacing={3}>
         <Grid size={{ sm: 3 }} className="my-auto">
           <Box sx={{ textAlign: "center" }}>
-            <Avatar
-              src={PersonHelper.getPhotoUrl(person)}
-              sx={{
-                width: 120,
-                height: 120,
-                border: "3px solid #fff",
-                boxShadow: 2,
-                cursor: "pointer",
-                margin: "0 auto",
-                "&:hover": { opacity: 0.8 },
-              }}
-              id="imgPreview"
-              onClick={handlePhotoClick}
-            />
+            <div style={{ border: "3px solid #fff", borderRadius: "50%", boxShadow: "0 2px 4px rgba(0,0,0,0.2)", display: "inline-block" }}>
+              <PersonAvatar
+                person={person}
+                size="xxlarge"
+                editable={true}
+                onClick={handlePhotoClick}
+              />
+            </div>
           </Box>
         </Grid>
         <Grid size={{ sm: 1 }}></Grid>

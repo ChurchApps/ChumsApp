@@ -1,7 +1,5 @@
 import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper, type FormInterface } from "@churchapps/apphelper";
-import {
- Button, Typography, IconButton, Avatar, Stack, Menu, MenuItem 
-} from "@mui/material";
+import { Button, Typography, IconButton, Stack, Menu, MenuItem } from "@mui/material";
 import {
   Edit as EditIcon,
   Phone as PhoneIcon,
@@ -17,6 +15,7 @@ import {
 } from "@mui/icons-material";
 import React, { memo, useMemo, useState } from "react";
 import { StatusChip } from "../../components";
+import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   person: PersonInterface;
@@ -153,17 +152,14 @@ export const PersonBanner = memo((props: Props) => {
       <Stack direction={{ xs: "column", lg: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
         {/* Column 1: Avatar + Name + Status */}
         <Stack direction="row" spacing={2} alignItems="center" sx={{ flexShrink: 0 }}>
-          <Avatar
-            src={PersonHelper.getPhotoUrl(person)}
-            sx={{
-              width: { xs: 70, sm: 80, md: 100 },
-              height: { xs: 70, sm: 80, md: 100 },
-              cursor: canEdit ? "pointer" : "default",
-              border: "3px solid #FFF",
-              flexShrink: 0,
-            }}
-            onClick={() => canEdit && togglePhotoEditor?.(true)}
-          />
+          <div style={{ border: "3px solid #FFF", borderRadius: "50%" }}>
+            <PersonAvatar
+              person={person}
+              size="responsive"
+              editable={canEdit}
+              onClick={() => canEdit && togglePhotoEditor?.(true)}
+            />
+          </div>
           <Stack spacing={1} sx={{ minWidth: 0 }}>
             <Stack direction="row" alignItems="center" spacing={1}>
               <Typography

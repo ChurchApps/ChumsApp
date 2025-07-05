@@ -9,7 +9,7 @@
     "@mui/icons-material": "^7.1.2",
     "@mui/material": "^7.1.2",
     "axios": "^1.7.7",
-    "cropperjs": "^2.0.0",
+    "cropperjs": "^1.6.2",
     "mui-tel-input": "^9.0.1",
     "react": "^19.1.0",
     "react-cookie": "^8.0.1",

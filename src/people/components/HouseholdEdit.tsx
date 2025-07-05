@@ -4,9 +4,10 @@ import {
  InputBox, PersonAdd, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale 
 } from "@churchapps/apphelper";
 import {
- Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, Avatar, type SelectChangeEvent 
+ Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, type SelectChangeEvent 
 } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
+import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   updatedFunction: () => void;
@@ -106,7 +107,7 @@ export function HouseholdEdit(props: Props) {
   const rows = members.map((m, index) => (
     <TableRow key={m.id || index}>
       <TableCell>
-        <Avatar src={PersonHelper.getPhotoUrl(m)} sx={{ width: 48, height: 48 }} />
+        <PersonAvatar person={m} size="small" />
       </TableCell>
       <TableCell>
         <FormControl fullWidth style={{ marginTop: 0 }}>

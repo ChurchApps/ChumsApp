@@ -1,8 +1,9 @@
 import React, { memo, useMemo } from "react";
 import { AssociatedForms } from ".";
 import { PersonHelper, type PersonInterface, Loading, DisplayBox, DateHelper, Locale } from "@churchapps/apphelper";
-import { Grid, Icon, Table, TableBody, TableRow, TableCell, Avatar } from "@mui/material";
+import { Grid, Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { formattedPhoneNumber } from "./PersonEdit";
+import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   id?: string;
@@ -149,17 +150,13 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
     return (
       <Grid container spacing={3}>
         <Grid size={{ xs: 3 }}>
-          <Avatar
-            src={PersonHelper.getPhotoUrl(person)}
-            sx={{
-              width: 120,
-              height: 120,
-              border: "3px solid #fff",
-              boxShadow: 2,
-            }}
-            aria-label="personImage"
-            id="imgPreview"
-          />
+          <div style={{ border: "3px solid #fff", borderRadius: "50%", boxShadow: "0 2px 4px rgba(0,0,0,0.2)" }}>
+            <PersonAvatar
+              person={person}
+              size="xxlarge"
+              editable={false}
+            />
+          </div>
         </Grid>
         <Grid size={{ xs: 9 }}>
           <h2>{person?.name.display}</h2>
