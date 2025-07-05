@@ -3,8 +3,7 @@
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import type { Stripe } from "@stripe/stripe-js";
-import { DonationForm, RecurringDonations, PaymentMethods } from "./components";
-import { DisplayBox, ExportLink, Loading } from "@churchapps/apphelper";
+import { DisplayBox, ExportLink, Loading, DonationForm, RecurringDonations, PaymentMethods } from "@churchapps/apphelper";
 import { ApiHelper, DateHelper, UniqueIdHelper, CurrencyHelper, Locale } from "../helpers";
 import { DonationInterface, PersonInterface, StripePaymentMethod, ChurchInterface } from "@churchapps/helpers";
 // import { Link } from "react-router-dom"
