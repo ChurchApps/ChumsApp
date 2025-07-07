@@ -67,7 +67,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         }
       }
     });
-  }, [props.service, isMounted, service?.campusId]);
+  }, [props.service, isMounted]);
 
   const getCampusOptions = () => {
     const options = [];
