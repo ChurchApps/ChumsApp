@@ -49,7 +49,6 @@ export const FormPage = () => {
   React.useEffect(() => {
     if (selectedTab === "" && availableTabs.length > 0) {
       setSelectedTab(availableTabs[0].key);
-      setTabIndex(0);
     }
   }, [availableTabs, selectedTab]);
 
@@ -111,7 +110,6 @@ export const FormPage = () => {
                 variant={selectedTab === tab.key ? "contained" : "outlined"}
                 onClick={() => {
                   setSelectedTab(tab.key);
-                  setTabIndex(index);
                 }}
                 sx={{
                   color: selectedTab === tab.key ? "var(--c1l2)" : "#FFF",
