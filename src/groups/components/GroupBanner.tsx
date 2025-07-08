@@ -18,10 +18,11 @@ interface Props {
   onTabChange?: (tab: string) => void;
   togglePhotoEditor?: (show: boolean) => void;
   onEdit?: () => void;
+  editMode?: boolean;
 }
 
 export const GroupBanner = memo((props: Props) => {
-  const { group, selectedTab, onTabChange, togglePhotoEditor, onEdit } = props;
+  const { group, selectedTab, onTabChange, togglePhotoEditor, onEdit, editMode } = props;
   const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
 
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.groups.edit), []);
@@ -365,7 +366,7 @@ export const GroupBanner = memo((props: Props) => {
                 }}
                 useFlexGap
               >
-                {quickActions.map((action) => {
+                {!editMode && quickActions.map((action) => {
                   const isActive = selectedTab === action.key;
                   return (
                     <Button
