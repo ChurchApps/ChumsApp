@@ -813,7 +813,7 @@
 			"title": "Search for a Song",
 			"inputLabel": "Title or Artist",
 			"inputPlaceholder": "Enter song title or artist name..."
-		}
+		},
 		"arrangement": {
 			"title": "편곡",
 			"enterLyrics": "수동으로 가사를 입력하거나 PraiseCharts에서 가져오기",

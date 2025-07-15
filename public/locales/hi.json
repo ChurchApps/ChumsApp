@@ -813,7 +813,7 @@
 			"title": "Search for a Song",
 			"inputLabel": "Title or Artist",
 			"inputPlaceholder": "Enter song title or artist name..."
-		}
+		},
 		"arrangement": {
 			"title": "व्यवस्था",
 			"enterLyrics": "मैन्युअल रूप से गीत दर्ज करें या PraiseCharts से आयात करें",

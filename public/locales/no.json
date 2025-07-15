@@ -813,7 +813,7 @@
 			"title": "Search for a Song",
 			"inputLabel": "Title or Artist",
 			"inputPlaceholder": "Enter song title or artist name..."
-		}
+		},
 		"arrangement": {
 			"title": "Arrangement",
 			"enterLyrics": "Skriv inn tekster manuelt eller importer fra PraiseCharts",

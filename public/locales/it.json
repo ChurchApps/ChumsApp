@@ -813,7 +813,7 @@
 			"title": "Search for a Song",
 			"inputLabel": "Title or Artist",
 			"inputPlaceholder": "Enter song title or artist name..."
-		}
+		},
 		"arrangement": {
 			"title": "Arrangiamento",
 			"enterLyrics": "Inserisci il testo manualmente o importa da PraiseCharts",
