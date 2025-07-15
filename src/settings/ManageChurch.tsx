@@ -3,7 +3,7 @@ import { type ChurchInterface, ApiHelper, UserHelper, Permissions, Locale } from
 import { Navigate } from "react-router-dom";
 import { Box, Typography, Stack, Button, IconButton } from "@mui/material";
 import { Settings as SettingsIcon, Lock as LockIcon, PlayArrow as PlayArrowIcon, Language as LanguageIcon, LocationOn as LocationOnIcon, Edit as EditIcon } from "@mui/icons-material";
-import { RolesTab, ChurchSettings } from "./components";
+import { RolesTab, ChurchSettingsEdit } from "./components";
 
 export const ManageChurch = () => {
   const [selectedTab, setSelectedTab] = React.useState("roles");
@@ -189,7 +189,7 @@ export const ManageChurch = () => {
       {/* Church Settings Modal/Component */}
       {showChurchSettings && (
         <Box sx={{ p: 3 }}>
-          <ChurchSettings church={church} updatedFunction={() => { loadData(); setShowChurchSettings(false); }} />
+          <ChurchSettingsEdit church={church} updatedFunction={() => { loadData(); setShowChurchSettings(false); }} />
         </Box>
       )}
     </>

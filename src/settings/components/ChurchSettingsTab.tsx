@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChurchSettings } from "./";
+import { ChurchSettingsEdit } from "./";
 import { type ChurchInterface, ApiHelper, UserHelper, Permissions } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 
@@ -20,7 +20,7 @@ export const ChurchSettingsTab = () => {
   else {
     return (
       <>
-        <ChurchSettings church={church} updatedFunction={loadData} />
+        <ChurchSettingsEdit church={church} updatedFunction={loadData} />
       </>
     );
   }
