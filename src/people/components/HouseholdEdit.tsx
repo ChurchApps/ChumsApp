@@ -1,8 +1,9 @@
 import React from "react";
-import { UpdateHouseHold } from ".";
+import { UpdateHouseHold } from "./modals/UpdateHouseHold";
 import {
- InputBox, PersonAdd, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale 
+ InputBox, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale 
 } from "@churchapps/apphelper";
+import { PersonAdd } from "../../components";
 import {
  Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, type SelectChangeEvent 
 } from "@mui/material";
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export function HouseholdEdit(props: Props) {
-  const [members, setMembers] = React.useState<PersonInterface[]>([...props.currentMembers]);
+  const [members, setMembers] = React.useState<PersonInterface[]>([...(props.currentMembers || [])]);
   const [showAdd, setShowAdd] = React.useState(false);
   const [showUpdateAddressModal, setShowUpdateAddressModal] = React.useState<boolean>(false);
   const [text, setText] = React.useState("");
@@ -67,6 +68,7 @@ export function HouseholdEdit(props: Props) {
     const m = [...members];
     m.push(addPerson);
     setMembers(m);
+    setShowAdd(false);
   }
 
   const validate = () => {
@@ -136,7 +138,15 @@ export function HouseholdEdit(props: Props) {
 
   React.useEffect(() => { setHousehold(props.household); return () => { setHousehold(null); }; }, [props.household]);
 
-  const personAdd = showAdd ? <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={props.currentPerson} showCreatePersonOnNotFound={true} /> : null;
+  const personAdd = showAdd ? (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <h3>Add Household Member</h3>
+        <SmallButton icon="close" onClick={() => setShowAdd(false)} ariaLabel="Cancel add member" />
+      </div>
+      <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} person={props.currentPerson} showCreatePersonOnNotFound={true} />
+    </div>
+  ) : null;
   return (
     <>
       <UpdateHouseHold show={showUpdateAddressModal} onHide={() => setShowUpdateAddressModal(false)} handleNo={handleNo} handleYes={handleYes} text={text} />
