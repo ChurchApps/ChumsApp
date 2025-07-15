@@ -1,6 +1,6 @@
 import { ApiHelper, type GenericSettingInterface, Locale, UniqueIdHelper, type VisibilityPreferenceInterface } from "@churchapps/apphelper";
 import {
- FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography, type SelectChangeEvent 
+  FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography, type SelectChangeEvent
 } from "@mui/material";
 import React, { useState } from "react";
 
@@ -89,7 +89,7 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
         </Tooltip>
       </Stack>
       <Grid container spacing={{ xs: 0, sm: 1, md: 2 }}>
-        <Grid xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <FormControl fullWidth>
             <InputLabel id="address">{Locale.label("settings.visibilityPrefSettingsEdit.address")}</InputLabel>
             <Select fullWidth labelId="address" label={Locale.label("settings.visibilityPrefSettingsEdit.address")} name="address" value={pref.address} defaultValue="" onChange={handlePrefChange}>
@@ -99,7 +99,7 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <FormControl fullWidth>
             <InputLabel id="phone">{Locale.label("settings.visibilityPrefSettingsEdit.phoneNum")}</InputLabel>
             <Select
@@ -117,7 +117,7 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid xs={12} sm={12} md={4}>
+        <Grid size={{ xs: 12, sm: 12, md: 4 }}>
           <FormControl fullWidth>
             <InputLabel id="email">{Locale.label("settings.visibilityPrefSettingsEdit.email")}</InputLabel>
             <Select fullWidth labelId="email" label={Locale.label("settings.visibilityPrefSettingsEdit.email")} name="email" value={pref.email} defaultValue="" onChange={handlePrefChange}>

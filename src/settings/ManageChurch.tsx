@@ -183,15 +183,17 @@ export const ManageChurch = () => {
         </Stack>
       </Box>
 
-      {/* Tab Content */}
-      {selectedTab === "roles" && <Box sx={{ p: 3 }}>{getCurrentTab()}</Box>}
-      
       {/* Church Settings Modal/Component */}
       {showChurchSettings && (
         <Box sx={{ p: 3 }}>
           <ChurchSettingsEdit church={church} updatedFunction={() => { loadData(); setShowChurchSettings(false); }} />
         </Box>
       )}
+
+      {/* Tab Content */}
+      {selectedTab === "roles" && <Box sx={{ p: 3 }}>{getCurrentTab()}</Box>}
+
+
     </>
   );
 };
