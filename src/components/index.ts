@@ -26,3 +26,6 @@ export { CreatePerson } from "./CreatePerson";
 
 // UI Components
 export * from "./ui";
+
+// Reporting Components (moved from AppHelper)
+export * from "./reporting";

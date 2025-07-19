@@ -1,4 +1,5 @@
-import { ReportWithFilter, DisplayBox, Locale } from "@churchapps/apphelper";
+import { DisplayBox, Locale } from "@churchapps/apphelper";
+import { ReportWithFilter } from "../../components";
 import React from "react";
 
 export const UsageTrendsTab = () => (

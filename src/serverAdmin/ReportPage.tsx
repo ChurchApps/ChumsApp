@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { ReportWithFilter, type ReportInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { type ReportInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { ReportWithFilter } from "../components";
 import {
  Box, Typography, Stack, Container, Card, CardContent, Skeleton, Breadcrumbs, Link as MuiLink, Chip 
 } from "@mui/material";

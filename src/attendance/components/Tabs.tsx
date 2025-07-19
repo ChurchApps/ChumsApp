@@ -1,5 +1,6 @@
 import React from "react";
-import { ReportWithFilter, Permissions, UserHelper, Locale } from "@churchapps/apphelper";
+import { Permissions, UserHelper, Locale } from "@churchapps/apphelper";
+import { ReportWithFilter } from "../../components";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
 
 export const Tabs: React.FC = () => {

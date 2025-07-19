@@ -1,5 +1,6 @@
 import React from "react";
-import { UserHelper, Locale, ReportWithFilter, Permissions } from "@churchapps/apphelper";
+import { UserHelper, Locale, Permissions } from "@churchapps/apphelper";
+import { ReportWithFilter } from "../components";
 import { Box } from "@mui/material";
 import { VolunteerActivism as DonationIcon } from "@mui/icons-material";
 import { PageHeader } from "../components";
