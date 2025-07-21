@@ -1,8 +1,9 @@
 import React from "react";
 import { BatchEdit, DonationEvents } from "./components";
-import { ApiHelper, DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, Locale } from "@churchapps/apphelper";
+import { DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { useMountedState, type DonationBatchInterface, Permissions } from "@churchapps/apphelper";
+import { type DonationBatchInterface, Permissions } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 import {
  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 
 } from "@mui/material";
@@ -10,14 +11,17 @@ import { VolunteerActivism as DonationIcon, Add as AddIcon, FileDownload as Expo
 
 export const DonationBatchesPage = () => {
   const [editBatchId, setEditBatchId] = React.useState("notset");
-  const [batches, setBatches] = React.useState<DonationBatchInterface[]>(null);
   const [sortDirection, setSortDirection] = React.useState<boolean | null>(null);
   const [currentSortedCol, setCurrentSortedCol] = React.useState<string>("");
-  const isMounted = useMountedState();
+
+  const batches = useQuery<DonationBatchInterface[]>({
+    queryKey: ["/donationbatches", "GivingApi"],
+    placeholderData: [],
+  });
 
   const batchUpdated = () => {
     setEditBatchId("notset");
-    loadData();
+    batches.refetch();
   };
 
   const showEditBatch = (e: React.MouseEvent) => {
@@ -27,14 +31,6 @@ export const DonationBatchesPage = () => {
     setEditBatchId(id);
   };
 
-  const loadData = () => {
-    ApiHelper.get("/donationbatches", "GivingApi").then((data) => {
-      if (isMounted()) {
-        setBatches(data);
-      }
-    });
-  };
-
   const [stats, setStats] = React.useState({
     totalBatches: 0,
     totalDonations: 0,
@@ -42,10 +38,10 @@ export const DonationBatchesPage = () => {
   });
 
   React.useEffect(() => {
-    if (batches) {
-      const totalBatches = batches.length;
-      const totalDonations = batches.reduce((sum, batch) => sum + (batch.donationCount || 0), 0);
-      const totalAmount = batches.reduce((sum, batch) => sum + (batch.totalAmount || 0), 0);
+    if (batches.data) {
+      const totalBatches = batches.data.length;
+      const totalDonations = batches.data.reduce((sum, batch) => sum + (batch.donationCount || 0), 0);
+      const totalAmount = batches.data.reduce((sum, batch) => sum + (batch.totalAmount || 0), 0);
 
       setStats({
         totalBatches,
@@ -53,7 +49,7 @@ export const DonationBatchesPage = () => {
         totalAmount,
       });
     }
-  }, [batches]);
+  }, [batches.data]);
 
   const getSidebarModules = () => {
     const result = [];
@@ -65,7 +61,7 @@ export const DonationBatchesPage = () => {
     if (asc === null) asc = false;
     setCurrentSortedCol(key);
 
-    const sortedBatches = batches.sort(function (a: any, b: any) {
+    batches.data.sort(function (a: any, b: any) {
       if (a[key] === null) return Infinity;
 
       if (key === "batchDate") {
@@ -90,7 +86,7 @@ export const DonationBatchesPage = () => {
 
       return 0;
     });
-    setBatches(sortedBatches);
+    batches.refetch();
     setSortDirection(!asc);
   };
 
@@ -104,7 +100,7 @@ export const DonationBatchesPage = () => {
   const getRows = () => {
     const result: JSX.Element[] = [];
 
-    if (batches.length === 0) {
+    if (batches.data.length === 0) {
       result.push(<TableRow key="0">
           <TableCell colSpan={5} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
@@ -121,8 +117,8 @@ export const DonationBatchesPage = () => {
     const canEdit = UserHelper.checkAccess(Permissions.givingApi.donations.edit);
     const canViewBatch = UserHelper.checkAccess(Permissions.givingApi.donations.view);
 
-    for (let i = 0; i < batches.length; i++) {
-      const b = batches[i];
+    for (let i = 0; i < batches.data.length; i++) {
+      const b = batches.data[i];
       const editLink = canEdit ? (
         <Button size="small" variant="outlined" startIcon={<Icon>edit</Icon>} data-cy={`edit-${i}`} data-id={b.id} onClick={showEditBatch} sx={{ minWidth: "auto" }}>
           Edit
@@ -200,7 +196,7 @@ export const DonationBatchesPage = () => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
 
-    if (batches.length === 0) {
+    if (batches.data.length === 0) {
       return rows;
     }
 
@@ -254,10 +250,8 @@ export const DonationBatchesPage = () => {
     return rows;
   };
 
-  React.useEffect(loadData, [isMounted]);
-
   const getTable = () => {
-    if (!batches) return <Loading />;
+    if (batches.isLoading) return <Loading />;
     else {
       return (
         <Table sx={{ minWidth: 650 }}>
@@ -395,8 +389,8 @@ export const DonationBatchesPage = () => {
                 <Typography variant="h6">{Locale.label("donations.donationsPage.batch")}</Typography>
               </Stack>
               <Stack direction="row" spacing={1} alignItems="center">
-                {batches && (
-                  <Button size="small" variant="outlined" startIcon={<ExportIcon />} component={ExportLink} data={batches} filename="donationbatches.csv" sx={{ mr: 1 }}>
+                {batches.data && (
+                  <Button size="small" variant="outlined" startIcon={<ExportIcon />} component={ExportLink} data={batches.data} filename="donationbatches.csv" sx={{ mr: 1 }}>
                     Export
                   </Button>
                 )}
