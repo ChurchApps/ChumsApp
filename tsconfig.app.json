@@ -36,13 +36,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "sourceMap": true,
-    "paths": {
-      "react": [
-        "./node_modules/@types/react" // looks fishy
-      ]
-    },
   },
-  "include": ["src", "tests"],
+  "include": ["src", "tests", "types"],
   // normally node_modules and build directories would be excluded, but they weren't in the original config
-  "exclude": ["types"],
 }
