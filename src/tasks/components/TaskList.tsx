@@ -2,11 +2,11 @@ import React, { memo, useCallback, useMemo } from "react";
 import {
  Grid, Typography, Card, CardContent, Stack, Box, Chip, Button, Paper, Divider 
 } from "@mui/material";
-import { ApiHelper, ArrayHelper, DateHelper, type GroupMemberInterface, Locale, type TaskInterface, UserHelper } from "@churchapps/apphelper";
+import { ArrayHelper, DateHelper, type GroupMemberInterface, Locale, type TaskInterface, UserHelper, Loading } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { NewTask } from "./";
 import UserContext from "../../UserContext";
-import { useMountedState } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 import {
   Assignment as TaskIcon,
   Person as PersonIcon,
@@ -29,11 +29,37 @@ interface Props {
 
 export const TaskList = memo((props: Props) => {
   const [showAdd, setShowAdd] = React.useState(false);
-  const [tasks, setTasks] = React.useState<TaskInterface[]>([]);
-  const [groupTasks, setGroupTasks] = React.useState<TaskInterface[]>([]);
-  const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([]);
-  const isMounted = useMountedState();
   const context = React.useContext(UserContext);
+
+  // React Query hooks for data fetching
+  const tasks = useQuery<TaskInterface[]>({
+    queryKey: props.status === Locale.label("tasks.taskPage.closed") ? ["/tasks/closed", "DoingApi"] : ["/tasks", "DoingApi"],
+    placeholderData: [],
+  });
+
+  const groupMembers = useQuery<GroupMemberInterface[]>({
+    queryKey: ["/groupmembers?personId=" + UserHelper.person?.id, "MembershipApi"],
+    enabled: !!UserHelper.person?.id,
+    placeholderData: [],
+  });
+
+  const groupIds = useMemo(() => {
+    if (groupMembers.data?.length > 0) {
+      return ArrayHelper.getIds(groupMembers.data, "groupId");
+    }
+    return [];
+  }, [groupMembers.data]);
+
+  const groupTasks = useQuery<TaskInterface[]>({
+    queryKey: ["/tasks/loadForGroups", "DoingApi", groupIds, props.status],
+    enabled: groupIds.length > 0,
+    placeholderData: [],
+    queryFn: async () => {
+      if (groupIds.length === 0) return [];
+      const { ApiHelper } = await import("@churchapps/apphelper");
+      return ApiHelper.post("/tasks/loadForGroups", { groupIds, status: props.status }, "DoingApi");
+    }
+  });
 
   const editContent = (
     <Button
@@ -53,42 +79,12 @@ export const TaskList = memo((props: Props) => {
     </Button>
   );
 
-  const loadData = useCallback(() => {
-    if (props.status === Locale.label("tasks.taskPage.closed")) {
-      ApiHelper.get("/tasks/closed", "DoingApi").then((data) => {
-        if (isMounted()) {
-          setTasks(data);
-        }
-      });
-    } else {
-      ApiHelper.get("/tasks", "DoingApi").then((data) => {
-        if (isMounted()) {
-          setTasks(data);
-        }
-      });
-    }
-    if (UserHelper.person?.id) {
-      ApiHelper.get("/groupmembers?personId=" + UserHelper.person?.id, "MembershipApi").then((data) => {
-        if (isMounted()) {
-          setGroupMembers(data);
-        }
-      });
-    }
-  }, [props.status, isMounted]);
-
-  const loadGroupTasks = useCallback(() => {
-    if (groupMembers?.length > 0) {
-      const groupIds = ArrayHelper.getIds(groupMembers, "groupId");
-      ApiHelper.post("/tasks/loadForGroups", { groupIds, status: props.status }, "DoingApi").then((d) => {
-        if (isMounted()) {
-          setGroupTasks(d);
-        }
-      });
-    }
-  }, [groupMembers, props.status, isMounted]);
-
-  React.useEffect(loadData, [props.status, isMounted, loadData]);
-  React.useEffect(loadGroupTasks, [groupMembers, props.status, isMounted, loadGroupTasks]);
+  // Refetch function for all queries
+  const refetch = useCallback(() => {
+    tasks.refetch();
+    groupMembers.refetch();
+    groupTasks.refetch();
+  }, [tasks, groupMembers, groupTasks]);
 
   const getTask = useCallback((task: TaskInterface) => (
       <Box
@@ -205,20 +201,20 @@ export const TaskList = memo((props: Props) => {
     ), []);
 
   const assignedToMyGroups = useMemo(() => {
-    if (groupMembers?.length > 0) {
-      const groupIds = ArrayHelper.getIds(groupMembers, "groupId");
-      return groupTasks?.length > 0 ? ArrayHelper.getAllArray(groupTasks, "assignedToId", groupIds) : [];
+    if (groupMembers.data?.length > 0) {
+      const memberGroupIds = ArrayHelper.getIds(groupMembers.data, "groupId");
+      return groupTasks.data?.length > 0 ? ArrayHelper.getAllArray(groupTasks.data, "assignedToId", memberGroupIds) : [];
     }
     return [];
-  }, [groupMembers, groupTasks]);
+  }, [groupMembers.data, groupTasks.data]);
 
   const assignedToMe = useMemo(() => {
-    return tasks?.length > 0 ? ArrayHelper.getAll(tasks, "assignedToId", context.person?.id) : [];
-  }, [tasks, context.person?.id]);
+    return tasks.data?.length > 0 ? ArrayHelper.getAll(tasks.data, "assignedToId", context.person?.id) : [];
+  }, [tasks.data, context.person?.id]);
 
   const createdByMe = useMemo(() => {
-    return tasks?.length > 0 ? ArrayHelper.getAll(tasks, "createdById", context.person?.id) : [];
-  }, [tasks, context.person?.id]);
+    return tasks.data?.length > 0 ? ArrayHelper.getAll(tasks.data, "createdById", context.person?.id) : [];
+  }, [tasks.data, context.person?.id]);
 
   const getAssignedToMyGroups = () => {
     if (assignedToMyGroups.length === 0) return null;
@@ -252,6 +248,23 @@ export const TaskList = memo((props: Props) => {
 
   const hasAnyTasks = assignedToMe.length > 0 || assignedToMyGroups.length > 0 || createdByMe.length > 0;
 
+  // Show loading state if any query is loading
+  if (tasks.isLoading || groupMembers.isLoading) {
+    return (
+      <Card
+        sx={{
+          borderRadius: 2,
+          border: "1px solid",
+          borderColor: "grey.200",
+        }}
+      >
+        <CardContent>
+          <Loading />
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <>
       {showAdd && (
@@ -261,7 +274,7 @@ export const TaskList = memo((props: Props) => {
             setShowAdd(false);
           }}
           onSave={() => {
-            loadData();
+            refetch();
             setShowAdd(false);
           }}
         />
