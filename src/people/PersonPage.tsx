@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useCallback, useMemo } from "react";
 import { Groups, PersonAttendance, PersonNotes, PersonDonations } from "./components";
 import { ApiHelper, type PersonInterface, type ConversationInterface, Locale, type FormInterface } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,7 @@ import { PersonBanner } from "./components/PersonBanner";
 import { PersonDetails } from "./components/PersonDetails";
 import UserContext from "../UserContext";
 import { PersonForm } from "./components/PersonForm";
+import { useQuery } from "@tanstack/react-query";
 
 export const PersonPage = () => {
   const [person, setPerson] = React.useState<PersonInterface>(null);
@@ -17,7 +18,35 @@ export const PersonPage = () => {
   const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
   const [editMode, setEditMode] = React.useState<string>("display");
 
-  const loadData = () => {
+  const personData = useQuery<PersonInterface>({
+    queryKey: ["/people/" + params.id, "MembershipApi"],
+    enabled: !!(params.id && params.id !== "add"),
+    placeholderData: null,
+  });
+
+  const formsData = useQuery<FormInterface[]>({
+    queryKey: ["/forms?contentType=person", "MembershipApi"],
+    placeholderData: [],
+  });
+
+  const refetch = useCallback(() => {
+    personData.refetch();
+    formsData.refetch();
+  }, [personData, formsData]);
+
+  const processedPersonData = useMemo(() => {
+    if (!personData.data) return null;
+    const p: PersonInterface = personData.data;
+    if (!p.contactInfo) p.contactInfo = { homePhone: "", workPhone: "", mobilePhone: "" };
+    else {
+      if (!p.contactInfo.homePhone) p.contactInfo.homePhone = "";
+      if (!p.contactInfo.mobilePhone) p.contactInfo.mobilePhone = "";
+      if (!p.contactInfo.workPhone) p.contactInfo.workPhone = "";
+    }
+    return p;
+  }, [personData.data]);
+
+  const loadData = useCallback(() => {
     console.log("LOAD DATA", params.id);
     if (params.id === "add" || !params.id) {
       // Create a new empty person for adding
@@ -48,19 +77,10 @@ export const PersonPage = () => {
       };
       setPerson(newPerson);
     } else {
-      ApiHelper.get("/people/" + params.id, "MembershipApi").then((data) => {
-        const p: PersonInterface = data;
-        if (!p.contactInfo) p.contactInfo = { homePhone: "", workPhone: "", mobilePhone: "" };
-        else {
-          if (!p.contactInfo.homePhone) p.contactInfo.homePhone = "";
-          if (!p.contactInfo.mobilePhone) p.contactInfo.mobilePhone = "";
-          if (!p.contactInfo.workPhone) p.contactInfo.workPhone = "";
-        }
-        setPerson(data);
-      });
+      setPerson(processedPersonData);
     }
-    ApiHelper.get("/forms?contentType=person", "MembershipApi").then((data) => setAllForms(data));
-  };
+    setAllForms(formsData.data);
+  }, [params.id, processedPersonData, formsData.data]);
 
   const handleCreateConversation = async () => {
     const conv: ConversationInterface = {
@@ -91,20 +111,20 @@ export const PersonPage = () => {
     switch (selectedTab) {
       case "details":
         currentTab = (
-          <PersonDetails key="details" person={person} loadData={loadData} inPhotoEditMode={inPhotoEditMode} setInPhotoEditMode={setInPhotoEditMode} editMode={editMode} setEditMode={setEditMode} />
+          <PersonDetails key="details" person={person} loadData={loadData} updatedFunction={refetch} inPhotoEditMode={inPhotoEditMode} setInPhotoEditMode={setInPhotoEditMode} editMode={editMode} setEditMode={setEditMode} />
         );
         break;
       case "notes":
         currentTab = <PersonNotes key="notes" context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />;
         break;
       case "attendance":
-        currentTab = <PersonAttendance key="attendance" personId={person.id} />;
+        currentTab = <PersonAttendance key="attendance" personId={person.id} updatedFunction={refetch} />;
         break;
       case "donations":
         currentTab = <PersonDonations key="donations" personId={person.id} />;
         break;
       case "groups":
-        currentTab = <Groups key="groups" personId={person?.id} />;
+        currentTab = <Groups key="groups" personId={person?.id} updatedFunction={refetch} />;
         break;
       case "form":
         currentTab = (
@@ -114,9 +134,7 @@ export const PersonPage = () => {
             contentType={"person"}
             contentId={person.id}
             formSubmissions={person.formSubmissions}
-            updatedFunction={() => {
-              loadData();
-            }}
+            updatedFunction={refetch}
           />
         );
         break;
