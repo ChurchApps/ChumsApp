@@ -1,12 +1,14 @@
-import React, { useEffect, useCallback, memo } from "react";
+import React, { useCallback, memo } from "react";
 import {
  Box, Card, CardContent, Typography, Stack, Paper, Chip, Avatar, Button 
 } from "@mui/material";
 import { Add as AddIcon, Assignment as AssignmentIcon, CalendarMonth as CalendarIcon, Edit as EditIcon, EventNote as EventNoteIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { ApiHelper, ArrayHelper, DateHelper, type GroupInterface, Locale, Loading } from "@churchapps/apphelper";
+import { ArrayHelper, DateHelper, type GroupInterface, Locale, Loading } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
 import { MinistryList } from "./MinistryList";
+import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "../../queryClient";
 
 interface Props {
   ministry: GroupInterface;
@@ -24,7 +26,15 @@ export interface PlanInterface {
 
 export const PlanList = memo((props: Props) => {
   const [plan, setPlan] = React.useState<PlanInterface>(null);
-  const [plans, setPlans] = React.useState<PlanInterface[]>(null);
+
+  const plansQuery = useQuery<PlanInterface[]>({
+    queryKey: ["/plans", "DoingApi"],
+    placeholderData: [],
+  });
+
+  const plans = React.useMemo(() => {
+    return ArrayHelper.getAll(plansQuery.data || [], "ministryId", props.ministry.id);
+  }, [plansQuery.data, props.ministry.id]);
 
   const addPlan = useCallback(() => {
     const date = DateHelper.getLastSunday();
@@ -39,22 +49,17 @@ export const PlanList = memo((props: Props) => {
     });
   }, [props.ministry.id]);
 
-  const loadData = useCallback(() => {
+  const handleUpdated = useCallback(() => {
     setPlan(null);
-    ApiHelper.get("/plans", "DoingApi").then((data: any[]) => {
-      setPlans(ArrayHelper.getAll(data, "ministryId", props.ministry.id));
-    });
-  }, [props.ministry.id]);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
+    plansQuery.refetch();
+    queryClient.invalidateQueries({ queryKey: ["/plans", "DoingApi"] });
+  }, [plansQuery]);
 
   if (plan) {
-    return <PlanEdit plan={plan} plans={plans || []} updatedFunction={loadData} />;
+    return <PlanEdit plan={plan} plans={plans} updatedFunction={handleUpdated} />;
   }
 
-  if (!plans) {
+  if (plansQuery.isLoading) {
     return <Loading />;
   }
 

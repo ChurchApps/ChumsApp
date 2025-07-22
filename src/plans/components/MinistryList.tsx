@@ -4,11 +4,13 @@ import {
 } from "@mui/material";
 import { Assignment as AssignmentIcon, Group as GroupIcon, Edit as EditIcon, People as PeopleIcon } from "@mui/icons-material";
 import {
- ApiHelper, ArrayHelper, type GroupInterface, type GroupMemberInterface, Locale, UserHelper, Permissions, Loading 
+ ArrayHelper, type GroupInterface, type GroupMemberInterface, Locale, UserHelper, Permissions, Loading 
 } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { GroupAdd } from "../../groups/components";
 import UserContext from "../../UserContext";
+import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "../../queryClient";
 
 interface Props {
   showAdd?: boolean;
@@ -16,34 +18,41 @@ interface Props {
 }
 
 export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
-  const [groups, setGroups] = React.useState<GroupInterface[]>(null);
-  const [groupMembers, setGroupMembers] = React.useState<GroupMemberInterface[]>([]);
   const context = React.useContext(UserContext);
 
-  const handleAddUpdated = () => {
-    onCloseAdd?.();
-    loadData();
-  };
+  const ministries = useQuery<GroupInterface[]>({
+    queryKey: ["/groups/tag/ministry", "MembershipApi"],
+    placeholderData: [],
+  });
 
-  const loadData = async () => {
-    const groups: GroupInterface[] = await ApiHelper.get("/groups/tag/ministry", "MembershipApi");
-    setGroups(groups);
-    if (groups.length > 0) {
-      ApiHelper.get("/groupMembers?groupIds=" + ArrayHelper.getIds(groups, "id"), "MembershipApi").then((data) => {
-        setGroupMembers(data);
-      });
+  const groupIds = React.useMemo(() => {
+    return ministries.data && ministries.data.length > 0 ? ArrayHelper.getIds(ministries.data, "id") : [];
+  }, [ministries.data]);
+
+  const groupMembers = useQuery<GroupMemberInterface[]>({
+    queryKey: ["/groupMembers", "MembershipApi", groupIds],
+    enabled: groupIds.length > 0,
+    placeholderData: [],
+    queryFn: async () => {
+      if (groupIds.length === 0) return [];
+      const { ApiHelper } = await import("@churchapps/apphelper");
+      return ApiHelper.get(`/groupMembers?groupIds=${groupIds}`, "MembershipApi");
     }
-  };
+  });
 
-  React.useEffect(() => {
-    loadData();
-  }, []);
+  const handleAddUpdated = React.useCallback(() => {
+    onCloseAdd?.();
+    ministries.refetch();
+    groupMembers.refetch();
+  }, [onCloseAdd, ministries, groupMembers]);
 
   if (showAdd) return <GroupAdd updatedFunction={handleAddUpdated} tags="ministry" categoryName="Ministry" />;
 
-  if (!groups) {
+  if (ministries.isLoading) {
     return <Loading />;
   }
+
+  const groups = ministries.data || [];
 
   if (groups.length === 0) {
     return (
@@ -81,7 +90,7 @@ export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
 
       <Stack spacing={2}>
         {groups.map((g) => {
-          const members = ArrayHelper.getAll(groupMembers, "groupId", g.id);
+          const members = ArrayHelper.getAll(groupMembers.data || [], "groupId", g.id);
           const hasAccess = members.length === 0 || ArrayHelper.getOne(members, "personId", context.person?.id) !== null || UserHelper.checkAccess(Permissions.membershipApi.roles.edit);
           const memberCount = members.length;
 
