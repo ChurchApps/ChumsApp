@@ -1,30 +1,39 @@
 import { TextField } from "@mui/material";
-import React, { useState } from "react";
-import { ApiHelper, InputBox, type RoleInterface, UniqueIdHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
+import React, { useState, useCallback } from "react";
+import { ApiHelper, InputBox, type RoleInterface, UniqueIdHelper, ErrorMessages, Locale, Loading } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 
 interface Props {
   roleId: string;
   updatedFunction: () => void;
 }
 
-export const RoleEdit: React.FC<Props> = (props) => {
+export const RoleEdit: React.FC<Props> = ({ roleId, updatedFunction }) => {
   const [role, setRole] = useState<RoleInterface>({} as RoleInterface);
   const [errors, setErrors] = useState<string[]>([]);
 
-  const loadData = () => {
-    if (!UniqueIdHelper.isMissing(props.roleId)) ApiHelper.get("/roles/" + props.roleId, "MembershipApi").then((data: RoleInterface) => setRole(data));
-    else setRole({} as RoleInterface);
-  };
+  const roleQuery = useQuery<RoleInterface>({
+    queryKey: [`/roles/${roleId}`, "MembershipApi"],
+    enabled: !UniqueIdHelper.isMissing(roleId),
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  React.useEffect(() => {
+    if (!UniqueIdHelper.isMissing(roleId) && roleQuery.data) {
+      setRole(roleQuery.data);
+    } else if (UniqueIdHelper.isMissing(roleId)) {
+      setRole({} as RoleInterface);
+    }
+  }, [roleId, roleQuery.data]);
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const r = { ...role };
     r.name = e.currentTarget.value;
 
     setRole(r);
     setErrors([]);
-  };
+  }, [role]);
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     if (!role.name?.trim()) {
       setErrors([Locale.label("settings.roleEdit.valMsg")]);
       return;
@@ -34,22 +43,25 @@ export const RoleEdit: React.FC<Props> = (props) => {
       ...role,
       name: role.name.trim(),
     };
-    ApiHelper.post("/roles", [r], "MembershipApi").then(() => props.updatedFunction());
-  };
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => {
+    ApiHelper.post("/roles", [r], "MembershipApi").then(() => updatedFunction());
+  }, [role, updatedFunction]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<any>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSave();
     }
-  };
-  const handleCancel = () => props.updatedFunction();
-  const handleDelete = () => {
-    if (window.confirm(Locale.label("settings.roleEdit.confirmMsg"))) {
-      ApiHelper.delete("/roles/" + role.id, "MembershipApi").then(() => props.updatedFunction());
-    }
-  };
+  }, [handleSave]);
 
-  React.useEffect(loadData, [props.roleId]);
+  const handleCancel = useCallback(() => updatedFunction(), [updatedFunction]);
+  
+  const handleDelete = useCallback(() => {
+    if (window.confirm(Locale.label("settings.roleEdit.confirmMsg"))) {
+      ApiHelper.delete("/roles/" + role.id, "MembershipApi").then(() => updatedFunction());
+    }
+  }, [role.id, updatedFunction]);
+
+  if (roleQuery.isLoading && !UniqueIdHelper.isMissing(roleId)) return <Loading />;
 
   return (
     <InputBox
@@ -58,7 +70,7 @@ export const RoleEdit: React.FC<Props> = (props) => {
       headerText={Locale.label("settings.roleEdit.roleEdit")}
       saveFunction={handleSave}
       cancelFunction={handleCancel}
-      deleteFunction={!UniqueIdHelper.isMissing(props.roleId) ? handleDelete : undefined}
+      deleteFunction={!UniqueIdHelper.isMissing(roleId) ? handleDelete : undefined}
     >
       <ErrorMessages errors={errors} />
       <TextField
