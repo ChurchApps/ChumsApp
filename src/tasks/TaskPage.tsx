@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import { Menu, MenuItem, Typography, Box, Stack, Button } from "@mui/material";
-import { ApiHelper, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale } from "@churchapps/apphelper";
+import { ApiHelper, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale, Loading } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
 import UserContext from "../UserContext";
 import { RequestedChanges } from "./components/RequestedChanges";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Assignment as TaskIcon,
   Person as PersonIcon,
@@ -15,19 +16,30 @@ import {
 
 export const TaskPage = () => {
   const params = useParams();
-  const [task, setTask] = React.useState<TaskInterface>(null);
   const [modalField, setModalField] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const context = useContext(UserContext);
+  const queryClient = useQueryClient();
 
-  const loadData = () => {
-    ApiHelper.get("/tasks/" + params.id, "DoingApi").then((data) => setTask(data));
-  };
+  const task = useQuery<TaskInterface>({
+    queryKey: ["/tasks/" + params.id, "DoingApi"],
+    enabled: !!params.id,
+  });
 
-  React.useEffect(loadData, [params.id]);
+  const updateTaskMutation = useMutation({
+    mutationFn: async (updatedTask: TaskInterface) => {
+      return ApiHelper.post("/tasks", [updatedTask], "DoingApi");
+    },
+    onSuccess: () => {
+      task.refetch();
+      queryClient.invalidateQueries({ queryKey: ["/tasks", "DoingApi"] });
+      queryClient.invalidateQueries({ queryKey: ["/tasks/closed", "DoingApi"] });
+    },
+  });
 
-  const handleContentPicked = (contentType: string, contentId: string, label: string) => {
-    const t = { ...task };
+  const handleContentPicked = useCallback((contentType: string, contentId: string, label: string) => {
+    if (!task.data) return;
+    const t = { ...task.data };
     switch (modalField) {
       case "associatedWith":
         t.associatedWithType = contentType;
@@ -40,45 +52,45 @@ export const TaskPage = () => {
         t.assignedToLabel = label;
         break;
     }
-    ApiHelper.post("/tasks", [t], "DoingApi");
-    setTask(t);
+    updateTaskMutation.mutate(t);
     setModalField("");
-  };
+  }, [task.data, modalField, updateTaskMutation]);
 
-  const handleStatusChange = (status: string) => {
-    const t = { ...task };
+  const handleStatusChange = useCallback((status: string) => {
+    if (!task.data) return;
+    const t = { ...task.data };
     t.status = status;
     t.dateClosed = status === "Open" ? null : new Date();
-    ApiHelper.post("/tasks", [t], "DoingApi");
-    setTask(t);
+    updateTaskMutation.mutate(t);
     closeStatusMenu();
-  };
+  }, [task.data, updateTaskMutation, closeStatusMenu]);
 
-  const handleModalClose = () => {
+  const handleModalClose = useCallback(() => {
     setModalField("");
-  };
-  const closeStatusMenu = () => {
+  }, []);
+
+  const closeStatusMenu = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
 
-
-  const handleCreateConversation = async () => {
+  const handleCreateConversation = useCallback(async () => {
+    if (!task.data) return;
     const conv: ConversationInterface = {
       allowAnonymousPosts: false,
       contentType: "task",
-      contentId: task.id,
-      title: "Task #" + task.id + " Notes",
+      contentId: task.data.id,
+      title: "Task #" + task.data.id + " Notes",
       visibility: "hidden",
     };
     const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
-    const t = { ...task };
+    const t = { ...task.data };
     t.conversationId = result[0].id;
-    ApiHelper.post("/tasks", [t], "DoingApi");
-    setTask(t);
+    updateTaskMutation.mutate(t);
     return t.conversationId;
-  };
+  }, [task.data, updateTaskMutation]);
 
-  if (!task) return <></>;
+  if (task.isLoading) return <Loading />;
+  if (!task.data) return <></>;
   else {
     return (
       <>
@@ -108,22 +120,22 @@ export const TaskPage = () => {
                     fontSize: { xs: "1.75rem", md: "2.125rem" },
                   }}
                 >
-                  #{task.taskNumber} - {task?.title}
+                  #{task.data.taskNumber} - {task.data?.title}
                 </Typography>
                 <Stack direction="row" spacing={3} flexWrap="wrap" sx={{ mt: 1 }}>
                   <Box>
                     <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.7)" }}>
-                      Created {DateHelper.getDisplayDuration(DateHelper.toDate(task?.dateCreated))} ago by {task.createdByLabel}
+                      Created {DateHelper.getDisplayDuration(DateHelper.toDate(task.data?.dateCreated))} ago by {task.data.createdByLabel}
                     </Typography>
                   </Box>
                   <Box>
                     <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.7)" }}>
-                      Associated: {task.associatedWithLabel || "Not specified"}
+                      Associated: {task.data.associatedWithLabel || "Not specified"}
                     </Typography>
                   </Box>
                   <Box>
                     <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.7)" }}>
-                      Assigned: {task.assignedToLabel || "Unassigned"}
+                      Assigned: {task.data.assignedToLabel || "Unassigned"}
                     </Typography>
                   </Box>
                 </Stack>
@@ -141,22 +153,22 @@ export const TaskPage = () => {
               }}
             >
               <Button
-                variant={task.status === "Open" ? "contained" : "outlined"}
-                startIcon={task.status === "Open" ? <OpenIcon /> : <CompletedIcon />}
+                variant={task.data.status === "Open" ? "contained" : "outlined"}
+                startIcon={task.data.status === "Open" ? <OpenIcon /> : <CompletedIcon />}
                 onClick={(e) => setAnchorEl(e.currentTarget)}
                 sx={{
-                  color: task.status === "Open" ? "#FFF" : "#FFF",
-                  backgroundColor: task.status === "Open" ? "#f57c00" : "transparent",
-                  borderColor: task.status === "Open" ? "#f57c00" : "#4caf50",
+                  color: task.data.status === "Open" ? "#FFF" : "#FFF",
+                  backgroundColor: task.data.status === "Open" ? "#f57c00" : "transparent",
+                  borderColor: task.data.status === "Open" ? "#f57c00" : "#4caf50",
                   "&:hover": {
-                    backgroundColor: task.status === "Open" ? "#ef6c00" : "rgba(76, 175, 80, 0.2)",
-                    borderColor: task.status === "Open" ? "#ef6c00" : "#4caf50",
+                    backgroundColor: task.data.status === "Open" ? "#ef6c00" : "rgba(76, 175, 80, 0.2)",
+                    borderColor: task.data.status === "Open" ? "#ef6c00" : "#4caf50",
                   },
                   textTransform: "none",
                   fontWeight: 600,
                 }}
               >
-                {task.status}
+                {task.data.status}
               </Button>
               <Button
                 variant="outlined"
@@ -219,8 +231,8 @@ export const TaskPage = () => {
 
         {/* Task Content */}
         <Box sx={{ p: 3 }}>
-          {task.taskType === "directoryUpdate" && <RequestedChanges task={task} />}
-          <Notes context={context} conversationId={task?.conversationId} createConversation={handleCreateConversation} />
+          {task.data.taskType === "directoryUpdate" && <RequestedChanges task={task.data} />}
+          <Notes context={context} conversationId={task.data?.conversationId} createConversation={handleCreateConversation} />
         </Box>
 
         {modalField !== "" && <ContentPicker onClose={handleModalClose} onSelect={handleContentPicked} />}

@@ -2,29 +2,26 @@ import {
  Grid, Typography, Card, CardContent, Stack, Box, Button, Paper, List, ListItem, ListItemButton, ListItemIcon, ListItemText 
 } from "@mui/material";
 import React from "react";
-import { Locale } from "@churchapps/apphelper";
-import { useMountedState } from "@churchapps/apphelper";
-import { ApiHelper, type AutomationInterface } from "@churchapps/apphelper";
+import { Locale, Loading } from "@churchapps/apphelper";
+import { type AutomationInterface } from "@churchapps/apphelper";
 import { AutomationDetails } from "./components/AutomationDetails";
 import { AutomationEdit } from "./components/AutomationEdit";
+import { useQuery } from "@tanstack/react-query";
 import { SettingsSuggest as AutomationsIcon, Add as AddIcon, PlayCircle as ActiveIcon, PauseCircle as InactiveIcon } from "@mui/icons-material";
 
 export const AutomationsPage = () => {
-  const isMounted = useMountedState();
-  const [automations, setAutomations] = React.useState<AutomationInterface[]>([]);
   const [showAdd, setShowAdd] = React.useState(false);
   const [editAutomation, setEditAutomation] = React.useState(null);
 
-  const loadData = () => {
-    if (isMounted()) {
-      ApiHelper.get("/automations", "DoingApi").then((data) => {
-        if (isMounted()) setAutomations(data);
-      });
-    }
-  };
+  const automations = useQuery<AutomationInterface[]>({
+    queryKey: ["/automations", "DoingApi"],
+    placeholderData: [],
+  });
 
   const getAutomationsList = () => {
-    if (automations.length === 0) {
+    if (automations.isLoading) return <Loading />;
+    
+    if (automations.data?.length === 0) {
       return (
         <Paper
           sx={{
@@ -45,7 +42,7 @@ export const AutomationsPage = () => {
 
     return (
       <List sx={{ p: 0 }}>
-        {automations.map((automation) => (
+        {automations.data?.map((automation) => (
           <ListItem key={automation.id} disablePadding>
             <ListItemButton
               onClick={() => setEditAutomation(automation)}
@@ -83,15 +80,13 @@ export const AutomationsPage = () => {
   const handleAdded = (automation: AutomationInterface) => {
     setShowAdd(false);
     setEditAutomation(automation);
-    loadData();
+    automations.refetch();
   };
 
   const handleDelete = () => {
     setEditAutomation(null);
-    loadData();
+    automations.refetch();
   };
-
-  React.useEffect(loadData, [isMounted]);
 
   return (
     <>
@@ -204,7 +199,7 @@ export const AutomationsPage = () => {
                   onSave={handleAdded}
                 />
               )}
-              {editAutomation && <AutomationDetails automation={editAutomation} onChange={loadData} onDelete={handleDelete} />}
+              {editAutomation && <AutomationDetails automation={editAutomation} onChange={automations.refetch} onDelete={handleDelete} />}
             </Grid>
           )}
         </Grid>
