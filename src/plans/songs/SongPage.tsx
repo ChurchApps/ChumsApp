@@ -1,7 +1,8 @@
-import React, { useEffect, memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { ApiHelper, ArrayHelper } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
+import { useQuery } from "@tanstack/react-query";
 import {
  Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, Avatar, Chip, IconButton 
 } from "@mui/material";
@@ -27,44 +28,57 @@ import { SongDetailLinks } from "./components/SongDetailLinks";
 import { SongDetailLinksEdit } from "./components/SongDetailLinksEdit";
 
 export const SongPage = memo(() => {
-  const [song, setSong] = React.useState<SongInterface>(null);
-  const [songDetail, setSongDetail] = React.useState<SongDetailInterface>(null);
   const [showSearch, setShowSearch] = React.useState(false);
   const [editSongDetails, setEditSongDetails] = React.useState(false);
   const [editLinks, setEditLinks] = React.useState(false);
-  const [arrangements, setArrangements] = React.useState<ArrangementInterface[]>([]);
   const [selectedArrangement, setSelectedArrangement] = React.useState(null);
   const params = useParams();
 
-  const loadData = useCallback(async () => {
-    if (!params.id) return;
-    const s = await ApiHelper.get("/songs/" + params.id, "ContentApi");
-    setSong(s);
-    const arrangements = await ApiHelper.get("/arrangements/song/" + s.id, "ContentApi");
-    setArrangements(arrangements);
-    if (arrangements.length > 0) {
-      setSelectedArrangement(arrangements[0]);
-      // Load song details from the first arrangement if available
-      if (arrangements[0].songDetailId) {
-        const songDetail = await ApiHelper.get("/songDetails/" + arrangements[0].songDetailId, "ContentApi");
-        setSongDetail(songDetail);
-      }
-    }
-  }, [params.id]);
+  const song = useQuery<SongInterface>({
+    queryKey: ["/songs/" + params.id, "ContentApi"],
+    enabled: !!params.id,
+  });
 
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
+  const arrangements = useQuery<ArrangementInterface[]>({
+    queryKey: ["/arrangements/song/" + params.id, "ContentApi"],
+    placeholderData: [],
+    enabled: !!params.id,
+  });
+
+  const songDetailId = useMemo(() => {
+    if (arrangements.data && arrangements.data.length > 0 && arrangements.data[0].songDetailId) {
+      return arrangements.data[0].songDetailId;
+    }
+    return null;
+  }, [arrangements.data]);
+
+  const songDetail = useQuery<SongDetailInterface>({
+    queryKey: ["/songDetails/" + songDetailId, "ContentApi"],
+    enabled: !!songDetailId,
+  });
+
+  // Set selected arrangement when arrangements load
+  React.useEffect(() => {
+    if (arrangements.data && arrangements.data.length > 0 && !selectedArrangement) {
+      setSelectedArrangement(arrangements.data[0]);
+    }
+  }, [arrangements.data, selectedArrangement]);
 
   const selectArrangement = useCallback((arrangementId: string) => {
-      const arr = ArrayHelper.getOne(arrangements, "id", arrangementId);
+      const arr = ArrayHelper.getOne(arrangements.data, "id", arrangementId);
       setSelectedArrangement(arr);
-    }, [arrangements]);
+    }, [arrangements.data]);
+
+  const refetch = useCallback(() => {
+    song.refetch();
+    arrangements.refetch();
+    songDetail.refetch();
+  }, [song, arrangements, songDetail]);
 
   const handleAdd = useCallback(async (songDetail: SongDetailInterface) => {
-      if (!song?.id) return;
+      if (!song.data?.id) return;
       const a: ArrangementInterface = {
-        songId: song.id,
+        songId: song.data.id,
         songDetailId: songDetail.id,
         name: songDetail.artist,
         lyrics: "",
@@ -74,9 +88,9 @@ export const SongPage = memo(() => {
         const key: ArrangementKeyInterface = { arrangementId: a.id, keySignature: songDetail.keySignature, shortDescription: "Default" };
         await ApiHelper.post("/arrangementKeys", [key], "ContentApi");
       }
-      loadData();
+      refetch();
       setShowSearch(false);
-    }, [song?.id, loadData]);
+    }, [song.data?.id, refetch]);
 
   const arrangementNavigation = useMemo(() => (
       <Stack spacing={3}>
@@ -90,7 +104,7 @@ export const SongPage = memo(() => {
             </Stack>
 
             <List sx={{ p: 0 }}>
-              {arrangements.map((arrangement, index) => (
+              {arrangements.data.map((arrangement, index) => (
                 <Box key={arrangement.id}>
                   <ListItem sx={{ px: 0 }}>
                     <ListItemButton
@@ -119,7 +133,7 @@ export const SongPage = memo(() => {
                       />
                     </ListItemButton>
                   </ListItem>
-                  {index < arrangements.length - 1 && <Divider sx={{ my: 0.5 }} />}
+                  {index < arrangements.data.length - 1 && <Divider sx={{ my: 0.5 }} />}
                 </Box>
               ))}
             </List>
@@ -149,18 +163,18 @@ export const SongPage = memo(() => {
         {/* External Links Card */}
         <Card sx={{ height: "fit-content", borderRadius: 2 }}>
           <CardContent>
-            {songDetail && (
+            {songDetail.data && (
               editLinks ? (
                 <SongDetailLinksEdit
-                  songDetailId={songDetail.id}
+                  songDetailId={songDetail.data.id}
                   reload={() => {
                     setEditLinks(false);
-                    loadData();
+                    refetch();
                   }}
                 />
               ) : (
                 <SongDetailLinks
-                  songDetail={songDetail}
+                  songDetail={songDetail.data}
                   onEdit={() => setEditLinks(true)}
                 />
               )
@@ -169,12 +183,12 @@ export const SongPage = memo(() => {
         </Card>
       </Stack>
     ), [
-arrangements,
+arrangements.data,
 selectedArrangement,
 selectArrangement,
-songDetail,
+songDetail.data,
 editLinks,
-loadData
+refetch
 ]);
 
   const currentContent = useMemo(() => {
@@ -200,8 +214,8 @@ loadData
       );
     }
 
-    return <Arrangement arrangement={selectedArrangement} reload={loadData} />;
-  }, [selectedArrangement, loadData]);
+    return <Arrangement arrangement={selectedArrangement} reload={refetch} />;
+  }, [selectedArrangement, refetch]);
 
   const formatSeconds = useCallback((seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -218,7 +232,7 @@ loadData
           <Stack direction="row" spacing={3} alignItems="center" sx={{ flex: 1 }}>
             {/* Album Art */}
             <Avatar
-              src={songDetail?.thumbnail}
+              src={songDetail.data?.thumbnail}
               sx={{
                 width: 80,
                 height: 80,
@@ -239,7 +253,7 @@ loadData
                     fontSize: { xs: "1.75rem", md: "2.125rem" },
                   }}
                 >
-                  {songDetail?.title || song?.name || "Loading..."}
+                  {songDetail.data?.title || song.data?.name || "Loading..."}
                 </Typography>
                 <IconButton
                   onClick={() => setEditSongDetails(true)}
@@ -258,10 +272,10 @@ loadData
 
               {/* Song Stats - All Details */}
               <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mt: 1, gap: 1 }}>
-                {songDetail?.artist && (
+                {songDetail.data?.artist && (
                   <Chip
                     icon={<ArtistIcon />}
-                    label={songDetail.artist}
+                    label={songDetail.data.artist}
                     size="small"
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -272,10 +286,10 @@ loadData
                   />
                 )}
 
-                {songDetail?.album && (
+                {songDetail.data?.album && (
                   <Chip
                     icon={<AlbumIcon />}
-                    label={songDetail.album}
+                    label={songDetail.data.album}
                     size="small"
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -286,10 +300,10 @@ loadData
                   />
                 )}
 
-                {songDetail?.releaseDate && (
+                {songDetail.data?.releaseDate && (
                   <Chip
                     icon={<DateIcon />}
-                    label={new Date(songDetail.releaseDate).toLocaleDateString()}
+                    label={new Date(songDetail.data.releaseDate).toLocaleDateString()}
                     size="small"
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -300,10 +314,10 @@ loadData
                   />
                 )}
 
-                {songDetail?.language && (
+                {songDetail.data?.language && (
                   <Chip
                     icon={<LanguageIcon />}
-                    label={songDetail.language}
+                    label={songDetail.data.language}
                     size="small"
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -314,10 +328,10 @@ loadData
                   />
                 )}
 
-                {songDetail?.seconds && (
+                {songDetail.data?.seconds && (
                   <Chip
                     icon={<TimerIcon />}
-                    label={formatSeconds(songDetail.seconds)}
+                    label={formatSeconds(songDetail.data.seconds)}
                     size="small"
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -328,10 +342,10 @@ loadData
                   />
                 )}
 
-                {songDetail?.keySignature && (
+                {songDetail.data?.keySignature && (
                   <Chip
                     icon={<KeyIcon />}
-                    label={`Key: ${songDetail.keySignature}`}
+                    label={`Key: ${songDetail.data.keySignature}`}
                     size="small"
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -342,10 +356,10 @@ loadData
                   />
                 )}
 
-                {songDetail?.tones && (
+                {songDetail.data?.tones && (
                   <Chip
                     icon={<NoteIcon />}
-                    label={`Tones: ${songDetail.tones}`}
+                    label={`Tones: ${songDetail.data.tones}`}
                     size="small"
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -356,10 +370,10 @@ loadData
                   />
                 )}
 
-                {songDetail?.meter && (
+                {songDetail.data?.meter && (
                   <Chip
                     icon={<TimeIcon />}
-                    label={`Meter: ${songDetail.meter}`}
+                    label={`Meter: ${songDetail.data.meter}`}
                     size="small"
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -370,10 +384,10 @@ loadData
                   />
                 )}
 
-                {songDetail?.bpm && (
+                {songDetail.data?.bpm && (
                   <Chip
                     icon={<BpmIcon />}
-                    label={`${songDetail.bpm} BPM`}
+                    label={`${songDetail.data.bpm} BPM`}
                     size="small"
                     sx={{
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -419,13 +433,13 @@ loadData
       <Box sx={{ p: 3 }}>
         {editSongDetails ? (
           <SongDetailsEdit
-            songDetail={songDetail}
+            songDetail={songDetail.data}
             onCancel={() => setEditSongDetails(false)}
             onSave={() => {
               setEditSongDetails(false);
-              loadData();
+              refetch();
             }}
-            reload={loadData}
+            reload={refetch}
           />
         ) : (
           <Grid container spacing={3}>
@@ -436,7 +450,7 @@ loadData
         )}
       </Box>
 
-      {showSearch && <SongSearchDialog searchText={song?.name} onClose={() => setShowSearch(false)} onSelect={handleAdd} />}
+      {showSearch && <SongSearchDialog searchText={song.data?.name} onClose={() => setShowSearch(false)} onSelect={handleAdd} />}
     </>
   );
 });
