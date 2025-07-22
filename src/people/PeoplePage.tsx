@@ -8,6 +8,7 @@ import { PeopleSearch } from "./components/PeopleSearch";
 import { useMountedState } from "@churchapps/apphelper";
 import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { PageHeader } from "../components/ui";
+import { AISearch } from "./components/AISearch";
 
 export const PeoplePage = memo(() => {
   const [searchResults, setSearchResults] = React.useState(null);
@@ -142,6 +143,12 @@ export const PeoplePage = memo(() => {
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 3 }}>
             <PeopleSearch
+              updateSearchResults={(people) => {
+                setSearchResults(people);
+                setIsSearchPerformed(true);
+              }}
+            />
+            <AISearch
               updateSearchResults={(people) => {
                 setSearchResults(people);
                 setIsSearchPerformed(true);
