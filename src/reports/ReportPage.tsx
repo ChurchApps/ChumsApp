@@ -1,32 +1,21 @@
-import React from "react";
+import React, { memo } from "react";
 import { useParams } from "react-router-dom";
-import { ReportWithFilter, type ReportInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { ReportWithFilter, type ReportInterface, Locale } from "@churchapps/apphelper";
 import {
  Box, Typography, Stack, Container, Card, CardContent, Skeleton, Breadcrumbs, Link as MuiLink 
 } from "@mui/material";
 import { Summarize as SummarizeIcon, ArrowBack as BackIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
-export const ReportPage = () => {
+export const ReportPage = memo(() => {
   const params = useParams();
-  const [report, setReport] = React.useState<ReportInterface>(null);
-  const [loading, setLoading] = React.useState(true);
 
-  const loadData = React.useCallback(() => {
-    if (params.keyName) {
-      setLoading(true);
-      ApiHelper.get("/reports/" + params.keyName, "ReportingApi")
-        .then((data) => {
-          setReport(data);
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-        });
-    }
-  }, [params.keyName]);
-
-  React.useEffect(loadData, [loadData]);
+  const report = useQuery<ReportInterface>({
+    queryKey: ["/reports/" + params.keyName, "ReportingApi"],
+    placeholderData: null,
+    enabled: !!params.keyName,
+  });
 
   return (
     <Container maxWidth="xl">
@@ -47,7 +36,7 @@ export const ReportPage = () => {
             <BackIcon sx={{ mr: 0.5, fontSize: 16 }} />
             {Locale.label("reports.reportsPage.reports")}
           </MuiLink>
-          <Typography color="text.primary">{loading ? <Skeleton width={150} /> : report?.displayName || Locale.label("reports.reportPage.report")}</Typography>
+          <Typography color="text.primary">{report.isLoading ? <Skeleton width={150} /> : report.data?.displayName || Locale.label("reports.reportPage.report")}</Typography>
         </Breadcrumbs>
 
         {/* Page Header */}
@@ -67,13 +56,13 @@ export const ReportPage = () => {
                 color: "text.primary",
               }}
             >
-              {loading ? <Skeleton width={300} /> : report?.displayName || Locale.label("reports.reportPage.report")}
+              {report.isLoading ? <Skeleton width={300} /> : report.data?.displayName || Locale.label("reports.reportPage.report")}
             </Typography>
           </Stack>
 
-          {!loading && report?.description && (
+          {!report.isLoading && report.data?.description && (
             <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 800 }}>
-              {report.description}
+              {report.data.description}
             </Typography>
           )}
         </Box>
@@ -89,7 +78,7 @@ export const ReportPage = () => {
           }}
         >
           <CardContent sx={{ p: 0 }}>
-            {loading ? (
+            {report.isLoading ? (
               <Box sx={{ p: 4 }}>
                 <Stack spacing={3}>
                   <Skeleton variant="rectangular" height={60} />
@@ -110,4 +99,4 @@ export const ReportPage = () => {
       </Box>
     </Container>
   );
-};
+});

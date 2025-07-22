@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { UserHelper, Locale, ReportWithFilter, Permissions } from "@churchapps/apphelper";
 import { Box } from "@mui/material";
 import { VolunteerActivism as DonationIcon } from "@mui/icons-material";
 import { PageHeader } from "../components";
 
-export const DonationsPage = () => {
+export const DonationsPage = memo(() => {
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) return <></>;
 
   return (
@@ -17,4 +17,4 @@ export const DonationsPage = () => {
       </Box>
     </>
   );
-};
+});

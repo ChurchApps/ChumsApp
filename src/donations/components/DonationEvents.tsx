@@ -1,52 +1,52 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Icon } from "@mui/material";
-import { useMountedState, DateHelper, ApiHelper, DisplayBox, Locale } from "@churchapps/apphelper";
+import { DateHelper, ApiHelper, DisplayBox, Locale } from "@churchapps/apphelper";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const DonationEvents: React.FC = () => {
-  const [headerIcon, setHeaderIcon] = React.useState<string>("error");
-  const [unresolvedErrorCount, setUnresolvedErrorCount] = React.useState<number>();
-  const [errorLogs, setErrorLogs] = React.useState<any>([]);
-  const [people, setPeople] = React.useState([]);
-  const isMounted = useMountedState();
+export const DonationEvents = memo(() => {
+  const queryClient = useQueryClient();
 
-  const loadData = () => {
-    ApiHelper.get("/eventLog/type/failed", "GivingApi").then((logs) => {
-      if (!isMounted()) {
-        return;
-      }
-      setErrorLogs(logs);
-      if (logs?.length > 0) {
-        const unresolvedCount = logs.filter((log: any) => !log.resolved).length;
-        setUnresolvedErrorCount(unresolvedCount);
-        if (unresolvedCount > 0) setHeaderIcon(headerIcon + " danger-text");
-      }
-      let personIds = "";
-      logs.map((log: any) => (personIds += log.personId + ","));
-      if (personIds) {
-        ApiHelper.get("/people/ids?ids=" + personIds, "MembershipApi").then((people) => {
-          if (isMounted()) {
-            setPeople(people);
-          }
-        });
-      }
-    });
-  };
+  const errorLogs = useQuery<any[]>({
+    queryKey: ["/eventLog/type/failed", "GivingApi"],
+    placeholderData: [],
+  });
 
-  const handleClick = (id: string, resolved: boolean) => {
+  const personIds = useMemo(() => {
+    if (!errorLogs.data?.length) return "";
+    return errorLogs.data.map((log: any) => log.personId).join(",");
+  }, [errorLogs.data]);
+
+  const people = useQuery({
+    queryKey: ["/people/ids?ids=" + personIds, "MembershipApi"],
+    placeholderData: [],
+    enabled: !!personIds,
+  });
+
+  const unresolvedErrorCount = useMemo(() => {
+    if (!errorLogs.data?.length) return 0;
+    return errorLogs.data.filter((log: any) => !log.resolved).length;
+  }, [errorLogs.data]);
+
+  const headerIcon = useMemo(() => {
+    return unresolvedErrorCount > 0 ? "error danger-text" : "error";
+  }, [unresolvedErrorCount]);
+
+  const handleClick = useCallback((id: string, resolved: boolean) => {
     resolved = !resolved;
-    ApiHelper.post("/eventLog", [{ id, resolved }], "GivingApi").then(() => loadData());
-  };
+    ApiHelper.post("/eventLog", [{ id, resolved }], "GivingApi").then(() => {
+      queryClient.invalidateQueries({ queryKey: ["/eventLog/type/failed", "GivingApi"] });
+    });
+  }, [queryClient]);
 
-  const getPersonName = (personId: string) => {
-    const person = people.find((person: any) => person.id === personId);
+  const getPersonName = useCallback((personId: string) => {
+    const person = people.data?.find((person: any) => person.id === personId);
     return person?.name?.display;
-  };
+  }, [people.data]);
 
-  const getErrorLogs = () => {
+  const getErrorLogs = useCallback(() => {
     const logs: React.ReactNode[] = [];
-    errorLogs.forEach((log: any, i: string) => {
-      i = i.toString();
+    errorLogs.data?.forEach((log: any, i: number) => {
       const eventType = log.eventType.replace(".", " ");
       logs.push(<Accordion key={i}>
           <AccordionSummary>
@@ -78,15 +78,13 @@ export const DonationEvents: React.FC = () => {
         </Accordion>);
     });
     return logs;
-  };
+  }, [errorLogs.data, getPersonName, handleClick]);
 
-  React.useEffect(loadData, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  if (!errorLogs.length) return null;
+  if (!errorLogs.data?.length) return null;
 
   return (
     <DisplayBox data-cy="eventLogs" headerIcon={headerIcon} headerText={Locale.label("donations.donationEvents.failed") + unresolvedErrorCount + Locale.label("donations.donationEvents.unres")}>
       {getErrorLogs()}
     </DisplayBox>
   );
-};
+});
