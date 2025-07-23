@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useMemo, useCallback } from "react";
+import React, { memo, useMemo, useCallback } from "react";
 import { ApiHelper, Loading, Locale } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
 import {
@@ -7,21 +7,19 @@ import {
 import { MusicNote as MusicIcon, LibraryMusic as LibraryIcon, Add as AddIcon, Search as SearchIcon, PlayCircle as PlayIcon, Timer as TimerIcon, Person as ArtistIcon } from "@mui/icons-material";
 import { SongSearchDialog } from "./SongSearchDialog";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
+import { useQuery } from "@tanstack/react-query";
 
 export const SongsPage = memo(() => {
-  const [songs, setSongs] = React.useState<SongDetailInterface[]>(null);
   const [showSearch, setShowSearch] = React.useState(false);
   const [redirect, setRedirect] = React.useState("");
   const [searchFilter, setSearchFilter] = React.useState("");
   const [showSearchField, setShowSearchField] = React.useState(false);
   const [failedImages, setFailedImages] = React.useState<Set<string>>(new Set());
 
-  const loadData = useCallback(async () => {
-    ApiHelper.get("/songDetails", "ContentApi").then((data) => {
-      setSongs(data);
-      setFailedImages(new Set()); // Reset failed images when loading new data
-    });
-  }, []);
+  const songs = useQuery<SongDetailInterface[]>({
+    queryKey: ["/songDetails", "ContentApi"],
+    placeholderData: [],
+  });
 
   const handleAdd = useCallback(async (songDetail: SongDetailInterface) => {
       let selectedSong = null;
@@ -54,14 +52,11 @@ export const SongsPage = memo(() => {
         selectedSong = songs[0];
       }
 
-      loadData();
+      songs.refetch();
       setShowSearch(false);
       setRedirect("/plans/songs/" + selectedSong.id);
-    }, [loadData]);
+    }, [songs]);
 
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
 
   const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const imgSrc = e.currentTarget.src;
@@ -70,10 +65,10 @@ export const SongsPage = memo(() => {
 
   // Get the first song with album art for the header
   const headerAlbumArt = useMemo(() => {
-    if (!songs || songs.length === 0) return null;
-    const songWithThumbnail = songs.find((song) => song.thumbnail && !failedImages.has(song.thumbnail));
+    if (!songs.data || songs.data.length === 0) return null;
+    const songWithThumbnail = songs.data.find((song) => song.thumbnail && !failedImages.has(song.thumbnail));
     return songWithThumbnail?.thumbnail || null;
-  }, [songs, failedImages]);
+  }, [songs.data, failedImages]);
 
   const formatSeconds = useCallback((seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -82,17 +77,17 @@ export const SongsPage = memo(() => {
   }, []);
 
   const filteredSongs = useMemo(() => {
-    if (!songs) return null;
-    if (!searchFilter.trim()) return songs;
+    if (!songs.data) return null;
+    if (!searchFilter.trim()) return songs.data;
 
     const filter = searchFilter.toLowerCase();
-    return songs.filter((song) => song.title?.toLowerCase().includes(filter) || song.artist?.toLowerCase().includes(filter));
-  }, [songs, searchFilter]);
+    return songs.data.filter((song) => song.title?.toLowerCase().includes(filter) || song.artist?.toLowerCase().includes(filter));
+  }, [songs.data, searchFilter]);
 
   const songsContent = useMemo(() => {
-    if (!songs) return <Loading size="sm" />;
+    if (songs.isLoading) return <Loading size="sm" />;
 
-    if (songs.length === 0) {
+    if (songs.data.length === 0) {
       return (
         <Paper
           sx={{
@@ -245,7 +240,7 @@ export const SongsPage = memo(() => {
         </Stack>
       </Box>
     );
-  }, [songs, filteredSongs, formatSeconds, handleImageError]);
+  }, [songs.isLoading, songs.data, filteredSongs, formatSeconds, handleImageError, failedImages]);
 
   if (redirect) return <Navigate to={redirect} />;
 
@@ -353,7 +348,7 @@ export const SongsPage = memo(() => {
       </Box>
 
       <Box sx={{ p: 3 }}>
-        {(showSearchField || searchFilter) && songs && songs.length > 0 && (
+        {(showSearchField || searchFilter) && songs.data && songs.data.length > 0 && (
           <Card
             sx={{
               mb: 3,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
  DisplayBox, UserHelper, ApiHelper, Permissions, type ChurchInterface, type RoleInterface, type RolePermissionInterface, Locale 
@@ -7,6 +7,7 @@ import {
  Divider, Icon, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow 
 } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 
 interface Props {
   selectRoleId: (id: string) => void;
@@ -15,9 +16,14 @@ interface Props {
 }
 
 export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
-  const [roles, setRoles] = useState<RoleInterface[]>([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const roles = useQuery<RoleInterface[]>({
+    queryKey: [`/roles/church/${church?.id}`, "MembershipApi"],
+    enabled: !!church?.id && selectedRoleId === "notset",
+    placeholderData: [],
+  });
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     setAnchorEl(e.currentTarget);
@@ -68,18 +74,13 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
       },
     ], []);
 
-  const loadData = useCallback(() => {
-    if (selectedRoleId !== "notset" || !church) return;
-    ApiHelper.get(`/roles/church/${church.id}`, "MembershipApi").then((roles) => setRoles(roles));
-  }, [selectedRoleId, church]);
-
   const addRole = useCallback(async (role: any) => {
       console.log("made it");
       console.log(role);
       handleClose();
       if (window.confirm(Locale.label("settings.roles.roleCreate") + role.name + Locale.label("settings.roles.itMsg") + role.description.toLowerCase())) {
-        const roles = await ApiHelper.post("/roles", [{ name: role.name }], "MembershipApi");
-        const r = roles[0];
+        const rolesData = await ApiHelper.post("/roles", [{ name: role.name }], "MembershipApi");
+        const r = rolesData[0];
         const perms: RolePermissionInterface[] = [];
         role.permissions.forEach((p: any) => {
           perms.push({
@@ -90,9 +91,9 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
           });
         });
         await ApiHelper.post("/rolepermissions/", perms, "MembershipApi");
-        loadData();
+        roles.refetch();
       }
-    }, [handleClose, loadData]);
+    }, [handleClose, roles]);
 
   const handleAddCustomRole = useCallback(() => {
     handleClose();
@@ -147,7 +148,7 @@ predefined,
 addRole
 ]);
 
-  const sortedRoles = useMemo(() => [...roles].sort((a, b) => (a.name > b.name ? 1 : -1)), [roles]);
+  const sortedRoles = useMemo(() => [...(roles.data || [])].sort((a, b) => (a.name > b.name ? 1 : -1)), [roles.data]);
 
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.roles.edit) && UserHelper.checkAccess(Permissions.membershipApi.roles.edit) && UserHelper.checkAccess(Permissions.membershipApi.people.view), []);
 
@@ -185,8 +186,6 @@ addRole
 
     return result;
   }, [sortedRoles, canEdit, selectRoleId]);
-
-  useEffect(loadData, [loadData]);
 
   return (
     <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={editContent} help="chums/assigning-roles">

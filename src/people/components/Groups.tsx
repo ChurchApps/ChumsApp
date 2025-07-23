@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { ApiHelper, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import {
  Box, Card, CardContent, Typography, Stack, Chip, Paper, ListItem, ListItemIcon, ListItemText, ListItemButton, Avatar 
@@ -10,28 +11,26 @@ import { useMountedState } from "@churchapps/apphelper";
 interface Props {
   personId: string;
   title?: string;
+  updatedFunction?: () => void;
 }
 
 export const Groups: React.FC<Props> = memo((props) => {
-  const [groupMembers, setGroupMembers] = React.useState(null);
   const isMounted = useMountedState();
 
-  const loadData = useCallback(() => {
-    if (!UniqueIdHelper.isMissing(props.personId)) {
-      ApiHelper.get("/groupmembers?personId=" + props.personId, "MembershipApi").then((data) => {
-        if (isMounted()) {
-          setGroupMembers(data);
-        }
-      });
-    }
-  }, [props.personId, isMounted]);
+  const groupMembers = useQuery({
+    queryKey: ["/groupmembers?personId=" + props.personId, "MembershipApi"],
+    enabled: !UniqueIdHelper.isMissing(props.personId),
+    placeholderData: [],
+  });
 
-  React.useEffect(loadData, [loadData]);
+  const refetch = useCallback(() => {
+    groupMembers.refetch();
+  }, [groupMembers]);
 
   const recordsContent = useMemo(() => {
-    if (!groupMembers) return <Loading size="sm" />;
+    if (groupMembers.isLoading) return <Loading size="sm" />;
 
-    if (groupMembers.length === 0) {
+    if (!groupMembers.data || groupMembers.data.length === 0) {
       return (
         <Paper
           sx={{
@@ -61,7 +60,7 @@ export const Groups: React.FC<Props> = memo((props) => {
         }}
       >
         <Stack spacing={2}>
-          {groupMembers.map((gm) => (
+          {groupMembers.data.map((gm) => (
             <Card
               key={gm.id}
               sx={{
@@ -163,7 +162,7 @@ export const Groups: React.FC<Props> = memo((props) => {
         </Stack>
       </Box>
     );
-  }, [groupMembers]);
+  }, [groupMembers.isLoading, groupMembers.data]);
 
   return recordsContent;
 });

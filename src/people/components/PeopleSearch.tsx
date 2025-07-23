@@ -6,6 +6,7 @@ import { AdvancedPeopleSearch } from "./AdvancedPeopleSearch";
 
 interface Props {
   updateSearchResults: (people: PersonInterface[]) => void;
+  updatedFunction?: () => void;
 }
 
 export function PeopleSearch(props: Props) {
@@ -76,5 +77,5 @@ export function PeopleSearch(props: Props) {
   );
 
   if (!advanced) return getSimpleSearch();
-  return <AdvancedPeopleSearch updateSearchResults={props.updateSearchResults} toggleFunction={toggleAdvanced} />;
+  return <AdvancedPeopleSearch updateSearchResults={props.updateSearchResults} toggleFunction={toggleAdvanced} updatedFunction={props.updatedFunction} />;
 }

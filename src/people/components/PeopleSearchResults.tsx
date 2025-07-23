@@ -14,6 +14,7 @@ interface Props {
   columns: { key: string; label: string; shortName: string }[];
   selectedColumns: string[];
   updateSearchResults?: (people: PersonInterface[]) => void;
+  updatedFunction?: () => void;
 }
 
 const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
@@ -62,6 +63,7 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
         if (idx > -1) {
           peopleArray.splice(idx, 1);
           props?.updateSearchResults(peopleArray);
+          if (props.updatedFunction) props.updatedFunction();
         }
       });
     }, [people, props]);
@@ -378,7 +380,7 @@ sortTableByKey
       {getResults()}
       <Card sx={{ mt: 3 }} id="createPersonForm">
         <Box sx={{ p: 3 }}>
-          <CreatePerson onCreate={navigateToPersonCreate} />
+          <CreatePerson onCreate={navigateToPersonCreate} updatedFunction={props.updatedFunction} />
         </Box>
       </Card>
     </Box>

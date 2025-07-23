@@ -5,7 +5,7 @@ import { ImageEditor } from "@churchapps/apphelper";
 
 interface Props {
   person: PersonInterface;
-  loadData: () => void;
+  updatedFunction: () => void;
   inPhotoEditMode: boolean;
   setInPhotoEditMode: (show: boolean) => void;
   editMode: string;
@@ -49,7 +49,7 @@ export const PersonDetails = memo((props: Props) => {
 
   const handleUpdated = () => {
     setEditMode("display");
-    props.loadData();
+    props.updatedFunction();
   };
 
   if (!person) return null;

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { Locale, type PersonInterface } from "@churchapps/apphelper";
 import { PeopleSearchResults, PeopleColumns } from "./components";
 import { ApiHelper, ExportLink } from "@churchapps/apphelper";
@@ -8,6 +8,7 @@ import { PeopleSearch } from "./components/PeopleSearch";
 import { useMountedState } from "@churchapps/apphelper";
 import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { PageHeader } from "../components/ui";
+import { useQuery } from "@tanstack/react-query";
 import { AISearch } from "./components/AISearch";
 
 export const PeoplePage = memo(() => {
@@ -15,6 +16,15 @@ export const PeoplePage = memo(() => {
   const [selectedColumns, setSelectedColumns] = React.useState<string[]>(["photo", "displayName"]);
   const [isSearchPerformed, setIsSearchPerformed] = React.useState(false);
   const isMounted = useMountedState();
+
+  const recentPeople = useQuery<PersonInterface[]>({
+    queryKey: ["/people/recent", "MembershipApi"],
+    placeholderData: [],
+  });
+
+  const refetch = useCallback(() => {
+    recentPeople.refetch();
+  }, [recentPeople]);
 
   const columns = [
     { key: "photo", label: Locale.label("people.peoplePage.photo"), shortName: "" },
@@ -58,26 +68,23 @@ export const PeoplePage = memo(() => {
     }
   }, []);
 
-  React.useEffect(() => {
-    const loadData = () => {
-      ApiHelper.get("/people/recent", "MembershipApi").then((data) => {
-        if (!isMounted()) {
-          return;
-        }
-        setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
-        setIsSearchPerformed(false); // Reset to show this is recent data, not search results
-      });
-    };
+  const expandedRecentPeople = useMemo(() => {
+    if (!recentPeople.data) return [];
+    return recentPeople.data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d));
+  }, [recentPeople.data]);
 
-    loadData();
-  }, [isMounted]);
+  React.useEffect(() => {
+    if (recentPeople.data && !isSearchPerformed) {
+      setSearchResults(expandedRecentPeople);
+    }
+  }, [expandedRecentPeople, isSearchPerformed]);
 
   return (
     <>
       <PageHeader
         icon={<PeopleIcon />}
         title={Locale.label("people.peoplePage.searchPpl")}
-        subtitle={searchResults ? (isSearchPerformed ? `Found ${searchResults.length} people` : `Showing ${searchResults.length} most recent people`) : "Loading people..."}
+        subtitle={searchResults ? (isSearchPerformed ? `Found ${searchResults.length} people` : `Showing ${searchResults.length} most recent people`) : (recentPeople.isLoading ? "Loading people..." : "No people found")}
       >
         <SearchIcon
           sx={{
@@ -147,6 +154,7 @@ export const PeoplePage = memo(() => {
                 setSearchResults(people);
                 setIsSearchPerformed(true);
               }}
+              updatedFunction={refetch}
             />
             <AISearch
               updateSearchResults={(people) => {
@@ -174,7 +182,7 @@ export const PeoplePage = memo(() => {
                 </Stack>
               </Box>
               <Box>
-                <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} />
+                <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} updateSearchResults={(people) => setSearchResults(people)} updatedFunction={refetch} />
               </Box>
             </Card>
           </Grid>

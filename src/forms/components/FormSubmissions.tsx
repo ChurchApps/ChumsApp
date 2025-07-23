@@ -7,6 +7,7 @@ import {
   ExportLink,
   type FormSubmissionInterface,
   Locale,
+  Loading,
   type MemberPermissionInterface,
   type PersonInterface,
   type QuestionInterface,
@@ -15,6 +16,7 @@ import { useReactToPrint } from "react-to-print";
 import {
  Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Card, Box, Typography, Stack 
 } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 
 interface Props {
   formId: string;
@@ -22,7 +24,6 @@ interface Props {
 }
 
 export const FormSubmissions: React.FC<Props> = memo((props) => {
-  const [formSubmissions, setFormSubmissions] = useState<any[]>([]);
   const [summary, setSummary] = useState<any>([]);
   const [summaryCsv, setSummaryCsv] = useState<any>([]);
   const yesNoMap: any = { True: Locale.label("common.yes"), False: Locale.label("common.no") };
@@ -30,34 +31,43 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
   const contentRef: any = useRef<HTMLDivElement>(null);
   const handleSummaryPrint = useReactToPrint({ content: () => contentRef.current });
 
-  const loadData = useCallback(async () => {
-    const people = await ApiHelper.get("/people", "MembershipApi");
-    const formSubmissions = await ApiHelper.get("/formsubmissions/formId/" + props.formId, "MembershipApi");
+  const people = useQuery<PersonInterface[]>({
+    queryKey: ["/people", "MembershipApi"],
+    placeholderData: [],
+  });
 
-    const csv: any[] = [];
-    const summaryData: any = [];
-    formSubmissions.forEach((formSubmission: any) => {
-      const submittedBy = getPerson(people, formSubmission);
-      const csvData: any = {};
-      csvData["For"] = submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon");
-      formSubmission = setFormSubmissionData(people, formSubmission);
-      formSubmission.questions.forEach((question: QuestionInterface) => {
-        const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id) || null;
-        const answerValue = answer?.value || "";
-        if (question.fieldType === "Yes/No" && answer?.value) answer.value = yesNoMap[answer.value];
-        csvData[question.title] = answerValue;
-        formSubmission.csvData.push({ [question.title]: answerValue });
-        if (question.fieldType === "Multiple Choice" || question.fieldType === "Yes/No" || question.fieldType === "Checkbox") {
-          if (!summaryData.length) summaryData.push(setSummaryResultDefault(question, answer));
-          else setSummaryResultData(summaryData, question, answer);
-        }
+  const formSubmissions = useQuery<any[]>({
+    queryKey: ["/formsubmissions/formId/" + props.formId, "MembershipApi"],
+    placeholderData: [],
+  });
+
+  // Process data when both queries are loaded
+  React.useEffect(() => {
+    if (people.data && formSubmissions.data) {
+      const csv: any[] = [];
+      const summaryData: any = [];
+      formSubmissions.data.forEach((formSubmission: any) => {
+        const submittedBy = getPerson(people.data, formSubmission);
+        const csvData: any = {};
+        csvData["For"] = submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon");
+        formSubmission = setFormSubmissionData(people.data, formSubmission);
+        formSubmission.questions.forEach((question: QuestionInterface) => {
+          const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id) || null;
+          const answerValue = answer?.value || "";
+          if (question.fieldType === "Yes/No" && answer?.value) answer.value = yesNoMap[answer.value];
+          csvData[question.title] = answerValue;
+          formSubmission.csvData.push({ [question.title]: answerValue });
+          if (question.fieldType === "Multiple Choice" || question.fieldType === "Yes/No" || question.fieldType === "Checkbox") {
+            if (!summaryData.length) summaryData.push(setSummaryResultDefault(question, answer));
+            else setSummaryResultData(summaryData, question, answer);
+          }
+        });
+        csv.push(csvData);
       });
-      csv.push(csvData);
-    });
-    setSummary(summaryData);
-    setFormSubmissions(formSubmissions);
-    setSummaryCsv(csv);
-  }, [props.formId, yesNoMap]);
+      setSummary(summaryData);
+      setSummaryCsv(csv);
+    }
+  }, [people.data, formSubmissions.data, yesNoMap]);
 
   const setSummaryResultData = useCallback((summaryData: any, question: QuestionInterface, answer: AnswerInterface) => {
     const match = summaryData.find((result: any) => result.title === question.title);
@@ -130,10 +140,10 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
 
   const tableHeader = useMemo(() => {
     const result: JSX.Element[] = [];
-    if (formSubmissions.length) {
+    if (formSubmissions.data?.length) {
       result.push(<TableCell key="submittedBy" sx={{ fontWeight: 600 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {formSubmissions[0].contentType === "person" ? Locale.label("forms.formSubmissions.subFor") : Locale.label("forms.formSubmissions.subBy")}
+            {formSubmissions.data[0].contentType === "person" ? Locale.label("forms.formSubmissions.subFor") : Locale.label("forms.formSubmissions.subBy")}
           </Typography>
         </TableCell>);
       result.push(<TableCell key="submissionDate" sx={{ fontWeight: 600 }}>
@@ -141,7 +151,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
             {Locale.label("forms.formSubmissions.subDate")}
           </Typography>
         </TableCell>);
-      formSubmissions[0].questions.forEach((question: QuestionInterface) =>
+      formSubmissions.data[0].questions.forEach((question: QuestionInterface) =>
         result.push(<TableCell key={question.id} sx={{ fontWeight: 600 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
               {question.title}
@@ -149,7 +159,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
           </TableCell>));
     }
     return result;
-  }, [formSubmissions]);
+  }, [formSubmissions.data]);
 
   const getAnswers = useCallback((formSubmission: FormSubmissionInterface) => {
     const rows: JSX.Element[] = [];
@@ -165,7 +175,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
   const tableRows = useMemo(() => {
     const rows: JSX.Element[] = [];
 
-    if (formSubmissions.length === 0) {
+    if (formSubmissions.data?.length === 0) {
       rows.push(<TableRow key="0">
           <TableCell colSpan={6} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
@@ -179,7 +189,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
       return rows;
     }
 
-    formSubmissions.forEach((submission: any, i: number) => {
+    formSubmissions.data?.forEach((submission: any, i: number) => {
       rows.push(<TableRow
           key={i}
           sx={{
@@ -206,10 +216,10 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
         </TableRow>);
     });
     return rows;
-  }, [formSubmissions, getAnswers]);
+  }, [formSubmissions.data, getAnswers]);
 
   const editLinks = useMemo(() => {
-    const formName = formSubmissions.length ? formSubmissions[0].form?.name + ".csv" : "form_submissions.csv";
+    const formName = formSubmissions.data?.length ? formSubmissions.data[0].form?.name + ".csv" : "form_submissions.csv";
     return (
       <>
         <ExportLink data={summaryCsv} spaceAfter={true} filename={formName} />
@@ -225,7 +235,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
         </a>
       </>
     );
-  }, [formSubmissions, summaryCsv, handleSummaryPrint]);
+  }, [formSubmissions.data, summaryCsv, handleSummaryPrint]);
 
   const formSubmissionsTable = useMemo(() => (
       <Card>
@@ -259,9 +269,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
       </Card>
     ), [tableHeader, tableRows, editLinks]);
 
-  React.useEffect(() => {
-    loadData();
-  }, [props.formId]); //eslint-disable-line
+  if (people.isLoading || formSubmissions.isLoading) return <Loading />;
 
   return (
     <Grid container spacing={3}>

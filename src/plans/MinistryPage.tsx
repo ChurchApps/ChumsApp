@@ -4,20 +4,17 @@ import { Assignment as AssignmentIcon, People as PeopleIcon, Group as GroupIcon 
 import { PlanList } from "./components/PlanList";
 import { TeamList } from "./components/TeamList";
 import { useParams } from "react-router-dom";
-import { ApiHelper, type GroupInterface, Locale } from "@churchapps/apphelper";
+import { type GroupInterface, Locale, Loading } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 
 export const MinistryPage = () => {
   const [selectedTab, setSelectedTab] = React.useState(0);
   const params = useParams();
-  const [ministry, setMinistry] = React.useState<GroupInterface>(null);
 
-  const loadData = () => {
-    ApiHelper.get("/groups/" + params.id, "MembershipApi").then((data) => {
-      setMinistry(data);
-    });
-  };
-
-  React.useEffect(loadData, [params.id]);
+  const ministry = useQuery<GroupInterface>({
+    queryKey: [`/groups/${params.id}`, "MembershipApi"],
+    enabled: !!params.id,
+  });
 
 
   const tabs = [
@@ -25,27 +22,18 @@ export const MinistryPage = () => {
       key: "plans",
       icon: <AssignmentIcon />,
       label: Locale.label("plans.ministryPage.plans"),
-      component: ministry ? <PlanList key="plans" ministry={ministry} /> : null,
+      component: ministry.data ? <PlanList key="plans" ministry={ministry.data} /> : null,
     },
     {
       key: "teams",
       icon: <PeopleIcon />,
       label: Locale.label("plans.ministryPage.teams"),
-      component: ministry ? <TeamList key="teams" ministry={ministry} /> : null,
+      component: ministry.data ? <TeamList key="teams" ministry={ministry.data} /> : null,
     },
   ];
 
-  if (!ministry) {
-    return (
-      <Container maxWidth="lg" sx={{ py: 3 }}>
-        <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
-          <Typography variant="body1" color="text.secondary">
-            Loading ministry...
-          </Typography>
-        </Box>
-      </Container>
-    );
-  }
+  if (ministry.isLoading) return <Loading />;
+  if (!ministry.data) return null;
 
   return (
     <>
@@ -75,7 +63,7 @@ export const MinistryPage = () => {
                   fontSize: { xs: "1.75rem", md: "2.125rem" },
                 }}
               >
-                {ministry.name}
+                {ministry.data.name}
               </Typography>
               <Typography
                 variant="body1"

@@ -1,30 +1,31 @@
 import React from "react";
 import { Tabs } from "./components";
-import { ApiHelper, type FormInterface, type MemberPermissionInterface, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
+import { type FormInterface, type MemberPermissionInterface, UserHelper, Permissions, Locale, Loading } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Box, Typography, Stack, Button } from "@mui/material";
 import { Description as DescriptionIcon } from "@mui/icons-material";
+import { useQuery } from "@tanstack/react-query";
 
 export const FormPage = () => {
   const params = useParams();
-  const [form, setForm] = React.useState<FormInterface>({} as FormInterface);
-  const [memberPermission, setMemberPermission] = React.useState<MemberPermissionInterface>({} as MemberPermissionInterface);
   const [selectedTab, setSelectedTab] = React.useState("");
 
-  const loadData = () => {
-    ApiHelper.get("/forms/" + params.id, "MembershipApi").then((data) => {
-      setForm(data);
-      if (data.contentType === "form") ApiHelper.get("/memberpermissions/form/" + params.id + "/my", "MembershipApi").then((results) => setMemberPermission(results));
-    });
-  };
+  const form = useQuery<FormInterface>({
+    queryKey: ["/forms/" + params.id, "MembershipApi"],
+    placeholderData: {} as FormInterface,
+  });
 
-  React.useEffect(loadData, [params.id]);
+  const memberPermission = useQuery<MemberPermissionInterface>({
+    queryKey: ["/memberpermissions/form/" + params.id + "/my", "MembershipApi"],
+    enabled: form.data?.contentType === "form",
+    placeholderData: {} as MemberPermissionInterface,
+  });
 
   // Get available tabs based on permissions
   const getAvailableTabs = () => {
     const tabs = [];
-    const formType = form.contentType;
-    const formMemberAction = memberPermission.action;
+    const formType = form.data?.contentType;
+    const formMemberAction = memberPermission.data?.action;
     const formAdmin = UserHelper.checkAccess(Permissions.membershipApi.forms.admin);
     const formEdit = UserHelper.checkAccess(Permissions.membershipApi.forms.edit) && formType !== undefined && formType !== "form";
     const formMemberAdmin = formMemberAction === "admin" && formType !== undefined && formType === "form";
@@ -52,7 +53,9 @@ export const FormPage = () => {
     }
   }, [availableTabs, selectedTab]);
 
-  return form?.id ? (
+  if (form.isLoading) return <Loading />;
+
+  return form.data?.id ? (
     <>
       {/* Modern Banner Header */}
       <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
@@ -80,7 +83,7 @@ export const FormPage = () => {
                   fontSize: { xs: "1.75rem", md: "2.125rem" },
                 }}
               >
-                {form.name}
+                {form.data.name}
               </Typography>
               <Typography
                 variant="body1"
@@ -137,7 +140,7 @@ export const FormPage = () => {
             "& > *:not(:first-of-type)": { mt: 0 }, // Ensure no extra margin for main content
           }}
         >
-          <Tabs form={form} memberPermission={memberPermission} selectedTab={selectedTab} onTabChange={setSelectedTab} />
+          <Tabs form={form.data} memberPermission={memberPermission.data} selectedTab={selectedTab} onTabChange={setSelectedTab} />
         </Box>
       </Box>
     </>

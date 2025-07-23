@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
 import { useMountedState, ApiHelper, InputBox, DateHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   formId: string;
@@ -24,25 +25,47 @@ export function FormEdit(props: Props) {
   const [standAloneForm, setStandAloneForm] = useState<boolean>(false);
   const [showDates, setShowDates] = useState<boolean>(false);
   const [errors, setErrors] = React.useState<string[]>([]);
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const isMounted = useMountedState();
+  const queryClient = useQueryClient();
 
-  function loadData() {
-    if (props.formId) {
-      ApiHelper.get("/forms/" + props.formId, "MembershipApi").then((data: FormInterface) => {
-        if (!isMounted()) {
-          return;
-        }
-        if (data.restricted !== undefined && data.contentType === "form") {
-          setStandAloneForm(true);
-        } else {
-          setStandAloneForm(false);
-        }
-        setForm(data);
-        setShowDates(!!data.accessEndTime);
-      });
+  const formQuery = useQuery<FormInterface>({
+    queryKey: ["/forms/" + props.formId, "MembershipApi"],
+    enabled: !!props.formId,
+  });
+
+  React.useEffect(() => {
+    if (formQuery.data && isMounted()) {
+      const data = formQuery.data;
+      if (data.restricted !== undefined && data.contentType === "form") {
+        setStandAloneForm(true);
+      } else {
+        setStandAloneForm(false);
+      }
+      setForm(data);
+      setShowDates(!!data.accessEndTime);
     }
-  }
+  }, [formQuery.data, isMounted]);
+
+  const saveFormMutation = useMutation({
+    mutationFn: (formData: FormInterface) => ApiHelper.post("/forms", [formData], "MembershipApi"),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/forms", "MembershipApi"] });
+      queryClient.invalidateQueries({ queryKey: ["/forms/archived", "MembershipApi"] });
+      if (props.formId) {
+        queryClient.invalidateQueries({ queryKey: ["/forms/" + props.formId, "MembershipApi"] });
+      }
+      props.updatedFunction();
+    },
+  });
+
+  const deleteFormMutation = useMutation({
+    mutationFn: (formId: string) => ApiHelper.delete("/forms/" + formId, "MembershipApi"),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/forms", "MembershipApi"] });
+      queryClient.invalidateQueries({ queryKey: ["/forms/archived", "MembershipApi"] });
+      props.updatedFunction();
+    },
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     setErrors([]);
@@ -84,28 +107,20 @@ export function FormEdit(props: Props) {
 
   function handleSave() {
     if (validate()) {
-      setIsSubmitting(true);
       const f = form;
       if (!showDates) {
         f.accessEndTime = null;
         f.accessStartTime = null;
       }
-
-      ApiHelper.post("/forms", [f], "MembershipApi")
-        .then(props.updatedFunction)
-        .finally(() => {
-          setIsSubmitting(false);
-        });
+      saveFormMutation.mutate(f);
     }
   }
 
   function handleDelete() {
     if (window.confirm(Locale.label("forms.formEdit.confirmMsg"))) {
-      ApiHelper.delete("/forms/" + form.id, "MembershipApi").then(() => props.updatedFunction());
+      deleteFormMutation.mutate(form.id!);
     }
   }
-
-  React.useEffect(loadData, [props.formId, isMounted]);
 
   return (
     <InputBox
@@ -113,7 +128,7 @@ export function FormEdit(props: Props) {
       headerIcon="format_align_left"
       headerText={Locale.label("forms.formEdit.editForm")}
       saveFunction={handleSave}
-      isSubmitting={isSubmitting}
+      isSubmitting={saveFormMutation.isPending || deleteFormMutation.isPending}
       cancelFunction={props.updatedFunction}
       deleteFunction={props.formId ? handleDelete : undefined}
     >

@@ -1,18 +1,29 @@
 import React from "react";
 import { DonationEdit, Donations } from "./components";
-import {
- ApiHelper, type DonationBatchInterface, UserHelper, type FundInterface, Permissions, type DonationInterface, DateHelper, CurrencyHelper 
-} from "@churchapps/apphelper";
+import { type DonationBatchInterface, UserHelper, type FundInterface, Permissions, type DonationInterface, DateHelper, CurrencyHelper } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { Box, Typography, Card, Stack, Icon, Button } from "@mui/material";
 import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Add as AddIcon } from "@mui/icons-material";
 
 export const DonationBatchPage = () => {
   const params = useParams();
   const [editDonationId, setEditDonationId] = React.useState("notset");
-  const [batch, setBatch] = React.useState<DonationBatchInterface>({});
-  const [funds, setFunds] = React.useState<FundInterface[]>([]);
-  const [donations, setDonations] = React.useState<DonationInterface[]>([]);
+
+  const batch = useQuery<DonationBatchInterface>({
+    queryKey: ["/donationbatches/" + params.id, "GivingApi"],
+    placeholderData: {},
+  });
+
+  const funds = useQuery<FundInterface[]>({
+    queryKey: ["/funds", "GivingApi"],
+    placeholderData: [],
+  });
+
+  const donations = useQuery<DonationInterface[]>({
+    queryKey: ["/donations?batchId=" + params.id, "GivingApi"],
+    placeholderData: [],
+  });
 
   const showAddDonation = () => {
     setEditDonationId("");
@@ -22,18 +33,13 @@ export const DonationBatchPage = () => {
   };
   const donationUpdated = () => {
     setEditDonationId("notset");
-    loadData();
-  };
-
-  const loadData = () => {
-    ApiHelper.get("/donationbatches/" + params.id, "GivingApi").then((data) => setBatch(data));
-    ApiHelper.get("/funds", "GivingApi").then((data) => setFunds(data));
-    ApiHelper.get("/donations?batchId=" + params.id, "GivingApi").then((data) => setDonations(data));
+    batch.refetch();
+    donations.refetch();
   };
 
   const getEditModules = () => {
     const result = [];
-    if (editDonationId !== "notset") result.push(<DonationEdit key="donationEdit" donationId={editDonationId} updatedFunction={donationUpdated} funds={funds} batchId={batch.id} />);
+    if (editDonationId !== "notset") result.push(<DonationEdit key="donationEdit" donationId={editDonationId} updatedFunction={donationUpdated} funds={funds.data} batchId={batch.data.id} />);
     return result;
   };
 
@@ -43,18 +49,16 @@ export const DonationBatchPage = () => {
   });
 
   React.useEffect(() => {
-    if (donations) {
-      const totalDonations = donations.length;
-      const totalAmount = donations.reduce((sum, donation) => sum + (donation.amount || 0), 0);
+    if (donations.data) {
+      const totalDonations = donations.data.length;
+      const totalAmount = donations.data.reduce((sum, donation) => sum + (donation.amount || 0), 0);
 
       setStats({
         totalDonations,
         totalAmount,
       });
     }
-  }, [donations]);
-
-  React.useEffect(loadData, [params.id]);
+  }, [donations.data]);
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return <></>;
 
@@ -86,7 +90,7 @@ export const DonationBatchPage = () => {
                   fontSize: { xs: "1.75rem", md: "2.125rem" },
                 }}
               >
-                {batch.name || "Donation Batch"}
+                {batch.data?.name || "Donation Batch"}
               </Typography>
               <Typography
                 variant="body1"
@@ -95,13 +99,13 @@ export const DonationBatchPage = () => {
                   fontSize: { xs: "0.875rem", md: "1rem" },
                 }}
               >
-                {batch.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.batchDate))}` : "Manage donations in this batch"}
+                {batch.data?.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.data.batchDate))}` : "Manage donations in this batch"}
               </Typography>
             </Box>
           </Stack>
 
           {/* Right side: Quick Actions */}
-          {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && funds.length > 0 && (
+          {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && funds.data?.length > 0 && (
             <Box>
               <Button
                 variant="outlined"
@@ -166,7 +170,7 @@ export const DonationBatchPage = () => {
 
         {/* Main donations table */}
         <Card>
-          <Donations batch={batch} editFunction={showEditDonation} funds={funds} />
+          <Donations batch={batch.data} editFunction={showEditDonation} funds={funds.data} />
         </Card>
       </Box>
     </>

@@ -2,6 +2,7 @@ import React, { memo, useCallback, useMemo } from "react";
 import {
  useMountedState, ArrayHelper, ApiHelper, type AttendanceRecordInterface, DateHelper, type GroupInterface, UniqueIdHelper, Loading, Locale 
 } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import {
  Box, Card, CardContent, Typography, Stack, Chip, Divider, Paper, List, ListItem 
@@ -10,30 +11,31 @@ import { CalendarMonth as CalendarIcon, Church as ChurchIcon, Schedule as Schedu
 
 interface Props {
   personId: string;
+  updatedFunction?: () => void;
 }
 
 export const PersonAttendance: React.FC<Props> = memo((props) => {
-  const [records, setRecords] = React.useState<AttendanceRecordInterface[]>(null);
-  const [groups, setGroups] = React.useState<GroupInterface[]>(null);
   const isMounted = useMountedState();
 
-  const loadData = useCallback(() => {
-    if (!UniqueIdHelper.isMissing(props.personId)) {
-      ApiHelper.get("/attendancerecords?personId=" + props.personId, "AttendanceApi").then((data) => {
-        if (isMounted()) {
-          setRecords(data);
-        }
-      });
-      ApiHelper.get("/groups", "MembershipApi").then((data) => {
-        if (isMounted()) {
-          setGroups(data);
-        }
-      });
-    }
-  }, [props.personId, isMounted]);
+  const attendanceRecords = useQuery<AttendanceRecordInterface[]>({
+    queryKey: ["/attendancerecords?personId=" + props.personId, "AttendanceApi"],
+    enabled: !UniqueIdHelper.isMissing(props.personId),
+    placeholderData: [],
+  });
+
+  const groups = useQuery<GroupInterface[]>({
+    queryKey: ["/groups", "MembershipApi"],
+    placeholderData: [],
+  });
+
+  const refetch = useCallback(() => {
+    attendanceRecords.refetch();
+    groups.refetch();
+  }, [attendanceRecords, groups]);
 
   const attendanceCards = useMemo(() => {
-    if (!records || !groups) return null;
+    if (!attendanceRecords.data || !groups.data) return null;
+    const records = attendanceRecords.data;
 
     if (records.length === 0) {
       return (
@@ -99,7 +101,7 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
               {/* Attendance Records for this date */}
               <List sx={{ p: 0 }}>
                 {dateRecords.map((record, index) => {
-                  const group = ArrayHelper.getOne(groups, "id", record.groupId);
+                  const group = ArrayHelper.getOne(groups.data, "id", record.groupId);
 
                   return (
                     <ListItem
@@ -200,12 +202,10 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
           </CardContent>
         </Card>
       ));
-  }, [records, groups]);
-
-  React.useEffect(loadData, [props.personId, isMounted]);
+  }, [attendanceRecords.data, groups.data]);
 
   const content = useMemo(() => {
-    if (!records || !groups) return <Loading size="sm" />;
+    if (attendanceRecords.isLoading || groups.isLoading) return <Loading size="sm" />;
     return (
       <Box
         sx={{
@@ -223,7 +223,7 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
         {attendanceCards}
       </Box>
     );
-  }, [records, groups, attendanceCards]);
+  }, [attendanceRecords.isLoading, groups.isLoading, attendanceCards]);
 
   return content;
 });

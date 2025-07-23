@@ -1,5 +1,5 @@
 import {
- Grid, Icon, TextField, Checkbox, Typography, Button, InputAdornment, IconButton, Box, Card, CardContent, Alert, Stack, FormControlLabel 
+ Grid, Icon, TextField, Checkbox, Typography, InputAdornment, IconButton, Box, Card, CardContent, Alert, Stack, FormControlLabel 
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +8,11 @@ import { NotificationPreferences } from "./components/NotificationPreferences";
 import { LinkedAccounts } from "./components/LinkedAccounts";
 import { Person as PersonIcon } from "@mui/icons-material";
 import { PageHeader, LoadingButton } from "../components";
+import { useMutation } from "@tanstack/react-query";
 
 export const ProfilePage = () => {
+  const navigate = useNavigate();
+  
   const [password, setPassword] = useState<string>("");
   const [passwordVerify, setPasswordVerify] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
@@ -18,11 +21,9 @@ export const ProfilePage = () => {
   const [optedOut, setOptedOut] = useState<boolean>(false);
   const [errors, setErrors] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
-  const navigate = useNavigate();
 
-  const initData = () => {
+  React.useEffect(() => {
     const { email, firstName, lastName } = UserHelper.user;
     setFirstName(firstName);
     setLastName(lastName);
@@ -32,45 +33,57 @@ export const ProfilePage = () => {
       const { optedOut } = UserHelper.person;
       setOptedOut(optedOut);
     }
-  };
+  }, []);
 
-  const handleSave = async () => {
-    if (validate()) {
-      setLoading(true);
-      setSaveMessage("");
-      try {
-        const promises: Promise<any>[] = [];
+  const updateProfileMutation = useMutation({
+    mutationFn: async () => {
+      const promises: Promise<any>[] = [];
 
-        if (password.length >= 8) {
-          promises.push(ApiHelper.post("/users/updatePassword", { newPassword: password }, "MembershipApi"));
-        }
-
-        if (areNamesChanged()) {
-          promises.push(ApiHelper.post("/users/setDisplayName", { firstName, lastName }, "MembershipApi"));
-        }
-
-        if (email !== UserHelper.user.email) {
-          promises.push(ApiHelper.post("/users/updateEmail", { email }, "MembershipApi"));
-        }
-
-        promises.push(ApiHelper.post("/users/updateOptedOut", {
-              personId: UserHelper.person.id,
-              optedOut,
-            }, "MembershipApi"));
-
-        await Promise.all(promises);
-
-        UserHelper.user.firstName = firstName;
-        UserHelper.user.lastName = lastName;
-        UserHelper.user.email = email;
-        UserHelper.person.optedOut = optedOut;
-        setSaveMessage(Locale.label("profile.profilePage.saveChange"));
-      } catch (error) {
-        console.error("Error saving profile:", error);
-        setSaveMessage("An error occurred while saving your profile.");
-      } finally {
-        setLoading(false);
+      if (password.length >= 8) {
+        promises.push(ApiHelper.post("/users/updatePassword", { newPassword: password }, "MembershipApi"));
       }
+
+      if (areNamesChanged()) {
+        promises.push(ApiHelper.post("/users/setDisplayName", { firstName, lastName }, "MembershipApi"));
+      }
+
+      if (email !== UserHelper.user.email) {
+        promises.push(ApiHelper.post("/users/updateEmail", { email }, "MembershipApi"));
+      }
+
+      promises.push(ApiHelper.post("/users/updateOptedOut", {
+        personId: UserHelper.person.id,
+        optedOut,
+      }, "MembershipApi"));
+
+      await Promise.all(promises);
+    },
+    onSuccess: () => {
+      UserHelper.user.firstName = firstName;
+      UserHelper.user.lastName = lastName;
+      UserHelper.user.email = email;
+      UserHelper.person.optedOut = optedOut;
+      setSaveMessage(Locale.label("profile.profilePage.saveChange"));
+      setPassword("");
+      setPasswordVerify("");
+    },
+    onError: (error) => {
+      console.error("Error saving profile:", error);
+      setSaveMessage("An error occurred while saving your profile.");
+    }
+  });
+
+  const deleteAccountMutation = useMutation({
+    mutationFn: () => ApiHelper.delete("/users", "MembershipApi"),
+    onSuccess: () => {
+      navigate("/logout", { replace: true });
+    }
+  });
+
+  const handleSave = () => {
+    if (validate()) {
+      setSaveMessage("");
+      updateProfileMutation.mutate();
     }
   };
 
@@ -123,13 +136,10 @@ export const ProfilePage = () => {
 
   const handleAccountDelete = () => {
     if (window.confirm(Locale.label("profile.profilePage.confirmMsg"))) {
-      ApiHelper.delete("/users", "MembershipApi").then(() => {
-        navigate("/logout", { replace: true });
-      });
+      deleteAccountMutation.mutate();
     }
   };
 
-  React.useEffect(initData, []);
 
   return (
     <>
@@ -137,7 +147,7 @@ export const ProfilePage = () => {
 
       <Box sx={{ p: 3 }}>
         <Stack spacing={3}>
-          {/* Display errors if any */}
+          {/* Display validation errors if any */}
           {errors.length > 0 && (
             <Alert severity="error">
               <ul style={{ margin: 0, paddingLeft: "20px" }}>
@@ -145,6 +155,19 @@ export const ProfilePage = () => {
                   <li key={index}>{error}</li>
                 ))}
               </ul>
+            </Alert>
+          )}
+
+          {/* Display mutation errors if any */}
+          {updateProfileMutation.error && (
+            <Alert severity="error">
+              {updateProfileMutation.error.message || "An error occurred while saving your profile."}
+            </Alert>
+          )}
+
+          {deleteAccountMutation.error && (
+            <Alert severity="error">
+              {deleteAccountMutation.error.message || "An error occurred while deleting your account."}
             </Alert>
           )}
 
@@ -219,7 +242,7 @@ export const ProfilePage = () => {
                 </Grid>
 
                 <Box sx={{ pt: 2 }}>
-                  <LoadingButton variant="contained" color="primary" loading={loading} onClick={handleSave}>
+                  <LoadingButton variant="contained" color="primary" loading={updateProfileMutation.isPending} onClick={handleSave}>
                     Save Changes
                   </LoadingButton>
                 </Box>
@@ -239,9 +262,9 @@ export const ProfilePage = () => {
                 </Typography>
                 <Typography color="text.secondary">{Locale.label("profile.profilePage.permWarn")}</Typography>
                 <Box>
-                  <Button variant="outlined" color="error" onClick={handleAccountDelete} data-testid="delete-account-button">
+                  <LoadingButton variant="outlined" color="error" loading={deleteAccountMutation.isPending} onClick={handleAccountDelete} data-testid="delete-account-button">
                     {Locale.label("profile.profilePage.delAcc")}
-                  </Button>
+                  </LoadingButton>
                 </Box>
               </Stack>
             </CardContent>

@@ -4,32 +4,34 @@ import {
 } from "@mui/material";
 import { Person as PersonIcon, Search as SearchIcon } from "@mui/icons-material";
 import { ChumsPersonHelper } from "../../helpers";
-import { ApiHelper, Locale, type PersonInterface, SearchCondition } from "@churchapps/apphelper";
+import { ApiHelper, Locale, type PersonInterface, SearchCondition, Loading } from "@churchapps/apphelper";
 import { PeopleSearchResults } from "../../people/components";
+import { useQuery } from "@tanstack/react-query";
 
 export const PeopleSearch = () => {
-  const [searchResults, setSearchResults] = React.useState(null);
   const [searchText, setSearchText] = React.useState("");
-  const [isSearching, setIsSearching] = React.useState(false);
+  const [searchTerm, setSearchTerm] = React.useState<string | null>(null);
   const selectedColumns = ["photo", "displayName"];
+
+  const searchResults = useQuery<PersonInterface[]>({
+    queryKey: ["/people/advancedSearch", "MembershipApi", searchTerm],
+    enabled: !!searchTerm,
+    placeholderData: [],
+    queryFn: async () => {
+      if (!searchTerm) return [];
+      const condition: SearchCondition = { field: "displayName", operator: "contains", value: searchTerm };
+      const data: PersonInterface[] = await ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi");
+      return data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d));
+    }
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.currentTarget.value);
 
-  const handleSubmit = async (e: React.MouseEvent) => {
+  const handleSubmit = (e: React.MouseEvent) => {
     if (e !== null) e.preventDefault();
     const term = searchText.trim();
     if (!term) return;
-
-    setIsSearching(true);
-    try {
-      const condition: SearchCondition = { field: "displayName", operator: "contains", value: term };
-      const data: PersonInterface[] = await ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi");
-      setSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
-    } catch (error) {
-      console.error("Search error:", error);
-    } finally {
-      setIsSearching(false);
-    }
+    setSearchTerm(term);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -90,7 +92,7 @@ export const PeopleSearch = () => {
                   onClick={handleSubmit}
                   data-testid="dashboard-search-button"
                   aria-label="Search people"
-                  disabled={isSearching || !searchText.trim()}
+                  disabled={searchResults.isLoading || !searchText.trim()}
                   startIcon={<SearchIcon />}
                   sx={{
                     ml: 1,
@@ -101,7 +103,7 @@ export const PeopleSearch = () => {
                     },
                   }}
                 >
-                  {isSearching ? Locale.label("common.searching") || "Searching..." : Locale.label("common.search")}
+                  {searchResults.isLoading ? Locale.label("common.searching") || "Searching..." : Locale.label("common.search")}
                 </Button>
               }
             />
@@ -109,13 +111,19 @@ export const PeopleSearch = () => {
         </Box>
 
         {/* Search Results */}
-        {searchResults && (
+        {searchResults.isLoading && searchTerm && (
           <Box sx={{ mt: 2 }}>
-            <PeopleSearchResults people={searchResults} columns={columns} selectedColumns={selectedColumns} />
+            <Loading />
+          </Box>
+        )}
+        
+        {searchResults.data && searchResults.data.length > 0 && (
+          <Box sx={{ mt: 2 }}>
+            <PeopleSearchResults people={searchResults.data} columns={columns} selectedColumns={selectedColumns} />
           </Box>
         )}
 
-        {searchResults && searchResults.length === 0 && (
+        {searchResults.data && searchResults.data.length === 0 && searchTerm && !searchResults.isLoading && (
           <Box
             sx={{
               textAlign: "center",

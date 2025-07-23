@@ -1,6 +1,8 @@
 import React from "react";
 import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
-import { ApiHelper, DateHelper, ErrorMessages, InputBox, Locale } from "@churchapps/apphelper";
+import { DateHelper, ErrorMessages, InputBox, Locale } from "@churchapps/apphelper";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../../queryClient";
 
 interface Props {
   plan: PlanInterface;
@@ -52,15 +54,40 @@ export const PlanEdit = (props: Props) => {
     return result.length === 0;
   };
 
+  const savePlanMutation = useMutation({
+    mutationFn: async () => {
+      const { ApiHelper } = await import("@churchapps/apphelper");
+      if (copyFromId === "none") {
+        return ApiHelper.post("/plans", [plan], "DoingApi");
+      } else {
+        return ApiHelper.post("/plans/copy/" + copyFromId, plan, "DoingApi");
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/plans", "DoingApi"] });
+      props.updatedFunction();
+    },
+  });
+
+  const deletePlanMutation = useMutation({
+    mutationFn: async () => {
+      const { ApiHelper } = await import("@churchapps/apphelper");
+      return ApiHelper.delete("/plans/" + plan.id, "DoingApi");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/plans", "DoingApi"] });
+      props.updatedFunction();
+    },
+  });
+
   const handleSave = () => {
     if (validate()) {
-      if (copyFromId === "none") ApiHelper.post("/plans", [plan], "DoingApi").then(props.updatedFunction);
-      else ApiHelper.post("/plans/copy/" + copyFromId, plan, "DoingApi").then(props.updatedFunction);
+      savePlanMutation.mutate();
     }
   };
 
   const handleDelete = () => {
-    ApiHelper.delete("/plans/" + plan.id, "DoingApi").then(props.updatedFunction);
+    deletePlanMutation.mutate();
   };
 
   const getCopyOptions = () => {

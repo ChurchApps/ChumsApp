@@ -8,33 +8,33 @@ import {
 import { Description as DescriptionIcon, Add as AddIcon, Archive as ArchiveIcon } from "@mui/icons-material";
 import { SmallButton } from "@churchapps/apphelper";
 import { PageHeader } from "../components";
+import { useQuery } from "@tanstack/react-query";
 
 export const FormsPage = () => {
-  const [forms, setForms] = React.useState<FormInterface[]>(null);
-  const [archivedForms, setArchivedForms] = React.useState<FormInterface[]>(null);
   const [selectedFormId, setSelectedFormId] = React.useState("notset");
   const [selectedTab, setSelectedTab] = React.useState("forms");
   const formPermission = UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || UserHelper.checkAccess(Permissions.membershipApi.forms.edit);
 
-  const loadData = () => {
-    ApiHelper.get("/forms", "MembershipApi").then((data) => {
-      setForms(data);
-    });
-    ApiHelper.get("/forms/archived", "MembershipApi").then((data) => {
-      setArchivedForms(data);
-    });
-  };
+  const forms = useQuery<FormInterface[]>({
+    queryKey: ["/forms", "MembershipApi"],
+    placeholderData: [],
+  });
+
+  const archivedForms = useQuery<FormInterface[]>({
+    queryKey: ["/forms/archived", "MembershipApi"],
+    placeholderData: [],
+  });
 
   const getRows = () => {
     const result: JSX.Element[] = [];
-    if (!forms.length) {
+    if (!forms.data?.length) {
       result.push(<TableRow key="0">
           <TableCell>{Locale.label("forms.formsPage.noCustomMsg")}</TableCell>
         </TableRow>);
       return result;
     }
 
-    const formData = selectedTab === "forms" ? forms : archivedForms;
+    const formData = selectedTab === "forms" ? forms.data : archivedForms.data;
     formData.forEach((form: FormInterface) => {
       const canEdit =
         UserHelper.checkAccess(Permissions.membershipApi.forms.admin) || (UserHelper.checkAccess(Permissions.membershipApi.forms.edit) && form.contentType !== "form") || form?.action === "admin";
@@ -97,12 +97,15 @@ export const FormsPage = () => {
     const conf = archive ? window.confirm(Locale.label("forms.formsPage.confirmMsg1")) : window.confirm(Locale.label("forms.formsPage.confirmMsg2"));
     if (!conf) return;
     form.archived = archive;
-    ApiHelper.post("/forms", [form], "MembershipApi").then(() => loadData());
+    ApiHelper.post("/forms", [form], "MembershipApi").then(() => {
+      forms.refetch();
+      archivedForms.refetch();
+    });
   };
 
   const getArchivedRows = () => {
     const result: JSX.Element[] = [];
-    if (!archivedForms.length) {
+    if (!archivedForms.data?.length) {
       result.push(<TableRow key="0">
           <TableCell>{Locale.label("forms.formsPage.noArch")}</TableCell>
         </TableRow>);
@@ -113,7 +116,7 @@ export const FormsPage = () => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    if (forms.length === 0) {
+    if (forms.data?.length === 0) {
       return rows;
     }
     rows.push(<TableRow key="header">
@@ -123,7 +126,8 @@ export const FormsPage = () => {
   };
 
   const handleUpdate = () => {
-    loadData();
+    forms.refetch();
+    archivedForms.refetch();
     setSelectedFormId("notset");
   };
 
@@ -132,23 +136,18 @@ export const FormsPage = () => {
     if (selectedTab === "forms") return <FormEdit formId={selectedFormId} updatedFunction={handleUpdate}></FormEdit>;
   };
 
-  React.useEffect(loadData, []);
+  if (forms.isLoading || archivedForms.isLoading) return <Loading />;
+  
+  const contents = (
+    <Table>
+      <TableHead>{getTableHeader()}</TableHead>
+      <TableBody>{selectedTab === "forms" ? getRows() : getArchivedRows()}</TableBody>
+    </Table>
+  );
 
-  if (!forms && !archivedForms) return <></>;
-  else {
-    let contents = <Loading />;
-    if (forms && archivedForms) {
-      contents = (
-        <Table>
-          <TableHead>{getTableHeader()}</TableHead>
-          <TableBody>{selectedTab === "forms" ? getRows() : getArchivedRows()}</TableBody>
-        </Table>
-      );
-    }
-
-    const getTab = (index: number, keyName: string, icon: string, text: string) => (
+    const getTab = (keyName: string, icon: string, text: string) => (
       <Tab
-        key={index}
+        key={keyName}
         style={{ textTransform: "none", color: "#000" }}
         onClick={() => {
           setSelectedTab(keyName);
@@ -159,10 +158,10 @@ export const FormsPage = () => {
 
     const tabs = [];
     let defaultTab = "";
-    tabs.push(getTab(0, "forms", "format_align_left", Locale.label("forms.formsPage.forms")));
+    tabs.push(getTab("forms", "format_align_left", Locale.label("forms.formsPage.forms")));
     if (defaultTab === "") defaultTab = "forms";
-    if (archivedForms?.length > 0) {
-      tabs.push(getTab(1, "archived", "archive", Locale.label("forms.formsPage.archForms")));
+    if (archivedForms.data?.length > 0) {
+      tabs.push(getTab("archived", "archive", Locale.label("forms.formsPage.archForms")));
       if (defaultTab === "") defaultTab = "archived";
     }
     if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
@@ -191,7 +190,6 @@ export const FormsPage = () => {
             variant="outlined"
             onClick={() => {
               setSelectedTab("forms");
-              setTabIndex(0);
             }}
             sx={{
               color: "#FFF",
@@ -207,12 +205,11 @@ export const FormsPage = () => {
           >
             {Locale.label("forms.formsPage.forms")}
           </Button>
-          {archivedForms?.length > 0 && (
+          {archivedForms.data?.length > 0 && (
             <Button
               variant="outlined"
               onClick={() => {
                 setSelectedTab("archived");
-                setTabIndex(1);
               }}
               sx={{
                 color: "#FFF",
@@ -244,8 +241,8 @@ export const FormsPage = () => {
                 </Stack>
                 <Typography variant="body2" color="text.secondary">
                   {selectedTab === "forms"
-                    ? `${forms?.length || 0} ${forms?.length === 1 ? "form" : "forms"}`
-                    : `${archivedForms?.length || 0} archived ${archivedForms?.length === 1 ? "form" : "forms"}`}
+                    ? `${forms.data?.length || 0} ${forms.data?.length === 1 ? "form" : "forms"}`
+                    : `${archivedForms.data?.length || 0} archived ${archivedForms.data?.length === 1 ? "form" : "forms"}`}
                 </Typography>
               </Stack>
             </Box>
@@ -256,5 +253,4 @@ export const FormsPage = () => {
         </Box>
       </>
     );
-  }
 };

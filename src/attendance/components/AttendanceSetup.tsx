@@ -6,32 +6,40 @@ import {
  Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box, Typography, Button, Stack 
 } from "@mui/material";
 import {
-  useMountedState,
   type AttendanceInterface,
   type CampusInterface,
   type ServiceInterface,
   type ServiceTimeInterface,
   type GroupServiceTimeInterface,
   type GroupInterface,
-  ApiHelper,
   ArrayHelper,
   Loading,
   Locale,
 } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 
 export const AttendanceSetup = memo(() => {
-  const [attendance, setAttendance] = React.useState<AttendanceInterface[]>([]);
-  const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
-  const [groups, setGroups] = React.useState<GroupInterface[]>([]);
-  const isMounted = useMountedState();
-
   const [selectedCampus, setSelectedCampus] = React.useState<CampusInterface>(null);
   const [selectedService, setSelectedService] = React.useState<ServiceInterface>(null);
   const [selectedServiceTime, setSelectedServiceTime] = React.useState<ServiceTimeInterface>(null);
-  //const [filter, setFilter] = React.useState<AttendanceFilterInterface>(AttendanceHelper.createFilter());
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const attendance = useQuery<AttendanceInterface[]>({
+    queryKey: ["/attendancerecords/tree", "AttendanceApi"],
+    placeholderData: [],
+  });
+
+  const groupServiceTimes = useQuery<GroupServiceTimeInterface[]>({
+    queryKey: ["/groupservicetimes", "AttendanceApi"],
+    placeholderData: [],
+  });
+
+  const groups = useQuery<GroupInterface[]>({
+    queryKey: ["/groups", "MembershipApi"],
+    placeholderData: [],
+  });
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     setAnchorEl(e.currentTarget);
@@ -47,28 +55,16 @@ export const AttendanceSetup = memo(() => {
     setSelectedServiceTime(null);
   }, []);
 
-  const loadData = useCallback(() => {
-    ApiHelper.get("/attendancerecords/tree", "AttendanceApi").then((data) => {
-      if (isMounted()) {
-        setAttendance(data);
-      }
-    });
-    ApiHelper.get("/groupservicetimes", "AttendanceApi").then((data) => {
-      if (isMounted()) {
-        setGroupServiceTimes(data);
-      }
-    });
-    ApiHelper.get("/groups", "MembershipApi").then((data) => {
-      if (isMounted()) {
-        setGroups(data);
-      }
-    });
-  }, [isMounted]);
+  const refetch = useCallback(() => {
+    attendance.refetch();
+    groupServiceTimes.refetch();
+    groups.refetch();
+  }, [attendance, groupServiceTimes, groups]);
 
   const handleUpdated = useCallback(() => {
     removeEditors();
-    loadData();
-  }, [removeEditors, loadData]);
+    refetch();
+  }, [removeEditors, refetch]);
 
   const selectCampus = useCallback((campus: CampusInterface) => {
       removeEditors();
@@ -85,32 +81,28 @@ export const AttendanceSetup = memo(() => {
       setSelectedServiceTime(service);
     }, [removeEditors]);
 
-  React.useEffect(() => {
-    loadData();
-  }, [loadData]);
-
   const compare = useCallback((a: GroupInterface, b: GroupInterface) => a.categoryName.localeCompare(b.categoryName) || a.name.localeCompare(b.name), []);
 
   const unassignedGroups = useMemo(() => {
     const result: GroupInterface[] = [];
-    groups.forEach((g) => {
+    groups.data.forEach((g) => {
       if (g.trackAttendance) {
-        const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes, "groupId", g.id);
+        const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes.data, "groupId", g.id);
         if (gsts.length === 0) result.push(g);
       }
     });
     return result;
-  }, [groups, groupServiceTimes]);
+  }, [groups.data, groupServiceTimes.data]);
 
   const getGroups = useCallback((serviceTimeId: string) => {
       const result: GroupInterface[] = [];
-      const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes, "serviceTimeId", serviceTimeId);
+      const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes.data, "serviceTimeId", serviceTimeId);
       gsts.forEach((gst) => {
-        const group: GroupInterface = ArrayHelper.getOne(groups, "id", gst.groupId);
+        const group: GroupInterface = ArrayHelper.getOne(groups.data, "id", gst.groupId);
         if (group !== null && group.trackAttendance) result.push(group);
       });
       return result;
-    }, [groups, groupServiceTimes]);
+    }, [groups.data, groupServiceTimes.data]);
 
   const handleAddCampus = useCallback(() => {
     handleClose();
@@ -164,7 +156,7 @@ handleAddServiceTime
 ]);
 
   const tableHeader = useMemo(() => {
-    if (attendance.length === 0) return [];
+    if (attendance.data.length === 0) return [];
     return [
       <TableRow key="header">
         <TableCell sx={{ fontWeight: 600, color: "#666" }}>{Locale.label("attendance.attendancePage.campus")}</TableCell>
@@ -174,7 +166,7 @@ handleAddServiceTime
         <TableCell sx={{ fontWeight: 600, color: "#666" }}>{Locale.label("attendance.attendancePage.group")}</TableCell>
       </TableRow>,
     ];
-  }, [attendance.length]);
+  }, [attendance.data.length]);
 
   const getRows = useCallback(() => {
     const rows: JSX.Element[] = [];
@@ -183,7 +175,7 @@ handleAddServiceTime
     let lastServiceTime = "";
     let lastCategory = "";
 
-    if (attendance.length === 0) {
+    if (attendance.data.length === 0) {
       rows.push(<TableRow key="0">
           <TableCell colSpan={5} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
@@ -324,7 +316,7 @@ handleAddServiceTime
       return result;
     };
 
-    attendance.forEach((a, i) => {
+    attendance.data.forEach((a, i) => {
       const filteredGroups = a.serviceTime === undefined ? [] : getGroups(a.serviceTime.id);
       const sortedGroups = filteredGroups.sort(compare);
       if (sortedGroups.length > 0) {
@@ -338,7 +330,7 @@ handleAddServiceTime
     });
     return rows;
   }, [
-attendance,
+attendance.data,
 getGroups,
 compare,
 unassignedGroups,
@@ -348,7 +340,7 @@ selectServiceTime
 ]);
 
   const table = useMemo(() => {
-    if (!attendance) return <Loading />;
+    if (attendance.isLoading) return <Loading />;
     return (
       <Paper
         sx={{
@@ -365,7 +357,7 @@ selectServiceTime
         </Table>
       </Paper>
     );
-  }, [attendance, tableHeader, getRows]);
+  }, [attendance.isLoading, tableHeader, getRows]);
 
   return (
     <>

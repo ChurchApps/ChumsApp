@@ -1,8 +1,7 @@
-import {
- ApiHelper, ArrayHelper, CurrencyHelper, DateHelper, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface 
-} from "@churchapps/apphelper";
-import React, { useContext, useEffect, useState } from "react";
+import { ArrayHelper, CurrencyHelper, DateHelper, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/apphelper";
+import React, { useContext, useEffect, useMemo } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import UserContext from "../UserContext";
 
 export const PrintDonationPage = () => {
@@ -15,40 +14,45 @@ export const PrintDonationPage = () => {
   }
   const context = useContext(UserContext);
 
-  const [funds, setFunds] = useState<FundInterface[]>([]);
-  const [fundDonations, setFundDonations] = useState<FundDonationInterface[]>([]);
-  const [donations, setDonations] = useState<DonationInterface[]>([]);
-  const [person, setPerson] = useState<PersonInterface>();
+  const person = useQuery<PersonInterface>({
+    queryKey: ["/people/" + params.personId, "MembershipApi"],
+    placeholderData: undefined,
+  });
 
-  const loadData = () => {
-    ApiHelper.get("/people/" + params.personId, "MembershipApi").then((p) => {
-      setPerson(p);
-    });
-    ApiHelper.get("/funds", "GivingApi").then((f) => {
-      setFunds(f);
-    });
-    ApiHelper.get("/donations?personId=" + params.personId, "GivingApi").then((d: DonationInterface[]) => {
-      const filteredDonations: DonationInterface[] = [];
-      d.forEach((don) => {
-        don.donationDate = new Date(don.donationDate);
-        if (don.donationDate.getFullYear() === currYear) {
-          filteredDonations.push(don);
-        }
-      });
-      setDonations(filteredDonations);
+  const funds = useQuery<FundInterface[]>({
+    queryKey: ["/funds", "GivingApi"],
+    placeholderData: [],
+  });
 
-      // Filter fundDonations to only include those matching the filtered donations
-      ApiHelper.get("/fundDonations?personId=" + params.personId, "GivingApi").then((fd) => {
-        const filteredFundDonations = fd.filter((fundDonation: any) => filteredDonations.some((donation) => donation.id === fundDonation.donationId));
-        setFundDonations(filteredFundDonations);
-      });
-    });
+  const allDonations = useQuery<DonationInterface[]>({
+    queryKey: ["/donations?personId=" + params.personId, "GivingApi"],
+    placeholderData: [],
+  });
 
-    setTimeout(() => {
-      window.print();
-      navigate(-1);
-    }, 1500);
-  };
+  const allFundDonations = useQuery<FundDonationInterface[]>({
+    queryKey: ["/fundDonations?personId=" + params.personId, "GivingApi"],
+    placeholderData: [],
+  });
+
+  const donations = useMemo(() => {
+    return allDonations.data?.filter((don) => {
+      const donationDate = new Date(don.donationDate);
+      return donationDate.getFullYear() === currYear;
+    }) || [];
+  }, [allDonations.data, currYear]);
+
+  const fundDonations = useMemo(() => {
+    return allFundDonations.data?.filter((fundDonation) => donations.some((donation) => donation.id === fundDonation.donationId)) || [];
+  }, [allFundDonations.data, donations]);
+
+  useEffect(() => {
+    if (person.data && funds.data && donations.length >= 0 && fundDonations.length >= 0) {
+      setTimeout(() => {
+        window.print();
+        navigate(-1);
+      }, 1500);
+    }
+  }, [person.data, funds.data, donations, fundDonations, navigate]);
 
   const getDate = () => {
     const date = DateHelper.prettyDate(new Date());
@@ -71,7 +75,7 @@ export const PrintDonationPage = () => {
   const getFundArray = () => {
     const result: any[] = [];
     fundDonations.forEach((fd) => {
-      const fund = ArrayHelper.getOne(funds, "id", fd.fundId);
+      const fund = ArrayHelper.getOne(funds.data || [], "id", fd.fundId);
       const donation = ArrayHelper.getOne(donations, "id", fd.donationId);
       if (donation) {
         result.push({ fund: fund?.name, amount: fd.amount });
@@ -128,7 +132,7 @@ export const PrintDonationPage = () => {
     const result: React.ReactElement[] = [];
     fundDonations.forEach((fd) => {
       const donation = ArrayHelper.getOne(donations, "id", fd.donationId);
-      const fund = ArrayHelper.getOne(funds, "id", fd.fundId);
+      const fund = ArrayHelper.getOne(funds.data || [], "id", fd.fundId);
       if (donation) {
         result.push(<tr style={{ height: "28px" }}>
             <td
@@ -185,7 +189,6 @@ export const PrintDonationPage = () => {
     return result;
   };
 
-  useEffect(loadData, [params.personId, currYear, navigate]);
 
   return (
     <>
@@ -225,11 +228,11 @@ export const PrintDonationPage = () => {
         <div style={{ display: "flex" }}>
           {/* Donor */}
           <div style={{ width: "50%" }}>
-            <h1>{person?.name?.display}</h1>
-            <p>{person?.contactInfo?.address1}</p>
-            <p>{person?.contactInfo?.address2}</p>
-            <p>{person?.contactInfo?.mobilePhone}</p>
-            <p>{person?.contactInfo?.email}</p>
+            <h1>{person.data?.name?.display}</h1>
+            <p>{person.data?.contactInfo?.address1}</p>
+            <p>{person.data?.contactInfo?.address2}</p>
+            <p>{person.data?.contactInfo?.mobilePhone}</p>
+            <p>{person.data?.contactInfo?.email}</p>
           </div>
           {/* Church */}
           <div style={{ width: "50%" }}>

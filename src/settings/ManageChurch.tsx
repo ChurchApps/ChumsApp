@@ -1,61 +1,72 @@
-import React, { useState } from "react";
-import { type ChurchInterface, ApiHelper, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
+import React, { useState, useCallback } from "react";
+import { type ChurchInterface, UserHelper, Permissions, Locale, ApiHelper, Loading } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { Box, Typography, Stack, Button, IconButton } from "@mui/material";
 import { Settings as SettingsIcon, Lock as LockIcon, PlayArrow as PlayArrowIcon, Language as LanguageIcon, LocationOn as LocationOnIcon, Edit as EditIcon } from "@mui/icons-material";
 import { RolesTab, ChurchSettingsEdit } from "./components";
+import { useQuery } from "@tanstack/react-query";
 
 export const ManageChurch = () => {
   const [selectedTab, setSelectedTab] = React.useState("roles");
   const [showChurchSettings, setShowChurchSettings] = React.useState(false);
-  const [church, setChurch] = useState<ChurchInterface | null>(null);
   const [redirectUrl, setRedirectUrl] = useState<string>("");
 
   const jwt = ApiHelper.getConfig("MembershipApi").jwt;
   const churchId = UserHelper.currentUserChurch.church.id;
 
-  const loadData = () => {
-    if (!UserHelper.checkAccess(Permissions.membershipApi.settings.edit)) setRedirectUrl("/");
-    ApiHelper.get("/churches/" + churchId + "?include=permissions", "MembershipApi").then((data) => setChurch(data));
-  };
+  const church = useQuery<ChurchInterface>({
+    queryKey: [`/churches/${churchId}?include=permissions`, "MembershipApi"],
+    enabled: !!churchId,
+  });
 
-  const getCurrentTab = () => {
-    if (church) {
+  const checkAccess = useCallback(() => {
+    if (!UserHelper.checkAccess(Permissions.membershipApi.settings.edit)) {
+      setRedirectUrl("/");
+    }
+  }, []);
+
+  const getCurrentTab = useCallback(() => {
+    if (church.data) {
       switch (selectedTab) {
         case "roles":
-          return <RolesTab church={church} />;
+          return <RolesTab church={church.data} />;
         default:
           return <div></div>;
       }
     }
     return <div></div>;
-  };
+  }, [church.data, selectedTab]);
 
-  const getDisplayAddress = () => {
+  const getDisplayAddress = useCallback(() => {
     const result: string[] = [];
-    if (church !== null) {
-      if (!isEmpty(church.address1)) result.push(church.address1);
-      if (!isEmpty(church.address2)) result.push(church.address2);
-      if (!isEmpty(church.city)) {
-        const cityStateZip = `${church.city}${church.state ? ", " + church.state : ""}${church.zip ? " " + church.zip : ""}`;
+    if (church.data) {
+      if (!isEmpty(church.data.address1)) result.push(church.data.address1);
+      if (!isEmpty(church.data.address2)) result.push(church.data.address2);
+      if (!isEmpty(church.data.city)) {
+        const cityStateZip = `${church.data.city}${church.data.state ? ", " + church.data.state : ""}${church.data.zip ? " " + church.data.zip : ""}`;
         result.push(cityStateZip);
       }
-      if (!isEmpty(church.country)) result.push(church.country);
+      if (!isEmpty(church.data.country)) result.push(church.data.country);
     }
     return result.join(", ");
-  };
+  }, [church.data]);
 
   const isEmpty = (value: any) => value === undefined || value === null || value === "";
 
+  const handleUpdated = useCallback(() => {
+    setShowChurchSettings(false);
+    church.refetch();
+  }, [church]);
 
-  React.useEffect(loadData, [UserHelper.currentUserChurch.church.id]); //eslint-disable-line
+  React.useEffect(checkAccess, [checkAccess]);
 
   React.useEffect(() => {
     if (selectedTab === "" || selectedTab === "settings") setSelectedTab("roles");
   }, [selectedTab]);
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
-  if (!church) return <div>Loading...</div>;
+  if (church.isLoading) return <Loading />;
+  if (!church.data) return <div>No church data available</div>;
 
   return (
     <>
@@ -86,7 +97,7 @@ export const ManageChurch = () => {
                     fontSize: { xs: "1.75rem", md: "2.125rem" },
                   }}
                 >
-                  {church?.name}
+                  {church.data?.name}
                 </Typography>
                 {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
                   <IconButton
@@ -113,7 +124,7 @@ export const ManageChurch = () => {
                     fontSize: { xs: "0.875rem", md: "1rem" },
                   }}
                 >
-                  {church?.subDomain ? `${church.subDomain}.churchapps.org` : "Church Management"}
+                  {church.data?.subDomain ? `${church.data.subDomain}.churchapps.org` : "Church Management"}
                 </Typography>
               </Stack>
               {getDisplayAddress() && (
@@ -186,7 +197,7 @@ export const ManageChurch = () => {
       {/* Church Settings Modal/Component */}
       {showChurchSettings && (
         <Box sx={{ p: 3 }}>
-          <ChurchSettingsEdit church={church} updatedFunction={() => { loadData(); setShowChurchSettings(false); }} />
+          <ChurchSettingsEdit church={church.data} updatedFunction={handleUpdated} />
         </Box>
       )}
 

@@ -7,6 +7,9 @@ import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import "@churchapps/apphelper/dist/components/markdownEditor/editor.css";
 //TODO export the css from apphelper
 import { EnvironmentHelper } from "./helpers";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { queryClient } from "./queryClient";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -89,15 +92,17 @@ const App: React.FC = () => (
 
     <ThemeProvider theme={mdTheme}>
       <CssBaseline />
-      <CookiesProvider defaultSetOptions={{ path: "/" }}>
-        <UserProvider>
-          <Router>
-            <Routes>
-              <Route path="/*" element={<ControlPanel />} />
-            </Routes>
-          </Router>
-        </UserProvider>
-      </CookiesProvider>
+      <QueryClientProvider client={queryClient}>
+        <CookiesProvider defaultSetOptions={{ path: "/" }}>
+          <UserProvider>
+            <Router>
+              <Routes>
+                <Route path="/*" element={<ControlPanel />} />
+              </Routes>
+            </Router>
+          </UserProvider>
+        </CookiesProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   </>
 );

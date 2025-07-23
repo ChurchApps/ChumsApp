@@ -13,6 +13,7 @@ import {
   ArrayHelper,
   Locale,
 } from "@churchapps/apphelper";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import {
  Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField 
@@ -27,56 +28,44 @@ interface Props {
 }
 
 export const GroupMembers: React.FC<Props> = memo((props) => {
-  const [groupMembers, setGroupMembers] = useState<GroupMemberInterface[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
   const [showTemplates, setShowTemplates] = useState<boolean>(false);
   const [selectedTemplate, setSelectedTemplate] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [count, setCount] = useState<number>(0);
 
-  const loadData = useCallback(() => {
-    setIsLoading(true);
-    ApiHelper.get("/groupmembers?groupId=" + props.group.id, "MembershipApi")
-      .then((data) => {
-        setGroupMembers(data);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [props.group.id]);
+  const groupMembers = useQuery<GroupMemberInterface[]>({
+    queryKey: [`/groupmembers?groupId=${props.group?.id}`, "MembershipApi"],
+    placeholderData: [],
+    enabled: !!props.group?.id,
+  });
 
   const handleRemove = useCallback((member: GroupMemberInterface) => {
-      const members = [...groupMembers];
-      const idx = members.indexOf(member);
-      members.splice(idx, 1);
-      setGroupMembers(members);
-      ApiHelper.delete("/groupmembers/" + member.id, "MembershipApi");
+      ApiHelper.delete("/groupmembers/" + member.id, "MembershipApi").then(() => {
+        groupMembers.refetch();
+      });
     }, [groupMembers]);
 
   const handleToggleLeader = useCallback((member: GroupMemberInterface) => {
       member.leader = !member.leader;
       console.log("Member", member);
       ApiHelper.post("/groupmembers", [member], "MembershipApi").then(() => {
-        loadData();
+        groupMembers.refetch();
       });
-    }, [loadData]);
+    }, [groupMembers]);
 
   const getMemberByPersonId = useCallback((personId: string) => {
       let result = null;
-      for (let i = 0; i < groupMembers.length; i++) if (groupMembers[i].personId === personId) result = groupMembers[i];
+      for (let i = 0; i < groupMembers.data.length; i++) if (groupMembers.data[i].personId === personId) result = groupMembers.data[i];
       return result;
-    }, [groupMembers]);
+    }, [groupMembers.data]);
 
   const handleAdd = useCallback(() => {
     if (getMemberByPersonId(props.addedPerson.id) === null) {
       const gm = { groupId: props.group.id, personId: props.addedPerson.id, person: props.addedPerson } as GroupMemberInterface;
-      ApiHelper.post("/groupmembers", [gm], "MembershipApi").then((data) => {
-        gm.id = data[0].id;
+      ApiHelper.post("/groupmembers", [gm], "MembershipApi").then(() => {
+        groupMembers.refetch();
       });
-      const members = [...groupMembers];
-      members.push(gm);
-      setGroupMembers(members);
       props.addedCallback();
     }
   }, [props, getMemberByPersonId, groupMembers]);
@@ -86,15 +75,15 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
   const tableRows = useMemo(() => {
     const rows: JSX.Element[] = [];
 
-    if (groupMembers.length === 0) {
+    if (groupMembers.data.length === 0) {
       rows.push(<TableRow key="0">
           <TableCell>{Locale.label("groups.groupMembers.noMem")}</TableCell>
         </TableRow>);
       return rows;
     }
 
-    for (let i = 0; i < groupMembers.length; i++) {
-      const gm = groupMembers[i];
+    for (let i = 0; i < groupMembers.data.length; i++) {
+      const gm = groupMembers.data[i];
       const editLinks = [];
       if (canEdit) {
         if (gm.leader) {
@@ -137,11 +126,11 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
         </TableRow>);
     }
     return rows;
-  }, [groupMembers, canEdit, handleToggleLeader, handleRemove]);
+  }, [groupMembers.data, canEdit, handleToggleLeader, handleRemove]);
 
   const tableHeader = useMemo(() => {
     const rows: JSX.Element[] = [];
-    if (groupMembers.length === 0) {
+    if (groupMembers.data.length === 0) {
       return rows;
     }
 
@@ -151,7 +140,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
         <th></th>
       </TableRow>);
     return rows;
-  }, [groupMembers.length]);
+  }, [groupMembers.data.length]);
 
   const handleTemplateMessage = (templateType: string) => {
     let newMessage = "";
@@ -182,12 +171,12 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
           ariaLabel="Send message to members"
         ></SmallButton>
       )}
-      <ExportLink data={groupMembers} spaceAfter={true} filename="groupmembers.csv" />
+      <ExportLink data={groupMembers.data} spaceAfter={true} filename="groupmembers.csv" />
     </>
   );
 
   const handleSend = async () => {
-    const peopleIds = ArrayHelper.getIds(groupMembers, "personId");
+    const peopleIds = ArrayHelper.getIds(groupMembers.data, "personId");
     const ids = peopleIds.filter((id) => id !== UserHelper.person.id); //remove the one that is sending the message.
     const data: any = {
       peopleIds: ids,
@@ -198,11 +187,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
     await ApiHelper.post("/notifications/create", data, "MessagingApi");
   };
 
-  React.useEffect(() => {
-    if (props.group.id !== undefined) {
-      loadData();
-    }
-  }, [props.group, loadData]);
+  // Query automatically refetches when props.group.id changes
 
   React.useEffect(() => {
     if (props.addedPerson?.id !== undefined) {
@@ -211,7 +196,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
   }, [props.addedPerson, handleAdd]);
 
   const getTable = () => {
-    if (isLoading) return <Loading />;
+    if (groupMembers.isLoading) return <Loading />;
     else {
       return (
         <Table id="groupMemberTable">

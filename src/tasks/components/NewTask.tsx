@@ -6,6 +6,7 @@ import {
  ApiHelper, ArrayHelper, type ConversationInterface, ErrorMessages, Locale, type MessageInterface, type TaskInterface, UserHelper 
 } from "@churchapps/apphelper";
 import { ContentPicker } from "./ContentPicker";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Assignment as TaskIcon, Search as SearchIcon, Cancel as CancelIcon, Save as SaveIcon } from "@mui/icons-material";
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export const NewTask = (props: Props) => {
+  const queryClient = useQueryClient();
   const initialData = {
     status: "Open",
     createdByType: "person",
@@ -29,6 +31,41 @@ export const NewTask = (props: Props) => {
   const [message, setMessage] = React.useState<MessageInterface>({});
   const [modalField, setModalField] = React.useState("");
   const [errors, setErrors] = React.useState([]);
+
+  const createTaskMutation = useMutation({
+    mutationFn: async (taskData: { task: TaskInterface; message?: MessageInterface }) => {
+      const tasks = await ApiHelper.post("/tasks", [taskData.task], "DoingApi");
+      const createdTask = tasks[0];
+
+      if (taskData.message?.content && taskData.message.content.trim() !== "") {
+        const conv: ConversationInterface = {
+          allowAnonymousPosts: false,
+          contentType: "task",
+          contentId: createdTask.id,
+          title: "Task #" + createdTask.id + " Notes",
+          visibility: "hidden",
+        };
+        const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
+        
+        const updatedTask = { ...createdTask };
+        updatedTask.conversationId = result[0].id;
+        await ApiHelper.post("/tasks", [updatedTask], "DoingApi");
+
+        const taskMessage = { ...taskData.message };
+        taskMessage.conversationId = updatedTask.conversationId;
+        await ApiHelper.post("/messages", [taskMessage], "MessagingApi");
+      }
+
+      await sendNotification(createdTask);
+      return createdTask;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/tasks", "DoingApi"] });
+      queryClient.invalidateQueries({ queryKey: ["/tasks/closed", "DoingApi"] });
+      queryClient.invalidateQueries({ queryKey: ["/tasks/loadForGroups", "DoingApi"] });
+      props.onSave();
+    },
+  });
 
   const validate = () => {
     const result = [];
@@ -58,28 +95,9 @@ export const NewTask = (props: Props) => {
     await ApiHelper.post("/notifications/create", data, "MessagingApi");
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (validate()) {
-      const tasks = await ApiHelper.post("/tasks", [task], "DoingApi");
-      if (message.content && (message.content?.trim() !== undefined || message.content?.trim() !== "")) {
-        const conv: ConversationInterface = {
-          allowAnonymousPosts: false,
-          contentType: "task",
-          contentId: task.id,
-          title: "Task #" + tasks[0].id + " Notes",
-          visibility: "hidden",
-        };
-        const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
-        const t = { ...tasks[0] };
-        t.conversationId = result[0].id;
-        ApiHelper.post("/tasks", [t], "DoingApi");
-
-        message.conversationId = t.conversationId;
-        //message.contentId = tasks[0].id;
-        await ApiHelper.post("/messages", [message], "MessagingApi");
-      }
-      await sendNotification(tasks[0]);
-      props.onSave();
+      createTaskMutation.mutate({ task, message });
     }
   };
 
@@ -244,13 +262,14 @@ export const NewTask = (props: Props) => {
               variant="contained"
               startIcon={<SaveIcon />}
               onClick={handleSave}
+              disabled={createTaskMutation.isPending}
               sx={{
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
               }}
             >
-              {Locale.label("common.save")}
+              {createTaskMutation.isPending ? "Saving..." : Locale.label("common.save")}
             </Button>
           </Stack>
         </Stack>

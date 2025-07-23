@@ -1,23 +1,23 @@
 import React from "react";
 import { GroupBanner, GroupDetailsEdit } from "./components";
-import { ApiHelper, type GroupInterface, ImageEditor } from "@churchapps/apphelper";
+import { type GroupInterface, ImageEditor } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { GroupMembersTab } from "./components/GroupMembersTab";
 import { GroupSessionsTab } from "./components/GroupSessionsTab";
 import { Grid } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 
 export const GroupPage = () => {
   const params = useParams();
 
-  const [group, setGroup] = React.useState({} as GroupInterface);
   const [selectedTab, setSelectedTab] = React.useState("");
   const [editMode, setEditMode] = React.useState(false);
   const [inPhotoEditMode, setInPhotoEditMode] = React.useState(false);
 
-  const loadData = () => {
-    ApiHelper.get("/groups/" + params.id, "MembershipApi").then((data) => setGroup(data));
-  };
-  React.useEffect(loadData, [params.id]);
+  const group = useQuery<GroupInterface>({
+    queryKey: [`/groups/${params.id}`, "MembershipApi"],
+    placeholderData: {} as GroupInterface,
+  });
 
   React.useEffect(() => {
     if (selectedTab === "") {
@@ -29,13 +29,13 @@ export const GroupPage = () => {
     let currentTab = null;
     switch (selectedTab) {
       case "members":
-        currentTab = <GroupMembersTab key="members" group={group} />;
+        currentTab = <GroupMembersTab key="members" group={group.data} />;
         break;
       case "sessions":
-        currentTab = <GroupSessionsTab key="sessions" group={group} />;
+        currentTab = <GroupSessionsTab key="sessions" group={group.data} />;
         break;
       default:
-        currentTab = <GroupMembersTab key="members" group={group} />;
+        currentTab = <GroupMembersTab key="members" group={group.data} />;
         break;
     }
     return currentTab;
@@ -47,34 +47,32 @@ export const GroupPage = () => {
 
   const handleUpdated = () => {
     setEditMode(false);
-    loadData();
+    group.refetch();
   };
 
   const handlePhotoUpdated = (dataUrl: string) => {
-    const updatedGroup = { ...group };
-    updatedGroup.photoUrl = dataUrl;
-    setGroup(updatedGroup);
+    group.refetch();
     setInPhotoEditMode(false);
   };
 
   const togglePhotoEditor = (show: boolean, updatedGroup?: GroupInterface) => {
     setInPhotoEditMode(show);
     if (updatedGroup) {
-      setGroup(updatedGroup);
+      group.refetch();
     }
   };
 
-  const imageEditor = inPhotoEditMode && <ImageEditor aspectRatio={16 / 9} photoUrl={group.photoUrl} onCancel={() => togglePhotoEditor(false)} onUpdate={handlePhotoUpdated} />;
+  const imageEditor = inPhotoEditMode && <ImageEditor aspectRatio={16 / 9} photoUrl={group.data?.photoUrl} onCancel={() => togglePhotoEditor(false)} onUpdate={handlePhotoUpdated} />;
 
   return (
     <>
       {imageEditor}
-      <GroupBanner group={group} selectedTab={selectedTab} onTabChange={setSelectedTab} togglePhotoEditor={togglePhotoEditor} onEdit={handleEdit} editMode={editMode} />
+      <GroupBanner group={group.data} selectedTab={selectedTab} onTabChange={setSelectedTab} togglePhotoEditor={togglePhotoEditor} onEdit={handleEdit} editMode={editMode} />
       <Grid container spacing={2}>
         <Grid size={{ xs: 12 }}>
           <div id="mainContent">
             {editMode ? (
-              <GroupDetailsEdit id="groupDetailsBox" group={group} updatedFunction={handleUpdated} togglePhotoEditor={togglePhotoEditor} />
+              <GroupDetailsEdit id="groupDetailsBox" group={group.data} updatedFunction={handleUpdated} togglePhotoEditor={togglePhotoEditor} />
             ) : (
               getCurrentTab()
             )}
