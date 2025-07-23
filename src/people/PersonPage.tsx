@@ -9,11 +9,9 @@ import { PersonForm } from "./components/PersonForm";
 import { useQuery } from "@tanstack/react-query";
 
 export const PersonPage = () => {
-  const [person, setPerson] = React.useState<PersonInterface>(null);
   const [selectedTab, setSelectedTab] = React.useState("");
   const context = useContext(UserContext);
   const params = useParams();
-  const [allForms, setAllForms] = useState(null);
   const [form, setForm] = useState<FormInterface>(null);
   const [inPhotoEditMode, setInPhotoEditMode] = React.useState<boolean>(false);
   const [editMode, setEditMode] = React.useState<string>("display");
@@ -34,23 +32,10 @@ export const PersonPage = () => {
     formsData.refetch();
   }, [personData, formsData]);
 
-  const processedPersonData = useMemo(() => {
-    if (!personData.data) return null;
-    const p: PersonInterface = personData.data;
-    if (!p.contactInfo) p.contactInfo = { homePhone: "", workPhone: "", mobilePhone: "" };
-    else {
-      if (!p.contactInfo.homePhone) p.contactInfo.homePhone = "";
-      if (!p.contactInfo.mobilePhone) p.contactInfo.mobilePhone = "";
-      if (!p.contactInfo.workPhone) p.contactInfo.workPhone = "";
-    }
-    return p;
-  }, [personData.data]);
-
-  const loadData = useCallback(() => {
-    console.log("LOAD DATA", params.id);
+  const person = useMemo(() => {
     if (params.id === "add" || !params.id) {
       // Create a new empty person for adding
-      const newPerson: PersonInterface = {
+      return {
         name: {
           first: "",
           last: "",
@@ -75,12 +60,20 @@ export const PersonPage = () => {
         maritalStatus: "",
         nametagNotes: "",
       };
-      setPerson(newPerson);
-    } else {
-      setPerson(processedPersonData);
     }
-    setAllForms(formsData.data);
-  }, [params.id, processedPersonData, formsData.data]);
+    
+    if (!personData.data) return null;
+    const p: PersonInterface = personData.data;
+    if (!p.contactInfo) p.contactInfo = { homePhone: "", workPhone: "", mobilePhone: "" };
+    else {
+      if (!p.contactInfo.homePhone) p.contactInfo.homePhone = "";
+      if (!p.contactInfo.mobilePhone) p.contactInfo.mobilePhone = "";
+      if (!p.contactInfo.workPhone) p.contactInfo.workPhone = "";
+    }
+    return p;
+  }, [params.id, personData.data]);
+
+  const allForms = formsData.data;
 
   const handleCreateConversation = async () => {
     const conv: ConversationInterface = {
@@ -94,8 +87,8 @@ export const PersonPage = () => {
     const p = { ...person };
     p.conversationId = result[0].id;
     ApiHelper.post("/people", [p], "MembershipApi");
-    setPerson(p);
-    return p.conversationId;
+    refetch(); // Refetch data instead of updating local state
+    return result[0].id;
   };
 
   const defaultTab = "details";
@@ -111,7 +104,7 @@ export const PersonPage = () => {
     switch (selectedTab) {
       case "details":
         currentTab = (
-          <PersonDetails key="details" person={person} loadData={loadData} updatedFunction={refetch} inPhotoEditMode={inPhotoEditMode} setInPhotoEditMode={setInPhotoEditMode} editMode={editMode} setEditMode={setEditMode} />
+          <PersonDetails key="details" person={person} updatedFunction={refetch} inPhotoEditMode={inPhotoEditMode} setInPhotoEditMode={setInPhotoEditMode} editMode={editMode} setEditMode={setEditMode} />
         );
         break;
       case "notes":
@@ -145,7 +138,6 @@ export const PersonPage = () => {
     return currentTab;
   };
 
-  React.useEffect(loadData, [params.id]);
 
   return (
     <>
