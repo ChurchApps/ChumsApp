@@ -9,6 +9,7 @@ import { useMountedState } from "@churchapps/apphelper";
 import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { PageHeader } from "../components/ui";
 import { useQuery } from "@tanstack/react-query";
+import { AISearch } from "./components/AISearch";
 
 export const PeoplePage = memo(() => {
   const [searchResults, setSearchResults] = React.useState(null);
@@ -154,6 +155,12 @@ export const PeoplePage = memo(() => {
                 setIsSearchPerformed(true);
               }}
               updatedFunction={refetch}
+            />
+            <AISearch
+              updateSearchResults={(people) => {
+                setSearchResults(people);
+                setIsSearchPerformed(true);
+              }}
             />
           </Grid>
           <Grid size={{ xs: 12, md: 9 }}>
