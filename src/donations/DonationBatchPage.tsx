@@ -1,6 +1,7 @@
 import React from "react";
 import { DonationEdit, Donations } from "./components";
-import { type DonationBatchInterface, UserHelper, type FundInterface, Permissions, type DonationInterface, DateHelper, CurrencyHelper } from "@churchapps/apphelper";
+import { UserHelper, Permissions, DateHelper, CurrencyHelper } from "@churchapps/apphelper";
+import { type DonationBatchInterface, type FundInterface, type DonationInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Box, Typography, Card, Stack, Icon, Button } from "@mui/material";

@@ -4,7 +4,7 @@ import {
  Grid, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Card, CardContent 
 } from "@mui/material";
 import { Church as ChurchIcon, ShowChart as UsageIcon, Book as TranslationIcon, Settings as AdminIcon } from "@mui/icons-material";
-import { PageHeader } from "../components";
+import { PageHeader } from "@churchapps/apphelper";
 import { UsageTrendsTab } from "./components/UsageTrendTab";
 import { ChurchesTab } from "./components/ChurchesTab";
 import { TranslationTab } from "./components/TranslationTab";

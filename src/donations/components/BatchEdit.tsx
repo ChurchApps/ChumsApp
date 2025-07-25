@@ -1,5 +1,6 @@
 import React, { memo, useCallback } from "react";
-import { ApiHelper, InputBox, DateHelper, type DonationBatchInterface, UniqueIdHelper, Locale } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, DateHelper, UniqueIdHelper, Locale } from "@churchapps/apphelper";
+import { type DonationBatchInterface } from "@churchapps/helpers";
 import { TextField } from "@mui/material";
 
 interface Props {

@@ -1,4 +1,5 @@
-import { ArrayHelper, CurrencyHelper, DateHelper, type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/apphelper";
+import { ArrayHelper, CurrencyHelper, DateHelper } from "@churchapps/apphelper";
+import { type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/helpers";
 import React, { useContext, useEffect, useMemo } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";

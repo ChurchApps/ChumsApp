@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { ApiHelper, UserHelper } from "@churchapps/apphelper";
+import { ApiHelper, UserHelper, Permissions } from "@churchapps/apphelper";
 import UserContext from "./UserContext";
-import { LoginPage, Permissions } from "@churchapps/apphelper";
+import { LoginPage } from "@churchapps/apphelper-login";
 import { Alert, Box } from "@mui/material";
 
 export const Login: React.FC = () => {

@@ -8,7 +8,8 @@ export {
   InputBox, 
   ErrorMessages, 
   ExportLink, 
-  ImageEditor 
+  ImageEditor,
+  PageHeader 
 } from "@churchapps/apphelper";
 
 export { ErrorBoundary } from "./ErrorBoundary";

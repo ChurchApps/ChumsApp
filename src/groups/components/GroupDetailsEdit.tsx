@@ -6,7 +6,7 @@ import {
  Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Box, Typography, Icon, type SelectChangeEvent 
 } from "@mui/material";
 import { useMountedState, type GroupInterface } from "@churchapps/apphelper";
-import { MarkdownEditor } from "@churchapps/apphelper";
+import { MarkdownEditor } from "@churchapps/apphelper-markdown";
 import { GroupLabelsEdit } from "./GroupLabelsEdit";
 
 interface Props {

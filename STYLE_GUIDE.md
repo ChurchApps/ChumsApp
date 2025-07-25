@@ -771,11 +771,12 @@ The following reusable UI components have been implemented and are available in 
 All components can be imported from `@/components/ui`:
 
 ```tsx
-import { PageHeader, IconText, StatusChip, EmptyState, CardWithHeader, LoadingButton, PersonAvatar } from '@/components/ui';
+import { IconText, StatusChip, EmptyState, CardWithHeader, LoadingButton, PersonAvatar } from '@/components/ui';
+import { PageHeader } from '@churchapps/apphelper';
 ```
 
 #### 1. **PageHeader** Component ✅ **IMPLEMENTED**
-**Location**: `src/components/ui/PageHeader.tsx`  
+**Location**: `@churchapps/apphelper`  
 **Usage**: Used across all major pages for consistent header styling
 
 ```tsx

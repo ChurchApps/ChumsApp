@@ -2,7 +2,8 @@ import React from "react";
 import { FundEdit } from "./components";
 import { UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { type FundInterface, Permissions } from "@churchapps/apphelper";
+import { Permissions } from "@churchapps/apphelper";
+import { type FundInterface } from "@churchapps/helpers";
 import {
  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 
 } from "@mui/material";

@@ -4,7 +4,8 @@ import {
 } from "@mui/material";
 import { Person as PersonIcon, Search as SearchIcon } from "@mui/icons-material";
 import { ChumsPersonHelper } from "../../helpers";
-import { ApiHelper, Locale, type PersonInterface, SearchCondition, Loading } from "@churchapps/apphelper";
+import { ApiHelper, Locale, Loading } from "@churchapps/apphelper";
+import { type PersonInterface, SearchCondition } from "@churchapps/helpers";
 import { PeopleSearchResults } from "../../people/components";
 import { useQuery } from "@tanstack/react-query";
 

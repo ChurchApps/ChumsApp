@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Description as DescriptionIcon, Add as AddIcon, Archive as ArchiveIcon } from "@mui/icons-material";
 import { SmallButton } from "@churchapps/apphelper";
-import { PageHeader } from "../components";
+import { PageHeader } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 
 export const FormsPage = () => {

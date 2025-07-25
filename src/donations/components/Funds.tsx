@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { DisplayBox, UserHelper, Loading, type FundInterface, Permissions, SmallButton, Locale } from "@churchapps/apphelper";
+import { DisplayBox, UserHelper, Loading, Permissions, SmallButton, Locale } from "@churchapps/apphelper";
+import { type FundInterface } from "@churchapps/helpers";
 import { FundEdit } from ".";
 import { Link } from "react-router-dom";
 import { Icon, Table, TableBody, TableCell, TableRow } from "@mui/material";
