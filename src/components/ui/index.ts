@@ -1,4 +1,3 @@
-export { PageHeader } from "./PageHeader";
 export { IconText } from "./IconText";
 export { StatusChip } from "./StatusChip";
 export { EmptyState } from "./EmptyState";
