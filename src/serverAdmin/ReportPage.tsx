@@ -1,11 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { ReportWithFilter, type ReportInterface, ApiHelper, Locale } from "@churchapps/apphelper";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 import {
- Box, Typography, Stack, Container, Card, CardContent, Skeleton, Breadcrumbs, Link as MuiLink, Chip 
+  Box, Typography, Stack, Container, Card, CardContent, Skeleton, Breadcrumbs, Link as MuiLink, Chip
 } from "@mui/material";
 import { AdminPanelSettings as AdminIcon, ArrowBack as BackIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { ReportWithFilter } from "../components/reporting/ReportWithFilter";
+import { type ReportInterface } from "@churchapps/helpers";
 
 export const ReportPage = () => {
   const params = useParams();

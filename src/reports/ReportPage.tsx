@@ -1,12 +1,14 @@
 import React, { memo } from "react";
 import { useParams } from "react-router-dom";
-import { ReportWithFilter, type ReportInterface, Locale } from "@churchapps/apphelper";
+import { Locale } from "@churchapps/apphelper";
 import {
- Box, Typography, Stack, Container, Card, CardContent, Skeleton, Breadcrumbs, Link as MuiLink 
+  Box, Typography, Stack, Container, Card, CardContent, Skeleton, Breadcrumbs, Link as MuiLink
 } from "@mui/material";
 import { Summarize as SummarizeIcon, ArrowBack as BackIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { ReportWithFilter } from "../components/reporting/ReportWithFilter";
+import { type ReportInterface } from "@churchapps/helpers";
 
 export const ReportPage = memo(() => {
   const params = useParams();

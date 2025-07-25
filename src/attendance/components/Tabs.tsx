@@ -1,6 +1,7 @@
 import React from "react";
-import { ReportWithFilter, Permissions, UserHelper, Locale } from "@churchapps/apphelper";
+import { Permissions, UserHelper, Locale } from "@churchapps/apphelper";
 import { Box, Paper, Tabs as MaterialTabs, Tab } from "@mui/material";
+import { ReportWithFilter } from "../../components/reporting";
 
 export const Tabs: React.FC = () => {
   const [selectedTab, setSelectedTab] = React.useState("");
