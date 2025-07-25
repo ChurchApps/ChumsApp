@@ -10,7 +10,7 @@ CHUMS (CHUrch Management Software) is a React-based church management applicatio
 
 ```bash
 # Setup and installation
-npm install
+npm install --legacy-peer-deps  # Use legacy peer deps due to React 19 compatibility
 npm run postinstall  # Copy locales and CSS from apphelper
 
 # Development

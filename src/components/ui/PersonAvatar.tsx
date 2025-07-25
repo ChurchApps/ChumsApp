@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Avatar } from "@mui/material";
-import { PersonInterface, PersonHelper } from "@churchapps/apphelper";
+import { PersonHelper } from "@churchapps/apphelper";
+import { PersonInterface } from "@churchapps/helpers";
 
 interface PersonAvatarProps {
   person: PersonInterface;

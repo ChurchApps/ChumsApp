@@ -1,12 +1,11 @@
 export * from "./Interfaces";
 
-// AppHelper imports (for donation and person components)
+// AppHelper imports (for person components)
 export { 
   ApiHelper, 
   ArrayHelper, 
   CurrencyHelper, 
   DateHelper, 
-  DonationHelper,
   PersonHelper, 
   UniqueIdHelper, 
   AnalyticsHelper, 
@@ -15,6 +14,9 @@ export {
   Locale, 
   UserHelper 
 } from "@churchapps/apphelper";
+
+// Donation helper from donations package
+export { DonationHelper } from "@churchapps/apphelper-donations";
 
 // Local helpers
 export { ChumsPersonHelper } from "./ChumsPersonHelper";
