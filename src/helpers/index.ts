@@ -6,7 +6,6 @@ export {
   ArrayHelper, 
   CurrencyHelper, 
   DateHelper, 
-  DonationHelper,
   PersonHelper, 
   UniqueIdHelper, 
   AnalyticsHelper, 
@@ -15,6 +14,8 @@ export {
   Locale, 
   UserHelper 
 } from "@churchapps/apphelper";
+
+export { DonationHelper } from "@churchapps/apphelper-donations";
 
 // Local helpers
 export { ChumsPersonHelper } from "./ChumsPersonHelper";

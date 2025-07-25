@@ -3,7 +3,8 @@ import {
 } from "@mui/material";
 import React, { memo, useCallback, useMemo } from "react";
 import { PersonAdd } from "../../components";
-import { ApiHelper, DateHelper, UniqueIdHelper, PersonHelper, Locale, FundDonations } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
+import { FundDonations } from "@churchapps/apphelper-donations";
 import { type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/apphelper";
 
 interface Props {

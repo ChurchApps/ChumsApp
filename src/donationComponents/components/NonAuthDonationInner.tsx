@@ -3,7 +3,8 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useState, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import { ErrorMessages, InputBox, FundDonations } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox } from "@churchapps/apphelper";
+import { FundDonations } from "@churchapps/apphelper-donations";
 import { ApiHelper, DateHelper, CurrencyHelper, Locale, DonationHelper } from "../../helpers";
 import { FundDonationInterface, FundInterface, PersonInterface, StripeDonationInterface, StripePaymentMethod, UserInterface, ChurchInterface } from "@churchapps/helpers";
 import {
