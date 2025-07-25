@@ -1,8 +1,9 @@
 import React from "react";
 import { Search, MergeModal } from ".";
 import {
- InputBox, type PersonInterface, ApiHelper, type GroupMemberInterface, type VisitInterface, type DonationInterface, type FormSubmissionInterface, Locale 
+ InputBox, ApiHelper, type GroupMemberInterface, type VisitInterface, type FormSubmissionInterface, Locale 
 } from "@churchapps/apphelper";
+import { type PersonInterface, type DonationInterface } from "@churchapps/helpers";
 import { useNavigate } from "react-router-dom";
 import { useMountedState } from "@churchapps/apphelper";
 

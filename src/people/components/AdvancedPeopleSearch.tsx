@@ -1,8 +1,9 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { ChumsPersonHelper } from ".";
 import {
- ArrayHelper, type GroupMemberInterface, InputBox, type SearchCondition, type PersonInterface, ApiHelper, type FundDonationInterface, Locale 
+ ArrayHelper, type GroupMemberInterface, InputBox, type SearchCondition, ApiHelper, Locale 
 } from "@churchapps/apphelper";
+import { type PersonInterface, type FundDonationInterface } from "@churchapps/helpers";
 import { EditCondition } from "./EditCondition";
 import { Button, Icon, Box } from "@mui/material";
 

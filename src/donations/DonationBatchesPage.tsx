@@ -2,7 +2,8 @@ import React from "react";
 import { BatchEdit, DonationEvents } from "./components";
 import { DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import { type DonationBatchInterface, Permissions } from "@churchapps/apphelper";
+import { Permissions } from "@churchapps/apphelper";
+import { type DonationBatchInterface } from "@churchapps/helpers";
 import { useQuery } from "@tanstack/react-query";
 import {
  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 

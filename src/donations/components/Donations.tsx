@@ -3,17 +3,15 @@ import {
   ArrayHelper,
   ApiHelper,
   UserHelper,
-  type DonationInterface,
   DateHelper,
   CurrencyHelper,
-  type DonationBatchInterface,
   ExportLink,
   Permissions,
   UniqueIdHelper,
-  type FundInterface,
   Loading,
   Locale,
 } from "@churchapps/apphelper";
+import { type DonationInterface, type DonationBatchInterface, type FundInterface } from "@churchapps/helpers";
 import {
  Table, TableBody, TableCell, TableRow, TableHead, Typography, Stack, Icon, Button, Box 
 } from "@mui/material";
