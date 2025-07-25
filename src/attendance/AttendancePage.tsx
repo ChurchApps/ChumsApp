@@ -3,9 +3,10 @@ import {
  Grid, Icon, Box, Typography, Button, Stack, Card, CardContent 
 } from "@mui/material";
 import { CalendarMonth as CalendarIcon, Group as GroupIcon, TrendingUp as TrendingIcon, Settings as SettingsIcon } from "@mui/icons-material";
-import { Locale, UserHelper, ReportWithFilter, ApiHelper } from "@churchapps/apphelper";
+import { Locale, UserHelper, ApiHelper } from "@churchapps/apphelper";
 import { AttendanceSetup } from "./components/AttendanceSetup";
 import { Permissions } from "@churchapps/apphelper";
+import { ReportWithFilter } from "../components";
 
 export const AttendancePage = () => {
   const [selectedTab, setSelectedTab] = React.useState("");

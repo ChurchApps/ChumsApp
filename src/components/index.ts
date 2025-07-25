@@ -24,5 +24,8 @@ export { Wrapper } from "./Wrapper";
 export { PersonAdd } from "./PersonAdd";
 export { CreatePerson } from "./CreatePerson";
 
+// Report Components
+export { ReportWithFilter } from "./ReportWithFilter";
+
 // UI Components
 export * from "./ui";
