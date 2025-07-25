@@ -240,7 +240,14 @@ export const SongsPage = memo(() => {
         </Stack>
       </Box>
     );
-  }, [songs.isLoading, songs.data, filteredSongs, formatSeconds, handleImageError, failedImages]);
+  }, [
+songs.isLoading,
+songs.data,
+filteredSongs,
+formatSeconds,
+handleImageError,
+failedImages
+]);
 
   if (redirect) return <Navigate to={redirect} />;
 
