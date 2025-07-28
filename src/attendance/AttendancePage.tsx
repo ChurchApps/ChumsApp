@@ -3,7 +3,7 @@ import {
   Grid, Icon, Box, Typography, Button, Stack, Card, CardContent
 } from "@mui/material";
 import { CalendarMonth as CalendarIcon, Group as GroupIcon, TrendingUp as TrendingIcon, Settings as SettingsIcon } from "@mui/icons-material";
-import { Locale, UserHelper, ApiHelper } from "@churchapps/apphelper";
+import { Locale, UserHelper, ApiHelper, PageHeader } from "@churchapps/apphelper";
 import { AttendanceSetup } from "./components/AttendanceSetup";
 import { Permissions } from "@churchapps/apphelper";
 import { ReportWithFilter } from "../components/reporting";
@@ -92,137 +92,44 @@ export const AttendancePage = () => {
 
   return (
     <>
-      {/* Enhanced Blue Header */}
-      <Box
-        sx={{
-          backgroundColor: "var(--c1l2)",
-          color: "#FFF",
-          p: { xs: 2, md: 3 },
-          mb: 3,
-        }}
+      <PageHeader
+        icon={<CalendarIcon />}
+        title={Locale.label("attendance.attendancePage.att")}
+        subtitle="Track and manage church attendance across all services"
+        statistics={[
+          { icon: <Icon>church</Icon>, value: stats.campuses.toString(), label: "Campuses" },
+          { icon: <CalendarIcon />, value: stats.serviceTimes.toString(), label: "Service Times" },
+          { icon: <Icon>schedule</Icon>, value: stats.scheduledGroups.toString(), label: "Scheduled Groups" },
+          { icon: <Icon>groups</Icon>, value: stats.unscheduledGroups.toString(), label: "Unscheduled Groups" },
+          { icon: <GroupIcon />, value: stats.totalGroups.toString(), label: "Total Groups" }
+        ]}
       >
-        <Stack spacing={2}>
-          {/* Top Row: Title, Icon, and Tab Navigation */}
-          <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }}>
-            {/* Column 1: Title and Icon */}
-            <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-              <Box
-                sx={{
-                  backgroundColor: "rgba(255,255,255,0.2)",
-                  borderRadius: "12px",
-                  p: 1.5,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <CalendarIcon sx={{ fontSize: 32, color: "#FFF" }} />
-              </Box>
-              <Box>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontWeight: 600,
-                    mb: 0.5,
-                    fontSize: { xs: "1.75rem", md: "2.125rem" },
-                  }}
-                >
-                  {Locale.label("attendance.attendancePage.att")}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "rgba(255,255,255,0.9)",
-                    fontSize: { xs: "0.875rem", md: "1rem" },
-                  }}
-                >
-                  Track and manage church attendance across all services
-                </Typography>
-              </Box>
-            </Stack>
-
-            {/* Column 2: Tab Navigation */}
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-              {getTabs().map((tab) => (
-                <Button
-                  key={tab.key}
-                  variant={selectedTab === tab.key ? "contained" : "outlined"}
-                  startIcon={tabIcons[tab.key] || <Icon>{tab.icon}</Icon>}
-                  onClick={() => setSelectedTab(tab.key)}
-                  sx={{
-                    color: selectedTab === tab.key ? "#1565C0" : "#FFF",
-                    backgroundColor: selectedTab === tab.key ? "#FFF" : "transparent",
-                    borderColor: "rgba(255,255,255,0.3)",
-                    minWidth: "auto",
-                    px: 2,
-                    py: 1,
-                    fontSize: "0.875rem",
-                    "&:hover": {
-                      backgroundColor: selectedTab === tab.key ? "#FFF" : "rgba(255,255,255,0.1)",
-                      borderColor: "#FFF",
-                    },
-                  }}
-                >
-                  {tab.label}
-                </Button>
-              ))}
-            </Stack>
-          </Stack>
-
-          {/* Statistics Row */}
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={3} flexWrap="wrap" useFlexGap justifyContent="space-between">
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Icon sx={{ color: "#FFF", fontSize: 20 }}>church</Icon>
-              <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-                {stats.campuses}
-              </Typography>
-              <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-                Campuses
-              </Typography>
-            </Stack>
-
-            <Stack direction="row" spacing={1} alignItems="center">
-              <CalendarIcon sx={{ color: "#FFF", fontSize: 20 }} />
-              <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-                {stats.serviceTimes}
-              </Typography>
-              <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-                Service Times
-              </Typography>
-            </Stack>
-
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Icon sx={{ color: "#FFF", fontSize: 20 }}>schedule</Icon>
-              <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-                {stats.scheduledGroups}
-              </Typography>
-              <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-                Scheduled Groups
-              </Typography>
-            </Stack>
-
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Icon sx={{ color: "#FFF", fontSize: 20 }}>groups</Icon>
-              <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-                {stats.unscheduledGroups}
-              </Typography>
-              <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-                Unscheduled Groups
-              </Typography>
-            </Stack>
-
-            <Stack direction="row" spacing={1} alignItems="center">
-              <GroupIcon sx={{ color: "#FFF", fontSize: 20 }} />
-              <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-                {stats.totalGroups}
-              </Typography>
-              <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-                Total Groups
-              </Typography>
-            </Stack>
-          </Stack>
+        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+          {getTabs().map((tab) => (
+            <Button
+              key={tab.key}
+              variant={selectedTab === tab.key ? "contained" : "outlined"}
+              startIcon={tabIcons[tab.key] || <Icon>{tab.icon}</Icon>}
+              onClick={() => setSelectedTab(tab.key)}
+              sx={{
+                color: selectedTab === tab.key ? "#1565C0" : "#FFF",
+                backgroundColor: selectedTab === tab.key ? "#FFF" : "transparent",
+                borderColor: "rgba(255,255,255,0.3)",
+                minWidth: "auto",
+                px: 2,
+                py: 1,
+                fontSize: "0.875rem",
+                "&:hover": {
+                  backgroundColor: selectedTab === tab.key ? "#FFF" : "rgba(255,255,255,0.1)",
+                  borderColor: "#FFF",
+                },
+              }}
+            >
+              {tab.label}
+            </Button>
+          ))}
         </Stack>
-      </Box>
+      </PageHeader>
 
       {/* Main Content */}
       <Grid container spacing={3} sx={{ px: { xs: 2, md: 3 } }}>

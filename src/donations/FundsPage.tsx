@@ -1,6 +1,6 @@
 import React from "react";
 import { FundEdit } from "./components";
-import { UserHelper, ExportLink, Loading, Locale } from "@churchapps/apphelper";
+import { UserHelper, ExportLink, Loading, Locale, PageHeader } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Permissions } from "@churchapps/apphelper";
 import { type FundInterface } from "@churchapps/helpers";
@@ -214,84 +214,39 @@ export const FundsPage = () => {
 
   return (
     <>
-      {/* Modern Blue Header */}
-      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
-          {/* Left side: Title and Icon */}
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-            <Box
-              sx={{
-                backgroundColor: "rgba(255,255,255,0.2)",
-                borderRadius: "12px",
-                p: 1.5,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <FundIcon sx={{ fontSize: 32, color: "#FFF" }} />
-            </Box>
-            <Box>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 600,
-                  mb: 0.5,
-                  fontSize: { xs: "1.75rem", md: "2.125rem" },
-                }}
-              >
-                {Locale.label("donations.donations.funds")}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "rgba(255,255,255,0.9)",
-                  fontSize: { xs: "0.875rem", md: "1rem" },
-                }}
-              >
-                Manage donation funds and track giving categories
-              </Typography>
-            </Box>
-          </Stack>
-
-          {/* Right side: Quick Actions */}
-          <Stack direction="row" spacing={1} flexWrap="wrap">
-            {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "#FFF",
-                  borderColor: "rgba(255,255,255,0.5)",
-                  "&:hover": {
-                    borderColor: "#FFF",
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                  },
-                }}
-                startIcon={<AddIcon />}
-                onClick={() => {
-                  setEditFundId("");
-                }}
-                data-testid="add-fund-button"
-              >
-                Add Fund
-              </Button>
-            )}
-          </Stack>
-        </Stack>
-
-        {/* Statistics Row */}
-        <Stack direction="row" spacing={3} flexWrap="wrap" useFlexGap justifyContent="flex-start" sx={{ mt: 3 }}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <FundIcon sx={{ color: "#FFF", fontSize: 20 }} />
-            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {stats.totalFunds}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-              Total Funds
-            </Typography>
-          </Stack>
-        </Stack>
-      </Box>
+      <PageHeader
+        icon={<FundIcon />}
+        title={Locale.label("donations.donations.funds")}
+        subtitle="Manage donation funds and track giving categories"
+        statistics={[
+          {
+            icon: <FundIcon />,
+            value: stats.totalFunds,
+            label: "Total Funds"
+          }
+        ]}
+      >
+        {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
+          <Button
+            variant="outlined"
+            sx={{
+              color: "#FFF",
+              borderColor: "rgba(255,255,255,0.5)",
+              "&:hover": {
+                borderColor: "#FFF",
+                backgroundColor: "rgba(255,255,255,0.1)",
+              },
+            }}
+            startIcon={<AddIcon />}
+            onClick={() => {
+              setEditFundId("");
+            }}
+            data-testid="add-fund-button"
+          >
+            Add Fund
+          </Button>
+        )}
+      </PageHeader>
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>

@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { ApiHelper, ArrayHelper } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, PageHeader } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { useQuery } from "@tanstack/react-query";
@@ -225,210 +225,40 @@ refetch
 
   return (
     <>
-      {/* Modern Blue Header */}
-      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
-          {/* Left side: Album Art, Title and Details */}
-          <Stack direction="row" spacing={3} alignItems="center" sx={{ flex: 1 }}>
-            {/* Album Art */}
-            <Avatar
-              src={songDetail.data?.thumbnail}
-              sx={{
-                width: 80,
-                height: 80,
-                bgcolor: "rgba(255,255,255,0.2)",
-                border: "2px solid rgba(255,255,255,0.3)",
-              }}
-            >
-              <MusicIcon sx={{ fontSize: 40, color: "#FFF" }} />
-            </Avatar>
-
-            {/* Song Info */}
-            <Box>
-              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: { xs: "1.75rem", md: "2.125rem" },
-                  }}
-                >
-                  {songDetail.data?.title || song.data?.name || "Loading..."}
-                </Typography>
-                <IconButton
-                  onClick={() => setEditSongDetails(true)}
-                  sx={{
-                    color: "rgba(255,255,255,0.8)",
-                    "&:hover": {
-                      color: "#FFF",
-                      backgroundColor: "rgba(255,255,255,0.1)",
-                    },
-                  }}
-                  size="small"
-                >
-                  <EditIcon fontSize="small" />
-                </IconButton>
-              </Stack>
-
-              {/* Song Stats - All Details */}
-              <Stack direction="row" spacing={2} flexWrap="wrap" sx={{ mt: 1, gap: 1 }}>
-                {songDetail.data?.artist && (
-                  <Chip
-                    icon={<ArtistIcon />}
-                    label={songDetail.data.artist}
-                    size="small"
-                    sx={{
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      color: "#FFF",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      fontSize: "0.75rem",
-                    }}
-                  />
-                )}
-
-                {songDetail.data?.album && (
-                  <Chip
-                    icon={<AlbumIcon />}
-                    label={songDetail.data.album}
-                    size="small"
-                    sx={{
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      color: "#FFF",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      fontSize: "0.75rem",
-                    }}
-                  />
-                )}
-
-                {songDetail.data?.releaseDate && (
-                  <Chip
-                    icon={<DateIcon />}
-                    label={new Date(songDetail.data.releaseDate).toLocaleDateString()}
-                    size="small"
-                    sx={{
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      color: "#FFF",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      fontSize: "0.75rem",
-                    }}
-                  />
-                )}
-
-                {songDetail.data?.language && (
-                  <Chip
-                    icon={<LanguageIcon />}
-                    label={songDetail.data.language}
-                    size="small"
-                    sx={{
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      color: "#FFF",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      fontSize: "0.75rem",
-                    }}
-                  />
-                )}
-
-                {songDetail.data?.seconds && (
-                  <Chip
-                    icon={<TimerIcon />}
-                    label={formatSeconds(songDetail.data.seconds)}
-                    size="small"
-                    sx={{
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      color: "#FFF",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      fontSize: "0.75rem",
-                    }}
-                  />
-                )}
-
-                {songDetail.data?.keySignature && (
-                  <Chip
-                    icon={<KeyIcon />}
-                    label={`Key: ${songDetail.data.keySignature}`}
-                    size="small"
-                    sx={{
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      color: "#FFF",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      fontSize: "0.75rem",
-                    }}
-                  />
-                )}
-
-                {songDetail.data?.tones && (
-                  <Chip
-                    icon={<NoteIcon />}
-                    label={`Tones: ${songDetail.data.tones}`}
-                    size="small"
-                    sx={{
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      color: "#FFF",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      fontSize: "0.75rem",
-                    }}
-                  />
-                )}
-
-                {songDetail.data?.meter && (
-                  <Chip
-                    icon={<TimeIcon />}
-                    label={`Meter: ${songDetail.data.meter}`}
-                    size="small"
-                    sx={{
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      color: "#FFF",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      fontSize: "0.75rem",
-                    }}
-                  />
-                )}
-
-                {songDetail.data?.bpm && (
-                  <Chip
-                    icon={<BpmIcon />}
-                    label={`${songDetail.data.bpm} BPM`}
-                    size="small"
-                    sx={{
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      color: "#FFF",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      fontSize: "0.75rem",
-                    }}
-                  />
-                )}
-              </Stack>
-            </Box>
-          </Stack>
-
-          {/* Right side: Action Buttons */}
-          <Stack
-            direction="row"
-            spacing={1}
-            sx={{
-              flexShrink: 0,
-              justifyContent: { xs: "flex-start", md: "flex-end" },
-              width: { xs: "100%", md: "auto" },
-            }}
-          >
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={() => setShowSearch(true)}
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                },
-              }}
-            >
-              Add Arrangement
-            </Button>
-          </Stack>
-        </Stack>
-      </Box>
+      <PageHeader
+        icon={<MusicIcon />}
+        title={songDetail.data?.title || song.data?.name || "Loading..."}
+        subtitle="Manage song arrangements and details"
+      >
+        <IconButton
+          onClick={() => setEditSongDetails(true)}
+          sx={{
+            color: "rgba(255,255,255,0.8)",
+            "&:hover": {
+              color: "#FFF",
+              backgroundColor: "rgba(255,255,255,0.1)",
+            },
+          }}
+          size="small"
+        >
+          <EditIcon fontSize="small" />
+        </IconButton>
+        <Button
+          variant="outlined"
+          startIcon={<AddIcon />}
+          onClick={() => setShowSearch(true)}
+          sx={{
+            color: "#FFF",
+            borderColor: "rgba(255,255,255,0.5)",
+            "&:hover": {
+              borderColor: "#FFF",
+              backgroundColor: "rgba(255,255,255,0.1)",
+            },
+          }}
+        >
+          Add Arrangement
+        </Button>
+      </PageHeader>
 
       <Box sx={{ p: 3 }}>
         {editSongDetails ? (

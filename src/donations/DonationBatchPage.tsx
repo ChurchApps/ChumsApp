@@ -1,6 +1,6 @@
 import React from "react";
 import { DonationEdit, Donations } from "./components";
-import { UserHelper, Permissions, DateHelper, CurrencyHelper } from "@churchapps/apphelper";
+import { UserHelper, Permissions, DateHelper, CurrencyHelper, PageHeader } from "@churchapps/apphelper";
 import { type DonationBatchInterface, type FundInterface, type DonationInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -65,92 +65,42 @@ export const DonationBatchPage = () => {
 
   return (
     <>
-      {/* Modern Blue Header */}
-      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
-          {/* Left side: Title and Icon */}
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-            <Box
-              sx={{
-                backgroundColor: "rgba(255,255,255,0.2)",
-                borderRadius: "12px",
-                p: 1.5,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <DonationIcon sx={{ fontSize: 32, color: "#FFF" }} />
-            </Box>
-            <Box>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 600,
-                  mb: 0.5,
-                  fontSize: { xs: "1.75rem", md: "2.125rem" },
-                }}
-              >
-                {batch.data?.name || "Donation Batch"}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "rgba(255,255,255,0.9)",
-                  fontSize: { xs: "0.875rem", md: "1rem" },
-                }}
-              >
-                {batch.data?.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.data.batchDate))}` : "Manage donations in this batch"}
-              </Typography>
-            </Box>
-          </Stack>
-
-          {/* Right side: Quick Actions */}
-          {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && funds.data?.length > 0 && (
-            <Box>
-              <Button
-                variant="outlined"
-                startIcon={<AddIcon />}
-                onClick={showAddDonation}
-                data-testid="add-donation-button"
-                sx={{
-                  color: "#FFF",
-                  borderColor: "rgba(255,255,255,0.5)",
-                  "&:hover": {
-                    borderColor: "#FFF",
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                  },
-                }}
-              >
-                Add Donation
-              </Button>
-            </Box>
-          )}
-        </Stack>
-
-        {/* Statistics Row */}
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={3} flexWrap="wrap" useFlexGap justifyContent="flex-start" sx={{ mt: 3 }}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <ReceiptIcon sx={{ color: "#FFF", fontSize: 20 }} />
-            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {stats.totalDonations}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-              Total Donations
-            </Typography>
-          </Stack>
-
-          <Stack direction="row" spacing={1} alignItems="center">
-            <MoneyIcon sx={{ color: "#FFF", fontSize: 20 }} />
-            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {CurrencyHelper.formatCurrency(stats.totalAmount)}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-              Total Amount
-            </Typography>
-          </Stack>
-        </Stack>
-      </Box>
+      <PageHeader
+        icon={<DonationIcon />}
+        title={batch.data?.name || "Donation Batch"}
+        subtitle={batch.data?.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.data.batchDate))}` : "Manage donations in this batch"}
+        statistics={[
+          {
+            icon: <ReceiptIcon />,
+            value: stats.totalDonations,
+            label: "Total Donations"
+          },
+          {
+            icon: <MoneyIcon />,
+            value: CurrencyHelper.formatCurrency(stats.totalAmount),
+            label: "Total Amount"
+          }
+        ]}
+      >
+        {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && funds.data?.length > 0 && (
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={showAddDonation}
+            data-testid="add-donation-button"
+            sx={{
+              color: "#FFF",
+              borderColor: "rgba(255,255,255,0.5)",
+              "&:hover": {
+                borderColor: "#FFF",
+                backgroundColor: "rgba(255,255,255,0.1)",
+              },
+            }}
+          >
+            Add Donation
+          </Button>
+        )}
+      </PageHeader>
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>

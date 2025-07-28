@@ -1,6 +1,6 @@
 import React from "react";
 import { BatchEdit, DonationEvents } from "./components";
-import { DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, Locale } from "@churchapps/apphelper";
+import { DateHelper, UserHelper, ExportLink, Loading, CurrencyHelper, Locale, PageHeader } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { Permissions } from "@churchapps/apphelper";
 import { type DonationBatchInterface } from "@churchapps/helpers";
@@ -277,104 +277,49 @@ export const DonationBatchesPage = () => {
 
   return (
     <>
-      {/* Modern Blue Header */}
-      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
-          {/* Left side: Title and Icon */}
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-            <Box
-              sx={{
-                backgroundColor: "rgba(255,255,255,0.2)",
-                borderRadius: "12px",
-                p: 1.5,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <DonationIcon sx={{ fontSize: 32, color: "#FFF" }} />
-            </Box>
-            <Box>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 600,
-                  mb: 0.5,
-                  fontSize: { xs: "1.75rem", md: "2.125rem" },
-                }}
-              >
-                {Locale.label("donations.donations.batches")}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "rgba(255,255,255,0.9)",
-                  fontSize: { xs: "0.875rem", md: "1rem" },
-                }}
-              >
-                Manage donation batches and track giving records
-              </Typography>
-            </Box>
-          </Stack>
-
-          {/* Right side: Quick Actions */}
-          <Stack direction="row" spacing={1} flexWrap="wrap">
-            {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "#FFF",
-                  borderColor: "rgba(255,255,255,0.5)",
-                  "&:hover": {
-                    borderColor: "#FFF",
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                  },
-                }}
-                startIcon={<AddIcon />}
-                onClick={() => {
-                  setEditBatchId("");
-                }}
-                data-testid="add-batch-button"
-              >
-                Add Batch
-              </Button>
-            )}
-          </Stack>
-        </Stack>
-
-        {/* Statistics Row */}
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={3} flexWrap="wrap" useFlexGap justifyContent="space-between" sx={{ mt: 3 }}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <DonationIcon sx={{ color: "#FFF", fontSize: 20 }} />
-            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {stats.totalBatches}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-              Total Batches
-            </Typography>
-          </Stack>
-
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Icon sx={{ color: "#FFF", fontSize: 20 }}>receipt</Icon>
-            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {stats.totalDonations}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-              Total Donations
-            </Typography>
-          </Stack>
-
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Icon sx={{ color: "#FFF", fontSize: 20 }}>attach_money</Icon>
-            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {stats.totalAmount.toLocaleString("en-US", { style: "decimal", minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-              Total Amount
-            </Typography>
-          </Stack>
-        </Stack>
-      </Box>
+      <PageHeader
+        icon={<DonationIcon />}
+        title={Locale.label("donations.donations.batches")}
+        subtitle="Manage donation batches and track giving records"
+        statistics={[
+          {
+            icon: <DonationIcon />,
+            value: stats.totalBatches,
+            label: "Total Batches"
+          },
+          {
+            icon: <Icon>receipt</Icon>,
+            value: stats.totalDonations,
+            label: "Total Donations"
+          },
+          {
+            icon: <Icon>attach_money</Icon>,
+            value: stats.totalAmount.toLocaleString("en-US", { style: "decimal", minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+            label: "Total Amount"
+          }
+        ]}
+      >
+        {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
+          <Button
+            variant="outlined"
+            sx={{
+              color: "#FFF",
+              borderColor: "rgba(255,255,255,0.5)",
+              "&:hover": {
+                borderColor: "#FFF",
+                backgroundColor: "rgba(255,255,255,0.1)",
+              },
+            }}
+            startIcon={<AddIcon />}
+            onClick={() => {
+              setEditBatchId("");
+            }}
+            data-testid="add-batch-button"
+          >
+            Add Batch
+          </Button>
+        )}
+      </PageHeader>
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>
