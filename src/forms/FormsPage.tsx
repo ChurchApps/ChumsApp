@@ -186,25 +186,6 @@ export const FormsPage = () => {
               {Locale.label("forms.formsPage.addForm") || "Add Form"}
             </Button>
           )}
-          <Button
-            variant="outlined"
-            onClick={() => {
-              setSelectedTab("forms");
-            }}
-            sx={{
-              color: "#FFF",
-              backgroundColor: "transparent",
-              borderColor: "#FFF",
-              fontWeight: selectedTab === "forms" ? 600 : 400,
-              "&:hover": {
-                backgroundColor: "rgba(255,255,255,0.1)",
-                color: "#FFF",
-                borderColor: "#FFF",
-              },
-            }}
-          >
-            {Locale.label("forms.formsPage.forms")}
-          </Button>
           {archivedForms.data?.length > 0 && (
             <Button
               variant="outlined"
