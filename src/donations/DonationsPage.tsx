@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { UserHelper, Locale, Permissions } from "@churchapps/apphelper";
 import { Box } from "@mui/material";
 import { VolunteerActivism as DonationIcon } from "@mui/icons-material";
-import { PageHeader } from "../components";
+import { PageHeader } from "@churchapps/apphelper";
 import { ReportWithFilter } from "../components/reporting/ReportWithFilter";
 
 export const DonationsPage = memo(() => {

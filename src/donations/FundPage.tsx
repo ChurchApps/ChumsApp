@@ -1,19 +1,18 @@
 import React from "react";
 import {
   ApiHelper,
-  type DonationBatchInterface,
   DateHelper,
   UserHelper,
-  type FundDonationInterface,
   ExportLink,
   Permissions,
   UniqueIdHelper,
-  type PersonInterface,
   ArrayHelper,
   Loading,
   CurrencyHelper,
   Locale,
+  PageHeader,
 } from "@churchapps/apphelper";
+import { type DonationBatchInterface, type FundDonationInterface, type PersonInterface } from "@churchapps/helpers";
 import { useParams, Link } from "react-router-dom";
 import {
  Table, TableBody, TableRow, TableCell, TableHead, TextField, Box, Typography, Card, Stack, Button 
@@ -240,80 +239,28 @@ export const FundPage = () => {
 
   return (
     <>
-      {/* Modern Blue Header */}
-      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
-          {/* Left side: Title and Icon */}
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-            <Box
-              sx={{
-                backgroundColor: "rgba(255,255,255,0.2)",
-                borderRadius: "12px",
-                p: 1.5,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <FundIcon sx={{ fontSize: 32, color: "#FFF" }} />
-            </Box>
-            <Box>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 600,
-                  mb: 0.5,
-                  fontSize: { xs: "1.75rem", md: "2.125rem" },
-                }}
-              >
-                {fund.name} {Locale.label("donations.fundsPage.don")}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "rgba(255,255,255,0.9)",
-                  fontSize: { xs: "0.875rem", md: "1rem" },
-                }}
-              >
-                Track donations and contributions to this fund
-              </Typography>
-            </Box>
-          </Stack>
-        </Stack>
-
-        {/* Statistics Row */}
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={3} flexWrap="wrap" useFlexGap justifyContent="space-between" sx={{ mt: 3 }}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <ReceiptIcon sx={{ color: "#FFF", fontSize: 20 }} />
-            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {stats.totalDonations}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-              Total Donations
-            </Typography>
-          </Stack>
-
-          <Stack direction="row" spacing={1} alignItems="center">
-            <PersonIcon sx={{ color: "#FFF", fontSize: 20 }} />
-            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {stats.uniqueDonors}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-              Unique Donors
-            </Typography>
-          </Stack>
-
-          <Stack direction="row" spacing={1} alignItems="center">
-            <MoneyIcon sx={{ color: "#FFF", fontSize: 20 }} />
-            <Typography variant="h6" sx={{ color: "#FFF", fontWeight: 600, mr: 1 }}>
-              {CurrencyHelper.formatCurrency(stats.totalAmount)}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)", fontSize: "0.875rem" }}>
-              Total Amount
-            </Typography>
-          </Stack>
-        </Stack>
-      </Box>
+      <PageHeader
+        icon={<FundIcon />}
+        title={`${fund.name} ${Locale.label("donations.fundsPage.don")}`}
+        subtitle="Track donations and contributions to this fund"
+        statistics={[
+          {
+            icon: <ReceiptIcon />,
+            value: stats.totalDonations,
+            label: "Total Donations"
+          },
+          {
+            icon: <PersonIcon />,
+            value: stats.uniqueDonors,
+            label: "Unique Donors"
+          },
+          {
+            icon: <MoneyIcon />,
+            value: CurrencyHelper.formatCurrency(stats.totalAmount),
+            label: "Total Amount"
+          }
+        ]}
+      />
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>

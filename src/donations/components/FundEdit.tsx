@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { ApiHelper, InputBox, type FundInterface, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { type FundInterface } from "@churchapps/helpers";
 import { Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
 
 interface Props {

@@ -8,13 +8,13 @@ import {
   Permissions,
   type GroupInterface,
   Loading,
-  type FundInterface,
   type CampusInterface,
   DateHelper,
   type ServiceInterface,
   type ServiceTimeInterface,
   Locale,
 } from "@churchapps/apphelper";
+import { type FundInterface } from "@churchapps/helpers";
 
 interface Props {
   conditionAdded: (condition: any) => void;

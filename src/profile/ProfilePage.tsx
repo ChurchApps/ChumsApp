@@ -7,7 +7,8 @@ import { ApiHelper, UserHelper, Locale } from "@churchapps/apphelper";
 import { NotificationPreferences } from "./components/NotificationPreferences";
 import { LinkedAccounts } from "./components/LinkedAccounts";
 import { Person as PersonIcon } from "@mui/icons-material";
-import { PageHeader, LoadingButton } from "../components";
+import { PageHeader } from "@churchapps/apphelper";
+import { LoadingButton } from "../components";
 import { useMutation } from "@tanstack/react-query";
 
 export const ProfilePage = () => {

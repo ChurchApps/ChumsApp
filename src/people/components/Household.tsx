@@ -1,14 +1,13 @@
 import React, { memo, useMemo } from "react";
 import { HouseholdEdit } from ".";
 import {
- DisplayBox, ApiHelper, UserHelper, type PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper, Locale 
+ DisplayBox, ApiHelper, UserHelper, type PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper, Locale, PersonAvatar 
 } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import {
  Table, TableBody, TableRow, TableCell, Typography, Stack, Box, Chip 
 } from "@mui/material";
 import { Email as EmailIcon, Phone as PhoneIcon } from "@mui/icons-material";
-import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   person: PersonInterface;

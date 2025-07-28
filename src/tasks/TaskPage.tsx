@@ -1,6 +1,6 @@
 import React, { useContext, useCallback } from "react";
 import { Menu, MenuItem, Typography, Box, Stack, Button } from "@mui/material";
-import { ApiHelper, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale, Loading } from "@churchapps/apphelper";
+import { ApiHelper, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale, Loading, PageHeader } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
 import UserContext from "../UserContext";
@@ -94,140 +94,86 @@ export const TaskPage = () => {
   else {
     return (
       <>
-        {/* Modern Blue Header */}
-        <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-          <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
-            {/* Left side: Title and Icon */}
-            <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-              <Box
-                sx={{
-                  backgroundColor: "rgba(255,255,255,0.2)",
-                  borderRadius: "12px",
-                  p: 1.5,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <TaskIcon sx={{ fontSize: 32, color: "#FFF" }} />
-              </Box>
-              <Box>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontWeight: 600,
-                    mb: 0.5,
-                    fontSize: { xs: "1.75rem", md: "2.125rem" },
-                  }}
-                >
-                  #{task.data.taskNumber} - {task.data?.title}
-                </Typography>
-                <Stack direction="row" spacing={3} flexWrap="wrap" sx={{ mt: 1 }}>
-                  <Box>
-                    <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.7)" }}>
-                      Created {DateHelper.getDisplayDuration(DateHelper.toDate(task.data?.dateCreated))} ago by {task.data.createdByLabel}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.7)" }}>
-                      Associated: {task.data.associatedWithLabel || "Not specified"}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.7)" }}>
-                      Assigned: {task.data.assignedToLabel || "Unassigned"}
-                    </Typography>
-                  </Box>
-                </Stack>
-              </Box>
-            </Stack>
-
-            {/* Right side: Status and Actions */}
-            <Stack
-              direction="row"
-              spacing={1}
+        <PageHeader
+          icon={<TaskIcon />}
+          title={`#${task.data.taskNumber} - ${task.data?.title}`}
+          subtitle={`Created ${DateHelper.getDisplayDuration(DateHelper.toDate(task.data?.dateCreated))} ago by ${task.data.createdByLabel} • Associated: ${task.data.associatedWithLabel || "Not specified"} • Assigned: ${task.data.assignedToLabel || "Unassigned"}`}
+        >
+          <Stack direction="row" spacing={1}>
+            <Button
+              variant={task.data.status === "Open" ? "contained" : "outlined"}
+              startIcon={task.data.status === "Open" ? <OpenIcon /> : <CompletedIcon />}
+              onClick={(e) => setAnchorEl(e.currentTarget)}
               sx={{
-                flexShrink: 0,
-                justifyContent: { xs: "flex-start", md: "flex-end" },
-                width: { xs: "100%", md: "auto" },
+                color: task.data.status === "Open" ? "#FFF" : "#FFF",
+                backgroundColor: task.data.status === "Open" ? "#f57c00" : "transparent",
+                borderColor: task.data.status === "Open" ? "#f57c00" : "#4caf50",
+                "&:hover": {
+                  backgroundColor: task.data.status === "Open" ? "#ef6c00" : "rgba(76, 175, 80, 0.2)",
+                  borderColor: task.data.status === "Open" ? "#ef6c00" : "#4caf50",
+                },
+                textTransform: "none",
+                fontWeight: 600,
               }}
             >
-              <Button
-                variant={task.data.status === "Open" ? "contained" : "outlined"}
-                startIcon={task.data.status === "Open" ? <OpenIcon /> : <CompletedIcon />}
-                onClick={(e) => setAnchorEl(e.currentTarget)}
-                sx={{
-                  color: task.data.status === "Open" ? "#FFF" : "#FFF",
-                  backgroundColor: task.data.status === "Open" ? "#f57c00" : "transparent",
-                  borderColor: task.data.status === "Open" ? "#f57c00" : "#4caf50",
-                  "&:hover": {
-                    backgroundColor: task.data.status === "Open" ? "#ef6c00" : "rgba(76, 175, 80, 0.2)",
-                    borderColor: task.data.status === "Open" ? "#ef6c00" : "#4caf50",
-                  },
-                  textTransform: "none",
-                  fontWeight: 600,
-                }}
-              >
-                {task.data.status}
-              </Button>
-              <Button
-                variant="outlined"
-                size="small"
-                startIcon={<PersonIcon />}
-                onClick={() => setModalField("assignedTo")}
-                sx={{
-                  color: "#FFF",
-                  borderColor: "rgba(255,255,255,0.5)",
-                  minWidth: "auto",
-                  "&:hover": {
-                    borderColor: "#FFF",
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                  },
-                }}
-                title="Edit Assigned To"
-              >
-                Assign
-              </Button>
-              <Button
-                variant="outlined"
-                size="small"
-                startIcon={<GroupIcon />}
-                onClick={() => setModalField("associatedWith")}
-                sx={{
-                  color: "#FFF",
-                  borderColor: "rgba(255,255,255,0.5)",
-                  minWidth: "auto",
-                  "&:hover": {
-                    borderColor: "#FFF",
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                  },
-                }}
-                title="Edit Associated With"
-              >
-                Associate
-              </Button>
-            </Stack>
-
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closeStatusMenu}>
-              <MenuItem
-                onClick={() => {
-                  handleStatusChange("Open");
-                  closeStatusMenu();
-                }}
-              >
-                <OpenIcon sx={{ mr: 1 }} /> {Locale.label("tasks.taskPage.open")}
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleStatusChange("Closed");
-                  closeStatusMenu();
-                }}
-              >
-                <CompletedIcon sx={{ mr: 1 }} /> {Locale.label("tasks.taskPage.closed")}
-              </MenuItem>
-            </Menu>
+              {task.data.status}
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<PersonIcon />}
+              onClick={() => setModalField("assignedTo")}
+              sx={{
+                color: "#FFF",
+                borderColor: "rgba(255,255,255,0.5)",
+                minWidth: "auto",
+                "&:hover": {
+                  borderColor: "#FFF",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                },
+              }}
+              title="Edit Assigned To"
+            >
+              Assign
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<GroupIcon />}
+              onClick={() => setModalField("associatedWith")}
+              sx={{
+                color: "#FFF",
+                borderColor: "rgba(255,255,255,0.5)",
+                minWidth: "auto",
+                "&:hover": {
+                  borderColor: "#FFF",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                },
+              }}
+              title="Edit Associated With"
+            >
+              Associate
+            </Button>
           </Stack>
-        </Box>
+        </PageHeader>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closeStatusMenu}>
+          <MenuItem
+            onClick={() => {
+              handleStatusChange("Open");
+              closeStatusMenu();
+            }}
+          >
+            <OpenIcon sx={{ mr: 1 }} /> {Locale.label("tasks.taskPage.open")}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleStatusChange("Closed");
+              closeStatusMenu();
+            }}
+          >
+            <CompletedIcon sx={{ mr: 1 }} /> {Locale.label("tasks.taskPage.closed")}
+          </MenuItem>
+        </Menu>
 
         {/* Task Content */}
         <Box sx={{ p: 3 }}>

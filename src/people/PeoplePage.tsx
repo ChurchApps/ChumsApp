@@ -7,7 +7,7 @@ import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
 import { useMountedState } from "@churchapps/apphelper";
 import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
-import { PageHeader } from "../components/ui";
+import { PageHeader } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 import { AISearch } from "./components/AISearch";
 

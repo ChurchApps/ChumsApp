@@ -1,11 +1,10 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import {
- ApiHelper, type GroupInterface, DisplayBox, type GroupMemberInterface, PersonHelper, type PersonInterface, Loading, Locale 
+ ApiHelper, type GroupInterface, DisplayBox, type GroupMemberInterface, PersonHelper, type PersonInterface, Loading, Locale, PersonAvatar 
 } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
-import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   group: GroupInterface;

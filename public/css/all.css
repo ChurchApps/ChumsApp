@@ -116,10 +116,15 @@ h1 {
   border-radius: 5px;
 }
 
-#peopleTable img {
+#peopleTable img:not(.MuiAvatar-img) {
   width: 60px;
   height: 45px;
   border-radius: 5px;
+}
+
+#peopleTable .MuiAvatar-root {
+  width: 45px !important;
+  height: 45px !important;
 }
 
 #peopleTable td {
@@ -216,11 +221,17 @@ h1 {
   border-radius: 5px;
 }
 
-#groupMemberTable img,
-#roleMemberTable img {
+#groupMemberTable img:not(.MuiAvatar-img),
+#roleMemberTable img:not(.MuiAvatar-img) {
   width: 60px;
   height: 45px;
   border-radius: 5px;
+}
+
+#groupMemberTable .MuiAvatar-root,
+#roleMemberTable .MuiAvatar-root {
+  width: 40px !important;
+  height: 40px !important;
 }
 
 #groupMemberTable td,

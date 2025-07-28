@@ -1,9 +1,8 @@
 import React from "react";
-import { type PersonInterface, PersonHelper, Locale } from "@churchapps/apphelper";
+import { type PersonInterface, PersonHelper, Locale, PersonAvatar } from "@churchapps/apphelper";
 import {
  Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box 
 } from "@mui/material";
-import { PersonAvatar } from "./ui/PersonAvatar";
 
 interface Props {
   handleSearch: (text: string) => void;
