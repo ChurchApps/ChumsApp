@@ -1,7 +1,7 @@
 import React from "react";
-import { Locale } from "@churchapps/apphelper";
+import { Locale, PageHeader } from "@churchapps/apphelper";
 import {
- Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Container, Paper 
+ Box, Card, CardContent, Typography, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Container, Paper 
 } from "@mui/material";
 import { Summarize as SummarizeIcon, CakeOutlined as BirthdayIcon, TrendingUp as TrendIcon, Groups as GroupsIcon, Today as DailyIcon, VolunteerActivism as DonationIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -41,35 +41,17 @@ export const ReportsPage = () => {
   ];
 
   return (
-    <Container maxWidth="lg">
-      <Box sx={{ py: 3 }}>
-        {/* Page Header */}
-        <Box sx={{ mb: 4 }}>
-          <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
-            <SummarizeIcon
-              sx={{
-                fontSize: 32,
-                color: "primary.main",
-              }}
-            />
-            <Typography
-              variant="h4"
-              component="h1"
-              sx={{
-                fontWeight: 600,
-                color: "text.primary",
-              }}
-            >
-              {Locale.label("reports.reportsPage.reports")}
-            </Typography>
-          </Stack>
-          <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 600 }}>
-            Generate detailed reports and analytics for your church management needs. Choose from various report types to gain insights into attendance, membership, and giving patterns.
-          </Typography>
-        </Box>
+    <>
+      <PageHeader
+        icon={<SummarizeIcon />}
+        title={Locale.label("reports.reportsPage.reports")}
+        subtitle="Generate detailed reports and analytics for your church management needs. Choose from various report types to gain insights into attendance, membership, and giving patterns."
+      />
 
-        {/* Reports Grid */}
-        <Card
+      <Container maxWidth="lg">
+        <Box sx={{ py: 3 }}>
+          {/* Reports Grid */}
+          <Card
           elevation={2}
           sx={{
             borderRadius: 2,
@@ -158,7 +140,8 @@ export const ReportsPage = () => {
             Need help with reports? Each report includes filters and export options to customize your data view.
           </Typography>
         </Paper>
-      </Box>
-    </Container>
+        </Box>
+      </Container>
+    </>
   );
 };

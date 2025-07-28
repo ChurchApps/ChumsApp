@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Grid, Icon, Box, Typography, Button, Stack, Card, CardContent
+  Grid, Icon, Box, Button, Stack, Card, CardContent, Container
 } from "@mui/material";
 import { CalendarMonth as CalendarIcon, Group as GroupIcon, TrendingUp as TrendingIcon, Settings as SettingsIcon } from "@mui/icons-material";
 import { Locale, UserHelper, ApiHelper, PageHeader } from "@churchapps/apphelper";
@@ -132,17 +132,21 @@ export const AttendancePage = () => {
       </PageHeader>
 
       {/* Main Content */}
-      <Grid container spacing={3} sx={{ px: { xs: 2, md: 3 } }}>
-        <Grid size={12}>
-          {selectedTab === "setup" ? (
-            <Card sx={{ borderRadius: 2, boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
-              <CardContent sx={{ p: 0 }}>{getCurrentTab()}</CardContent>
-            </Card>
-          ) : (
-            getCurrentTab()
-          )}
-        </Grid>
-      </Grid>
+      <Container maxWidth="xl">
+        <Box sx={{ py: 3 }}>
+          <Grid container spacing={3}>
+            <Grid size={12}>
+              {selectedTab === "setup" ? (
+                <Card sx={{ borderRadius: 2, boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+                  <CardContent sx={{ p: 0 }}>{getCurrentTab()}</CardContent>
+                </Card>
+              ) : (
+                getCurrentTab()
+              )}
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
     </>
   );
 };
