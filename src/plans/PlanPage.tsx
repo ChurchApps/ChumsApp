@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { ApiHelper, Locale } from "@churchapps/apphelper";
+import { ApiHelper, Locale, PageHeader } from "@churchapps/apphelper";
 import { Assignment } from "./components/Assignment";
-import { Box, Typography, Stack, Button, Container } from "@mui/material";
+import { Box, Stack, Button, Container, Typography } from "@mui/material";
 import { Assignment as AssignmentIcon, Album as AlbumIcon } from "@mui/icons-material";
 import { ServiceOrder } from "./components/ServiceOrder";
 
@@ -69,56 +69,12 @@ export const PlanPage = () => {
 
   return (
     <>
-      {/* Modern Banner Header */}
-      <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
-          {/* Left side: Title and Icon */}
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ flex: 1 }}>
-            <Box
-              sx={{
-                backgroundColor: "rgba(255,255,255,0.2)",
-                borderRadius: "12px",
-                p: 1.5,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <AssignmentIcon sx={{ fontSize: 32, color: "#FFF" }} />
-            </Box>
-            <Box>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 600,
-                  mb: 0.5,
-                  fontSize: { xs: "1.75rem", md: "2.125rem" },
-                }}
-              >
-                {plan.name || Locale.label("plans.planPage.servicePlan")}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: "rgba(255,255,255,0.9)",
-                  fontSize: { xs: "0.875rem", md: "1rem" },
-                }}
-              >
-                Service plan details and team assignments
-              </Typography>
-            </Box>
-          </Stack>
-
-          {/* Right side: Tab Buttons */}
-          <Stack
-            direction="row"
-            spacing={1}
-            sx={{
-              flexShrink: 0,
-              justifyContent: { xs: "flex-start", md: "flex-end" },
-              width: { xs: "100%", md: "auto" },
-            }}
-          >
+      <PageHeader 
+        icon={<AssignmentIcon />} 
+        title={plan.name || Locale.label("plans.planPage.servicePlan")} 
+        subtitle="Service plan details and team assignments"
+        actions={
+          <Stack direction="row" spacing={1}>
             {availableTabs.map((tab, index) => (
               <Button
                 key={tab.key}
@@ -140,8 +96,8 @@ export const PlanPage = () => {
               </Button>
             ))}
           </Stack>
-        </Stack>
-      </Box>
+        }
+      />
 
       {/* Tab Content */}
       <Box sx={{ p: 3 }}>{availableTabs[selectedTab]?.component}</Box>
