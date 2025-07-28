@@ -2,14 +2,13 @@ import React, { useState, memo, useCallback, useMemo } from "react";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { ChumsPersonHelper, UpdateHouseHold } from ".";
 import {
- PersonHelper, DateHelper, InputBox, ApiHelper, type PersonInterface, Loading, ErrorMessages, Locale 
+ PersonHelper, DateHelper, InputBox, ApiHelper, type PersonInterface, Loading, ErrorMessages, Locale, PersonAvatar 
 } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
 import {
  Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent 
 } from "@mui/material";
-import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   id?: string;
@@ -267,7 +266,6 @@ export const PersonEdit = memo((props: Props) => {
               <PersonAvatar
                 person={person}
                 size="xxlarge"
-                editable={true}
                 onClick={handlePhotoClick}
               />
             </div>

@@ -1,4 +1,4 @@
-import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper, type FormInterface } from "@churchapps/apphelper";
+import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper, type FormInterface, PersonAvatar } from "@churchapps/apphelper";
 import { Button, Typography, IconButton, Stack, Menu, MenuItem } from "@mui/material";
 import {
   Edit as EditIcon,
@@ -15,7 +15,6 @@ import {
 } from "@mui/icons-material";
 import React, { memo, useMemo, useState } from "react";
 import { StatusChip } from "../../components";
-import { PersonAvatar } from "../../components/ui/PersonAvatar";
 
 interface Props {
   person: PersonInterface;
@@ -156,7 +155,6 @@ export const PersonBanner = memo((props: Props) => {
             <PersonAvatar
               person={person}
               size="responsive"
-              editable={canEdit}
               onClick={() => canEdit && togglePhotoEditor?.(true)}
             />
           </div>
