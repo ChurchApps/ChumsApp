@@ -8,6 +8,7 @@ export class EnvironmentHelper {
 
   static init = async () => {
     const stage = process.env.REACT_APP_STAGE;
+    console.log(`Environment stage: ${stage}`);
 
     switch (stage) {
       case "staging":
