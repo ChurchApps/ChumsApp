@@ -16,7 +16,12 @@ export const AISearch = (props: Props) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await ApiHelper.post("/query/members", { text: text, subDomain: UserHelper.currentUserChurch.church.subDomain || "", siteUrl: window.location.host || "" }, "MembershipApi");
+      // First, get the filters from AskApi
+      const filters = await ApiHelper.post("/query/people", { query: text }, "AskApi");
+      
+      // Then use those filters to search for people
+      const response = await ApiHelper.post("/people/advancedSearch", filters, "MembershipApi");
+
       props.updateSearchResults(response?.map((p: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(p)));
     } catch (error) {
       setErrors([error as string]);

@@ -71,6 +71,12 @@ export class EnvironmentHelper {
         jwt: "",
         permissions: [],
       },
+      {
+        keyName: "AskApi",
+        url: EnvironmentHelper.Common.AskApi,
+        jwt: "",
+        permissions: [],
+      },
     ];
 
     await Locale.init([`/locales/{{lng}}.json?v=1`, `/apphelper/locales/{{lng}}.json`]);
