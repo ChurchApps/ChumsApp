@@ -165,10 +165,10 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
 
-"@churchapps/apphelper-donations@^0.4.18":
-  version "0.4.18"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper-donations/-/apphelper-donations-0.4.18.tgz"
-  integrity sha512-XPvPCA9dv1ebXnp9OaQF9f8COjlWgWmKpaIzkK3NrnBeDSXeTHIQGZeoGB02aS7nJpwm0vs6qxWfQIv9Rp3Oqg==
+"@churchapps/apphelper-donations@^0.4.25":
+  version "0.4.25"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper-donations/-/apphelper-donations-0.4.25.tgz"
+  integrity sha512-Owa0vIkLMCjujQzLRDP0l3QW73/b7VsErExK/c6o8voLaZaIs52vmkqJRxcXVdK2ZeDwbZQX/Ifcj/AU+6MyhQ==
   dependencies:
     "@emotion/react" "^11.14.0"
     "@emotion/styled" "^11.14.1"
@@ -183,10 +183,10 @@
     react-i18next "^15.6.0"
     rrule "^2.8.1"
 
-"@churchapps/apphelper-login@^0.4.18":
-  version "0.4.18"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper-login/-/apphelper-login-0.4.18.tgz"
-  integrity sha512-BulMhHxn0J2GKEaBm0W3ePueRkZjNpjrgi8cMrPrMFO9Xjw4wKR4V5DSSJrj9SlMXAyfcP01xIFtKfsqrkpItQ==
+"@churchapps/apphelper-login@^0.4.25":
+  version "0.4.25"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper-login/-/apphelper-login-0.4.25.tgz"
+  integrity sha512-ySzGCfez3Cm0okrrlI3DUmeu36ggJ0rQC3g0hKVyc5CCRtU2W70RljA52MCE8VvrkKZ2wt0HeSSmFXSHLebqAA==
   dependencies:
     "@emotion/react" "^11.14.0"
     "@emotion/styled" "^11.14.1"
@@ -199,10 +199,10 @@
     react-google-recaptcha "^3.1.0"
     react-i18next "^15.6.0"
 
-"@churchapps/apphelper-markdown@^0.4.18":
-  version "0.4.18"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper-markdown/-/apphelper-markdown-0.4.18.tgz"
-  integrity sha512-Ye2euQYO6TFJ5Mb3uiVQqXcucXgmoa0l0pFSj+aafXH7g6FzB/aXVxt6OXSL3mHkGuUSV2iZ/Yv8ZstlIgoVIQ==
+"@churchapps/apphelper-markdown@^0.4.25":
+  version "0.4.25"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper-markdown/-/apphelper-markdown-0.4.25.tgz"
+  integrity sha512-KOWoasEr+53PS7rF1FU7xO4RGPg6l2k68D27S75A5Fxe+1NLEwNCZT+MLMkw9nAesoe+p4tZjGbOGM+sxgPHhA==
   dependencies:
     "@lexical/code" "^0.33.0"
     "@lexical/link" "^0.33.0"
@@ -218,10 +218,10 @@
     marked "^16.0.0"
     material-symbols "^0.32.0"
 
-"@churchapps/apphelper@^0.4.17", "@churchapps/apphelper@^0.4.24":
-  version "0.4.24"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper/-/apphelper-0.4.24.tgz"
-  integrity sha512-tIjKPR2CjLTgrROBjnZyf08w+QkXRl2zZC6hf3XYhkf4FkZOABYYkGkzKpWWhfiSsvQuqYVg3MirQKzE8jG4MQ==
+"@churchapps/apphelper@^0.4.25":
+  version "0.4.25"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper/-/apphelper-0.4.25.tgz"
+  integrity sha512-G7+07HPNHj3xBgt9ypZ2m508aRAsCbx451PDkKY/m9nuw0iek3R5nm6ITNfN77JseixHaqwj4f5iuQHJdKZRfQ==
   dependencies:
     "@churchapps/helpers" "^1.0.45"
     "@emotion/cache" "^11.13.5"
@@ -249,7 +249,7 @@
     react-to-print "^3.1.1"
     slug "^11.0.0"
 
-"@churchapps/helpers@^1.0.42", "@churchapps/helpers@^1.0.45":
+"@churchapps/helpers@^1.0.45":
   version "1.0.45"
   resolved "https://registry.npmjs.org/@churchapps/helpers/-/helpers-1.0.45.tgz"
   integrity sha512-7y5fjiUMqi4M4J/1K5rGY04/FVicaJkh9YMsUt//orrZ7kxmvWOn866BCMW2ybbh4mU+gDcjuTtiO3ARaaXreA==
@@ -3011,7 +3011,7 @@ react-dnd@^16.0.1:
     fast-deep-equal "^3.1.3"
     hoist-non-react-statics "^3.3.2"
 
-"react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0 || ^19.0.0", react-dom@^18.0.0, "react-dom@^18.0.0 || ^19.0.0", react-dom@^19.1.0, "react-dom@>= 15.0.0", react-dom@>=16.3.0, react-dom@>=16.6.0, react-dom@>=16.8.0, "react-dom@>=16.8.0 <20.0.0", react-dom@>=17.0.0, react-dom@>=17.x, react-dom@>=18, react-dom@>=18.0.0:
+"react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^18.0.0 || ^19.0.0", react-dom@^19.1.0, "react-dom@>= 15.0.0", react-dom@>=16.3.0, react-dom@>=16.6.0, react-dom@>=16.8.0, "react-dom@>=16.8.0 <20.0.0", react-dom@>=17.0.0, react-dom@>=17.x, react-dom@>=18, react-dom@>=18.0.0:
   version "19.1.0"
   dependencies:
     scheduler "^0.26.0"
@@ -3137,7 +3137,7 @@ react-transition-group@^4.3.0, react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ~19", "react@^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0 || ^19.0.0", "react@^18 || ^19", react@^18.0.0, "react@^18.0.0 || ^19.0.0", react@^19.1.0, "react@>= 15.0.0", "react@>= 16.14", "react@>= 16.3.0", "react@>= 16.8.0", react@>=16.13.1, react@>=16.3.0, react@>=16.4.1, react@>=16.6.0, react@>=16.8.0, "react@>=16.8.0 <20.0.0", react@>=17.0.0, react@>=17.0.2, react@>=17.x, react@>=18, react@>=18.0.0:
+"react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ~19", "react@^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0 || ^19.0.0", "react@^18 || ^19", "react@^18.0.0 || ^19.0.0", react@^19.1.0, "react@>= 15.0.0", "react@>= 16.14", "react@>= 16.3.0", "react@>= 16.8.0", react@>=16.13.1, react@>=16.3.0, react@>=16.4.1, react@>=16.6.0, react@>=16.8.0, "react@>=16.8.0 <20.0.0", react@>=17.0.0, react@>=17.0.2, react@>=17.x, react@>=18, react@>=18.0.0:
   version "19.1.0"
 
 readable-stream@~1.0.31:
