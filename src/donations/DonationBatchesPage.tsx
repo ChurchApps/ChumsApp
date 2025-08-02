@@ -143,15 +143,7 @@ export const DonationBatchesPage = () => {
         </Typography>
       );
 
-      const dateObj = new Date(b.batchDate);
-      const tz = dateObj.getTimezoneOffset() * 60 * 1000;
-      const getDateTime = dateObj.getTime();
-      let calcDate;
-      if (tz > 0) {
-        calcDate = new Date(getDateTime - tz);
-      } else {
-        calcDate = new Date(getDateTime + tz);
-      }
+      const dateObj = new Date(b.batchDate + "T00:00:00");
 
       result.push(<TableRow
           key={i}
@@ -169,7 +161,7 @@ export const DonationBatchesPage = () => {
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
               <DateIcon sx={{ color: "text.secondary", fontSize: 18 }} />
-              <Typography variant="body2">{DateHelper.prettyDate(calcDate)}</Typography>
+              <Typography variant="body2">{DateHelper.prettyDate(dateObj)}</Typography>
             </Stack>
           </TableCell>
           <TableCell>

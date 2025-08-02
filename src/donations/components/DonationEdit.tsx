@@ -3,7 +3,7 @@ import {
 } from "@mui/material";
 import React, { memo, useCallback, useMemo } from "react";
 import { PersonAdd } from "../../components";
-import { ApiHelper, DateHelper, UniqueIdHelper, PersonHelper, Locale } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, UniqueIdHelper, PersonHelper, Locale, InputBox } from "@churchapps/apphelper";
 import { FundDonations } from "@churchapps/apphelper-donations";
 import { type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/helpers";
 
@@ -59,7 +59,11 @@ export const DonationEdit = memo((props: Props) => {
   const getDeleteFunction = useCallback(() => (UniqueIdHelper.isMissing(props.donationId) ? undefined : handleDelete), [props.donationId, handleDelete]);
 
   const handleSave = useCallback(() => {
-    ApiHelper.post("/donations", [donation], "GivingApi").then((data) => {
+    const donationToSave = {
+      ...donation,
+      donationDate: donation.donationDate ? DateHelper.formatHtml5Date(donation.donationDate) : null
+    };
+    ApiHelper.post("/donations", [donationToSave], "GivingApi").then((data) => {
       const id = data[0].id;
       const promises = [];
       const fDonations = [...fundDonations];
@@ -93,6 +97,7 @@ export const DonationEdit = memo((props: Props) => {
 
   const populatePerson = useCallback(async (data: DonationInterface) => {
     if (!UniqueIdHelper.isMissing(data.personId)) data.person = await ApiHelper.get("/people/" + data.personId.toString(), "MembershipApi");
+    if (data.donationDate) data.donationDate = new Date(data.donationDate.split('T')[0] + "T00:00:00");
     setDonation(data);
   }, []);
 
@@ -162,68 +167,61 @@ export const DonationEdit = memo((props: Props) => {
   React.useEffect(loadData, [loadData]);
 
   return (
-    <Box id="donationBox" data-cy="donation-box">
-      <Stack spacing={2}>
-        <Box>
-          <label>{Locale.label("common.person")}</label>
-          {personSection}
-        </Box>
-        <TextField
-          fullWidth
-          label={Locale.label("donations.donationEdit.date")}
-          type="date"
-          name="date"
-          value={DateHelper.formatHtml5Date(donation.donationDate) || ""}
+    <InputBox
+      id="donationBox"
+      headerIcon="attach_money"
+      headerText={Locale.label("common.edit")}
+      cancelFunction={handleCancel}
+      deleteFunction={getDeleteFunction()}
+      saveFunction={handleSave}
+      help="chums/donations"
+    >
+      <Box>
+        <label>{Locale.label("common.person")}</label>
+        {personSection}
+      </Box>
+      <TextField
+        fullWidth
+        label={Locale.label("donations.donationEdit.date")}
+        type="date"
+        name="date"
+        value={DateHelper.formatHtml5Date(donation.donationDate) || ""}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        data-testid="donation-date-input"
+        aria-label="Donation date"
+      />
+      <FormControl fullWidth>
+        <InputLabel id="method">{Locale.label("donations.donationEdit.method")}</InputLabel>
+        <Select
+          name="method"
+          labelId="method"
+          label={Locale.label("donations.donationEdit.method")}
+          value={donation.method || ""}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          data-testid="donation-date-input"
-          aria-label="Donation date"
-        />
-        <FormControl fullWidth>
-          <InputLabel id="method">{Locale.label("donations.donationEdit.method")}</InputLabel>
-          <Select
-            name="method"
-            labelId="method"
-            label={Locale.label("donations.donationEdit.method")}
-            value={donation.method || ""}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            data-testid="payment-method-select"
-            aria-label="Payment method"
-          >
-            <MenuItem value="Check">{Locale.label("donations.donationEdit.check")}</MenuItem>
-            <MenuItem value="Cash">{Locale.label("donations.donationEdit.cash")}</MenuItem>
-            <MenuItem value="Card">{Locale.label("donations.donationEdit.card")}</MenuItem>
-          </Select>
-        </FormControl>
-        {methodDetails}
-        <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
-        <TextField
-          fullWidth
-          label={Locale.label("common.notes")}
-          data-cy="note"
-          name="notes"
-          value={donation.notes || ""}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          multiline
-          data-testid="donation-notes-input"
-          aria-label="Donation notes"
-        />
-        <Stack direction="row" spacing={1} justifyContent="end" sx={{ mt: 2 }}>
-          <Button onClick={handleCancel} color="warning">
-            {Locale.label("common.cancel")}
-          </Button>
-          {getDeleteFunction() && (
-            <Button variant="outlined" onClick={getDeleteFunction()} color="error">
-              {Locale.label("common.delete")}
-            </Button>
-          )}
-          <Button variant="contained" onClick={handleSave} disableElevation>
-            {Locale.label("common.save")}
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
+          data-testid="payment-method-select"
+          aria-label="Payment method"
+        >
+          <MenuItem value="Check">{Locale.label("donations.donationEdit.check")}</MenuItem>
+          <MenuItem value="Cash">{Locale.label("donations.donationEdit.cash")}</MenuItem>
+          <MenuItem value="Card">{Locale.label("donations.donationEdit.card")}</MenuItem>
+        </Select>
+      </FormControl>
+      {methodDetails}
+      <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
+      <TextField
+        fullWidth
+        label={Locale.label("common.notes")}
+        data-cy="note"
+        name="notes"
+        value={donation.notes || ""}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        multiline
+        data-testid="donation-notes-input"
+        aria-label="Donation notes"
+      />
+    </InputBox>
   );
 });

@@ -100,8 +100,8 @@ export const DonationPage: React.FC<Props> = (props) => {
     const currentY = date.getFullYear();
     const lastY = date.getFullYear() - 1;
 
-    const current_year = (donations.length>0) ? donations.filter(d => new Date(d.donationDate || "2000-01-01").getFullYear() === currentY) : [];
-    const last_year = (donations.length>0) ? donations.filter(d => new Date(d.donationDate || "2000-01-01").getFullYear() === lastY) : [];
+    const current_year = (donations.length>0) ? donations.filter(d => new Date((d.donationDate || "2000-01-01").split('T')[0] + "T00:00:00").getFullYear() === currentY) : [];
+    const last_year = (donations.length>0) ? donations.filter(d => new Date((d.donationDate || "2000-01-01").split('T')[0] + "T00:00:00").getFullYear() === lastY) : [];
     const customHeaders = [{ label: "amount", key: "amount" }, { label: "donationDate", key: "donationDate" }, { label: "fundName", key: "fund.name" }, { label: "method", key: "method" }, { label: "methodDetails", key: "methodDetails" }];
 
     result.push(<>
@@ -145,7 +145,7 @@ export const DonationPage: React.FC<Props> = (props) => {
       const d = donations[i];
       rows.push(<TableRow key={i}>
           {appName !== "B1App" && <TableCell><Link href={"/donations/" + d.batchId}>{d.batchId}</Link></TableCell>}
-          <TableCell>{DateHelper.prettyDate(new Date(d.donationDate))}</TableCell>
+          <TableCell>{DateHelper.prettyDate(new Date(d.donationDate.split('T')[0] + "T00:00:00"))}</TableCell>
           <TableCell>{d.method} - {d.methodDetails}</TableCell>
           <TableCell>{d.fund.name}</TableCell>
           <TableCell>{CurrencyHelper.formatCurrency(d.fund.amount)}</TableCell>

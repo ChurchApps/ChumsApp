@@ -1,20 +1,19 @@
 import React from "react";
-import { DonationEdit, Donations } from "./components";
+import { DonationEdit, Donations, BatchEdit } from "./components";
 import { UserHelper, Permissions, DateHelper, CurrencyHelper, PageHeader } from "@churchapps/apphelper";
 import { type DonationBatchInterface, type FundInterface, type DonationInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Box, Typography, Card, Stack, Icon, Button } from "@mui/material";
-import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Add as AddIcon } from "@mui/icons-material";
+import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 
 export const DonationBatchPage = () => {
   const params = useParams();
   const [editDonationId, setEditDonationId] = React.useState("notset");
+  const [editBatch, setEditBatch] = React.useState(false);
 
-  const batch = useQuery<DonationBatchInterface>({
-    queryKey: ["/donationbatches/" + params.id, "GivingApi"],
-    placeholderData: {},
-  });
+  const batch = useQuery<DonationBatchInterface>({ queryKey: ["/donationbatches/" + params.id, "GivingApi"] });
+
 
   const funds = useQuery<FundInterface[]>({
     queryKey: ["/funds", "GivingApi"],
@@ -38,9 +37,15 @@ export const DonationBatchPage = () => {
     donations.refetch();
   };
 
+  const batchUpdated = () => {
+    setEditBatch(false);
+    batch.refetch();
+  };
+
   const getEditModules = () => {
     const result = [];
     if (editDonationId !== "notset") result.push(<DonationEdit key="donationEdit" donationId={editDonationId} updatedFunction={donationUpdated} funds={funds.data} batchId={batch.data.id} />);
+    if (editBatch && batch.data?.id) result.push(<BatchEdit key="batchEdit" batchId={batch.data.id} updatedFunction={batchUpdated} />);
     return result;
   };
 
@@ -63,12 +68,14 @@ export const DonationBatchPage = () => {
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return <></>;
 
+  console.log("BATCH IS", batch.data);
+
   return (
     <>
       <PageHeader
         icon={<DonationIcon />}
         title={batch.data?.name || "Donation Batch"}
-        subtitle={batch.data?.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.data.batchDate))}` : "Manage donations in this batch"}
+        subtitle={batch.data?.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.data.batchDate.split('T')[0] + "T00:00:00"))}` : "Manage donations in this batch"}
         statistics={[
           {
             icon: <ReceiptIcon />,
@@ -82,40 +89,52 @@ export const DonationBatchPage = () => {
           }
         ]}
       >
-        {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && funds.data?.length > 0 && (
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={showAddDonation}
-            data-testid="add-donation-button"
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)",
-              },
-            }}
-          >
-            Add Donation
-          </Button>
-        )}
+        <Stack direction="row" spacing={2}>
+          {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
+            <Button
+              variant="outlined"
+              startIcon={<EditIcon />}
+              onClick={() => setEditBatch(true)}
+              data-testid="edit-batch-button"
+              sx={{
+                color: "#FFF",
+                borderColor: "rgba(255,255,255,0.5)",
+                "&:hover": {
+                  borderColor: "#FFF",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                },
+              }}
+            >
+              Edit Batch
+            </Button>
+          )}
+          {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && funds.data?.length > 0 && (
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={showAddDonation}
+              data-testid="add-donation-button"
+              sx={{
+                color: "#FFF",
+                borderColor: "rgba(255,255,255,0.5)",
+                "&:hover": {
+                  borderColor: "#FFF",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                },
+              }}
+            >
+              Add Donation
+            </Button>
+          )}
+        </Stack>
       </PageHeader>
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>
         {/* Edit content appears above when editing */}
-        {editDonationId !== "notset" && (
+        {(editDonationId !== "notset" || editBatch) && (
           <Box sx={{ mb: 3 }}>
-            <Card>
-              <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <Icon>edit</Icon>
-                  <Typography variant="h6">{editDonationId === "" ? "Add Donation" : "Edit Donation"}</Typography>
-                </Stack>
-              </Box>
-              <Box sx={{ p: 2 }}>{getEditModules()}</Box>
-            </Card>
+            {getEditModules()}
           </Box>
         )}
 

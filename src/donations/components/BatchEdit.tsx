@@ -15,7 +15,13 @@ export const BatchEdit = memo((props: Props) => {
     props.updatedFunction();
   }, [props.updatedFunction]);
 
-  const handleSave = useCallback(() => ApiHelper.post("/donationbatches", [batch], "GivingApi").then(() => props.updatedFunction()), [batch, props.updatedFunction]);
+  const handleSave = useCallback(() => {
+    const batchToSave = {
+      ...batch,
+      batchDate: batch.batchDate ? DateHelper.formatHtml5Date(batch.batchDate) : null
+    };
+    return ApiHelper.post("/donationbatches", [batchToSave], "GivingApi").then(() => props.updatedFunction());
+  }, [batch, props.updatedFunction]);
 
   const handleDelete = useCallback(() => {
     if (window.confirm(Locale.label("donations.batchEdit.confirmMsg"))) {
@@ -48,7 +54,10 @@ export const BatchEdit = memo((props: Props) => {
 
   const loadData = useCallback(() => {
     if (UniqueIdHelper.isMissing(props.batchId)) setBatch({ batchDate: new Date(), name: "" });
-    else ApiHelper.get("/donationbatches/" + props.batchId, "GivingApi").then((data) => setBatch(data));
+    else ApiHelper.get("/donationbatches/" + props.batchId, "GivingApi").then((data) => {
+      if (data.batchDate) data.batchDate = new Date(data.batchDate.split('T')[0] + "T00:00:00");
+      setBatch(data);
+    });
   }, [props.batchId]);
 
   React.useEffect(loadData, [loadData]);

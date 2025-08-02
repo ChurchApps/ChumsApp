@@ -37,7 +37,7 @@ export const PrintDonationPage = () => {
 
   const donations = useMemo(() => {
     return allDonations.data?.filter((don) => {
-      const donationDate = new Date(don.donationDate);
+      const donationDate = new Date(don.donationDate.split('T')[0] + "T00:00:00");
       return donationDate.getFullYear() === currYear;
     }) || [];
   }, [allDonations.data, currYear]);
@@ -146,7 +146,7 @@ export const PrintDonationPage = () => {
                 paddingLeft: "5px",
               }}
             >
-              {DateHelper.prettyDate(donation?.donationDate).toString()}
+              {DateHelper.prettyDate(new Date(donation?.donationDate.split('T')[0] + "T00:00:00")).toString()}
             </td>
             <td
               style={{
