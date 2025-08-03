@@ -6,7 +6,9 @@ import { AutomationEdit } from "./AutomationEdit";
 import { ConditionDetails } from "./ConditionDetails";
 import { ConjunctionEdit } from "./ConjunctionEdit";
 import { ConditionEdit } from "./ConditionEdit";
-import { Card, CardContent, Typography, Stack, Box, Button, IconButton, Divider, List, ListItem, Chip } from "@mui/material";
+import {
+  Card, CardContent, Typography, Stack, Box, Button, IconButton, Divider, List, ListItem, Chip 
+} from "@mui/material";
 import {
   SettingsSuggest as AutomationsIcon,
   Edit as EditIcon,

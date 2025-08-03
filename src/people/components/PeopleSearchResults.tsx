@@ -3,7 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
 import { CreatePerson } from "../../components";
 import { PersonHelper, type PersonInterface, Loading, ApiHelper, ArrayHelper, Locale, PersonAvatar } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Typography, Stack, Box, Chip, Card } from "@mui/material";
+import {
+  Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Typography, Stack, Box, Chip, Card 
+} from "@mui/material";
 import { Email as EmailIcon, Phone as PhoneIcon } from "@mui/icons-material";
 
 interface Props {

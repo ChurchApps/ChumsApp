@@ -85,7 +85,7 @@ export const ChartReport = (props: Props) => {
   };
 
   let result = <p>{Locale.label("reporting.noData")}</p>;
-  if (props.reportResult.table?.length > 0)
+  if (props.reportResult.table?.length > 0) {
     result = (
       <Chart
         chartType="ColumnChart"
@@ -95,6 +95,7 @@ export const ChartReport = (props: Props) => {
         options={{ height: 400, legend: { position: "top", maxLines: 3 }, bar: { groupWidth: "75%" }, isStacked: true }}
       />
     );
+  }
 
   return result;
 };

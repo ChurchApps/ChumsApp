@@ -39,19 +39,19 @@ export default tseslint.config([
       // Object and array formatting - prefer compact single-line objects
       'object-curly-spacing': ['error', 'always'],
       'object-curly-newline': ['error', { 
-        'ObjectExpression': { 'multiline': true, 'minProperties': 6 },
-        'ObjectPattern': { 'multiline': true, 'minProperties': 6 },
-        'ImportDeclaration': { 'multiline': true, 'minProperties': 6 },
-        'ExportDeclaration': { 'multiline': true, 'minProperties': 6 }
+        'ObjectExpression': { 'multiline': true, 'minProperties': 6, 'consistent': true },
+        'ObjectPattern': { 'multiline': true, 'minProperties': 6, 'consistent': true },
+        'ImportDeclaration': { 'multiline': true, 'minProperties': 8, 'consistent': true },
+        'ExportDeclaration': { 'multiline': true, 'minProperties': 8, 'consistent': true }
       }],
       'object-property-newline': ['error', { 'allowAllPropertiesOnSameLine': true }],
       'array-bracket-spacing': ['error', 'never'],
-      'array-bracket-newline': ['error', { 'multiline': true, 'minItems': 6 }],
-      'array-element-newline': ['error', { 'multiline': true, 'minItems': 6 }],
+      'array-bracket-newline': ['error', { 'multiline': true, 'minItems': 8 }],
+      'array-element-newline': ['error', { 'ArrayExpression': 'consistent', 'ArrayPattern': { 'minItems': 8 } }],
       
-      // Function formatting
-      'function-paren-newline': ['error', 'never'],
-      'function-call-argument-newline': ['error', 'never'],
+      // Function formatting - allow compact
+      'function-paren-newline': ['error', 'consistent'],
+      'function-call-argument-newline': ['error', 'consistent'],
       
       // Line length and spacing
       'max-len': ['warn', { 
@@ -70,6 +70,11 @@ export default tseslint.config([
       
       // JSX formatting - prefer compact single-line elements  
       // Note: React ESLint plugin rules would go here if available
+      
+      // Additional compact formatting rules
+      'indent': ['error', 2, { 'SwitchCase': 1, 'ignoredNodes': ['JSXElement', 'JSXFragment'] }],
+      'no-multi-spaces': ['error', { 'ignoreEOLComments': true }],
+      'key-spacing': ['error', { 'beforeColon': false, 'afterColon': true, 'mode': 'strict' }],
       
       // Block formatting - encourage single line for simple blocks
       'block-spacing': ['error', 'always'],

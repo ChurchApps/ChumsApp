@@ -10,7 +10,9 @@ interface EmptyStateProps {
   colSpan?: number; // Required for table variant
 }
 
-export const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description, action, variant = "card", colSpan = 5 }) => {
+export const EmptyState: React.FC<EmptyStateProps> = ({
+  icon, title, description, action, variant = "card", colSpan = 5 
+}) => {
   const content = (
     <Stack spacing={2} alignItems="center">
       {React.cloneElement(icon as React.ReactElement, { sx: { fontSize: variant === "card" ? 64 : 48, color: variant === "card" ? "grey.400" : "text.secondary" } })}

@@ -1,7 +1,9 @@
 import React, { useEffect, memo, useMemo } from "react";
 import { ApiHelper } from "@churchapps/apphelper";
 import { type SongDetailInterface, type SongDetailLinkInterface } from "../../../helpers";
-import { Stack, Box, Card, CardContent, Typography, Avatar, Paper, Button, IconButton } from "@mui/material";
+import {
+  Stack, Box, Card, CardContent, Typography, Avatar, Paper, Button, IconButton 
+} from "@mui/material";
 import { Link as LinkIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 
 interface Props {
@@ -86,7 +88,9 @@ export const SongDetailLinks = memo((props: Props) => {
           target="_blank"
           rel="noopener noreferrer"
           style={{ textDecoration: "none" }}>
-          <CardContent sx={{ p: 2, textAlign: "center", "&:last-child": { pb: 2 }, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+          <CardContent sx={{
+            p: 2, textAlign: "center", "&:last-child": { pb: 2 }, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" 
+          }}>
             {logo ? (
               <img
                 src={logo}

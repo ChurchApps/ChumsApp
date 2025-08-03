@@ -1,7 +1,9 @@
 import React, { memo, useMemo, useCallback } from "react";
 import { ApiHelper, Loading, Locale, PageHeader } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
-import { Button, Box, Card, CardContent, Typography, Stack, Avatar, Paper, Chip, IconButton, TextField, InputAdornment } from "@mui/material";
+import {
+  Button, Box, Card, CardContent, Typography, Stack, Avatar, Paper, Chip, IconButton, TextField, InputAdornment 
+} from "@mui/material";
 import { MusicNote as MusicIcon, LibraryMusic as LibraryIcon, Add as AddIcon, Search as SearchIcon, PlayCircle as PlayIcon, Timer as TimerIcon, Person as ArtistIcon } from "@mui/icons-material";
 import { SongSearchDialog } from "./SongSearchDialog";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
@@ -129,7 +131,9 @@ export const SongsPage = memo(() => {
                       variant="h6"
                       component={Link}
                       to={`/plans/songs/${(songDetail as any).songId}`}
-                      sx={{ color: "primary.main", textDecoration: "none", fontWeight: 600, fontSize: "1.1rem", "&:hover": { textDecoration: "underline" }, display: "block", mb: 0.5 }}>
+                      sx={{
+                        color: "primary.main", textDecoration: "none", fontWeight: 600, fontSize: "1.1rem", "&:hover": { textDecoration: "underline" }, display: "block", mb: 0.5 
+                      }}>
                       {songDetail.title}
                     </Typography>
 

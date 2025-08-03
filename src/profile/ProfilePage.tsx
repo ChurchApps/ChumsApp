@@ -1,4 +1,6 @@
-import { Grid, Icon, TextField, Checkbox, Typography, InputAdornment, IconButton, Box, Card, CardContent, Alert, Stack, FormControlLabel } from "@mui/material";
+import {
+  Grid, Icon, TextField, Checkbox, Typography, InputAdornment, IconButton, Box, Card, CardContent, Alert, Stack, FormControlLabel 
+} from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiHelper, UserHelper, Locale } from "@churchapps/apphelper";

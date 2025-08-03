@@ -4,7 +4,9 @@ import { UserHelper, ExportLink, Loading, Locale, PageHeader } from "@churchapps
 import { Link } from "react-router-dom";
 import { Permissions } from "@churchapps/apphelper";
 import { type FundInterface } from "@churchapps/helpers";
-import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button } from "@mui/material";
+import {
+  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 
+} from "@mui/material";
 import { VolunteerActivism as FundIcon, Add as AddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
 

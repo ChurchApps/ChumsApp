@@ -1,5 +1,7 @@
 import React from "react";
-import { Grid, Icon, Box, Button, Stack, Card, CardContent, Container } from "@mui/material";
+import {
+  Grid, Icon, Box, Button, Stack, Card, CardContent, Container 
+} from "@mui/material";
 import { CalendarMonth as CalendarIcon, Group as GroupIcon, TrendingUp as TrendingIcon, Settings as SettingsIcon } from "@mui/icons-material";
 import { Locale, UserHelper, ApiHelper, PageHeader } from "@churchapps/apphelper";
 import { AttendanceSetup } from "./components/AttendanceSetup";

@@ -1,7 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiHelper, DateHelper, Locale, type PersonInterface, type TaskInterface } from "@churchapps/apphelper";
-import { Table, TableBody, TableCell, TableHead, TableRow, Card, CardContent, Typography, Stack, Box, Button, Paper, Avatar } from "@mui/material";
+import {
+  Table, TableBody, TableCell, TableHead, TableRow, Card, CardContent, Typography, Stack, Box, Button, Paper, Avatar 
+} from "@mui/material";
 import {
   AssignmentReturn as ChangesIcon,
   CheckCircle as ApplyIcon,

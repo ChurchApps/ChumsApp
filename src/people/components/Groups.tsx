@@ -2,7 +2,9 @@ import React, { memo, useMemo } from "react";
 import { UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { Box, Card, CardContent, Typography, Stack, Chip, Paper, ListItem, ListItemIcon, ListItemText, ListItemButton, Avatar } from "@mui/material";
+import {
+  Box, Card, CardContent, Typography, Stack, Chip, Paper, ListItem, ListItemIcon, ListItemText, ListItemButton, Avatar 
+} from "@mui/material";
 import { Group as GroupIcon, Groups as GroupsIcon, SupervisorAccount as LeaderIcon } from "@mui/icons-material";
 
 interface Props {

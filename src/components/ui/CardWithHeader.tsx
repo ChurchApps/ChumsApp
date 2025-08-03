@@ -10,7 +10,9 @@ interface CardWithHeaderProps {
   borderRadius?: number;
 }
 
-export const CardWithHeader: React.FC<CardWithHeaderProps> = ({ title, icon, actions, children, borderColor = "grey.200", borderRadius = 2 }) => {
+export const CardWithHeader: React.FC<CardWithHeaderProps> = ({
+  title, icon, actions, children, borderColor = "grey.200", borderRadius = 2 
+}) => {
   return (
     <Card
       sx={{

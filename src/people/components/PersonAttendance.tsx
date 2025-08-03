@@ -2,7 +2,9 @@ import React, { memo, useMemo } from "react";
 import { ArrayHelper, type AttendanceRecordInterface, DateHelper, type GroupInterface, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { Box, Card, CardContent, Typography, Stack, Chip, Divider, Paper, List, ListItem } from "@mui/material";
+import {
+  Box, Card, CardContent, Typography, Stack, Chip, Divider, Paper, List, ListItem 
+} from "@mui/material";
 import { CalendarMonth as CalendarIcon, Church as ChurchIcon, Schedule as ScheduleIcon, Group as GroupIcon, EventAvailable as EventIcon } from "@mui/icons-material";
 
 interface Props {

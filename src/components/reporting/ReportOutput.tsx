@@ -190,13 +190,13 @@ export const ReportOutput = (props: Props) => {
   };
 
   const getResults = () => {
-    if (!props.report)
+    if (!props.report) {
       return (
         <DisplayBox ref={contentRef} id="reportsBox" headerIcon="summarize" headerText={Locale.label("reporting.runReport")} editContent={getEditContent()}>
           <p>{Locale.label("reporting.useFilter")}</p>
         </DisplayBox>
       );
-    else if (!reportResult) return <Loading />;
+    } else if (!reportResult) return <Loading />;
     else {
       return (
         <DisplayBox ref={contentRef} id="reportsBox" headerIcon="summarize" headerText={props.report.displayName} editContent={getEditContent()}>

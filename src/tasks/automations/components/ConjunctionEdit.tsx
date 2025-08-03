@@ -1,4 +1,6 @@
-import { MenuItem, Select, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, FormControl, InputLabel } from "@mui/material";
+import {
+  MenuItem, Select, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, FormControl, InputLabel 
+} from "@mui/material";
 import React from "react";
 import { ErrorMessages, type ConjunctionInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { Merge as ConjunctionIcon, Save as SaveIcon, Cancel as CancelIcon } from "@mui/icons-material";

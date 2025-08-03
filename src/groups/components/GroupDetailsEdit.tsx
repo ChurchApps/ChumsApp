@@ -2,7 +2,9 @@ import React from "react";
 import { ServiceTimesEdit } from ".";
 import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Box, Typography, Icon, type SelectChangeEvent } from "@mui/material";
+import {
+  Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Box, Typography, Icon, type SelectChangeEvent 
+} from "@mui/material";
 import { useMountedState, type GroupInterface } from "@churchapps/apphelper";
 import { MarkdownEditor } from "@churchapps/apphelper-markdown";
 import { GroupLabelsEdit } from "./GroupLabelsEdit";

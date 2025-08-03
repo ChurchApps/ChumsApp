@@ -19,7 +19,9 @@ interface Props {
   onCreate?: (person: PersonInterface) => void;
 }
 
-export const PersonAdd: React.FC<Props> = ({ addFunction, getPhotoUrl, searchClicked, filterList = [], includeEmail = false, actionLabel, showCreatePersonOnNotFound = false, onCreate }) => {
+export const PersonAdd: React.FC<Props> = ({
+  addFunction, getPhotoUrl, searchClicked, filterList = [], includeEmail = false, actionLabel, showCreatePersonOnNotFound = false, onCreate 
+}) => {
   const [searchResults, setSearchResults] = useState<PersonInterface[]>([]);
   const [searchText, setSearchText] = useState("");
   const [hasSearched, setHasSearched] = useState<boolean>(false);

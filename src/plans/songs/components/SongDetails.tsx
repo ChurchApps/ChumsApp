@@ -1,7 +1,9 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { Locale } from "@churchapps/apphelper";
 import { type SongDetailInterface } from "../../../helpers";
-import { Box, Card, CardContent, Typography, Stack, Chip, Avatar, IconButton, Paper, List, ListItem, ListItemIcon, ListItemText, Divider } from "@mui/material";
+import {
+  Box, Card, CardContent, Typography, Stack, Chip, Avatar, IconButton, Paper, List, ListItem, ListItemIcon, ListItemText, Divider 
+} from "@mui/material";
 import {
   Edit as EditIcon,
   Album as AlbumIcon,

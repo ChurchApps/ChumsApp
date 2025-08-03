@@ -8,7 +8,9 @@ import { DonationForm, RecurringDonations, PaymentMethods } from "@churchapps/ap
 import { ApiHelper, DateHelper, UniqueIdHelper, CurrencyHelper, Locale } from "../helpers";
 import { DonationInterface, PersonInterface, StripePaymentMethod, ChurchInterface } from "@churchapps/helpers";
 // import { Link } from "react-router-dom"
-import { Table, TableBody, TableRow, TableCell, TableHead, Alert, Button, Icon, Link, Menu, MenuItem } from "@mui/material";
+import {
+  Table, TableBody, TableRow, TableCell, TableHead, Alert, Button, Icon, Link, Menu, MenuItem 
+} from "@mui/material";
 
 interface Props {
   personId: string;

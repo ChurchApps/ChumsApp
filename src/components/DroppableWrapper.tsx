@@ -12,7 +12,9 @@ type Props = {
 };
 
 export function DroppableWrapper(props: Props) {
-  const { accept, onDrop, dndDeps, updateIsDragging, hideWhenInactive, children } = props;
+  const {
+    accept, onDrop, dndDeps, updateIsDragging, hideWhenInactive, children 
+  } = props;
 
   const [isDragging, setIsDragging] = React.useState(false);
 

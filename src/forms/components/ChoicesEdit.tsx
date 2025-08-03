@@ -1,6 +1,8 @@
 import React from "react";
 import { Locale, type QuestionInterface } from "@churchapps/apphelper";
-import { Table, TableBody, TableRow, TableCell, TableHead, FormLabel, TextField, Button } from "@mui/material";
+import {
+  Table, TableBody, TableRow, TableCell, TableHead, FormLabel, TextField, Button 
+} from "@mui/material";
 
 interface Props {
   question: QuestionInterface;

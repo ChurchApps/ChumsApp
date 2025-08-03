@@ -1,8 +1,12 @@
 import React from "react";
 import { UpdateHouseHold } from "./modals/UpdateHouseHold";
-import { InputBox, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale, PersonAvatar } from "@churchapps/apphelper";
+import {
+  InputBox, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale, PersonAvatar 
+} from "@churchapps/apphelper";
 import { PersonAdd } from "../../components";
-import { Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, type SelectChangeEvent } from "@mui/material";
+import {
+  Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, type SelectChangeEvent 
+} from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {

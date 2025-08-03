@@ -1,8 +1,12 @@
 import React from "react";
-import { ApiHelper, DateHelper, UserHelper, ExportLink, Permissions, UniqueIdHelper, ArrayHelper, Loading, CurrencyHelper, Locale, PageHeader } from "@churchapps/apphelper";
+import {
+  ApiHelper, DateHelper, UserHelper, ExportLink, Permissions, UniqueIdHelper, ArrayHelper, Loading, CurrencyHelper, Locale, PageHeader 
+} from "@churchapps/apphelper";
 import { type DonationBatchInterface, type FundDonationInterface, type PersonInterface } from "@churchapps/helpers";
 import { useParams, Link } from "react-router-dom";
-import { Table, TableBody, TableRow, TableCell, TableHead, TextField, Box, Typography, Card, Stack, Button } from "@mui/material";
+import {
+  Table, TableBody, TableRow, TableCell, TableHead, TextField, Box, Typography, Card, Stack, Button 
+} from "@mui/material";
 import {
   VolunteerActivism as FundIcon,
   FileDownload as ExportIcon,

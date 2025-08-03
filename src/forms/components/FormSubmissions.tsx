@@ -12,7 +12,9 @@ import {
   type QuestionInterface,
 } from "@churchapps/apphelper";
 import { useReactToPrint } from "react-to-print";
-import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Card, Box, Typography, Stack } from "@mui/material";
+import {
+  Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Card, Box, Typography, Stack 
+} from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
 interface Props {
@@ -173,8 +175,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
               {question.title}
             </Typography>
           </TableCell>
-        )
-      );
+        ));
     }
     return result;
   }, [formSubmissions.data]);

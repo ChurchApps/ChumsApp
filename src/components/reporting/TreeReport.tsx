@@ -65,13 +65,13 @@ export const TreeReport = (props: Props) => {
     for (let i = prevCols; i < prevCols + g; i++) {
       const c = props.output.columns[i];
       const className = "heading" + (groupNumber + 1);
-      if (i === prevCols && i > 0)
+      if (i === prevCols && i > 0) {
         outputRow.push(
           <TableCell className={className} style={{ paddingLeft: 30 * groupNumber }}>
             {ReportHelper.getField(c, row)}
           </TableCell>
         );
-      else outputRow.push(<TableCell className={className}>{ReportHelper.getField(c, row)}</TableCell>);
+      } else outputRow.push(<TableCell className={className}>{ReportHelper.getField(c, row)}</TableCell>);
     }
     return <TableRow>{outputRow}</TableRow>;
   };

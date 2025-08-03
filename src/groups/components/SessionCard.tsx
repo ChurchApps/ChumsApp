@@ -12,7 +12,9 @@ interface Props {
   canEdit: boolean;
 }
 
-export const SessionCard: React.FC<Props> = ({ session, attendanceCount, isSelected, onView, onEdit, canEdit }) => {
+export const SessionCard: React.FC<Props> = ({
+  session, attendanceCount, isSelected, onView, onEdit, canEdit 
+}) => {
   const getAttendanceColor = (count: number) => {
     if (count >= 10) return "success";
     if (count >= 5) return "warning";

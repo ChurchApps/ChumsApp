@@ -1,6 +1,10 @@
-import { Grid, TextField, Card, CardContent, Typography, Stack, Box, Button, InputAdornment } from "@mui/material";
+import {
+  Grid, TextField, Card, CardContent, Typography, Stack, Box, Button, InputAdornment 
+} from "@mui/material";
 import React from "react";
-import { ApiHelper, ArrayHelper, type ConversationInterface, ErrorMessages, Locale, type MessageInterface, type TaskInterface, UserHelper } from "@churchapps/apphelper";
+import {
+  ApiHelper, ArrayHelper, type ConversationInterface, ErrorMessages, Locale, type MessageInterface, type TaskInterface, UserHelper 
+} from "@churchapps/apphelper";
 import { ContentPicker } from "./ContentPicker";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Assignment as TaskIcon, Search as SearchIcon, Cancel as CancelIcon, Save as SaveIcon } from "@mui/icons-material";

@@ -1,4 +1,6 @@
-import { Menu, MenuItem, Box, Typography, Stack, Button, IconButton, List, ListItem, ListItemIcon, ListItemText, Chip } from "@mui/material";
+import {
+  Menu, MenuItem, Box, Typography, Stack, Button, IconButton, List, ListItem, ListItemIcon, ListItemText, Chip 
+} from "@mui/material";
 import React from "react";
 import { type AutomationInterface, type ConditionInterface, type ConjunctionInterface, Locale } from "@churchapps/apphelper";
 import { ArrayHelper } from "@churchapps/apphelper";

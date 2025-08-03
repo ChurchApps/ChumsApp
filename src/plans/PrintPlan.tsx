@@ -1,4 +1,6 @@
-import { ApiHelper, ArrayHelper, type AssignmentInterface, DateHelper, type PersonInterface, type PlanInterface, type PositionInterface, Locale } from "@churchapps/apphelper";
+import {
+  ApiHelper, ArrayHelper, type AssignmentInterface, DateHelper, type PersonInterface, type PlanInterface, type PositionInterface, Locale 
+} from "@churchapps/apphelper";
 import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";

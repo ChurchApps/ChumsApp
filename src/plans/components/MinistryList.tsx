@@ -1,5 +1,7 @@
 import React from "react";
-import { Box, Card, CardContent, Typography, Stack, Paper, Chip, Avatar } from "@mui/material";
+import {
+  Box, Card, CardContent, Typography, Stack, Paper, Chip, Avatar 
+} from "@mui/material";
 import { Assignment as AssignmentIcon, Group as GroupIcon, Edit as EditIcon, People as PeopleIcon } from "@mui/icons-material";
 import { ArrayHelper, type GroupInterface, type GroupMemberInterface, Locale, UserHelper, Permissions, Loading } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";

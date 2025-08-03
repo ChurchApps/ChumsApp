@@ -2,7 +2,9 @@ import React, { memo, useMemo } from "react";
 import { GroupDetailsEdit, ServiceTimes } from ".";
 import { type GroupInterface, Loading, Locale, ImageEditor } from "@churchapps/apphelper";
 import { MarkdownPreview } from "@churchapps/apphelper-markdown";
-import { Chip, Grid, Box, Typography, Stack, Card, CardContent, Divider } from "@mui/material";
+import {
+  Chip, Grid, Box, Typography, Stack, Card, CardContent, Divider 
+} from "@mui/material";
 import { LocationOn as LocationIcon, Schedule as ScheduleIcon, Category as CategoryIcon, Label as LabelIcon, Group as GroupIcon } from "@mui/icons-material";
 
 interface Props {

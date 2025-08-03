@@ -1,4 +1,6 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, Paper } from "@mui/material";
+import {
+  Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, Paper 
+} from "@mui/material";
 import React from "react";
 import { SelectGroup } from ".";
 import { type GroupInterface, Locale, PersonHelper, type PersonInterface } from "@churchapps/apphelper";

@@ -1,6 +1,8 @@
 import React, { useState, memo, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton } from "@mui/material";
+import {
+  Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton 
+} from "@mui/material";
 import { Info } from "@mui/icons-material";
 import { PersonAdd } from "../../components";
 import { DisplayBox, type PersonInterface, ApiHelper, type MemberPermissionInterface, PersonHelper, Locale } from "@churchapps/apphelper";

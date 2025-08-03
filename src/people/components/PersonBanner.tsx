@@ -27,7 +27,9 @@ interface Props {
 }
 
 export const PersonBanner = memo((props: Props) => {
-  const { person, onTabChange, togglePhotoEditor, onEdit, allForms, onFormSelect, selectedTab } = props;
+  const {
+    person, onTabChange, togglePhotoEditor, onEdit, allForms, onFormSelect, selectedTab 
+  } = props;
   const [formsMenuAnchor, setFormsMenuAnchor] = useState<null | HTMLElement>(null);
 
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.people.edit), []);
