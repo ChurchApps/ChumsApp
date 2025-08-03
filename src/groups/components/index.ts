@@ -9,4 +9,5 @@ export { MembersAdd } from "./MembersAdd";
 export { ServiceTimes } from "./ServiceTimes";
 export { ServiceTimesEdit } from "./ServiceTimesEdit";
 export { SessionAdd } from "./SessionAdd";
+export { SessionCard } from "./SessionCard";
 export { Tabs } from "./Tabs";

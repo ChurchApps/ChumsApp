@@ -15,10 +15,12 @@ import {
   Loading,
   SmallButton,
   Locale,
+  DateHelper,
 } from "@churchapps/apphelper";
 import {
- Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, Grid, MenuItem, Avatar, IconButton, type SelectChangeEvent 
+ Table, TableBody, TableRow, TableCell, TableHead, Icon, Button, Grid, Avatar, Box, Typography, Paper, Pagination, Chip
 } from "@mui/material";
+import { SessionCard } from "./SessionCard";
 
 interface Props {
   group: GroupInterface;
@@ -37,6 +39,12 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
   const [sessions, setSessions] = React.useState<SessionInterface[]>([]);
   const [session, setSession] = React.useState<SessionInterface>(null);
   const [downloadData, setDownloadData] = React.useState<any[]>([]);
+  const [sessionAttendanceCounts, setSessionAttendanceCounts] = React.useState<Record<string, number>>({});
+  
+  // Pagination and filtering state
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [selectedYear, setSelectedYear] = React.useState<string>('all');
+  const sessionsPerPage = 12;
 
   const loadAttDownloadData = useCallback(() => {
     if (session?.id) {
@@ -60,20 +68,49 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
     }
   }, [session?.id, setHiddenPeople]);
 
+  const loadSessionAttendanceCounts = useCallback(async (sessions: SessionInterface[]) => {
+    const counts: Record<string, number> = {};
+    
+    // For scalability, only load counts for recent sessions or limit the batch size
+    const sessionsToLoadCounts = sessions.slice(0, 50); // Limit to most recent 50 sessions
+    
+    // Load attendance counts in smaller batches to avoid overwhelming the API
+    const batchSize = 10;
+    for (let i = 0; i < sessionsToLoadCounts.length; i += batchSize) {
+      const batch = sessionsToLoadCounts.slice(i, i + batchSize);
+      const batchPromises = batch.map(async (session) => {
+        try {
+          const visitSessions = await ApiHelper.get(`/visitsessions?sessionId=${session.id}`, "AttendanceApi");
+          counts[session.id] = visitSessions.length;
+        } catch (error) {
+          console.error(`Failed to load attendance for session ${session.id}:`, error);
+          counts[session.id] = 0;
+        }
+      });
+      
+      await Promise.all(batchPromises);
+      // Update counts incrementally for better UX
+      setSessionAttendanceCounts(prev => ({ ...prev, ...counts }));
+    }
+  }, []);
+
   const loadSessions = useCallback(() => {
     if (group.id) {
-      ApiHelper.get("/sessions?groupId=" + group.id, "AttendanceApi").then((data) => {
+      ApiHelper.get("/sessions?groupId=" + group.id, "AttendanceApi").then(async (data) => {
         if (data.length > 0) {
           // Sort sessions by date (most recent first)
           const sortedSessions = [...data].sort((a, b) => new Date(b.sessionDate).getTime() - new Date(a.sessionDate).getTime());
           setSessions(sortedSessions);
-          setSession(sortedSessions[0]);
+          
+          // Load attendance counts for all sessions
+          await loadSessionAttendanceCounts(sortedSessions);
         } else {
           setSessions(data);
+          setSessionAttendanceCounts({});
         }
       });
     }
-  }, [group.id]);
+  }, [group.id, loadSessionAttendanceCounts]);
 
   const handleRemove = useCallback((vs: VisitSessionInterface) => {
       ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + vs.visit.personId, "AttendanceApi").then(loadAttendance);
@@ -84,19 +121,71 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
       sidebarVisibilityFunction("addSession", true);
     }, [sidebarVisibilityFunction]);
 
-  const handleEditSession = useCallback(() => {
-    if (session && onSessionEdit) {
-      onSessionEdit(session);
-    }
-  }, [session, onSessionEdit]);
+  const handleViewSession = useCallback((selectedSession: SessionInterface) => {
+    setSession(selectedSession);
+  }, []);
 
-  const handleDeleteSession = useCallback(() => {
-    if (session && window.confirm("Are you sure you want to delete this session? This will also remove all attendance records for this session.")) {
-      ApiHelper.delete("/sessions/" + session.id, "AttendanceApi").then(() => {
-        loadSessions();
-      });
+  const handleEditSession = useCallback((sessionToEdit: SessionInterface) => {
+    if (onSessionEdit) {
+      onSessionEdit(sessionToEdit);
     }
-  }, [session, loadSessions]);
+  }, [onSessionEdit]);
+
+  // Extract unique years from session displayNames
+  const availableYears = useMemo(() => {
+    const years = new Set<string>();
+    sessions.forEach(session => {
+      if (session.displayName) {
+        // Extract year from displayName (assuming format includes year like "Dec 15, 2024")
+        const yearMatch = session.displayName.match(/\b(20\d{2})\b/);
+        if (yearMatch) {
+          years.add(yearMatch[1]);
+        }
+      }
+    });
+    // Sort years in descending order (most recent first)
+    return Array.from(years).sort((a, b) => b.localeCompare(a));
+  }, [sessions]);
+
+  // Set default year to most recent when sessions load
+  React.useEffect(() => {
+    if (availableYears.length > 0 && selectedYear === 'all') {
+      setSelectedYear(availableYears[0]);
+    }
+  }, [availableYears, selectedYear]);
+
+  // Filter sessions based on selected year
+  const filteredSessions = useMemo(() => {
+    if (selectedYear === 'all') {
+      return [...sessions];
+    }
+    
+    // Filter by year in displayName
+    return sessions.filter(s => {
+      if (!s.displayName) return false;
+      return s.displayName.includes(`/${selectedYear}`) || s.displayName.includes(`, ${selectedYear}`);
+    });
+  }, [sessions, selectedYear]);
+
+  // Auto-select logic: select most recent session from filtered results
+  React.useEffect(() => {
+    if (filteredSessions.length > 0 && (!session || !filteredSessions.find(s => s.id === session.id))) {
+      // If no session is selected or current session is not in filtered results,
+      // select the most recent session from filtered results
+      setSession(filteredSessions[0]);
+    } else if (filteredSessions.length === 0) {
+      // If no sessions match the filter, clear selection
+      setSession(null);
+    }
+  }, [filteredSessions, session]);
+
+  // Paginated sessions
+  const paginatedSessions = useMemo(() => {
+    const startIndex = (currentPage - 1) * sessionsPerPage;
+    return filteredSessions.slice(startIndex, startIndex + sessionsPerPage);
+  }, [filteredSessions, currentPage, sessionsPerPage]);
+
+  const totalPages = Math.ceil(filteredSessions.length / sessionsPerPage);
 
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit), []);
 
@@ -135,51 +224,98 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
     return result;
   }, [visitSessions, people, canEdit, handleRemove]);
 
-  const selectSession = useCallback((e: SelectChangeEvent) => {
-      for (let i = 0; i < sessions.length; i++) {
-        if (sessions[i].id === e.target.value) {
-          setSession(sessions[i]);
-          break;
-        }
-      }
-    }, [sessions]);
+  const renderFilterControls = () => (
+    <Box sx={{ mb: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Typography variant="h6" component="div">
+          {Locale.label("groups.groupSessions.sessions")} ({filteredSessions.length})
+        </Typography>
+        {canEdit && getAddButton()}
+      </Box>
+      
+      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        {availableYears.map(year => (
+          <Chip
+            key={year}
+            label={year}
+            onClick={() => { setSelectedYear(year); setCurrentPage(1); }}
+            color={selectedYear === year ? 'primary' : 'default'}
+            variant={selectedYear === year ? 'filled' : 'outlined'}
+          />
+        ))}
+        {availableYears.length > 1 && (
+          <Chip
+            label="All Years"
+            onClick={() => { setSelectedYear('all'); setCurrentPage(1); }}
+            color={selectedYear === 'all' ? 'primary' : 'default'}
+            variant={selectedYear === 'all' ? 'filled' : 'outlined'}
+          />
+        )}
+      </Box>
+    </Box>
+  );
 
-  const sessionOptions = useMemo(() => {
-    const result: JSX.Element[] = [];
-    for (let i = 0; i < sessions.length; i++) {
-      result.push(<MenuItem value={sessions[i].id} key={sessions[i].id}>
-          {sessions[i].displayName}
-        </MenuItem>);
-    }
-    return result;
-  }, [sessions]);
-
-  const getHeaderSection = () => {
-    if (!UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit)) return null;
-    else {
+  const renderSessionCards = () => {
+    if (sessions.length === 0) {
       return (
-        <Grid container columnSpacing={2} alignItems="center">
-          <Grid item>
-            <FormControl style={{ width: 140, marginTop: 0 }} size="small">
-              <InputLabel id="sessions">{Locale.label("groups.groupSessions.session")}</InputLabel>
-              <Select fullWidth labelId="sessions" label={Locale.label("groups.groupSessions.session")} value={session?.id} onChange={selectSession}>
-                {sessionOptions}
-              </Select>
-            </FormControl>
-          </Grid>
-          {session && (
-            <>
-              <Grid item>
-                <IconButton onClick={handleEditSession} size="small" data-testid="edit-session-button" aria-label="Edit session" sx={{ opacity: 0.5, '&:hover': { opacity: 1 } }}>
-                  <Icon>edit</Icon>
-                </IconButton>
-              </Grid>
-            </>
-          )}
-          <Grid item>{getAddButton()}</Grid>
-        </Grid>
+        <Paper sx={{ p: 4, textAlign: 'center', mb: 3 }}>
+          <Icon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }}>calendar_month</Icon>
+          <Typography variant="h6" color="text.secondary" gutterBottom>
+            {Locale.label("groups.groupSessions.noSesMsg")}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            {Locale.label("groups.groupSessions.addSesMsg")}
+          </Typography>
+          {getAddButton()}
+        </Paper>
       );
     }
+
+    if (filteredSessions.length === 0) {
+      return (
+        <Paper sx={{ p: 4, textAlign: 'center', mb: 3 }}>
+          <Icon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }}>search_off</Icon>
+          <Typography variant="h6" color="text.secondary" gutterBottom>
+            No sessions found
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Try adjusting your filters or search term
+          </Typography>
+        </Paper>
+      );
+    }
+
+    return (
+      <Box sx={{ mb: 3 }}>
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          {paginatedSessions.map((sessionItem) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={sessionItem.id}>
+              <SessionCard
+                session={sessionItem}
+                attendanceCount={sessionAttendanceCounts[sessionItem.id] || 0}
+                isSelected={session?.id === sessionItem.id}
+                onView={handleViewSession}
+                onEdit={handleEditSession}
+                canEdit={canEdit}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        
+        {totalPages > 1 && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={(_, page) => setCurrentPage(page)}
+              color="primary"
+              showFirstButton
+              showLastButton
+            />
+          </Box>
+        )}
+      </Box>
+    );
   };
 
   const handleSessionSelected = useCallback(() => {
@@ -227,21 +363,53 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
     { label: "visitId", key: "visitId" },
   ];
 
-  let content = <Loading />;
-  if (sessions) {
-    if (sessions.length === 0) {
-      content = (
-        <div className="alert alert-warning" role="alert" data-cy="no-session-msg">
-          <b>{Locale.label("groups.groupSessions.noSesMsg")}</b> {Locale.label("groups.groupSessions.addSesMsg")}
-        </div>
+  const getAddButton = () => {
+    if (!UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit)) return null;
+    return (
+      <Button variant="contained" color="primary" startIcon={<Icon>add</Icon>} onClick={handleAdd} data-cy="create-new-session">
+        {Locale.label("groups.groupSessions.new")}
+      </Button>
+    );
+  };
+
+  const renderAttendanceSection = () => {
+    if (!session) {
+      return (
+        <Paper sx={{ p: 4, textAlign: 'center' }}>
+          <Typography variant="body1" color="text.secondary">
+            Select a session above to view attendance
+          </Typography>
+        </Paper>
       );
-    } else {
-      content = (
-        <>
-          <span className="float-right">{downloadData ? <ExportLink data={downloadData} spaceAfter={true} filename={`${group.name}_visits.csv`} customHeaders={customHeaders} /> : <></>}</span>
-          <b data-cy="session-present-msg">
-            {Locale.label("groups.groupSessions.attFor")} {group.name}
-          </b>
+    }
+
+    return (
+      <Paper sx={{ p: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <Box>
+            <Typography variant="h6" component="div" data-cy="session-present-msg">
+              {Locale.label("groups.groupSessions.attFor")} {group.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Session: {session.displayName}
+              {session.serviceTime?.name && ` • ${session.serviceTime.name}`}
+            </Typography>
+          </Box>
+          {downloadData && (
+            <ExportLink 
+              data={downloadData} 
+              spaceAfter={true} 
+              filename={`${group.name}_visits.csv`} 
+              customHeaders={customHeaders} 
+            />
+          )}
+        </Box>
+        
+        {visitSessions.length === 0 ? (
+          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
+            No attendance recorded for this session
+          </Typography>
+        ) : (
           <Table id="groupMemberTable">
             <TableHead>
               <TableRow>
@@ -252,23 +420,20 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
             </TableHead>
             <TableBody>{tableRows}</TableBody>
           </Table>
-        </>
-      );
-    }
-  }
-
-  const getAddButton = () => {
-    if (!UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit)) return null;
-    return (
-      <Button variant="contained" color="primary" startIcon={<Icon>calendar_month</Icon>} onClick={handleAdd} data-cy="create-new-session">
-        {Locale.label("groups.groupSessions.new")}
-      </Button>
+        )}
+      </Paper>
     );
   };
 
+  if (sessions === null) {
+    return <Loading />;
+  }
+
   return (
-    <DisplayBox id="groupSessionsBox" data-cy="group-session-box" headerText={Locale.label("groups.groupSessions.sessions")} headerIcon="calendar_month" editContent={getHeaderSection()}>
-      {content}
-    </DisplayBox>
+    <Box id="groupSessionsBox" data-cy="group-session-box">
+      {renderFilterControls()}
+      {renderSessionCards()}
+      {renderAttendanceSection()}
+    </Box>
   );
 });
