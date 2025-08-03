@@ -8,7 +8,6 @@ import "@churchapps/apphelper-markdown/dist/components/markdownEditor/editor.css
 //TODO export the css from apphelper
 import { EnvironmentHelper } from "./helpers";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "./queryClient";
 
 declare module "@mui/material/styles" {

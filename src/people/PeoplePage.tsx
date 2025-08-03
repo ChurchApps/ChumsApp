@@ -1,11 +1,10 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { Locale, type PersonInterface } from "@churchapps/apphelper";
 import { PeopleSearchResults, PeopleColumns } from "./components";
-import { ApiHelper, ExportLink } from "@churchapps/apphelper";
+import { ExportLink } from "@churchapps/apphelper";
 import { Grid, Box, Typography, Card, Stack, Button } from "@mui/material";
 import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
-import { useMountedState } from "@churchapps/apphelper";
 import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { PageHeader } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
@@ -15,7 +14,6 @@ export const PeoplePage = memo(() => {
   const [searchResults, setSearchResults] = React.useState(null);
   const [selectedColumns, setSelectedColumns] = React.useState<string[]>(["photo", "displayName"]);
   const [isSearchPerformed, setIsSearchPerformed] = React.useState(false);
-  const isMounted = useMountedState();
 
   const recentPeople = useQuery<PersonInterface[]>({
     queryKey: ["/people/recent", "MembershipApi"],

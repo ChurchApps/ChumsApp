@@ -68,7 +68,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
     });
   };
 
-  const handleCaptchaChange = (value: string) => {
+  const handleCaptchaChange = () => {
     const captchaToken = captchaRef.current.getValue();
     ApiHelper.postAnonymous("/donate/captcha-verify", { token: captchaToken }, "GivingApi").then((data) => { setCaptchaResponse(data.response); });
   };

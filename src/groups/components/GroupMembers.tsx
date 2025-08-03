@@ -5,7 +5,6 @@ import {
   DisplayBox,
   UserHelper,
   type GroupMemberInterface,
-  PersonHelper,
   type PersonInterface,
   ExportLink,
   Permissions,

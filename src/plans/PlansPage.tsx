@@ -1,7 +1,7 @@
 import React from "react";
 import { MinistryList } from "./components/MinistryList";
 import { Locale, PageHeader } from "@churchapps/apphelper";
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Assignment as AssignmentIcon, Add as AddIcon } from "@mui/icons-material";
 
 export const PlansPage = () => {

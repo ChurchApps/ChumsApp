@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import { GroupAdd } from "../../groups/components";
 import UserContext from "../../UserContext";
 import { useQuery } from "@tanstack/react-query";
-import { queryClient } from "../../queryClient";
 
 interface Props {
   showAdd?: boolean;

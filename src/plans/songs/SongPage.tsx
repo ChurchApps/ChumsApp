@@ -4,22 +4,13 @@ import { useParams } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { useQuery } from "@tanstack/react-query";
 import {
- Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, Avatar, Chip, IconButton 
+ Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, IconButton 
 } from "@mui/material";
 import {
   LibraryMusic as MusicIcon,
   Add as AddIcon,
   QueueMusic as ArrangementIcon,
-  MusicNote as NoteIcon,
-  Person as ArtistIcon,
-  Album as AlbumIcon,
-  Timer as TimerIcon,
-  MusicOff as KeyIcon,
-  Speed as BpmIcon,
   Edit as EditIcon,
-  Language as LanguageIcon,
-  DateRange as DateIcon,
-  Schedule as TimeIcon,
 } from "@mui/icons-material";
 import { Arrangement } from "./components/Arrangement";
 import { SongSearchDialog } from "./SongSearchDialog";
@@ -216,12 +207,6 @@ refetch
 
     return <Arrangement arrangement={selectedArrangement} reload={refetch} />;
   }, [selectedArrangement, refetch]);
-
-  const formatSeconds = useCallback((seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return mins + ":" + (secs < 10 ? "0" : "") + secs;
-  }, []);
 
   return (
     <>

@@ -2,19 +2,19 @@
 
 declare global {
   namespace JSX {
-    interface Element extends React.ReactElement<any, any> {}
+    type Element = React.ReactElement<any, any>;
     interface ElementClass extends React.Component<any> {
       render(): React.ReactNode;
     }
     interface ElementAttributesProperty {
-      props: {};
+      props: unknown;
     }
     interface ElementChildrenAttribute {
-      children: {};
+      children: unknown;
     }
-    interface IntrinsicAttributes extends React.Attributes {}
-    interface IntrinsicClassAttributes<T> extends React.ClassAttributes<T> {}
-    interface IntrinsicElements extends React.JSX.IntrinsicElements {}
+    type IntrinsicAttributes = React.Attributes;
+    type IntrinsicClassAttributes<T> = React.ClassAttributes<T>;
+    type IntrinsicElements = React.JSX.IntrinsicElements;
   }
 }
 

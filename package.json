@@ -62,7 +62,7 @@
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
     "lint:only": "eslint --ext ts,tsx,js",
-    "lint:fix": "npm run lint:only -- --fix",
+    "lint": "npm run lint:only -- --fix",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json}\"",
     "format": "npm run prettier && npm run lint:fix",
     "predeploy-demo": "export REACT_APP_STAGE=demo && npm run postinstall && npm run build",

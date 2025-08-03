@@ -1,6 +1,8 @@
 import React, { useContext, useCallback } from "react";
-import { Menu, MenuItem, Typography, Box, Stack, Button } from "@mui/material";
-import { ApiHelper, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale, Loading, PageHeader } from "@churchapps/apphelper";
+import { Menu, MenuItem, Box, Stack, Button } from "@mui/material";
+import {
+ ApiHelper, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale, Loading, PageHeader 
+} from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
 import UserContext from "../UserContext";

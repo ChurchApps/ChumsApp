@@ -1,7 +1,6 @@
 import React, { useRef, useState, memo, useCallback, useMemo } from "react";
 import {
   type AnswerInterface,
-  ApiHelper,
   DateHelper,
   DisplayBox,
   ExportLink,

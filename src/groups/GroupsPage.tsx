@@ -3,7 +3,7 @@ import { GroupAdd } from "./components";
 import { ApiHelper, UserHelper, ExportLink, Loading, Locale, PageHeader } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import {
- Table, TableBody, TableCell, TableRow, TableHead, Stack, Paper, Box, Chip, Button, Typography, IconButton, Toolbar 
+ Table, TableBody, TableCell, TableRow, TableHead, Paper, Box, Chip, Button, IconButton, Toolbar 
 } from "@mui/material";
 import { Groups as GroupsIcon, Add as AddIcon, FileDownload as ExportIcon, Folder as FolderIcon, Group as GroupIcon } from "@mui/icons-material";
 import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
@@ -125,11 +125,7 @@ const GroupsPage = () => {
         icon={<GroupsIcon />}
         title={Locale.label("groups.groupsPage.groups")}
         subtitle={groups.length > 0 ? `Manage ${groups.length} groups and their members` : "Create and organize groups for your church community"}
-        statistics={groups.length > 0 ? [
-          { icon: <GroupIcon />, value: groups.length.toString(), label: "Total Groups" },
-          { icon: <FolderIcon />, value: [...new Set(groups.map(g => g.categoryName))].length.toString(), label: "Categories" },
-          { icon: <GroupIcon />, value: groups.reduce((total, group) => total + (group.memberCount || 0), 0).toString(), label: "Total Members" }
-        ] : undefined}
+        statistics={groups.length > 0 ? [{ icon: <GroupIcon />, value: groups.length.toString(), label: "Total Groups" }, { icon: <FolderIcon />, value: [...new Set(groups.map(g => g.categoryName))].length.toString(), label: "Categories" }, { icon: <GroupIcon />, value: groups.reduce((total, group) => total + (group.memberCount || 0), 0).toString(), label: "Total Members" }] : undefined}
       >
         {UserHelper.checkAccess(Permissions.membershipApi.groups.edit) && (
           <Button

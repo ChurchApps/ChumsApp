@@ -96,13 +96,7 @@ export const AttendancePage = () => {
         icon={<CalendarIcon />}
         title={Locale.label("attendance.attendancePage.att")}
         subtitle="Track and manage church attendance across all services"
-        statistics={[
-          { icon: <Icon>church</Icon>, value: stats.campuses.toString(), label: "Campuses" },
-          { icon: <CalendarIcon />, value: stats.serviceTimes.toString(), label: "Service Times" },
-          { icon: <Icon>schedule</Icon>, value: stats.scheduledGroups.toString(), label: "Scheduled Groups" },
-          { icon: <Icon>groups</Icon>, value: stats.unscheduledGroups.toString(), label: "Unscheduled Groups" },
-          { icon: <GroupIcon />, value: stats.totalGroups.toString(), label: "Total Groups" }
-        ]}
+        statistics={[{ icon: <Icon>church</Icon>, value: stats.campuses.toString(), label: "Campuses" }, { icon: <CalendarIcon />, value: stats.serviceTimes.toString(), label: "Service Times" }, { icon: <Icon>schedule</Icon>, value: stats.scheduledGroups.toString(), label: "Scheduled Groups" }, { icon: <Icon>groups</Icon>, value: stats.unscheduledGroups.toString(), label: "Unscheduled Groups" }, { icon: <GroupIcon />, value: stats.totalGroups.toString(), label: "Total Groups" }]}
       >
         <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
           {getTabs().map((tab) => (

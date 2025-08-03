@@ -54,10 +54,12 @@ export const BatchEdit = memo((props: Props) => {
 
   const loadData = useCallback(() => {
     if (UniqueIdHelper.isMissing(props.batchId)) setBatch({ batchDate: new Date(), name: "" });
-    else ApiHelper.get("/donationbatches/" + props.batchId, "GivingApi").then((data) => {
+    else {
+ApiHelper.get("/donationbatches/" + props.batchId, "GivingApi").then((data) => {
       if (data.batchDate) data.batchDate = new Date(data.batchDate.split('T')[0] + "T00:00:00");
       setBatch(data);
     });
+}
   }, [props.batchId]);
 
   React.useEffect(loadData, [loadData]);

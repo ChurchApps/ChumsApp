@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { ApiHelper, type GroupInterface, type GroupServiceTimeInterface, Locale, type ServiceTimeInterface } from "@churchapps/apphelper";
 import {
- Table, TableBody, TableRow, TableCell, Icon, FormControl, InputLabel, Select, Button, MenuItem, type SelectChangeEvent 
+ Table, TableBody, TableRow, TableCell, FormControl, InputLabel, Select, Button, MenuItem, type SelectChangeEvent 
 } from "@mui/material";
 
 interface Props {

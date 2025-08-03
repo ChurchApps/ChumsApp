@@ -27,15 +27,13 @@ export const ReportFilter = (props: Props) => {
       p.keyName?.toLowerCase().includes("from") || 
       p.displayName?.toLowerCase().includes("from") ||
       p.keyName?.toLowerCase().includes("start") ||
-      p.displayName?.toLowerCase().includes("start")
-    );
+      p.displayName?.toLowerCase().includes("start"));
     
     let toParam = dateParams.find(p => 
       p.keyName?.toLowerCase().includes("to") || 
       p.displayName?.toLowerCase().includes("to") ||
       p.keyName?.toLowerCase().includes("end") ||
-      p.displayName?.toLowerCase().includes("end")
-    );
+      p.displayName?.toLowerCase().includes("end"));
     
     // If we have exactly 2 date parameters and couldn't identify them, assume first is from, second is to
     if (!fromParam && !toParam && dateParams.length === 2) {

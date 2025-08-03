@@ -63,13 +63,6 @@ export const SongsPage = memo(() => {
     setFailedImages(prev => new Set(prev).add(imgSrc));
   }, []);
 
-  // Get the first song with album art for the header
-  const headerAlbumArt = useMemo(() => {
-    if (!songs.data || songs.data.length === 0) return null;
-    const songWithThumbnail = songs.data.find((song) => song.thumbnail && !failedImages.has(song.thumbnail));
-    return songWithThumbnail?.thumbnail || null;
-  }, [songs.data, failedImages]);
-
   const formatSeconds = useCallback((seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;

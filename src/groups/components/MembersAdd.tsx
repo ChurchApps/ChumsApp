@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import {
- ApiHelper, type GroupInterface, DisplayBox, type GroupMemberInterface, PersonHelper, type PersonInterface, Loading, Locale, PersonAvatar 
+ ApiHelper, type GroupInterface, DisplayBox, type GroupMemberInterface, type PersonInterface, Loading, Locale, PersonAvatar 
 } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";

@@ -4,7 +4,7 @@ import { UserHelper, Permissions, DateHelper, CurrencyHelper, PageHeader } from 
 import { type DonationBatchInterface, type FundInterface, type DonationInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Box, Typography, Card, Stack, Icon, Button } from "@mui/material";
+import { Box, Card, Stack, Button } from "@mui/material";
 import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 
 export const DonationBatchPage = () => {

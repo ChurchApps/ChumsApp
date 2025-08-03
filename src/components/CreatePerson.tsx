@@ -65,7 +65,7 @@ export function CreatePerson({ onCreate = () => { }, showInModal = false, ...pro
 			}).finally(() => {
 				if (isMounted()) {
 					setIsSubmitting(false);
-					showInModal && props.onClose();
+					if (showInModal) props.onClose();
 				}
 			});
 		});

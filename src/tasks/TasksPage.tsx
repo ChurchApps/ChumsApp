@@ -1,7 +1,7 @@
 import React from "react";
 import { Locale, PageHeader } from "@churchapps/apphelper";
 import { TaskList } from "./components/TaskList";
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Assignment as TaskIcon, SettingsSuggest as AutomationsIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 

@@ -11,7 +11,6 @@ import { DonationInterface, PersonInterface, StripePaymentMethod, ChurchInterfac
 import {
  Table, TableBody, TableRow, TableCell, TableHead, Alert, Button, Icon, Link, Menu, MenuItem 
 } from "@mui/material";
-import { useMountedState } from "@churchapps/apphelper";
 
 interface Props { personId: string, appName?: string, church?: ChurchInterface, churchLogo?: string }
 
@@ -25,7 +24,6 @@ export const DonationPage: React.FC<Props> = (props) => {
   const [appName, setAppName] = React.useState<string>("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const isMounted = useMountedState();
 
   const handleClose = () => {
     setAnchorEl(null);

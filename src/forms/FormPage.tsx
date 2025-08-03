@@ -63,7 +63,7 @@ export const FormPage = () => {
         subtitle="Form configuration and submissions"
         actions={
           <Stack direction="row" spacing={1}>
-            {availableTabs.map((tab, index) => (
+            {availableTabs.map((tab) => (
               <Button
                 key={tab.key}
                 variant={selectedTab === tab.key ? "contained" : "outlined"}

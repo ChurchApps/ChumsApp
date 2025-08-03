@@ -27,6 +27,7 @@ export default tseslint.config([
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/consistent-type-imports': 'off',
       'no-case-declarations': 'off',
       'no-constant-binary-expression': 'off',
       

@@ -1,7 +1,5 @@
-import React, { memo, useCallback, useMemo } from "react";
-import {
- useMountedState, ArrayHelper, ApiHelper, type AttendanceRecordInterface, DateHelper, type GroupInterface, UniqueIdHelper, Loading, Locale 
-} from "@churchapps/apphelper";
+import React, { memo, useMemo } from "react";
+import { ArrayHelper, type AttendanceRecordInterface, DateHelper, type GroupInterface, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import {
@@ -15,8 +13,6 @@ interface Props {
 }
 
 export const PersonAttendance: React.FC<Props> = memo((props) => {
-  const isMounted = useMountedState();
-
   const attendanceRecords = useQuery<AttendanceRecordInterface[]>({
     queryKey: ["/attendancerecords?personId=" + props.personId, "AttendanceApi"],
     enabled: !UniqueIdHelper.isMissing(props.personId),
@@ -28,10 +24,6 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
     placeholderData: [],
   });
 
-  const refetch = useCallback(() => {
-    attendanceRecords.refetch();
-    groups.refetch();
-  }, [attendanceRecords, groups]);
 
   const attendanceCards = useMemo(() => {
     if (!attendanceRecords.data || !groups.data) return null;

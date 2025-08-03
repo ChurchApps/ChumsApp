@@ -50,7 +50,7 @@ export const GroupPage = () => {
     group.refetch();
   };
 
-  const handlePhotoUpdated = (dataUrl: string) => {
+  const handlePhotoUpdated = () => {
     group.refetch();
     setInPhotoEditMode(false);
   };
