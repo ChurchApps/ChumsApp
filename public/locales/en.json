@@ -449,6 +449,10 @@
       "sesDate": "Session Date",
       "srvTime": "Service Time"
     },
+    "sessionEdit": {
+      "deleteConfirm": "Are you sure you wish to permanently delete this session?",
+      "sesEdit": "Edit Session"
+    },
     "tabs": {
       "mem": "Members",
       "noImplement": "Not Implemented",

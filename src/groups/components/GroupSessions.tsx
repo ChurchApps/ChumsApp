@@ -17,7 +17,7 @@ import {
   Locale,
 } from "@churchapps/apphelper";
 import {
- Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, Grid, MenuItem, Avatar, type SelectChangeEvent 
+ Table, TableBody, TableRow, TableCell, TableHead, Icon, FormControl, InputLabel, Select, Button, Grid, MenuItem, Avatar, IconButton, type SelectChangeEvent 
 } from "@mui/material";
 
 interface Props {
@@ -27,10 +27,11 @@ interface Props {
   addedPerson: PersonInterface;
   addedCallback?: (personId: string) => void;
   setHiddenPeople?: (peopleIds: string[]) => void;
+  onSessionEdit?: (session: SessionInterface) => void;
 }
 
 export const GroupSessions: React.FC<Props> = memo((props) => {
-  const { group, sidebarVisibilityFunction, addedSession, addedPerson, addedCallback, setHiddenPeople } = props;
+  const { group, sidebarVisibilityFunction, addedSession, addedPerson, addedCallback, setHiddenPeople, onSessionEdit } = props;
   const [visitSessions, setVisitSessions] = React.useState<VisitSessionInterface[]>([]);
   const [people, setPeople] = React.useState<PersonInterface[]>([]);
   const [sessions, setSessions] = React.useState<SessionInterface[]>([]);
@@ -57,13 +58,19 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
         setHiddenPeople?.(peopleIds);
       });
     }
-  }, [session?.id]);
+  }, [session?.id, setHiddenPeople]);
 
   const loadSessions = useCallback(() => {
     if (group.id) {
       ApiHelper.get("/sessions?groupId=" + group.id, "AttendanceApi").then((data) => {
-        setSessions(data);
-        if (data.length > 0) setSession(data[0]);
+        if (data.length > 0) {
+          // Sort sessions by date (most recent first)
+          const sortedSessions = [...data].sort((a, b) => new Date(b.sessionDate).getTime() - new Date(a.sessionDate).getTime());
+          setSessions(sortedSessions);
+          setSession(sortedSessions[0]);
+        } else {
+          setSessions(data);
+        }
       });
     }
   }, [group.id]);
@@ -76,6 +83,20 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
       e.preventDefault();
       sidebarVisibilityFunction("addSession", true);
     }, [sidebarVisibilityFunction]);
+
+  const handleEditSession = useCallback(() => {
+    if (session && onSessionEdit) {
+      onSessionEdit(session);
+    }
+  }, [session, onSessionEdit]);
+
+  const handleDeleteSession = useCallback(() => {
+    if (session && window.confirm("Are you sure you want to delete this session? This will also remove all attendance records for this session.")) {
+      ApiHelper.delete("/sessions/" + session.id, "AttendanceApi").then(() => {
+        loadSessions();
+      });
+    }
+  }, [session, loadSessions]);
 
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit), []);
 
@@ -137,7 +158,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
     if (!UserHelper.checkAccess(Permissions.attendanceApi.attendance.edit)) return null;
     else {
       return (
-        <Grid container columnSpacing={2}>
+        <Grid container columnSpacing={2} alignItems="center">
           <Grid item>
             <FormControl style={{ width: 140, marginTop: 0 }} size="small">
               <InputLabel id="sessions">{Locale.label("groups.groupSessions.session")}</InputLabel>
@@ -146,6 +167,15 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
               </Select>
             </FormControl>
           </Grid>
+          {session && (
+            <>
+              <Grid item>
+                <IconButton onClick={handleEditSession} size="small" data-testid="edit-session-button" aria-label="Edit session" sx={{ opacity: 0.5, '&:hover': { opacity: 1 } }}>
+                  <Icon>edit</Icon>
+                </IconButton>
+              </Grid>
+            </>
+          )}
           <Grid item>{getAddButton()}</Grid>
         </Grid>
       );
@@ -173,7 +203,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
     if (group.id !== undefined) {
       loadSessions();
     }
-  }, [group.id, addedSession?.id, loadSessions]);
+  }, [group.id, addedSession?.id, addedSession?.sessionDate, addedSession?._updateTimestamp, loadSessions]);
 
   React.useEffect(() => {
     if (addedPerson?.id !== undefined) {
@@ -187,7 +217,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
 
   React.useEffect(() => {
     loadAttDownloadData();
-  }, [loadAttDownloadData]);
+  }, [loadAttDownloadData, session]);
   const customHeaders = [
     { label: "id", key: "id" },
     { label: "sessionDate", key: "sessionDate" },
