@@ -73,31 +73,30 @@ export const PlanPage = () => {
         icon={<AssignmentIcon />} 
         title={plan.name || Locale.label("plans.planPage.servicePlan")} 
         subtitle="Service plan details and team assignments"
-        actions={
-          <Stack direction="row" spacing={1}>
-            {availableTabs.map((tab, index) => (
-              <Button
-                key={tab.key}
-                variant={selectedTab === index ? "contained" : "outlined"}
-                startIcon={tab.icon}
-                onClick={() => setSelectedTab(index)}
-                sx={{
-                  color: selectedTab === index ? "var(--c1l2)" : "#FFF",
-                  backgroundColor: selectedTab === index ? "#FFF" : "transparent",
-                  borderColor: selectedTab === index ? "#FFF" : "rgba(255,255,255,0.5)",
-                  "&:hover": {
-                    borderColor: "#FFF",
-                    backgroundColor: selectedTab === index ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
-                    color: selectedTab === index ? "var(--c1l2)" : "#FFF",
-                  },
-                }}
-              >
-                {tab.label}
-              </Button>
-            ))}
-          </Stack>
-        }
-      />
+      >
+        <Stack direction="row" spacing={1}>
+          {availableTabs.map((tab, index) => (
+            <Button
+              key={tab.key}
+              variant={selectedTab === index ? "contained" : "outlined"}
+              startIcon={tab.icon}
+              onClick={() => setSelectedTab(index)}
+              size="medium"
+              sx={{
+                color: selectedTab === index ? "primary.main" : "#FFF",
+                backgroundColor: selectedTab === index ? "#FFF" : "transparent",
+                borderColor: "#FFF",
+                "&:hover": {
+                  backgroundColor: selectedTab === index ? "#FFF" : "rgba(255,255,255,0.2)",
+                  color: selectedTab === index ? "primary.main" : "#FFF",
+                },
+              }}
+            >
+              {tab.label}
+            </Button>
+          ))}
+        </Stack>
+      </PageHeader>
 
       {/* Tab Content */}
       <Box sx={{ p: 3 }}>{availableTabs[selectedTab]?.component}</Box>

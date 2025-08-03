@@ -61,32 +61,30 @@ export const FormPage = () => {
         icon={<DescriptionIcon />} 
         title={form.data.name} 
         subtitle="Form configuration and submissions"
-        actions={
-          <Stack direction="row" spacing={1}>
-            {availableTabs.map((tab) => (
-              <Button
-                key={tab.key}
-                variant={selectedTab === tab.key ? "contained" : "outlined"}
-                onClick={() => {
-                  setSelectedTab(tab.key);
-                }}
-                sx={{
-                  color: selectedTab === tab.key ? "var(--c1l2)" : "#FFF",
-                  backgroundColor: selectedTab === tab.key ? "#FFF" : "transparent",
-                  borderColor: selectedTab === tab.key ? "#FFF" : "rgba(255,255,255,0.5)",
-                  "&:hover": {
-                    borderColor: "#FFF",
-                    backgroundColor: selectedTab === tab.key ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
-                    color: selectedTab === tab.key ? "var(--c1l2)" : "#FFF",
-                  },
-                }}
-              >
-                {tab.label}
-              </Button>
-            ))}
-          </Stack>
-        }
-      />
+      >
+        <Stack direction="row" spacing={1}>
+          {availableTabs.map((tab) => (
+            <Button
+              key={tab.key}
+              variant={selectedTab === tab.key ? "contained" : "outlined"}
+              onClick={() => {
+                setSelectedTab(tab.key);
+              }}
+              sx={{
+                color: selectedTab === tab.key ? "primary.main" : "#FFF",
+                backgroundColor: selectedTab === tab.key ? "#FFF" : "transparent",
+                borderColor: "#FFF",
+                "&:hover": {
+                  backgroundColor: selectedTab === tab.key ? "#FFF" : "rgba(255,255,255,0.2)",
+                  color: selectedTab === tab.key ? "primary.main" : "#FFF",
+                },
+              }}
+            >
+              {tab.label}
+            </Button>
+          ))}
+        </Stack>
+      </PageHeader>
 
       {/* Tab Content */}
       <Box sx={{ p: 3 }}>

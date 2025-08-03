@@ -59,62 +59,59 @@ export const ManageChurch = () => {
         icon={<SettingsIcon />} 
         title={church.data?.name || "Church Management"} 
         subtitle={church.data?.subDomain ? `${church.data.subDomain}.churchapps.org` : "Church Settings"}
-        actions={
-          <Stack direction="row" spacing={1}>
-            {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
-              <IconButton
-                size="small"
-                onClick={() => setShowChurchSettings(true)}
-                sx={{
-                  color: "rgba(255,255,255,0.8)",
-                  "&:hover": {
-                    color: "#FFF",
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                  },
-                }}
-              >
-                <EditIcon />
-              </IconButton>
-            )}
-            <Button
-              variant={selectedTab === "roles" ? "contained" : "outlined"}
-              startIcon={<LockIcon />}
-              onClick={() => setSelectedTab("roles")}
+      >
+        <Stack direction="row" spacing={1}>
+          {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
+            <IconButton
+              size="small"
+              onClick={() => setShowChurchSettings(true)}
               sx={{
-                color: selectedTab === "roles" ? "var(--c1l2)" : "#FFF",
-                backgroundColor: selectedTab === "roles" ? "#FFF" : "transparent",
-                borderColor: selectedTab === "roles" ? "#FFF" : "rgba(255,255,255,0.5)",
+                color: "rgba(255,255,255,0.8)",
                 "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: selectedTab === "roles" ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
-                  color: selectedTab === "roles" ? "var(--c1l2)" : "#FFF",
-                },
-              }}
-            >
-              {Locale.label("settings.roles.roles")}
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<PlayArrowIcon />}
-              href={`https://transfer.chums.org/login?jwt=${jwt}&churchId=${churchId}`}
-              target="_blank"
-              rel="noreferrer noopener"
-              sx={{
-                color: "#FFF",
-                backgroundColor: "transparent",
-                borderColor: "rgba(255,255,255,0.5)",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)",
                   color: "#FFF",
+                  backgroundColor: "rgba(255,255,255,0.1)",
                 },
               }}
             >
-              {Locale.label("settings.manageChurch.imEx")}
-            </Button>
-          </Stack>
-        }
-      />
+              <EditIcon />
+            </IconButton>
+          )}
+          <Button
+            variant={selectedTab === "roles" ? "contained" : "outlined"}
+            startIcon={<LockIcon />}
+            onClick={() => setSelectedTab("roles")}
+            sx={{
+              color: selectedTab === "roles" ? "primary.main" : "#FFF",
+              backgroundColor: selectedTab === "roles" ? "#FFF" : "transparent",
+              borderColor: "#FFF",
+              "&:hover": {
+                backgroundColor: selectedTab === "roles" ? "#FFF" : "rgba(255,255,255,0.2)",
+                color: selectedTab === "roles" ? "primary.main" : "#FFF",
+              },
+            }}
+          >
+            {Locale.label("settings.roles.roles")}
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<PlayArrowIcon />}
+            href={`https://transfer.chums.org/login?jwt=${jwt}&churchId=${churchId}`}
+            target="_blank"
+            rel="noreferrer noopener"
+            sx={{
+              color: "#FFF",
+              backgroundColor: "transparent",
+              borderColor: "#FFF",
+              "&:hover": {
+                backgroundColor: "rgba(255,255,255,0.2)",
+                color: "#FFF",
+              },
+            }}
+          >
+            {Locale.label("settings.manageChurch.imEx")}
+          </Button>
+        </Stack>
+      </PageHeader>
 
       {/* Church Settings Modal/Component */}
       {showChurchSettings && (
