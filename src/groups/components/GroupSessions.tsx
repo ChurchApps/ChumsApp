@@ -57,7 +57,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
         setHiddenPeople?.(peopleIds);
       });
     }
-  }, [session?.id, setHiddenPeople]);
+  }, [session?.id]);
 
   const loadSessions = useCallback(() => {
     if (group.id) {
@@ -115,7 +115,12 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
   }, [visitSessions, people, canEdit, handleRemove]);
 
   const selectSession = useCallback((e: SelectChangeEvent) => {
-      for (let i = 0; i < sessions.length; i++) if (sessions[i].id === e.target.value) setSession(sessions[i]);
+      for (let i = 0; i < sessions.length; i++) {
+        if (sessions[i].id === e.target.value) {
+          setSession(sessions[i]);
+          break;
+        }
+      }
     }, [sessions]);
 
   const sessionOptions = useMemo(() => {
@@ -152,7 +157,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
       loadAttendance();
       sidebarVisibilityFunction("addPerson", true);
     }
-  }, [session, loadAttendance, sidebarVisibilityFunction]);
+  }, [session?.id, loadAttendance, sidebarVisibilityFunction]);
 
   const handlePersonAdd = useCallback(() => {
     if (addedPerson?.id && session?.id) {
@@ -167,9 +172,8 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
   React.useEffect(() => {
     if (group.id !== undefined) {
       loadSessions();
-      addedCallback("");
     }
-  }, [group.id, addedSession?.id, addedCallback, loadSessions]);
+  }, [group.id, addedSession?.id, loadSessions]);
 
   React.useEffect(() => {
     if (addedPerson?.id !== undefined) {

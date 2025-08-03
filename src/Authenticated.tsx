@@ -8,7 +8,7 @@ import UserContext from "./UserContext";
 // Lazy load all page components for code splitting
 const PeoplePage = React.lazy(() => import("./people/PeoplePage").then((module) => ({ default: module.PeoplePage })));
 const PersonPage = React.lazy(() => import("./people/PersonPage").then((module) => ({ default: module.PersonPage })));
-const GroupsPage = React.lazy(() => import("./groups/GroupsPage").then((module) => ({ default: module.GroupsPage })));
+const GroupsPage = React.lazy(() => import("./groups/GroupsPage"));
 const GroupPage = React.lazy(() => import("./groups/GroupPage").then((module) => ({ default: module.GroupPage })));
 const AttendancePage = React.lazy(() => import("./attendance/AttendancePage").then((module) => ({ default: module.AttendancePage })));
 const DonationsPage = React.lazy(() => import("./donations/DonationsPage").then((module) => ({ default: module.DonationsPage })));

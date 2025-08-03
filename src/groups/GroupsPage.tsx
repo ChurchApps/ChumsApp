@@ -8,7 +8,7 @@ import {
 import { Groups as GroupsIcon, Add as AddIcon, FileDownload as ExportIcon, Folder as FolderIcon, Group as GroupIcon } from "@mui/icons-material";
 import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
 
-export const GroupsPage = () => {
+const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);
   const [showAdd, setShowAdd] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -159,3 +159,5 @@ export const GroupsPage = () => {
     </>
   );
 };
+
+export default GroupsPage;

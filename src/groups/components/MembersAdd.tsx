@@ -34,7 +34,6 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const getRows = () => {
     const rows: JSX.Element[] = [];
     const filtered: GroupMemberInterface[] = [];
-    console.log("Hidden People:", props.hiddenPeople);
     groupMembers.forEach((d: GroupMemberInterface) => {
       if (!props.hiddenPeople || props.hiddenPeople.indexOf(d.personId) === -1) {
         filtered.push(d);

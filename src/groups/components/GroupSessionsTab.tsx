@@ -17,20 +17,20 @@ export const GroupSessionsTab = (props: Props) => {
   const [addSessionVisible, setAddSessionVisible] = React.useState(false);
   const [hiddenPeople, setHiddenPeople] = React.useState([] as string[]);
 
-  const addPerson = (p: PersonInterface) => setAddedPerson(p);
+  const addPerson = React.useCallback((p: PersonInterface) => setAddedPerson(p), []);
 
-  const handleAddedCallback = () => {
+  const handleAddedCallback = React.useCallback(() => {
     setAddedPerson(null);
-  };
+  }, []);
 
-  const handleSidebarVisibility = (name: string, visible: boolean) => {
+  const handleSidebarVisibility = React.useCallback((name: string, visible: boolean) => {
     if (name === "addSession") setAddSessionVisible(visible);
-  };
+  }, []);
 
-  const handleSessionAdd = (session: SessionInterface) => {
+  const handleSessionAdd = React.useCallback((session: SessionInterface) => {
     setAddedSession(session);
     setAddSessionVisible(false);
-  };
+  }, []);
 
   return (
     <>
