@@ -60,11 +60,24 @@ export const SongPage = memo(() => {
       setSelectedArrangement(arr);
     }, [arrangements.data]);
 
-  const refetch = useCallback(() => {
-    song.refetch();
-    arrangements.refetch();
-    songDetail.refetch();
-  }, [song, arrangements, songDetail]);
+  const refetch = useCallback(async () => {
+    const results = await Promise.all([
+      song.refetch(),
+      arrangements.refetch(),
+      songDetail.refetch()
+    ]);
+    
+    // Update selected arrangement with fresh data after refetch
+    if (selectedArrangement?.id) {
+      const arrangementResult = results[1];
+      if (arrangementResult.data) {
+        const updatedArrangement = arrangementResult.data.find(arr => arr.id === selectedArrangement.id);
+        if (updatedArrangement) {
+          setSelectedArrangement(updatedArrangement);
+        }
+      }
+    }
+  }, [song, arrangements, songDetail, selectedArrangement?.id]);
 
   const handleAdd = useCallback(async (songDetail: SongDetailInterface) => {
       if (!song.data?.id) return;

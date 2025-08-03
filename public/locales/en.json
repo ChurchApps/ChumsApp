@@ -1148,7 +1148,8 @@
       "keys": "Keys",
       "meter": "Meter",
       "length": "Length",
-      "key": "Key"
+      "key": "Key",
+      "seconds": "Seconds"
     },
     "library": {
       "empty": {

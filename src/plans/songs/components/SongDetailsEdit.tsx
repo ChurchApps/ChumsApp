@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { ApiHelper, DateHelper, InputBox, Locale } from "@churchapps/apphelper";
 import { type SongDetailInterface } from "../../../helpers";
 import { TextField } from "@mui/material";
-import { SongDetailLinksEdit } from "./SongDetailLinksEdit";
 
 interface Props {
   songDetail: SongDetailInterface;
@@ -50,24 +49,21 @@ export const SongDetailsEdit = (props: Props) => {
   };
 
   return (
-    <>
-      <InputBox headerText={props.songDetail?.title} headerIcon="album" saveFunction={handleSave} cancelFunction={props.onCancel}>
-        <TextField label={Locale.label("songs.details.album")} name="album" value={songDetail?.album} onChange={handleChange} fullWidth size="small" />
-        <TextField label={Locale.label("songs.details.language")} name="language" value={songDetail?.language} onChange={handleChange} fullWidth size="small" />
-        <TextField
-          type="date"
-          label={Locale.label("songs.details.releaseDate")}
-          name="releaseDate"
-          value={songDetail?.releaseDate ? DateHelper.formatHtml5Date(songDetail.releaseDate) : ""}
-          onChange={handleChange}
-          fullWidth
-          size="small"
-        />
-        <TextField type="number" label={Locale.label("songs.details.bpm")} name="bpm" value={songDetail?.bpm} onChange={handleChange} fullWidth size="small" />
-        <TextField label={Locale.label("songs.details.key")} name="keySignature" value={songDetail?.keySignature} placeholder="C#" onChange={handleChange} fullWidth size="small" />
-        <TextField type="number" label={Locale.label("songs.details.seconds")} name="seconds" value={songDetail?.seconds} onChange={handleChange} fullWidth size="small" />
-      </InputBox>
-      <SongDetailLinksEdit songDetailId={songDetail?.id} reload={props.reload} />
-    </>
+    <InputBox headerText={props.songDetail?.title} headerIcon="album" saveFunction={handleSave} cancelFunction={props.onCancel}>
+      <TextField label={Locale.label("songs.details.album")} name="album" value={songDetail?.album} onChange={handleChange} fullWidth size="small" />
+      <TextField label={Locale.label("songs.details.language")} name="language" value={songDetail?.language} onChange={handleChange} fullWidth size="small" />
+      <TextField
+        type="date"
+        label={Locale.label("songs.details.releaseDate")}
+        name="releaseDate"
+        value={songDetail?.releaseDate ? DateHelper.formatHtml5Date(songDetail.releaseDate) : ""}
+        onChange={handleChange}
+        fullWidth
+        size="small"
+      />
+      <TextField type="number" label={Locale.label("songs.details.bpm")} name="bpm" value={songDetail?.bpm} onChange={handleChange} fullWidth size="small" />
+      <TextField label={Locale.label("songs.details.key")} name="keySignature" value={songDetail?.keySignature} placeholder="C#" onChange={handleChange} fullWidth size="small" />
+      <TextField type="number" label={Locale.label("songs.details.seconds")} name="seconds" value={songDetail?.seconds} onChange={handleChange} fullWidth size="small" />
+    </InputBox>
   );
 };
