@@ -19,33 +19,43 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
     const p = { ...person };
 
     if (p.gender && p.gender !== "Unspecified") {
-      attributes.push(<div key="gender">
+      attributes.push(
+        <div key="gender">
           <label>{Locale.label("person.gender")}</label> <b>{p.gender}</b>
-        </div>);
+        </div>
+      );
     }
     if (p.birthDate) {
-      attributes.push(<div key="age">
+      attributes.push(
+        <div key="age">
           <label>{Locale.label("person.age")}</label> <b>{PersonHelper.getAge(p.birthDate)}</b>
-        </div>);
+        </div>
+      );
     }
     if (p.maritalStatus && p.maritalStatus !== "Single") {
       if (p.anniversary) {
-        attributes.push(<div key="maritalStatus">
+        attributes.push(
+          <div key="maritalStatus">
             <label>{Locale.label("person.maritalStatus")}:</label>{" "}
             <b>
               {p.maritalStatus} ({DateHelper.getShortDate(DateHelper.toDate(p.anniversary))})
             </b>
-          </div>);
+          </div>
+        );
       } else {
-        attributes.push(<div key="maritalStatus">
+        attributes.push(
+          <div key="maritalStatus">
             <label>{Locale.label("person.maritalStatus")}:</label> <b>{p.maritalStatus}</b>
-          </div>);
+          </div>
+        );
       }
     }
     if (p.membershipStatus) {
-      attributes.push(<div key="membership">
+      attributes.push(
+        <div key="membership">
           <label>{Locale.label("people.personView.memShip")}</label> <b>{p.membershipStatus}</b>
-        </div>);
+        </div>
+      );
     }
 
     return attributes;
@@ -59,7 +69,8 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
     let homeLabel = Locale.label("people.personView.home");
 
     if (p.contactInfo.email) {
-      methods.push(<TableRow key="email">
+      methods.push(
+        <TableRow key="email">
           <TableCell>
             <label>{homeLabel}</label>
           </TableCell>
@@ -71,11 +82,13 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
               <b>{p.contactInfo.email}</b>
             </a>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       homeLabel = "";
     }
     if (p.contactInfo.homePhone) {
-      methods.push(<TableRow key="homePhone">
+      methods.push(
+        <TableRow key="homePhone">
           <TableCell>
             <label>{homeLabel}</label>
           </TableCell>
@@ -85,25 +98,33 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
           <TableCell>
             <b>{formattedPhoneNumber(p.contactInfo.homePhone)}</b>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       homeLabel = "";
     }
 
     if (p.contactInfo.address1) {
       const lines = [];
-      lines.push(<div key="address1">
+      lines.push(
+        <div key="address1">
           <b>{p.contactInfo.address1}</b>
-        </div>);
+        </div>
+      );
       if (p.contactInfo.address2) {
-        lines.push(<div key="address2">
+        lines.push(
+          <div key="address2">
             <b>{p.contactInfo.address2}</b>
-          </div>);
+          </div>
+        );
       }
-      lines.push(<div key="contactInfo">
+      lines.push(
+        <div key="contactInfo">
           {p.contactInfo.city}, {p.contactInfo.state} {p.contactInfo.zip}
-        </div>);
+        </div>
+      );
 
-      methods.push(<TableRow key="address">
+      methods.push(
+        <TableRow key="address">
           <TableCell>
             <label>{homeLabel}</label>
           </TableCell>
@@ -111,10 +132,12 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
             <Icon>home_pin</Icon>
           </TableCell>
           <TableCell>{lines}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     if (p.contactInfo.mobilePhone) {
-      methods.push(<TableRow key="mobilePHone">
+      methods.push(
+        <TableRow key="mobilePHone">
           <TableCell>
             <label>{Locale.label("people.personView.mobile")}</label>
           </TableCell>
@@ -124,10 +147,12 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
           <TableCell>
             <b>{formattedPhoneNumber(p.contactInfo.mobilePhone)}</b>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     if (p.contactInfo.workPhone) {
-      methods.push(<TableRow key="workPhone">
+      methods.push(
+        <TableRow key="workPhone">
           <TableCell>
             <label>{Locale.label("people.personView.work")}</label>
           </TableCell>
@@ -137,7 +162,8 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
           <TableCell>
             <b>{formattedPhoneNumber(p.contactInfo.workPhone)}</b>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
 
     return methods;
@@ -150,10 +176,7 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
       <Grid container spacing={3}>
         <Grid size={{ xs: 3 }}>
           <div style={{ border: "3px solid #fff", borderRadius: "50%", boxShadow: "0 2px 4px rgba(0,0,0,0.2)" }}>
-            <PersonAvatar
-              person={person}
-              size="xxlarge"
-            />
+            <PersonAvatar person={person} size="xxlarge" />
           </div>
         </Grid>
         <Grid size={{ xs: 9 }}>
@@ -175,8 +198,7 @@ export const PersonView = memo(({ person, editFunction, updatedFunction }: Props
     <DisplayBox
       headerText={Locale.label("people.personView.persDet")}
       editFunction={editFunction}
-      footerContent={<AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />}
-    >
+      footerContent={<AssociatedForms contentType="person" contentId={person?.id} formSubmissions={person?.formSubmissions} updatedFunction={updatedFunction} />}>
       {personFields}
     </DisplayBox>
   );

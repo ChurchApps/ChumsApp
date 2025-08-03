@@ -52,16 +52,20 @@ export const Arrangement = memo((props: Props) => {
     });
   }, [songDetail?.praiseChartsId, props.arrangement, props.reload]);
 
-  const handleSave = useCallback((arrangement: ArrangementInterface) => {
+  const handleSave = useCallback(
+    (arrangement: ArrangementInterface) => {
       setEdit(false);
       if (arrangement) {
         props.reload();
       } else {
         navigate("/plans/songs");
       }
-    }, [props.reload, navigate]);
+    },
+    [props.reload, navigate]
+  );
 
-  const arrangementCard = useMemo(() => (
+  const arrangementCard = useMemo(
+    () => (
       <Card sx={{ borderRadius: 2, border: "1px solid", borderColor: "grey.200" }}>
         <CardContent>
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
@@ -77,8 +81,7 @@ export const Arrangement = memo((props: Props) => {
                 color: "primary.main",
                 "&:hover": { backgroundColor: "primary.light" },
               }}
-              aria-label="Edit arrangement"
-            >
+              aria-label="Edit arrangement">
               <EditIcon />
             </IconButton>
           </Stack>
@@ -104,7 +107,9 @@ export const Arrangement = memo((props: Props) => {
           />
         </CardContent>
       </Card>
-    ), [props.arrangement]);
+    ),
+    [props.arrangement]
+  );
 
   return (
     <Stack spacing={3}>

@@ -62,10 +62,12 @@ export const PlanValidation = (props: Props) => {
     });
 
     conflicts.forEach((c) => {
-      issues.push(<>
+      issues.push(
+        <>
           <b>{c.person.name.display}:</b> {Locale.label("plans.planValidation.blockCon")} {DateHelper.prettyDate(new Date(c.blockout.startDate))} {Locale.label("plans.planValidation.to")}{" "}
           {DateHelper.prettyDate(new Date(c.blockout.endDate))}.
-        </>);
+        </>
+      );
     });
   };
 
@@ -74,10 +76,12 @@ export const PlanValidation = (props: Props) => {
       const assignments = props.assignments.filter((a) => a.positionId === p.id);
       if (assignments.length < p.count) {
         const needed = p.count - assignments.length;
-        issues.push(<>
+        issues.push(
+          <>
             <b>{p.name}:</b> {needed} {Locale.label("plans.planValidation.more")} {needed === 1 ? Locale.label("plans.planValidation.person") : Locale.label("plans.planValidation.ppl")}{" "}
             {Locale.label("plans.planValidation.needed")}
-          </>);
+          </>
+        );
       }
     });
   };
@@ -100,10 +104,12 @@ export const PlanValidation = (props: Props) => {
         a.times.forEach((at) => {
           b.times.forEach((bt) => {
             if (at.startTime < bt.endTime && at.endTime > bt.startTime) {
-              issues.push(<>
+              issues.push(
+                <>
                   <b>{person.name.display}:</b> {Locale.label("plans.planValidation.timeCon")} {a.position.name} {Locale.label("plans.planValidation.and")} {b.position.name}{" "}
                   {Locale.label("plans.planValidation.during")} {at.displayName}.
-                </>);
+                </>
+              );
             }
           });
         });
@@ -127,7 +133,8 @@ export const PlanValidation = (props: Props) => {
           //get overlaping times from planTimeConflicts based on current duty.
           const filtered = tc.overlapingTimes.filter((ot) => a.position.planId === ot.planId && ot.teams?.indexOf(a.position.categoryName) > -1);
           if (filtered.length > 0) {
-            issues.push(<>
+            issues.push(
+              <>
                 <hr />
                 <b
                   style={{
@@ -135,16 +142,18 @@ export const PlanValidation = (props: Props) => {
                     justifyContent: "center",
                     alignItems: "center",
                     fontStyle: "italic",
-                  }}
-                >
+                  }}>
                   {plan.name} {Locale.label("plans.planValidation.cons")}
                 </b>
-              </>);
+              </>
+            );
             filtered.forEach((f) => {
-              issues.push(<>
+              issues.push(
+                <>
                   <b>{person.name.display}:</b> {Locale.label("plans.planValidation.timeCon2")} {a.position.name} {Locale.label("plans.planValidation.between")} {tc.time.displayName}{" "}
                   {Locale.label("plans.planValidation.and")} {f.displayName}
-                </>);
+                </>
+              );
             });
           }
         });
@@ -265,8 +274,7 @@ export const PlanValidation = (props: Props) => {
             onClick={(e) => {
               e.preventDefault();
               notify();
-            }}
-          >
+            }}>
             {Locale.label("plans.planValidation.notify")} {pending.length} {Locale.label("plans.planValidation.vol")}
           </a>
         </p>

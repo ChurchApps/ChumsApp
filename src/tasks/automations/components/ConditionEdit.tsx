@@ -1,6 +1,4 @@
-import {
- FormControl, InputLabel, ListSubheader, MenuItem, Select, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, Divider 
-} from "@mui/material";
+import { FormControl, InputLabel, ListSubheader, MenuItem, Select, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, Divider } from "@mui/material";
 import React from "react";
 import { ErrorMessages, ApiHelper, type ConditionInterface, Locale } from "@churchapps/apphelper";
 import { ConditionAttendance } from "./ConditionAttendance";
@@ -87,8 +85,7 @@ export const ConditionEdit = (props: Props) => {
         borderColor: "grey.200",
         transition: "all 0.2s ease-in-out",
         "&:hover": { boxShadow: 2 },
-      }}
-    >
+      }}>
       <CardContent>
         <Stack spacing={3}>
           {/* Header */}
@@ -122,8 +119,7 @@ export const ConditionEdit = (props: Props) => {
                     color: "text.primary",
                     lineHeight: "36px",
                   },
-                }}
-              >
+                }}>
                 <ListSubheader>{Locale.label("tasks.conditionEdit.gen")}</ListSubheader>
                 <MenuItem value="today">{Locale.label("tasks.conditionEdit.today")}</MenuItem>
 
@@ -174,8 +170,7 @@ export const ConditionEdit = (props: Props) => {
                   borderRadius: 2,
                   textTransform: "none",
                   fontWeight: 600,
-                }}
-              >
+                }}>
                 {Locale.label("common.delete")}
               </Button>
             )}
@@ -187,8 +182,7 @@ export const ConditionEdit = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {Locale.label("common.cancel")}
             </Button>
             <Button
@@ -199,8 +193,7 @@ export const ConditionEdit = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {Locale.label("common.save")}
             </Button>
           </Stack>

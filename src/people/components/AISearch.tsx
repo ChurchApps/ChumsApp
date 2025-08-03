@@ -18,7 +18,7 @@ export const AISearch = (props: Props) => {
     try {
       // First, get the filters from AskApi
       const filters = await ApiHelper.post("/query/people", { query: text }, "AskApi");
-      
+
       // Then use those filters to search for people
       const response = await ApiHelper.post("/people/advancedSearch", filters, "MembershipApi");
 

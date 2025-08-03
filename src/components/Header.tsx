@@ -85,7 +85,7 @@ export const Header: React.FC = () => {
         "/donations/funds": "nav-item-funds",
         "/plans/songs": "nav-item-songs",
         "/profile": "nav-item-profile",
-        "/profile/devices": "nav-item-devices"
+        "/profile/devices": "nav-item-devices",
       };
 
       // Find all navigation links
@@ -95,28 +95,28 @@ export const Header: React.FC = () => {
         if (href && urlToTestId[href]) {
           link.setAttribute("data-testid", urlToTestId[href]);
         }
-        
+
         // Also check for button text content for menu items
         const text = link.textContent?.toLowerCase();
         if (text) {
           const textToTestId: Record<string, string> = {
-            "dashboard": "nav-item-dashboard",
-            "people": "nav-item-people",
-            "groups": "nav-item-groups",
-            "donations": "nav-item-donations",
-            "plans": "nav-item-plans",
-            "tasks": "nav-item-tasks",
-            "settings": "nav-item-settings",
-            "attendance": "nav-item-attendance",
-            "forms": "nav-item-forms",
+            dashboard: "nav-item-dashboard",
+            people: "nav-item-people",
+            groups: "nav-item-groups",
+            donations: "nav-item-donations",
+            plans: "nav-item-plans",
+            tasks: "nav-item-tasks",
+            settings: "nav-item-settings",
+            attendance: "nav-item-attendance",
+            forms: "nav-item-forms",
             "server admin": "nav-item-admin",
-            "batches": "nav-item-batches",
-            "funds": "nav-item-funds",
-            "songs": "nav-item-songs",
-            "profile": "nav-item-profile",
-            "devices": "nav-item-devices"
+            batches: "nav-item-batches",
+            funds: "nav-item-funds",
+            songs: "nav-item-songs",
+            profile: "nav-item-profile",
+            devices: "nav-item-devices",
           };
-          
+
           for (const [key, testId] of Object.entries(textToTestId)) {
             if (text.includes(key)) {
               link.setAttribute("data-testid", testId);
@@ -129,7 +129,7 @@ export const Header: React.FC = () => {
 
     // Add test IDs after a short delay to ensure DOM is ready
     const timer = setTimeout(addTestIds, 100);
-    
+
     // Also add test IDs when menu items change
     const observer = new MutationObserver(addTestIds);
     observer.observe(document.body, { childList: true, subtree: true });

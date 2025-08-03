@@ -1,7 +1,5 @@
 import React from "react";
-import {
- Box, Card, CardContent, Typography, Stack, Paper, Chip, Avatar 
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, Stack, Paper, Chip, Avatar } from "@mui/material";
 import { Assignment as AssignmentIcon, Group as GroupIcon, Edit as EditIcon, People as PeopleIcon } from "@mui/icons-material";
 import { ArrayHelper, type GroupInterface, type GroupMemberInterface, Locale, UserHelper, Permissions, Loading } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
@@ -34,7 +32,7 @@ export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
       if (groupIds.length === 0) return [];
       const { ApiHelper } = await import("@churchapps/apphelper");
       return ApiHelper.get(`/groupMembers?groupIds=${groupIds}`, "MembershipApi");
-    }
+    },
   });
 
   const handleAddUpdated = React.useCallback(() => {
@@ -61,8 +59,7 @@ export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
           border: "1px dashed",
           borderColor: "grey.300",
           borderRadius: 2,
-        }}
-      >
+        }}>
         <AssignmentIcon sx={{ fontSize: 64, color: "grey.400", mb: 2 }} />
         <Typography variant="h6" color="text.secondary" gutterBottom>
           {Locale.label("plans.ministryList.noMinMsg")}
@@ -104,8 +101,7 @@ export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
                   boxShadow: 3,
                   borderColor: "primary.main",
                 },
-              }}
-            >
+              }}>
               <CardContent sx={{ pb: "16px !important" }}>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                   <Stack direction="row" alignItems="center" spacing={2} sx={{ flex: 1, minWidth: 0 }}>
@@ -114,8 +110,7 @@ export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
                         bgcolor: "primary.main",
                         width: 48,
                         height: 48,
-                      }}
-                    >
+                      }}>
                       <GroupIcon />
                     </Avatar>
 
@@ -134,8 +129,7 @@ export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
-                        }}
-                      >
+                        }}>
                         {g.name}
                       </Typography>
 

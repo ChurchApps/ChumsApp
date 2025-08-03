@@ -1,7 +1,5 @@
 import React, { useCallback, memo } from "react";
-import {
- Box, Card, CardContent, Typography, Stack, Paper, Chip, Avatar, Button 
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, Stack, Paper, Chip, Avatar, Button } from "@mui/material";
 import { Add as AddIcon, Assignment as AssignmentIcon, CalendarMonth as CalendarIcon, Edit as EditIcon, EventNote as EventNoteIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { ArrayHelper, DateHelper, type GroupInterface, Locale, Loading } from "@churchapps/apphelper";
@@ -75,8 +73,7 @@ export const PlanList = memo((props: Props) => {
             borderColor: "grey.300",
             borderRadius: 2,
             mb: 3,
-          }}
-        >
+          }}>
           <EventNoteIcon sx={{ fontSize: 64, color: "grey.400", mb: 2 }} />
           <Typography variant="h6" color="text.secondary" gutterBottom>
             No service plans yet
@@ -93,8 +90,7 @@ export const PlanList = memo((props: Props) => {
               fontSize: "1rem",
               py: 1.5,
               px: 3,
-            }}
-          >
+            }}>
             Create Service Plan
           </Button>
         </Paper>
@@ -123,8 +119,7 @@ export const PlanList = memo((props: Props) => {
                 transform: "translateY(-1px)",
                 boxShadow: 2,
               },
-            }}
-          >
+            }}>
             New Plan
           </Button>
         </Stack>
@@ -144,8 +139,7 @@ export const PlanList = memo((props: Props) => {
                 boxShadow: 3,
                 borderColor: "primary.main",
               },
-            }}
-          >
+            }}>
             <CardContent sx={{ pb: "16px !important" }}>
               <Stack direction="row" alignItems="center" justifyContent="space-between">
                 <Stack direction="row" alignItems="center" spacing={2} sx={{ flex: 1, minWidth: 0 }}>
@@ -154,8 +148,7 @@ export const PlanList = memo((props: Props) => {
                       bgcolor: "primary.main",
                       width: 48,
                       height: 48,
-                    }}
-                  >
+                    }}>
                     <CalendarIcon />
                   </Avatar>
 
@@ -174,8 +167,7 @@ export const PlanList = memo((props: Props) => {
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
-                      }}
-                    >
+                      }}>
                       {p.name}
                     </Typography>
 
@@ -222,8 +214,7 @@ export const PlanList = memo((props: Props) => {
                         backgroundColor: "primary.light",
                         borderColor: "primary.dark",
                       },
-                    }}
-                  >
+                    }}>
                     Edit
                   </Button>
                 </Box>

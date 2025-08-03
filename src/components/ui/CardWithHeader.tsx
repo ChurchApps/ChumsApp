@@ -17,8 +17,7 @@ export const CardWithHeader: React.FC<CardWithHeaderProps> = ({ title, icon, act
         borderRadius,
         border: "1px solid",
         borderColor,
-      }}
-    >
+      }}>
       <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Stack direction="row" spacing={1} alignItems="center">

@@ -33,7 +33,8 @@ export const ServiceOrder = memo((props: Props) => {
     setEditPlanItem({ itemType: "header", planId: props.plan.id, sort: planItems?.length + 1 || 1 });
   }, [props.plan.id, planItems?.length]);
 
-  const editContent = useMemo(() => (
+  const editContent = useMemo(
+    () => (
       <Stack direction="row" spacing={1}>
         <Button
           component={Link}
@@ -45,8 +46,7 @@ export const ServiceOrder = memo((props: Props) => {
             textTransform: "none",
             borderRadius: 2,
             fontWeight: 600,
-          }}
-        >
+          }}>
           Print
         </Button>
         <Button
@@ -58,14 +58,16 @@ export const ServiceOrder = memo((props: Props) => {
             textTransform: "none",
             borderRadius: 2,
             fontWeight: 600,
-          }}
-        >
+          }}>
           Add Section
         </Button>
       </Stack>
-    ), [props.plan?.id, addHeader]);
+    ),
+    [props.plan?.id, addHeader]
+  );
 
-  const handleDrop = useCallback((data: any, sort: number) => {
+  const handleDrop = useCallback(
+    (data: any, sort: number) => {
       console.log(JSON.stringify(data));
       console.log("handleDrop Header", data);
       const pi = data.data as PlanItemInterface;
@@ -73,17 +75,19 @@ export const ServiceOrder = memo((props: Props) => {
       ApiHelper.post("/planItems/sort", pi, "DoingApi").then(() => {
         loadData();
       });
-    }, [loadData]);
+    },
+    [loadData]
+  );
 
-  const wrapPlanItem = useCallback((pi: PlanItemInterface, index: number) => (
+  const wrapPlanItem = useCallback(
+    (pi: PlanItemInterface, index: number) => (
       <>
         {showHeaderDrop && (
           <DroppableWrapper
             accept="planItemHeader"
             onDrop={(item) => {
               handleDrop(item, index + 0.5);
-            }}
-          >
+            }}>
             &nbsp;
           </DroppableWrapper>
         )}
@@ -93,8 +97,7 @@ export const ServiceOrder = memo((props: Props) => {
           draggingCallback={(isDragging) => {
             console.log("isDragging", isDragging);
             setShowHeaderDrop(isDragging);
-          }}
-        >
+          }}>
           <PlanItem
             planItem={pi}
             setEditPlanItem={setEditPlanItem}
@@ -109,7 +112,9 @@ export const ServiceOrder = memo((props: Props) => {
           />
         </DraggableWrapper>
       </>
-    ), [showHeaderDrop, showItemDrop, handleDrop, loadData]);
+    ),
+    [showHeaderDrop, showItemDrop, handleDrop, loadData]
+  );
 
   React.useEffect(() => {
     loadData();
@@ -136,8 +141,7 @@ export const ServiceOrder = memo((props: Props) => {
           borderColor: "grey.200",
           transition: "all 0.2s ease-in-out",
           "&:hover": { boxShadow: 2 },
-        }}
-      >
+        }}>
         <CardContent>
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
             <Stack direction="row" alignItems="center" spacing={1}>
@@ -157,8 +161,7 @@ export const ServiceOrder = memo((props: Props) => {
               borderColor: "grey.300",
               borderRadius: 2,
               backgroundColor: "grey.50",
-            }}
-          >
+            }}>
             <DndProvider backend={HTML5Backend}>
               {planItems.length === 0 ? (
                 <Box
@@ -166,8 +169,7 @@ export const ServiceOrder = memo((props: Props) => {
                     textAlign: "center",
                     py: 4,
                     color: "text.secondary",
-                  }}
-                >
+                  }}>
                   <AlbumIcon sx={{ fontSize: 48, mb: 2, color: "grey.400" }} />
                   <Typography variant="body1">No service items yet. Add your first item to get started.</Typography>
                 </Box>
@@ -179,8 +181,7 @@ export const ServiceOrder = memo((props: Props) => {
                       accept="planItemHeader"
                       onDrop={(item) => {
                         handleDrop(item, planItems?.length + 1);
-                      }}
-                    >
+                      }}>
                       <Box
                         sx={{
                           height: 40,

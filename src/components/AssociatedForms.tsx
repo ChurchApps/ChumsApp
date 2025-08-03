@@ -51,8 +51,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
         expanded={expanded === "submitted" + fs.id}
         onChange={() => {
           setExpanded("submitted" + fs.id);
-        }}
-      >
+        }}>
         <AccordionSummary>
           <span>{fs.form.name}</span>
         </AccordionSummary>
@@ -73,8 +72,7 @@ export const AssociatedForms: React.FC<Props> = (props) => {
           expanded={expanded === "unsubmitted" + uf.id}
           onChange={() => {
             setExpanded("unsubmitted" + uf.id);
-          }}
-        >
+          }}>
           <AccordionSummary onClick={() => handleAdd(uf.id)}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Button variant="text" onClick={() => handleAdd(uf.id)} data-testid="add-form-button" aria-label="Add form">

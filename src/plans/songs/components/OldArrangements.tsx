@@ -31,7 +31,8 @@ export const OldArrangements = (props: Props) => {
     else if (arrangements.length === 1) result.push(<OldArrangement arrangement={arrangements[0]} originalKey={props.songDetail?.keySignature} />);
     else {
       arrangements.forEach((arrangement: any) => {
-        result.push(<Accordion key={arrangement.id}>
+        result.push(
+          <Accordion key={arrangement.id}>
             <AccordionSummary>
               {arrangement.name}
               <span style={{ marginLeft: "auto" }}>
@@ -48,7 +49,8 @@ export const OldArrangements = (props: Props) => {
             <AccordionDetails>
               <OldArrangement arrangement={arrangement} originalKey={props.songDetail?.keySignature} />
             </AccordionDetails>
-          </Accordion>);
+          </Accordion>
+        );
       });
       //result.push(<p>{arrangements.length} arrangements found.</p>);
     }

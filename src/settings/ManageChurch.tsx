@@ -37,7 +37,6 @@ export const ManageChurch = () => {
     return <div></div>;
   }, [church.data, selectedTab]);
 
-
   const handleUpdated = useCallback(() => {
     setShowChurchSettings(false);
     church.refetch();
@@ -55,11 +54,7 @@ export const ManageChurch = () => {
 
   return (
     <>
-      <PageHeader 
-        icon={<SettingsIcon />} 
-        title={church.data?.name || "Church Management"} 
-        subtitle={church.data?.subDomain ? `${church.data.subDomain}.churchapps.org` : "Church Settings"}
-      >
+      <PageHeader icon={<SettingsIcon />} title={church.data?.name || "Church Management"} subtitle={church.data?.subDomain ? `${church.data.subDomain}.churchapps.org` : "Church Settings"}>
         <Stack direction="row" spacing={1}>
           {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
             <IconButton
@@ -71,8 +66,7 @@ export const ManageChurch = () => {
                   color: "#FFF",
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
-              }}
-            >
+              }}>
               <EditIcon />
             </IconButton>
           )}
@@ -88,8 +82,7 @@ export const ManageChurch = () => {
                 backgroundColor: selectedTab === "roles" ? "#FFF" : "rgba(255,255,255,0.2)",
                 color: selectedTab === "roles" ? "primary.main" : "#FFF",
               },
-            }}
-          >
+            }}>
             {Locale.label("settings.roles.roles")}
           </Button>
           <Button
@@ -106,8 +99,7 @@ export const ManageChurch = () => {
                 backgroundColor: "rgba(255,255,255,0.2)",
                 color: "#FFF",
               },
-            }}
-          >
+            }}>
             {Locale.label("settings.manageChurch.imEx")}
           </Button>
         </Stack>
@@ -122,8 +114,6 @@ export const ManageChurch = () => {
 
       {/* Tab Content */}
       {selectedTab === "roles" && <Box sx={{ p: 3 }}>{getCurrentTab()}</Box>}
-
-
     </>
   );
 };

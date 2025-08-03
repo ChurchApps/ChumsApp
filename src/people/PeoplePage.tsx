@@ -82,8 +82,15 @@ export const PeoplePage = memo(() => {
       <PageHeader
         icon={<PeopleIcon />}
         title={Locale.label("people.peoplePage.searchPpl")}
-        subtitle={searchResults ? (isSearchPerformed ? `Found ${searchResults.length} people` : `Showing ${searchResults.length} most recent people`) : (recentPeople.isLoading ? "Loading people..." : "No people found")}
-      >
+        subtitle={
+          searchResults
+            ? isSearchPerformed
+              ? `Found ${searchResults.length} people`
+              : `Showing ${searchResults.length} most recent people`
+            : recentPeople.isLoading
+              ? "Loading people..."
+              : "No people found"
+        }>
         <SearchIcon
           sx={{
             fontSize: 32,
@@ -137,8 +144,7 @@ export const PeoplePage = memo(() => {
               // Fallback: scroll to bottom of page
               window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
             }
-          }}
-        >
+          }}>
           Add Person
         </Button>
       </PageHeader>

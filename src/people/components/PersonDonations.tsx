@@ -102,8 +102,7 @@ export const PersonDonations: React.FC<Props> = memo((props) => {
             },
           },
         },
-      }}
-    >
+      }}>
       <div className="donationPage">
         <DonationPage personId={props.personId} church={UserHelper.currentUserChurch?.church} />
       </div>

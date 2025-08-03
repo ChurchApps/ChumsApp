@@ -49,8 +49,7 @@ export const NotificationPreferences = () => {
                 value={pref.allowPush?.toString() || "true"}
                 onChange={handlePrefChange}
                 data-testid="push-notifications-select"
-                aria-label="Push notifications preference"
-              >
+                aria-label="Push notifications preference">
                 <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
                 <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
               </Select>
@@ -67,8 +66,7 @@ export const NotificationPreferences = () => {
                 value={pref.emailFrequency || "daily"}
                 onChange={handlePrefChange}
                 data-testid="email-frequency-select"
-                aria-label="Email frequency preference"
-              >
+                aria-label="Email frequency preference">
                 <MenuItem value="never">{Locale.label("profile.profilePage.never")}</MenuItem>
                 <MenuItem value="individual">{Locale.label("profile.profilePage.indiv")}</MenuItem>
                 <MenuItem value="daily">{Locale.label("profile.profilePage.daily")}</MenuItem>

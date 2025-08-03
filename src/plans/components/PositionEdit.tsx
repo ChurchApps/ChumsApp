@@ -80,9 +80,11 @@ export const PositionEdit = (props: Props) => {
   const getGroupOptions = () => {
     const options = [];
     for (let i = 0; i < groups.length; i++) {
-      options.push(<MenuItem key={i} value={groups[i].id}>
+      options.push(
+        <MenuItem key={i} value={groups[i].id}>
           {groups[i].name}
-        </MenuItem>);
+        </MenuItem>
+      );
     }
     return options;
   };
@@ -103,8 +105,7 @@ export const PositionEdit = (props: Props) => {
         headerIcon="assignment"
         saveFunction={handleSave}
         cancelFunction={props.updatedFunction}
-        deleteFunction={position.id ? handleDelete : null}
-      >
+        deleteFunction={position.id ? handleDelete : null}>
         <FormControl fullWidth>
           <div
             style={{
@@ -115,8 +116,7 @@ export const PositionEdit = (props: Props) => {
               left: 10,
               backgroundColor: "#FFF",
               zIndex: 999,
-            }}
-          >
+            }}>
             {Locale.label("plans.positionEdit.catName")}
           </div>
           <ReactSelect

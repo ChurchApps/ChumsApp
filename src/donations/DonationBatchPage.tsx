@@ -14,7 +14,6 @@ export const DonationBatchPage = () => {
 
   const batch = useQuery<DonationBatchInterface>({ queryKey: ["/donationbatches/" + params.id, "GivingApi"] });
 
-
   const funds = useQuery<FundInterface[]>({
     queryKey: ["/funds", "GivingApi"],
     placeholderData: [],
@@ -75,20 +74,19 @@ export const DonationBatchPage = () => {
       <PageHeader
         icon={<DonationIcon />}
         title={batch.data?.name || "Donation Batch"}
-        subtitle={batch.data?.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.data.batchDate.split('T')[0] + "T00:00:00"))}` : "Manage donations in this batch"}
+        subtitle={batch.data?.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.data.batchDate.split("T")[0] + "T00:00:00"))}` : "Manage donations in this batch"}
         statistics={[
           {
             icon: <ReceiptIcon />,
             value: stats.totalDonations,
-            label: "Total Donations"
+            label: "Total Donations",
           },
           {
             icon: <MoneyIcon />,
             value: CurrencyHelper.formatCurrency(stats.totalAmount),
-            label: "Total Amount"
-          }
-        ]}
-      >
+            label: "Total Amount",
+          },
+        ]}>
         <Stack direction="row" spacing={2}>
           {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
             <Button
@@ -103,8 +101,7 @@ export const DonationBatchPage = () => {
                   borderColor: "#FFF",
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
-              }}
-            >
+              }}>
               Edit Batch
             </Button>
           )}
@@ -121,8 +118,7 @@ export const DonationBatchPage = () => {
                   borderColor: "#FFF",
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
-              }}
-            >
+              }}>
               Add Donation
             </Button>
           )}
@@ -132,11 +128,7 @@ export const DonationBatchPage = () => {
       {/* Main Content */}
       <Box sx={{ p: 3 }}>
         {/* Edit content appears above when editing */}
-        {(editDonationId !== "notset" || editBatch) && (
-          <Box sx={{ mb: 3 }}>
-            {getEditModules()}
-          </Box>
-        )}
+        {(editDonationId !== "notset" || editBatch) && <Box sx={{ mb: 3 }}>{getEditModules()}</Box>}
 
         {/* Main donations table */}
         <Card>

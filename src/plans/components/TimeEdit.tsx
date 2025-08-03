@@ -59,10 +59,12 @@ export const TimeEdit = (props: Props) => {
     const teamList = time.teams?.split(",") || [];
     props.categories.forEach((c) => {
       const checked = teamList.includes(c);
-      result.push(<div>
+      result.push(
+        <div>
           <Checkbox key={c} name="team" checked={checked} onChange={handleTeamCheck} value={c} data-testid={`team-checkbox-${c.toLowerCase().replace(/\s+/g, "-")}`} aria-label={`Team ${c}`} />
           <label>{c}</label>
-        </div>);
+        </div>
+      );
     });
 
     if (result.length === 0) {
@@ -87,8 +89,7 @@ export const TimeEdit = (props: Props) => {
         saveFunction={handleSave}
         cancelFunction={props.onUpdate}
         deleteFunction={time.id ? handleDelete : null}
-        isSubmitting={props.categories.length === 0}
-      >
+        isSubmitting={props.categories.length === 0}>
         <TextField
           fullWidth
           label={Locale.label("plans.timeEdit.disName")}

@@ -64,8 +64,7 @@ export const ConditionText = (props: Props) => {
           name="operator"
           onChange={handleChange}
           data-testid="condition-operator-select"
-          aria-label="Condition operator"
-        >
+          aria-label="Condition operator">
           <MenuItem value="=">=</MenuItem>
           <MenuItem value="contains">{Locale.label("tasks.conditionText.contains")}</MenuItem>
           <MenuItem value="startsWith">{Locale.label("tasks.conditionText.startW")}</MenuItem>

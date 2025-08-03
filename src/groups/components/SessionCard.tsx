@@ -30,9 +30,9 @@ export const SessionCard: React.FC<Props> = ({ session, attendanceCount, isSelec
     if (session.displayName) {
       return session.displayName;
     }
-    
+
     if (!session.sessionDate) return "No Date";
-    
+
     try {
       const date = new Date(session.sessionDate);
       if (isNaN(date.getTime())) {
@@ -46,42 +46,32 @@ export const SessionCard: React.FC<Props> = ({ session, attendanceCount, isSelec
   };
 
   return (
-    <Card 
-      sx={{ 
-        height: '100%',
-        cursor: 'pointer',
+    <Card
+      sx={{
+        height: "100%",
+        cursor: "pointer",
         border: isSelected ? 2 : 1,
-        borderColor: isSelected ? 'primary.main' : 'divider',
+        borderColor: isSelected ? "primary.main" : "divider",
         boxShadow: isSelected ? 3 : 1,
-        '&:hover': {
+        "&:hover": {
           boxShadow: 3,
-          transform: 'translateY(-2px)'
+          transform: "translateY(-2px)",
         },
-        transition: 'all 0.2s ease-in-out'
+        transition: "all 0.2s ease-in-out",
       }}
-      onClick={() => onView(session)}
-    >
+      onClick={() => onView(session)}>
       <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-          <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 2 }}>
+          <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
             {getSessionTitle()}
           </Typography>
-          {isSelected && (
-            <Chip 
-              label="Active" 
-              color="primary" 
-              size="small" 
-              variant="outlined"
-            />
-          )}
+          {isSelected && <Chip label="Active" color="primary" size="small" variant="outlined" />}
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <Avatar sx={{ width: 24, height: 24, mr: 1, fontSize: '12px' }}>
-            {getAttendanceIcon(attendanceCount)}
-          </Avatar>
+        <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+          <Avatar sx={{ width: 24, height: 24, mr: 1, fontSize: "12px" }}>{getAttendanceIcon(attendanceCount)}</Avatar>
           <Typography variant="body2" color="text.secondary">
-            {attendanceCount} {attendanceCount === 1 ? 'person' : 'people'}
+            {attendanceCount} {attendanceCount === 1 ? "person" : "people"}
           </Typography>
         </Box>
 
@@ -91,30 +81,28 @@ export const SessionCard: React.FC<Props> = ({ session, attendanceCount, isSelec
           </Typography>
         )}
 
-        <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
-          <Button 
-            size="small" 
+        <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
+          <Button
+            size="small"
             variant={isSelected ? "contained" : "outlined"}
             onClick={(e) => {
               e.stopPropagation();
               onView(session);
             }}
             startIcon={<Icon>visibility</Icon>}
-            fullWidth
-          >
+            fullWidth>
             View
           </Button>
           {canEdit && (
-            <Button 
-              size="small" 
+            <Button
+              size="small"
               variant="outlined"
               onClick={(e) => {
                 e.stopPropagation();
                 onEdit(session);
               }}
               startIcon={<Icon>edit</Icon>}
-              fullWidth
-            >
+              fullWidth>
               Edit
             </Button>
           )}

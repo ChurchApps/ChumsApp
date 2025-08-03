@@ -2,9 +2,7 @@ import React from "react";
 import { FormEdit, EnvironmentHelper } from "./components";
 import { ApiHelper, type FormInterface, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import {
- Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Stack, Button, Card, Tab 
-} from "@mui/material";
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Stack, Button, Card, Tab } from "@mui/material";
 import { Description as DescriptionIcon, Add as AddIcon, Archive as ArchiveIcon } from "@mui/icons-material";
 import { SmallButton } from "@churchapps/apphelper";
 import { PageHeader } from "@churchapps/apphelper";
@@ -28,9 +26,11 @@ export const FormsPage = () => {
   const getRows = () => {
     const result: JSX.Element[] = [];
     if (!forms.data?.length) {
-      result.push(<TableRow key="0">
+      result.push(
+        <TableRow key="0">
           <TableCell>{Locale.label("forms.formsPage.noCustomMsg")}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return result;
     }
 
@@ -78,7 +78,8 @@ export const FormsPage = () => {
             ariaLabel={`Restore form ${form.name}`}
           />
         ) : null;
-      result.push(<TableRow key={form.id}>
+      result.push(
+        <TableRow key={form.id}>
           <TableCell>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Icon sx={{ fontSize: 20, marginRight: "5px" }}>format_align_left</Icon> <Link to={"/forms/" + form.id}>{form.name}</Link>
@@ -88,7 +89,8 @@ export const FormsPage = () => {
           <TableCell style={{ textAlign: "right" }}>
             {archiveLink || unarchiveLink} {editLink}
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     });
     return result;
   };
@@ -106,9 +108,11 @@ export const FormsPage = () => {
   const getArchivedRows = () => {
     const result: JSX.Element[] = [];
     if (!archivedForms.data?.length) {
-      result.push(<TableRow key="0">
+      result.push(
+        <TableRow key="0">
           <TableCell>{Locale.label("forms.formsPage.noArch")}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return result;
     }
     return getRows();
@@ -119,9 +123,11 @@ export const FormsPage = () => {
     if (forms.data?.length === 0) {
       return rows;
     }
-    rows.push(<TableRow key="header">
+    rows.push(
+      <TableRow key="header">
         <th colSpan={3}>{Locale.label("common.name")}</th>
-      </TableRow>);
+      </TableRow>
+    );
     return rows;
   };
 
@@ -137,7 +143,7 @@ export const FormsPage = () => {
   };
 
   if (forms.isLoading || archivedForms.isLoading) return <Loading />;
-  
+
   const contents = (
     <Table>
       <TableHead>{getTableHeader()}</TableHead>
@@ -145,93 +151,91 @@ export const FormsPage = () => {
     </Table>
   );
 
-    const getTab = (keyName: string, icon: string, text: string) => (
-      <Tab
-        key={keyName}
-        style={{ textTransform: "none", color: "#000" }}
-        onClick={() => {
-          setSelectedTab(keyName);
-        }}
-        label={<>{text}</>}
-      />
-    );
+  const getTab = (keyName: string, icon: string, text: string) => (
+    <Tab
+      key={keyName}
+      style={{ textTransform: "none", color: "#000" }}
+      onClick={() => {
+        setSelectedTab(keyName);
+      }}
+      label={<>{text}</>}
+    />
+  );
 
-    const tabs = [];
-    let defaultTab = "";
-    tabs.push(getTab("forms", "format_align_left", Locale.label("forms.formsPage.forms")));
-    if (defaultTab === "") defaultTab = "forms";
-    if (archivedForms.data?.length > 0) {
-      tabs.push(getTab("archived", "archive", Locale.label("forms.formsPage.archForms")));
-      if (defaultTab === "") defaultTab = "archived";
-    }
-    if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
+  const tabs = [];
+  let defaultTab = "";
+  tabs.push(getTab("forms", "format_align_left", Locale.label("forms.formsPage.forms")));
+  if (defaultTab === "") defaultTab = "forms";
+  if (archivedForms.data?.length > 0) {
+    tabs.push(getTab("archived", "archive", Locale.label("forms.formsPage.archForms")));
+    if (defaultTab === "") defaultTab = "archived";
+  }
+  if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
 
-    return (
-      <>
-        <PageHeader icon={<DescriptionIcon />} title={Locale.label("forms.formsPage.forms")} subtitle="Create and manage custom forms">
-          {formPermission && selectedTab !== "archived" && (
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => {
-                setSelectedFormId("");
-              }}
-              sx={{
-                backgroundColor: "#FFF",
-                color: "var(--c1l2)",
-                "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" },
-              }}
-              data-testid="add-form-button"
-            >
-              {Locale.label("forms.formsPage.addForm") || "Add Form"}
-            </Button>
-          )}
-          {archivedForms.data?.length > 0 && (
-            <Button
-              variant="outlined"
-              onClick={() => {
-                setSelectedTab("archived");
-              }}
-              sx={{
+  return (
+    <>
+      <PageHeader icon={<DescriptionIcon />} title={Locale.label("forms.formsPage.forms")} subtitle="Create and manage custom forms">
+        {formPermission && selectedTab !== "archived" && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => {
+              setSelectedFormId("");
+            }}
+            sx={{
+              backgroundColor: "#FFF",
+              color: "var(--c1l2)",
+              "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" },
+            }}
+            data-testid="add-form-button">
+            {Locale.label("forms.formsPage.addForm") || "Add Form"}
+          </Button>
+        )}
+        {archivedForms.data?.length > 0 && (
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setSelectedTab("archived");
+            }}
+            sx={{
+              color: "#FFF",
+              backgroundColor: "transparent",
+              borderColor: "#FFF",
+              fontWeight: selectedTab === "archived" ? 600 : 400,
+              "&:hover": {
+                backgroundColor: "rgba(255,255,255,0.1)",
                 color: "#FFF",
-                backgroundColor: "transparent",
                 borderColor: "#FFF",
-                fontWeight: selectedTab === "archived" ? 600 : 400,
-                "&:hover": {
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                  color: "#FFF",
-                  borderColor: "#FFF",
-                },
-              }}
-            >
-              {Locale.label("forms.formsPage.archForms")}
-            </Button>
-          )}
-        </PageHeader>
+              },
+            }}>
+            {Locale.label("forms.formsPage.archForms")}
+          </Button>
+        )}
+      </PageHeader>
 
-        {/* Tab Content */}
-        <Box sx={{ p: 3 }}>
-          {getSidebar()}
-          <Card sx={{ mt: getSidebar() ? 2 : 0 }}>
-            {/* Card Header */}
-            <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Stack direction="row" spacing={1} alignItems="center">
-                  {selectedTab === "forms" ? <DescriptionIcon /> : <ArchiveIcon />}
-                  <Typography variant="h6">{selectedTab === "forms" ? Locale.label("forms.formsPage.forms") : Locale.label("forms.formsPage.archForms")}</Typography>
-                </Stack>
-                <Typography variant="body2" color="text.secondary">
-                  {selectedTab === "forms"
-                    ? `${forms.data?.length || 0} ${forms.data?.length === 1 ? "form" : "forms"}`
-                    : `${archivedForms.data?.length || 0} archived ${archivedForms.data?.length === 1 ? "form" : "forms"}`}
-                </Typography>
+      {/* Tab Content */}
+      <Box sx={{ p: 3 }}>
+        {getSidebar()}
+        <Card sx={{ mt: getSidebar() ? 2 : 0 }}>
+          {/* Card Header */}
+          <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Stack direction="row" spacing={1} alignItems="center">
+                {selectedTab === "forms" ? <DescriptionIcon /> : <ArchiveIcon />}
+                <Typography variant="h6">{selectedTab === "forms" ? Locale.label("forms.formsPage.forms") : Locale.label("forms.formsPage.archForms")}</Typography>
               </Stack>
-            </Box>
+              <Typography variant="body2" color="text.secondary">
+                {selectedTab === "forms"
+                  ? `${forms.data?.length || 0} ${forms.data?.length === 1 ? "form" : "forms"}`
+                  : `${archivedForms.data?.length || 0} archived ${archivedForms.data?.length === 1 ? "form" : "forms"}`}
+              </Typography>
+            </Stack>
+          </Box>
 
-            {/* Card Content */}
-            <Box sx={{ p: 0 }}>{contents}</Box>
-          </Card>
-        </Box>
-      </>
-    );
+          {/* Card Content */}
+          <Box sx={{ p: 0 }}>{contents}</Box>
+        </Card>
+      </Box>
+    </>
+  );
 };

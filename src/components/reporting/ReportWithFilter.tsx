@@ -9,7 +9,10 @@ import { ReportFilter } from "./ReportFilter";
 import { type ReportInterface, type ReportPermissionInterface } from "@churchapps/helpers";
 import { Loading, useMountedState } from "@churchapps/apphelper";
 
-interface Props { keyName: string, autoRun: boolean }
+interface Props {
+  keyName: string;
+  autoRun: boolean;
+}
 
 export const ReportWithFilter = (props: Props) => {
   const [report, setReport] = React.useState<ReportInterface>(null);
@@ -19,7 +22,7 @@ export const ReportWithFilter = (props: Props) => {
   const loadData = () => {
     setReportToRun(null);
     setReport(null);
-    ApiHelper.get("/reports/" + props.keyName, "ReportingApi").then(data => {
+    ApiHelper.get("/reports/" + props.keyName, "ReportingApi").then((data) => {
       if (isMounted()) {
         setReport(data);
       }
@@ -38,15 +41,17 @@ export const ReportWithFilter = (props: Props) => {
   React.useEffect(loadData, [props.keyName, isMounted]);
   React.useEffect(handleAutoRun, [report, props.autoRun, hasAutoRun]);
 
-  const handleRun = () => { setReportToRun(report); };
+  const handleRun = () => {
+    setReportToRun(report);
+  };
 
   const handleChange = (r: ReportInterface) => setReport(r);
 
   const checkAccess = () => {
     let result = true;
-    report.permissions.forEach(rpg => {
+    report.permissions.forEach((rpg) => {
       const groupResult = checkGroup(rpg.requireOne);
-      if (!groupResult) result = false;  //between groups use AND
+      if (!groupResult) result = false; //between groups use AND
     });
     return result;
   };
@@ -54,7 +59,7 @@ export const ReportWithFilter = (props: Props) => {
   //Within groups use OR
   const checkGroup = (pa: ReportPermissionInterface[]) => {
     let result = false;
-    pa.forEach(p => {
+    pa.forEach((p) => {
       if (UserHelper.checkAccess(p)) result = true;
     });
     return result;
@@ -63,13 +68,15 @@ export const ReportWithFilter = (props: Props) => {
   if (!report) return <Loading />;
   if (!checkAccess()) return <></>;
   else {
-    return (<Grid container spacing={3}>
-      <Grid size={{ xs: 12, md: 8 }}>
-        <ReportOutput keyName={props.keyName} report={reportToRun} />
+    return (
+      <Grid container spacing={3}>
+        <Grid size={{ xs: 12, md: 8 }}>
+          <ReportOutput keyName={props.keyName} report={reportToRun} />
+        </Grid>
+        <Grid size={{ xs: 12, md: 4 }}>
+          <ReportFilter report={report} onChange={handleChange} onRun={handleRun} />
+        </Grid>
       </Grid>
-      <Grid size={{ xs: 12, md: 4 }}>
-        <ReportFilter report={report} onChange={handleChange} onRun={handleRun} />
-      </Grid>
-    </Grid>);
+    );
   }
 };

@@ -1,9 +1,7 @@
 import React, { useState, useCallback, memo } from "react";
 import { ApiHelper, UserHelper, Loading, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
-import {
- Box, Card, CardContent, Typography, Stack, Button, Paper, Chip, Avatar 
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, Stack, Button, Paper, Chip, Avatar } from "@mui/material";
 import { Add as AddIcon, Group as GroupIcon, People as PeopleIcon, PersonAdd as PersonAddIcon } from "@mui/icons-material";
 import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
 import { GroupAdd } from "../../groups/components";
@@ -53,8 +51,7 @@ export const TeamList = memo((props: Props) => {
             border: "1px dashed",
             borderColor: "grey.300",
             borderRadius: 2,
-          }}
-        >
+          }}>
           <PeopleIcon sx={{ fontSize: 64, color: "grey.400", mb: 2 }} />
           <Typography variant="h6" color="text.secondary" gutterBottom>
             {Locale.label("plans.teamList.noTeam")}
@@ -72,8 +69,7 @@ export const TeamList = memo((props: Props) => {
                 fontSize: "1rem",
                 py: 1.5,
                 px: 3,
-              }}
-            >
+              }}>
               Create Team
             </Button>
           )}
@@ -103,8 +99,7 @@ export const TeamList = memo((props: Props) => {
                   transform: "translateY(-1px)",
                   boxShadow: 2,
                 },
-              }}
-            >
+              }}>
               New Team
             </Button>
           )}
@@ -129,8 +124,7 @@ export const TeamList = memo((props: Props) => {
                   boxShadow: 3,
                   borderColor: "primary.main",
                 },
-              }}
-            >
+              }}>
               <CardContent sx={{ pb: "16px !important" }}>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
                   <Stack direction="row" alignItems="center" spacing={2} sx={{ flex: 1, minWidth: 0 }}>
@@ -139,8 +133,7 @@ export const TeamList = memo((props: Props) => {
                         bgcolor: "secondary.main",
                         width: 48,
                         height: 48,
-                      }}
-                    >
+                      }}>
                       <GroupIcon />
                     </Avatar>
 
@@ -159,8 +152,7 @@ export const TeamList = memo((props: Props) => {
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
-                        }}
-                      >
+                        }}>
                         {g.name}
                       </Typography>
 
@@ -203,8 +195,7 @@ export const TeamList = memo((props: Props) => {
                           backgroundColor: "primary.light",
                           borderColor: "primary.dark",
                         },
-                      }}
-                    >
+                      }}>
                       Manage
                     </Button>
                   </Box>

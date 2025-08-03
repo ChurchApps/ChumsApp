@@ -1,8 +1,6 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { ApiHelper, type GroupInterface, type GroupServiceTimeInterface, Locale, type ServiceTimeInterface } from "@churchapps/apphelper";
-import {
- Table, TableBody, TableRow, TableCell, FormControl, InputLabel, Select, Button, MenuItem, type SelectChangeEvent 
-} from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, FormControl, InputLabel, Select, Button, MenuItem, type SelectChangeEvent } from "@mui/material";
 
 interface Props {
   group: GroupInterface;
@@ -23,12 +21,15 @@ export const ServiceTimesEdit = memo((props: Props) => {
     });
   }, [props.group.id]);
 
-  const handleRemove = useCallback((e: React.MouseEvent) => {
+  const handleRemove = useCallback(
+    (e: React.MouseEvent) => {
       e.preventDefault();
       const anchor = e.currentTarget as HTMLAnchorElement;
       const id = anchor.getAttribute("data-id");
       ApiHelper.delete("/groupservicetimes/" + id.toString(), "AttendanceApi").then(loadData);
-    }, [loadData]);
+    },
+    [loadData]
+  );
 
   const rows = useMemo(() => {
     return groupServiceTimes.map((gst) => (
@@ -53,11 +54,14 @@ export const ServiceTimesEdit = memo((props: Props) => {
     ));
   }, [serviceTimes]);
 
-  const handleAdd = useCallback((e: React.MouseEvent) => {
+  const handleAdd = useCallback(
+    (e: React.MouseEvent) => {
       e.preventDefault();
       const gst = { groupId: props.group.id, serviceTimeId: addServiceTimeId } as GroupServiceTimeInterface;
       ApiHelper.post("/groupservicetimes", [gst], "AttendanceApi").then(loadData);
-    }, [props.group.id, addServiceTimeId, loadData]);
+    },
+    [props.group.id, addServiceTimeId, loadData]
+  );
 
   const handleChange = useCallback((e: SelectChangeEvent) => {
     setAddServiceTimeId(e.target.value as string);
@@ -89,8 +93,7 @@ export const ServiceTimesEdit = memo((props: Props) => {
                 <Icon>add</Icon> {Locale.label("common.add")}
               </Button>
             </>
-          }
-        >
+          }>
           {options}
         </Select>
       </FormControl>

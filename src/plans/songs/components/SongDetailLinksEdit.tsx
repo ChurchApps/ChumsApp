@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { ApiHelper, InputBox } from "@churchapps/apphelper";
 import { type SongDetailLinkInterface } from "../../../helpers";
-import {
- FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, type SelectChangeEvent, Stack, Typography, Box, IconButton 
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, type SelectChangeEvent, Stack, Typography, Box, IconButton } from "@mui/material";
 import { Link as LinkIcon, Done as DoneIcon, Add as AddIcon } from "@mui/icons-material";
 
 interface Props {
@@ -123,8 +121,7 @@ export const SongDetailLinksEdit = (props: Props) => {
           onClick={(e) => {
             e.preventDefault();
             setEditLink(link);
-          }}
-        >
+          }}>
           {link.service}
         </a>
       </TableCell>
@@ -141,8 +138,7 @@ export const SongDetailLinksEdit = (props: Props) => {
           setEditLink(null);
         }}
         saveFunction={handleSave}
-        deleteFunction={editLink.id ? handleDelete : null}
-      >
+        deleteFunction={editLink.id ? handleDelete : null}>
         <FormControl fullWidth size="small">
           <InputLabel>Service</InputLabel>
           <Select size="small" name="service" label="Service" value={editLink.service} onChange={handleChange}>
@@ -175,8 +171,7 @@ export const SongDetailLinksEdit = (props: Props) => {
               sx={{
                 color: "primary.main",
                 "&:hover": { backgroundColor: "primary.light" },
-              }}
-            >
+              }}>
               <AddIcon fontSize="small" />
             </IconButton>
             <IconButton
@@ -185,8 +180,7 @@ export const SongDetailLinksEdit = (props: Props) => {
               sx={{
                 color: "success.main",
                 "&:hover": { backgroundColor: "success.light" },
-              }}
-            >
+              }}>
               <DoneIcon fontSize="small" />
             </IconButton>
           </Stack>

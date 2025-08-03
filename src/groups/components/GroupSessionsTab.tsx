@@ -38,7 +38,7 @@ export const GroupSessionsTab = (props: Props) => {
 
   const handleSessionUpdated = React.useCallback((session: SessionInterface) => {
     // Force reload by adding timestamp to ensure useEffect triggers
-    setAddedSession(session ? { ...session, _updateTimestamp: Date.now() } as SessionInterface : {} as SessionInterface);
+    setAddedSession(session ? ({ ...session, _updateTimestamp: Date.now() } as SessionInterface) : ({} as SessionInterface));
     setEditSessionVisible(false);
     setEditingSession(null);
   }, []);

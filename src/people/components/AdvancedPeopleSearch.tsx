@@ -68,12 +68,15 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
     });
   }, [convertConditions, props]);
 
-  const conditionAddedHandler = useCallback((condition: SearchCondition) => {
+  const conditionAddedHandler = useCallback(
+    (condition: SearchCondition) => {
       const c = [...conditions];
       c.push(condition);
       setConditions(c);
       setShowAddCondition(false);
-    }, [conditions]);
+    },
+    [conditions]
+  );
 
   const showAddConditionHandler = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -92,19 +95,21 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
             marginBottom: "10px",
             justifyContent: "flex-end",
           }}
-          onClick={showAddConditionHandler}
-        >
+          onClick={showAddConditionHandler}>
           <Icon>add</Icon> {Locale.label("people.peopleSearch.addCon")}
         </a>
       );
     }
   }, [showAddCondition, conditionAddedHandler, showAddConditionHandler]);
 
-  const removeCondition = useCallback((index: number) => {
+  const removeCondition = useCallback(
+    (index: number) => {
       const c = [...conditions];
       c.splice(index, 1);
       setConditions(c);
-    }, [conditions]);
+    },
+    [conditions]
+  );
 
   const displayConditions = useMemo(() => {
     const result: JSX.Element[] = [];
@@ -134,21 +139,22 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         const parsedValue = JSON.parse(c.value);
         displayValue = `${parsedValue[0]?.text} [${parsedValue[1]?.from} - ${parsedValue[1]?.to}]`;
       }
-      result.push(<Box key={index} sx={{ display: "flex", alignItems: "center" }} mb={1}>
+      result.push(
+        <Box key={index} sx={{ display: "flex", alignItems: "center" }} mb={1}>
           <a
             href="about:blank"
             style={{ display: "flex" }}
             onClick={(e) => {
               e.preventDefault();
               removeCondition(index);
-            }}
-          >
+            }}>
             <Icon sx={{ marginRight: "5px" }}>delete</Icon>
           </a>
           <Box>
             <b>{displayField}</b> {displayOperator} <i>{displayValue}</i>
           </Box>
-        </Box>);
+        </Box>
+      );
       idx++;
     }
     return result;
@@ -167,8 +173,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
       saveFunction={handleAdvancedSearch}
       saveText="Search"
       isSubmitting={conditions.length < 1}
-      help="chums/advanced-search"
-    >
+      help="chums/advanced-search">
       <p>{Locale.label("people.peopleSearch.allPeeps")}</p>
       {displayConditions}
       {addConditionContent}

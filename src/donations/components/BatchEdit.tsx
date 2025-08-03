@@ -18,7 +18,7 @@ export const BatchEdit = memo((props: Props) => {
   const handleSave = useCallback(() => {
     const batchToSave = {
       ...batch,
-      batchDate: batch.batchDate ? DateHelper.formatHtml5Date(batch.batchDate) : null
+      batchDate: batch.batchDate ? DateHelper.formatHtml5Date(batch.batchDate) : null,
     };
     return ApiHelper.post("/donationbatches", [batchToSave], "GivingApi").then(() => props.updatedFunction());
   }, [batch, props.updatedFunction]);
@@ -31,14 +31,18 @@ export const BatchEdit = memo((props: Props) => {
 
   const getDeleteFunction = useCallback(() => (!UniqueIdHelper.isMissing(props.batchId) ? handleDelete : undefined), [props.batchId, handleDelete]);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent<any>) => {
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<any>) => {
       if (e.key === "Enter") {
         e.preventDefault();
         handleSave();
       }
-    }, [handleSave]);
+    },
+    [handleSave]
+  );
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const b = { ...batch } as DonationBatchInterface;
       switch (e.currentTarget.name) {
         case "name":
@@ -50,16 +54,18 @@ export const BatchEdit = memo((props: Props) => {
           break;
       }
       setBatch(b);
-    }, [batch]);
+    },
+    [batch]
+  );
 
   const loadData = useCallback(() => {
     if (UniqueIdHelper.isMissing(props.batchId)) setBatch({ batchDate: new Date(), name: "" });
     else {
-ApiHelper.get("/donationbatches/" + props.batchId, "GivingApi").then((data) => {
-      if (data.batchDate) data.batchDate = new Date(data.batchDate.split('T')[0] + "T00:00:00");
-      setBatch(data);
-    });
-}
+      ApiHelper.get("/donationbatches/" + props.batchId, "GivingApi").then((data) => {
+        if (data.batchDate) data.batchDate = new Date(data.batchDate.split("T")[0] + "T00:00:00");
+        setBatch(data);
+      });
+    }
   }, [props.batchId]);
 
   React.useEffect(loadData, [loadData]);
@@ -72,8 +78,7 @@ ApiHelper.get("/donationbatches/" + props.batchId, "GivingApi").then((data) => {
       cancelFunction={handleCancel}
       deleteFunction={getDeleteFunction()}
       saveFunction={handleSave}
-      help="chums/manual-input"
-    >
+      help="chums/manual-input">
       <TextField fullWidth name="name" data-cy="batch-name" label={Locale.label("donations.batchEdit.opName")} value={batch.name} onChange={handleChange} onKeyDown={handleKeyDown} />
       <TextField
         fullWidth

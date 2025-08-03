@@ -1,6 +1,4 @@
-import {
- Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent 
-} from "@mui/material";
+import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
 import { ChoicesEdit } from ".";
 import { useMountedState, type QuestionInterface, ApiHelper, InputBox, UniqueIdHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
@@ -117,8 +115,7 @@ export function FormQuestionEdit(props: Props) {
       cancelFunction={props.updatedFunction}
       isSubmitting={isSubmitting}
       deleteFunction={!UniqueIdHelper.isMissing(question.id) ? handleDelete : undefined}
-      help="chums/forms"
-    >
+      help="chums/forms">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel id="provider">{Locale.label("forms.formQuestionEdit.prov")}</InputLabel>

@@ -1,20 +1,7 @@
 import React from "react";
-import {
-  ArrayHelper,
-  ApiHelper,
-  UserHelper,
-  DateHelper,
-  CurrencyHelper,
-  ExportLink,
-  Permissions,
-  UniqueIdHelper,
-  Loading,
-  Locale,
-} from "@churchapps/apphelper";
+import { ArrayHelper, ApiHelper, UserHelper, DateHelper, CurrencyHelper, ExportLink, Permissions, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { type DonationInterface, type DonationBatchInterface, type FundInterface } from "@churchapps/helpers";
-import {
- Table, TableBody, TableCell, TableRow, TableHead, Typography, Stack, Icon, Button, Box 
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow, TableHead, Typography, Stack, Icon, Button, Box } from "@mui/material";
 import { Edit as EditIcon, Person as PersonIcon, CalendarMonth as DateIcon, AttachMoney as MoneyIcon, FileDownload as ExportIcon, VolunteerActivism as DonationIcon } from "@mui/icons-material";
 import { IconText, EmptyState } from "../../components";
 
@@ -55,12 +42,15 @@ export const Donations: React.FC<Props> = (props) => {
     );
   }, [funds.length, donations]);
 
-  const showEditDonation = React.useCallback((e: React.MouseEvent) => {
+  const showEditDonation = React.useCallback(
+    (e: React.MouseEvent) => {
       e.preventDefault();
       const button = e.currentTarget as HTMLButtonElement;
       const id = button.getAttribute("data-id");
       editFunction(id);
-    }, [editFunction]);
+    },
+    [editFunction]
+  );
 
   // Memoize the total calculation to avoid recalculating on every render
   const donationsTotal = React.useMemo(() => {
@@ -81,8 +71,7 @@ export const Donations: React.FC<Props> = (props) => {
             borderBottom: "2px solid",
             borderBottomColor: "divider",
           },
-        }}
-      >
+        }}>
         <TableRow>
           <TableCell sx={{ fontWeight: 600 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -120,16 +109,20 @@ export const Donations: React.FC<Props> = (props) => {
     const rows: React.ReactNode[] = [];
 
     if (props.funds.length === 0) {
-      rows.push(<TableRow key="0">
+      rows.push(
+        <TableRow key="0">
           <EmptyState variant="table" colSpan={5} icon={<DonationIcon />} title={Locale.label("donations.donations.errMsg")} />
-        </TableRow>);
+        </TableRow>
+      );
       return rows;
     }
 
     if (!donations || donations.length === 0) {
-      rows.push(<TableRow key="0">
+      rows.push(
+        <TableRow key="0">
           <EmptyState variant="table" colSpan={5} icon={<DonationIcon />} title={Locale.label("donations.donations.noDonMsg")} />
-        </TableRow>);
+        </TableRow>
+      );
       return rows;
     }
 
@@ -142,13 +135,13 @@ export const Donations: React.FC<Props> = (props) => {
         </Button>
       ) : null;
 
-      rows.push(<TableRow
+      rows.push(
+        <TableRow
           key={i}
           sx={{
             "&:hover": { backgroundColor: "action.hover" },
             transition: "background-color 0.2s ease",
-          }}
-        >
+          }}>
           <TableCell>
             <IconText icon={<Icon>receipt</Icon>} iconSize={20} iconColor="var(--c1l2)" variant="body2">
               <span style={{ fontWeight: 500, color: "text.primary" }}>{d.id}</span>
@@ -161,7 +154,7 @@ export const Donations: React.FC<Props> = (props) => {
           </TableCell>
           <TableCell>
             <IconText icon={<DateIcon />} iconSize={18} iconColor="text.secondary" variant="body2">
-              {DateHelper.prettyDate(new Date(d.donationDate.split('T')[0] + "T00:00:00"))}
+              {DateHelper.prettyDate(new Date(d.donationDate.split("T")[0] + "T00:00:00"))}
             </IconText>
           </TableCell>
           <TableCell>
@@ -170,11 +163,13 @@ export const Donations: React.FC<Props> = (props) => {
             </IconText>
           </TableCell>
           {canEdit && <TableCell>{editButton}</TableCell>}
-        </TableRow>);
+        </TableRow>
+      );
     }
 
     // Add total row
-    rows.push(<TableRow key="total" sx={{ borderTop: 2, backgroundColor: "grey.50" }}>
+    rows.push(
+      <TableRow key="total" sx={{ borderTop: 2, backgroundColor: "grey.50" }}>
         <TableCell sx={{ fontWeight: "bold", fontSize: 15 }}>
           <Stack direction="row" spacing={1} alignItems="center">
             <Icon sx={{ color: "var(--c1l2)", fontSize: 20 }}>calculate</Icon>
@@ -194,7 +189,8 @@ export const Donations: React.FC<Props> = (props) => {
           </Stack>
         </TableCell>
         {canEdit && <TableCell></TableCell>}
-      </TableRow>);
+      </TableRow>
+    );
 
     return rows;
   }, [donations, props.funds.length, canEdit, showEditDonation, donationsTotal]);

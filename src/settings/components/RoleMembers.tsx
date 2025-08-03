@@ -1,7 +1,5 @@
 import React, { memo, useCallback, useMemo } from "react";
-import {
- ApiHelper, DisplayBox, UserHelper, type RoleMemberInterface, type RoleInterface, Permissions, SmallButton, Locale 
-} from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, UserHelper, type RoleMemberInterface, type RoleInterface, Permissions, SmallButton, Locale } from "@churchapps/apphelper";
 import { Stack, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 interface Props {
@@ -16,21 +14,27 @@ export const RoleMembers: React.FC<Props> = memo((props) => {
   const { roleMembers } = props;
   const isRoleEveryone = props.role.id === null;
 
-  const handleAdd = useCallback((e: React.MouseEvent) => {
+  const handleAdd = useCallback(
+    (e: React.MouseEvent) => {
       e.preventDefault();
       props.addFunction(props.role);
-    }, [props]);
+    },
+    [props]
+  );
 
   const editContent = useMemo(() => {
     if (isRoleEveryone) return null;
     return <SmallButton onClick={handleAdd} icon="add" text={Locale.label("common.add")} data-testid="add-role-member-button" ariaLabel="Add role member" />;
   }, [isRoleEveryone, handleAdd]);
 
-  const handleRemove = useCallback((roleMember: RoleMemberInterface) => {
+  const handleRemove = useCallback(
+    (roleMember: RoleMemberInterface) => {
       if (window.confirm(`${Locale.label("settings.roleMembers.confirmMsg")} ${props.role.name}?`)) {
         ApiHelper.delete("/rolemembers/" + roleMember.id, "MembershipApi").then(() => props.updatedFunction());
       }
-    }, [props.role.name, props.updatedFunction]);
+    },
+    [props.role.name, props.updatedFunction]
+  );
 
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.roles.edit), []);
   const canDelete = useMemo(() => (props.role.name === "Domain Admins" ? canEdit && roleMembers.length > 1 : canEdit), [props.role.name, canEdit, roleMembers.length]);
@@ -38,9 +42,11 @@ export const RoleMembers: React.FC<Props> = memo((props) => {
   const tableRows = useMemo(() => {
     const rows: JSX.Element[] = [];
     if (isRoleEveryone) {
-      rows.push(<TableRow key="0">
+      rows.push(
+        <TableRow key="0">
           <TableCell>{Locale.label("settings.roleMembers.roleAppMsg")}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return rows;
     }
 
@@ -71,7 +77,8 @@ export const RoleMembers: React.FC<Props> = memo((props) => {
       ) : null;
 
       const { firstName, lastName } = rm.user;
-      rows.push(<TableRow key={i}>
+      rows.push(
+        <TableRow key={i}>
           <TableCell>{`${firstName} ${lastName}`}</TableCell>
           <TableCell>{rm.user.email}</TableCell>
           <TableCell>
@@ -80,17 +87,11 @@ export const RoleMembers: React.FC<Props> = memo((props) => {
               {removeLink}
             </Stack>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     return rows;
-  }, [
-isRoleEveryone,
-roleMembers,
-canEdit,
-canDelete,
-handleRemove,
-props.setSelectedRoleMember
-]);
+  }, [isRoleEveryone, roleMembers, canEdit, canDelete, handleRemove, props.setSelectedRoleMember]);
 
   const tableHeader = useMemo(() => {
     if (isRoleEveryone) return null;

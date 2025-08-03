@@ -1,8 +1,6 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import {
- ApiHelper, type GroupInterface, DisplayBox, type GroupMemberInterface, type PersonInterface, Loading, Locale, PersonAvatar 
-} from "@churchapps/apphelper";
+import { ApiHelper, type GroupInterface, DisplayBox, type GroupMemberInterface, type PersonInterface, Loading, Locale, PersonAvatar } from "@churchapps/apphelper";
 import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
@@ -40,14 +38,17 @@ export const MembersAdd: React.FC<Props> = (props) => {
       }
     });
     if (filtered.length === 0) {
-      rows.push(<TableRow key="0">
+      rows.push(
+        <TableRow key="0">
           <TableCell>{Locale.label("groups.membersAdd.noMem")}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return rows;
     }
     for (let i = 0; i < filtered.length; i++) {
       const gm = filtered[i];
-      rows.push(<TableRow key={gm.personId}>
+      rows.push(
+        <TableRow key={gm.personId}>
           <TableCell>
             <PersonAvatar person={gm.person} size="small" />
           </TableCell>
@@ -57,7 +58,8 @@ export const MembersAdd: React.FC<Props> = (props) => {
           <TableCell>
             <SmallButton icon="person_add" text={Locale.label("common.add")} onClick={() => addMember(gm)} color="success" data-testid="add-member-button" ariaLabel="Add member to group" />
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     return rows;
   };
@@ -65,11 +67,13 @@ export const MembersAdd: React.FC<Props> = (props) => {
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) return rows;
-    rows.push(<TableRow key="0">
+    rows.push(
+      <TableRow key="0">
         <th></th>
         <th>{Locale.label("common.name")}</th>
         <th></th>
-      </TableRow>);
+      </TableRow>
+    );
     return rows;
   };
 

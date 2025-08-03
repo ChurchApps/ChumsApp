@@ -1,6 +1,4 @@
-import {
- Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, Paper 
-} from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, Paper } from "@mui/material";
 import React from "react";
 import { SelectGroup } from ".";
 import { type GroupInterface, Locale, PersonHelper, type PersonInterface } from "@churchapps/apphelper";
@@ -49,8 +47,7 @@ export const ContentPicker: React.FC<Props> = (props) => {
           alignItems: "center",
           justifyContent: "space-between",
           pb: 2,
-        }}
-      >
+        }}>
         {Locale.label("tasks.contentPicker.selPers")}
       </DialogTitle>
       <DialogContent sx={{ pt: 0 }}>
@@ -67,8 +64,7 @@ export const ContentPicker: React.FC<Props> = (props) => {
                 fontWeight: 600,
                 fontSize: "1rem",
               },
-            }}
-          >
+            }}>
             <Tab label={Locale.label("tasks.contentPicker.pers")} icon={<PersonIcon />} iconPosition="start" />
             <Tab label={Locale.label("tasks.contentPicker.group")} icon={<GroupIcon />} iconPosition="start" />
           </Tabs>
@@ -91,8 +87,7 @@ export const ContentPicker: React.FC<Props> = (props) => {
             borderRadius: 2,
             textTransform: "none",
             fontWeight: 600,
-          }}
-        >
+          }}>
           {Locale.label("common.close")}
         </Button>
       </DialogActions>

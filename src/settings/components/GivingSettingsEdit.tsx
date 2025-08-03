@@ -1,7 +1,5 @@
 import React from "react";
-import {
- FormControl, InputLabel, MenuItem, Select, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton, type SelectChangeEvent 
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton, type SelectChangeEvent } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import { ApiHelper, Locale, UniqueIdHelper } from "@churchapps/apphelper";
 import { type PaymentGatewaysInterface } from "../../helpers";

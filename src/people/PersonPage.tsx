@@ -61,7 +61,7 @@ export const PersonPage = () => {
         nametagNotes: "",
       };
     }
-    
+
     if (!personData.data) return null;
     const p: PersonInterface = personData.data;
     if (!p.contactInfo) p.contactInfo = { homePhone: "", workPhone: "", mobilePhone: "" };
@@ -104,7 +104,15 @@ export const PersonPage = () => {
     switch (selectedTab) {
       case "details":
         currentTab = (
-          <PersonDetails key="details" person={person} updatedFunction={refetch} inPhotoEditMode={inPhotoEditMode} setInPhotoEditMode={setInPhotoEditMode} editMode={editMode} setEditMode={setEditMode} />
+          <PersonDetails
+            key="details"
+            person={person}
+            updatedFunction={refetch}
+            inPhotoEditMode={inPhotoEditMode}
+            setInPhotoEditMode={setInPhotoEditMode}
+            editMode={editMode}
+            setEditMode={setEditMode}
+          />
         );
         break;
       case "notes":
@@ -120,16 +128,7 @@ export const PersonPage = () => {
         currentTab = <Groups key="groups" personId={person?.id} updatedFunction={refetch} />;
         break;
       case "form":
-        currentTab = (
-          <PersonForm
-            key="form"
-            form={form}
-            contentType={"person"}
-            contentId={person.id}
-            formSubmissions={person.formSubmissions}
-            updatedFunction={refetch}
-          />
-        );
+        currentTab = <PersonForm key="form" form={form} contentType={"person"} contentId={person.id} formSubmissions={person.formSubmissions} updatedFunction={refetch} />;
         break;
       default:
         currentTab = <div key="default">{Locale.label("people.tabs.noImplement")}</div>;
@@ -137,7 +136,6 @@ export const PersonPage = () => {
     }
     return currentTab;
   };
-
 
   return (
     <>

@@ -1,12 +1,8 @@
 import React from "react";
 import { UpdateHouseHold } from "./modals/UpdateHouseHold";
-import {
- InputBox, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale, PersonAvatar 
-} from "@churchapps/apphelper";
+import { InputBox, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale, PersonAvatar } from "@churchapps/apphelper";
 import { PersonAdd } from "../../components";
-import {
- Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, type SelectChangeEvent 
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow, TextField, FormControl, Select, MenuItem, InputLabel, type SelectChangeEvent } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
@@ -56,7 +52,9 @@ export function HouseholdEdit(props: Props) {
       addPerson(person);
       return;
     }
-    setText(`${Locale.label("people.householdEdit.updQuestion")} ${person.name.first}"s ${Locale.label("people.householdEdit.addMatch")} ${props.currentPerson.name.first}"s (${PersonHelper.addressToString(props.currentPerson.contactInfo)})?`);
+    setText(
+      `${Locale.label("people.householdEdit.updQuestion")} ${person.name.first}"s ${Locale.label("people.householdEdit.addMatch")} ${props.currentPerson.name.first}"s (${PersonHelper.addressToString(props.currentPerson.contactInfo)})?`
+    );
     setShowUpdateAddressModal(true);
   }
 
@@ -120,8 +118,7 @@ export function HouseholdEdit(props: Props) {
             label={m.name.display}
             labelId="household-role"
             onChange={(e: SelectChangeEvent) => handleChangeRole(e, index)}
-            data-testid="household-role-select"
-          >
+            data-testid="household-role-select">
             <MenuItem value="Head">{Locale.label("people.householdEdit.head")}</MenuItem>
             <MenuItem value="Spouse">{Locale.label("people.householdEdit.spouse")}</MenuItem>
             <MenuItem value="Child">{Locale.label("people.householdEdit.child")}</MenuItem>
@@ -135,11 +132,16 @@ export function HouseholdEdit(props: Props) {
     </TableRow>
   ));
 
-  React.useEffect(() => { setHousehold(props.household); return () => { setHousehold(null); }; }, [props.household]);
+  React.useEffect(() => {
+    setHousehold(props.household);
+    return () => {
+      setHousehold(null);
+    };
+  }, [props.household]);
 
   const personAdd = showAdd ? (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
         <h3>Add Household Member</h3>
         <SmallButton icon="close" onClick={() => setShowAdd(false)} ariaLabel="Cancel add member" />
       </div>
@@ -155,8 +157,7 @@ export function HouseholdEdit(props: Props) {
         headerText={household?.name + Locale.label("people.householdEdit.house")}
         isSubmitting={isSubmitting}
         saveFunction={handleSave}
-        cancelFunction={props.updatedFunction}
-      >
+        cancelFunction={props.updatedFunction}>
         <ErrorMessages errors={errors} />
         <TextField
           fullWidth

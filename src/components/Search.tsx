@@ -1,8 +1,6 @@
 import React from "react";
 import { type PersonInterface, Locale, PersonAvatar } from "@churchapps/apphelper";
-import {
- Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box 
-} from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box } from "@mui/material";
 
 interface Props {
   handleSearch: (text: string) => void;
@@ -41,8 +39,7 @@ export const Search: React.FC<Props> = (props) => {
               props.handleClickAction(person.id);
             }}
             data-testid="select-person-button"
-            aria-label="Select person"
-          >
+            aria-label="Select person">
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Icon sx={{ marginRight: "5px" }}>person</Icon>
               {props.buttonText}

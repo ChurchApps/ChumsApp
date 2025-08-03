@@ -44,8 +44,7 @@ export const Assignment = (props: Props) => {
           textTransform: "none",
           borderRadius: 2,
           fontWeight: 600,
-        }}
-      >
+        }}>
         Auto Assign
       </Button>
       <Button
@@ -65,8 +64,7 @@ export const Assignment = (props: Props) => {
           textTransform: "none",
           borderRadius: 2,
           fontWeight: 600,
-        }}
-      >
+        }}>
         Add Position
       </Button>
     </Stack>
@@ -142,8 +140,7 @@ export const Assignment = (props: Props) => {
             borderColor: "grey.200",
             transition: "all 0.2s ease-in-out",
             "&:hover": { boxShadow: 2 },
-          }}
-        >
+          }}>
           <CardContent>
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
               <Stack direction="row" alignItems="center" spacing={1}>
@@ -166,8 +163,7 @@ export const Assignment = (props: Props) => {
             borderColor: "grey.200",
             transition: "all 0.2s ease-in-out",
             "&:hover": { boxShadow: 2 },
-          }}
-        >
+          }}>
           <CardContent>
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
               <Stack direction="row" alignItems="center" spacing={1}>
@@ -185,8 +181,7 @@ export const Assignment = (props: Props) => {
                   textTransform: "none",
                   borderRadius: 2,
                   fontWeight: 600,
-                }}
-              >
+                }}>
                 Save Notes
               </Button>
             </Stack>

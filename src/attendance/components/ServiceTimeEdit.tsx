@@ -69,9 +69,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
   const getServiceOptions = () => {
     const options = [];
     for (let i = 0; i < services.length; i++) {
-      options.push(<MenuItem key={i} value={services[i].id}>
-          {services[i].name}
-        </MenuItem>);
+      options.push(<MenuItem key={i} value={services[i].id}>{services[i].name}</MenuItem>);
     }
     return options;
   };
@@ -92,8 +90,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
       headerText={serviceTime.name}
       isSubmitting={isSubmitting}
       headerIcon="schedule"
-      help="chums/attendance"
-    >
+      help="chums/attendance">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel id="service">{Locale.label("attendance.serviceTimeEdit.service")}</InputLabel>
@@ -104,8 +101,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
           value={serviceTime.serviceId}
           onChange={handleChange}
           data-testid="service-select"
-          aria-label="Select service"
-        >
+          aria-label="Select service">
           {getServiceOptions()}
         </Select>
       </FormControl>

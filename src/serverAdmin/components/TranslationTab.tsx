@@ -1,7 +1,5 @@
 import { ApiHelper, DateHelper, DisplayBox } from "@churchapps/apphelper";
-import {
- Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField 
-} from "@mui/material";
+import { Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import React from "react";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 
@@ -29,10 +27,12 @@ export const TranslationTab = () => {
 
   const getTableHeader = () => {
     const rows: JSX.Element[] = [];
-    rows.push(<TableRow sx={{ textAlign: "left" }} key="header">
+    rows.push(
+      <TableRow sx={{ textAlign: "left" }} key="header">
         <th>{"Abbreviations"}</th>
         <th>{"Lookups"}</th>
-      </TableRow>);
+      </TableRow>
+    );
     return rows;
   };
 
@@ -41,10 +41,12 @@ export const TranslationTab = () => {
     let keyVal = 0;
 
     report.forEach((r: any) => {
-      rows.push(<TableRow key={keyVal.toString()}>
+      rows.push(
+        <TableRow key={keyVal.toString()}>
           <TableCell>{r.abbreviation}</TableCell>
           <TableCell>{r.lookups}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       keyVal += 1;
     });
     return rows;

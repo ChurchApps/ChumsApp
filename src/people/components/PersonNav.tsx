@@ -39,8 +39,7 @@ export const PersonNav: React.FC<Props> = (props) => {
             onClick={(e) => {
               e.preventDefault();
               setSelectedTab(tab.key);
-            }}
-          >
+            }}>
             <Icon>{tab.icon}</Icon> {tab.label}
           </a>
         </li>
@@ -53,8 +52,7 @@ export const PersonNav: React.FC<Props> = (props) => {
           onClick={(e) => {
             e.preventDefault();
             setSelectedTab(tab.key);
-          }}
-        >
+          }}>
           <Icon>{tab.icon}</Icon> {tab.label}
         </a>
       </li>

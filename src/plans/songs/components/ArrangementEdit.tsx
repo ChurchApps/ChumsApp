@@ -49,8 +49,7 @@ export const ArrangementEdit = (props: Props) => {
       headerIcon="library_music"
       saveFunction={handleSave}
       cancelFunction={props.onCancel}
-      deleteFunction={arrangement?.id ? handleDelete : null}
-    >
+      deleteFunction={arrangement?.id ? handleDelete : null}>
       <TextField label={Locale.label("songs.arrangement.name")} name="name" value={arrangement?.name} onChange={handleChange} fullWidth />
       <TextField label={Locale.label("songs.arrangement.lyrics")} multiline name="lyrics" value={arrangement?.lyrics} onChange={handleChange} fullWidth />
     </InputBox>

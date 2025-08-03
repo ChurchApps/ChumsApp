@@ -36,13 +36,13 @@ export default tseslint.config([
       'brace-style': ['error', '1tbs', { 'allowSingleLine': true }],
       'nonblock-statement-body-position': ['error', 'beside'],
       
-      // Object and array formatting
+      // Object and array formatting - prefer compact single-line objects
       'object-curly-spacing': ['error', 'always'],
       'object-curly-newline': ['error', { 
-        'ObjectExpression': { 'multiline': true, 'minProperties': 8 },
-        'ObjectPattern': { 'multiline': true, 'minProperties': 8 },
-        'ImportDeclaration': { 'multiline': true, 'minProperties': 8 },
-        'ExportDeclaration': { 'multiline': true, 'minProperties': 8 }
+        'ObjectExpression': { 'multiline': true, 'minProperties': 6 },
+        'ObjectPattern': { 'multiline': true, 'minProperties': 6 },
+        'ImportDeclaration': { 'multiline': true, 'minProperties': 6 },
+        'ExportDeclaration': { 'multiline': true, 'minProperties': 6 }
       }],
       'object-property-newline': ['error', { 'allowAllPropertiesOnSameLine': true }],
       'array-bracket-spacing': ['error', 'never'],
@@ -68,11 +68,8 @@ export default tseslint.config([
       'comma-dangle': ['error', 'only-multiline'],
       'comma-spacing': ['error', { 'before': false, 'after': true }],
       
-      // Disable rules that force multi-line
-      'react/jsx-max-props-per-line': 'off',
-      'react/jsx-first-prop-new-line': 'off',
-      'react/jsx-closing-bracket-location': 'off',
-      'react/jsx-one-expression-per-line': 'off',
+      // JSX formatting - prefer compact single-line elements  
+      // Note: React ESLint plugin rules would go here if available
       
       // Block formatting - encourage single line for simple blocks
       'block-spacing': ['error', 'always'],

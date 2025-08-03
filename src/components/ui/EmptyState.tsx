@@ -43,8 +43,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, description
         border: "1px dashed",
         borderColor: "grey.300",
         borderRadius: 2,
-      }}
-    >
+      }}>
       {content}
     </Paper>
   );

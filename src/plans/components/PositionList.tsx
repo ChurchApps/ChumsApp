@@ -11,24 +11,7 @@ interface Props {
 }
 
 export const PositionList = (props: Props) => {
-  const colorList = [
-"#FFF8E7",
-"#E7F2FA",
-"#E7F4E7",
-"#F7E7F4",
-"#F7F4E7",
-"#E7F7F4",
-"#F4E7F7",
-"#F4F7E7",
-"#E7F7F7",
-"#F7E7F7",
-"#F7F7E7",
-"#E7E7F7",
-"#F4F4F7",
-"#F7F4F4",
-"#F4F7F4",
-"#F4F4F4"
-];
+  const colorList = ["#FFF8E7", "#E7F2FA", "#E7F4E7", "#F7E7F4", "#F7F4E7", "#E7F7F4", "#F4E7F7", "#F4F7E7", "#E7F7F7", "#F7E7F7", "#F7F7E7", "#E7E7F7", "#F4F4F7", "#F7F4F4", "#F4F7F4", "#F4F4F4"];
 
   const getPersonLink = (assignment: AssignmentInterface, position: PositionInterface) => {
     const person = ArrayHelper.getOne(props.people, "id", assignment.personId);
@@ -58,8 +41,7 @@ export const PositionList = (props: Props) => {
           onClick={(e) => {
             e.preventDefault();
             props.onAssignmentSelect(position, assignment || { positionId: position.id });
-          }}
-        >
+          }}>
           {wrappedImage}
           {person.name.display}
         </a>
@@ -74,15 +56,16 @@ export const PositionList = (props: Props) => {
     const remaining = position.count - assignments.length;
     if (remaining > 0) {
       const label = remaining === 1 ? Locale.label("plans.positionList.persNeed") : remaining.toString() + Locale.label("plans.positionList.pplNeed");
-      result.push(<a
+      result.push(
+        <a
           href="about:blank"
           onClick={(e) => {
             e.preventDefault();
             props.onAssignmentSelect(position, { positionId: position.id });
-          }}
-        >
+          }}>
           {label}
-        </a>);
+        </a>
+      );
     }
     return result;
   };
@@ -96,8 +79,7 @@ export const PositionList = (props: Props) => {
           onClick={(e) => {
             e.preventDefault();
             props.onSelect(position);
-          }}
-        >
+          }}>
           {position.name}
         </a>
       </TableCell>

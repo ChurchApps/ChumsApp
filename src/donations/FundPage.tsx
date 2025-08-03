@@ -1,22 +1,8 @@
 import React from "react";
-import {
-  ApiHelper,
-  DateHelper,
-  UserHelper,
-  ExportLink,
-  Permissions,
-  UniqueIdHelper,
-  ArrayHelper,
-  Loading,
-  CurrencyHelper,
-  Locale,
-  PageHeader,
-} from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, UserHelper, ExportLink, Permissions, UniqueIdHelper, ArrayHelper, Loading, CurrencyHelper, Locale, PageHeader } from "@churchapps/apphelper";
 import { type DonationBatchInterface, type FundDonationInterface, type PersonInterface } from "@churchapps/helpers";
 import { useParams, Link } from "react-router-dom";
-import {
- Table, TableBody, TableRow, TableCell, TableHead, TextField, Box, Typography, Card, Stack, Button 
-} from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, TableHead, TextField, Box, Typography, Card, Stack, Button } from "@mui/material";
 import {
   VolunteerActivism as FundIcon,
   FileDownload as ExportIcon,
@@ -51,7 +37,8 @@ export const FundPage = () => {
   };
 
   const loadDonations = () => {
-    ApiHelper.get("/funddonations?fundId=" + params.id + "&startDate=" + DateHelper.formatHtml5Date(startDate) + "&endDate=" + DateHelper.formatHtml5Date(endDate), "GivingApi").then((d: FundDonationInterface[]) => {
+    ApiHelper.get("/funddonations?fundId=" + params.id + "&startDate=" + DateHelper.formatHtml5Date(startDate) + "&endDate=" + DateHelper.formatHtml5Date(endDate), "GivingApi").then(
+      (d: FundDonationInterface[]) => {
         // fetch people who have made donations if any
         const peopleIds = ArrayHelper.getUniqueValues(d, "donation.personId").filter((f) => f !== null);
         if (peopleIds.length > 0) {
@@ -76,7 +63,8 @@ export const FundPage = () => {
           totalAmount,
           uniqueDonors,
         });
-      });
+      }
+    );
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +82,8 @@ export const FundPage = () => {
     const result: JSX.Element[] = [];
 
     if (fundDonations.length === 0) {
-      result.push(<TableRow key="0">
+      result.push(
+        <TableRow key="0">
           <TableCell colSpan={4} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
               <FundIcon sx={{ fontSize: 48, color: "text.secondary" }} />
@@ -103,7 +92,8 @@ export const FundPage = () => {
               </Typography>
             </Stack>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return result;
     }
 
@@ -130,21 +120,20 @@ export const FundPage = () => {
                 textDecoration: "none",
                 color: "var(--c1l2)",
                 fontWeight: 500,
-              }}
-            >
+              }}>
               {people[fd.donation.personId] || Locale.label("donations.fundsPage.anon")}
             </Link>
           </Stack>
         </TableCell>
       );
 
-      result.push(<TableRow
+      result.push(
+        <TableRow
           key={i}
           sx={{
             "&:hover": { backgroundColor: "action.hover" },
             transition: "background-color 0.2s ease",
-          }}
-        >
+          }}>
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
               <DateIcon sx={{ color: "text.secondary", fontSize: 18 }} />
@@ -161,8 +150,7 @@ export const FundPage = () => {
                   textDecoration: "none",
                   color: "var(--c1l2)",
                   fontWeight: 500,
-                }}
-              >
+                }}>
                 {fd.donation.batchId}
               </Link>
             </Stack>
@@ -176,7 +164,8 @@ export const FundPage = () => {
               </Typography>
             </Stack>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     return result;
   };
@@ -188,7 +177,8 @@ export const FundPage = () => {
       return rows;
     }
 
-    rows.push(<TableRow key="header">
+    rows.push(
+      <TableRow key="header">
         <TableCell sx={{ fontWeight: 600 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
             {Locale.label("donations.fundsPage.date")}
@@ -209,7 +199,8 @@ export const FundPage = () => {
             {Locale.label("donations.fundsPage.amt")}
           </Typography>
         </TableCell>
-      </TableRow>);
+      </TableRow>
+    );
     return rows;
   };
 
@@ -226,8 +217,7 @@ export const FundPage = () => {
               borderBottom: "2px solid",
               borderBottomColor: "divider",
             },
-          }}
-        >
+          }}>
           {getTableHeader()}
         </TableHead>
         <TableBody>{getRows()}</TableBody>
@@ -247,18 +237,18 @@ export const FundPage = () => {
           {
             icon: <ReceiptIcon />,
             value: stats.totalDonations,
-            label: "Total Donations"
+            label: "Total Donations",
           },
           {
             icon: <PersonIcon />,
             value: stats.uniqueDonors,
-            label: "Unique Donors"
+            label: "Unique Donors",
           },
           {
             icon: <MoneyIcon />,
             value: CurrencyHelper.formatCurrency(stats.totalAmount),
-            label: "Total Amount"
-          }
+            label: "Total Amount",
+          },
         ]}
       />
 

@@ -1,6 +1,4 @@
-import {
- Grid, Typography, Card, CardContent, Stack, Box, Button, Paper, List, ListItem, ListItemButton, ListItemIcon, ListItemText 
-} from "@mui/material";
+import { Grid, Typography, Card, CardContent, Stack, Box, Button, Paper, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import React from "react";
 import { Locale, Loading, PageHeader } from "@churchapps/apphelper";
 import { type AutomationInterface } from "@churchapps/apphelper";
@@ -20,7 +18,7 @@ export const AutomationsPage = () => {
 
   const getAutomationsList = () => {
     if (automations.isLoading) return <Loading />;
-    
+
     if (automations.data?.length === 0) {
       return (
         <Paper
@@ -30,8 +28,7 @@ export const AutomationsPage = () => {
             backgroundColor: "grey.50",
             border: "1px dashed",
             borderColor: "grey.300",
-          }}
-        >
+          }}>
           <AutomationsIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
           <Typography variant="body1" color="text.secondary">
             No automations configured. Create your first automation to get started!
@@ -55,8 +52,7 @@ export const AutomationsPage = () => {
                   borderColor: "primary.main",
                   backgroundColor: "action.hover",
                 },
-              }}
-            >
+              }}>
               <ListItemIcon>{automation.active ? <ActiveIcon sx={{ color: "success.main" }} /> : <InactiveIcon sx={{ color: "grey.400" }} />}</ListItemIcon>
               <ListItemText
                 primary={
@@ -90,11 +86,7 @@ export const AutomationsPage = () => {
 
   return (
     <>
-      <PageHeader
-        icon={<AutomationsIcon />}
-        title={Locale.label("tasks.automationsPage.manageAuto") || "Automations"}
-        subtitle="Automate tasks and workflows for your organization"
-      >
+      <PageHeader icon={<AutomationsIcon />} title={Locale.label("tasks.automationsPage.manageAuto") || "Automations"} subtitle="Automate tasks and workflows for your organization">
         <Button
           variant="outlined"
           startIcon={<AddIcon />}
@@ -109,8 +101,7 @@ export const AutomationsPage = () => {
               borderColor: "#FFF",
               backgroundColor: "rgba(255,255,255,0.1)",
             },
-          }}
-        >
+          }}>
           Add Automation
         </Button>
       </PageHeader>
@@ -124,8 +115,7 @@ export const AutomationsPage = () => {
                 borderRadius: 2,
                 border: "1px solid",
                 borderColor: "grey.200",
-              }}
-            >
+              }}>
               <CardContent>
                 {/* Header */}
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>

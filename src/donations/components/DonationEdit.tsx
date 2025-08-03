@@ -24,7 +24,8 @@ export const DonationEdit = memo((props: Props) => {
     }
   }, []);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
       const d = { ...donation } as DonationInterface;
       const value = e.target.value;
       switch (e.target.name) {
@@ -42,7 +43,9 @@ export const DonationEdit = memo((props: Props) => {
           break;
       }
       setDonation(d);
-    }, [donation]);
+    },
+    [donation]
+  );
 
   const handleCancel = useCallback(() => {
     props.updatedFunction();
@@ -59,7 +62,7 @@ export const DonationEdit = memo((props: Props) => {
   const handleSave = useCallback(() => {
     const donationToSave = {
       ...donation,
-      donationDate: donation.donationDate ? DateHelper.formatHtml5Date(donation.donationDate) : null
+      donationDate: donation.donationDate ? DateHelper.formatHtml5Date(donation.donationDate) : null,
     };
     ApiHelper.post("/donations", [donationToSave], "GivingApi").then((data) => {
       const id = data[0].id;
@@ -95,7 +98,7 @@ export const DonationEdit = memo((props: Props) => {
 
   const populatePerson = useCallback(async (data: DonationInterface) => {
     if (!UniqueIdHelper.isMissing(data.personId)) data.person = await ApiHelper.get("/people/" + data.personId.toString(), "MembershipApi");
-    if (data.donationDate) data.donationDate = new Date(data.donationDate.split('T')[0] + "T00:00:00");
+    if (data.donationDate) data.donationDate = new Date(data.donationDate.split("T")[0] + "T00:00:00");
     setDonation(data);
   }, []);
 
@@ -105,7 +108,8 @@ export const DonationEdit = memo((props: Props) => {
     return <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails || ""} onChange={handleChange} />;
   }, [donation.method, donation.methodDetails, handleChange]);
 
-  const handlePersonAdd = useCallback((p: PersonInterface) => {
+  const handlePersonAdd = useCallback(
+    (p: PersonInterface) => {
       const d = { ...donation } as DonationInterface;
       if (p === null) {
         d.person = null;
@@ -116,9 +120,12 @@ export const DonationEdit = memo((props: Props) => {
       }
       setDonation(d);
       setShowSelectPerson(false);
-    }, [donation]);
+    },
+    [donation]
+  );
 
-  const handleFundDonationsChange = useCallback((fd: FundDonationInterface[]) => {
+  const handleFundDonationsChange = useCallback(
+    (fd: FundDonationInterface[]) => {
       setFundDonations(fd);
       let totalAmount = 0;
       for (let i = 0; i < fd.length; i++) totalAmount += fd[i].amount;
@@ -127,17 +134,22 @@ export const DonationEdit = memo((props: Props) => {
         d.amount = totalAmount;
         setDonation(d);
       }
-    }, [donation]);
+    },
+    [donation]
+  );
 
   const handlePersonSelect = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     setShowSelectPerson(true);
   }, []);
 
-  const handleAnonymousSelect = useCallback((e: React.MouseEvent) => {
+  const handleAnonymousSelect = useCallback(
+    (e: React.MouseEvent) => {
       e.preventDefault();
       handlePersonAdd(null);
-    }, [handlePersonAdd]);
+    },
+    [handlePersonAdd]
+  );
 
   const personSection = useMemo(() => {
     if (showSelectPerson) {
@@ -172,8 +184,7 @@ export const DonationEdit = memo((props: Props) => {
       cancelFunction={handleCancel}
       deleteFunction={getDeleteFunction()}
       saveFunction={handleSave}
-      help="chums/donations"
-    >
+      help="chums/donations">
       <Box>
         <label>{Locale.label("common.person")}</label>
         {personSection}
@@ -199,8 +210,7 @@ export const DonationEdit = memo((props: Props) => {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           data-testid="payment-method-select"
-          aria-label="Payment method"
-        >
+          aria-label="Payment method">
           <MenuItem value="Check">{Locale.label("donations.donationEdit.check")}</MenuItem>
           <MenuItem value="Cash">{Locale.label("donations.donationEdit.cash")}</MenuItem>
           <MenuItem value="Card">{Locale.label("donations.donationEdit.card")}</MenuItem>

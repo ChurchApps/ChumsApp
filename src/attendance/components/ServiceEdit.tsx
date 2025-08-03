@@ -72,9 +72,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   const getCampusOptions = () => {
     const options = [];
     for (let i = 0; i < campuses.length; i++) {
-      options.push(<MenuItem key={i} value={campuses[i].id}>
-          {campuses[i].name}
-        </MenuItem>);
+      options.push(<MenuItem key={i} value={campuses[i].id}>{campuses[i].name}</MenuItem>);
     }
     return options;
   };
@@ -96,8 +94,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
       headerText={service.name}
       headerIcon="calendar_month"
       isSubmitting={isSubmitting}
-      help="chums/attendance"
-    >
+      help="chums/attendance">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel id="campus">{Locale.label("attendance.serviceEdit.campus")}</InputLabel>
@@ -108,8 +105,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
           value={service.campusId}
           onChange={handleChange}
           data-testid="campus-select"
-          aria-label="Select campus"
-        >
+          aria-label="Select campus">
           {getCampusOptions()}
         </Select>
       </FormControl>

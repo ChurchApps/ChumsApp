@@ -1,9 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiHelper, DateHelper, Locale, type PersonInterface, type TaskInterface } from "@churchapps/apphelper";
-import {
- Table, TableBody, TableCell, TableHead, TableRow, Card, CardContent, Typography, Stack, Box, Button, Paper, Avatar 
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableHead, TableRow, Card, CardContent, Typography, Stack, Box, Button, Paper, Avatar } from "@mui/material";
 import {
   AssignmentReturn as ChangesIcon,
   CheckCircle as ApplyIcon,
@@ -53,13 +51,13 @@ export const RequestedChanges = (props: Props) => {
           />
         );
       }
-      rows.push(<TableRow
+      rows.push(
+        <TableRow
           key={i}
           sx={{
             "&:hover": { backgroundColor: "action.hover" },
             "& td": { py: 2 },
-          }}
-        >
+          }}>
           <TableCell>
             <Stack direction="row" alignItems="center" spacing={1}>
               {getFieldIcon(ch.field)}
@@ -73,7 +71,8 @@ export const RequestedChanges = (props: Props) => {
               {val}
             </Typography>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     });
     return rows;
   };
@@ -153,8 +152,7 @@ export const RequestedChanges = (props: Props) => {
         mb: 3,
         transition: "all 0.2s ease-in-out",
         "&:hover": { boxShadow: 2 },
-      }}
-    >
+      }}>
       <CardContent>
         <Stack spacing={3}>
           {/* Header */}
@@ -174,8 +172,7 @@ export const RequestedChanges = (props: Props) => {
                   borderRadius: 2,
                   textTransform: "none",
                   fontWeight: 600,
-                }}
-              >
+                }}>
                 {Locale.label("tasks.requestedChanges.apply")}
               </Button>
             )}
@@ -187,8 +184,7 @@ export const RequestedChanges = (props: Props) => {
               overflow: "hidden",
               border: "1px solid",
               borderColor: "grey.200",
-            }}
-          >
+            }}>
             <Table>
               <TableHead>
                 <TableRow sx={{ backgroundColor: "grey.50" }}>
@@ -207,8 +203,7 @@ export const RequestedChanges = (props: Props) => {
                 backgroundColor: "success.light",
                 borderRadius: 1,
                 textAlign: "center",
-              }}
-            >
+              }}>
               <Typography variant="body2" sx={{ color: "success.dark", fontWeight: 600 }}>
                 These changes have been applied
               </Typography>

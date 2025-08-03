@@ -1,20 +1,12 @@
 import React, { useContext, useCallback } from "react";
 import { Menu, MenuItem, Box, Stack, Button } from "@mui/material";
-import {
- ApiHelper, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale, Loading, PageHeader 
-} from "@churchapps/apphelper";
+import { ApiHelper, type TaskInterface, Notes, DateHelper, type ConversationInterface, Locale, Loading, PageHeader } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { ContentPicker } from "./components/ContentPicker";
 import UserContext from "../UserContext";
 import { RequestedChanges } from "./components/RequestedChanges";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  Assignment as TaskIcon,
-  Person as PersonIcon,
-  Group as GroupIcon,
-  CheckCircle as CompletedIcon,
-  RadioButtonUnchecked as OpenIcon,
-} from "@mui/icons-material";
+import { Assignment as TaskIcon, Person as PersonIcon, Group as GroupIcon, CheckCircle as CompletedIcon, RadioButtonUnchecked as OpenIcon } from "@mui/icons-material";
 
 export const TaskPage = () => {
   const params = useParams();
@@ -39,33 +31,39 @@ export const TaskPage = () => {
     },
   });
 
-  const handleContentPicked = useCallback((contentType: string, contentId: string, label: string) => {
-    if (!task.data) return;
-    const t = { ...task.data };
-    switch (modalField) {
-      case "associatedWith":
-        t.associatedWithType = contentType;
-        t.associatedWithId = contentId;
-        t.associatedWithLabel = label;
-        break;
-      case "assignedTo":
-        t.assignedToType = contentType;
-        t.assignedToId = contentId;
-        t.assignedToLabel = label;
-        break;
-    }
-    updateTaskMutation.mutate(t);
-    setModalField("");
-  }, [task.data, modalField, updateTaskMutation]);
+  const handleContentPicked = useCallback(
+    (contentType: string, contentId: string, label: string) => {
+      if (!task.data) return;
+      const t = { ...task.data };
+      switch (modalField) {
+        case "associatedWith":
+          t.associatedWithType = contentType;
+          t.associatedWithId = contentId;
+          t.associatedWithLabel = label;
+          break;
+        case "assignedTo":
+          t.assignedToType = contentType;
+          t.assignedToId = contentId;
+          t.assignedToLabel = label;
+          break;
+      }
+      updateTaskMutation.mutate(t);
+      setModalField("");
+    },
+    [task.data, modalField, updateTaskMutation]
+  );
 
-  const handleStatusChange = useCallback((status: string) => {
-    if (!task.data) return;
-    const t = { ...task.data };
-    t.status = status;
-    t.dateClosed = status === "Open" ? null : new Date();
-    updateTaskMutation.mutate(t);
-    closeStatusMenu();
-  }, [task.data, updateTaskMutation, closeStatusMenu]);
+  const handleStatusChange = useCallback(
+    (status: string) => {
+      if (!task.data) return;
+      const t = { ...task.data };
+      t.status = status;
+      t.dateClosed = status === "Open" ? null : new Date();
+      updateTaskMutation.mutate(t);
+      closeStatusMenu();
+    },
+    [task.data, updateTaskMutation, closeStatusMenu]
+  );
 
   const handleModalClose = useCallback(() => {
     setModalField("");
@@ -99,8 +97,7 @@ export const TaskPage = () => {
         <PageHeader
           icon={<TaskIcon />}
           title={`#${task.data.taskNumber} - ${task.data?.title}`}
-          subtitle={`Created ${DateHelper.getDisplayDuration(DateHelper.toDate(task.data?.dateCreated))} ago by ${task.data.createdByLabel} • Associated: ${task.data.associatedWithLabel || "Not specified"} • Assigned: ${task.data.assignedToLabel || "Unassigned"}`}
-        >
+          subtitle={`Created ${DateHelper.getDisplayDuration(DateHelper.toDate(task.data?.dateCreated))} ago by ${task.data.createdByLabel} • Associated: ${task.data.associatedWithLabel || "Not specified"} • Assigned: ${task.data.assignedToLabel || "Unassigned"}`}>
           <Stack direction="row" spacing={1}>
             <Button
               variant={task.data.status === "Open" ? "contained" : "outlined"}
@@ -116,8 +113,7 @@ export const TaskPage = () => {
                 },
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {task.data.status}
             </Button>
             <Button
@@ -134,8 +130,7 @@ export const TaskPage = () => {
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
               }}
-              title="Edit Assigned To"
-            >
+              title="Edit Assigned To">
               Assign
             </Button>
             <Button
@@ -152,8 +147,7 @@ export const TaskPage = () => {
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
               }}
-              title="Edit Associated With"
-            >
+              title="Edit Associated With">
               Associate
             </Button>
           </Stack>
@@ -163,16 +157,14 @@ export const TaskPage = () => {
             onClick={() => {
               handleStatusChange("Open");
               closeStatusMenu();
-            }}
-          >
+            }}>
             <OpenIcon sx={{ mr: 1 }} /> {Locale.label("tasks.taskPage.open")}
           </MenuItem>
           <MenuItem
             onClick={() => {
               handleStatusChange("Closed");
               closeStatusMenu();
-            }}
-          >
+            }}>
             <CompletedIcon sx={{ mr: 1 }} /> {Locale.label("tasks.taskPage.closed")}
           </MenuItem>
         </Menu>

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { ApiHelper, type GroupInterface, Locale } from "@churchapps/apphelper";
-import {
- TextField, Button, Table, TableBody, TableRow, TableCell, InputAdornment, Paper, Typography, Stack, IconButton, TableContainer 
-} from "@mui/material";
+import { TextField, Button, Table, TableBody, TableRow, TableCell, InputAdornment, Paper, Typography, Stack, IconButton, TableContainer } from "@mui/material";
 import { Search as SearchIcon, Group as GroupIcon, Check as CheckIcon } from "@mui/icons-material";
 
 interface Props {
@@ -49,7 +47,8 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
   for (let i = 0; i < searchResults.length; i++) {
     const sr = searchResults[i];
 
-    rows.push(<TableRow
+    rows.push(
+      <TableRow
         key={sr.id}
         sx={{
           "&:hover": {
@@ -58,8 +57,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
           },
           "&:last-child td": { border: 0 },
         }}
-        onClick={() => handleAdd(sr)}
-      >
+        onClick={() => handleAdd(sr)}>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={1}>
             <GroupIcon sx={{ color: "text.secondary", fontSize: 20 }} />
@@ -77,12 +75,12 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
               handleAdd(sr);
             }}
             data-testid={`select-group-button-${sr.id}`}
-            aria-label="Select group"
-          >
+            aria-label="Select group">
             <CheckIcon />
           </IconButton>
         </TableCell>
-      </TableRow>);
+      </TableRow>
+    );
   }
 
   return (
@@ -108,8 +106,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
                   borderRadius: 2,
                   textTransform: "none",
                   fontWeight: 600,
-                }}
-              >
+                }}>
                 {Locale.label("common.search")}
               </Button>
             </InputAdornment>
@@ -125,8 +122,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
             maxHeight: 300,
             border: "1px solid",
             borderColor: "grey.200",
-          }}
-        >
+          }}>
           <Table size="small" stickyHeader>
             <TableBody>{rows}</TableBody>
           </Table>
@@ -140,8 +136,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
               backgroundColor: "grey.50",
               border: "1px dashed",
               borderColor: "grey.300",
-            }}
-          >
+            }}>
             <GroupIcon sx={{ fontSize: 48, color: "grey.400", mb: 1 }} />
             <Typography variant="body2" color="text.secondary">
               {searchResults.length === 0 && searchText ? "No groups found matching your search" : "Search for a group to select"}

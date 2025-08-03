@@ -82,7 +82,9 @@ export const PersonBanner = memo((props: Props) => {
     }
 
     if (person.contactInfo.address1) {
-      const addressParts = [person.contactInfo.address1, person.contactInfo.address2, [person.contactInfo.city, person.contactInfo.state, person.contactInfo.zip].filter(Boolean).join(", ")].filter(Boolean);
+      const addressParts = [person.contactInfo.address1, person.contactInfo.address2, [person.contactInfo.city, person.contactInfo.state, person.contactInfo.zip].filter(Boolean).join(", ")].filter(
+        Boolean
+      );
 
       info.push({
         icon: <HomeIcon sx={{ color: "#fff", fontSize: 16 }} />,
@@ -152,11 +154,7 @@ export const PersonBanner = memo((props: Props) => {
         {/* Column 1: Avatar + Name + Status */}
         <Stack direction="row" spacing={2} alignItems="center" sx={{ flexShrink: 0 }}>
           <div style={{ border: "3px solid #FFF", borderRadius: "50%" }}>
-            <PersonAvatar
-              person={person}
-              size="responsive"
-              onClick={() => canEdit && togglePhotoEditor?.(true)}
-            />
+            <PersonAvatar person={person} size="responsive" onClick={() => canEdit && togglePhotoEditor?.(true)} />
           </div>
           <Stack spacing={1} sx={{ minWidth: 0 }}>
             <Stack direction="row" alignItems="center" spacing={1}>
@@ -168,8 +166,7 @@ export const PersonBanner = memo((props: Props) => {
                   wordBreak: "break-word",
                   fontSize: { xs: "1.7rem", sm: "2rem", md: "2.5rem" },
                   lineHeight: 1.1,
-                }}
-              >
+                }}>
                 {person.name.display}
               </Typography>
               {canEdit && (
@@ -203,8 +200,7 @@ export const PersonBanner = memo((props: Props) => {
                   wordBreak: "break-word",
                   fontSize: { xs: "0.875rem", md: "1rem" },
                 }}
-                onClick={info.action}
-              >
+                onClick={info.action}>
                 {info.value}
               </Typography>
             </Stack>
@@ -221,8 +217,7 @@ export const PersonBanner = memo((props: Props) => {
             justifyContent: { xs: "flex-start", md: "flex-end" },
             width: { xs: "100%", md: "auto" },
           }}
-          useFlexGap
-        >
+          useFlexGap>
           {quickActions.map((action) => (
             <Button
               key={action.label}
@@ -240,8 +235,7 @@ export const PersonBanner = memo((props: Props) => {
                 mb: { xs: 1, md: 0 },
               }}
               startIcon={action.icon}
-              onClick={action.onClick}
-            >
+              onClick={action.onClick}>
               {action.label}
             </Button>
           ))}
@@ -265,8 +259,7 @@ export const PersonBanner = memo((props: Props) => {
                 }}
                 startIcon={<FormIcon />}
                 endIcon={<ExpandMoreIcon />}
-                onClick={handleFormsMenuOpen}
-              >
+                onClick={handleFormsMenuOpen}>
                 Forms
               </Button>
               <Menu
@@ -279,8 +272,7 @@ export const PersonBanner = memo((props: Props) => {
                     maxHeight: 300,
                     mt: 1,
                   },
-                }}
-              >
+                }}>
                 {allForms.map((form) => (
                   <MenuItem
                     key={form.id}
@@ -289,8 +281,7 @@ export const PersonBanner = memo((props: Props) => {
                       py: 1.5,
                       px: 2,
                       "&:hover": { backgroundColor: "action.hover" },
-                    }}
-                  >
+                    }}>
                     <Stack direction="row" spacing={1} alignItems="center">
                       <FormIcon sx={{ color: "text.secondary", fontSize: 20 }} />
                       <Typography variant="body2">{form.name}</Typography>

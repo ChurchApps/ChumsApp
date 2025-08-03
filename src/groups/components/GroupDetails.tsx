@@ -2,9 +2,7 @@ import React, { memo, useMemo } from "react";
 import { GroupDetailsEdit, ServiceTimes } from ".";
 import { type GroupInterface, Loading, Locale, ImageEditor } from "@churchapps/apphelper";
 import { MarkdownPreview } from "@churchapps/apphelper-markdown";
-import {
- Chip, Grid, Box, Typography, Stack, Card, CardContent, Divider 
-} from "@mui/material";
+import { Chip, Grid, Box, Typography, Stack, Card, CardContent, Divider } from "@mui/material";
 import { LocationOn as LocationIcon, Schedule as ScheduleIcon, Category as CategoryIcon, Label as LabelIcon, Group as GroupIcon } from "@mui/icons-material";
 
 interface Props {
@@ -46,13 +44,19 @@ export const GroupDetails = memo((props: Props) => {
 
   const isStandard = useMemo(() => group?.tags?.indexOf("standard") > -1, [group?.tags]);
 
-  const labelChips = useMemo(() => group?.labelArray?.map((label, index) => <Chip key={`${group.id}-${label}-${index}`} label={label} variant="outlined" size="medium" sx={{ mr: 1, mb: 1 }} />) || [], [group?.labelArray, group?.id]);
+  const labelChips = useMemo(
+    () => group?.labelArray?.map((label, index) => <Chip key={`${group.id}-${label}-${index}`} label={label} variant="outlined" size="medium" sx={{ mr: 1, mb: 1 }} />) || [],
+    [group?.labelArray, group?.id]
+  );
 
-  const booleanDisplays = useMemo(() => ({
+  const booleanDisplays = useMemo(
+    () => ({
       trackAttendance: group?.trackAttendance?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "",
       parentPickup: group?.parentPickup?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "",
       printNametag: group?.printNametag?.toString().replace("false", Locale.label("common.no")).replace("true", Locale.label("common.yes")) || "",
-    }), [group?.trackAttendance, group?.parentPickup, group?.printNametag]);
+    }),
+    [group?.trackAttendance, group?.parentPickup, group?.printNametag]
+  );
 
   const getDisplayContent = useMemo(() => {
     if (!group) return <Loading />;
@@ -79,8 +83,7 @@ export const GroupDetails = memo((props: Props) => {
                     border: "1px solid",
                     borderColor: "grey.300",
                     position: "relative",
-                  }}
-                >
+                  }}>
                   {group.photoUrl ? (
                     <img
                       src={group.photoUrl}

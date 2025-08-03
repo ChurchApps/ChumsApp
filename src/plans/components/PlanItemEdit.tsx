@@ -105,27 +105,30 @@ export const PlanItemEdit = (props: Props) => {
       const keys = ArrayHelper.getAll(songs, "id", sd.id);
       const links: JSX.Element[] = [];
       keys.forEach((k) => {
-        links.push(<span style={{ paddingRight: 10 }}>
+        links.push(
+          <span style={{ paddingRight: 10 }}>
             <a
               href="about:blank"
               onClick={(e) => {
                 e.preventDefault();
                 selectSong(k);
-              }}
-            >
+              }}>
               {k.shortDescription} ({k.arrangementKeySignature})
             </a>
-          </span>);
+          </span>
+        );
       });
 
-      result.push(<tr>
+      result.push(
+        <tr>
           <td>
             {sd.title} - {sd.artist}
             <div style={{ paddingLeft: 15 }}>
               <b>Key:</b> {links}
             </div>
           </td>
-        </tr>);
+        </tr>
+      );
     });
     return <table>{result}</table>;
   };

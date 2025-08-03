@@ -16,7 +16,6 @@ export const MinistryPage = () => {
     enabled: !!params.id,
   });
 
-
   const tabs = [
     {
       key: "plans",
@@ -37,11 +36,7 @@ export const MinistryPage = () => {
 
   return (
     <>
-      <PageHeader 
-        icon={<GroupIcon />} 
-        title={ministry.data.name} 
-        subtitle="Manage plans and teams for this ministry"
-      >
+      <PageHeader icon={<GroupIcon />} title={ministry.data.name} subtitle="Manage plans and teams for this ministry">
         <Stack direction="row" spacing={1}>
           {tabs.map((tab, index) => (
             <Button
@@ -57,8 +52,7 @@ export const MinistryPage = () => {
                   backgroundColor: selectedTab === index ? "#FFF" : "rgba(255,255,255,0.2)",
                   color: selectedTab === index ? "primary.main" : "#FFF",
                 },
-              }}
-            >
+              }}>
               {tab.label}
             </Button>
           ))}

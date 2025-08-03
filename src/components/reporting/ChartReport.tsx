@@ -6,7 +6,10 @@ import type { ReportOutputInterface, ReportResultInterface } from "@churchapps/h
 import { ReportHelper } from "./ReportHelper";
 import { Locale } from "../../helpers";
 
-interface Props { reportResult: ReportResultInterface, output: ReportOutputInterface }
+interface Props {
+  reportResult: ReportResultInterface;
+  output: ReportOutputInterface;
+}
 
 export const ChartReport = (props: Props) => {
   let rows: any = [];
@@ -20,13 +23,13 @@ export const ChartReport = (props: Props) => {
     const result: string[] = [];
     const uniqueValues: string[] = [];
 
-    props.reportResult.table.forEach(d => {
+    props.reportResult.table.forEach((d) => {
       const val = ReportHelper.getField(props.output.columns[1], d);
       if (uniqueValues.indexOf(val) === -1) uniqueValues.push(val);
     });
 
     result.push(props.output.columns[0].header);
-    uniqueValues.forEach(v => result.push(v));
+    uniqueValues.forEach((v) => result.push(v));
 
     return result;
   };
@@ -34,7 +37,7 @@ export const ChartReport = (props: Props) => {
   const getHeaderIndex = (headers: string[], header: string) => {
     let result = -1;
     let i = 0;
-    headers.forEach(h => {
+    headers.forEach((h) => {
       if (h === header) result = i;
       i++;
     });
@@ -43,7 +46,7 @@ export const ChartReport = (props: Props) => {
 
   const transformData = (headers: string[]) => {
     const result: any[] = [];
-    props.reportResult.table.forEach(d => {
+    props.reportResult.table.forEach((d) => {
       const firstVal = ReportHelper.getField(props.output.columns[0], d);
       const secondVal = ReportHelper.getField(props.output.columns[1], d);
       const headerIndex = getHeaderIndex(headers, secondVal);
@@ -65,7 +68,7 @@ export const ChartReport = (props: Props) => {
     const headers = getHeaders();
     rows = [];
     rows.push(headers);
-    transformData(headers).forEach(d => {
+    transformData(headers).forEach((d) => {
       rows.push(d);
     });
 
@@ -75,15 +78,23 @@ export const ChartReport = (props: Props) => {
   const getSingleData = () => {
     rows = [];
     rows.push([props.output.columns[0].header, props.output.columns[1].header]);
-    props.reportResult.table.forEach(d => {
+    props.reportResult.table.forEach((d) => {
       rows.push([ReportHelper.getField(props.output.columns[0], d), parseFloat(ReportHelper.getField(props.output.columns[1], d))]);
     });
     return rows;
   };
 
   let result = <p>{Locale.label("reporting.noData")}</p>;
-  if (props.reportResult.table?.length > 0) result = (<Chart chartType="ColumnChart" data={getChartData()} width="100%" height="400px" options={{ height: 400, legend: { position: "top", maxLines: 3 }, bar: { groupWidth: "75%" }, isStacked: true }} />);
+  if (props.reportResult.table?.length > 0)
+    result = (
+      <Chart
+        chartType="ColumnChart"
+        data={getChartData()}
+        width="100%"
+        height="400px"
+        options={{ height: 400, legend: { position: "top", maxLines: 3 }, bar: { groupWidth: "75%" }, isStacked: true }}
+      />
+    );
 
   return result;
-
 };

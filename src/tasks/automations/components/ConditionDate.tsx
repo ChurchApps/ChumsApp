@@ -1,6 +1,4 @@
-import {
- FormControl, InputLabel, ListSubheader, MenuItem, Select, TextField, type SelectChangeEvent, Stack 
-} from "@mui/material";
+import { FormControl, InputLabel, ListSubheader, MenuItem, Select, TextField, type SelectChangeEvent, Stack } from "@mui/material";
 import React from "react";
 import { type ConditionInterface, Locale } from "@churchapps/apphelper";
 import { ConditionHelper } from "../../../helpers";
@@ -108,8 +106,7 @@ export const ConditionDate = (props: Props) => {
             color: "text.primary",
             lineHeight: "36px",
           },
-        }}
-      >
+        }}>
         <ListSubheader>{Locale.label("tasks.conditionDate.absolute")}</ListSubheader>
         <MenuItem value="1">{Locale.label("month.jan")}</MenuItem>
         <MenuItem value="2">{Locale.label("month.feb")}</MenuItem>

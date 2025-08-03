@@ -1,6 +1,4 @@
-import {
- Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, type SelectChangeEvent 
-} from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField, type SelectChangeEvent } from "@mui/material";
 import React from "react";
 import {
   ApiHelper,
@@ -54,9 +52,15 @@ export function EditCondition(props: Props) {
         const parsed = JSON.parse(c?.value);
         let newObj;
         if (Array.isArray(parsed)) {
-          newObj = [{ value: parsed[0].value, text: parsed[0].text }, { from: e.target.value, to: parsed[1]?.to }];
+          newObj = [
+            { value: parsed[0].value, text: parsed[0].text },
+            { from: e.target.value, to: parsed[1]?.to },
+          ];
         } else {
-          newObj = [{ value: parsed.value, text: parsed.text }, { from: e.target.value, to: parsed.to }];
+          newObj = [
+            { value: parsed.value, text: parsed.text },
+            { from: e.target.value, to: parsed.to },
+          ];
         }
         c.value = JSON.stringify(newObj);
         break;
@@ -64,9 +68,15 @@ export function EditCondition(props: Props) {
         const parsedObj = JSON.parse(c?.value);
         let obj;
         if (Array.isArray(parsedObj)) {
-          obj = [{ value: parsedObj[0].value, text: parsedObj[0].text }, { from: parsedObj[1]?.from, to: e.target.value }];
+          obj = [
+            { value: parsedObj[0].value, text: parsedObj[0].text },
+            { from: parsedObj[1]?.from, to: e.target.value },
+          ];
         } else {
-          obj = [{ value: parsedObj.value, text: parsedObj.text }, { from: parsedObj?.from, to: e.target.value }];
+          obj = [
+            { value: parsedObj.value, text: parsedObj.text },
+            { from: parsedObj?.from, to: e.target.value },
+          ];
         }
         c.value = JSON.stringify(obj);
         break;
@@ -129,9 +139,11 @@ export function EditCondition(props: Props) {
         break;
       case "groupMember":
         loadedOptions.forEach((o, i) => {
-          options.push(<MenuItem key={i} value={JSON.stringify(o)}>
+          options.push(
+            <MenuItem key={i} value={JSON.stringify(o)}>
               {o.text}
-            </MenuItem>);
+            </MenuItem>
+          );
         });
         setDefaultValue(loadedOptions?.length > 0 ? JSON.stringify(loadedOptions[0]) : "");
         result = getValueSelect(options);
@@ -202,15 +214,22 @@ export function EditCondition(props: Props) {
       case "memberDonations":
         let defaultDonationValue;
         if (condition.operator === "donatedToAny") {
-          options.push(<MenuItem key="any" value={JSON.stringify({ value: "any", text: "Any" })}>
+          options.push(
+            <MenuItem key="any" value={JSON.stringify({ value: "any", text: "Any" })}>
               {Locale.label("people.editCondition.any")}
-            </MenuItem>);
-          defaultDonationValue = JSON.stringify([{ value: "any", text: "Any" }, { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]);
+            </MenuItem>
+          );
+          defaultDonationValue = JSON.stringify([
+            { value: "any", text: "Any" },
+            { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) },
+          ]);
         } else {
           loadedOptions.forEach((o, i) => {
-            options.push(<MenuItem key={i} value={JSON.stringify(o)}>
+            options.push(
+              <MenuItem key={i} value={JSON.stringify(o)}>
                 {o.text}
-              </MenuItem>);
+              </MenuItem>
+            );
           });
           defaultDonationValue = loadedOptions?.length > 0 ? JSON.stringify([loadedOptions[0], { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) }]) : "";
         }
@@ -229,17 +248,21 @@ export function EditCondition(props: Props) {
         let defaultAttendanceValue;
         const defaultDateObj = { from: DateHelper.formatHtml5Date(new Date()), to: DateHelper.formatHtml5Date(new Date()) };
         if (condition.operator === "attendedAny") {
-          options.push(<MenuItem key="any" value={JSON.stringify({ value: "any", text: "Any" })}>
+          options.push(
+            <MenuItem key="any" value={JSON.stringify({ value: "any", text: "Any" })}>
               {Locale.label("people.editCondition.any")}
-            </MenuItem>);
+            </MenuItem>
+          );
           defaultAttendanceValue = JSON.stringify([{ value: "any", text: "Any" }, defaultDateObj]);
         } else if (condition.operator === "attendedService") {
           const serviceOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter((item) => "services" in item)[0]?.services;
           if (serviceOptions) {
             serviceOptions.forEach((o, i) => {
-              options.push(<MenuItem key={i} value={JSON.stringify(o)}>
+              options.push(
+                <MenuItem key={i} value={JSON.stringify(o)}>
                   {o.text}
-                </MenuItem>);
+                </MenuItem>
+              );
             });
           }
           defaultAttendanceValue = serviceOptions?.length > 0 ? JSON.stringify([serviceOptions[0], defaultDateObj]) : "";
@@ -247,9 +270,11 @@ export function EditCondition(props: Props) {
           const serviceTimeOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter((item) => "serviceTimes" in item)[0]?.serviceTimes;
           if (serviceTimeOptions) {
             serviceTimeOptions.forEach((o, i) => {
-              options.push(<MenuItem key={i} value={JSON.stringify(o)}>
+              options.push(
+                <MenuItem key={i} value={JSON.stringify(o)}>
                   {o.text}
-                </MenuItem>);
+                </MenuItem>
+              );
             });
           }
           defaultAttendanceValue = serviceTimeOptions?.length > 0 ? JSON.stringify([serviceTimeOptions[0], defaultDateObj]) : "";
@@ -257,9 +282,11 @@ export function EditCondition(props: Props) {
           const groupOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter((item) => "groups" in item)[0]?.groups;
           if (groupOptions) {
             groupOptions.forEach((o, i) => {
-              options.push(<MenuItem key={i} value={JSON.stringify(o)}>
+              options.push(
+                <MenuItem key={i} value={JSON.stringify(o)}>
                   {o.text}
-                </MenuItem>);
+                </MenuItem>
+              );
             });
           }
           defaultAttendanceValue = groupOptions?.length > 0 ? JSON.stringify([groupOptions[0], defaultDateObj]) : "";
@@ -267,9 +294,11 @@ export function EditCondition(props: Props) {
           const campusOptions: any[] = loadedOptions.length > 0 && loadedOptions.filter((item) => "campuses" in item)[0]?.campuses;
           if (campusOptions) {
             campusOptions.forEach((o, i) => {
-              options.push(<MenuItem key={i} value={JSON.stringify(o)}>
+              options.push(
+                <MenuItem key={i} value={JSON.stringify(o)}>
                   {o.text}
-                </MenuItem>);
+                </MenuItem>
+              );
             });
           }
           defaultAttendanceValue = campusOptions?.length > 0 ? JSON.stringify([campusOptions[0], defaultDateObj]) : "";
@@ -586,8 +615,7 @@ export function EditCondition(props: Props) {
         fullWidth
         onClick={() => {
           props.conditionAdded(condition);
-        }}
-      >
+        }}>
         {Locale.label("people.editCondition.saveCon")}
       </Button>
     </>

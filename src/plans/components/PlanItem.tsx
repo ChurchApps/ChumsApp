@@ -55,14 +55,14 @@ export const PlanItem = React.memo((props: Props) => {
   const getChildren = () => {
     const result: JSX.Element[] = [];
     props.planItem.children?.forEach((c, index) => {
-      result.push(<>
+      result.push(
+        <>
           {props.showItemDrop && (
             <DroppableWrapper
               accept="planItem"
               onDrop={(item) => {
                 handleDrop(item, index + 0.5);
-              }}
-            >
+              }}>
               &nbsp;
             </DroppableWrapper>
           )}
@@ -73,24 +73,25 @@ export const PlanItem = React.memo((props: Props) => {
             draggingCallback={(isDragging) => {
               console.log("ISdragging", isDragging);
               props.onDragChange(isDragging);
-            }}
-          >
+            }}>
             <PlanItem key={c.id} planItem={c} setEditPlanItem={props.setEditPlanItem} />
           </DraggableWrapper>
-        </>);
+        </>
+      );
     });
     console.log("showItemDrop", props.showItemDrop);
     if (props.showItemDrop) {
-      result.push(<>
+      result.push(
+        <>
           <DroppableWrapper
             accept="planItem"
             onDrop={(item) => {
               handleDrop(item, props.planItem.children?.length + 1);
-            }}
-          >
+            }}>
             &nbsp;
           </DroppableWrapper>
-        </>);
+        </>
+      );
     }
     return result;
   };
@@ -104,8 +105,7 @@ export const PlanItem = React.memo((props: Props) => {
             onClick={(e) => {
               e.preventDefault();
               setAnchorEl(e.currentTarget);
-            }}
-          >
+            }}>
             <Icon>add</Icon>
           </a>
           &nbsp;
@@ -114,8 +114,7 @@ export const PlanItem = React.memo((props: Props) => {
             onClick={(e) => {
               e.preventDefault();
               props.setEditPlanItem(props.planItem);
-            }}
-          >
+            }}>
             <Icon>edit</Icon>
           </a>
         </span>
@@ -137,8 +136,7 @@ export const PlanItem = React.memo((props: Props) => {
               onClick={(e) => {
                 e.preventDefault();
                 props.setEditPlanItem(props.planItem);
-              }}
-            >
+              }}>
               <Icon>edit</Icon>
             </a>
           </span>
@@ -161,8 +159,7 @@ export const PlanItem = React.memo((props: Props) => {
               onClick={(e) => {
                 e.preventDefault();
                 props.setEditPlanItem(props.planItem);
-              }}
-            >
+              }}>
               <Icon>edit</Icon>
             </a>
           </span>

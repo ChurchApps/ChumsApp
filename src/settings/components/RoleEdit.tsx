@@ -25,13 +25,16 @@ export const RoleEdit: React.FC<Props> = ({ roleId, updatedFunction }) => {
     }
   }, [roleId, roleQuery.data]);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const r = { ...role };
-    r.name = e.currentTarget.value;
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const r = { ...role };
+      r.name = e.currentTarget.value;
 
-    setRole(r);
-    setErrors([]);
-  }, [role]);
+      setRole(r);
+      setErrors([]);
+    },
+    [role]
+  );
 
   const handleSave = useCallback(() => {
     if (!role.name?.trim()) {
@@ -46,15 +49,18 @@ export const RoleEdit: React.FC<Props> = ({ roleId, updatedFunction }) => {
     ApiHelper.post("/roles", [r], "MembershipApi").then(() => updatedFunction());
   }, [role, updatedFunction]);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent<any>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSave();
-    }
-  }, [handleSave]);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<any>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSave();
+      }
+    },
+    [handleSave]
+  );
 
   const handleCancel = useCallback(() => updatedFunction(), [updatedFunction]);
-  
+
   const handleDelete = useCallback(() => {
     if (window.confirm(Locale.label("settings.roleEdit.confirmMsg"))) {
       ApiHelper.delete("/roles/" + role.id, "MembershipApi").then(() => updatedFunction());
@@ -70,8 +76,7 @@ export const RoleEdit: React.FC<Props> = ({ roleId, updatedFunction }) => {
       headerText={Locale.label("settings.roleEdit.roleEdit")}
       saveFunction={handleSave}
       cancelFunction={handleCancel}
-      deleteFunction={!UniqueIdHelper.isMissing(roleId) ? handleDelete : undefined}
-    >
+      deleteFunction={!UniqueIdHelper.isMissing(roleId) ? handleDelete : undefined}>
       <ErrorMessages errors={errors} />
       <TextField
         fullWidth

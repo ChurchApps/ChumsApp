@@ -1,7 +1,5 @@
 import React, { memo, useCallback, useMemo } from "react";
-import {
- Grid, Typography, Card, CardContent, Stack, Box, Chip, Button, Paper, Divider 
-} from "@mui/material";
+import { Grid, Typography, Card, CardContent, Stack, Box, Chip, Button, Paper, Divider } from "@mui/material";
 import { ArrayHelper, DateHelper, type GroupMemberInterface, Locale, type TaskInterface, UserHelper, Loading } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { NewTask } from "./";
@@ -58,7 +56,7 @@ export const TaskList = memo((props: Props) => {
       if (groupIds.length === 0) return [];
       const { ApiHelper } = await import("@churchapps/apphelper");
       return ApiHelper.post("/tasks/loadForGroups", { groupIds, status: props.status }, "DoingApi");
-    }
+    },
   });
 
   const editContent = (
@@ -73,8 +71,7 @@ export const TaskList = memo((props: Props) => {
         borderRadius: 2,
         textTransform: "none",
         fontWeight: 600,
-      }}
-    >
+      }}>
       Add Task
     </Button>
   );
@@ -86,7 +83,8 @@ export const TaskList = memo((props: Props) => {
     groupTasks.refetch();
   }, [tasks, groupMembers, groupTasks]);
 
-  const getTask = useCallback((task: TaskInterface) => (
+  const getTask = useCallback(
+    (task: TaskInterface) => (
       <Box
         key={task.id}
         sx={{
@@ -102,8 +100,7 @@ export const TaskList = memo((props: Props) => {
             borderColor: "primary.main",
           },
           "&:last-child": { mb: 0 },
-        }}
-      >
+        }}>
         <Stack spacing={2}>
           {/* Task Header */}
           <Box
@@ -112,8 +109,7 @@ export const TaskList = memo((props: Props) => {
               alignItems: "flex-start",
               justifyContent: "space-between",
               gap: 2,
-            }}
-          >
+            }}>
             <Box sx={{ flex: 1, minWidth: 0 }}>
               <Typography
                 variant="h6"
@@ -126,8 +122,7 @@ export const TaskList = memo((props: Props) => {
                   fontSize: "1.1rem",
                   wordBreak: "break-word",
                   "&:hover": { textDecoration: "underline" },
-                }}
-              >
+                }}>
                 {task.title}
               </Typography>
 
@@ -186,9 +181,12 @@ export const TaskList = memo((props: Props) => {
           )}
         </Stack>
       </Box>
-    ), [props.compact]);
+    ),
+    [props.compact]
+  );
 
-  const getSectionHeader = useCallback((title: string, icon: React.ReactNode, count: number) => (
+  const getSectionHeader = useCallback(
+    (title: string, icon: React.ReactNode, count: number) => (
       <Box sx={{ mb: 2 }}>
         <Stack direction="row" alignItems="center" spacing={1}>
           {icon}
@@ -198,7 +196,9 @@ export const TaskList = memo((props: Props) => {
           <Chip label={count} size="small" color="primary" sx={{ fontWeight: 600, fontSize: "0.75rem" }} />
         </Stack>
       </Box>
-    ), []);
+    ),
+    []
+  );
 
   const assignedToMyGroups = useMemo(() => {
     if (groupMembers.data?.length > 0) {
@@ -256,8 +256,7 @@ export const TaskList = memo((props: Props) => {
           borderRadius: 2,
           border: "1px solid",
           borderColor: "grey.200",
-        }}
-      >
+        }}>
         <CardContent>
           <Loading />
         </CardContent>
@@ -285,8 +284,7 @@ export const TaskList = memo((props: Props) => {
           borderRadius: 2,
           border: "1px solid",
           borderColor: "grey.200",
-        }}
-      >
+        }}>
         <CardContent>
           {/* Header */}
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
@@ -309,8 +307,7 @@ export const TaskList = memo((props: Props) => {
                     sx={{
                       textTransform: "none",
                       fontWeight: 600,
-                    }}
-                  >
+                    }}>
                     {Locale.label("tasks.tasksPage.showClosed") || "Show Closed"}
                   </Button>
                 ) : (
@@ -324,8 +321,7 @@ export const TaskList = memo((props: Props) => {
                     sx={{
                       textTransform: "none",
                       fontWeight: 600,
-                    }}
-                  >
+                    }}>
                     {Locale.label("tasks.tasksPage.showOpen") || "Show Open"}
                   </Button>
                 ))}
@@ -348,8 +344,7 @@ export const TaskList = memo((props: Props) => {
                 backgroundColor: "grey.50",
                 border: "1px dashed",
                 borderColor: "grey.300",
-              }}
-            >
+              }}>
               <TaskIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
               <Typography variant="body1" color="text.secondary">
                 No tasks found. Create your first task to get started!

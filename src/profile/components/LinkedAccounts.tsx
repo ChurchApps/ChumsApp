@@ -31,7 +31,10 @@ export const LinkedAccounts = () => {
       if (popup) popup.close();
 
       try {
-        await ApiHelper.get("/praiseCharts/access?verifier=" + encodeURIComponent(oauth_verifier) + "&token=" + encodeURIComponent(oauthToken) + "&secret=" + encodeURIComponent(oauthTokenSecret), "ContentApi");
+        await ApiHelper.get(
+          "/praiseCharts/access?verifier=" + encodeURIComponent(oauth_verifier) + "&token=" + encodeURIComponent(oauthToken) + "&secret=" + encodeURIComponent(oauthTokenSecret),
+          "ContentApi"
+        );
       } catch (error) {
         console.error("Failed to complete OAuth flow:", error);
       }
@@ -67,8 +70,7 @@ export const LinkedAccounts = () => {
                     onClick={() => {
                       const newWindow = window.open("https://www.praisecharts.com/?XID=churchapps", "_blank");
                       if (newWindow) newWindow.opener = null;
-                    }}
-                  >
+                    }}>
                     Sign-up
                   </Button>
                   &nbsp;

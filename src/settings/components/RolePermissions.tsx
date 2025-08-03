@@ -31,14 +31,16 @@ export const RolePermissions: React.FC<Props> = (props) => {
 
     sortedPermissions.forEach((p, index) => {
       if (!lastSection.includes(p.displaySection)) {
-        result.push(<Accordion expanded={expanded === "panel" + index} onChange={handleChange("panel" + index)}>
+        result.push(
+          <Accordion expanded={expanded === "panel" + index} onChange={handleChange("panel" + index)}>
             <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
               <Typography>{p.displaySection}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <div>{getChecks(p.displaySection)}</div>
             </AccordionDetails>
-          </Accordion>);
+          </Accordion>
+        );
         lastSection.push(p.displaySection);
       }
     });

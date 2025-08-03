@@ -37,11 +37,10 @@ export const ReportPage = () => {
           {
             href: "/admin",
             text: "Server Admin",
-            icon: <BackIcon />
-          }
+            icon: <BackIcon />,
+          },
         ]}
-        bgColor="error.main"
-      >
+        bgColor="error.main">
         <Chip
           label="Admin Only"
           size="small"
@@ -57,36 +56,34 @@ export const ReportPage = () => {
 
       <Container maxWidth="xl">
         <Box sx={{ py: 3 }}>
-
-        {/* Report Content */}
-        <Card
-          elevation={2}
-          sx={{
-            borderRadius: 2,
-            border: "1px solid",
-            borderColor: "divider",
-            minHeight: 400,
-          }}
-        >
-          <CardContent sx={{ p: 0 }}>
-            {loading ? (
-              <Box sx={{ p: 4 }}>
-                <Stack spacing={3}>
-                  <Skeleton variant="rectangular" height={60} />
-                  <Skeleton variant="rectangular" height={200} />
-                  <Stack direction="row" spacing={2}>
-                    <Skeleton variant="rectangular" width={120} height={40} />
-                    <Skeleton variant="rectangular" width={120} height={40} />
+          {/* Report Content */}
+          <Card
+            elevation={2}
+            sx={{
+              borderRadius: 2,
+              border: "1px solid",
+              borderColor: "divider",
+              minHeight: 400,
+            }}>
+            <CardContent sx={{ p: 0 }}>
+              {loading ? (
+                <Box sx={{ p: 4 }}>
+                  <Stack spacing={3}>
+                    <Skeleton variant="rectangular" height={60} />
+                    <Skeleton variant="rectangular" height={200} />
+                    <Stack direction="row" spacing={2}>
+                      <Skeleton variant="rectangular" width={120} height={40} />
+                      <Skeleton variant="rectangular" width={120} height={40} />
+                    </Stack>
                   </Stack>
-                </Stack>
-              </Box>
-            ) : (
-              <Box sx={{ "& .report-container": { p: 0 } }}>
-                <ReportWithFilter keyName={params.keyName} autoRun={false} />
-              </Box>
-            )}
-          </CardContent>
-        </Card>
+                </Box>
+              ) : (
+                <Box sx={{ "& .report-container": { p: 0 } }}>
+                  <ReportWithFilter keyName={params.keyName} autoRun={false} />
+                </Box>
+              )}
+            </CardContent>
+          </Card>
         </Box>
       </Container>
     </>

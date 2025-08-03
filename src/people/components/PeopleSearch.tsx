@@ -49,12 +49,10 @@ export function PeopleSearch(props: Props) {
           }}
           sx={{ textTransform: "none" }}
           data-testid="toggle-advanced-search-button"
-          aria-label="Toggle advanced search"
-        >
+          aria-label="Toggle advanced search">
           {Locale.label("people.peopleSearch.adv")}
         </Button>
-      }
-    >
+      }>
       <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
         <InputLabel htmlFor="searchText">{Locale.label("common.name")}</InputLabel>
         <OutlinedInput

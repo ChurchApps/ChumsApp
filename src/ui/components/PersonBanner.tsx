@@ -28,8 +28,7 @@ export const PersonBanner: React.FC = () => {
               fontWeight: "normal",
               marginBottom: 0,
               lineHeight: 1,
-            }}
-          >
+            }}>
             Jeremy Zongker
           </h1>
           <div>918-282-2011 &nbsp; jeremy@zongker.net</div>

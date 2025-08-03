@@ -7,13 +7,12 @@ import { FormControl, InputLabel, Select, type SelectChangeEvent, TextField, Men
 import { useMountedState } from "@churchapps/apphelper";
 
 interface Props {
-  parameter: ParameterInterface,
-  report: ReportInterface,
-  onChange: (parameter: ParameterInterface, permittedChildIds: string[]) => void
+  parameter: ParameterInterface;
+  report: ReportInterface;
+  onChange: (parameter: ParameterInterface, permittedChildIds: string[]) => void;
 }
 
 export const ReportFilterField = (props: Props) => {
-
   const [rawData, setRawData] = React.useState<any[]>(null);
   const [secondaryData, setSecondaryData] = React.useState<any[]>(null);
   const isMounted = useMountedState();
@@ -27,7 +26,7 @@ export const ReportFilterField = (props: Props) => {
         setRawData(getMonths());
         break;
       case "campus":
-        ApiHelper.get("/campuses", "AttendanceApi").then(data => {
+        ApiHelper.get("/campuses", "AttendanceApi").then((data) => {
           data.unshift({ id: "", name: "Any" });
           if (isMounted()) {
             setRawData(data);
@@ -35,7 +34,7 @@ export const ReportFilterField = (props: Props) => {
         });
         break;
       case "service":
-        ApiHelper.get("/services", "AttendanceApi").then(data => {
+        ApiHelper.get("/services", "AttendanceApi").then((data) => {
           data.unshift({ id: "", name: "Any" });
           if (isMounted()) {
             setRawData(data);
@@ -43,7 +42,7 @@ export const ReportFilterField = (props: Props) => {
         });
         break;
       case "serviceTime":
-        ApiHelper.get("/serviceTimes", "AttendanceApi").then(data => {
+        ApiHelper.get("/serviceTimes", "AttendanceApi").then((data) => {
           data.unshift({ id: "", name: "Any" });
           if (isMounted()) {
             setRawData(data);
@@ -51,13 +50,13 @@ export const ReportFilterField = (props: Props) => {
         });
         break;
       case "group":
-        ApiHelper.get("/groups", "MembershipApi").then(data => {
+        ApiHelper.get("/groups", "MembershipApi").then((data) => {
           data.unshift({ id: "", name: "Any" });
           if (isMounted()) {
             setRawData(data);
           }
         });
-        ApiHelper.get("/groupServiceTimes", "AttendanceApi").then(data => {
+        ApiHelper.get("/groupServiceTimes", "AttendanceApi").then((data) => {
           if (isMounted()) {
             setSecondaryData(data);
           }
@@ -96,7 +95,7 @@ export const ReportFilterField = (props: Props) => {
       Locale.label("month.september"),
       Locale.label("month.october"),
       Locale.label("month.november"),
-      Locale.label("month.december")
+      Locale.label("month.december"),
     ];
 
     const result = [];
@@ -105,8 +104,10 @@ export const ReportFilterField = (props: Props) => {
   };
 
   const getIdName = () => {
-    const result: { value: string, text: string }[] = [];
-    filterOptions().forEach(d => { result.push({ value: d.id, text: d.name }); });
+    const result: { value: string; text: string }[] = [];
+    filterOptions().forEach((d) => {
+      result.push({ value: d.id, text: d.name });
+    });
     return result;
   };
 
@@ -133,7 +134,7 @@ export const ReportFilterField = (props: Props) => {
   };
 
   const getOptions = () => {
-    let options: { value: string, text: string }[] = [];
+    let options: { value: string; text: string }[] = [];
     if (rawData) {
       switch (props.parameter.sourceKey) {
         case "campus":
@@ -162,7 +163,9 @@ export const ReportFilterField = (props: Props) => {
     props.onChange(p, parentIds);
   };
 
-  React.useEffect(() => { init() }, [props.parameter.keyName, isMounted]); //eslint-disable-line
+  React.useEffect(() => {
+    init();
+  }, [props.parameter.keyName, isMounted]); //eslint-disable-line
 
   let result = <></>;
   switch (props.parameter.source) {
@@ -170,16 +173,29 @@ export const ReportFilterField = (props: Props) => {
       result = (
         <FormControl fullWidth>
           <InputLabel>{props.parameter.displayName}</InputLabel>
-          <Select value={options.find(v => v.value === props.parameter.value)?.value || ""} label={props.parameter.displayName} onChange={handleChange} name={props.parameter.keyName}>
-            {options.map((o, i) => <MenuItem key={i} value={o.value}>{o.text}</MenuItem>)}
+          <Select value={options.find((v) => v.value === props.parameter.value)?.value || ""} label={props.parameter.displayName} onChange={handleChange} name={props.parameter.keyName}>
+            {options.map((o, i) => (
+              <MenuItem key={i} value={o.value}>
+                {o.text}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       );
       break;
     case "date":
-      result = (<TextField type="date" fullWidth InputLabelProps={{ shrink: true }} label={props.parameter.displayName} value={props.parameter.value || ""} onChange={handleChange} name={props.parameter.keyName} />);
+      result = (
+        <TextField
+          type="date"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          label={props.parameter.displayName}
+          value={props.parameter.value || ""}
+          onChange={handleChange}
+          name={props.parameter.keyName}
+        />
+      );
       break;
   }
   return result;
-
 };

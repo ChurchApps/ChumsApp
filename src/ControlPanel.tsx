@@ -16,7 +16,9 @@ export const ControlPanel = () => {
 
   const location = typeof window === "undefined" ? null : window.location;
   AnalyticsHelper.init();
-  React.useEffect(() => { AnalyticsHelper.logPageView(); }, [location]);
+  React.useEffect(() => {
+    AnalyticsHelper.logPageView();
+  }, [location]);
 
   const getErrorAppData = () => {
     const result: ErrrorAppDataInterface = {
@@ -51,7 +53,14 @@ export const ControlPanel = () => {
         <Route path="/ui" element={<UI />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/*" element={<RequireAuth><Authenticated /></RequireAuth>} />
+        <Route
+          path="/*"
+          element={
+            <RequireAuth>
+              <Authenticated />
+            </RequireAuth>
+          }
+        />
       </Routes>
     </>
   );

@@ -1,6 +1,4 @@
-import {
- MenuItem, Select, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, FormControl, InputLabel 
-} from "@mui/material";
+import { MenuItem, Select, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, FormControl, InputLabel } from "@mui/material";
 import React from "react";
 import { ErrorMessages, type ConjunctionInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { Merge as ConjunctionIcon, Save as SaveIcon, Cancel as CancelIcon } from "@mui/icons-material";
@@ -55,8 +53,7 @@ export const ConjunctionEdit = (props: Props) => {
         borderColor: "grey.200",
         transition: "all 0.2s ease-in-out",
         "&:hover": { boxShadow: 2 },
-      }}
-    >
+      }}>
       <CardContent>
         <Stack spacing={3}>
           {/* Header */}
@@ -81,8 +78,7 @@ export const ConjunctionEdit = (props: Props) => {
               name="groupType"
               onChange={handleChange}
               data-testid="conjunction-type-select"
-              aria-label="Conjunction type"
-            >
+              aria-label="Conjunction type">
               <MenuItem value="and">{Locale.label("tasks.conjunctionEdit.and")}</MenuItem>
               <MenuItem value="or">{Locale.label("tasks.conjunctionEdit.or")}</MenuItem>
             </Select>
@@ -98,8 +94,7 @@ export const ConjunctionEdit = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {Locale.label("common.cancel")}
             </Button>
             <Button
@@ -110,8 +105,7 @@ export const ConjunctionEdit = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {Locale.label("common.save")}
             </Button>
           </Stack>

@@ -1,6 +1,4 @@
-import {
- Menu, MenuItem, Box, Typography, Stack, Button, IconButton, List, ListItem, ListItemIcon, ListItemText, Chip 
-} from "@mui/material";
+import { Menu, MenuItem, Box, Typography, Stack, Button, IconButton, List, ListItem, ListItemIcon, ListItemText, Chip } from "@mui/material";
 import React from "react";
 import { type AutomationInterface, type ConditionInterface, type ConjunctionInterface, Locale } from "@churchapps/apphelper";
 import { ArrayHelper } from "@churchapps/apphelper";
@@ -38,14 +36,12 @@ export const ConditionDetails = (props: Props) => {
       onClose={() => {
         setMenuAnchor(null);
       }}
-      MenuListProps={{ "aria-labelledby": "addMenuButton" }}
-    >
+      MenuListProps={{ "aria-labelledby": "addMenuButton" }}>
       <MenuItem
         onClick={() => {
           props.setEditConjunction({ automationId: props.automation.id, groupType: "and", parentId: parentId });
           setMenuAnchor(null);
-        }}
-      >
+        }}>
         <ListItemIcon>
           <ConjunctionIcon />
         </ListItemIcon>
@@ -55,8 +51,7 @@ export const ConditionDetails = (props: Props) => {
         onClick={() => {
           props.setEditCondition({ conjunctionId: parentId, field: "dayOfWeek" });
           setMenuAnchor(null);
-        }}
-      >
+        }}>
         <ListItemIcon>
           <ConditionIcon />
         </ListItemIcon>
@@ -70,15 +65,15 @@ export const ConditionDetails = (props: Props) => {
 
     // Render conditions
     conditions?.forEach((condition) => {
-      result.push(<ListItem
+      result.push(
+        <ListItem
           key={condition.id}
           sx={{
             pl: level * 3,
             py: 1,
             borderRadius: 1,
             "&:hover": { backgroundColor: "action.hover" },
-          }}
-        >
+          }}>
           <ListItemIcon sx={{ minWidth: 36 }}>
             <ConditionIcon sx={{ fontSize: 20, color: "success.main" }} />
           </ListItemIcon>
@@ -92,14 +87,16 @@ export const ConditionDetails = (props: Props) => {
           <IconButton size="small" onClick={() => props.setEditCondition(condition)} data-testid={`edit-condition-button-${condition.id}`} aria-label="Edit condition">
             <EditIcon fontSize="small" />
           </IconButton>
-        </ListItem>);
+        </ListItem>
+      );
     });
 
     // Render conjunctions
     conjunctions?.forEach((conjunction) => {
       const isOr = conjunction.groupType === "or";
 
-      result.push(<Box key={conjunction.id}>
+      result.push(
+        <Box key={conjunction.id}>
           <ListItem
             sx={{
               pl: level * 3,
@@ -108,8 +105,7 @@ export const ConditionDetails = (props: Props) => {
               backgroundColor: "grey.50",
               mb: 1,
               "&:hover": { backgroundColor: "grey.100" },
-            }}
-          >
+            }}>
             <ListItemIcon sx={{ minWidth: 36 }}>
               <ConjunctionIcon sx={{ fontSize: 20, color: "primary.main" }} />
             </ListItemIcon>
@@ -133,8 +129,7 @@ export const ConditionDetails = (props: Props) => {
                   setParentId(conjunction.id);
                 }}
                 data-testid={`add-conjunction-button-${conjunction.id}`}
-                aria-label="Add conjunction"
-              >
+                aria-label="Add conjunction">
                 <AddIcon fontSize="small" />
               </IconButton>
               <IconButton size="small" onClick={() => props.setEditConjunction(conjunction)} data-testid={`edit-conjunction-button-${conjunction.id}`} aria-label="Edit conjunction">
@@ -144,7 +139,8 @@ export const ConditionDetails = (props: Props) => {
           </ListItem>
           {getConditionMenu()}
           {getLevel(conjunction.conjunctions, conjunction.conditions, level + 1)}
-        </Box>);
+        </Box>
+      );
     });
 
     if (result.length === 0) return null;
@@ -164,8 +160,7 @@ export const ConditionDetails = (props: Props) => {
           onClick={() => props.setEditConjunction({ automationId: props.automation.id, groupType: "and" })}
           data-testid="add-automation-condition-button"
           aria-label="Add condition"
-          sx={{ textTransform: "none" }}
-        >
+          sx={{ textTransform: "none" }}>
           Add Condition
         </Button>
       </Stack>

@@ -1,7 +1,5 @@
 import React from "react";
-import {
- ApiHelper, type GroupInterface, type GroupServiceTimeInterface, InputBox, ErrorMessages, type SessionInterface, DateHelper, UniqueIdHelper, Locale, Loading
-} from "@churchapps/apphelper";
+import { ApiHelper, type GroupInterface, type GroupServiceTimeInterface, InputBox, ErrorMessages, type SessionInterface, DateHelper, UniqueIdHelper, Locale, Loading } from "@churchapps/apphelper";
 import { TextField, FormControl, Select, InputLabel, MenuItem, type SelectChangeEvent } from "@mui/material";
 
 interface Props {
@@ -47,7 +45,7 @@ export const SessionEdit: React.FC<Props> = (props) => {
       const s = { ...props.session, groupId: props.group.id, sessionDate: sessionDate } as SessionInterface;
       if (!UniqueIdHelper.isMissing(serviceTimeId)) s.serviceTimeId = serviceTimeId;
       else s.serviceTimeId = null;
-      
+
       ApiHelper.post("/sessions", [s], "AttendanceApi").then(() => {
         props.updatedFunction(s);
       });
@@ -67,9 +65,11 @@ export const SessionEdit: React.FC<Props> = (props) => {
       const options = [];
       for (let i = 0; i < groupServiceTimes.length; i++) {
         const gst = groupServiceTimes[i];
-        options.push(<MenuItem key={i} value={gst.serviceTimeId}>
+        options.push(
+          <MenuItem key={i} value={gst.serviceTimeId}>
             {gst.serviceTime.name}
-          </MenuItem>);
+          </MenuItem>
+        );
       }
 
       return (
@@ -82,8 +82,7 @@ export const SessionEdit: React.FC<Props> = (props) => {
             onChange={(e: SelectChangeEvent) => {
               setServiceTimeId(e.target.value as string);
             }}
-            onKeyDown={handleKeyDown}
-          >
+            onKeyDown={handleKeyDown}>
             {options}
           </Select>
         </FormControl>
@@ -99,21 +98,23 @@ export const SessionEdit: React.FC<Props> = (props) => {
     // Load session by ID to get full data
     if (props.session?.id) {
       setLoading(true);
-      ApiHelper.get("/sessions/" + props.session.id, "AttendanceApi").then((data) => {
-        if (data?.sessionDate) {
-          const date = new Date(data.sessionDate);
-          if (!isNaN(date.getTime())) {
-            setSessionDate(date);
+      ApiHelper.get("/sessions/" + props.session.id, "AttendanceApi")
+        .then((data) => {
+          if (data?.sessionDate) {
+            const date = new Date(data.sessionDate);
+            if (!isNaN(date.getTime())) {
+              setSessionDate(date);
+            }
           }
-        }
-        if (data?.serviceTimeId) {
-          setServiceTimeId(data.serviceTimeId);
-        }
-        setLoading(false);
-      }).catch((error) => {
-        console.error("Failed to load session:", error);
-        setLoading(false);
-      });
+          if (data?.serviceTimeId) {
+            setServiceTimeId(data.serviceTimeId);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Failed to load session:", error);
+          setLoading(false);
+        });
     } else {
       setLoading(false);
     }
@@ -121,13 +122,7 @@ export const SessionEdit: React.FC<Props> = (props) => {
 
   if (loading) {
     return (
-      <InputBox
-        data-cy="edit-session-box"
-        headerIcon="edit"
-        headerText={Locale.label("groups.sessionEdit.sesEdit")}
-        cancelFunction={handleCancel}
-        help="chums/attendance"
-      >
+      <InputBox data-cy="edit-session-box" headerIcon="edit" headerText={Locale.label("groups.sessionEdit.sesEdit")} cancelFunction={handleCancel} help="chums/attendance">
         <Loading />
       </InputBox>
     );
@@ -141,8 +136,7 @@ export const SessionEdit: React.FC<Props> = (props) => {
       saveFunction={handleSave}
       cancelFunction={handleCancel}
       deleteFunction={handleDelete}
-      help="chums/attendance"
-    >
+      help="chums/attendance">
       <ErrorMessages errors={errors} />
       {getServiceTimes()}
 

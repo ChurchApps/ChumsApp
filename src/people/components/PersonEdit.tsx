@@ -1,14 +1,10 @@
 import React, { useState, memo, useCallback, useMemo } from "react";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { ChumsPersonHelper, UpdateHouseHold } from ".";
-import {
- PersonHelper, DateHelper, InputBox, ApiHelper, type PersonInterface, Loading, ErrorMessages, Locale, PersonAvatar 
-} from "@churchapps/apphelper";
+import { PersonHelper, DateHelper, InputBox, ApiHelper, type PersonInterface, Loading, ErrorMessages, Locale, PersonAvatar } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";
-import {
- Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent 
-} from "@mui/material";
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent } from "@mui/material";
 
 interface Props {
   id?: string;
@@ -63,7 +59,8 @@ export const PersonEdit = memo((props: Props) => {
   });
 
   //const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } }
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
       setErrors([]);
       const p = { ...person } as PersonInterface;
       const value = e.target.value;
@@ -121,14 +118,19 @@ export const PersonEdit = memo((props: Props) => {
           break;
       }
       setPerson(p);
-    }, [person]);
+    },
+    [person]
+  );
 
-  const handlePhoneChange = useCallback((value: string, field: "homePhone" | "workPhone" | "mobilePhone") => {
+  const handlePhoneChange = useCallback(
+    (value: string, field: "homePhone" | "workPhone" | "mobilePhone") => {
       setPhoneHasError((prevState) => ({ ...prevState, [field]: !matchIsValidTel(value) }));
       const p: PersonInterface = { ...person };
       p.contactInfo[field] = value;
       setPerson(p);
-    }, [person]);
+    },
+    [person]
+  );
 
   const handleDelete = useCallback(() => {
     if (window.confirm(Locale.label("people.personEdit.confirmMsg"))) {
@@ -159,7 +161,9 @@ export const PersonEdit = memo((props: Props) => {
       const { contactInfo: contactFromProps } = props.person;
 
       if (members && members.length > 1 && PersonHelper.compareAddress(contactFromProps, person.contactInfo)) {
-        setText(`${Locale.label("people.personEdit.upAddress")} ${PersonHelper.addressToString(person.contactInfo)} ${Locale.label("people.personEdit.for")} ${person.name.display}.  ${Locale.label("people.personEdit.applyQuestion")} ${person.name.last} ${Locale.label("people.personEdit.family")}?`);
+        setText(
+          `${Locale.label("people.personEdit.upAddress")} ${PersonHelper.addressToString(person.contactInfo)} ${Locale.label("people.personEdit.for")} ${person.name.display}.  ${Locale.label("people.personEdit.applyQuestion")} ${person.name.last} ${Locale.label("people.personEdit.family")}?`
+        );
         setShowUpdateAddressModal(true);
         return;
       }
@@ -168,7 +172,8 @@ export const PersonEdit = memo((props: Props) => {
     }
   }, [validate, person, context, props.person, members]);
 
-  const handleChangeExtention = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeExtention = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const p = { ...person } as PersonInterface;
       const value = e.target.value;
       switch (e.target.name) {
@@ -183,24 +188,31 @@ export const PersonEdit = memo((props: Props) => {
           break;
       }
       setPerson(p);
-    }, [person]);
+    },
+    [person]
+  );
 
-  const updatePerson = useCallback(async (p: PersonInterface) => {
+  const updatePerson = useCallback(
+    async (p: PersonInterface) => {
       await ApiHelper.post("/people/", [p], "MembershipApi");
       props.updatedFunction();
       setIsSubmitting(false);
-    }, [props.updatedFunction]);
+    },
+    [props.updatedFunction]
+  );
 
   const handleYes = useCallback(async () => {
     setShowUpdateAddressModal(false);
-    await Promise.all(members.map(async (member) => {
+    await Promise.all(
+      members.map(async (member) => {
         member.contactInfo = PersonHelper.changeOnlyAddress(member.contactInfo, person.contactInfo);
         try {
           await ApiHelper.post("/people", [member], "MembershipApi");
         } catch {
           console.log(`error in updating ${person.name.display}"s address`);
         }
-      }));
+      })
+    );
     props.updatedFunction();
   }, [members, person.contactInfo, person.name.display, props.updatedFunction]);
 
@@ -221,10 +233,13 @@ export const PersonEdit = memo((props: Props) => {
     }
   }, [props.person.householdId]);
 
-  const handlePhotoClick = useCallback((e: React.MouseEvent) => {
+  const handlePhotoClick = useCallback(
+    (e: React.MouseEvent) => {
       e.preventDefault();
       props.togglePhotoEditor(true, person);
-    }, [props.togglePhotoEditor, person]);
+    },
+    [props.togglePhotoEditor, person]
+  );
 
   React.useEffect(() => {
     setPerson({ ...props.person });
@@ -237,10 +252,13 @@ export const PersonEdit = memo((props: Props) => {
 
   const ariaLabel = useMemo(() => ({ "aria-label": "phone-number" }), []);
 
-  const ariaDesc = useMemo(() => ({
+  const ariaDesc = useMemo(
+    () => ({
       "aria-describedby": "errorMsg",
       "aria-labelledby": "tel-label errorMsg",
-    }), []);
+    }),
+    []
+  );
 
   const editForm = !person ? (
     <Loading />
@@ -256,18 +274,13 @@ export const PersonEdit = memo((props: Props) => {
         <Button id="mergeButton" size="small" onClick={props.showMergeSearch} data-testid="merge-person-button" aria-label="Merge person">
           {Locale.label("people.personEdit.merge")}
         </Button>
-      }
-    >
+      }>
       <ErrorMessages errors={errors} />
       <Grid container spacing={3}>
         <Grid size={{ sm: 3 }} className="my-auto">
           <Box sx={{ textAlign: "center" }}>
             <div style={{ border: "3px solid #fff", borderRadius: "50%", boxShadow: "0 2px 4px rgba(0,0,0,0.2)", display: "inline-block" }}>
-              <PersonAvatar
-                person={person}
-                size="xxlarge"
-                onClick={handlePhotoClick}
-              />
+              <PersonAvatar person={person} size="xxlarge" onClick={handlePhotoClick} />
             </div>
           </Box>
         </Grid>
@@ -354,8 +367,7 @@ export const PersonEdit = memo((props: Props) => {
               value={person.membershipStatus || ""}
               onChange={handleChange}
               data-testid="membership-status-select"
-              aria-label="Membership status"
-            >
+              aria-label="Membership status">
               <MenuItem value="Visitor">{Locale.label("person.visitor")}</MenuItem>
               <MenuItem value="Regular Attendee">{Locale.label("person.regularAttendee")}</MenuItem>
               <MenuItem value="Member">{Locale.label("person.member")}</MenuItem>
@@ -392,8 +404,7 @@ export const PersonEdit = memo((props: Props) => {
               value={person.gender || ""}
               onChange={handleChange}
               data-testid="gender-select"
-              aria-label="Gender"
-            >
+              aria-label="Gender">
               <MenuItem value="Unspecified">{Locale.label("person.unspecified")}</MenuItem>
               <MenuItem value="Male">{Locale.label("person.male")}</MenuItem>
               <MenuItem value="Female">{Locale.label("person.female")}</MenuItem>
@@ -411,8 +422,7 @@ export const PersonEdit = memo((props: Props) => {
               value={person.maritalStatus || ""}
               onChange={handleChange}
               data-testid="marital-status-select"
-              aria-label="Marital status"
-            >
+              aria-label="Marital status">
               <MenuItem value="Unknown">{Locale.label("person.unknown")}</MenuItem>
               <MenuItem value="Single">{Locale.label("person.single")}</MenuItem>
               <MenuItem value="Married">{Locale.label("person.married")}</MenuItem>

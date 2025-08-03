@@ -41,8 +41,7 @@ export const ChurchesTab = () => {
           onClick={(e) => {
             e.preventDefault();
             handleArchive(currentChurch);
-          }}
-        >
+          }}>
           {Locale.label("serverAdmin.adminPage.arch")}
         </a>
       ) : (
@@ -52,23 +51,26 @@ export const ChurchesTab = () => {
           onClick={(e) => {
             e.preventDefault();
             handleArchive(currentChurch);
-          }}
-        >
+          }}>
           {Locale.label("serverAdmin.adminPage.act")}
         </a>
       );
 
-      result.push(<tr key={index}>
+      result.push(
+        <tr key={index}>
           <td>{getManageAccessLink(c)}</td>
           <td>{DateHelper.prettyDate(DateHelper.toDate(c.registrationDate))}</td>
           <td>{activeLink}</td>
-        </tr>);
+        </tr>
+      );
     });
-    result.unshift(<tr>
+    result.unshift(
+      <tr>
         <th>{Locale.label("serverAdmin.adminPage.church")}</th>
         <th>{Locale.label("serverAdmin.adminPage.regist")}</th>
         <th>{Locale.label("serverAdmin.adminPage.act")}</th>
-      </tr>);
+      </tr>
+    );
     return result;
   };
 

@@ -57,8 +57,7 @@ export const PersonForm: React.FC<Props> = memo((props) => {
           border: "1px solid",
           borderColor: "grey.200",
         },
-      }}
-    >
+      }}>
       <Card
         sx={{
           transition: "all 0.2s ease-in-out",
@@ -66,8 +65,7 @@ export const PersonForm: React.FC<Props> = memo((props) => {
             transform: "translateY(-1px)",
             boxShadow: 2,
           },
-        }}
-      >
+        }}>
         <CardContent sx={{ pb: "16px !important" }}>
           <FormSubmission formSubmissionId={submission.id} editFunction={handleEdit} />
         </CardContent>
@@ -81,8 +79,7 @@ export const PersonForm: React.FC<Props> = memo((props) => {
         backgroundColor: "grey.50",
         border: "1px dashed",
         borderColor: "grey.300",
-      }}
-    >
+      }}>
       <DescriptionIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
       <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
         {Locale.label("people.personForm.noFormMsg") || "No form submission found for this person"}
@@ -99,8 +96,7 @@ export const PersonForm: React.FC<Props> = memo((props) => {
           },
         }}
         data-testid="add-form-button"
-        aria-label={`Add ${props.form?.name || "form"} submission`}
-      >
+        aria-label={`Add ${props.form?.name || "form"} submission`}>
         {Locale.label("people.personForm.addForm") || "Add Form"}
       </Button>
     </Paper>
@@ -111,8 +107,7 @@ export const PersonForm: React.FC<Props> = memo((props) => {
       headerText={props.form?.name || Locale.label("people.personForm.form") || "Form"}
       headerIcon="description"
       help="chums/forms"
-      ariaLabel={`${props.form?.name || "form"} submission details`}
-    >
+      ariaLabel={`${props.form?.name || "form"} submission details`}>
       {content}
     </DisplayBox>
   );

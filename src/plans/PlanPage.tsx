@@ -31,7 +31,6 @@ export const PlanPage = () => {
     loadData();
   }, [params.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-
   // Available tabs based on plan configuration
   const availableTabs = React.useMemo(() => {
     const tabs = [
@@ -69,11 +68,7 @@ export const PlanPage = () => {
 
   return (
     <>
-      <PageHeader 
-        icon={<AssignmentIcon />} 
-        title={plan.name || Locale.label("plans.planPage.servicePlan")} 
-        subtitle="Service plan details and team assignments"
-      >
+      <PageHeader icon={<AssignmentIcon />} title={plan.name || Locale.label("plans.planPage.servicePlan")} subtitle="Service plan details and team assignments">
         <Stack direction="row" spacing={1}>
           {availableTabs.map((tab, index) => (
             <Button
@@ -90,8 +85,7 @@ export const PlanPage = () => {
                   backgroundColor: selectedTab === index ? "#FFF" : "rgba(255,255,255,0.2)",
                   color: selectedTab === index ? "primary.main" : "#FFF",
                 },
-              }}
-            >
+              }}>
               {tab.label}
             </Button>
           ))}

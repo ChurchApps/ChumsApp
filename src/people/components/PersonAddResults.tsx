@@ -33,7 +33,8 @@ export const PersonAddResults: React.FC<Props> = (props: Props) => {
   for (let i = 0; i < searchResults.length; i++) {
     const sr = searchResults[i];
 
-    rows.push(<TableRow key={sr.id}>
+    rows.push(
+      <TableRow key={sr.id}>
         <TableCell>
           <Avatar src={props.getPhotoUrl(sr)} sx={{ width: 48, height: 48 }} />
         </TableCell>
@@ -56,7 +57,8 @@ export const PersonAddResults: React.FC<Props> = (props: Props) => {
             data-testid={`add-person-button-${sr.id || "new"}`}
           />
         </TableCell>
-      </TableRow>);
+      </TableRow>
+    );
   }
 
   return (

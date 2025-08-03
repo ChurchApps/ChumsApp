@@ -2,7 +2,6 @@ import { DateHelper } from "@churchapps/apphelper";
 import type { ColumnInterface } from "@churchapps/helpers";
 
 export class ReportHelper {
-
   static getField = (column: ColumnInterface, dataRow: any) => {
     let result = "";
     try {
@@ -36,5 +35,4 @@ export class ReportHelper {
     }
     return result;
   };
-
 }

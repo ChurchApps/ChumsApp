@@ -2,9 +2,7 @@ import React, { memo, useMemo } from "react";
 import { ArrayHelper, type AttendanceRecordInterface, DateHelper, type GroupInterface, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import {
- Box, Card, CardContent, Typography, Stack, Chip, Divider, Paper, List, ListItem 
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, Stack, Chip, Divider, Paper, List, ListItem } from "@mui/material";
 import { CalendarMonth as CalendarIcon, Church as ChurchIcon, Schedule as ScheduleIcon, Group as GroupIcon, EventAvailable as EventIcon } from "@mui/icons-material";
 
 interface Props {
@@ -24,7 +22,6 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
     placeholderData: [],
   });
 
-
   const attendanceCards = useMemo(() => {
     if (!attendanceRecords.data || !groups.data) return null;
     const records = attendanceRecords.data;
@@ -38,8 +35,7 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
             backgroundColor: "grey.50",
             border: "1px dashed",
             borderColor: "grey.300",
-          }}
-        >
+          }}>
           <EventIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
           <Typography variant="body1" color="text.secondary">
             {Locale.label("people.personAttendance.noAttMsg")}
@@ -49,14 +45,17 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
     }
 
     // Group records by date for better visual organization
-    const groupedRecords = records.reduce((acc, record) => {
+    const groupedRecords = records.reduce(
+      (acc, record) => {
         const dateKey = DateHelper.formatHtml5Date(record.visitDate);
         if (!acc[dateKey]) {
           acc[dateKey] = [];
         }
         acc[dateKey].push(record);
         return acc;
-      }, {} as Record<string, AttendanceRecordInterface[]>);
+      },
+      {} as Record<string, AttendanceRecordInterface[]>
+    );
 
     return Object.entries(groupedRecords)
       .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
@@ -71,8 +70,7 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
               boxShadow: 2,
             },
             "&:last-child": { mb: 0 },
-          }}
-        >
+          }}>
           <CardContent sx={{ pb: "16px !important" }}>
             <Stack spacing={2}>
               {/* Date Header */}
@@ -105,8 +103,7 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
                           borderBottom: "1px solid",
                           borderColor: "grey.100",
                         },
-                      }}
-                    >
+                      }}>
                       <Box sx={{ width: "100%" }}>
                         <Stack direction="row" spacing={2} flexWrap="wrap">
                           {/* Campus */}
@@ -165,8 +162,7 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
                                     textDecoration: "none",
                                     color: "inherit",
                                     fontSize: "inherit",
-                                  }}
-                                >
+                                  }}>
                                   {group.name}
                                 </Link>
                               }
@@ -210,8 +206,7 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
             fontWeight: 500,
             fontSize: "0.875rem",
           },
-        }}
-      >
+        }}>
         {attendanceCards}
       </Box>
     );

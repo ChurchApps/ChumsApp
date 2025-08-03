@@ -16,9 +16,11 @@ export const OldArrangement = (props: Props) => {
     const result: JSX.Element[] = [];
     ChordProHelper.noteNames.forEach((note, index) => {
       const halfStepOffset = index - originalIndex;
-      result.push(<MenuItem key={note} value={halfStepOffset.toString()}>
+      result.push(
+        <MenuItem key={note} value={halfStepOffset.toString()}>
           {note}
-        </MenuItem>);
+        </MenuItem>
+      );
     });
     return result;
   };

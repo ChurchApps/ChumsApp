@@ -1,8 +1,6 @@
 import React from "react";
 import { Locale, type QuestionInterface } from "@churchapps/apphelper";
-import {
- Table, TableBody, TableRow, TableCell, TableHead, FormLabel, TextField, Button 
-} from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, TableHead, FormLabel, TextField, Button } from "@mui/material";
 
 interface Props {
   question: QuestionInterface;
@@ -48,7 +46,8 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
     if (props.question.choices) {
       for (let i = 0; i < props.question.choices?.length; i++) {
         const c = props.question.choices[i];
-        result.push(<TableRow key={i}>
+        result.push(
+          <TableRow key={i}>
             <TableCell>{c.value}</TableCell>
             <TableCell>{c.text}</TableCell>
             <TableCell>
@@ -56,7 +55,8 @@ export const ChoicesEdit: React.FC<Props> = (props) => {
                 {Locale.label("common.remove")}
               </Button>
             </TableCell>
-          </TableRow>);
+          </TableRow>
+        );
       }
     }
     return result;

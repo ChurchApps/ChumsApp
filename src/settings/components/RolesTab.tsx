@@ -16,11 +16,7 @@ export const RolesTab = (props: Props) => {
   const getSidebar = () => {
     const modules: JSX.Element[] = [];
     if (selectedRoleId !== "notset") {
-      modules.push(<RoleEdit
-          key="roleEdit"
-          roleId={selectedRoleId}
-          updatedFunction={handleRoleUpdated}
-        />);
+      modules.push(<RoleEdit key="roleEdit" roleId={selectedRoleId} updatedFunction={handleRoleUpdated} />);
     }
     return modules;
   };

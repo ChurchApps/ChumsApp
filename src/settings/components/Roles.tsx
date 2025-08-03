@@ -1,11 +1,7 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
-import {
- DisplayBox, UserHelper, ApiHelper, Permissions, type ChurchInterface, type RoleInterface, type RolePermissionInterface, Locale 
-} from "@churchapps/apphelper";
-import {
- Divider, Icon, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow 
-} from "@mui/material";
+import { DisplayBox, UserHelper, ApiHelper, Permissions, type ChurchInterface, type RoleInterface, type RolePermissionInterface, Locale } from "@churchapps/apphelper";
+import { Divider, Icon, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 
@@ -33,7 +29,8 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
     setAnchorEl(null);
   }, []);
 
-  const predefined = useMemo(() => [
+  const predefined = useMemo(
+    () => [
       {
         name: Locale.label("settings.roles.acc"),
         description: Locale.label("settings.roles.accDesc"),
@@ -72,9 +69,12 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
         description: Locale.label("settings.roles.lesAdminDesc") + "Lessons.church.",
         permissions: [{ api: "LessonsApi", contentType: "Schedules", permission: "Edit" }],
       },
-    ], []);
+    ],
+    []
+  );
 
-  const addRole = useCallback(async (role: any) => {
+  const addRole = useCallback(
+    async (role: any) => {
       console.log("made it");
       console.log(role);
       handleClose();
@@ -93,7 +93,9 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
         await ApiHelper.post("/rolepermissions/", perms, "MembershipApi");
         roles.refetch();
       }
-    }, [handleClose, roles]);
+    },
+    [handleClose, roles]
+  );
 
   const handleAddCustomRole = useCallback(() => {
     handleClose();
@@ -113,8 +115,7 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
           onClick={handleClick}
-          data-testid="add-role-button"
-        >
+          data-testid="add-role-button">
           <Icon color="primary">add</Icon>
         </IconButton>
         <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
@@ -130,38 +131,34 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
               }}
               title={role.description}
               data-testid={`add-predefined-role-${role.name.toLowerCase().replace(/\s+/g, "-")}`}
-              aria-label={`Add ${role.name} role`}
-            >
+              aria-label={`Add ${role.name} role`}>
               <Icon sx={{ mr: "3px" }}>lock</Icon> {Locale.label("common.add")} "<strong>{role.name}</strong>" {Locale.label("settings.roles.role")}
             </MenuItem>
           ))}
         </Menu>
       </>
     );
-  }, [
-open,
-anchorEl,
-handleClick,
-handleClose,
-handleAddCustomRole,
-predefined,
-addRole
-]);
+  }, [open, anchorEl, handleClick, handleClose, handleAddCustomRole, predefined, addRole]);
 
   const sortedRoles = useMemo(() => [...(roles.data || [])].sort((a, b) => (a.name > b.name ? 1 : -1)), [roles.data]);
 
-  const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.membershipApi.roles.edit) && UserHelper.checkAccess(Permissions.membershipApi.roles.edit) && UserHelper.checkAccess(Permissions.membershipApi.people.view), []);
+  const canEdit = useMemo(
+    () => UserHelper.checkAccess(Permissions.membershipApi.roles.edit) && UserHelper.checkAccess(Permissions.membershipApi.roles.edit) && UserHelper.checkAccess(Permissions.membershipApi.people.view),
+    []
+  );
 
   const rows = useMemo(() => {
     const result: JSX.Element[] = [];
 
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.edit)) {
-      result.push(<TableRow key="everyone">
+      result.push(
+        <TableRow key="everyone">
           <TableCell>
             <i className="groups" /> <Link to={`/settings/role/everyone`}>({Locale.label("settings.roles.everyone")})</Link>
           </TableCell>
           <TableCell></TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
 
     sortedRoles.forEach((role) => {
@@ -176,12 +173,14 @@ addRole
           ariaLabel="Edit role"
         />
       ) : null;
-      result.push(<TableRow key={role.id}>
+      result.push(
+        <TableRow key={role.id}>
           <TableCell>
             <i className="lock" /> <Link to={`/settings/role/${role.id}`}>{role.name}</Link>
           </TableCell>
           <TableCell align="right">{editLink}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     });
 
     return result;

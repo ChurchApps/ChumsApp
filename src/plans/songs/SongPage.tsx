@@ -3,15 +3,8 @@ import { ApiHelper, ArrayHelper, PageHeader } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { useQuery } from "@tanstack/react-query";
-import {
- Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, IconButton 
-} from "@mui/material";
-import {
-  LibraryMusic as MusicIcon,
-  Add as AddIcon,
-  QueueMusic as ArrangementIcon,
-  Edit as EditIcon,
-} from "@mui/icons-material";
+import { Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, IconButton } from "@mui/material";
+import { LibraryMusic as MusicIcon, Add as AddIcon, QueueMusic as ArrangementIcon, Edit as EditIcon } from "@mui/icons-material";
 import { Arrangement } from "./components/Arrangement";
 import { SongSearchDialog } from "./SongSearchDialog";
 import { SongDetailsEdit } from "./components/SongDetailsEdit";
@@ -55,23 +48,22 @@ export const SongPage = memo(() => {
     }
   }, [arrangements.data, selectedArrangement]);
 
-  const selectArrangement = useCallback((arrangementId: string) => {
+  const selectArrangement = useCallback(
+    (arrangementId: string) => {
       const arr = ArrayHelper.getOne(arrangements.data, "id", arrangementId);
       setSelectedArrangement(arr);
-    }, [arrangements.data]);
+    },
+    [arrangements.data]
+  );
 
   const refetch = useCallback(async () => {
-    const results = await Promise.all([
-      song.refetch(),
-      arrangements.refetch(),
-      songDetail.refetch()
-    ]);
-    
+    const results = await Promise.all([song.refetch(), arrangements.refetch(), songDetail.refetch()]);
+
     // Update selected arrangement with fresh data after refetch
     if (selectedArrangement?.id) {
       const arrangementResult = results[1];
       if (arrangementResult.data) {
-        const updatedArrangement = arrangementResult.data.find(arr => arr.id === selectedArrangement.id);
+        const updatedArrangement = arrangementResult.data.find((arr) => arr.id === selectedArrangement.id);
         if (updatedArrangement) {
           setSelectedArrangement(updatedArrangement);
         }
@@ -79,7 +71,8 @@ export const SongPage = memo(() => {
     }
   }, [song, arrangements, songDetail, selectedArrangement?.id]);
 
-  const handleAdd = useCallback(async (songDetail: SongDetailInterface) => {
+  const handleAdd = useCallback(
+    async (songDetail: SongDetailInterface) => {
       if (!song.data?.id) return;
       const a: ArrangementInterface = {
         songId: song.data.id,
@@ -94,9 +87,12 @@ export const SongPage = memo(() => {
       }
       refetch();
       setShowSearch(false);
-    }, [song.data?.id, refetch]);
+    },
+    [song.data?.id, refetch]
+  );
 
-  const arrangementNavigation = useMemo(() => (
+  const arrangementNavigation = useMemo(
+    () => (
       <Stack spacing={3}>
         <Card sx={{ height: "fit-content", borderRadius: 2 }}>
           <CardContent>
@@ -121,8 +117,7 @@ export const SongPage = memo(() => {
                           "&:hover": { backgroundColor: "primary.light" },
                         },
                         "&:hover": { backgroundColor: "action.hover" },
-                      }}
-                    >
+                      }}>
                       <ListItemIcon sx={{ minWidth: 36 }}>
                         <ArrangementIcon sx={{ color: selectedArrangement?.id === arrangement.id ? "primary.main" : "text.secondary" }} />
                       </ListItemIcon>
@@ -157,8 +152,7 @@ export const SongPage = memo(() => {
                   color: "primary.main",
                   backgroundColor: "primary.light",
                 },
-              }}
-            >
+              }}>
               Add Arrangement
             </Button>
           </CardContent>
@@ -167,8 +161,8 @@ export const SongPage = memo(() => {
         {/* External Links Card */}
         <Card sx={{ height: "fit-content", borderRadius: 2 }}>
           <CardContent>
-            {songDetail.data && (
-              editLinks ? (
+            {songDetail.data &&
+              (editLinks ? (
                 <SongDetailLinksEdit
                   songDetailId={songDetail.data.id}
                   reload={() => {
@@ -177,23 +171,14 @@ export const SongPage = memo(() => {
                   }}
                 />
               ) : (
-                <SongDetailLinks
-                  songDetail={songDetail.data}
-                  onEdit={() => setEditLinks(true)}
-                />
-              )
-            )}
+                <SongDetailLinks songDetail={songDetail.data} onEdit={() => setEditLinks(true)} />
+              ))}
           </CardContent>
         </Card>
       </Stack>
-    ), [
-arrangements.data,
-selectedArrangement,
-selectArrangement,
-songDetail.data,
-editLinks,
-refetch
-]);
+    ),
+    [arrangements.data, selectedArrangement, selectArrangement, songDetail.data, editLinks, refetch]
+  );
 
   const currentContent = useMemo(() => {
     if (!selectedArrangement) {
@@ -205,8 +190,7 @@ refetch
             backgroundColor: "grey.50",
             border: "1px dashed",
             borderColor: "grey.300",
-          }}
-        >
+          }}>
           <ArrangementIcon sx={{ fontSize: 64, color: "grey.400", mb: 2 }} />
           <Typography variant="h6" color="text.secondary" gutterBottom>
             No Arrangement Selected
@@ -223,11 +207,7 @@ refetch
 
   return (
     <>
-      <PageHeader
-        icon={<MusicIcon />}
-        title={songDetail.data?.title || song.data?.name || "Loading..."}
-        subtitle="Manage song arrangements and details"
-      >
+      <PageHeader icon={<MusicIcon />} title={songDetail.data?.title || song.data?.name || "Loading..."} subtitle="Manage song arrangements and details">
         <IconButton
           onClick={() => setEditSongDetails(true)}
           sx={{
@@ -237,8 +217,7 @@ refetch
               backgroundColor: "rgba(255,255,255,0.1)",
             },
           }}
-          size="small"
-        >
+          size="small">
           <EditIcon fontSize="small" />
         </IconButton>
         <Button
@@ -252,8 +231,7 @@ refetch
               borderColor: "#FFF",
               backgroundColor: "rgba(255,255,255,0.1)",
             },
-          }}
-        >
+          }}>
           Add Arrangement
         </Button>
       </PageHeader>

@@ -184,8 +184,7 @@ export const GroupBanner = memo((props: Props) => {
                   }
                 : {},
             }}
-            onClick={() => canEdit && togglePhotoEditor?.(true)}
-          >
+            onClick={() => canEdit && togglePhotoEditor?.(true)}>
             {group.photoUrl ? (
               <img
                 src={group.photoUrl}
@@ -214,8 +213,7 @@ export const GroupBanner = memo((props: Props) => {
                     wordBreak: "break-word",
                     fontSize: { xs: "1.75rem", md: "2.125rem" },
                     lineHeight: 1.1,
-                  }}
-                >
+                  }}>
                   {group.name}
                 </Typography>
                 {groupType}
@@ -241,8 +239,7 @@ export const GroupBanner = memo((props: Props) => {
                       mb: 1,
                       textTransform: "uppercase",
                       letterSpacing: "0.5px",
-                    }}
-                  >
+                    }}>
                     Meeting Info
                   </Typography>
                 )}
@@ -254,8 +251,7 @@ export const GroupBanner = memo((props: Props) => {
                       sx={{
                         color: "#FFF",
                         fontSize: { xs: "0.875rem", md: "1rem" },
-                      }}
-                    >
+                      }}>
                       {stat.value}
                     </Typography>
                   </Stack>
@@ -275,8 +271,7 @@ export const GroupBanner = memo((props: Props) => {
                         mb: 1,
                         textTransform: "uppercase",
                         letterSpacing: "0.5px",
-                      }}
-                    >
+                      }}>
                       Settings
                     </Typography>
                     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
@@ -290,8 +285,7 @@ export const GroupBanner = memo((props: Props) => {
                               fontSize: { xs: "0.75rem", md: "0.875rem" },
                               fontWeight: 500,
                               whiteSpace: "nowrap",
-                            }}
-                          >
+                            }}>
                             {info.label}
                           </Typography>
                         </Stack>
@@ -318,8 +312,7 @@ export const GroupBanner = memo((props: Props) => {
                           mb: 1,
                           textTransform: "uppercase",
                           letterSpacing: "0.5px",
-                        }}
-                      >
+                        }}>
                         Labels
                       </Typography>
                       <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
@@ -364,36 +357,35 @@ export const GroupBanner = memo((props: Props) => {
                   justifyContent: { xs: "center", md: "flex-end" },
                   alignItems: "center",
                 }}
-                useFlexGap
-              >
-                {!editMode && quickActions.map((action) => {
-                  const isActive = selectedTab === action.key;
-                  return (
-                    <Button
-                      key={action.label}
-                      size="small"
-                      variant={isActive ? "contained" : "outlined"}
-                      sx={{
-                        color: isActive ? "var(--c1l2)" : "#FFF",
-                        backgroundColor: isActive ? "#FFF" : "transparent",
-                        borderColor: isActive ? "#FFF" : "rgba(255,255,255,0.5)",
-                        "&:hover": {
-                          borderColor: "#FFF",
-                          backgroundColor: isActive ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
+                useFlexGap>
+                {!editMode &&
+                  quickActions.map((action) => {
+                    const isActive = selectedTab === action.key;
+                    return (
+                      <Button
+                        key={action.label}
+                        size="small"
+                        variant={isActive ? "contained" : "outlined"}
+                        sx={{
                           color: isActive ? "var(--c1l2)" : "#FFF",
-                        },
-                        minWidth: "auto",
-                        px: 2,
-                        py: 0.5,
-                        fontWeight: isActive ? 600 : 400,
-                      }}
-                      startIcon={action.icon}
-                      onClick={action.onClick}
-                    >
-                      {action.label}
-                    </Button>
-                  );
-                })}
+                          backgroundColor: isActive ? "#FFF" : "transparent",
+                          borderColor: isActive ? "#FFF" : "rgba(255,255,255,0.5)",
+                          "&:hover": {
+                            borderColor: "#FFF",
+                            backgroundColor: isActive ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
+                            color: isActive ? "var(--c1l2)" : "#FFF",
+                          },
+                          minWidth: "auto",
+                          px: 2,
+                          py: 0.5,
+                          fontWeight: isActive ? 600 : 400,
+                        }}
+                        startIcon={action.icon}
+                        onClick={action.onClick}>
+                        {action.label}
+                      </Button>
+                    );
+                  })}
               </Stack>
             </Stack>
           </Stack>
@@ -411,8 +403,7 @@ export const GroupBanner = memo((props: Props) => {
                 mb: 1,
                 textTransform: "uppercase",
                 letterSpacing: "0.5px",
-              }}
-            >
+              }}>
               Associated Services
             </Typography>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
@@ -445,8 +436,7 @@ export const GroupBanner = memo((props: Props) => {
                 fontSize: { xs: "0.875rem", md: "0.95rem" },
                 lineHeight: 1.4,
                 fontStyle: "italic",
-              }}
-            >
+              }}>
               {group.about.replace(/[#*_`]/g, "")}
             </Typography>
           </Box>

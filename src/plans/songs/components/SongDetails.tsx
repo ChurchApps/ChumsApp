@@ -1,9 +1,7 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { Locale } from "@churchapps/apphelper";
 import { type SongDetailInterface } from "../../../helpers";
-import {
- Box, Card, CardContent, Typography, Stack, Chip, Avatar, IconButton, Paper, List, ListItem, ListItemIcon, ListItemText, Divider 
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, Stack, Chip, Avatar, IconButton, Paper, List, ListItem, ListItemIcon, ListItemText, Divider } from "@mui/material";
 import {
   Edit as EditIcon,
   Album as AlbumIcon,
@@ -157,8 +155,7 @@ export const SongDetails = memo((props: Props) => {
               color: "primary.main",
               "&:hover": { backgroundColor: "primary.light" },
             }}
-            aria-label="Edit song details"
-          >
+            aria-label="Edit song details">
             <EditIcon />
           </IconButton>
         </Stack>
@@ -175,8 +172,7 @@ export const SongDetails = memo((props: Props) => {
                 border: "2px solid",
                 borderColor: "grey.300",
               }}
-              onError={handleImageError}
-            >
+              onError={handleImageError}>
               <AlbumIcon sx={{ fontSize: 48, color: "grey.400" }} />
             </Avatar>
           </Box>
@@ -221,8 +217,7 @@ export const SongDetails = memo((props: Props) => {
               backgroundColor: "grey.50",
               border: "1px dashed",
               borderColor: "grey.300",
-            }}
-          >
+            }}>
             <AlbumIcon sx={{ fontSize: 48, color: "grey.400", mb: 1 }} />
             <Typography variant="body2" color="text.secondary">
               No additional details available for this song.

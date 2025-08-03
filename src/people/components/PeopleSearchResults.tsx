@@ -3,9 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
 import { CreatePerson } from "../../components";
 import { PersonHelper, type PersonInterface, Loading, ApiHelper, ArrayHelper, Locale, PersonAvatar } from "@churchapps/apphelper";
-import {
- Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Typography, Stack, Box, Chip, Card 
-} from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Typography, Stack, Box, Chip, Card } from "@mui/material";
 import { Email as EmailIcon, Phone as PhoneIcon } from "@mui/icons-material";
 
 interface Props {
@@ -25,14 +23,17 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
   const [optionalColumns, setOptionalColumns] = React.useState<any[]>([]);
   const [formSubmissions, setFormSubmissions] = React.useState<any[]>([]);
 
-  const navigateToPersonCreate = useCallback((person: PersonInterface) => {
+  const navigateToPersonCreate = useCallback(
+    (person: PersonInterface) => {
       navigate("/people/" + person.id);
-    }, [navigate]);
+    },
+    [navigate]
+  );
 
   const getPhotoJSX = useCallback((p: PersonInterface) => {
     const photoUrl = PersonHelper.getPhotoUrl(p);
     const hasCustomPhoto = photoUrl !== "/images/sample-profile.png";
-    
+
     if (hasCustomPhoto) {
       return (
         <a href={photoUrl} target="_blank" rel="noopener noreferrer">
@@ -40,11 +41,12 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
         </a>
       );
     }
-    
+
     return <PersonAvatar person={p} size="medium" />;
   }, []);
 
-  const getAnswer = useCallback((p: PersonInterface, key: string) => {
+  const getAnswer = useCallback(
+    (p: PersonInterface, key: string) => {
       let result = <></>;
       formSubmissions.forEach((fs) => {
         if (fs.submittedBy === p.id) {
@@ -53,9 +55,12 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
         }
       });
       return result;
-    }, [formSubmissions]);
+    },
+    [formSubmissions]
+  );
 
-  const handleDelete = useCallback((personId: string) => {
+  const handleDelete = useCallback(
+    (personId: string) => {
       const peopleArray = [...people];
       ApiHelper.delete("/people/" + personId, "MembershipApi").then(() => {
         const idx = ArrayHelper.getIndex(peopleArray, "id", personId);
@@ -65,9 +70,12 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
           if (props.updatedFunction) props.updatedFunction();
         }
       });
-    }, [people, props]);
+    },
+    [people, props]
+  );
 
-  const getColumn = useCallback((p: PersonInterface, key: string) => {
+  const getColumn = useCallback(
+    (p: PersonInterface, key: string) => {
       let result = <></>;
       switch (key) {
         case "photo":
@@ -190,8 +198,7 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
                   handleDelete(p.id.toString());
                 }}
                 data-testid={`delete-person-button-${p.id}`}
-                aria-label={`Delete ${p.name.display}`}
-              >
+                aria-label={`Delete ${p.name.display}`}>
                 <Icon>delete</Icon>
               </IconButton>
             </Tooltip>
@@ -203,9 +210,12 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
       }
 
       return result;
-    }, [getPhotoJSX, handleDelete, getAnswer]);
+    },
+    [getPhotoJSX, handleDelete, getAnswer]
+  );
 
-  const getColumns = useCallback((p: PersonInterface) => {
+  const getColumns = useCallback(
+    (p: PersonInterface) => {
       const result: JSX.Element[] = [];
       columns.forEach((c) => {
         if (selectedColumns.indexOf(c.key) > -1) {
@@ -220,7 +230,9 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
         });
       }
       return result;
-    }, [columns, selectedColumns, optionalColumns, getColumn]);
+    },
+    [columns, selectedColumns, optionalColumns, getColumn]
+  );
 
   useEffect(() => {
     ApiHelper.get("/forms?contentType=person", "MembershipApi").then((data) => {
@@ -236,7 +248,8 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
     });
   }, []);
 
-  const sortTableByKey = useCallback((key: string, asc: boolean | null) => {
+  const sortTableByKey = useCallback(
+    (key: string, asc: boolean | null) => {
       if (asc === null) asc = false;
       setCurrentSortedCol(key);
       setSortDirection(!asc); //set sort direction for next time
@@ -282,7 +295,9 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
       if (props.updateSearchResults) {
         props.updateSearchResults(sortedPeople);
       }
-    }, [people, props]);
+    },
+    [people, props]
+  );
 
   const rows = useMemo(() => {
     return (
@@ -293,8 +308,7 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
             "&:hover": { backgroundColor: "rgba(0,0,0,0.04)" },
             cursor: "pointer",
           }}
-          onClick={() => navigate(`/people/${p.id}`)}
-        >
+          onClick={() => navigate(`/people/${p.id}`)}>
           {getColumns(p)}
         </TableRow>
       )) || []
@@ -305,7 +319,8 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
     const result: JSX.Element[] = [];
     columns.forEach((c) => {
       if (selectedColumns.indexOf(c.key) > -1) {
-        result.push(<th key={c.key} onClick={() => sortTableByKey(c.key, sortDirection)}>
+        result.push(
+          <th key={c.key} onClick={() => sortTableByKey(c.key, sortDirection)}>
             <span style={{ float: "left" }}>{c.shortName}</span>
             {c.key !== "photo" && c.key !== "deleteOption" && (
               <div style={{ display: "flex" }}>
@@ -313,7 +328,8 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
                 <div style={{ marginTop: "14px" }} className={`${!sortDirection && currentSortedCol === c.key ? "sortDescActive" : "sortDesc"}`}></div>
               </div>
             )}
-          </th>);
+          </th>
+        );
       }
     });
 
@@ -321,9 +337,11 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
       optionalColumns.forEach((c) => {
         const key = c.id;
         if (selectedColumns.indexOf(key) > -1) {
-          result.push(<th key={key}>
+          result.push(
+            <th key={key}>
               <span style={{ float: "left" }}>{c.title}</span>
-            </th>);
+            </th>
+          );
         }
       });
     }
@@ -333,14 +351,7 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
         <TableRow>{result}</TableRow>
       </TableHead>
     );
-  }, [
-columns,
-selectedColumns,
-optionalColumns,
-sortDirection,
-currentSortedCol,
-sortTableByKey
-]);
+  }, [columns, selectedColumns, optionalColumns, sortDirection, currentSortedCol, sortTableByKey]);
 
   const getResults = () => {
     if (people.length === 0) {
@@ -365,8 +376,7 @@ sortTableByKey
             backgroundColor: "#fafafa",
             fontWeight: 600,
           },
-        }}
-      >
+        }}>
         {headers}
         <TableBody>{rows}</TableBody>
       </Table>

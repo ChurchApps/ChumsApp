@@ -10,11 +10,7 @@ export const TasksPage = () => {
 
   return (
     <>
-      <PageHeader
-        icon={<TaskIcon />}
-        title={Locale.label("tasks.tasksPage.tasks")}
-        subtitle="Manage tasks, assignments, and automated workflows"
-      >
+      <PageHeader icon={<TaskIcon />} title={Locale.label("tasks.tasksPage.tasks")} subtitle="Manage tasks, assignments, and automated workflows">
         <Button
           component={Link}
           to="/tasks/automations"
@@ -29,8 +25,7 @@ export const TasksPage = () => {
               borderColor: "#FFF",
               backgroundColor: "rgba(255,255,255,0.1)",
             },
-          }}
-        >
+          }}>
           {Locale.label("tasks.tasksPage.auto")}
         </Button>
       </PageHeader>

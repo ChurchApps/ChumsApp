@@ -49,8 +49,7 @@ export const KeyEdit = (props: Props) => {
       headerIcon="library_music"
       saveFunction={handleSave}
       cancelFunction={props.onCancel}
-      deleteFunction={key?.id ? handleDelete : null}
-    >
+      deleteFunction={key?.id ? handleDelete : null}>
       <TextField label={Locale.label("songs.key.signature")} name="keySignature" value={key?.keySignature} onChange={handleChange} fullWidth />
       <TextField
         label={Locale.label("songs.key.label")}

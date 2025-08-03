@@ -5,10 +5,12 @@ import type { ReportOutputInterface, ReportResultInterface } from "@churchapps/h
 import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 import { ReportHelper } from "./ReportHelper";
 
-interface Props { reportResult: ReportResultInterface, output: ReportOutputInterface }
+interface Props {
+  reportResult: ReportResultInterface;
+  output: ReportOutputInterface;
+}
 
 export const TreeReport = (props: Props) => {
-
   const getPreviousGroupingCount = (depth: number) => {
     let result = 0;
     for (let i = 0; i < depth; i++) result += props.output.groupings[i];
@@ -32,10 +34,10 @@ export const TreeReport = (props: Props) => {
     const result: React.ReactElement[] = [];
     const columns = props.output.columns;
     let previousData = {};
-    props.reportResult.table.forEach(d => {
+    props.reportResult.table.forEach((d) => {
       const row: React.ReactElement[] = [];
       const groupingRows: React.ReactElement[] = getGroupingRows(previousData, d);
-      groupingRows.forEach(gr => result.push(gr));
+      groupingRows.forEach((gr) => result.push(gr));
       for (let i = totalGroupings; i < columns.length; i++) {
         const c = columns[i];
         if (i === totalGroupings) row.push(<TableCell style={{ paddingLeft: 30 * totalGroupings }}>{ReportHelper.getField(c, d)}</TableCell>);
@@ -63,10 +65,15 @@ export const TreeReport = (props: Props) => {
     for (let i = prevCols; i < prevCols + g; i++) {
       const c = props.output.columns[i];
       const className = "heading" + (groupNumber + 1);
-      if (i === prevCols && i > 0) outputRow.push(<TableCell className={className} style={{ paddingLeft: 30 * groupNumber }}>{ReportHelper.getField(c, row)}</TableCell>);
+      if (i === prevCols && i > 0)
+        outputRow.push(
+          <TableCell className={className} style={{ paddingLeft: 30 * groupNumber }}>
+            {ReportHelper.getField(c, row)}
+          </TableCell>
+        );
       else outputRow.push(<TableCell className={className}>{ReportHelper.getField(c, row)}</TableCell>);
     }
-    return (<TableRow>{outputRow}</TableRow>);
+    return <TableRow>{outputRow}</TableRow>;
   };
 
   const getFirstGroupModified = (previousRow: any, row: any) => {
@@ -87,17 +94,12 @@ export const TreeReport = (props: Props) => {
     return firstGroupModified;
   };
 
-
   return (
     <Table className="table table-sm report">
       <TableHead className="thead-dark">
-        <TableRow>
-          {getHeaders()}
-        </TableRow>
+        <TableRow>{getHeaders()}</TableRow>
       </TableHead>
-      <TableBody>
-        {getRows()}
-      </TableBody>
+      <TableBody>{getRows()}</TableBody>
     </Table>
   );
 };

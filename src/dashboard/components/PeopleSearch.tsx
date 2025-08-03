@@ -1,7 +1,5 @@
 import React from "react";
-import {
- Button, FormControl, InputLabel, OutlinedInput, Card, CardContent, Typography, Box, Stack 
-} from "@mui/material";
+import { Button, FormControl, InputLabel, OutlinedInput, Card, CardContent, Typography, Box, Stack } from "@mui/material";
 import { Person as PersonIcon, Search as SearchIcon } from "@mui/icons-material";
 import { ChumsPersonHelper } from "../../helpers";
 import { ApiHelper, Locale, Loading } from "@churchapps/apphelper";
@@ -23,7 +21,7 @@ export const PeopleSearch = () => {
       const condition: SearchCondition = { field: "displayName", operator: "contains", value: searchTerm };
       const data: PersonInterface[] = await ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi");
       return data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d));
-    }
+    },
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.currentTarget.value);
@@ -41,7 +39,10 @@ export const PeopleSearch = () => {
     }
   };
 
-  const columns = [{ key: "photo", label: Locale.label("dashboard.peopleSearch.photo"), shortName: "" }, { key: "displayName", label: Locale.label("dashboard.peopleSearch.display"), shortName: Locale.label("common.name") }];
+  const columns = [
+    { key: "photo", label: Locale.label("dashboard.peopleSearch.photo"), shortName: "" },
+    { key: "displayName", label: Locale.label("dashboard.peopleSearch.display"), shortName: Locale.label("common.name") },
+  ];
 
   return (
     <Card
@@ -50,8 +51,7 @@ export const PeopleSearch = () => {
         borderRadius: 2,
         border: "1px solid",
         borderColor: "divider",
-      }}
-    >
+      }}>
       <CardContent>
         {/* Header */}
         <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
@@ -67,8 +67,7 @@ export const PeopleSearch = () => {
             sx={{
               fontWeight: 600,
               color: "text.primary",
-            }}
-          >
+            }}>
             {Locale.label("dashboard.peopleSearch.ppl")}
           </Typography>
         </Stack>
@@ -102,8 +101,7 @@ export const PeopleSearch = () => {
                       transform: "translateY(-1px)",
                       boxShadow: 2,
                     },
-                  }}
-                >
+                  }}>
                   {searchResults.isLoading ? Locale.label("common.searching") || "Searching..." : Locale.label("common.search")}
                 </Button>
               }
@@ -117,7 +115,7 @@ export const PeopleSearch = () => {
             <Loading />
           </Box>
         )}
-        
+
         {searchResults.data && searchResults.data.length > 0 && (
           <Box sx={{ mt: 2 }}>
             <PeopleSearchResults people={searchResults.data} columns={columns} selectedColumns={selectedColumns} />
@@ -130,8 +128,7 @@ export const PeopleSearch = () => {
               textAlign: "center",
               py: 3,
               color: "text.secondary",
-            }}
-          >
+            }}>
             <Typography variant="body2">No people found matching your search criteria.</Typography>
           </Box>
         )}

@@ -93,9 +93,11 @@ export const PlanEdit = (props: Props) => {
   const getCopyOptions = () => {
     const options = [];
     for (let i = 0; i < props.plans.length; i++) {
-      options.push(<MenuItem key={i} value={props.plans[i].id}>
+      options.push(
+        <MenuItem key={i} value={props.plans[i].id}>
           {props.plans[i].name}
-        </MenuItem>);
+        </MenuItem>
+      );
     }
     return options;
   };
@@ -108,8 +110,7 @@ export const PlanEdit = (props: Props) => {
         headerIcon="assignment"
         saveFunction={handleSave}
         cancelFunction={props.updatedFunction}
-        deleteFunction={plan.id ? handleDelete : null}
-      >
+        deleteFunction={plan.id ? handleDelete : null}>
         <TextField fullWidth label={Locale.label("common.name")} id="name" name="name" type="text" value={plan.name} onChange={handleChange} data-testid="plan-name-input" aria-label="Plan name" />
         <TextField
           fullWidth

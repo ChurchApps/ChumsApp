@@ -1,10 +1,6 @@
-import {
- Grid, TextField, Card, CardContent, Typography, Stack, Box, Button, InputAdornment 
-} from "@mui/material";
+import { Grid, TextField, Card, CardContent, Typography, Stack, Box, Button, InputAdornment } from "@mui/material";
 import React from "react";
-import {
- ApiHelper, ArrayHelper, type ConversationInterface, ErrorMessages, Locale, type MessageInterface, type TaskInterface, UserHelper 
-} from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, type ConversationInterface, ErrorMessages, Locale, type MessageInterface, type TaskInterface, UserHelper } from "@churchapps/apphelper";
 import { ContentPicker } from "./ContentPicker";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Assignment as TaskIcon, Search as SearchIcon, Cancel as CancelIcon, Save as SaveIcon } from "@mui/icons-material";
@@ -46,7 +42,7 @@ export const NewTask = (props: Props) => {
           visibility: "hidden",
         };
         const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
-        
+
         const updatedTask = { ...createdTask };
         updatedTask.conversationId = result[0].id;
         await ApiHelper.post("/tasks", [updatedTask], "DoingApi");
@@ -149,8 +145,7 @@ export const NewTask = (props: Props) => {
         borderColor: "grey.200",
         transition: "all 0.2s ease-in-out",
         "&:hover": { boxShadow: 2 },
-      }}
-    >
+      }}>
       <CardContent>
         <Stack spacing={3}>
           {/* Header */}
@@ -254,8 +249,7 @@ export const NewTask = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {Locale.label("common.cancel")}
             </Button>
             <Button
@@ -267,8 +261,7 @@ export const NewTask = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {createTaskMutation.isPending ? "Saving..." : Locale.label("common.save")}
             </Button>
           </Stack>

@@ -36,10 +36,12 @@ export const PrintDonationPage = () => {
   });
 
   const donations = useMemo(() => {
-    return allDonations.data?.filter((don) => {
-      const donationDate = new Date(don.donationDate.split('T')[0] + "T00:00:00");
-      return donationDate.getFullYear() === currYear;
-    }) || [];
+    return (
+      allDonations.data?.filter((don) => {
+        const donationDate = new Date(don.donationDate.split("T")[0] + "T00:00:00");
+        return donationDate.getFullYear() === currYear;
+      }) || []
+    );
   }, [allDonations.data, currYear]);
 
   const fundDonations = useMemo(() => {
@@ -99,7 +101,8 @@ export const PrintDonationPage = () => {
     const tableValues: React.ReactElement[] = [];
 
     result.forEach((tv) => {
-      tableValues.push(<tr style={{ height: "24px" }}>
+      tableValues.push(
+        <tr style={{ height: "24px" }}>
           <td
             style={{
               borderBottom: "2px solid #1976D2",
@@ -108,8 +111,7 @@ export const PrintDonationPage = () => {
               textAlign: "left",
               width: "70%",
               paddingLeft: "5px",
-            }}
-          >
+            }}>
             {tv.fund}
           </td>
           <td
@@ -120,11 +122,11 @@ export const PrintDonationPage = () => {
               textAlign: "right",
               width: "30%",
               paddingRight: "5px",
-            }}
-          >
+            }}>
             {CurrencyHelper.formatCurrency(tv.total)}
           </td>
-        </tr>);
+        </tr>
+      );
     });
     return tableValues;
   };
@@ -135,7 +137,8 @@ export const PrintDonationPage = () => {
       const donation = ArrayHelper.getOne(donations, "id", fd.donationId);
       const fund = ArrayHelper.getOne(funds.data || [], "id", fd.fundId);
       if (donation) {
-        result.push(<tr style={{ height: "28px" }}>
+        result.push(
+          <tr style={{ height: "28px" }}>
             <td
               style={{
                 borderBottom: "2px solid #1976D2",
@@ -144,9 +147,8 @@ export const PrintDonationPage = () => {
                 textAlign: "left",
                 width: "20%",
                 paddingLeft: "5px",
-              }}
-            >
-              {DateHelper.prettyDate(new Date(donation?.donationDate.split('T')[0] + "T00:00:00")).toString()}
+              }}>
+              {DateHelper.prettyDate(new Date(donation?.donationDate.split("T")[0] + "T00:00:00")).toString()}
             </td>
             <td
               style={{
@@ -156,8 +158,7 @@ export const PrintDonationPage = () => {
                 textAlign: "left",
                 width: "15%",
                 paddingLeft: "5px",
-              }}
-            >
+              }}>
               {donation?.method}
             </td>
             <td
@@ -168,8 +169,7 @@ export const PrintDonationPage = () => {
                 textAlign: "left",
                 width: "45%",
                 paddingLeft: "5px",
-              }}
-            >
+              }}>
               {fund?.name}
             </td>
             <td
@@ -180,16 +180,15 @@ export const PrintDonationPage = () => {
                 textAlign: "right",
                 width: "20%",
                 paddingRight: "5px",
-              }}
-            >
+              }}>
               {CurrencyHelper.formatCurrency(fd.amount)}
             </td>
-          </tr>);
+          </tr>
+        );
       }
     });
     return result;
   };
-
 
   return (
     <>
@@ -201,16 +200,14 @@ export const PrintDonationPage = () => {
           width: "100%",
           backgroundColor: "white",
           fontFamily: "Roboto, sans-serif",
-        }}
-      >
+        }}>
         <div
           style={{
             margin: "0px",
             padding: "0px",
             borderTop: "24px solid #1976D2",
             width: "100%",
-          }}
-        ></div>
+          }}></div>
 
         <div style={{ margin: "0px", padding: "0px", width: "100%" }}>
           <h1>{currYear} Annual Giving Statement</h1>
@@ -223,8 +220,7 @@ export const PrintDonationPage = () => {
             padding: "0px",
             borderTop: "2px solid #1976D2",
             width: "80%",
-          }}
-        ></div>
+          }}></div>
 
         <div style={{ display: "flex" }}>
           {/* Donor */}
@@ -251,8 +247,7 @@ export const PrintDonationPage = () => {
             padding: "0px",
             borderTop: "2px solid #1976D2",
             width: "80%",
-          }}
-        ></div>
+          }}></div>
 
         <div>
           <h1>Statement Summary:</h1>
@@ -267,8 +262,7 @@ export const PrintDonationPage = () => {
                   textAlign: "center",
                   border: "4px solid #1976D2",
                   fontSize: "40px",
-                }}
-              >
+                }}>
                 {getTotalContributions()}
               </div>
             </div>
@@ -285,8 +279,7 @@ export const PrintDonationPage = () => {
                         textAlign: "left",
                         width: "70%",
                         paddingLeft: "5px",
-                      }}
-                    >
+                      }}>
                       Fund
                     </th>
                     <th
@@ -296,8 +289,7 @@ export const PrintDonationPage = () => {
                         textAlign: "right",
                         width: "30%",
                         paddingRight: "5px",
-                      }}
-                    >
+                      }}>
                       Amount
                     </th>
                   </tr>
@@ -322,8 +314,7 @@ export const PrintDonationPage = () => {
                     textAlign: "left",
                     width: "15%",
                     paddingLeft: "5px",
-                  }}
-                >
+                  }}>
                   Date
                 </th>
                 <th
@@ -333,8 +324,7 @@ export const PrintDonationPage = () => {
                     textAlign: "left",
                     width: "15%",
                     paddingLeft: "5px",
-                  }}
-                >
+                  }}>
                   Method
                 </th>
                 <th
@@ -344,8 +334,7 @@ export const PrintDonationPage = () => {
                     textAlign: "left",
                     width: "50%",
                     paddingLeft: "5px",
-                  }}
-                >
+                  }}>
                   Fund
                 </th>
                 <th
@@ -355,8 +344,7 @@ export const PrintDonationPage = () => {
                     textAlign: "right",
                     width: "20%",
                     paddingRight: "5px",
-                  }}
-                >
+                  }}>
                   Amount
                 </th>
               </tr>
@@ -371,8 +359,7 @@ export const PrintDonationPage = () => {
                     textAlign: "left",
                     width: "15%",
                     paddingLeft: "5px",
-                  }}
-                ></td>
+                  }}></td>
                 <td
                   style={{
                     borderTop: "2px solid #1976D2",
@@ -380,8 +367,7 @@ export const PrintDonationPage = () => {
                     textAlign: "left",
                     width: "15%",
                     paddingLeft: "5px",
-                  }}
-                ></td>
+                  }}></td>
                 <td
                   style={{
                     borderTop: "2px solid #1976D2",
@@ -390,8 +376,7 @@ export const PrintDonationPage = () => {
                     width: "50%",
                     paddingRight: "5px",
                     fontWeight: "bold",
-                  }}
-                >
+                  }}>
                   Total Contributions:
                 </td>
                 <td
@@ -402,8 +387,7 @@ export const PrintDonationPage = () => {
                     width: "20%",
                     paddingRight: "5px",
                     fontWeight: "bold",
-                  }}
-                >
+                  }}>
                   {getTotalContributions()}
                 </td>
               </tr>

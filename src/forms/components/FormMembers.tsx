@@ -1,8 +1,6 @@
 import React, { useState, memo, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
-import {
- Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton 
-} from "@mui/material";
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Stack, Button, Paper, Switch, Tooltip, IconButton } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import { PersonAdd } from "../../components";
 import { DisplayBox, type PersonInterface, ApiHelper, type MemberPermissionInterface, PersonHelper, Locale } from "@churchapps/apphelper";
@@ -24,7 +22,8 @@ export const FormMembers: React.FC<Props> = memo((props) => {
     });
   }, [props.formId]);
 
-  const addPerson = useCallback((p: PersonInterface) => {
+  const addPerson = useCallback(
+    (p: PersonInterface) => {
       const newMember = {
         memberId: p.id,
         contentType: "form",
@@ -38,16 +37,22 @@ export const FormMembers: React.FC<Props> = memo((props) => {
         setFormMembers(fm);
       });
       updateFilterList(p.id, "add");
-    }, [props.formId, formMembers]);
+    },
+    [props.formId, formMembers]
+  );
 
-  const updateFilterList = useCallback((id: string, action: string) => {
+  const updateFilterList = useCallback(
+    (id: string, action: string) => {
       let fl = [...filterList];
       if (action === "add") fl.push(id);
       if (action === "remove") fl = fl.filter((memberId) => memberId !== id);
       setFilterList(fl);
-    }, [filterList]);
+    },
+    [filterList]
+  );
 
-  const handleActionChange = useCallback((personId: string, action: object) => {
+  const handleActionChange = useCallback(
+    (personId: string, action: object) => {
       let member;
       const fm = [...formMembers];
       const fmArray = fm.map((p: MemberPermissionInterface) => {
@@ -59,20 +64,26 @@ export const FormMembers: React.FC<Props> = memo((props) => {
       });
       ApiHelper.post("/memberpermissions?formId=" + props.formId, [member], "MembershipApi");
       setFormMembers(fmArray);
-    }, [props.formId, formMembers]);
+    },
+    [props.formId, formMembers]
+  );
 
-  const handleRemoveMember = useCallback((personId: string) => {
+  const handleRemoveMember = useCallback(
+    (personId: string) => {
       updateFilterList(personId, "remove");
       let fm = [...formMembers];
       fm = fm.filter((p: MemberPermissionInterface) => p.memberId !== personId);
       setFormMembers(fm);
       ApiHelper.delete("/memberpermissions/member/" + personId + "?formId=" + props.formId, "MembershipApi");
-    }, [props.formId, formMembers, updateFilterList]);
+    },
+    [props.formId, formMembers, updateFilterList]
+  );
 
   const tableRows = useMemo(() => {
     const rows: JSX.Element[] = [];
     formMembers.forEach((fm) => {
-      rows.push(<TableRow key={fm.memberId}>
+      rows.push(
+        <TableRow key={fm.memberId}>
           <TableCell>
             <Link to={"/people/" + fm.memberId}>{fm.personName}</Link>
           </TableCell>
@@ -82,16 +93,14 @@ export const FormMembers: React.FC<Props> = memo((props) => {
                 variant={fm.action === "admin" ? "contained" : "outlined"}
                 onClick={() => {
                   handleActionChange(fm.memberId, { action: "admin" });
-                }}
-              >
+                }}>
                 {Locale.label("forms.formMembers.admin")}
               </Button>
               <Button
                 variant={fm.action === "view" ? "contained" : "outlined"}
                 onClick={() => {
                   handleActionChange(fm.memberId, { action: "view" });
-                }}
-              >
+                }}>
                 {Locale.label("forms.formMembers.view")}
               </Button>
             </Stack>
@@ -104,8 +113,7 @@ export const FormMembers: React.FC<Props> = memo((props) => {
                   e.preventDefault();
                   handleRemoveMember(fm.memberId);
                 }}
-                style={{ display: "flex", alignItems: "center", color: "#dc3545" }}
-              >
+                style={{ display: "flex", alignItems: "center", color: "#dc3545" }}>
                 <Icon sx={{ marginRight: "5px" }}>person_remove</Icon> {Locale.label("common.remove")}
               </a>
             }
@@ -118,14 +126,16 @@ export const FormMembers: React.FC<Props> = memo((props) => {
               }}
             />
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     });
     return rows;
   }, [formMembers, handleActionChange, handleRemoveMember]);
 
   const tableHeader = useMemo(() => {
     const rows: JSX.Element[] = [];
-    rows.push(<TableRow key="header" sx={{ textAlign: "left" }}>
+    rows.push(
+      <TableRow key="header" sx={{ textAlign: "left" }}>
         <th>{Locale.label("common.name")}</th>
         <th>{Locale.label("forms.formMembers.perm")}</th>
         <th>{Locale.label("forms.formMembers.act")}</th>
@@ -137,7 +147,8 @@ export const FormMembers: React.FC<Props> = memo((props) => {
             </IconButton>
           </Tooltip>
         </th>
-      </TableRow>);
+      </TableRow>
+    );
     return rows;
   }, []);
 

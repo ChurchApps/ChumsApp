@@ -32,23 +32,30 @@ export const DonationEvents = memo(() => {
     return unresolvedErrorCount > 0 ? "error danger-text" : "error";
   }, [unresolvedErrorCount]);
 
-  const handleClick = useCallback((id: string, resolved: boolean) => {
-    resolved = !resolved;
-    ApiHelper.post("/eventLog", [{ id, resolved }], "GivingApi").then(() => {
-      queryClient.invalidateQueries({ queryKey: ["/eventLog/type/failed", "GivingApi"] });
-    });
-  }, [queryClient]);
+  const handleClick = useCallback(
+    (id: string, resolved: boolean) => {
+      resolved = !resolved;
+      ApiHelper.post("/eventLog", [{ id, resolved }], "GivingApi").then(() => {
+        queryClient.invalidateQueries({ queryKey: ["/eventLog/type/failed", "GivingApi"] });
+      });
+    },
+    [queryClient]
+  );
 
-  const getPersonName = useCallback((personId: string) => {
-    const person = people.data?.find((person: any) => person.id === personId);
-    return person?.name?.display;
-  }, [people.data]);
+  const getPersonName = useCallback(
+    (personId: string) => {
+      const person = people.data?.find((person: any) => person.id === personId);
+      return person?.name?.display;
+    },
+    [people.data]
+  );
 
   const getErrorLogs = useCallback(() => {
     const logs: React.ReactNode[] = [];
     errorLogs.data?.forEach((log: any, i: number) => {
       const eventType = log.eventType.replace(".", " ");
-      logs.push(<Accordion key={i}>
+      logs.push(
+        <Accordion key={i}>
           <AccordionSummary>
             <Icon sx={{ marginRight: "5px", color: !log.resolved ? "#dc3545" : "#000" }}>error</Icon>
             <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
@@ -75,7 +82,8 @@ export const DonationEvents = memo(() => {
               </li>
             </ul>
           </AccordionDetails>
-        </Accordion>);
+        </Accordion>
+      );
     });
     return logs;
   }, [errorLogs.data, getPersonName, handleClick]);

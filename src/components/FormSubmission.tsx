@@ -70,8 +70,7 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
             top: 0,
             right: 0,
             zIndex: 1,
-          }}
-        >
+          }}>
           <Tooltip title="Edit form submission">
             <IconButton
               onClick={() => props.editFunction(props.formSubmissionId)}
@@ -84,8 +83,7 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
                 },
               }}
               data-testid="edit-form-submission-button"
-              aria-label="Edit form submission"
-            >
+              aria-label="Edit form submission">
               <EditIcon />
             </IconButton>
           </Tooltip>

@@ -98,8 +98,7 @@ export const PraiseChartsProducts = (props: Props) => {
             onClick={(e) => {
               e.preventDefault();
               download(product);
-            }}
-          >
+            }}>
             <Icon>download</Icon>
           </Button>
         );
@@ -112,8 +111,7 @@ export const PraiseChartsProducts = (props: Props) => {
             onClick={(e) => {
               e.preventDefault();
               purchase(product.sku);
-            }}
-          >
+            }}>
             Free
           </Button>
         );
@@ -126,8 +124,7 @@ export const PraiseChartsProducts = (props: Props) => {
             onClick={(e) => {
               e.preventDefault();
               purchase(product.sku);
-            }}
-          >
+            }}>
             {CurrencyHelper.formatCurrency(product.price.price)}
           </Button>
         );
@@ -146,8 +143,7 @@ export const PraiseChartsProducts = (props: Props) => {
             onClick={(e) => {
               e.preventDefault();
               setExpandedSkus(expandedSkus.filter((s) => s !== product.sku));
-            }}
-          >
+            }}>
             <Icon>expand_less</Icon>
           </a>
         );
@@ -158,8 +154,7 @@ export const PraiseChartsProducts = (props: Props) => {
             onClick={(e) => {
               e.preventDefault();
               setExpandedSkus([...expandedSkus, product.sku]);
-            }}
-          >
+            }}>
             <Icon>expand_more</Icon>
           </a>
         );

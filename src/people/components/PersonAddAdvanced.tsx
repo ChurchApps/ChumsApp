@@ -47,8 +47,7 @@ export const PersonAddAdvanced: React.FC<Props> = (props: Props) => {
           e.preventDefault();
           toggleAdvanced();
         }}
-        sx={{ textTransform: "none" }}
-      >
+        sx={{ textTransform: "none" }}>
         {Locale.label("people.peopleSearch.adv")}
       </Button>
     );

@@ -62,7 +62,8 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
     let idx = 0;
     domains.forEach((d) => {
       const index = idx;
-      result.push(<TableRow>
+      result.push(
+        <TableRow>
           <TableCell>{d.domainName}</TableCell>
           <TableCell>
             <a
@@ -70,12 +71,12 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
               onClick={(e) => {
                 e.preventDefault();
                 handleDelete(index);
-              }}
-            >
+              }}>
               {Locale.label("common.delete")}
             </a>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       idx++;
     });
     return result;

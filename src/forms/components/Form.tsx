@@ -1,9 +1,7 @@
 import React from "react";
 import { FormQuestionEdit } from ".";
 import { ApiHelper, type FormInterface, type QuestionInterface, Permissions, Loading, UserHelper, Locale } from "@churchapps/apphelper";
-import {
- Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Stack, Button, Card 
-} from "@mui/material";
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Stack, Button, Card } from "@mui/material";
 
 interface Props {
   id: string;
@@ -55,7 +53,8 @@ export const Form: React.FC<Props> = (props) => {
   const getRows = () => {
     const rows: JSX.Element[] = [];
     if (questions.length === 0) {
-      rows.push(<TableRow key="0">
+      rows.push(
+        <TableRow key="0">
           <TableCell colSpan={4} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
               <Icon sx={{ fontSize: 48, color: "text.secondary" }}>help</Icon>
@@ -64,7 +63,8 @@ export const Form: React.FC<Props> = (props) => {
               </Typography>
             </Stack>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return rows;
     }
     for (let i = 0; i < questions.length; i++) {
@@ -84,14 +84,14 @@ export const Form: React.FC<Props> = (props) => {
             <Icon sx={{ fontSize: 18 }}>arrow_downward</Icon>
           </Button>
         );
-      rows.push(<TableRow
+      rows.push(
+        <TableRow
           key={i}
           data-index={i}
           sx={{
             "&:hover": { backgroundColor: "action.hover" },
             transition: "background-color 0.2s ease",
-          }}
-        >
+          }}>
           <TableCell>
             <a
               href="about:blank"
@@ -100,8 +100,7 @@ export const Form: React.FC<Props> = (props) => {
                 textDecoration: "none",
                 color: "var(--c1l2)",
                 fontWeight: 500,
-              }}
-            >
+              }}>
               {questions[i].title}
             </a>
           </TableCell>
@@ -117,7 +116,8 @@ export const Form: React.FC<Props> = (props) => {
           <TableCell>
             <Typography variant="body2">{questions[i].required ? Locale.label("common.yes") : Locale.label("common.no")}</Typography>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     return rows;
   };
@@ -126,7 +126,8 @@ export const Form: React.FC<Props> = (props) => {
     if (questions.length === 0) {
       return rows;
     }
-    rows.push(<TableRow key="header">
+    rows.push(
+      <TableRow key="header">
         <TableCell sx={{ fontWeight: 600 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
             {Locale.label("forms.form.question")}
@@ -147,7 +148,8 @@ export const Form: React.FC<Props> = (props) => {
             {Locale.label("forms.form.req")}
           </Typography>
         </TableCell>
-      </TableRow>);
+      </TableRow>
+    );
     return rows;
   };
   const getSidebarModules = () => {
@@ -171,8 +173,7 @@ export const Form: React.FC<Props> = (props) => {
                 borderBottom: "2px solid",
                 borderBottomColor: "divider",
               },
-            }}
-          >
+            }}>
             {getTableHeader()}
           </TableHead>
           <TableBody>{getRows()}</TableBody>
@@ -201,8 +202,7 @@ export const Form: React.FC<Props> = (props) => {
                     setEditQuestionId("");
                   }}
                   size="small"
-                  aria-label="addQuestion"
-                >
+                  aria-label="addQuestion">
                   Add Question
                 </Button>
               )}

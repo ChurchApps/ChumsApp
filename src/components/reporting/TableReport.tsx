@@ -5,23 +5,29 @@ import type { ReportOutputInterface, ReportResultInterface } from "@churchapps/h
 import { Table, TableBody, TableRow, TableCell, TableHead } from "@mui/material";
 import { ReportHelper } from "./ReportHelper";
 
-interface Props { reportResult: ReportResultInterface, output: ReportOutputInterface }
+interface Props {
+  reportResult: ReportResultInterface;
+  output: ReportOutputInterface;
+}
 
 export const TableReport = (props: Props) => {
-
   const getHeaders = () => {
     const result: React.ReactElement[] = [];
     props.output.columns.forEach((c, i) => {
-      result.push(<TableCell key={i} style={{ fontWeight: "bold" }}>{c.header}</TableCell>);
+      result.push(
+        <TableCell key={i} style={{ fontWeight: "bold" }}>
+          {c.header}
+        </TableCell>
+      );
     });
     return result;
   };
 
   const getRows = () => {
     const result: React.ReactElement[] = [];
-    props.reportResult.table.forEach(d => {
+    props.reportResult.table.forEach((d) => {
       const row: React.ReactElement[] = [];
-      props.output.columns.forEach(c => {
+      props.output.columns.forEach((c) => {
         row.push(<TableCell>{ReportHelper.getField(c, d)}</TableCell>);
       });
       result.push(<TableRow>{row}</TableRow>);
@@ -32,13 +38,9 @@ export const TableReport = (props: Props) => {
   return (
     <Table>
       <TableHead>
-        <TableRow>
-          {getHeaders()}
-        </TableRow>
+        <TableRow>{getHeaders()}</TableRow>
       </TableHead>
-      <TableBody>
-        {getRows()}
-      </TableBody>
+      <TableBody>{getRows()}</TableBody>
     </Table>
   );
 };

@@ -2,9 +2,7 @@ import React from "react";
 import { ServiceTimesEdit } from ".";
 import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
-import {
- Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Box, Typography, Icon, type SelectChangeEvent 
-} from "@mui/material";
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Box, Typography, Icon, type SelectChangeEvent } from "@mui/material";
 import { useMountedState, type GroupInterface } from "@churchapps/apphelper";
 import { MarkdownEditor } from "@churchapps/apphelper-markdown";
 import { GroupLabelsEdit } from "./GroupLabelsEdit";
@@ -117,8 +115,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
               padding: 10,
               marginTop: 20,
               marginBottom: 20,
-            }}
-          >
+            }}>
             <b>Attendance</b>
           </div>
           <Grid container spacing={3}>
@@ -132,8 +129,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                   data-cy="select-attendance-type"
                   value={group.trackAttendance?.toString() || "false"}
                   onChange={handleChange}
-                  onKeyDown={handleKeyDown}
-                >
+                  onKeyDown={handleKeyDown}>
                   <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
                   <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
                 </Select>
@@ -148,8 +144,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                     name="parentPickup"
                     value={group.parentPickup?.toString() || "false"}
                     onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                  >
+                    onKeyDown={handleKeyDown}>
                     <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
                     <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
                   </Select>
@@ -161,8 +156,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                     name="printNametag"
                     value={group.printNametag?.toString() || "false"}
                     onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                  >
+                    onKeyDown={handleKeyDown}>
                     <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
                     <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
                   </Select>
@@ -189,8 +183,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
           saveFunction={handleSave}
           cancelFunction={handleCancel}
           deleteFunction={handleDelete}
-          help="chums/groups"
-        >
+          help="chums/groups">
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             {!teamMode && (
@@ -290,8 +283,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                       onClick={(e) => {
                         e.preventDefault();
                         props.togglePhotoEditor(true, group);
-                      }}
-                    >
+                      }}>
                       {group.photoUrl ? (
                         <img
                           src={group.photoUrl}
@@ -319,8 +311,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                       }}
                       data-testid="change-photo-button"
                       aria-label="Change group photo"
-                      size="small"
-                    >
+                      size="small">
                       {group.photoUrl ? Locale.label("common.changePhoto") : "Add Photo"}
                     </Button>
                   </Box>

@@ -78,8 +78,7 @@ export const PersonAdd: React.FC<Props> = ({ addFunction, getPhotoUrl, searchCli
               setOpen(true);
             }}
             data-testid="create-new-person-link"
-            aria-label="Create new person"
-          >
+            aria-label="Create new person">
             {Locale.label("createPerson.addNewPerson")}
           </a>
         </Typography>

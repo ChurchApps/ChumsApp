@@ -57,11 +57,7 @@ export const FormPage = () => {
 
   return form.data?.id ? (
     <>
-      <PageHeader 
-        icon={<DescriptionIcon />} 
-        title={form.data.name} 
-        subtitle="Form configuration and submissions"
-      >
+      <PageHeader icon={<DescriptionIcon />} title={form.data.name} subtitle="Form configuration and submissions">
         <Stack direction="row" spacing={1}>
           {availableTabs.map((tab) => (
             <Button
@@ -78,8 +74,7 @@ export const FormPage = () => {
                   backgroundColor: selectedTab === tab.key ? "#FFF" : "rgba(255,255,255,0.2)",
                   color: selectedTab === tab.key ? "primary.main" : "#FFF",
                 },
-              }}
-            >
+              }}>
               {tab.label}
             </Button>
           ))}
@@ -92,8 +87,7 @@ export const FormPage = () => {
           sx={{
             "& > *:first-of-type": { mb: 2 }, // Add margin bottom to edit components that appear above
             "& > *:not(:first-of-type)": { mt: 0 }, // Ensure no extra margin for main content
-          }}
-        >
+          }}>
           <Tabs form={form.data} memberPermission={memberPermission.data} selectedTab={selectedTab} onTabChange={setSelectedTab} />
         </Box>
       </Box>

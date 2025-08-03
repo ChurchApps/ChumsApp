@@ -12,9 +12,7 @@ import {
   type QuestionInterface,
 } from "@churchapps/apphelper";
 import { useReactToPrint } from "react-to-print";
-import {
- Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Card, Box, Typography, Stack 
-} from "@mui/material";
+import { Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Card, Box, Typography, Stack } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
 interface Props {
@@ -26,7 +24,13 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
   const [summary, setSummary] = useState<any>([]);
   const [summaryCsv, setSummaryCsv] = useState<any>([]);
   const yesNoMap: any = { True: Locale.label("common.yes"), False: Locale.label("common.no") };
-  const yesNoDefault = useMemo(() => [{ value: "Yes", text: Locale.label("common.yes") }, { value: "No", text: Locale.label("common.no") }], []);
+  const yesNoDefault = useMemo(
+    () => [
+      { value: "Yes", text: Locale.label("common.yes") },
+      { value: "No", text: Locale.label("common.no") },
+    ],
+    []
+  );
   const contentRef: any = useRef<HTMLDivElement>(null);
   const handleSummaryPrint = useReactToPrint({ content: () => contentRef.current });
 
@@ -89,7 +93,8 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     return result;
   }, []);
 
-  const setFormSubmissionData = useCallback((people: PersonInterface[], formSubmission: any) => {
+  const setFormSubmissionData = useCallback(
+    (people: PersonInterface[], formSubmission: any) => {
       const submittedBy = getPerson(people, formSubmission);
 
       formSubmission.person = { name: submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon"), id: submittedBy?.id || null };
@@ -97,9 +102,12 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
       formSubmission.csvData = [];
       formSubmission.questions = formSubmission.questions.sort((a: QuestionInterface, b: QuestionInterface) => (a.title > b.title ? 1 : -1));
       return formSubmission;
-    }, [getPerson]);
+    },
+    [getPerson]
+  );
 
-  const setSummaryResultDefault = useCallback((question: QuestionInterface, answer: AnswerInterface) => {
+  const setSummaryResultDefault = useCallback(
+    (question: QuestionInterface, answer: AnswerInterface) => {
       const choices: any = [];
       const questionChoices = question.choices || yesNoDefault;
       questionChoices.forEach((choice: any) => {
@@ -115,7 +123,9 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
         choices.push(choiceCount);
       });
       return { title: question.title, values: choices };
-    }, [yesNoDefault]);
+    },
+    [yesNoDefault]
+  );
 
   const getResultCount = useCallback((summaryValues: any[]) => {
     const results: JSX.Element[] = [];
@@ -129,10 +139,12 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
   const summaryContent = useMemo(() => {
     const results: JSX.Element[] = [];
     summary.forEach((s: any, i: number) => {
-      results.push(<Grid xs={12} md={6} key={s.id + "-" + i}>
+      results.push(
+        <Grid xs={12} md={6} key={s.id + "-" + i}>
           <h4>{s.title}</h4>
           {getResultCount(s.values)}
-        </Grid>);
+        </Grid>
+      );
     });
     return results;
   }, [summary, getResultCount]);
@@ -140,22 +152,29 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
   const tableHeader = useMemo(() => {
     const result: JSX.Element[] = [];
     if (formSubmissions.data?.length) {
-      result.push(<TableCell key="submittedBy" sx={{ fontWeight: 600 }}>
+      result.push(
+        <TableCell key="submittedBy" sx={{ fontWeight: 600 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
             {formSubmissions.data[0].contentType === "person" ? Locale.label("forms.formSubmissions.subFor") : Locale.label("forms.formSubmissions.subBy")}
           </Typography>
-        </TableCell>);
-      result.push(<TableCell key="submissionDate" sx={{ fontWeight: 600 }}>
+        </TableCell>
+      );
+      result.push(
+        <TableCell key="submissionDate" sx={{ fontWeight: 600 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
             {Locale.label("forms.formSubmissions.subDate")}
           </Typography>
-        </TableCell>);
+        </TableCell>
+      );
       formSubmissions.data[0].questions.forEach((question: QuestionInterface) =>
-        result.push(<TableCell key={question.id} sx={{ fontWeight: 600 }}>
+        result.push(
+          <TableCell key={question.id} sx={{ fontWeight: 600 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
               {question.title}
             </Typography>
-          </TableCell>));
+          </TableCell>
+        )
+      );
     }
     return result;
   }, [formSubmissions.data]);
@@ -164,9 +183,11 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     const rows: JSX.Element[] = [];
     formSubmission.questions.forEach((question: QuestionInterface) => {
       const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id);
-      rows.push(<TableCell key={question.id}>
+      rows.push(
+        <TableCell key={question.id}>
           <Typography variant="body2">{answer?.value || "-"}</Typography>
-        </TableCell>);
+        </TableCell>
+      );
     });
     return rows;
   }, []);
@@ -175,7 +196,8 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     const rows: JSX.Element[] = [];
 
     if (formSubmissions.data?.length === 0) {
-      rows.push(<TableRow key="0">
+      rows.push(
+        <TableRow key="0">
           <TableCell colSpan={6} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
               <Icon sx={{ fontSize: 48, color: "text.secondary" }}>assignment</Icon>
@@ -184,18 +206,19 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
               </Typography>
             </Stack>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return rows;
     }
 
     formSubmissions.data?.forEach((submission: any, i: number) => {
-      rows.push(<TableRow
+      rows.push(
+        <TableRow
           key={i}
           sx={{
             "&:hover": { backgroundColor: "action.hover" },
             transition: "background-color 0.2s ease",
-          }}
-        >
+          }}>
           <TableCell key="personName">
             <a
               href={"/people/" + submission.person.id}
@@ -203,8 +226,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
                 textDecoration: "none",
                 color: "var(--c1l2)",
                 fontWeight: 500,
-              }}
-            >
+              }}>
               {submission.person.name}
             </a>
           </TableCell>
@@ -212,7 +234,8 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
             <Typography variant="body2">{DateHelper.prettyDate(new Date(submission.submissionDate))}</Typography>
           </TableCell>
           {getAnswers(submission)}
-        </TableRow>);
+        </TableRow>
+      );
     });
     return rows;
   }, [formSubmissions.data, getAnswers]);
@@ -228,15 +251,15 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
           onClick={(e) => {
             e.preventDefault();
             handleSummaryPrint();
-          }}
-        >
+          }}>
           <Icon>print</Icon>
         </a>
       </>
     );
   }, [formSubmissions.data, summaryCsv, handleSummaryPrint]);
 
-  const formSubmissionsTable = useMemo(() => (
+  const formSubmissionsTable = useMemo(
+    () => (
       <Card>
         <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -258,15 +281,16 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
                   borderBottom: "2px solid",
                   borderBottomColor: "divider",
                 },
-              }}
-            >
+              }}>
               <TableRow key="header">{tableHeader}</TableRow>
             </TableHead>
             <TableBody>{tableRows}</TableBody>
           </Table>
         </Box>
       </Card>
-    ), [tableHeader, tableRows, editLinks]);
+    ),
+    [tableHeader, tableRows, editLinks]
+  );
 
   if (people.isLoading || formSubmissions.isLoading) return <Loading />;
 

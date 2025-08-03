@@ -1,7 +1,5 @@
 import { ApiHelper, type GenericSettingInterface, Locale, UniqueIdHelper, type VisibilityPreferenceInterface } from "@churchapps/apphelper";
-import {
-  FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography, type SelectChangeEvent
-} from "@mui/material";
+import { FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography, type SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
 
 interface Props {
@@ -109,8 +107,7 @@ export const VisbilityPrefSettingsEdit: React.FC<Props> = (props) => {
               name="phoneNumber"
               value={pref.phoneNumber}
               defaultValue=""
-              onChange={handlePrefChange}
-            >
+              onChange={handlePrefChange}>
               <MenuItem value="everyone">{Locale.label("settings.visibilityPrefSettingsEdit.everyone")}</MenuItem>
               <MenuItem value="members">{Locale.label("settings.visibilityPrefSettingsEdit.members")}</MenuItem>
               <MenuItem value="groups">{Locale.label("settings.visibilityPrefSettingsEdit.groups")}</MenuItem>

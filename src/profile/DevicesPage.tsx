@@ -84,8 +84,7 @@ export const DevicesPage = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         setEditDevice(device);
-                      }}
-                    >
+                      }}>
                       {device.label || "Device"}
                     </a>
                   </TableCell>

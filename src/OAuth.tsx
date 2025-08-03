@@ -49,8 +49,7 @@ export const OAuthPage: React.FC = () => {
             padding: "10px",
           }}
           px="16px"
-          mx="auto"
-        >
+          mx="auto">
           <div style={{ textAlign: "center", margin: 50 }}>
             <img src={"/images/logo-login.png"} alt="logo" />
           </div>
@@ -81,8 +80,7 @@ export const OAuthPage: React.FC = () => {
                     window.location.href = redirectUri || "/";
                   }}
                   data-testid="oauth-deny-button"
-                  aria-label="Deny authorization"
-                >
+                  aria-label="Deny authorization">
                   Deny
                 </Button>
               </Grid>

@@ -37,15 +37,18 @@ export const AssignmentEdit = (props: Props) => {
   const getMembers = () => {
     const rows: JSX.Element[] = [];
     if (groupMembers.length === 0) {
-      rows.push(<TableRow key="0">
+      rows.push(
+        <TableRow key="0">
           <TableCell>{Locale.label("plans.assignmentEdit.noMem")}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return rows;
     }
 
     for (let i = 0; i < groupMembers.length; i++) {
       const gm = groupMembers[i];
-      rows.push(<TableRow key={i}>
+      rows.push(
+        <TableRow key={i}>
           <TableCell>
             <Avatar src={PersonHelper.getPhotoUrl(gm.person)} sx={{ width: 32, height: 32 }} />
           </TableCell>
@@ -55,12 +58,12 @@ export const AssignmentEdit = (props: Props) => {
               onClick={(e) => {
                 e.preventDefault();
                 selectPerson(gm);
-              }}
-            >
+              }}>
               {gm.person.name.display}
             </a>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     return rows;
   };
@@ -77,8 +80,7 @@ export const AssignmentEdit = (props: Props) => {
         saveFunction={handleSave}
         cancelFunction={() => props.updatedFunction(true)}
         deleteFunction={props.assignment.id ? handleDelete : null}
-        saveText={Locale.label("plans.assignmentEdit.done")}
-      >
+        saveText={Locale.label("plans.assignmentEdit.done")}>
         <Table size="small">{getMembers()}</Table>
       </InputBox>
     </>

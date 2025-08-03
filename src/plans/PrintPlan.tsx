@@ -1,6 +1,4 @@
-import {
- ApiHelper, ArrayHelper, type AssignmentInterface, DateHelper, type PersonInterface, type PlanInterface, type PositionInterface, Locale 
-} from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, type AssignmentInterface, DateHelper, type PersonInterface, type PlanInterface, type PositionInterface, Locale } from "@churchapps/apphelper";
 import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -58,10 +56,12 @@ export const PrintPlan = () => {
     });
     const result: JSX.Element[] = [];
     cats.forEach((c) => {
-      result.push(<div key={c}>
+      result.push(
+        <div key={c}>
           <h3 style={{ marginTop: 15, marginBottom: 5 }}>{c}</h3>
           {getPositions(c)}
-        </div>);
+        </div>
+      );
     });
     return result;
   };
@@ -79,9 +79,11 @@ export const PrintPlan = () => {
             names.push(person?.name?.display);
           });
 
-        result.push(<div key={p.id}>
+        result.push(
+          <div key={p.id}>
             <b>{p.name}:</b> {names.join(", ")}
-          </div>);
+          </div>
+        );
       });
     return result;
   };
@@ -90,13 +92,15 @@ export const PrintPlan = () => {
     let result: JSX.Element[] = [];
     items.forEach((pi) => {
       if (pi.itemType !== "header") {
-        result.push(<tr key={pi.id}>
+        result.push(
+          <tr key={pi.id}>
             <td style={Styles.tableCell}>{formatTime(totalSeconds)}</td>
             <td style={Styles.tableCell}>
               <b>{pi.label}:</b> {pi.description}
             </td>
             <td style={{ ...Styles.tableCell, textAlign: "right" }}>{formatTime(pi.seconds)}</td>
-          </tr>);
+          </tr>
+        );
         totalSeconds += pi.seconds;
       }
       console.log("PI", pi);

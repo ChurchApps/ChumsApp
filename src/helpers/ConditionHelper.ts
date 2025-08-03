@@ -22,29 +22,8 @@ export class ConditionHelper {
     else if (displayOperator === "endsWith") displayOperator = "ends with";
 
     let displayValue = c.value;
-    const dayLabels = [
-"Sunday",
-"Monday",
-"Tuesday",
-"Wednesday",
-"Thursday",
-"Friday",
-"Saturday"
-];
-    const monthLabels = [
-"January",
-"February",
-"March",
-"April",
-"May",
-"June",
-"July",
-"August",
-"September",
-"October",
-"November",
-"December"
-];
+    const dayLabels = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const monthLabels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     if (fieldData.datePart === "dayOfWeek") displayValue = dayLabels[parseInt(c.value) - 1];
     if (fieldData.datePart === "month") {
       if (c.value.indexOf("{") > -1) displayValue = this.getTitleCase(c.value.replace("{", "").replace("}", ""));

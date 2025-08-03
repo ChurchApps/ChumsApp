@@ -51,7 +51,8 @@ export const TimeList = (props: Props) => {
       //startTime.setMinutes(startTime.getMinutes() - startTime.getTimezoneOffset());
       const endTime = new Date(t.endTime);
       //endTime.setMinutes(endTime.getMinutes() - endTime.getTimezoneOffset());
-      result.push(<tr key={t.id}>
+      result.push(
+        <tr key={t.id}>
           <td style={{ verticalAlign: "top" }}>
             <Icon>schedule</Icon>
           </td>
@@ -61,8 +62,7 @@ export const TimeList = (props: Props) => {
               onClick={(e) => {
                 e.preventDefault();
                 handleSelect(t);
-              }}
-            >
+              }}>
               {t.displayName}
             </a>
             <div style={{ fontSize: 12 }}>
@@ -72,12 +72,15 @@ export const TimeList = (props: Props) => {
               <i style={{ color: "#999" }}>{teamList.join(", ")}</i>
             </div>
           </td>
-        </tr>);
+        </tr>
+      );
     });
     if (props.times.length === 0) {
-      result.push(<tr>
+      result.push(
+        <tr>
           <td colSpan={2}>{Locale.label("plans.timeList.noTime")}</td>
-        </tr>);
+        </tr>
+      );
     }
     return result;
   };

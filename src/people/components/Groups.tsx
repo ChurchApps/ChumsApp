@@ -2,9 +2,7 @@ import React, { memo, useMemo } from "react";
 import { UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import {
- Box, Card, CardContent, Typography, Stack, Chip, Paper, ListItem, ListItemIcon, ListItemText, ListItemButton, Avatar 
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, Stack, Chip, Paper, ListItem, ListItemIcon, ListItemText, ListItemButton, Avatar } from "@mui/material";
 import { Group as GroupIcon, Groups as GroupsIcon, SupervisorAccount as LeaderIcon } from "@mui/icons-material";
 
 interface Props {
@@ -20,7 +18,6 @@ export const Groups: React.FC<Props> = memo((props) => {
     placeholderData: [],
   });
 
-
   const recordsContent = useMemo(() => {
     if (groupMembers.isLoading) return <Loading size="sm" />;
 
@@ -33,8 +30,7 @@ export const Groups: React.FC<Props> = memo((props) => {
             backgroundColor: "grey.50",
             border: "1px dashed",
             borderColor: "grey.300",
-          }}
-        >
+          }}>
           <GroupsIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
           <Typography variant="body1" color="text.secondary">
             {Locale.label("people.groups.notMemMsg")}
@@ -51,8 +47,7 @@ export const Groups: React.FC<Props> = memo((props) => {
             border: "1px solid",
             borderColor: "grey.200",
           },
-        }}
-      >
+        }}>
         <Stack spacing={2}>
           {groupMembers.data.map((gm) => (
             <Card
@@ -63,8 +58,7 @@ export const Groups: React.FC<Props> = memo((props) => {
                   transform: "translateY(-1px)",
                   boxShadow: 2,
                 },
-              }}
-            >
+              }}>
               <CardContent sx={{ pb: "16px !important" }}>
                 <ListItem sx={{ px: 0, py: 0 }}>
                   <ListItemButton
@@ -75,8 +69,7 @@ export const Groups: React.FC<Props> = memo((props) => {
                       py: 1,
                       borderRadius: 1,
                       "&:hover": { backgroundColor: "action.hover" },
-                    }}
-                  >
+                    }}>
                     <ListItemIcon sx={{ minWidth: 56 }}>
                       {gm.group?.photoUrl ? (
                         <Avatar
@@ -85,8 +78,7 @@ export const Groups: React.FC<Props> = memo((props) => {
                             width: 40,
                             height: 40,
                             bgcolor: "primary.light",
-                          }}
-                        >
+                          }}>
                           <GroupIcon sx={{ color: "primary.main" }} />
                         </Avatar>
                       ) : (
@@ -95,8 +87,7 @@ export const Groups: React.FC<Props> = memo((props) => {
                             width: 40,
                             height: 40,
                             bgcolor: "primary.light",
-                          }}
-                        >
+                          }}>
                           <GroupIcon sx={{ color: "primary.main" }} />
                         </Avatar>
                       )}
@@ -109,8 +100,7 @@ export const Groups: React.FC<Props> = memo((props) => {
                             fontWeight: 600,
                             color: "primary.main",
                             fontSize: "1rem",
-                          }}
-                        >
+                          }}>
                           {gm.group?.name || "Unknown Group"}
                         </Typography>
                       }

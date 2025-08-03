@@ -33,12 +33,15 @@ export const Funds: React.FC = memo(() => {
     } else return null;
   }, []);
 
-  const handleEdit = useCallback((e: React.MouseEvent) => {
+  const handleEdit = useCallback(
+    (e: React.MouseEvent) => {
       e.preventDefault();
       const anchor = e.currentTarget as HTMLAnchorElement;
       const idx = parseInt(anchor.getAttribute("data-index"));
       setEditFund(funds.data[idx]);
-    }, [funds.data]);
+    },
+    [funds.data]
+  );
 
   const canEdit = useMemo(() => UserHelper.checkAccess(Permissions.givingApi.donations.edit), []);
   const canViewIndividual = useMemo(() => UserHelper.checkAccess(Permissions.givingApi.donations.view), []);
@@ -61,12 +64,14 @@ export const Funds: React.FC = memo(() => {
         </a>
       ) : null;
       const viewLink = canViewIndividual ? <Link to={"/donations/funds/" + f.id}>{f.name}</Link> : <>{f.name}</>;
-      result.push(<TableBody key={result.length - 1}>
+      result.push(
+        <TableBody key={result.length - 1}>
           <TableRow>
             <TableCell> {viewLink}</TableCell>
             <TableCell align="right"> {editLink}</TableCell>
           </TableRow>
-        </TableBody>);
+        </TableBody>
+      );
     }
     return result;
   }, [funds.data, canEdit, canViewIndividual, handleEdit]);

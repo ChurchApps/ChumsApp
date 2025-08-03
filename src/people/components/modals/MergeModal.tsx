@@ -1,9 +1,7 @@
 import React from "react";
 import { type PersonInterface, type ContactInfoInterface, type NameInterface, Locale } from "@churchapps/apphelper";
 import { EnvironmentHelper } from "../../../helpers";
-import {
- Dialog, Button, Container, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Select, MenuItem 
-} from "@mui/material";
+import { Dialog, Button, Container, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 interface Props {
   show: boolean;
@@ -181,8 +179,7 @@ export const MergeModal: React.FC<Props> = (props) => {
           value={outer.selected}
           onChange={(e) => {
             handleSelect(outer.value, e.target.value);
-          }}
-        >
+          }}>
           {outer.options.map((name, i) => {
             const label = outer.value === "photo" ? <img src={EnvironmentHelper.Common.ContentRoot + name} alt={Locale.label("people.mergeModal.profile")} height="200px" width="200px" /> : name;
             return (

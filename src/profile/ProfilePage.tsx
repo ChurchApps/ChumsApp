@@ -1,6 +1,4 @@
-import {
- Grid, Icon, TextField, Checkbox, Typography, InputAdornment, IconButton, Box, Card, CardContent, Alert, Stack, FormControlLabel 
-} from "@mui/material";
+import { Grid, Icon, TextField, Checkbox, Typography, InputAdornment, IconButton, Box, Card, CardContent, Alert, Stack, FormControlLabel } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiHelper, UserHelper, Locale } from "@churchapps/apphelper";
@@ -13,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
-  
+
   const [password, setPassword] = useState<string>("");
   const [passwordVerify, setPasswordVerify] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
@@ -52,10 +50,16 @@ export const ProfilePage = () => {
         promises.push(ApiHelper.post("/users/updateEmail", { email }, "MembershipApi"));
       }
 
-      promises.push(ApiHelper.post("/users/updateOptedOut", {
-        personId: UserHelper.person.id,
-        optedOut,
-      }, "MembershipApi"));
+      promises.push(
+        ApiHelper.post(
+          "/users/updateOptedOut",
+          {
+            personId: UserHelper.person.id,
+            optedOut,
+          },
+          "MembershipApi"
+        )
+      );
 
       await Promise.all(promises);
     },
@@ -71,14 +75,14 @@ export const ProfilePage = () => {
     onError: (error) => {
       console.error("Error saving profile:", error);
       setSaveMessage("An error occurred while saving your profile.");
-    }
+    },
   });
 
   const deleteAccountMutation = useMutation({
     mutationFn: () => ApiHelper.delete("/users", "MembershipApi"),
     onSuccess: () => {
       navigate("/logout", { replace: true });
-    }
+    },
   });
 
   const handleSave = () => {
@@ -141,7 +145,6 @@ export const ProfilePage = () => {
     }
   };
 
-
   return (
     <>
       <PageHeader icon={<PersonIcon />} title={Locale.label("profile.profilePage.profEdit")} subtitle="Manage your personal information and account settings" />
@@ -160,17 +163,9 @@ export const ProfilePage = () => {
           )}
 
           {/* Display mutation errors if any */}
-          {updateProfileMutation.error && (
-            <Alert severity="error">
-              {updateProfileMutation.error.message || "An error occurred while saving your profile."}
-            </Alert>
-          )}
+          {updateProfileMutation.error && <Alert severity="error">{updateProfileMutation.error.message || "An error occurred while saving your profile."}</Alert>}
 
-          {deleteAccountMutation.error && (
-            <Alert severity="error">
-              {deleteAccountMutation.error.message || "An error occurred while deleting your account."}
-            </Alert>
-          )}
+          {deleteAccountMutation.error && <Alert severity="error">{deleteAccountMutation.error.message || "An error occurred while deleting your account."}</Alert>}
 
           {/* Display success message if any */}
           {saveMessage && <Alert severity="success">{saveMessage}</Alert>}

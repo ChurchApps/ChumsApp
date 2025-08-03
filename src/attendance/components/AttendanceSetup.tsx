@@ -2,9 +2,7 @@ import React, { memo, useCallback, useMemo } from "react";
 
 import { CampusEdit, ServiceEdit, ServiceTimeEdit } from "./";
 import { Link } from "react-router-dom";
-import {
- Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box, Typography, Button, Stack 
-} from "@mui/material";
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box, Typography, Button, Stack } from "@mui/material";
 import {
   type AttendanceInterface,
   type CampusInterface,
@@ -66,20 +64,29 @@ export const AttendanceSetup = memo(() => {
     refetch();
   }, [removeEditors, refetch]);
 
-  const selectCampus = useCallback((campus: CampusInterface) => {
+  const selectCampus = useCallback(
+    (campus: CampusInterface) => {
       removeEditors();
       if (campus.name !== "Undefined") setSelectedCampus(campus);
-    }, [removeEditors]);
+    },
+    [removeEditors]
+  );
 
-  const selectService = useCallback((service: ServiceInterface) => {
+  const selectService = useCallback(
+    (service: ServiceInterface) => {
       removeEditors();
       setSelectedService(service);
-    }, [removeEditors]);
+    },
+    [removeEditors]
+  );
 
-  const selectServiceTime = useCallback((service: ServiceTimeInterface) => {
+  const selectServiceTime = useCallback(
+    (service: ServiceTimeInterface) => {
       removeEditors();
       setSelectedServiceTime(service);
-    }, [removeEditors]);
+    },
+    [removeEditors]
+  );
 
   const compare = useCallback((a: GroupInterface, b: GroupInterface) => a.categoryName.localeCompare(b.categoryName) || a.name.localeCompare(b.name), []);
 
@@ -94,7 +101,8 @@ export const AttendanceSetup = memo(() => {
     return result;
   }, [groups.data, groupServiceTimes.data]);
 
-  const getGroups = useCallback((serviceTimeId: string) => {
+  const getGroups = useCallback(
+    (serviceTimeId: string) => {
       const result: GroupInterface[] = [];
       const gsts: GroupServiceTimeInterface[] = ArrayHelper.getAll(groupServiceTimes.data, "serviceTimeId", serviceTimeId);
       gsts.forEach((gst) => {
@@ -102,7 +110,9 @@ export const AttendanceSetup = memo(() => {
         if (group !== null && group.trackAttendance) result.push(group);
       });
       return result;
-    }, [groups.data, groupServiceTimes.data]);
+    },
+    [groups.data, groupServiceTimes.data]
+  );
 
   const handleAddCampus = useCallback(() => {
     handleClose();
@@ -119,7 +129,8 @@ export const AttendanceSetup = memo(() => {
     selectServiceTime({ id: "", serviceId: "", name: "New Service Time" });
   }, [handleClose, selectServiceTime]);
 
-  const editLinks = useMemo(() => (
+  const editLinks = useMemo(
+    () => (
       <>
         <IconButton
           aria-label="Add attendance"
@@ -129,8 +140,7 @@ export const AttendanceSetup = memo(() => {
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
           onClick={handleClick}
-          data-testid="add-attendance-button"
-        >
+          data-testid="add-attendance-button">
           <Icon color="primary">add</Icon>
         </IconButton>
         <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
@@ -145,15 +155,9 @@ export const AttendanceSetup = memo(() => {
           </MenuItem>
         </Menu>
       </>
-    ), [
-open,
-anchorEl,
-handleClick,
-handleClose,
-handleAddCampus,
-handleAddService,
-handleAddServiceTime
-]);
+    ),
+    [open, anchorEl, handleClick, handleClose, handleAddCampus, handleAddService, handleAddServiceTime]
+  );
 
   const tableHeader = useMemo(() => {
     if (attendance.data.length === 0) return [];
@@ -176,7 +180,8 @@ handleAddServiceTime
     let lastCategory = "";
 
     if (attendance.data.length === 0) {
-      rows.push(<TableRow key="0">
+      rows.push(
+        <TableRow key="0">
           <TableCell colSpan={5} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
               <Icon sx={{ fontSize: 48, color: "#ccc" }}>group</Icon>
@@ -188,7 +193,8 @@ handleAddServiceTime
               </Typography>
             </Stack>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return rows;
     }
 
@@ -209,8 +215,7 @@ handleAddServiceTime
                 fontWeight: 500,
                 minWidth: "auto",
                 p: 0,
-              }}
-            >
+              }}>
               {campus.name}
             </Button>
           </Stack>
@@ -232,8 +237,7 @@ handleAddServiceTime
                 fontWeight: 500,
                 minWidth: "auto",
                 p: 0,
-              }}
-            >
+              }}>
               {service.name}
             </Button>
           </Stack>
@@ -255,8 +259,7 @@ handleAddServiceTime
                 fontWeight: 500,
                 minWidth: "auto",
                 p: 0,
-              }}
-            >
+              }}>
               {serviceTime.name}
             </Button>
           </Stack>
@@ -286,8 +289,7 @@ handleAddServiceTime
                 textDecoration: "none",
                 color: "#1565C0",
                 fontWeight: 500,
-              }}
-            >
+              }}>
               {group.name}
             </Link>
           </Stack>
@@ -299,8 +301,7 @@ handleAddServiceTime
           sx={{
             "&:hover": { backgroundColor: "rgba(0,0,0,0.04)" },
             borderBottom: "1px solid #e0e0e0",
-          }}
-        >
+          }}>
           <TableCell sx={{ py: 2 }}>{campusHtml}</TableCell>
           <TableCell sx={{ py: 2 }}>{serviceHtml}</TableCell>
           <TableCell sx={{ py: 2 }}>{serviceTimeHtml}</TableCell>
@@ -329,15 +330,7 @@ handleAddServiceTime
       rows.push(getRow({ name: "Unassigned" }, undefined, undefined, g, g.id.toString()));
     });
     return rows;
-  }, [
-attendance.data,
-getGroups,
-compare,
-unassignedGroups,
-selectCampus,
-selectService,
-selectServiceTime
-]);
+  }, [attendance.data, getGroups, compare, unassignedGroups, selectCampus, selectService, selectServiceTime]);
 
   const table = useMemo(() => {
     if (attendance.isLoading) return <Loading />;
@@ -349,8 +342,7 @@ selectServiceTime
           borderRadius: 0,
           boxShadow: "none",
           border: "1px solid #e0e0e0",
-        }}
-      >
+        }}>
         <Table size="medium">
           <TableHead sx={{ backgroundColor: "#f5f5f5" }}>{tableHeader}</TableHead>
           <TableBody sx={{ whiteSpace: "nowrap" }}>{getRows()}</TableBody>

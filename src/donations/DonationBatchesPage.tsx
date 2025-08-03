@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 import { Permissions } from "@churchapps/apphelper";
 import { type DonationBatchInterface } from "@churchapps/helpers";
 import { useQuery } from "@tanstack/react-query";
-import {
- Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 
-} from "@mui/material";
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button } from "@mui/material";
 import { VolunteerActivism as DonationIcon, Add as AddIcon, FileDownload as ExportIcon, CalendarMonth as DateIcon } from "@mui/icons-material";
 
 export const DonationBatchesPage = () => {
@@ -102,7 +100,8 @@ export const DonationBatchesPage = () => {
     const result: JSX.Element[] = [];
 
     if (batches.data.length === 0) {
-      result.push(<TableRow key="0">
+      result.push(
+        <TableRow key="0">
           <TableCell colSpan={5} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
               <DonationIcon sx={{ fontSize: 48, color: "text.secondary" }} />
@@ -111,7 +110,8 @@ export const DonationBatchesPage = () => {
               </Typography>
             </Stack>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return result;
     }
 
@@ -133,8 +133,7 @@ export const DonationBatchesPage = () => {
             textDecoration: "none",
             color: "var(--c1l2)",
             fontWeight: 500,
-          }}
-        >
+          }}>
           {b.name}
         </Link>
       ) : (
@@ -145,13 +144,13 @@ export const DonationBatchesPage = () => {
 
       const dateObj = new Date(b.batchDate + "T00:00:00");
 
-      result.push(<TableRow
+      result.push(
+        <TableRow
           key={i}
           sx={{
             "&:hover": { backgroundColor: "action.hover" },
             transition: "background-color 0.2s ease",
-          }}
-        >
+          }}>
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
               <DonationIcon sx={{ color: "var(--c1l2)", fontSize: 20 }} />
@@ -181,7 +180,8 @@ export const DonationBatchesPage = () => {
             </Stack>
           </TableCell>
           <TableCell>{editLink}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     return result;
   };
@@ -193,15 +193,15 @@ export const DonationBatchesPage = () => {
       return rows;
     }
 
-    rows.push(<TableRow key="header">
+    rows.push(
+      <TableRow key="header">
         <TableCell
           sx={{
             fontWeight: 600,
             cursor: "pointer",
             "&:hover": { backgroundColor: "action.hover" },
           }}
-          onClick={() => sortTable("name", sortDirection)}
-        >
+          onClick={() => sortTable("name", sortDirection)}>
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
               {Locale.label("common.name")}
@@ -215,8 +215,7 @@ export const DonationBatchesPage = () => {
             cursor: "pointer",
             "&:hover": { backgroundColor: "action.hover" },
           }}
-          onClick={() => sortTable("batchDate", sortDirection)}
-        >
+          onClick={() => sortTable("batchDate", sortDirection)}>
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
               {Locale.label("donations.donationsPage.date")}
@@ -239,7 +238,8 @@ export const DonationBatchesPage = () => {
             {Locale.label("common.edit")}
           </Typography>
         </TableCell>
-      </TableRow>);
+      </TableRow>
+    );
     return rows;
   };
 
@@ -255,8 +255,7 @@ export const DonationBatchesPage = () => {
                 borderBottom: "2px solid",
                 borderBottomColor: "divider",
               },
-            }}
-          >
+            }}>
             {getTableHeader()}
           </TableHead>
           <TableBody>{getRows()}</TableBody>
@@ -277,20 +276,19 @@ export const DonationBatchesPage = () => {
           {
             icon: <DonationIcon />,
             value: stats.totalBatches,
-            label: "Total Batches"
+            label: "Total Batches",
           },
           {
             icon: <Icon>receipt</Icon>,
             value: stats.totalDonations,
-            label: "Total Donations"
+            label: "Total Donations",
           },
           {
             icon: <Icon>attach_money</Icon>,
             value: stats.totalAmount.toLocaleString("en-US", { style: "decimal", minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-            label: "Total Amount"
-          }
-        ]}
-      >
+            label: "Total Amount",
+          },
+        ]}>
         {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
           <Button
             variant="outlined"
@@ -306,8 +304,7 @@ export const DonationBatchesPage = () => {
             onClick={() => {
               setEditBatchId("");
             }}
-            data-testid="add-batch-button"
-          >
+            data-testid="add-batch-button">
             Add Batch
           </Button>
         )}

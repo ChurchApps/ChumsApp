@@ -1,9 +1,7 @@
 import React, { useEffect, memo, useCallback, useMemo } from "react";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface } from "../../../helpers";
 import { ApiHelper, ArrayHelper, type LinkInterface, Locale } from "@churchapps/apphelper";
-import {
- Alert, Box, Button, Menu, MenuItem, Tab, Tabs, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemText, IconButton, Paper, Chip 
-} from "@mui/material";
+import { Alert, Box, Button, Menu, MenuItem, Tab, Tabs, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemText, IconButton, Paper, Chip } from "@mui/material";
 import { MusicNote as KeyIcon, Add as AddIcon, Download as DownloadIcon, Link as LinkIcon, Edit as EditIcon, CloudDownload as ImportIcon } from "@mui/icons-material";
 import { PraiseChartsProducts } from "./PraiseChartsProducts";
 import { KeyEdit } from "./KeyEdit";
@@ -36,7 +34,8 @@ export const Keys = memo((props: Props) => {
     setAnchorEl(null);
   }, []);
 
-  const handleTabChange = useCallback((event: React.SyntheticEvent, newValue: string) => {
+  const handleTabChange = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
       if (newValue === "add") {
         setEditKey({
           arrangementId: props.arrangement.id,
@@ -48,7 +47,9 @@ export const Keys = memo((props: Props) => {
         setSelectedKey(k);
         setEditKey(null);
       }
-    }, [keys, props.arrangement.id]);
+    },
+    [keys, props.arrangement.id]
+  );
 
   const loadData = useCallback(async () => {
     if (props.arrangement) {
@@ -117,8 +118,7 @@ export const Keys = memo((props: Props) => {
                 sx={{
                   borderRadius: 1,
                   "&:hover": { backgroundColor: "action.hover" },
-                }}
-              >
+                }}>
                 <DownloadIcon sx={{ mr: 1, fontSize: 18, color: "primary.main" }} />
                 <ListItemText
                   primary={p.name}
@@ -159,8 +159,7 @@ export const Keys = memo((props: Props) => {
                     borderRadius: 1,
                     flex: 1,
                     "&:hover": { backgroundColor: "action.hover" },
-                  }}
-                >
+                  }}>
                   <LinkIcon sx={{ mr: 1, fontSize: 18, color: "secondary.main" }} />
                   <ListItemText
                     primary={l.text}
@@ -178,7 +177,8 @@ export const Keys = memo((props: Props) => {
     );
   }, [links]);
 
-  const tabsComponent = useMemo(() =>
+  const tabsComponent = useMemo(
+    () =>
       keys.map((k) => (
         <Tab
           key={k.id}
@@ -192,7 +192,9 @@ export const Keys = memo((props: Props) => {
             </Stack>
           }
         />
-      )), [keys]);
+      )),
+    [keys]
+  );
 
   if (editKey) {
     return (
@@ -226,8 +228,7 @@ export const Keys = memo((props: Props) => {
                   color: "primary.main",
                   "&:hover": { backgroundColor: "primary.light" },
                 }}
-                aria-label="Edit selected key"
-              >
+                aria-label="Edit selected key">
                 <EditIcon />
               </IconButton>
             )}
@@ -265,12 +266,10 @@ export const Keys = memo((props: Props) => {
                       }}
                       variant="contained"
                       color="success"
-                      size="small"
-                    >
+                      size="small">
                       {Locale.label("songs.keys.import") || "Import"}
                     </Button>
-                  }
-                >
+                  }>
                   {Locale.label("songs.keys.importPrompt") || "Lyrics are available for import from PraiseCharts."}
                 </Alert>
               )}
@@ -286,8 +285,7 @@ export const Keys = memo((props: Props) => {
                   pt: 2,
                   borderTop: "1px solid",
                   borderColor: "grey.200",
-                }}
-              >
+                }}>
                 <Button
                   id="addBtnGroup"
                   variant="outlined"
@@ -298,8 +296,7 @@ export const Keys = memo((props: Props) => {
                     color: "primary.main",
                     borderColor: "primary.main",
                     "&:hover": { backgroundColor: "primary.light" },
-                  }}
-                >
+                  }}>
                   {Locale.label("songs.keys.addFiles") || "Add Files"}
                 </Button>
               </Box>
@@ -312,8 +309,7 @@ export const Keys = memo((props: Props) => {
                 backgroundColor: "grey.50",
                 border: "1px dashed",
                 borderColor: "grey.300",
-              }}
-            >
+              }}>
               <KeyIcon sx={{ fontSize: 48, color: "grey.400", mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
                 No keys available. Add a key to get started.
@@ -329,8 +325,7 @@ export const Keys = memo((props: Props) => {
           onClick={() => {
             handleClose();
             setShowImport(true);
-          }}
-        >
+          }}>
           <ImportIcon sx={{ mr: 2, color: "primary.main" }} />
           {Locale.label("songs.keys.importFromPraiseCharts") || "Import from PraiseCharts"}
         </MenuItem>
@@ -344,8 +339,7 @@ export const Keys = memo((props: Props) => {
               linkData: "",
               icon: "",
             });
-          }}
-        >
+          }}>
           <LinkIcon sx={{ mr: 2, color: "secondary.main" }} />
           {Locale.label("songs.keys.addExternalLink") || "Add External Link"}
         </MenuItem>

@@ -1,9 +1,7 @@
 import React, { memo, useMemo, useCallback } from "react";
 import { ApiHelper, Loading, Locale, PageHeader } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
-import {
- Button, Box, Card, CardContent, Typography, Stack, Avatar, Paper, Chip, IconButton, TextField, InputAdornment 
-} from "@mui/material";
+import { Button, Box, Card, CardContent, Typography, Stack, Avatar, Paper, Chip, IconButton, TextField, InputAdornment } from "@mui/material";
 import { MusicNote as MusicIcon, LibraryMusic as LibraryIcon, Add as AddIcon, Search as SearchIcon, PlayCircle as PlayIcon, Timer as TimerIcon, Person as ArtistIcon } from "@mui/icons-material";
 import { SongSearchDialog } from "./SongSearchDialog";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
@@ -21,7 +19,8 @@ export const SongsPage = memo(() => {
     placeholderData: [],
   });
 
-  const handleAdd = useCallback(async (songDetail: SongDetailInterface) => {
+  const handleAdd = useCallback(
+    async (songDetail: SongDetailInterface) => {
       let selectedSong = null;
       if (!songDetail.id) {
         songDetail = await ApiHelper.post("/songDetails/create", songDetail, "ContentApi");
@@ -55,12 +54,13 @@ export const SongsPage = memo(() => {
       songs.refetch();
       setShowSearch(false);
       setRedirect("/plans/songs/" + selectedSong.id);
-    }, [songs]);
-
+    },
+    [songs]
+  );
 
   const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const imgSrc = e.currentTarget.src;
-    setFailedImages(prev => new Set(prev).add(imgSrc));
+    setFailedImages((prev) => new Set(prev).add(imgSrc));
   }, []);
 
   const formatSeconds = useCallback((seconds: number) => {
@@ -82,15 +82,7 @@ export const SongsPage = memo(() => {
 
     if (songs.data.length === 0) {
       return (
-        <Paper
-          sx={{
-            p: 6,
-            textAlign: "center",
-            backgroundColor: "grey.50",
-            border: "1px dashed",
-            borderColor: "grey.300",
-          }}
-        >
+        <Paper sx={{ p: 6, textAlign: "center", backgroundColor: "grey.50", border: "1px dashed", borderColor: "grey.300" }}>
           <LibraryIcon sx={{ fontSize: 64, color: "grey.400", mb: 2 }} />
           <Typography variant="h6" color="text.secondary" gutterBottom>
             {Locale.label("songs.library.empty.title") || "No Songs Found"}
@@ -107,15 +99,7 @@ export const SongsPage = memo(() => {
 
     if (filteredSongs && filteredSongs.length === 0) {
       return (
-        <Paper
-          sx={{
-            p: 4,
-            textAlign: "center",
-            backgroundColor: "grey.50",
-            border: "1px dashed",
-            borderColor: "grey.300",
-          }}
-        >
+        <Paper sx={{ p: 4, textAlign: "center", backgroundColor: "grey.50", border: "1px dashed", borderColor: "grey.300" }}>
           <SearchIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
           <Typography variant="body1" color="text.secondary">
             {Locale.label("songs.library.noResults") || "No songs match your search criteria."}
@@ -125,39 +109,17 @@ export const SongsPage = memo(() => {
     }
 
     return (
-      <Box
-        sx={{
-          "& .MuiCard-root": {
-            borderRadius: 2,
-            border: "1px solid",
-            borderColor: "grey.200",
-          },
-        }}
-      >
+      <Box sx={{ "& .MuiCard-root": { borderRadius: 2, border: "1px solid", borderColor: "grey.200" } }}>
         <Stack spacing={2}>
           {filteredSongs?.map((songDetail) => (
-            <Card
-              key={songDetail.id}
-              sx={{
-                transition: "all 0.2s ease-in-out",
-                "&:hover": {
-                  transform: "translateY(-1px)",
-                  boxShadow: 2,
-                },
-              }}
-            >
+            <Card key={songDetail.id} sx={{ transition: "all 0.2s ease-in-out", "&:hover": { transform: "translateY(-1px)", boxShadow: 2 } }}>
               <CardContent sx={{ pb: "16px !important" }}>
                 <Stack direction="row" spacing={2} alignItems="center">
                   {/* Thumbnail/Avatar */}
                   <Avatar
                     src={songDetail.thumbnail && !failedImages.has(songDetail.thumbnail) ? songDetail.thumbnail : undefined}
-                    sx={{
-                      width: 60,
-                      height: 60,
-                      bgcolor: "primary.light",
-                    }}
-                    onError={handleImageError}
-                  >
+                    sx={{ width: 60, height: 60, bgcolor: "primary.light" }}
+                    onError={handleImageError}>
                     <MusicIcon sx={{ fontSize: 28, color: "primary.main" }} />
                   </Avatar>
 
@@ -167,32 +129,13 @@ export const SongsPage = memo(() => {
                       variant="h6"
                       component={Link}
                       to={`/plans/songs/${(songDetail as any).songId}`}
-                      sx={{
-                        color: "primary.main",
-                        textDecoration: "none",
-                        fontWeight: 600,
-                        fontSize: "1.1rem",
-                        "&:hover": { textDecoration: "underline" },
-                        display: "block",
-                        mb: 0.5,
-                      }}
-                    >
+                      sx={{ color: "primary.main", textDecoration: "none", fontWeight: 600, fontSize: "1.1rem", "&:hover": { textDecoration: "underline" }, display: "block", mb: 0.5 }}>
                       {songDetail.title}
                     </Typography>
 
                     <Stack direction="row" spacing={2} flexWrap="wrap" alignItems="center">
                       {songDetail.artist && (
-                        <Chip
-                          icon={<ArtistIcon />}
-                          label={songDetail.artist}
-                          variant="outlined"
-                          size="small"
-                          sx={{
-                            color: "text.secondary",
-                            borderColor: "grey.400",
-                            fontSize: "0.75rem",
-                          }}
-                        />
+                        <Chip icon={<ArtistIcon />} label={songDetail.artist} variant="outlined" size="small" sx={{ color: "text.secondary", borderColor: "grey.400", fontSize: "0.75rem" }} />
                       )}
 
                       {songDetail.seconds && (
@@ -201,11 +144,7 @@ export const SongsPage = memo(() => {
                           label={formatSeconds(songDetail.seconds)}
                           variant="outlined"
                           size="small"
-                          sx={{
-                            color: "text.secondary",
-                            borderColor: "grey.400",
-                            fontSize: "0.75rem",
-                          }}
+                          sx={{ color: "text.secondary", borderColor: "grey.400", fontSize: "0.75rem" }}
                         />
                       )}
                     </Stack>
@@ -215,15 +154,8 @@ export const SongsPage = memo(() => {
                   <IconButton
                     component={Link}
                     to={`/plans/songs/${(songDetail as any).songId}`}
-                    sx={{
-                      color: "primary.main",
-                      "&:hover": {
-                        backgroundColor: "primary.light",
-                        color: "primary.dark",
-                      },
-                    }}
-                    aria-label={`Play ${songDetail.title}`}
-                  >
+                    sx={{ color: "primary.main", "&:hover": { backgroundColor: "primary.light", color: "primary.dark" } }}
+                    aria-label={`Play ${songDetail.title}`}>
                     <PlayIcon />
                   </IconButton>
                 </Stack>
@@ -233,37 +165,18 @@ export const SongsPage = memo(() => {
         </Stack>
       </Box>
     );
-  }, [
-songs.isLoading,
-songs.data,
-filteredSongs,
-formatSeconds,
-handleImageError,
-failedImages
-]);
+  }, [songs.isLoading, songs.data, filteredSongs, formatSeconds, handleImageError, failedImages]);
 
   if (redirect) return <Navigate to={redirect} />;
 
   return (
     <>
-      <PageHeader
-        icon={<LibraryIcon />}
-        title={Locale.label("songs.title") || "Songs"}
-        subtitle="Manage your song library and arrangements"
-      >
+      <PageHeader icon={<LibraryIcon />} title={Locale.label("songs.title") || "Songs"} subtitle="Manage your song library and arrangements">
         <Button
           variant="outlined"
           startIcon={<SearchIcon />}
           onClick={() => setShowSearchField(!showSearchField)}
-          sx={{
-            color: "#FFF",
-            borderColor: "rgba(255,255,255,0.5)",
-            "&:hover": {
-              borderColor: "#FFF",
-              backgroundColor: "rgba(255,255,255,0.1)",
-            },
-          }}
-        >
+          sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
           Search
         </Button>
         <Button
@@ -272,29 +185,14 @@ failedImages
           startIcon={<AddIcon />}
           data-testid="add-song-button"
           aria-label="Add song"
-          sx={{
-            color: "#FFF",
-            borderColor: "rgba(255,255,255,0.5)",
-            "&:hover": {
-              borderColor: "#FFF",
-              backgroundColor: "rgba(255,255,255,0.1)",
-            },
-          }}
-        >
+          sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
           {Locale.label("songs.addSong") || "Add Song"}
         </Button>
       </PageHeader>
 
       <Box sx={{ p: 3 }}>
         {(showSearchField || searchFilter) && songs.data && songs.data.length > 0 && (
-          <Card
-            sx={{
-              mb: 3,
-              borderRadius: 2,
-              border: "1px solid",
-              borderColor: "grey.200",
-            }}
-          >
+          <Card sx={{ mb: 3, borderRadius: 2, border: "1px solid", borderColor: "grey.200" }}>
             <CardContent sx={{ pb: "16px !important" }}>
               <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                 <SearchIcon sx={{ color: "primary.main", fontSize: 24 }} />
@@ -316,14 +214,7 @@ failedImages
                   ),
                 }}
                 autoFocus={showSearchField}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: 2,
-                    backgroundColor: "grey.50",
-                    "&:hover": { backgroundColor: "#FFF" },
-                    "&.Mui-focused": { backgroundColor: "#FFF" },
-                  },
-                }}
+                sx={{ "& .MuiOutlinedInput-root": { borderRadius: 2, backgroundColor: "grey.50", "&:hover": { backgroundColor: "#FFF" }, "&.Mui-focused": { backgroundColor: "#FFF" } } }}
               />
             </CardContent>
           </Card>

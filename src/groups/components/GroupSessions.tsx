@@ -17,9 +17,7 @@ import {
   Locale,
   DateHelper,
 } from "@churchapps/apphelper";
-import {
- Table, TableBody, TableRow, TableCell, TableHead, Icon, Button, Grid, Avatar, Box, Typography, Paper, Pagination, Chip
-} from "@mui/material";
+import { Table, TableBody, TableRow, TableCell, TableHead, Icon, Button, Grid, Avatar, Box, Typography, Paper, Pagination, Chip } from "@mui/material";
 import { SessionCard } from "./SessionCard";
 
 interface Props {
@@ -40,10 +38,10 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
   const [session, setSession] = React.useState<SessionInterface>(null);
   const [downloadData, setDownloadData] = React.useState<any[]>([]);
   const [sessionAttendanceCounts, setSessionAttendanceCounts] = React.useState<Record<string, number>>({});
-  
+
   // Pagination and filtering state
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [selectedYear, setSelectedYear] = React.useState<string>('all');
+  const [selectedYear, setSelectedYear] = React.useState<string>("all");
   const sessionsPerPage = 12;
 
   const loadAttDownloadData = useCallback(() => {
@@ -70,10 +68,10 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
 
   const loadSessionAttendanceCounts = useCallback(async (sessions: SessionInterface[]) => {
     const counts: Record<string, number> = {};
-    
+
     // For scalability, only load counts for recent sessions or limit the batch size
     const sessionsToLoadCounts = sessions.slice(0, 50); // Limit to most recent 50 sessions
-    
+
     // Load attendance counts in smaller batches to avoid overwhelming the API
     const batchSize = 10;
     for (let i = 0; i < sessionsToLoadCounts.length; i += batchSize) {
@@ -87,10 +85,10 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
           counts[session.id] = 0;
         }
       });
-      
+
       await Promise.all(batchPromises);
       // Update counts incrementally for better UX
-      setSessionAttendanceCounts(prev => ({ ...prev, ...counts }));
+      setSessionAttendanceCounts((prev) => ({ ...prev, ...counts }));
     }
   }, []);
 
@@ -101,7 +99,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
           // Sort sessions by date (most recent first)
           const sortedSessions = [...data].sort((a, b) => new Date(b.sessionDate).getTime() - new Date(a.sessionDate).getTime());
           setSessions(sortedSessions);
-          
+
           // Load attendance counts for all sessions
           await loadSessionAttendanceCounts(sortedSessions);
         } else {
@@ -112,29 +110,38 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
     }
   }, [group.id, loadSessionAttendanceCounts]);
 
-  const handleRemove = useCallback((vs: VisitSessionInterface) => {
+  const handleRemove = useCallback(
+    (vs: VisitSessionInterface) => {
       ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + vs.visit.personId, "AttendanceApi").then(loadAttendance);
-    }, [session?.id, loadAttendance]);
+    },
+    [session?.id, loadAttendance]
+  );
 
-  const handleAdd = useCallback((e: React.MouseEvent) => {
+  const handleAdd = useCallback(
+    (e: React.MouseEvent) => {
       e.preventDefault();
       sidebarVisibilityFunction("addSession", true);
-    }, [sidebarVisibilityFunction]);
+    },
+    [sidebarVisibilityFunction]
+  );
 
   const handleViewSession = useCallback((selectedSession: SessionInterface) => {
     setSession(selectedSession);
   }, []);
 
-  const handleEditSession = useCallback((sessionToEdit: SessionInterface) => {
-    if (onSessionEdit) {
-      onSessionEdit(sessionToEdit);
-    }
-  }, [onSessionEdit]);
+  const handleEditSession = useCallback(
+    (sessionToEdit: SessionInterface) => {
+      if (onSessionEdit) {
+        onSessionEdit(sessionToEdit);
+      }
+    },
+    [onSessionEdit]
+  );
 
   // Extract unique years from session displayNames
   const availableYears = useMemo(() => {
     const years = new Set<string>();
-    sessions.forEach(session => {
+    sessions.forEach((session) => {
       if (session.displayName) {
         // Extract year from displayName (assuming format includes year like "Dec 15, 2024")
         const yearMatch = session.displayName.match(/\b(20\d{2})\b/);
@@ -149,19 +156,19 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
 
   // Set default year to most recent when sessions load
   React.useEffect(() => {
-    if (availableYears.length > 0 && selectedYear === 'all') {
+    if (availableYears.length > 0 && selectedYear === "all") {
       setSelectedYear(availableYears[0]);
     }
   }, [availableYears, selectedYear]);
 
   // Filter sessions based on selected year
   const filteredSessions = useMemo(() => {
-    if (selectedYear === 'all') {
+    if (selectedYear === "all") {
       return [...sessions];
     }
-    
+
     // Filter by year in displayName
-    return sessions.filter(s => {
+    return sessions.filter((s) => {
       if (!s.displayName) return false;
       return s.displayName.includes(`/${selectedYear}`) || s.displayName.includes(`, ${selectedYear}`);
     });
@@ -169,7 +176,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
 
   // Auto-select logic: select most recent session from filtered results
   React.useEffect(() => {
-    if (filteredSessions.length > 0 && (!session || !filteredSessions.find(s => s.id === session.id))) {
+    if (filteredSessions.length > 0 && (!session || !filteredSessions.find((s) => s.id === session.id))) {
       // If no session is selected or current session is not in filtered results,
       // select the most recent session from filtered results
       setSession(filteredSessions[0]);
@@ -208,7 +215,8 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
         <></>
       );
       if (person) {
-        result.push(<TableRow key={vs.id}>
+        result.push(
+          <TableRow key={vs.id}>
             <TableCell>
               <Avatar src={PersonHelper.getPhotoUrl(person)} sx={{ width: 48, height: 48 }} />
             </TableCell>
@@ -218,7 +226,8 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
               </a>
             </TableCell>
             <TableCell style={{ textAlign: "right" }}>{editLink}</TableCell>
-          </TableRow>);
+          </TableRow>
+        );
       }
     }
     return result;
@@ -226,29 +235,35 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
 
   const renderFilterControls = () => (
     <Box sx={{ mb: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
         <Typography variant="h6" component="div">
           {Locale.label("groups.groupSessions.sessions")} ({filteredSessions.length})
         </Typography>
         {canEdit && getAddButton()}
       </Box>
-      
-      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-        {availableYears.map(year => (
+
+      <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+        {availableYears.map((year) => (
           <Chip
             key={year}
             label={year}
-            onClick={() => { setSelectedYear(year); setCurrentPage(1); }}
-            color={selectedYear === year ? 'primary' : 'default'}
-            variant={selectedYear === year ? 'filled' : 'outlined'}
+            onClick={() => {
+              setSelectedYear(year);
+              setCurrentPage(1);
+            }}
+            color={selectedYear === year ? "primary" : "default"}
+            variant={selectedYear === year ? "filled" : "outlined"}
           />
         ))}
         {availableYears.length > 1 && (
           <Chip
             label="All Years"
-            onClick={() => { setSelectedYear('all'); setCurrentPage(1); }}
-            color={selectedYear === 'all' ? 'primary' : 'default'}
-            variant={selectedYear === 'all' ? 'filled' : 'outlined'}
+            onClick={() => {
+              setSelectedYear("all");
+              setCurrentPage(1);
+            }}
+            color={selectedYear === "all" ? "primary" : "default"}
+            variant={selectedYear === "all" ? "filled" : "outlined"}
           />
         )}
       </Box>
@@ -258,8 +273,8 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
   const renderSessionCards = () => {
     if (sessions.length === 0) {
       return (
-        <Paper sx={{ p: 4, textAlign: 'center', mb: 3 }}>
-          <Icon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }}>calendar_month</Icon>
+        <Paper sx={{ p: 4, textAlign: "center", mb: 3 }}>
+          <Icon sx={{ fontSize: 48, color: "text.secondary", mb: 2 }}>calendar_month</Icon>
           <Typography variant="h6" color="text.secondary" gutterBottom>
             {Locale.label("groups.groupSessions.noSesMsg")}
           </Typography>
@@ -273,8 +288,8 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
 
     if (filteredSessions.length === 0) {
       return (
-        <Paper sx={{ p: 4, textAlign: 'center', mb: 3 }}>
-          <Icon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }}>search_off</Icon>
+        <Paper sx={{ p: 4, textAlign: "center", mb: 3 }}>
+          <Icon sx={{ fontSize: 48, color: "text.secondary", mb: 2 }}>search_off</Icon>
           <Typography variant="h6" color="text.secondary" gutterBottom>
             No sessions found
           </Typography>
@@ -301,17 +316,10 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
             </Grid>
           ))}
         </Grid>
-        
+
         {totalPages > 1 && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-            <Pagination
-              count={totalPages}
-              page={currentPage}
-              onChange={(_, page) => setCurrentPage(page)}
-              color="primary"
-              showFirstButton
-              showLastButton
-            />
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+            <Pagination count={totalPages} page={currentPage} onChange={(_, page) => setCurrentPage(page)} color="primary" showFirstButton showLastButton />
           </Box>
         )}
       </Box>
@@ -375,7 +383,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
   const renderAttendanceSection = () => {
     if (!session) {
       return (
-        <Paper sx={{ p: 4, textAlign: 'center' }}>
+        <Paper sx={{ p: 4, textAlign: "center" }}>
           <Typography variant="body1" color="text.secondary">
             Select a session above to view attendance
           </Typography>
@@ -385,7 +393,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
 
     return (
       <Paper sx={{ p: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
           <Box>
             <Typography variant="h6" component="div" data-cy="session-present-msg">
               {Locale.label("groups.groupSessions.attFor")} {group.name}
@@ -395,18 +403,11 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
               {session.serviceTime?.name && ` • ${session.serviceTime.name}`}
             </Typography>
           </Box>
-          {downloadData && (
-            <ExportLink 
-              data={downloadData} 
-              spaceAfter={true} 
-              filename={`${group.name}_visits.csv`} 
-              customHeaders={customHeaders} 
-            />
-          )}
+          {downloadData && <ExportLink data={downloadData} spaceAfter={true} filename={`${group.name}_visits.csv`} customHeaders={customHeaders} />}
         </Box>
-        
+
         {visitSessions.length === 0 ? (
-          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 4 }}>
             No attendance recorded for this session
           </Typography>
         ) : (

@@ -70,13 +70,7 @@ export const GroupPage = () => {
       <GroupBanner group={group.data} selectedTab={selectedTab} onTabChange={setSelectedTab} togglePhotoEditor={togglePhotoEditor} onEdit={handleEdit} editMode={editMode} />
       <Grid container spacing={2}>
         <Grid size={{ xs: 12 }}>
-          <div id="mainContent">
-            {editMode ? (
-              <GroupDetailsEdit id="groupDetailsBox" group={group.data} updatedFunction={handleUpdated} togglePhotoEditor={togglePhotoEditor} />
-            ) : (
-              getCurrentTab()
-            )}
-          </div>
+          <div id="mainContent">{editMode ? <GroupDetailsEdit id="groupDetailsBox" group={group.data} updatedFunction={handleUpdated} togglePhotoEditor={togglePhotoEditor} /> : getCurrentTab()}</div>
         </Grid>
       </Grid>
     </>

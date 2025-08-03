@@ -13,11 +13,14 @@ export function DraggableWrapper(props: Props) {
   const { dndType, data, draggingCallback, onDoubleClick, children } = props;
   const dragRef = React.useRef(null);
 
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
       type: dndType,
       item: { data },
       collect: (monitor) => ({ isDragging: !!monitor.isDragging() }),
-    }), [data]);
+    }),
+    [data]
+  );
 
   drag(dragRef);
 

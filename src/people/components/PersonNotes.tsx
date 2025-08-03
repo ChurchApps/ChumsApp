@@ -77,8 +77,7 @@ export const PersonNotes: React.FC<Props> = memo((props) => {
           marginTop: "8px",
           "&:hover": { backgroundColor: "primary.dark" },
         },
-      }}
-    >
+      }}>
       <Notes context={props.context} conversationId={props.conversationId} createConversation={props.createConversation} />
     </Box>
   );

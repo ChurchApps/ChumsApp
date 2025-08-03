@@ -1,7 +1,5 @@
 import React from "react";
-import {
- ApiHelper, type GroupInterface, type GroupServiceTimeInterface, InputBox, ErrorMessages, type SessionInterface, DateHelper, UniqueIdHelper, Locale 
-} from "@churchapps/apphelper";
+import { ApiHelper, type GroupInterface, type GroupServiceTimeInterface, InputBox, ErrorMessages, type SessionInterface, DateHelper, UniqueIdHelper, Locale } from "@churchapps/apphelper";
 import { TextField, FormControl, Select, InputLabel, MenuItem, type SelectChangeEvent } from "@mui/material";
 
 interface Props {
@@ -55,9 +53,11 @@ export const SessionAdd: React.FC<Props> = (props) => {
       const options = [];
       for (let i = 0; i < groupServiceTimes.length; i++) {
         const gst = groupServiceTimes[i];
-        options.push(<MenuItem key={i} value={gst.serviceTimeId}>
+        options.push(
+          <MenuItem key={i} value={gst.serviceTimeId}>
             {gst.serviceTime.name}
-          </MenuItem>);
+          </MenuItem>
+        );
       }
 
       return (
@@ -70,8 +70,7 @@ export const SessionAdd: React.FC<Props> = (props) => {
             onChange={(e: SelectChangeEvent) => {
               setServiceTimeId(e.target.value as string);
             }}
-            onKeyDown={handleKeyDown}
-          >
+            onKeyDown={handleKeyDown}>
             {options}
           </Select>
         </FormControl>
@@ -90,8 +89,7 @@ export const SessionAdd: React.FC<Props> = (props) => {
       headerText={Locale.label("groups.sessionAdd.sesAdd")}
       saveFunction={handleSave}
       cancelFunction={handleCancel}
-      help="chums/attendance"
-    >
+      help="chums/attendance">
       <ErrorMessages errors={errors} />
       {getServiceTimes()}
 

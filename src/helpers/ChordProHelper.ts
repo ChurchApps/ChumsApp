@@ -25,20 +25,7 @@ export class ChordProHelper {
   };
 
   // Array to convert semitone numbers back to note names (using sharps here)
-  static noteNames = [
-"C",
-"C#",
-"D",
-"D#",
-"E",
-"F",
-"F#",
-"G",
-"G#",
-"A",
-"A#",
-"B"
-];
+  static noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
   static replaceChords = (line: string) => {
     const l = line.replaceAll("[", "<sup>").replaceAll("]", "</sup>");

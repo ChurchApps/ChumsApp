@@ -15,9 +15,7 @@ import {
 } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import {
- Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField 
-} from "@mui/material";
+import { Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
@@ -39,25 +37,34 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
     enabled: !!props.group?.id,
   });
 
-  const handleRemove = useCallback((member: GroupMemberInterface) => {
+  const handleRemove = useCallback(
+    (member: GroupMemberInterface) => {
       ApiHelper.delete("/groupmembers/" + member.id, "MembershipApi").then(() => {
         groupMembers.refetch();
       });
-    }, [groupMembers]);
+    },
+    [groupMembers]
+  );
 
-  const handleToggleLeader = useCallback((member: GroupMemberInterface) => {
+  const handleToggleLeader = useCallback(
+    (member: GroupMemberInterface) => {
       member.leader = !member.leader;
       console.log("Member", member);
       ApiHelper.post("/groupmembers", [member], "MembershipApi").then(() => {
         groupMembers.refetch();
       });
-    }, [groupMembers]);
+    },
+    [groupMembers]
+  );
 
-  const getMemberByPersonId = useCallback((personId: string) => {
+  const getMemberByPersonId = useCallback(
+    (personId: string) => {
       let result = null;
       for (let i = 0; i < groupMembers.data.length; i++) if (groupMembers.data[i].personId === personId) result = groupMembers.data[i];
       return result;
-    }, [groupMembers.data]);
+    },
+    [groupMembers.data]
+  );
 
   const handleAdd = useCallback(() => {
     if (getMemberByPersonId(props.addedPerson.id) === null) {
@@ -75,9 +82,11 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
     const rows: JSX.Element[] = [];
 
     if (groupMembers.data.length === 0) {
-      rows.push(<TableRow key="0">
+      rows.push(
+        <TableRow key="0">
           <TableCell>{Locale.label("groups.groupMembers.noMem")}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return rows;
     }
 
@@ -86,35 +95,42 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
       const editLinks = [];
       if (canEdit) {
         if (gm.leader) {
-          editLinks.push(<SmallButton
+          editLinks.push(
+            <SmallButton
               icon="key_off"
               toolTip="Remove Leader Access"
               onClick={() => handleToggleLeader(gm)}
               color="error"
               data-testid={`remove-leader-button-${gm.id}`}
               ariaLabel={`Remove leader access for ${gm.person.name.display}`}
-            />);
+            />
+          );
         } else {
-          editLinks.push(<SmallButton
+          editLinks.push(
+            <SmallButton
               icon="key"
               toolTip="Promote to Leader"
               onClick={() => handleToggleLeader(gm)}
               color="success"
               data-testid={`promote-leader-button-${gm.id}`}
               ariaLabel={`Promote ${gm.person.name.display} to leader`}
-            />);
+            />
+          );
         }
-        editLinks.push(<SmallButton
+        editLinks.push(
+          <SmallButton
             icon="person_remove"
             toolTip="Remove"
             onClick={() => handleRemove(gm)}
             color="error"
             data-testid={`remove-member-button-${gm.id}`}
             ariaLabel={`Remove ${gm.person.name.display} from group`}
-          />);
+          />
+        );
       }
 
-      rows.push(<TableRow key={gm.id}>
+      rows.push(
+        <TableRow key={gm.id}>
           <TableCell>
             <PersonAvatar person={gm.person} size="small" />
           </TableCell>
@@ -122,7 +138,8 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
             <Link to={"/people/" + gm.personId}>{gm.person.name.display}</Link>
           </TableCell>
           <TableCell style={{ textAlign: "right" }}>{editLinks}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     return rows;
   }, [groupMembers.data, canEdit, handleToggleLeader, handleRemove]);
@@ -133,11 +150,13 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
       return rows;
     }
 
-    rows.push(<TableRow key="header" sx={{ textAlign: "left" }}>
+    rows.push(
+      <TableRow key="header" sx={{ textAlign: "left" }}>
         <th></th>
         <th>{Locale.label("common.name")}</th>
         <th></th>
-      </TableRow>);
+      </TableRow>
+    );
     return rows;
   }, [groupMembers.data.length]);
 
@@ -167,8 +186,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
             setShow(!show);
           }}
           data-testid="send-message-button"
-          ariaLabel="Send message to members"
-        ></SmallButton>
+          ariaLabel="Send message to members"></SmallButton>
       )}
       <ExportLink data={groupMembers.data} spaceAfter={true} filename="groupmembers.csv" />
     </>
@@ -221,8 +239,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
                 onChange={(e) => {
                   setSelectedTemplate(e.target.value);
                   handleTemplateMessage(e.target.value);
-                }}
-              >
+                }}>
                 <MenuItem value="">{Locale.label("groups.groupMembers.templates.none")}</MenuItem>
                 <MenuItem value="welcome_volunteers">{Locale.label("groups.groupMembers.templates.welcome_volunteers.heading")}</MenuItem>
               </Select>
@@ -234,8 +251,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
                 e.preventDefault();
                 setShowTemplates(!showTemplates);
               }}
-              style={{ paddingLeft: "5px" }}
-            >
+              style={{ paddingLeft: "5px" }}>
               {Locale.label("groups.groupMembers.showTemplates")}
             </a>
           )}
@@ -257,8 +273,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
               justifyContent: "end",
               alignItems: "center",
               marginTop: "15px",
-            }}
-          >
+            }}>
             <Button
               size="small"
               variant="contained"
@@ -269,8 +284,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
                 setMessage("");
                 setShowTemplates(false);
                 setSelectedTemplate("");
-              }}
-            >
+              }}>
               {Locale.label("groups.groupMembers.send")}
             </Button>
           </div>

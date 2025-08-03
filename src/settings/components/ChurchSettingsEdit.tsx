@@ -45,7 +45,7 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
     setErrors([]);
     const c = { ...church };
     const { name, value } = e.target;
-    
+
     switch (name) {
       case "churchName":
         c.name = value;
@@ -85,21 +85,15 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
   if (!church || !church.id) return null;
 
   return (
-    <InputBox
-      id="churchSettingsBox"
-      cancelFunction={props.updatedFunction}
-      saveFunction={handleSave}
-      headerText={Locale.label("settings.churchSettingsEdit.churchSettings")}
-      headerIcon="business"
-    >
+    <InputBox id="churchSettingsBox" cancelFunction={props.updatedFunction} saveFunction={handleSave} headerText={Locale.label("settings.churchSettingsEdit.churchSettings")} headerIcon="business">
       <ErrorMessages errors={errors} />
-      
+
       {/* Church Information Section */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: "primary.main" }}>
           {Locale.label("settings.churchSettingsEdit.churchInfo")}
         </Typography>
-        
+
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField
@@ -146,54 +140,19 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <TextField
-                fullWidth
-                name="address2"
-                label={Locale.label("settings.churchSettingsEdit.address2")}
-                value={church?.address2 || ""}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-              />
+              <TextField fullWidth name="address2" label={Locale.label("settings.churchSettingsEdit.address2")} value={church?.address2 || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <TextField
-                fullWidth
-                name="city"
-                label={Locale.label("person.city")}
-                value={church?.city || ""}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-              />
+              <TextField fullWidth name="city" label={Locale.label("person.city")} value={church?.city || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
             <Grid size={{ xs: 12, md: 3 }}>
-              <TextField
-                fullWidth
-                name="state"
-                label={Locale.label("person.state")}
-                value={church?.state || ""}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-              />
+              <TextField fullWidth name="state" label={Locale.label("person.state")} value={church?.state || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
             <Grid size={{ xs: 12, md: 3 }}>
-              <TextField
-                fullWidth
-                name="zip"
-                label={Locale.label("person.zip")}
-                value={church?.zip || ""}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-              />
+              <TextField fullWidth name="zip" label={Locale.label("person.zip")} value={church?.zip || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
             <Grid size={{ xs: 12 }}>
-              <TextField
-                fullWidth
-                name="country"
-                label={Locale.label("person.country")}
-                value={church?.country || ""}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-              />
+              <TextField fullWidth name="country" label={Locale.label("person.country")} value={church?.country || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
             </Grid>
           </Grid>
         </Box>

@@ -83,8 +83,7 @@ export const AutomationEdit = (props: Props) => {
         borderColor: "grey.200",
         transition: "all 0.2s ease-in-out",
         "&:hover": { boxShadow: 2 },
-      }}
-    >
+      }}>
       <CardContent>
         <Stack spacing={3}>
           {/* Header */}
@@ -123,8 +122,7 @@ export const AutomationEdit = (props: Props) => {
                 onChange={handleChange}
                 data-testid="recurs-select"
                 aria-label="Recurrence"
-                startAdornment={<RepeatIcon sx={{ color: "action.active", ml: 1, mr: 0.5 }} />}
-              >
+                startAdornment={<RepeatIcon sx={{ color: "action.active", ml: 1, mr: 0.5 }} />}>
                 <MenuItem value="never">{Locale.label("tasks.automationEdit.never")}</MenuItem>
                 <MenuItem value="yearly">{Locale.label("tasks.automationEdit.yearly")}</MenuItem>
                 <MenuItem value="monthly">{Locale.label("tasks.automationEdit.monthly")}</MenuItem>
@@ -154,8 +152,7 @@ export const AutomationEdit = (props: Props) => {
                   borderRadius: 2,
                   textTransform: "none",
                   fontWeight: 600,
-                }}
-              >
+                }}>
                 {Locale.label("common.delete")}
               </Button>
             )}
@@ -167,8 +164,7 @@ export const AutomationEdit = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {Locale.label("common.cancel")}
             </Button>
             <Button
@@ -179,8 +175,7 @@ export const AutomationEdit = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {Locale.label("common.save")}
             </Button>
           </Stack>

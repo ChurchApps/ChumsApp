@@ -6,6 +6,7 @@
   "trailingComma": "es5",
   "printWidth": 200,
   "bracketSpacing": true,
+  "bracketSameLine": true,
   "arrowParens": "always",
   "jsxSingleQuote": false,
   "proseWrap": "preserve",

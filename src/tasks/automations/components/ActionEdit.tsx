@@ -1,6 +1,4 @@
-import {
- MenuItem, Select, TextField, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, FormControl, InputLabel, InputAdornment, FormHelperText 
-} from "@mui/material";
+import { MenuItem, Select, TextField, type SelectChangeEvent, Card, CardContent, Typography, Stack, Box, Button, FormControl, InputLabel, InputAdornment, FormHelperText } from "@mui/material";
 import React from "react";
 import { ErrorMessages, type ActionInterface, ApiHelper, Locale } from "@churchapps/apphelper";
 import { ContentPicker } from "../../components/ContentPicker";
@@ -101,8 +99,7 @@ export const ActionEdit = (props: Props) => {
         borderColor: "grey.200",
         transition: "all 0.2s ease-in-out",
         "&:hover": { boxShadow: 2 },
-      }}
-    >
+      }}>
       <CardContent>
         <Stack spacing={3}>
           {/* Header */}
@@ -129,8 +126,7 @@ export const ActionEdit = (props: Props) => {
                 onChange={handleChange}
                 data-testid="action-type-select"
                 aria-label="Action type"
-                startAdornment={<TaskIcon sx={{ color: "action.active", ml: 1, mr: 0.5 }} />}
-              >
+                startAdornment={<TaskIcon sx={{ color: "action.active", ml: 1, mr: 0.5 }} />}>
                 <MenuItem value="task">{Locale.label("tasks.actionEdit.taskAssign")}</MenuItem>
               </Select>
               <FormHelperText>What type of action should be performed?</FormHelperText>
@@ -195,8 +191,7 @@ export const ActionEdit = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {Locale.label("common.cancel")}
             </Button>
             <Button
@@ -207,8 +202,7 @@ export const ActionEdit = (props: Props) => {
                 borderRadius: 2,
                 textTransform: "none",
                 fontWeight: 600,
-              }}
-            >
+              }}>
               {Locale.label("common.save")}
             </Button>
           </Stack>

@@ -4,9 +4,7 @@ import { UserHelper, ExportLink, Loading, Locale, PageHeader } from "@churchapps
 import { Link } from "react-router-dom";
 import { Permissions } from "@churchapps/apphelper";
 import { type FundInterface } from "@churchapps/helpers";
-import {
- Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 
-} from "@mui/material";
+import { Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button } from "@mui/material";
 import { VolunteerActivism as FundIcon, Add as AddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
 
@@ -56,7 +54,7 @@ export const FundsPage = () => {
     setCurrentSortedCol(key);
 
     // Note: With React Query, we can't directly mutate the cached data
-    // This sort functionality would need to be implemented differently 
+    // This sort functionality would need to be implemented differently
     // or moved to server-side sorting
     setSortDirection(!asc);
   };
@@ -72,7 +70,8 @@ export const FundsPage = () => {
     const result: JSX.Element[] = [];
 
     if (funds.data.length === 0) {
-      result.push(<TableRow key="0">
+      result.push(
+        <TableRow key="0">
           <TableCell colSpan={3} sx={{ textAlign: "center", py: 4 }}>
             <Stack spacing={2} alignItems="center">
               <FundIcon sx={{ fontSize: 48, color: "text.secondary" }} />
@@ -81,7 +80,8 @@ export const FundsPage = () => {
               </Typography>
             </Stack>
           </TableCell>
-        </TableRow>);
+        </TableRow>
+      );
       return result;
     }
 
@@ -103,8 +103,7 @@ export const FundsPage = () => {
             textDecoration: "none",
             color: "var(--c1l2)",
             fontWeight: 500,
-          }}
-        >
+          }}>
           {f.name}
         </Link>
       ) : (
@@ -113,13 +112,13 @@ export const FundsPage = () => {
         </Typography>
       );
 
-      result.push(<TableRow
+      result.push(
+        <TableRow
           key={i}
           sx={{
             "&:hover": { backgroundColor: "action.hover" },
             transition: "background-color 0.2s ease",
-          }}
-        >
+          }}>
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
               <FundIcon sx={{ color: "var(--c1l2)", fontSize: 20 }} />
@@ -146,7 +145,8 @@ export const FundsPage = () => {
             </Stack>
           </TableCell>
           <TableCell>{editLink}</TableCell>
-        </TableRow>);
+        </TableRow>
+      );
     }
     return result;
   };
@@ -158,15 +158,15 @@ export const FundsPage = () => {
       return rows;
     }
 
-    rows.push(<TableRow key="header">
+    rows.push(
+      <TableRow key="header">
         <TableCell
           sx={{
             fontWeight: 600,
             cursor: "pointer",
             "&:hover": { backgroundColor: "action.hover" },
           }}
-          onClick={() => sortTable("name", sortDirection)}
-        >
+          onClick={() => sortTable("name", sortDirection)}>
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
               {Locale.label("common.name")}
@@ -184,7 +184,8 @@ export const FundsPage = () => {
             {Locale.label("common.edit")}
           </Typography>
         </TableCell>
-      </TableRow>);
+      </TableRow>
+    );
     return rows;
   };
 
@@ -200,8 +201,7 @@ export const FundsPage = () => {
                 borderBottom: "2px solid",
                 borderBottomColor: "divider",
               },
-            }}
-          >
+            }}>
             {getTableHeader()}
           </TableHead>
           <TableBody>{getRows()}</TableBody>
@@ -222,10 +222,9 @@ export const FundsPage = () => {
           {
             icon: <FundIcon />,
             value: stats.totalFunds,
-            label: "Total Funds"
-          }
-        ]}
-      >
+            label: "Total Funds",
+          },
+        ]}>
         {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
           <Button
             variant="outlined"
@@ -241,8 +240,7 @@ export const FundsPage = () => {
             onClick={() => {
               setEditFundId("");
             }}
-            data-testid="add-fund-button"
-          >
+            data-testid="add-fund-button">
             Add Fund
           </Button>
         )}

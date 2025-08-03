@@ -1,7 +1,5 @@
 import React, { memo, useCallback, useMemo } from "react";
-import {
- Grid, FormControlLabel, Checkbox, Dialog, DialogTitle, DialogActions, Button, DialogContent, Tabs, Tab, Box 
-} from "@mui/material";
+import { Grid, FormControlLabel, Checkbox, Dialog, DialogTitle, DialogActions, Button, DialogContent, Tabs, Tab, Box } from "@mui/material";
 import { SmallButton, ApiHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
@@ -29,7 +27,8 @@ export const PeopleColumns = memo(function PeopleColumns(props: Props) {
     props.columns.forEach((o, i) => {
       const option = o;
       const selectedClass = props.selectedColumns.indexOf(o.key) > -1 ? "checked" : "";
-      result.push(<Grid key={i} size={{ xs: 12, sm: 6, md: 4 }}>
+      result.push(
+        <Grid key={i} size={{ xs: 12, sm: 6, md: 4 }}>
           <FormControlLabel
             control={
               <Checkbox
@@ -45,7 +44,8 @@ export const PeopleColumns = memo(function PeopleColumns(props: Props) {
             }
             label={option.label}
           />
-        </Grid>);
+        </Grid>
+      );
     });
     return result;
   }, [props.columns, props.selectedColumns, props.toggleColumn]);
@@ -55,7 +55,8 @@ export const PeopleColumns = memo(function PeopleColumns(props: Props) {
     optionalColumns.forEach((oc, i) => {
       const optionalColumn = oc;
       const selectedClass = props.selectedColumns.indexOf(optionalColumn.id) > -1 ? "checked" : "";
-      result.push(<Grid key={i} size={{ xs: 12, sm: 6, md: 4 }}>
+      result.push(
+        <Grid key={i} size={{ xs: 12, sm: 6, md: 4 }}>
           <FormControlLabel
             control={
               <Checkbox
@@ -71,7 +72,8 @@ export const PeopleColumns = memo(function PeopleColumns(props: Props) {
             }
             label={optionalColumn.title}
           />
-        </Grid>);
+        </Grid>
+      );
     });
     return result;
   }, [optionalColumns, props.selectedColumns, props.toggleColumn]);

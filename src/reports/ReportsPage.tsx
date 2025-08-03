@@ -1,8 +1,6 @@
 import React from "react";
 import { Locale, PageHeader } from "@churchapps/apphelper";
-import {
- Box, Card, CardContent, Typography, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Container, Paper 
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Container, Paper } from "@mui/material";
 import { Summarize as SummarizeIcon, CakeOutlined as BirthdayIcon, TrendingUp as TrendIcon, Groups as GroupsIcon, Today as DailyIcon, VolunteerActivism as DonationIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
@@ -52,94 +50,89 @@ export const ReportsPage = () => {
         <Box sx={{ py: 3 }}>
           {/* Reports Grid */}
           <Card
-          elevation={2}
-          sx={{
-            borderRadius: 2,
-            border: "1px solid",
-            borderColor: "divider",
-          }}
-        >
-          <CardContent sx={{ p: 0 }}>
-            <List sx={{ p: 0 }}>
-              {reportItems.map((item, index) => (
-                <React.Fragment key={item.path}>
-                  <ListItem disablePadding>
-                    <ListItemButton
-                      component={Link}
-                      to={item.path}
-                      sx={{
-                        py: 2.5,
-                        px: 3,
-                        transition: "all 0.2s ease-in-out",
-                        "&:hover": {
-                          backgroundColor: "action.hover",
-                          transform: "translateX(4px)",
-                          "& .MuiListItemIcon-root": {
-                            color: "primary.main",
-                            transform: "scale(1.1)",
-                          },
-                        },
-                      }}
-                    >
-                      <ListItemIcon
+            elevation={2}
+            sx={{
+              borderRadius: 2,
+              border: "1px solid",
+              borderColor: "divider",
+            }}>
+            <CardContent sx={{ p: 0 }}>
+              <List sx={{ p: 0 }}>
+                {reportItems.map((item, index) => (
+                  <React.Fragment key={item.path}>
+                    <ListItem disablePadding>
+                      <ListItemButton
+                        component={Link}
+                        to={item.path}
                         sx={{
-                          minWidth: 48,
-                          color: "text.secondary",
+                          py: 2.5,
+                          px: 3,
                           transition: "all 0.2s ease-in-out",
+                          "&:hover": {
+                            backgroundColor: "action.hover",
+                            transform: "translateX(4px)",
+                            "& .MuiListItemIcon-root": {
+                              color: "primary.main",
+                              transform: "scale(1.1)",
+                            },
+                          },
+                        }}>
+                        <ListItemIcon
+                          sx={{
+                            minWidth: 48,
+                            color: "text.secondary",
+                            transition: "all 0.2s ease-in-out",
+                          }}>
+                          {item.icon}
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={
+                            <Typography
+                              variant="subtitle1"
+                              sx={{
+                                fontWeight: 500,
+                                color: "text.primary",
+                              }}>
+                              {item.label}
+                            </Typography>
+                          }
+                          secondary={
+                            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                              {item.description}
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                    {index < reportItems.length - 1 && (
+                      <Box
+                        sx={{
+                          height: 1,
+                          backgroundColor: "divider",
+                          mx: 3,
                         }}
-                      >
-                        {item.icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={
-                          <Typography
-                            variant="subtitle1"
-                            sx={{
-                              fontWeight: 500,
-                              color: "text.primary",
-                            }}
-                          >
-                            {item.label}
-                          </Typography>
-                        }
-                        secondary={
-                          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                            {item.description}
-                          </Typography>
-                        }
                       />
-                    </ListItemButton>
-                  </ListItem>
-                  {index < reportItems.length - 1 && (
-                    <Box
-                      sx={{
-                        height: 1,
-                        backgroundColor: "divider",
-                        mx: 3,
-                      }}
-                    />
-                  )}
-                </React.Fragment>
-              ))}
-            </List>
-          </CardContent>
-        </Card>
+                    )}
+                  </React.Fragment>
+                ))}
+              </List>
+            </CardContent>
+          </Card>
 
-        {/* Help Text */}
-        <Paper
-          sx={{
-            mt: 3,
-            p: 3,
-            backgroundColor: "grey.50",
-            border: "1px solid",
-            borderColor: "divider",
-            borderRadius: 2,
-          }}
-        >
-          <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
-            Need help with reports? Each report includes filters and export options to customize your data view.
-          </Typography>
-        </Paper>
+          {/* Help Text */}
+          <Paper
+            sx={{
+              mt: 3,
+              p: 3,
+              backgroundColor: "grey.50",
+              border: "1px solid",
+              borderColor: "divider",
+              borderRadius: 2,
+            }}>
+            <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
+              Need help with reports? Each report includes filters and export options to customize your data view.
+            </Typography>
+          </Paper>
         </Box>
       </Container>
     </>

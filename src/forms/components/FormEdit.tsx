@@ -130,8 +130,7 @@ export function FormEdit(props: Props) {
       saveFunction={handleSave}
       isSubmitting={saveFormMutation.isPending || deleteFormMutation.isPending}
       cancelFunction={props.updatedFunction}
-      deleteFunction={props.formId ? handleDelete : undefined}
-    >
+      deleteFunction={props.formId ? handleDelete : undefined}>
       <ErrorMessages errors={errors} />
       <TextField fullWidth={true} label={Locale.label("forms.formEdit.name")} type="text" name="name" value={form.name} onChange={handleChange} data-testid="form-name-input" aria-label="Form name" />
       {!props.formId && (
@@ -147,8 +146,7 @@ export function FormEdit(props: Props) {
               if (e.target.value === "form") setStandAloneForm(true);
             }}
             data-testid="content-type-select"
-            aria-label="Content type"
-          >
+            aria-label="Content type">
             <MenuItem value="person">{Locale.label("forms.formEdit.ppl")}</MenuItem>
             <MenuItem value="form">{Locale.label("forms.formEdit.alone")}</MenuItem>
           </Select>
@@ -164,8 +162,7 @@ export function FormEdit(props: Props) {
               value={form?.restricted?.toString()}
               onChange={handleChange}
               data-testid="access-level-select"
-              aria-label="Access level"
-            >
+              aria-label="Access level">
               <MenuItem value="false">{Locale.label("forms.formEdit.public")}</MenuItem>
               <MenuItem value="true">{Locale.label("forms.formEdit.restrict")}</MenuItem>
             </Select>
@@ -178,8 +175,7 @@ export function FormEdit(props: Props) {
               value={showDates.toString()}
               onChange={(e) => {
                 setShowDates(e.target.value === "true");
-              }}
-            >
+              }}>
               <MenuItem value="false">{Locale.label("common.no")}</MenuItem>
               <MenuItem value="true">{Locale.label("common.yes")}</MenuItem>
             </Select>
