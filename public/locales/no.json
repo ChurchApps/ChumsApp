@@ -653,6 +653,12 @@
 			"reports": "Rapporter"
 		}
 	},
+	"reporting": {
+		"fromDate": "Fra dato",
+		"toDate": "Til dato",
+		"runReport": "Kjør rapport",
+		"toDateBeforeFromDate": "Sluttdato kan ikke være før startdato"
+	},
 	"serverAdmin": {
 		"adminPage": {
 			"act": "Aktiv",

@@ -800,6 +800,12 @@
       "reports": "Reports"
     }
   },
+  "reporting": {
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "runReport": "Run Report",
+    "toDateBeforeFromDate": "End date cannot be before start date"
+  },
   "serverAdmin": {
     "adminPage": {
       "abb": "Abbreviations",

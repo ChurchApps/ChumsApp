@@ -653,6 +653,12 @@
       "reports": "Отчеты"
     }
   },
+  "reporting": {
+    "fromDate": "Дата От",
+    "toDate": "Дата До",
+    "runReport": "Запустить Отчёт",
+    "toDateBeforeFromDate": "Дата окончания не может быть раньше даты начала"
+  },
   "serverAdmin": {
     "adminPage": {
       "act": "Активный",

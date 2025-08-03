@@ -653,6 +653,12 @@
 			"reports": "Mga Ulat"
 		}
 	},
+	"reporting": {
+		"fromDate": "Petsa Mula",
+		"toDate": "Petsa Hanggang",
+		"runReport": "Patakbuhin ang Ulat",
+		"toDateBeforeFromDate": "Ang petsa ng pagtatapos ay hindi maaaring maging nauna sa petsa ng pagsisimula"
+	},
 	"serverAdmin": {
 		"adminPage": {
 			"act": "Aktibo",

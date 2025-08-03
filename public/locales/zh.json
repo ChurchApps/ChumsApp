@@ -653,6 +653,12 @@
       "reports": "报告"
     }
   },
+  "reporting": {
+    "fromDate": "开始日期",
+    "toDate": "结束日期",
+    "runReport": "运行报告",
+    "toDateBeforeFromDate": "结束日期不能早于开始日期"
+  },
   "serverAdmin": {
     "adminPage": {
       "act": "积极的",

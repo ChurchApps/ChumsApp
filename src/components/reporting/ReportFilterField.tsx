@@ -177,7 +177,7 @@ export const ReportFilterField = (props: Props) => {
       );
       break;
     case "date":
-      result = (<TextField type="date" fullWidth InputLabelProps={{ shrink: true }} label={Locale.label("common.date")} value={props.parameter.value || ""} onChange={handleChange} name={props.parameter.keyName} />);
+      result = (<TextField type="date" fullWidth InputLabelProps={{ shrink: true }} label={props.parameter.displayName} value={props.parameter.value || ""} onChange={handleChange} name={props.parameter.keyName} />);
       break;
   }
   return result;

@@ -653,6 +653,12 @@
 			"reports": "Rapporti"
 		}
 	},
+	"reporting": {
+		"fromDate": "Data Da",
+		"toDate": "Data A",
+		"runReport": "Esegui Rapporto",
+		"toDateBeforeFromDate": "La data di fine non può essere precedente alla data di inizio"
+	},
 	"serverAdmin": {
 		"adminPage": {
 			"act": "Attivo",

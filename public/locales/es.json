@@ -649,6 +649,12 @@
 			"reports": "Informes"
 		}
 	},
+	"reporting": {
+		"fromDate": "Fecha Desde",
+		"toDate": "Fecha Hasta",
+		"runReport": "Ejecutar Informe",
+		"toDateBeforeFromDate": "La fecha final no puede ser anterior a la fecha inicial"
+	},
 	"serverAdmin": {
 		"adminPage": {
 			"act": "Activo",

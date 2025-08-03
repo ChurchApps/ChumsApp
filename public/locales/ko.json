@@ -653,6 +653,12 @@
 			"reports": "보고서"
 		}
 	},
+	"reporting": {
+		"fromDate": "시작 날짜",
+		"toDate": "종료 날짜",
+		"runReport": "보고서 실행",
+		"toDateBeforeFromDate": "종료 날짜는 시작 날짜보다 이전일 수 없습니다"
+	},
 	"serverAdmin": {
 		"adminPage": {
 			"act": "활성",

@@ -653,6 +653,12 @@
 			"reports": "रिपोर्ट्स"
 		}
 	},
+	"reporting": {
+		"fromDate": "से तारीख",
+		"toDate": "तक तारीख",
+		"runReport": "रिपोर्ट चलाएं",
+		"toDateBeforeFromDate": "समाप्ति तिथि प्रारंभ तिथि से पहले नहीं हो सकती"
+	},
 	"serverAdmin": {
 		"adminPage": {
 			"act": "सक्रिय",

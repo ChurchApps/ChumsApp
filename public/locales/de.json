@@ -648,6 +648,12 @@
 			"reports": "Berichte"
 		}
 	},
+	"reporting": {
+		"fromDate": "Von Datum",
+		"toDate": "Bis Datum",
+		"runReport": "Bericht Ausführen",
+		"toDateBeforeFromDate": "Das Enddatum kann nicht vor dem Startdatum liegen"
+	},
 	"serverAdmin": {
 		"adminPage": {
 			"act": "Aktiv",

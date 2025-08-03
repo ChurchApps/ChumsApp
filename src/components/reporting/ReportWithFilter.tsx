@@ -26,14 +26,17 @@ export const ReportWithFilter = (props: Props) => {
     });
   };
 
+  const [hasAutoRun, setHasAutoRun] = React.useState(false);
+
   const handleAutoRun = () => {
-    if (props.autoRun && report) {
+    if (props.autoRun && report && !hasAutoRun) {
       setReportToRun(report);
+      setHasAutoRun(true);
     }
   };
 
   React.useEffect(loadData, [props.keyName, isMounted]);
-  React.useEffect(handleAutoRun, [report, props.autoRun]);
+  React.useEffect(handleAutoRun, [report, props.autoRun, hasAutoRun]);
 
   const handleRun = () => { setReportToRun(report); };
 
