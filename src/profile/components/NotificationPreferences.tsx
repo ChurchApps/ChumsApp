@@ -1,6 +1,7 @@
 import { Grid, FormControl, InputLabel, Select, MenuItem, type SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
-import { InputBox, ApiHelper, type NotificationPreferenceInterface, Locale } from "@churchapps/apphelper";
+import { type NotificationPreferenceInterface } from "@churchapps/helpers";
+import { InputBox, ApiHelper, Locale } from "@churchapps/apphelper";
 
 export const NotificationPreferences = () => {
   const [pref, setPref] = useState<NotificationPreferenceInterface>({} as NotificationPreferenceInterface);

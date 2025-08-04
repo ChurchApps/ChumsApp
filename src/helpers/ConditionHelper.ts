@@ -1,4 +1,4 @@
-import { type ConditionInterface } from "@churchapps/apphelper";
+import { type ConditionInterface } from "@churchapps/helpers";
 
 export class ConditionHelper {
   static getTitleCase = (word: string) => {

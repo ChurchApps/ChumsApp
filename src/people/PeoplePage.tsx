@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { Locale, type PersonInterface } from "@churchapps/apphelper";
+import { type PersonInterface } from "@churchapps/helpers";
+import { Locale } from "@churchapps/apphelper";
 import { PeopleSearchResults, PeopleColumns } from "./components";
 import { ExportLink } from "@churchapps/apphelper";
 import { Grid, Box, Typography, Card, Stack, Button } from "@mui/material";

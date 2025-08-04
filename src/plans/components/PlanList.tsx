@@ -4,7 +4,8 @@ import {
 } from "@mui/material";
 import { Add as AddIcon, Assignment as AssignmentIcon, CalendarMonth as CalendarIcon, Edit as EditIcon, EventNote as EventNoteIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { ArrayHelper, DateHelper, type GroupInterface, Locale, Loading, UserHelper, Permissions } from "@churchapps/apphelper";
+import { type GroupInterface } from "@churchapps/helpers";
+import { ArrayHelper, DateHelper, Locale, Loading, UserHelper, Permissions } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
 import { MinistryList } from "./MinistryList";
 import { useQuery } from "@tanstack/react-query";

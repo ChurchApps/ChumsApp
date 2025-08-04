@@ -3,7 +3,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Locale, Loading, PageHeader } from "@churchapps/apphelper";
-import { type AutomationInterface } from "@churchapps/apphelper";
+import { type AutomationInterface } from "@churchapps/helpers";
 import { AutomationDetails } from "./components/AutomationDetails";
 import { AutomationEdit } from "./components/AutomationEdit";
 import { useQuery } from "@tanstack/react-query";

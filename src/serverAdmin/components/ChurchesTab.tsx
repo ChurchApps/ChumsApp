@@ -3,7 +3,7 @@ import { ApiHelper, DisplayBox, UserHelper, DateHelper, ArrayHelper, Locale } fr
 import { Navigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import UserContext from "../../UserContext";
-import { type ChurchInterface } from "@churchapps/apphelper";
+import { type ChurchInterface } from "@churchapps/helpers";
 
 export const ChurchesTab = () => {
   const [searchText, setSearchText] = React.useState<string>("");

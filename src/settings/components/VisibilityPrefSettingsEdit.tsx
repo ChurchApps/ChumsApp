@@ -1,4 +1,5 @@
-import { ApiHelper, type GenericSettingInterface, Locale, UniqueIdHelper, type VisibilityPreferenceInterface } from "@churchapps/apphelper";
+import { type GenericSettingInterface, type VisibilityPreferenceInterface } from "@churchapps/helpers";
+import { ApiHelper, Locale, UniqueIdHelper } from "@churchapps/apphelper";
 import {
   FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography, type SelectChangeEvent 
 } from "@mui/material";

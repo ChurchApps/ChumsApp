@@ -2,7 +2,8 @@ import React, { useState, memo } from "react";
 import { FormSubmission } from "./";
 import { Button, Box, Card, CardContent, Typography, Paper } from "@mui/material";
 import { Description as DescriptionIcon, Add as AddIcon } from "@mui/icons-material";
-import { type FormSubmissionInterface, FormSubmissionEdit, DisplayBox, type FormInterface, Locale } from "@churchapps/apphelper";
+import { type FormSubmissionInterface, type FormInterface } from "@churchapps/helpers";
+import { FormSubmissionEdit, DisplayBox, Locale } from "@churchapps/apphelper";
 
 interface Props {
   contentType: string;

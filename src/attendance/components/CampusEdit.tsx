@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import { type CampusInterface, InputBox, ApiHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { type CampusInterface } from "@churchapps/helpers";
+import { InputBox, ApiHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 
 interface Props {
   campus: CampusInterface;

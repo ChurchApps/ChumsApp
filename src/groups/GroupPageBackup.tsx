@@ -1,6 +1,7 @@
 import React from "react";
 import { MembersAdd, GroupDetails, Tabs, SessionAdd } from "./components";
-import { ApiHelper, type GroupInterface, type PersonInterface, type SessionInterface, PersonHelper } from "@churchapps/apphelper";
+import { type GroupInterface, type PersonInterface, type SessionInterface } from "@churchapps/helpers";
+import { ApiHelper, PersonHelper } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Grid } from "@mui/material";
 import { PersonAddAdvanced } from "../people/components/PersonAddAdvanced";

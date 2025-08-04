@@ -7,7 +7,8 @@ import { Login } from "./Login";
 
 import { Authenticated } from "./Authenticated";
 import { Logout } from "./Logout";
-import { AnalyticsHelper, UserHelper, ErrorHelper, type ErrorLogInterface, type ErrrorAppDataInterface } from "@churchapps/apphelper";
+import { type ErrorLogInterface, type ErrrorAppDataInterface } from "@churchapps/helpers";
+import { AnalyticsHelper, UserHelper, ErrorHelper } from "@churchapps/apphelper";
 import { UI } from "./ui/Test";
 import { Pingback } from "./Pingback";
 

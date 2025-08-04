@@ -1,6 +1,7 @@
 import React, { useEffect, memo, useCallback, useMemo } from "react";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface } from "../../../helpers";
-import { ApiHelper, ArrayHelper, type LinkInterface, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
+import { type LinkInterface } from "@churchapps/helpers";
+import { ApiHelper, ArrayHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
 import {
   Alert, Box, Button, Menu, MenuItem, Tab, Tabs, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemText, IconButton, Paper, Chip 
 } from "@mui/material";

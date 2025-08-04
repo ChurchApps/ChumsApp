@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { type ChurchInterface, UserHelper, Permissions, Locale, ApiHelper, Loading, PageHeader } from "@churchapps/apphelper";
+import { type ChurchInterface } from "@churchapps/helpers";
+import { UserHelper, Permissions, Locale, ApiHelper, Loading, PageHeader } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { Box, Stack, Button, IconButton } from "@mui/material";
 import { Settings as SettingsIcon, Lock as LockIcon, PlayArrow as PlayArrowIcon, Edit as EditIcon } from "@mui/icons-material";

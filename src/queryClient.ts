@@ -1,4 +1,5 @@
-import { ApiHelper, type ApiListType } from "@churchapps/apphelper";
+import { type ApiListType } from "@churchapps/helpers";
+import { ApiHelper } from "@churchapps/apphelper";
 import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient({

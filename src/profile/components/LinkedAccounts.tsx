@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Locale, ApiHelper, type SettingInterface } from "@churchapps/apphelper";
+import { type SettingInterface } from "@churchapps/helpers";
+import { Locale, ApiHelper } from "@churchapps/apphelper";
 import { Button, Card, CardContent, CardMedia, Grid } from "@mui/material";
 
 export const LinkedAccounts = () => {

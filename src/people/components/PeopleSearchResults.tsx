@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo, memo, type JSX } from
 import { Link, useNavigate } from "react-router-dom";
 import { ChumsPersonHelper } from ".";
 import { CreatePerson } from "../../components";
-import { PersonHelper, type PersonInterface, Loading, ApiHelper, ArrayHelper, Locale, PersonAvatar } from "@churchapps/apphelper";
+import { type PersonInterface } from "@churchapps/helpers";
+import { PersonHelper, Loading, ApiHelper, ArrayHelper, Locale, PersonAvatar } from "@churchapps/apphelper";
 import {
   Table, TableBody, TableRow, TableCell, TableHead, Tooltip, Icon, IconButton, Typography, Stack, Box, Chip, Card 
 } from "@mui/material";

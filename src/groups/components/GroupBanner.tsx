@@ -1,4 +1,5 @@
-import { type GroupInterface, UserHelper, Permissions, ApiHelper, type GroupServiceTimeInterface } from "@churchapps/apphelper";
+import { type GroupInterface, type GroupServiceTimeInterface } from "@churchapps/helpers";
+import { UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
 import { Button, Typography, Chip, IconButton, Stack, Box } from "@mui/material";
 import {
   Edit as EditIcon,

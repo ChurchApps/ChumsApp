@@ -1,6 +1,7 @@
 import React, { memo, useMemo } from "react";
 import { AssociatedForms } from ".";
-import { PersonHelper, type PersonInterface, Loading, DisplayBox, DateHelper, Locale, PersonAvatar } from "@churchapps/apphelper";
+import { type PersonInterface } from "@churchapps/helpers";
+import { PersonHelper, Loading, DisplayBox, DateHelper, Locale, PersonAvatar } from "@churchapps/apphelper";
 import { Grid, Icon, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { formattedPhoneNumber } from "./PersonEdit";
 

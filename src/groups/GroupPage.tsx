@@ -1,6 +1,7 @@
 import React from "react";
 import { GroupBanner, GroupDetailsEdit } from "./components";
-import { type GroupInterface, ImageEditor } from "@churchapps/apphelper";
+import { type GroupInterface } from "@churchapps/helpers";
+import { ImageEditor } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { GroupMembersTab } from "./components/GroupMembersTab";
 import { GroupSessionsTab } from "./components/GroupSessionsTab";

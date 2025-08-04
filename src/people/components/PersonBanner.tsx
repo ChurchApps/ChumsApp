@@ -1,4 +1,5 @@
-import { PersonHelper, type PersonInterface, UserHelper, Permissions, DateHelper, type FormInterface, PersonAvatar } from "@churchapps/apphelper";
+import { type PersonInterface, type FormInterface } from "@churchapps/helpers";
+import { PersonHelper, UserHelper, Permissions, DateHelper, PersonAvatar } from "@churchapps/apphelper";
 import { Button, Typography, IconButton, Stack, Menu, MenuItem } from "@mui/material";
 import {
   Edit as EditIcon,

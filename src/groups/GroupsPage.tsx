@@ -6,7 +6,8 @@ import {
   Table, TableBody, TableCell, TableRow, TableHead, Paper, Box, Chip, Button, IconButton, Toolbar 
 } from "@mui/material";
 import { Groups as GroupsIcon, Add as AddIcon, FileDownload as ExportIcon, Folder as FolderIcon, Group as GroupIcon } from "@mui/icons-material";
-import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
+import { type GroupInterface } from "@churchapps/helpers";
+import { useMountedState, Permissions } from "@churchapps/apphelper";
 
 const GroupsPage = () => {
   const [groups, setGroups] = useState<GroupInterface[]>([]);

@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, CardContent, Typography, Button, Box, Chip, Avatar } from "@mui/material";
 import { Icon } from "@mui/material";
-import { type SessionInterface, DateHelper, Locale } from "@churchapps/apphelper";
+import { type SessionInterface } from "@churchapps/helpers";
+import { DateHelper } from "@churchapps/apphelper";
 
 interface Props {
   session: SessionInterface;
@@ -15,12 +16,6 @@ interface Props {
 export const SessionCard: React.FC<Props> = ({
   session, attendanceCount, isSelected, onView, onEdit, canEdit 
 }) => {
-  const getAttendanceColor = (count: number) => {
-    if (count >= 10) return "success";
-    if (count >= 5) return "warning";
-    return "error";
-  };
-
   const getAttendanceIcon = (count: number) => {
     if (count >= 10) return "🟢";
     if (count >= 5) return "🟡";

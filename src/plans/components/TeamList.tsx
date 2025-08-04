@@ -5,7 +5,8 @@ import {
   Box, Card, CardContent, Typography, Stack, Button, Paper, Chip, Avatar 
 } from "@mui/material";
 import { Add as AddIcon, Group as GroupIcon, People as PeopleIcon, PersonAdd as PersonAddIcon } from "@mui/icons-material";
-import { useMountedState, type GroupInterface, Permissions } from "@churchapps/apphelper";
+import { type GroupInterface } from "@churchapps/helpers";
+import { useMountedState, Permissions } from "@churchapps/apphelper";
 import { GroupAdd } from "../../groups/components";
 
 interface Props {

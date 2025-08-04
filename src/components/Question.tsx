@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { Box, Typography, Chip, Divider } from "@mui/material";
-import { DateHelper, type QuestionInterface, type AnswerInterface, Locale } from "@churchapps/apphelper";
+import { type QuestionInterface, type AnswerInterface } from "@churchapps/helpers";
+import { DateHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   question: QuestionInterface;

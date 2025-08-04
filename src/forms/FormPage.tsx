@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs } from "./components";
-import { type FormInterface, type MemberPermissionInterface, UserHelper, Permissions, Locale, Loading, PageHeader } from "@churchapps/apphelper";
+import { type FormInterface, type MemberPermissionInterface } from "@churchapps/helpers";
+import { UserHelper, Permissions, Locale, Loading, PageHeader } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { Box, Stack, Button } from "@mui/material";
 import { Description as DescriptionIcon } from "@mui/icons-material";

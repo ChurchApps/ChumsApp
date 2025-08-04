@@ -1,6 +1,7 @@
 import React from "react";
 import { FormEdit, EnvironmentHelper } from "./components";
-import { ApiHelper, type FormInterface, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
+import { type FormInterface } from "@churchapps/helpers";
+import { ApiHelper, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import {
   Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Stack, Button, Card, Tab 

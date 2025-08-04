@@ -2,7 +2,8 @@ import React, { memo } from "react";
 import { Question } from "./";
 import { Grid, Box, IconButton, Tooltip, Typography, Stack } from "@mui/material";
 import { Edit as EditIcon } from "@mui/icons-material";
-import { type FormSubmissionInterface, Permissions, ApiHelper, UserHelper, UniqueIdHelper, Loading } from "@churchapps/apphelper";
+import { type FormSubmissionInterface } from "@churchapps/helpers";
+import { Permissions, ApiHelper, UserHelper, UniqueIdHelper, Loading } from "@churchapps/apphelper";
 
 interface Props {
   formSubmissionId: string;

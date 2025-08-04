@@ -1,5 +1,6 @@
 import React, { memo, useMemo } from "react";
-import { ArrayHelper, type AttendanceRecordInterface, DateHelper, type GroupInterface, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
+import { type AttendanceRecordInterface, type GroupInterface } from "@churchapps/helpers";
+import { ArrayHelper, DateHelper, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import {

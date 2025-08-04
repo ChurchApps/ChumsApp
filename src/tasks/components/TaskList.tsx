@@ -2,7 +2,8 @@ import React, { memo, useCallback, useMemo } from "react";
 import {
   Grid, Typography, Card, CardContent, Stack, Box, Chip, Button, Paper, Divider 
 } from "@mui/material";
-import { ArrayHelper, DateHelper, type GroupMemberInterface, Locale, type TaskInterface, UserHelper, Loading } from "@churchapps/apphelper";
+import { type GroupMemberInterface, type TaskInterface } from "@churchapps/helpers";
+import { ArrayHelper, DateHelper, Locale, UserHelper, Loading } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import { NewTask } from "./";
 import UserContext from "../../UserContext";

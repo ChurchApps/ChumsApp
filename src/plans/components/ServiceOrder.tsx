@@ -1,7 +1,8 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { Stack, Typography, Button, Box, Card, CardContent } from "@mui/material";
 import { Print as PrintIcon, Add as AddIcon, Album as AlbumIcon } from "@mui/icons-material";
-import { ApiHelper, type PlanInterface, UserHelper, Permissions } from "@churchapps/apphelper";
+import { type PlanInterface } from "@churchapps/helpers";
+import { ApiHelper, UserHelper, Permissions } from "@churchapps/apphelper";
 import { type PlanItemInterface } from "../../helpers";
 import { PlanItemEdit } from "./PlanItemEdit";
 import { DndProvider } from "react-dnd";

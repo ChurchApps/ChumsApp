@@ -1,6 +1,7 @@
 import React, { useContext, useState, useCallback, useMemo } from "react";
 import { Groups, PersonAttendance, PersonNotes, PersonDonations } from "./components";
-import { ApiHelper, type PersonInterface, type ConversationInterface, Locale, type FormInterface } from "@churchapps/apphelper";
+import { type PersonInterface, type ConversationInterface, type FormInterface } from "@churchapps/helpers";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { PersonBanner } from "./components/PersonBanner";
 import { PersonDetails } from "./components/PersonDetails";
