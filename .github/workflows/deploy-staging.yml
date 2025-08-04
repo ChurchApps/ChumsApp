@@ -22,13 +22,11 @@ jobs:
         with:
           submodules: "true"
 
-      - uses: actions/cache@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys:
-            |
-            ${{ runner.os }}-node-
+          node-version: '18'
+          cache: 'yarn'
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -42,8 +40,8 @@ jobs:
           |
           export SERVERLESS_ACCESS_KEY="$SERVERLESS_ACCESS_KEY"
 
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+          
       - name: Deploy
-        run:
-          |
-          npm ci --force
-          npm run deploy-staging
+        run: yarn deploy-staging
