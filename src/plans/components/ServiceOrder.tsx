@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { Stack, Typography, Button, Box, Card, CardContent } from "@mui/material";
 import { Print as PrintIcon, Add as AddIcon, Album as AlbumIcon } from "@mui/icons-material";
-import { ApiHelper, type PlanInterface } from "@churchapps/apphelper";
+import { ApiHelper, type PlanInterface, UserHelper, Permissions } from "@churchapps/apphelper";
 import { type PlanItemInterface } from "../../helpers";
 import { PlanItemEdit } from "./PlanItemEdit";
 import { DndProvider } from "react-dnd";
@@ -17,6 +17,7 @@ interface Props {
 
 export const ServiceOrder = memo((props: Props) => {
   const [planItems, setPlanItems] = React.useState<PlanItemInterface[]>([]);
+  const canEdit = UserHelper.checkAccess(Permissions.membershipApi.plans.edit);
   const [editPlanItem, setEditPlanItem] = React.useState<PlanItemInterface>(null);
   const [showHeaderDrop, setShowHeaderDrop] = React.useState(false);
   const [showItemDrop, setShowItemDrop] = React.useState(false);
@@ -49,21 +50,23 @@ export const ServiceOrder = memo((props: Props) => {
           }}>
           Print
         </Button>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={addHeader}
-          size="small"
-          sx={{
-            textTransform: "none",
-            borderRadius: 2,
-            fontWeight: 600,
-          }}>
-          Add Section
-        </Button>
+        {canEdit && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={addHeader}
+            size="small"
+            sx={{
+              textTransform: "none",
+              borderRadius: 2,
+              fontWeight: 600,
+            }}>
+            Add Section
+          </Button>
+        )}
       </Stack>
     ),
-    [props.plan?.id, addHeader]
+    [props.plan?.id, addHeader, canEdit]
   );
 
   const handleDrop = useCallback(
@@ -82,7 +85,7 @@ export const ServiceOrder = memo((props: Props) => {
   const wrapPlanItem = useCallback(
     (pi: PlanItemInterface, index: number) => (
       <>
-        {showHeaderDrop && (
+        {canEdit && showHeaderDrop && (
           <DroppableWrapper
             accept="planItemHeader"
             onDrop={(item) => {
@@ -91,29 +94,39 @@ export const ServiceOrder = memo((props: Props) => {
             &nbsp;
           </DroppableWrapper>
         )}
-        <DraggableWrapper
-          dndType="planItemHeader"
-          data={pi}
-          draggingCallback={(isDragging) => {
-            console.log("isDragging", isDragging);
-            setShowHeaderDrop(isDragging);
-          }}>
+        {canEdit ? (
+          <DraggableWrapper
+            dndType="planItemHeader"
+            data={pi}
+            draggingCallback={(isDragging) => {
+              console.log("isDragging", isDragging);
+              setShowHeaderDrop(isDragging);
+            }}>
+            <PlanItem
+              planItem={pi}
+              setEditPlanItem={setEditPlanItem}
+              showItemDrop={showItemDrop}
+              onDragChange={(dragging) => {
+                console.log("Dragging", dragging);
+                setShowItemDrop(dragging);
+              }}
+              onChange={() => {
+                loadData();
+              }}
+            />
+          </DraggableWrapper>
+        ) : (
           <PlanItem
             planItem={pi}
-            setEditPlanItem={setEditPlanItem}
-            showItemDrop={showItemDrop}
-            onDragChange={(dragging) => {
-              console.log("Dragging", dragging);
-              setShowItemDrop(dragging);
-            }}
-            onChange={() => {
-              loadData();
-            }}
+            setEditPlanItem={null}
+            showItemDrop={false}
+            onDragChange={() => {}}
+            onChange={() => {}}
           />
-        </DraggableWrapper>
+        )}
       </>
     ),
-    [showHeaderDrop, showItemDrop, handleDrop, loadData]
+    [canEdit, showHeaderDrop, showItemDrop, handleDrop, loadData]
   );
 
   React.useEffect(() => {
@@ -122,7 +135,7 @@ export const ServiceOrder = memo((props: Props) => {
 
   return (
     <Box>
-      {editPlanItem && (
+      {editPlanItem && canEdit && (
         <Box sx={{ mb: 3 }}>
           <PlanItemEdit
             planItem={editPlanItem}

@@ -13,6 +13,7 @@ import {
   type PositionInterface,
   type TimeInterface,
   UserHelper,
+  Permissions,
 } from "@churchapps/apphelper";
 
 interface Props {
@@ -27,6 +28,7 @@ interface Props {
 
 export const PlanValidation = (props: Props) => {
   const [errors, setErrors] = React.useState<JSX.Element[]>([]);
+  const canEdit = UserHelper.checkAccess(Permissions.membershipApi.plans.edit);
   const [plans, setPlans] = React.useState<PlanInterface[]>([]);
   const [planTimeConflicts, setPlanTimeConflicts] = React.useState<{ time: TimeInterface; overlapingTimes: TimeInterface[] }[]>([]);
   const [externalPositions, setExternalPositions] = React.useState<PositionInterface[]>();
@@ -263,6 +265,8 @@ export const PlanValidation = (props: Props) => {
   };
 
   const getNotificationLink = () => {
+    if (!canEdit) return null;
+    
     const pending = getPendingNotifications();
 
     if (pending.length === 0) return <p>{Locale.label("plans.planValidation.volNotif")}</p>;

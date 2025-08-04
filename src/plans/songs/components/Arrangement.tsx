@@ -1,7 +1,7 @@
 import React, { useEffect, memo, useCallback, useMemo } from "react";
 import { type ArrangementInterface, type SongDetailInterface } from "../../../helpers";
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
-import { ApiHelper, Locale } from "@churchapps/apphelper";
+import { ApiHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
 import { Card, CardContent, Typography, Stack, IconButton, Box } from "@mui/material";
 import { Edit as EditIcon, QueueMusic as ArrangementIcon } from "@mui/icons-material";
 import { Keys } from "./Keys";
@@ -16,6 +16,7 @@ interface Props {
 export const Arrangement = memo((props: Props) => {
   const navigate = useNavigate();
   const [songDetail, setSongDetail] = React.useState<SongDetailInterface>(null);
+  const canEdit = UserHelper.checkAccess(Permissions.contentApi.content.edit);
   const [edit, setEdit] = React.useState(false);
 
   const loadData = useCallback(async () => {
@@ -75,15 +76,17 @@ export const Arrangement = memo((props: Props) => {
                 {Locale.label("songs.arrangement.title") || "Arrangement"} - {props.arrangement?.name}
               </Typography>
             </Stack>
-            <IconButton
-              onClick={() => setEdit(true)}
-              sx={{
-                color: "primary.main",
-                "&:hover": { backgroundColor: "primary.light" },
-              }}
-              aria-label="Edit arrangement">
-              <EditIcon />
-            </IconButton>
+            {canEdit && (
+              <IconButton
+                onClick={() => setEdit(true)}
+                sx={{
+                  color: "primary.main",
+                  "&:hover": { backgroundColor: "primary.light" },
+                }}
+                aria-label="Edit arrangement">
+                <EditIcon />
+              </IconButton>
+            )}
           </Stack>
 
           <Box
@@ -108,13 +111,13 @@ export const Arrangement = memo((props: Props) => {
         </CardContent>
       </Card>
     ),
-    [props.arrangement]
+    [props.arrangement, canEdit]
   );
 
   return (
     <Stack spacing={3}>
-      <Keys arrangement={props.arrangement} songDetail={songDetail} importLyrics={importLyrics} />
-      {!edit ? arrangementCard : <ArrangementEdit arrangement={props.arrangement} onSave={handleSave} onCancel={() => setEdit(false)} />}
+      <Keys arrangement={props.arrangement} songDetail={songDetail} importLyrics={canEdit ? importLyrics : undefined} />
+      {!edit || !canEdit ? arrangementCard : <ArrangementEdit arrangement={props.arrangement} onSave={handleSave} onCancel={() => setEdit(false)} />}
     </Stack>
   );
 });

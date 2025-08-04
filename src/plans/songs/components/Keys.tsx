@@ -1,6 +1,6 @@
 import React, { useEffect, memo, useCallback, useMemo } from "react";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface } from "../../../helpers";
-import { ApiHelper, ArrayHelper, type LinkInterface, Locale } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, type LinkInterface, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
 import {
   Alert, Box, Button, Menu, MenuItem, Tab, Tabs, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemText, IconButton, Paper, Chip 
 } from "@mui/material";
@@ -13,11 +13,12 @@ import { LinkEdit } from "./LinkEdit";
 interface Props {
   arrangement: ArrangementInterface;
   songDetail: SongDetailInterface;
-  importLyrics: () => void;
+  importLyrics?: () => void;
 }
 
 export const Keys = memo((props: Props) => {
   const [keys, setKeys] = React.useState<ArrangementKeyInterface[]>([]);
+  const canEdit = UserHelper.checkAccess(Permissions.contentApi.content.edit);
   const [selectedKey, setSelectedKey] = React.useState<ArrangementKeyInterface>(null);
   const [editKey, setEditKey] = React.useState<ArrangementKeyInterface>(null);
   const [editLink, setEditLink] = React.useState<LinkInterface>(null);
@@ -149,9 +150,11 @@ export const Keys = memo((props: Props) => {
           {links.map((l) => (
             <ListItem key={l.id} sx={{ px: 0, py: 0.5 }}>
               <Stack direction="row" spacing={1} alignItems="center" sx={{ width: "100%" }}>
-                <IconButton size="small" onClick={() => setEditLink(l)} sx={{ color: "primary.main" }}>
-                  <EditIcon fontSize="small" />
-                </IconButton>
+                {canEdit && (
+                  <IconButton size="small" onClick={() => setEditLink(l)} sx={{ color: "primary.main" }}>
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                )}
                 <ListItemButton
                   component="a"
                   href={l.url}
@@ -177,7 +180,7 @@ export const Keys = memo((props: Props) => {
         </List>
       </Box>
     );
-  }, [links]);
+  }, [links, canEdit]);
 
   const tabsComponent = useMemo(
     () =>
@@ -198,7 +201,7 @@ export const Keys = memo((props: Props) => {
     [keys]
   );
 
-  if (editKey) {
+  if (editKey && canEdit) {
     return (
       <KeyEdit
         arrangementKey={editKey}
@@ -223,7 +226,7 @@ export const Keys = memo((props: Props) => {
                 {Locale.label("songs.keys.title") || "Keys & Downloads"}
               </Typography>
             </Stack>
-            {selectedKey && (
+            {selectedKey && canEdit && (
               <IconButton
                 onClick={() => setEditKey(selectedKey)}
                 sx={{
@@ -240,15 +243,17 @@ export const Keys = memo((props: Props) => {
           <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}>
             <Tabs value={selectedKey?.id || ""} onChange={handleTabChange} variant="scrollable" scrollButtons="auto" aria-label="Keys tabs">
               {tabsComponent}
-              <Tab
-                value="add"
-                label={
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <AddIcon fontSize="small" />
-                    <Typography variant="body2">{Locale.label("songs.keys.add") || "Add Key"}</Typography>
-                  </Stack>
-                }
-              />
+              {canEdit && (
+                <Tab
+                  value="add"
+                  label={
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <AddIcon fontSize="small" />
+                      <Typography variant="body2">{Locale.label("songs.keys.add") || "Add Key"}</Typography>
+                    </Stack>
+                  }
+                />
+              )}
             </Tabs>
           </Box>
 
@@ -256,7 +261,7 @@ export const Keys = memo((props: Props) => {
           {selectedKey ? (
             <Box>
               {/* Import Lyrics Alert */}
-              {canImportLyrics && (
+              {canImportLyrics && canEdit && props.importLyrics && (
                 <Alert
                   severity="success"
                   sx={{ mb: 2 }}
@@ -281,27 +286,29 @@ export const Keys = memo((props: Props) => {
               {linksList}
 
               {/* Add Files Button */}
-              <Box
-                sx={{
-                  mt: 3,
-                  pt: 2,
-                  borderTop: "1px solid",
-                  borderColor: "grey.200",
-                }}>
-                <Button
-                  id="addBtnGroup"
-                  variant="outlined"
-                  startIcon={<AddIcon />}
-                  onClick={handleClick}
+              {canEdit && (
+                <Box
                   sx={{
-                    borderStyle: "dashed",
-                    color: "primary.main",
-                    borderColor: "primary.main",
-                    "&:hover": { backgroundColor: "primary.light" },
+                    mt: 3,
+                    pt: 2,
+                    borderTop: "1px solid",
+                    borderColor: "grey.200",
                   }}>
-                  {Locale.label("songs.keys.addFiles") || "Add Files"}
-                </Button>
-              </Box>
+                  <Button
+                    id="addBtnGroup"
+                    variant="outlined"
+                    startIcon={<AddIcon />}
+                    onClick={handleClick}
+                    sx={{
+                      borderStyle: "dashed",
+                      color: "primary.main",
+                      borderColor: "primary.main",
+                      "&:hover": { backgroundColor: "primary.light" },
+                    }}>
+                    {Locale.label("songs.keys.addFiles") || "Add Files"}
+                  </Button>
+                </Box>
+              )}
             </Box>
           ) : (
             <Paper
@@ -348,7 +355,7 @@ export const Keys = memo((props: Props) => {
       </Menu>
 
       {/* Dialogs */}
-      {editLink && (
+      {editLink && canEdit && (
         <LinkEdit
           link={editLink}
           onSave={() => {

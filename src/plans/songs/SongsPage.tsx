@@ -1,5 +1,5 @@
 import React, { memo, useMemo, useCallback } from "react";
-import { ApiHelper, Loading, Locale, PageHeader } from "@churchapps/apphelper";
+import { ApiHelper, Loading, Locale, PageHeader, UserHelper, Permissions } from "@churchapps/apphelper";
 import { Link, Navigate } from "react-router-dom";
 import {
   Button, Box, Card, CardContent, Typography, Stack, Avatar, Paper, Chip, IconButton, TextField, InputAdornment 
@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const SongsPage = memo(() => {
   const [showSearch, setShowSearch] = React.useState(false);
+  const canEdit = UserHelper.checkAccess(Permissions.contentApi.content.edit);
   const [redirect, setRedirect] = React.useState("");
   const [searchFilter, setSearchFilter] = React.useState("");
   const [showSearchField, setShowSearchField] = React.useState(false);
@@ -92,9 +93,11 @@ export const SongsPage = memo(() => {
           <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
             {Locale.label("songs.library.empty.message") || "Get started by adding your first song to the library."}
           </Typography>
-          <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => setShowSearch(true)} size="large">
-            {Locale.label("songs.library.empty.action") || "Add First Song"}
-          </Button>
+          {canEdit && (
+            <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={() => setShowSearch(true)} size="large">
+              {Locale.label("songs.library.empty.action") || "Add First Song"}
+            </Button>
+          )}
         </Paper>
       );
     }
@@ -169,7 +172,7 @@ export const SongsPage = memo(() => {
         </Stack>
       </Box>
     );
-  }, [songs.isLoading, songs.data, filteredSongs, formatSeconds, handleImageError, failedImages]);
+  }, [songs.isLoading, songs.data, filteredSongs, formatSeconds, handleImageError, failedImages, canEdit]);
 
   if (redirect) return <Navigate to={redirect} />;
 
@@ -183,15 +186,17 @@ export const SongsPage = memo(() => {
           sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
           Search
         </Button>
-        <Button
-          onClick={() => setShowSearch(true)}
-          variant="outlined"
-          startIcon={<AddIcon />}
-          data-testid="add-song-button"
-          aria-label="Add song"
-          sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
-          {Locale.label("songs.addSong") || "Add Song"}
-        </Button>
+        {canEdit && (
+          <Button
+            onClick={() => setShowSearch(true)}
+            variant="outlined"
+            startIcon={<AddIcon />}
+            data-testid="add-song-button"
+            aria-label="Add song"
+            sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>
+            {Locale.label("songs.addSong") || "Add Song"}
+          </Button>
+        )}
       </PageHeader>
 
       <Box sx={{ p: 3 }}>
@@ -227,7 +232,7 @@ export const SongsPage = memo(() => {
         {songsContent}
       </Box>
 
-      {showSearch && <SongSearchDialog onClose={() => setShowSearch(false)} onSelect={handleAdd} />}
+      {showSearch && canEdit && <SongSearchDialog onClose={() => setShowSearch(false)} onSelect={handleAdd} />}
     </>
   );
 });

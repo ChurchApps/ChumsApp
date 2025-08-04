@@ -1,6 +1,16 @@
 import React from "react";
 import { Icon, IconButton } from "@mui/material";
-import { ArrayHelper, DateHelper, DisplayBox, Locale, type PlanInterface, type PositionInterface, type TimeInterface } from "@churchapps/apphelper";
+import {
+  ArrayHelper,
+  DateHelper,
+  DisplayBox,
+  Locale,
+  type PlanInterface,
+  type PositionInterface,
+  type TimeInterface,
+  UserHelper,
+  Permissions,
+} from "@churchapps/apphelper";
 import { TimeEdit } from "./TimeEdit";
 
 interface Props {
@@ -12,6 +22,7 @@ interface Props {
 
 export const TimeList = (props: Props) => {
   const [time, setTime] = React.useState<TimeInterface>(null);
+  const canEdit = UserHelper.checkAccess(Permissions.membershipApi.plans.edit);
 
   const handleAdd = () => {
     const startTime = new Date(props.plan.serviceDate);
@@ -37,11 +48,11 @@ export const TimeList = (props: Props) => {
     setTime(t);
   };
 
-  const getAddTimeLink = () => (
+  const getAddTimeLink = () => canEdit ? (
     <IconButton aria-label="Add time" id="addBtnGroup" data-cy="add-button" onClick={handleAdd} data-testid="add-time-button">
       <Icon color="primary">add</Icon>
     </IconButton>
-  );
+  ) : null;
 
   const getRows = () => {
     const result: JSX.Element[] = [];
@@ -57,14 +68,18 @@ export const TimeList = (props: Props) => {
             <Icon>schedule</Icon>
           </td>
           <td style={{ width: "90%" }}>
-            <a
-              href="about:blank"
-              onClick={(e) => {
-                e.preventDefault();
-                handleSelect(t);
-              }}>
-              {t.displayName}
-            </a>
+            {canEdit ? (
+              <a
+                href="about:blank"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSelect(t);
+                }}>
+                {t.displayName}
+              </a>
+            ) : (
+              <span>{t.displayName}</span>
+            )}
             <div style={{ fontSize: 12 }}>
               {DateHelper.prettyDateTime(startTime)}
               {t.endTime ? " - " + DateHelper.prettyTime(endTime) : ""}
@@ -85,7 +100,7 @@ export const TimeList = (props: Props) => {
     return result;
   };
 
-  if (time) {
+  if (time && canEdit) {
     const categories = ArrayHelper.getUniqueValues(props.positions, "categoryName").sort();
     return (
       <TimeEdit

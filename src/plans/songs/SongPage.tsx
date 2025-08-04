@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { ApiHelper, ArrayHelper, PageHeader } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, PageHeader, UserHelper, Permissions } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +15,7 @@ import { SongDetailLinksEdit } from "./components/SongDetailLinksEdit";
 
 export const SongPage = memo(() => {
   const [showSearch, setShowSearch] = React.useState(false);
+  const canEdit = UserHelper.checkAccess(Permissions.contentApi.content.edit);
   const [editSongDetails, setEditSongDetails] = React.useState(false);
   const [editLinks, setEditLinks] = React.useState(false);
   const [selectedArrangement, setSelectedArrangement] = React.useState(null);
@@ -139,24 +140,26 @@ export const SongPage = memo(() => {
               ))}
             </List>
 
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={() => setShowSearch(true)}
-              fullWidth
-              sx={{
-                mt: 2,
-                borderStyle: "dashed",
-                color: "text.secondary",
-                borderColor: "grey.400",
-                "&:hover": {
-                  borderColor: "primary.main",
-                  color: "primary.main",
-                  backgroundColor: "primary.light",
-                },
-              }}>
-              Add Arrangement
-            </Button>
+            {canEdit && (
+              <Button
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={() => setShowSearch(true)}
+                fullWidth
+                sx={{
+                  mt: 2,
+                  borderStyle: "dashed",
+                  color: "text.secondary",
+                  borderColor: "grey.400",
+                  "&:hover": {
+                    borderColor: "primary.main",
+                    color: "primary.main",
+                    backgroundColor: "primary.light",
+                  },
+                }}>
+                Add Arrangement
+              </Button>
+            )}
           </CardContent>
         </Card>
 
@@ -164,7 +167,7 @@ export const SongPage = memo(() => {
         <Card sx={{ height: "fit-content", borderRadius: 2 }}>
           <CardContent>
             {songDetail.data &&
-              (editLinks ? (
+              (editLinks && canEdit ? (
                 <SongDetailLinksEdit
                   songDetailId={songDetail.data.id}
                   reload={() => {
@@ -173,13 +176,13 @@ export const SongPage = memo(() => {
                   }}
                 />
               ) : (
-                <SongDetailLinks songDetail={songDetail.data} onEdit={() => setEditLinks(true)} />
+                <SongDetailLinks songDetail={songDetail.data} onEdit={canEdit ? () => setEditLinks(true) : undefined} />
               ))}
           </CardContent>
         </Card>
       </Stack>
     ),
-    [arrangements.data, selectedArrangement, selectArrangement, songDetail.data, editLinks, refetch]
+    [arrangements.data, selectedArrangement, selectArrangement, songDetail.data, editLinks, refetch, canEdit]
   );
 
   const currentContent = useMemo(() => {
@@ -210,36 +213,40 @@ export const SongPage = memo(() => {
   return (
     <>
       <PageHeader icon={<MusicIcon />} title={songDetail.data?.title || song.data?.name || "Loading..."} subtitle="Manage song arrangements and details">
-        <IconButton
-          onClick={() => setEditSongDetails(true)}
-          sx={{
-            color: "rgba(255,255,255,0.8)",
-            "&:hover": {
+        {canEdit && (
+          <IconButton
+            onClick={() => setEditSongDetails(true)}
+            sx={{
+              color: "rgba(255,255,255,0.8)",
+              "&:hover": {
+                color: "#FFF",
+                backgroundColor: "rgba(255,255,255,0.1)",
+              },
+            }}
+            size="small">
+            <EditIcon fontSize="small" />
+          </IconButton>
+        )}
+        {canEdit && (
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={() => setShowSearch(true)}
+            sx={{
               color: "#FFF",
-              backgroundColor: "rgba(255,255,255,0.1)",
-            },
-          }}
-          size="small">
-          <EditIcon fontSize="small" />
-        </IconButton>
-        <Button
-          variant="outlined"
-          startIcon={<AddIcon />}
-          onClick={() => setShowSearch(true)}
-          sx={{
-            color: "#FFF",
-            borderColor: "rgba(255,255,255,0.5)",
-            "&:hover": {
-              borderColor: "#FFF",
-              backgroundColor: "rgba(255,255,255,0.1)",
-            },
-          }}>
-          Add Arrangement
-        </Button>
+              borderColor: "rgba(255,255,255,0.5)",
+              "&:hover": {
+                borderColor: "#FFF",
+                backgroundColor: "rgba(255,255,255,0.1)",
+              },
+            }}>
+            Add Arrangement
+          </Button>
+        )}
       </PageHeader>
 
       <Box sx={{ p: 3 }}>
-        {editSongDetails ? (
+        {editSongDetails && canEdit ? (
           <SongDetailsEdit
             songDetail={songDetail.data}
             onCancel={() => setEditSongDetails(false)}
@@ -258,7 +265,7 @@ export const SongPage = memo(() => {
         )}
       </Box>
 
-      {showSearch && <SongSearchDialog searchText={song.data?.name} onClose={() => setShowSearch(false)} onSelect={handleAdd} />}
+      {showSearch && canEdit && <SongSearchDialog searchText={song.data?.name} onClose={() => setShowSearch(false)} onSelect={handleAdd} />}
     </>
   );
 });

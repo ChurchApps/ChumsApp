@@ -1,6 +1,15 @@
 import React from "react";
 import { Badge, Table, TableBody, TableCell, TableHead, TableRow, Avatar } from "@mui/material";
-import { ArrayHelper, type AssignmentInterface, Locale, PersonHelper, type PersonInterface, type PositionInterface } from "@churchapps/apphelper";
+import {
+  ArrayHelper,
+  type AssignmentInterface,
+  Locale,
+  PersonHelper,
+  type PersonInterface,
+  type PositionInterface,
+  UserHelper,
+  Permissions,
+} from "@churchapps/apphelper";
 
 interface Props {
   positions: PositionInterface[];
@@ -11,6 +20,7 @@ interface Props {
 }
 
 export const PositionList = (props: Props) => {
+  const canEdit = UserHelper.checkAccess(Permissions.membershipApi.plans.edit);
   const colorList = [
     "#FFF8E7", "#E7F2FA", "#E7F4E7", "#F7E7F4", "#F7F4E7", "#E7F7F4", "#F4E7F7", "#F4F7E7", "#E7F7F7", "#F7E7F7", "#F7F7E7", "#E7E7F7", "#F4F4F7", "#F7F4F4", "#F4F7F4", "#F4F4F4"
   ];
@@ -37,17 +47,26 @@ export const PositionList = (props: Props) => {
           </Badge>
         );
       }
-      return (
-        <a
-          href="about:blank"
-          onClick={(e) => {
-            e.preventDefault();
-            props.onAssignmentSelect(position, assignment || { positionId: position.id });
-          }}>
-          {wrappedImage}
-          {person.name.display}
-        </a>
-      );
+      if (canEdit) {
+        return (
+          <a
+            href="about:blank"
+            onClick={(e) => {
+              e.preventDefault();
+              props.onAssignmentSelect(position, assignment || { positionId: position.id });
+            }}>
+            {wrappedImage}
+            {person.name.display}
+          </a>
+        );
+      } else {
+        return (
+          <span>
+            {wrappedImage}
+            {person.name.display}
+          </span>
+        );
+      }
     } else return Locale.label("plans.positionList.load");
   };
 
@@ -56,7 +75,7 @@ export const PositionList = (props: Props) => {
     const result: JSX.Element[] = [];
     assignments.forEach((assignment) => result.push(<div key={assignment.id}>{getPersonLink(assignment, position)}</div>));
     const remaining = position.count - assignments.length;
-    if (remaining > 0) {
+    if (remaining > 0 && canEdit) {
       const label = remaining === 1 ? Locale.label("plans.positionList.persNeed") : remaining.toString() + Locale.label("plans.positionList.pplNeed");
       result.push(
         <a
@@ -76,14 +95,18 @@ export const PositionList = (props: Props) => {
     <TableRow style={{ backgroundColor: color }}>
       <TableCell style={{ paddingLeft: 10, fontWeight: "bold" }}>{first ? position.categoryName : ""}</TableCell>
       <TableCell>
-        <a
-          href="about:blank"
-          onClick={(e) => {
-            e.preventDefault();
-            props.onSelect(position);
-          }}>
-          {position.name}
-        </a>
+        {canEdit ? (
+          <a
+            href="about:blank"
+            onClick={(e) => {
+              e.preventDefault();
+              props.onSelect(position);
+            }}>
+            {position.name}
+          </a>
+        ) : (
+          <span>{position.name}</span>
+        )}
       </TableCell>
       <TableCell>{getPeopleLinks(position)}</TableCell>
     </TableRow>

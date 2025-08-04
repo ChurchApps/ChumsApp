@@ -11,6 +11,8 @@ import {
   type PlanInterface,
   type PositionInterface,
   type TimeInterface,
+  UserHelper,
+  Permissions,
 } from "@churchapps/apphelper";
 import { PositionEdit } from "./PositionEdit";
 import { PositionList } from "./PositionList";
@@ -24,6 +26,7 @@ interface Props {
 
 export const Assignment = (props: Props) => {
   const [plan, setPlan] = React.useState<PlanInterface>(null);
+  const canEdit = UserHelper.checkAccess(Permissions.membershipApi.plans.edit);
   const [positions, setPositions] = React.useState<PositionInterface[]>([]);
   const [assignments, setAssignments] = React.useState<AssignmentInterface[]>([]);
   const [people, setPeople] = React.useState<PersonInterface[]>([]);
@@ -32,7 +35,7 @@ export const Assignment = (props: Props) => {
   const [times, setTimes] = React.useState<TimeInterface[]>([]);
   const [blockoutDates, setBlockoutDates] = React.useState<BlockoutDateInterface[]>([]);
 
-  const getAddPositionActions = () => (
+  const getAddPositionActions = () => canEdit ? (
     <Stack direction="row" spacing={1}>
       <Button
         variant="outlined"
@@ -68,7 +71,7 @@ export const Assignment = (props: Props) => {
         Add Position
       </Button>
     </Stack>
-  );
+  ) : null;
 
   const handleAssignmentSelect = (p: PositionInterface, a: AssignmentInterface) => {
     setAssignment(a);
@@ -172,37 +175,40 @@ export const Assignment = (props: Props) => {
                   {Locale.label("common.notes") || "Plan Notes"}
                 </Typography>
               </Stack>
-              <Button
-                variant="contained"
-                startIcon={<SaveIcon />}
-                onClick={handleSave}
-                size="small"
-                sx={{
-                  textTransform: "none",
-                  borderRadius: 2,
-                  fontWeight: 600,
-                }}>
-                Save Notes
-              </Button>
+              {canEdit && (
+                <Button
+                  variant="contained"
+                  startIcon={<SaveIcon />}
+                  onClick={handleSave}
+                  size="small"
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: 2,
+                    fontWeight: 600,
+                  }}>
+                  Save Notes
+                </Button>
+              )}
             </Stack>
             <TextField
               fullWidth
               multiline
               rows={4}
               value={plan?.notes || ""}
-              onChange={(e) => {
+              onChange={canEdit ? (e) => {
                 setPlan({ ...plan, notes: e.target.value });
-              }}
+              } : undefined}
               data-testid="plan-notes-input"
               aria-label="Plan notes"
-              placeholder="Add notes for this service plan..."
+              placeholder={canEdit ? "Add notes for this service plan..." : "Plan notes (read-only)"}
               variant="outlined"
+              disabled={!canEdit}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   borderRadius: 2,
-                  backgroundColor: "grey.50",
-                  "&:hover": { backgroundColor: "#FFF" },
-                  "&.Mui-focused": { backgroundColor: "#FFF" },
+                  backgroundColor: canEdit ? "grey.50" : "grey.100",
+                  "&:hover": { backgroundColor: canEdit ? "#FFF" : "grey.100" },
+                  "&.Mui-focused": { backgroundColor: canEdit ? "#FFF" : "grey.100" },
                 },
               }}
             />
@@ -213,7 +219,7 @@ export const Assignment = (props: Props) => {
       <Grid size={{ xs: 12, md: 4 }}>
         <Stack spacing={3}>
           {/* Position/Assignment Edit */}
-          {position && !assignment && (
+          {canEdit && position && !assignment && (
             <PositionEdit
               position={position}
               categoryNames={positions?.length > 0 ? ArrayHelper.getUniqueValues(positions, "categoryName") : [Locale.label("plans.planPage.band")]}
@@ -223,7 +229,7 @@ export const Assignment = (props: Props) => {
               }}
             />
           )}
-          {assignment && position && (
+          {canEdit && assignment && position && (
             <AssignmentEdit
               position={position}
               assignment={assignment}

@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import { Add as AddIcon, Assignment as AssignmentIcon, CalendarMonth as CalendarIcon, Edit as EditIcon, EventNote as EventNoteIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { ArrayHelper, DateHelper, type GroupInterface, Locale, Loading } from "@churchapps/apphelper";
+import { ArrayHelper, DateHelper, type GroupInterface, Locale, Loading, UserHelper, Permissions } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
 import { MinistryList } from "./MinistryList";
 import { useQuery } from "@tanstack/react-query";
@@ -26,6 +26,7 @@ export interface PlanInterface {
 
 export const PlanList = memo((props: Props) => {
   const [plan, setPlan] = React.useState<PlanInterface>(null);
+  const canEdit = UserHelper.checkAccess(Permissions.membershipApi.plans.edit);
 
   const plansQuery = useQuery<PlanInterface[]>({
     queryKey: ["/plans", "DoingApi"],
@@ -55,7 +56,7 @@ export const PlanList = memo((props: Props) => {
     queryClient.invalidateQueries({ queryKey: ["/plans", "DoingApi"] });
   }, [plansQuery]);
 
-  if (plan) {
+  if (plan && canEdit) {
     return <PlanEdit plan={plan} plans={plans} updatedFunction={handleUpdated} />;
   }
 
@@ -83,18 +84,20 @@ export const PlanList = memo((props: Props) => {
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
             Create your first service plan to get started with planning
           </Typography>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={addPlan}
-            data-testid="add-plan-button"
-            sx={{
-              fontSize: "1rem",
-              py: 1.5,
-              px: 3,
-            }}>
-            Create Service Plan
-          </Button>
+          {canEdit && (
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={addPlan}
+              data-testid="add-plan-button"
+              sx={{
+                fontSize: "1rem",
+                py: 1.5,
+                px: 3,
+              }}>
+              Create Service Plan
+            </Button>
+          )}
         </Paper>
         <MinistryList />
       </Box>
@@ -111,19 +114,21 @@ export const PlanList = memo((props: Props) => {
               {Locale.label("plans.planList.plans")}
             </Typography>
           </Stack>
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={addPlan}
-            data-testid="add-plan-button"
-            sx={{
-              "&:hover": {
-                transform: "translateY(-1px)",
-                boxShadow: 2,
-              },
-            }}>
-            New Plan
-          </Button>
+          {canEdit && (
+            <Button
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={addPlan}
+              data-testid="add-plan-button"
+              sx={{
+                "&:hover": {
+                  transform: "translateY(-1px)",
+                  boxShadow: 2,
+                },
+              }}>
+              New Plan
+            </Button>
+          )}
         </Stack>
       </Box>
 
@@ -203,23 +208,25 @@ export const PlanList = memo((props: Props) => {
                   </Box>
                 </Stack>
 
-                <Box sx={{ ml: 2 }}>
-                  <Button
-                    size="small"
-                    startIcon={<EditIcon />}
-                    onClick={() => setPlan(p)}
-                    variant="outlined"
-                    sx={{
-                      color: "primary.main",
-                      borderColor: "primary.main",
-                      "&:hover": {
-                        backgroundColor: "primary.light",
-                        borderColor: "primary.dark",
-                      },
-                    }}>
-                    Edit
-                  </Button>
-                </Box>
+                {canEdit && (
+                  <Box sx={{ ml: 2 }}>
+                    <Button
+                      size="small"
+                      startIcon={<EditIcon />}
+                      onClick={() => setPlan(p)}
+                      variant="outlined"
+                      sx={{
+                        color: "primary.main",
+                        borderColor: "primary.main",
+                        "&:hover": {
+                          backgroundColor: "primary.light",
+                          borderColor: "primary.dark",
+                        },
+                      }}>
+                      Edit
+                    </Button>
+                  </Box>
+                )}
               </Stack>
             </CardContent>
           </Card>
