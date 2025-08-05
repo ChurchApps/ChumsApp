@@ -1,6 +1,7 @@
 import React from "react";
 import { Icon } from "@mui/material";
-import { Permissions, type PersonInterface, UserHelper, Locale } from "@churchapps/apphelper";
+import { type PersonInterface } from "@churchapps/helpers";
+import { Permissions, UserHelper, Locale } from "@churchapps/apphelper";
 interface Props {
   person: PersonInterface;
 }

@@ -1,12 +1,14 @@
 import React from "react";
 import { Badge, Table, TableBody, TableCell, TableHead, TableRow, Avatar } from "@mui/material";
 import {
-  ArrayHelper,
   type AssignmentInterface,
-  Locale,
-  PersonHelper,
   type PersonInterface,
   type PositionInterface,
+} from "@churchapps/helpers";
+import {
+  ArrayHelper,
+  Locale,
+  PersonHelper,
   UserHelper,
   Permissions,
 } from "@churchapps/apphelper";

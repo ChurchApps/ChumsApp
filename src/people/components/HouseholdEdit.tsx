@@ -1,7 +1,8 @@
 import React from "react";
 import { UpdateHouseHold } from "./modals/UpdateHouseHold";
+import { type HouseholdInterface, type PersonInterface } from "@churchapps/helpers";
 import {
-  InputBox, PersonHelper, ApiHelper, type HouseholdInterface, type PersonInterface, ErrorMessages, Locale, PersonAvatar 
+  InputBox, PersonHelper, ApiHelper, ErrorMessages, Locale, PersonAvatar 
 } from "@churchapps/apphelper";
 import { PersonAdd } from "../../components";
 import {

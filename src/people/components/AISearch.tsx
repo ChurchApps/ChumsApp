@@ -1,5 +1,6 @@
 import React from "react";
-import { ApiHelper, DisplayBox, ErrorMessages, type PersonInterface } from "@churchapps/apphelper";
+import { type PersonInterface } from "@churchapps/helpers";
+import { ApiHelper, DisplayBox, ErrorMessages } from "@churchapps/apphelper";
 import { Button, TextField, Typography } from "@mui/material";
 import { ChumsPersonHelper } from "../../helpers";
 

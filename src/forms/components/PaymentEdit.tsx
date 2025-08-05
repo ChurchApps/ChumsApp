@@ -1,6 +1,7 @@
 import React from "react";
 import { FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
-import { ApiHelper, Locale, type QuestionInterface } from "@churchapps/apphelper";
+import { type QuestionInterface } from "@churchapps/helpers";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { type FundInterface } from "@churchapps/helpers";
 
 interface Props {

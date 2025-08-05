@@ -1,6 +1,7 @@
 import React from "react";
 import { FormMembers, Form, FormSubmissions } from ".";
-import { type MemberPermissionInterface, type FormInterface, Locale } from "@churchapps/apphelper";
+import { type MemberPermissionInterface, type FormInterface } from "@churchapps/helpers";
+import { Locale } from "@churchapps/apphelper";
 
 interface Props {
   form: FormInterface;

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Table, TableCell, TableRow, Avatar } from "@mui/material";
-import { ApiHelper, type AssignmentInterface, type GroupMemberInterface, InputBox, Locale, PersonHelper, type PositionInterface } from "@churchapps/apphelper";
+import { type AssignmentInterface, type GroupMemberInterface, type PositionInterface } from "@churchapps/helpers";
+import { ApiHelper, InputBox, Locale, PersonHelper } from "@churchapps/apphelper";
 
 interface Props {
   assignment: AssignmentInterface;

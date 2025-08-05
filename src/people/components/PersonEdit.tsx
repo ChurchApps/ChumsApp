@@ -1,8 +1,9 @@
 import React, { useState, memo, useCallback, useMemo } from "react";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { ChumsPersonHelper, UpdateHouseHold } from ".";
+import { type PersonInterface } from "@churchapps/helpers";
 import {
-  PersonHelper, DateHelper, InputBox, ApiHelper, type PersonInterface, Loading, ErrorMessages, Locale, PersonAvatar 
+  PersonHelper, DateHelper, InputBox, ApiHelper, Loading, ErrorMessages, Locale, PersonAvatar 
 } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import UserContext from "../../UserContext";

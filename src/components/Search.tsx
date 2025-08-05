@@ -1,5 +1,6 @@
 import React from "react";
-import { type PersonInterface, Locale, PersonAvatar } from "@churchapps/apphelper";
+import { type PersonInterface } from "@churchapps/helpers";
+import { Locale, PersonAvatar } from "@churchapps/apphelper";
 import {
   Table, TableBody, TableRow, TableCell, Icon, TextField, Button, Box 
 } from "@mui/material";

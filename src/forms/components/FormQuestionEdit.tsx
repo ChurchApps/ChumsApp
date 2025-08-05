@@ -3,7 +3,8 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { ChoicesEdit } from ".";
-import { useMountedState, type QuestionInterface, ApiHelper, InputBox, UniqueIdHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { type QuestionInterface } from "@churchapps/helpers";
+import { useMountedState, ApiHelper, InputBox, UniqueIdHelper, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { PaymentEdit } from "./PaymentEdit";
 
 interface Props {

@@ -1,5 +1,6 @@
 import React from "react";
-import { Locale, type QuestionInterface } from "@churchapps/apphelper";
+import { type QuestionInterface } from "@churchapps/helpers";
+import { Locale } from "@churchapps/apphelper";
 import {
   Table, TableBody, TableRow, TableCell, TableHead, FormLabel, TextField, Button 
 } from "@mui/material";

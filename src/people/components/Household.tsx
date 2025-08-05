@@ -1,7 +1,8 @@
 import React, { memo, useMemo } from "react";
 import { HouseholdEdit } from ".";
+import { type PersonInterface } from "@churchapps/helpers";
 import {
-  DisplayBox, ApiHelper, UserHelper, type PersonInterface, Permissions, UniqueIdHelper, Loading, PersonHelper, Locale, PersonAvatar 
+  DisplayBox, ApiHelper, UserHelper, Permissions, UniqueIdHelper, Loading, PersonHelper, Locale, PersonAvatar 
 } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import {

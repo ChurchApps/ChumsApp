@@ -1,6 +1,7 @@
 import React, { memo, useMemo } from "react";
 import { GroupDetailsEdit, ServiceTimes } from ".";
-import { type GroupInterface, Loading, Locale, ImageEditor } from "@churchapps/apphelper";
+import { type GroupInterface } from "@churchapps/helpers";
+import { Loading, Locale, ImageEditor } from "@churchapps/apphelper";
 import { MarkdownPreview } from "@churchapps/apphelper-markdown";
 import {
   Chip, Grid, Box, Typography, Stack, Card, CardContent, Divider 

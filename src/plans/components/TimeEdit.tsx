@@ -1,6 +1,7 @@
 import React from "react";
 import { Checkbox, TextField, Typography } from "@mui/material";
-import { ApiHelper, DateHelper, ErrorMessages, InputBox, Locale, type TimeInterface } from "@churchapps/apphelper";
+import { type TimeInterface } from "@churchapps/helpers";
+import { ApiHelper, DateHelper, ErrorMessages, InputBox, Locale } from "@churchapps/apphelper";
 
 interface Props {
   time: TimeInterface;

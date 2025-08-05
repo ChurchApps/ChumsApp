@@ -5,7 +5,8 @@ import {
 } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import { PersonAdd } from "../../components";
-import { DisplayBox, type PersonInterface, ApiHelper, type MemberPermissionInterface, PersonHelper, Locale } from "@churchapps/apphelper";
+import { type PersonInterface, type MemberPermissionInterface } from "@churchapps/helpers";
+import { DisplayBox, ApiHelper, PersonHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   formId: string;
