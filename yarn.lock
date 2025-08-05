@@ -173,10 +173,10 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
 
-"@churchapps/apphelper-donations@^0.4.26":
-  version "0.4.26"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper-donations/-/apphelper-donations-0.4.26.tgz"
-  integrity sha512-S2ymVkZ/FC1Uj5atUVCHxgZr4AiXkQol4+jp0O1+CvLBAvYboxwFbE14c/JW1wz8D/fLzvwJ7OYHBv6TqRrhxA==
+"@churchapps/apphelper-donations@^0.4.27":
+  version "0.4.27"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper-donations/-/apphelper-donations-0.4.27.tgz"
+  integrity sha512-tKL1KW3B2QYzCmmYYe3IIxDNA8pMVb8YWo47YQ2u6HnTkCDeHoyE4/pLIC7a89ykyir82BLLkWgXs/xkL7HJUw==
   dependencies:
     "@emotion/react" "^11.14.0"
     "@emotion/styled" "^11.14.1"
@@ -191,10 +191,24 @@
     react-i18next "^15.6.0"
     rrule "^2.8.1"
 
-"@churchapps/apphelper-login@^0.4.26":
-  version "0.4.26"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper-login/-/apphelper-login-0.4.26.tgz"
-  integrity sha512-zNweT9KzujSZMYG8W88rMhkjxsogXzWdn7AVg2fDOjYPZ1JG8urPN9lhJAjG4mEX14XzUctkh3IXWA1qpzotEQ==
+"@churchapps/apphelper-forms@^0.4.27":
+  version "0.4.27"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper-forms/-/apphelper-forms-0.4.27.tgz"
+  integrity sha512-fD0ojTqqLKVyiQRKWvsAgXjeRQvi1qrFlxB882K0khr1qxGpdgnJ1vQLEunoru+B4Ci13LlbBGBa1iiihhCMeg==
+  dependencies:
+    "@churchapps/apphelper-donations" "^0.4.27"
+    "@emotion/react" "^11.14.0"
+    "@emotion/styled" "^11.14.1"
+    "@mui/material" "^7.2.0"
+    axios "^1.10.0"
+    date-fns "^4.1.0"
+    i18next "^25.3.1"
+    react-i18next "^15.6.0"
+
+"@churchapps/apphelper-login@^0.4.27":
+  version "0.4.27"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper-login/-/apphelper-login-0.4.27.tgz"
+  integrity sha512-MhnDauN41G4YtYe56ZVqrCQlHUkI/WFLVm7QASa2WFGgyT/H5lKrWYGAwXAmj6tBrX72NnvNlJYg5Tr3eDDEmw==
   dependencies:
     "@emotion/react" "^11.14.0"
     "@emotion/styled" "^11.14.1"
@@ -207,10 +221,10 @@
     react-google-recaptcha "^3.1.0"
     react-i18next "^15.6.0"
 
-"@churchapps/apphelper-markdown@^0.4.26":
-  version "0.4.26"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper-markdown/-/apphelper-markdown-0.4.26.tgz"
-  integrity sha512-WLlOjxJXm+cTFa02SkKM8aBaFi3UI7I+GUnsA48EdtYNb4tBI7RvgERkIrwu6h1EWegWbF/Pc0UQBLJsWdNSxQ==
+"@churchapps/apphelper-markdown@^0.4.27":
+  version "0.4.27"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper-markdown/-/apphelper-markdown-0.4.27.tgz"
+  integrity sha512-g7oDLPSosptt+jENQAIBfZwE8gFoxNsL8ckzLZcejD8gfP9K/koeifEnaBp54XmnOjBpVQfwsTja7a6bfpXbIA==
   dependencies:
     "@lexical/code" "^0.33.0"
     "@lexical/link" "^0.33.0"
@@ -226,10 +240,10 @@
     marked "^16.0.0"
     material-symbols "^0.32.0"
 
-"@churchapps/apphelper@^0.4.26":
-  version "0.4.26"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper/-/apphelper-0.4.26.tgz"
-  integrity sha512-SWcks07nCDAa5W042fA9KHK+Yk51vzeCPoJh78jTLKzTRpEIFS+XX0JRWsAo+iYMOFp91XgARqomcZ3W17C15A==
+"@churchapps/apphelper@^0.4.27":
+  version "0.4.27"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper/-/apphelper-0.4.27.tgz"
+  integrity sha512-nk2xrs9L+aKHKReA67Tg+Czm+MEmcVrkgAWm3U1N+G+Qr/UhiT1g5hHOuu6ynYwdK4XXG0/L/P4zLD3NwXIkEA==
   dependencies:
     "@churchapps/helpers" "^1.0.46"
     "@emotion/cache" "^11.13.5"

@@ -3,8 +3,9 @@ import { ServiceTimesEdit } from ".";
 import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import {
-  Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Box, Typography, Icon, type SelectChangeEvent 
+  Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Box, Typography, type SelectChangeEvent
 } from "@mui/material";
+import { PhotoCamera as PhotoCameraIcon } from "@mui/icons-material";
 import { useMountedState, type GroupInterface } from "@churchapps/apphelper";
 import { MarkdownEditor } from "@churchapps/apphelper-markdown";
 import { GroupLabelsEdit } from "./GroupLabelsEdit";
@@ -178,14 +179,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   else {
     return (
       <>
-        <InputBox
-          id="groupDetailsBox"
-          headerText={Locale.label("groups.groupDetailsEdit.groupDet")}
-          headerIcon="group"
-          saveFunction={handleSave}
-          cancelFunction={handleCancel}
-          deleteFunction={handleDelete}
-          help="chums/groups">
+        <InputBox id="groupDetailsBox" headerText={Locale.label("groups.groupDetailsEdit.groupDet")} headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} help="chums/groups">
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             {!teamMode && (
@@ -298,7 +292,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                         />
                       ) : (
                         <Stack alignItems="center" spacing={1} sx={{ color: "grey.500" }}>
-                          <Icon sx={{ fontSize: 32 }}>photo_camera</Icon>
+                          <PhotoCameraIcon sx={{ fontSize: 32 }} />
                           <Typography variant="body2" color="grey.500">
                             Click to add photo
                           </Typography>

@@ -16,8 +16,9 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import {
-  Button, FormControl, Icon, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField 
+  Button, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField 
 } from "@mui/material";
+import { Send as SendIcon } from "@mui/icons-material";
 import { SmallButton } from "@churchapps/apphelper";
 
 interface Props {
@@ -279,7 +280,7 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
             <Button
               size="small"
               variant="contained"
-              endIcon={<Icon fontSize="small">send</Icon>}
+              endIcon={<SendIcon fontSize="small" />}
               onClick={() => {
                 handleSend();
                 setShow(false);

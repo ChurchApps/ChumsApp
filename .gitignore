@@ -2,6 +2,7 @@
 /build
 /public/apphelper
 /test-results.json
+.serena
 
 # Logs
 logs
