@@ -18,53 +18,42 @@ export const Login: React.FC = () => {
   const returnUrl = search.get("returnUrl") || location.state?.from?.pathname || defaultRedirect;
 
   const handleRedirect = (url: string) => {
+    console.log("HANDLE REDIRECT", url);
     navigate(url);
   };
 
-  if (context.user === null || !ApiHelper.isAuthenticated) {
-    let jwt = search.get("jwt") || cookies.jwt;
-    let auth = search.get("auth");
-    if (!jwt) jwt = "";
-    if (!auth) auth = "";
 
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          backgroundColor: "#EEE",
-          minHeight: "100vh",
-        }}>
-        <Box
-          sx={{
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}>
-          {process.env.REACT_APP_STAGE === "demo" && (
-            <Alert severity="error" style={{ marginTop: 50 }}>
-              <b>Demo:</b> This is the demo environment. All data is erased nightly.
-              <br />
-              You can log into a test church of "Grace Community Church"
-              <br />
-              Use the email "<b>demo@chums.org</b>" and password "<b>password</b>".
-            </Alert>
-          )}
-          <LoginPage
-            auth={auth}
-            context={context}
-            jwt={jwt}
-            appName="CHUMS"
-            appUrl={window.location.href}
-            callbackErrors={errors}
-            returnUrl={returnUrl}
-            handleRedirect={handleRedirect}
-            defaultEmail={process.env.REACT_APP_STAGE === "demo" ? "demo@chums.org" : undefined}
-            defaultPassword={process.env.REACT_APP_STAGE === "demo" ? "password" : undefined}
-          />
-        </Box>
-      </Box>
-    );
-  } else {
-    // User is authenticated, LoginPage will call handleRedirect to navigate appropriately
-    return null;
-  }
+  let jwt = search.get("jwt") || cookies.jwt;
+  let auth = search.get("auth");
+  if (!jwt) jwt = "";
+  if (!auth) auth = "";
+
+  return (
+    <div style={{ marginTop: -50 }}>
+
+      {process.env.REACT_APP_STAGE === "demo" && (
+        <Alert severity="error" style={{ marginTop: 50 }}>
+          <b>Demo:</b> This is the demo environment. All data is erased nightly.
+          <br />
+          You can log into a test church of "Grace Community Church"
+          <br />
+          Use the email "<b>demo@chums.org</b>" and password "<b>password</b>".
+        </Alert>
+      )}
+      <LoginPage
+        auth={auth}
+        context={context}
+        jwt={jwt}
+        appName="CHUMS"
+        appUrl={window.location.href}
+        callbackErrors={errors}
+        returnUrl={returnUrl}
+        handleRedirect={handleRedirect}
+        defaultEmail={process.env.REACT_APP_STAGE === "demo" ? "demo@chums.org" : undefined}
+        defaultPassword={process.env.REACT_APP_STAGE === "demo" ? "password" : undefined}
+      />
+    </div>
+
+  );
+
 };

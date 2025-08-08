@@ -1,7 +1,7 @@
 import React from "react";
 import { GroupBanner, GroupDetailsEdit } from "./components";
 import { type GroupInterface } from "@churchapps/helpers";
-import { ImageEditor } from "@churchapps/apphelper";
+import { ImageEditor, ApiHelper } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { GroupMembersTab } from "./components/GroupMembersTab";
 import { GroupSessionsTab } from "./components/GroupSessionsTab";
@@ -51,24 +51,39 @@ export const GroupPage = () => {
     group.refetch();
   };
 
-  const handlePhotoUpdated = () => {
-    group.refetch();
+  const handlePhotoUpdated = async (photoUrl: string) => {
+    // Update the group with the new photo URL
+    if (group.data) {
+      const updatedGroup = { ...group.data, photoUrl: photoUrl };
+      await ApiHelper.post("/groups", [updatedGroup], "MembershipApi");
+      await group.refetch();
+    }
     setInPhotoEditMode(false);
   };
 
-  const togglePhotoEditor = (show: boolean, updatedGroup?: GroupInterface) => {
+  const togglePhotoEditor = async (show: boolean, updatedGroup?: GroupInterface) => {
     setInPhotoEditMode(show);
-    if (updatedGroup) {
-      group.refetch();
+    if (updatedGroup && !show) {
+      await group.refetch();
     }
   };
 
-  const imageEditor = inPhotoEditMode && <ImageEditor aspectRatio={16 / 9} photoUrl={group.data?.photoUrl} onCancel={() => togglePhotoEditor(false)} onUpdate={handlePhotoUpdated} />;
+  const imageEditor = inPhotoEditMode && (
+    <div style={{ position: "relative", zIndex: 1200 }}>
+      <ImageEditor
+        aspectRatio={16 / 9}
+        photoUrl={group.data?.photoUrl}
+        onCancel={() => togglePhotoEditor(false)}
+        onUpdate={handlePhotoUpdated}
+      />
+    </div>
+  );
 
   return (
     <>
-      {imageEditor}
+
       <GroupBanner group={group.data} selectedTab={selectedTab} onTabChange={setSelectedTab} togglePhotoEditor={togglePhotoEditor} onEdit={handleEdit} editMode={editMode} />
+      {imageEditor}
       <Grid container spacing={2}>
         <Grid size={{ xs: 12 }}>
           <div id="mainContent">{editMode ? <GroupDetailsEdit id="groupDetailsBox" group={group.data} updatedFunction={handleUpdated} togglePhotoEditor={togglePhotoEditor} /> : getCurrentTab()}</div>
