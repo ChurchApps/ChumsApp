@@ -17,14 +17,13 @@ interface Props {
   group: GroupInterface;
   selectedTab?: string;
   onTabChange?: (tab: string) => void;
-  togglePhotoEditor?: (show: boolean) => void;
   onEdit?: () => void;
   editMode?: boolean;
 }
 
 export const GroupBanner = memo((props: Props) => {
   const {
-    group, selectedTab, onTabChange, togglePhotoEditor, onEdit, editMode 
+    group, selectedTab, onTabChange, onEdit, editMode 
   } = props;
   const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
 
@@ -160,34 +159,11 @@ export const GroupBanner = memo((props: Props) => {
               overflow: "hidden",
               border: "3px solid #FFF",
               flexShrink: 0,
-              cursor: canEdit ? "pointer" : "default",
               backgroundColor: group.photoUrl ? "transparent" : "rgba(255,255,255,0.1)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              position: "relative",
-              "&:hover": canEdit
-                ? {
-                  opacity: 0.8,
-                  "&::after": {
-                    content: '"Click to edit"',
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: "rgba(0,0,0,0.7)",
-                    color: "white",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "0.875rem",
-                    fontWeight: 600,
-                  },
-                }
-                : {},
-            }}
-            onClick={() => canEdit && togglePhotoEditor?.(true)}>
+            }}>
             {group.photoUrl ? (
               <img
                 src={group.photoUrl}

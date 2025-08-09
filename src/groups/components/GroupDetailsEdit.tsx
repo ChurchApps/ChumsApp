@@ -1,6 +1,6 @@
 import React from "react";
 import { ServiceTimesEdit } from ".";
-import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, ErrorMessages, Locale, GalleryModal } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import {
   Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Box, Typography, type SelectChangeEvent
@@ -15,13 +15,13 @@ interface Props {
   id?: string;
   group: GroupInterface;
   updatedFunction: () => void;
-  togglePhotoEditor: (show: boolean, inProgressEditGroup: GroupInterface) => void;
 }
 
 export const GroupDetailsEdit: React.FC<Props> = (props) => {
   const [group, setGroup] = React.useState<GroupInterface>({} as GroupInterface);
   const [errors, setErrors] = React.useState([]);
   const [redirect, setRedirect] = React.useState("");
+  const [showGalleryModal, setShowGalleryModal] = React.useState(false);
   const isMounted = useMountedState();
 
   const handleCancel = () => props.updatedFunction();
@@ -101,6 +101,16 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     }
   };
 
+  const handlePhotoSelected = (photoUrl: string) => {
+    const updatedGroup = { ...group, photoUrl: photoUrl };
+    setGroup(updatedGroup);
+    setShowGalleryModal(false);
+  };
+
+  const toggleGalleryModal = (show: boolean) => {
+    setShowGalleryModal(show);
+  };
+
   React.useEffect(() => {
     if (isMounted()) {
       setGroup(props.group);
@@ -176,10 +186,20 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
 
   const teamMode = group?.tags?.indexOf("team") !== -1;
 
+  const galleryModal = showGalleryModal && (
+    <GalleryModal
+      onSelect={handlePhotoSelected}
+      onCancel={() => setShowGalleryModal(false)}
+      contentRoot="https://contentdemo.churchapps.org"
+      aspectRatio={16 / 9}
+    />
+  );
+
   if (redirect !== "") return <Navigate to={redirect} />;
   else {
     return (
       <>
+        {galleryModal}
         <InputBox id="groupDetailsBox" headerText={Locale.label("groups.groupDetailsEdit.groupDet")} headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} help="chums/groups">
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
@@ -279,7 +299,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                       }}
                       onClick={(e) => {
                         e.preventDefault();
-                        props.togglePhotoEditor(true, group);
+                        toggleGalleryModal(true);
                       }}>
                       {group.photoUrl ? (
                         <img
@@ -304,7 +324,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                       variant="outlined"
                       onClick={(e) => {
                         e.preventDefault();
-                        props.togglePhotoEditor(true, group);
+                        toggleGalleryModal(true);
                       }}
                       data-testid="change-photo-button"
                       aria-label="Change group photo"
