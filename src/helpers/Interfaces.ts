@@ -65,3 +65,10 @@ export interface PlanItemInterface {
 
   children?: PlanItemInterface[];
 }
+
+export interface PlanTypeInterface {
+  id?: string;
+  churchId?: string;
+  ministryId?: string;
+  name?: string;
+}

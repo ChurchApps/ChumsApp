@@ -29,6 +29,7 @@ const ProfilePage = React.lazy(() => import("./profile/ProfilePage").then((modul
 const PlansPage = React.lazy(() => import("./plans/PlansPage").then((module) => ({ default: module.PlansPage })));
 const PlanPage = React.lazy(() => import("./plans/PlanPage").then((module) => ({ default: module.PlanPage })));
 const MinistryPage = React.lazy(() => import("./plans/MinistryPage").then((module) => ({ default: module.MinistryPage })));
+const PlanTypePage = React.lazy(() => import("./plans/PlanTypePage").then((module) => ({ default: module.PlanTypePage })));
 const DonationBatchesPage = React.lazy(() => import("./donations/DonationBatchesPage").then((module) => ({ default: module.DonationBatchesPage })));
 const FundsPage = React.lazy(() => import("./donations/FundsPage").then((module) => ({ default: module.FundsPage })));
 const SongsPage = React.lazy(() => import("./plans/songs/SongsPage").then((module) => ({ default: module.SongsPage })));
@@ -102,6 +103,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/profile/devices" element={<DevicesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/plans/ministries/:id" element={<MinistryPage />} />
+          <Route path="/plans/types/:id" element={<PlanTypePage />} />
           <Route path="/plans/:id" element={<PlanPage />} />
           <Route path="/plans" element={<PlansPage />} />
           <Route path="/plans/songs" element={<SongsPage />} />

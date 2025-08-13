@@ -670,6 +670,7 @@
       "noMinMsg": "No ministries found. Please create a ministry."
     },
     "ministryPage": {
+      "planTypes": "Plan Types",
       "plans": "Plans",
       "teams": "Teams"
     },

@@ -42,6 +42,9 @@ export const PlanEdit = (props: Props) => {
       case "serviceOrder":
         p.serviceOrder = value === "true";
         break;
+      case "planTypeId":
+        p.planTypeId = value;
+        break;
     }
     setPlan(p);
   };

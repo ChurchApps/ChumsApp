@@ -13,6 +13,7 @@ import { queryClient } from "../../queryClient";
 
 interface Props {
   ministry: GroupInterface;
+  planTypeId?: string;
 }
 
 export interface PlanInterface {
@@ -20,6 +21,7 @@ export interface PlanInterface {
   churchId?: string;
   name?: string;
   ministryId?: string;
+  planTypeId?: string;
   serviceDate?: Date;
   notes?: string;
   serviceOrder?: boolean;
@@ -35,8 +37,12 @@ export const PlanList = memo((props: Props) => {
   });
 
   const plans = React.useMemo(() => {
-    return ArrayHelper.getAll(plansQuery.data || [], "ministryId", props.ministry.id);
-  }, [plansQuery.data, props.ministry.id]);
+    let filtered = ArrayHelper.getAll(plansQuery.data || [], "ministryId", props.ministry.id);
+    if (props.planTypeId) {
+      filtered = ArrayHelper.getAll(filtered, "planTypeId", props.planTypeId);
+    }
+    return filtered;
+  }, [plansQuery.data, props.ministry.id, props.planTypeId]);
 
   const addPlan = useCallback(() => {
     const date = DateHelper.getLastSunday();
@@ -100,7 +106,7 @@ export const PlanList = memo((props: Props) => {
             </Button>
           )}
         </Paper>
-        <MinistryList />
+        {!props.planTypeId && <MinistryList />}
       </Box>
     );
   }

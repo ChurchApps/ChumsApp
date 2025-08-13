@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Stack, Button } from "@mui/material";
 import { Assignment as AssignmentIcon, People as PeopleIcon, Group as GroupIcon } from "@mui/icons-material";
 import { PlanList } from "./components/PlanList";
+import { PlanTypeList } from "./components/PlanTypeList";
 import { TeamList } from "./components/TeamList";
 import { useParams } from "react-router-dom";
 import { type GroupInterface, Locale, Loading, PageHeader } from "@churchapps/apphelper";
@@ -17,6 +18,12 @@ export const MinistryPage = () => {
   });
 
   const tabs = [
+    {
+      key: "types",
+      icon: <AssignmentIcon />,
+      label: Locale.label("plans.ministryPage.planTypes") || "Plan Types",
+      component: ministry.data ? <PlanTypeList key="types" ministry={ministry.data} /> : null,
+    },
     {
       key: "plans",
       icon: <AssignmentIcon />,
@@ -36,7 +43,7 @@ export const MinistryPage = () => {
 
   return (
     <>
-      <PageHeader icon={<GroupIcon />} title={ministry.data.name} subtitle="Manage plans and teams for this ministry">
+      <PageHeader icon={<GroupIcon />} title={ministry.data.name} subtitle="Manage plan types, plans, and teams for this ministry">
         <Stack direction="row" spacing={1}>
           {tabs.map((tab, index) => (
             <Button
