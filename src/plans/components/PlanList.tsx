@@ -5,6 +5,7 @@ import {
 import { Add as AddIcon, Assignment as AssignmentIcon, CalendarMonth as CalendarIcon, Edit as EditIcon, EventNote as EventNoteIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { type GroupInterface } from "@churchapps/helpers";
+import { type PlanInterface } from "../../helpers";
 import { ArrayHelper, DateHelper, Locale, Loading, UserHelper, Permissions } from "@churchapps/apphelper";
 import { PlanEdit } from "./PlanEdit";
 import { MinistryList } from "./MinistryList";
@@ -16,32 +17,24 @@ interface Props {
   planTypeId?: string;
 }
 
-export interface PlanInterface {
-  id?: string;
-  churchId?: string;
-  name?: string;
-  ministryId?: string;
-  planTypeId?: string;
-  serviceDate?: Date;
-  notes?: string;
-  serviceOrder?: boolean;
-}
+
 
 export const PlanList = memo((props: Props) => {
   const [plan, setPlan] = React.useState<PlanInterface>(null);
   const canEdit = UserHelper.checkAccess(Permissions.membershipApi.plans.edit);
 
   const plansQuery = useQuery<PlanInterface[]>({
-    queryKey: ["/plans", "DoingApi"],
+    queryKey: props.planTypeId ? [`/plans/types/${props.planTypeId}`, "DoingApi"] : ["/plans", "DoingApi"],
     placeholderData: [],
   });
 
   const plans = React.useMemo(() => {
-    let filtered = ArrayHelper.getAll(plansQuery.data || [], "ministryId", props.ministry.id);
+    // When planTypeId is provided, the API already returns filtered data
     if (props.planTypeId) {
-      filtered = ArrayHelper.getAll(filtered, "planTypeId", props.planTypeId);
+      return plansQuery.data || [];
     }
-    return filtered;
+    // When no planTypeId, filter by ministry only
+    return ArrayHelper.getAll(plansQuery.data || [], "ministryId", props.ministry.id);
   }, [plansQuery.data, props.ministry.id, props.planTypeId]);
 
   const addPlan = useCallback(() => {
@@ -50,18 +43,23 @@ export const PlanList = memo((props: Props) => {
     const name = DateHelper.prettyDate(date);
     setPlan({
       ministryId: props.ministry.id,
+      planTypeId: props.planTypeId,
       serviceDate: date,
       name,
       notes: "",
       serviceOrder: true,
     });
-  }, [props.ministry.id]);
+  }, [props.ministry.id, props.planTypeId]);
 
   const handleUpdated = useCallback(() => {
     setPlan(null);
     plansQuery.refetch();
+    // Invalidate both the specific plan type query and the general plans query
+    if (props.planTypeId) {
+      queryClient.invalidateQueries({ queryKey: [`/plans/types/${props.planTypeId}`, "DoingApi"] });
+    }
     queryClient.invalidateQueries({ queryKey: ["/plans", "DoingApi"] });
-  }, [plansQuery]);
+  }, [plansQuery, props.planTypeId]);
 
   if (plan && canEdit) {
     return <PlanEdit plan={plan} plans={plans} updatedFunction={handleUpdated} />;
@@ -240,7 +238,7 @@ export const PlanList = memo((props: Props) => {
         ))}
       </Stack>
 
-      <MinistryList />
+      {!props.planTypeId && <MinistryList />}
     </Box>
   );
 });

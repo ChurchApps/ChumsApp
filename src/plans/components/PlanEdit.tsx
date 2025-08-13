@@ -1,6 +1,7 @@
 import React from "react";
 import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import { DateHelper, ErrorMessages, InputBox, Locale } from "@churchapps/apphelper";
+import { type PlanInterface } from "../../helpers";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "../../queryClient";
 
@@ -10,15 +11,7 @@ interface Props {
   updatedFunction: () => void;
 }
 
-export interface PlanInterface {
-  id?: string;
-  churchId?: string;
-  name?: string;
-  ministryId?: string;
-  serviceDate?: Date;
-  notes?: string;
-  serviceOrder?: boolean;
-}
+
 
 export const PlanEdit = (props: Props) => {
   const [plan, setPlan] = React.useState<PlanInterface>(props.plan);

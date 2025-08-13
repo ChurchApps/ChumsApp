@@ -72,3 +72,16 @@ export interface PlanTypeInterface {
   ministryId?: string;
   name?: string;
 }
+
+export interface PlanInterface {
+  id?: string;
+  churchId?: string;
+  name?: string;
+  ministryId?: string;
+  planTypeId?: string;
+  serviceDate?: Date;
+  notes?: string;
+  serviceOrder?: boolean;
+  contentType?: string;
+  contentId?: string;
+}

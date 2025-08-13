@@ -18,7 +18,7 @@ export const PlanTypeList = React.memo(({ ministry }: Props) => {
   const canEdit = UserHelper.checkAccess(Permissions.membershipApi.plans.edit);
 
   const planTypes = useQuery<PlanTypeInterface[]>({
-    queryKey: [`/planTypes?ministryId=${ministry.id}`, "DoingApi"],
+    queryKey: [`/planTypes/ministryId/${ministry.id}`, "DoingApi"],
     enabled: !!ministry.id,
     placeholderData: [],
   });

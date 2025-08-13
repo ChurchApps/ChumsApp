@@ -1,20 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { ApiHelper, Locale, PageHeader } from "@churchapps/apphelper";
+import { type PlanInterface } from "../helpers";
 import { Assignment } from "./components/Assignment";
 import { Box, Stack, Button, Container, Typography } from "@mui/material";
 import { Assignment as AssignmentIcon, Album as AlbumIcon } from "@mui/icons-material";
 import { ServiceOrder } from "./components/ServiceOrder";
 
-export interface PlanInterface {
-  id?: string;
-  churchId?: string;
-  name?: string;
-  ministryId?: string;
-  serviceDate?: Date;
-  notes?: string;
-  serviceOrder?: boolean;
-}
+
 
 export const PlanPage = () => {
   const params = useParams();
