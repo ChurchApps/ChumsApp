@@ -62,6 +62,7 @@ export interface PlanItemInterface {
   label?: string;
   description?: string;
   seconds?: number;
+  link?: string;
 
   children?: PlanItemInterface[];
 }
@@ -84,4 +85,40 @@ export interface PlanInterface {
   serviceOrder?: boolean;
   contentType?: string;
   contentId?: string;
+}
+
+export interface ProgramInterface {
+  id?: string;
+  name?: string;
+  slug?: string;
+  description?: string;
+  image?: string;
+  live?: boolean;
+  churchId?: string;
+}
+
+export interface StudyInterface {
+  id?: string;
+  name?: string;
+  slug?: string;
+  description?: string;
+  image?: string;
+  programId?: string;
+  sort?: number;
+}
+
+export interface LessonInterface {
+  id?: string;
+  name?: string;
+  slug?: string;
+  description?: string;
+  studyId?: string;
+  sort?: number;
+}
+
+export interface VenueInterface {
+  id?: string;
+  name?: string;
+  lessonId?: string;
+  sort?: number;
 }

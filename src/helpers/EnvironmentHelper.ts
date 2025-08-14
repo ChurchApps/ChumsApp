@@ -83,11 +83,12 @@ export class EnvironmentHelper {
     await Locale.init([`/locales/{{lng}}.json?v=1`, `/apphelper/locales/{{lng}}.json`]);
   };
 
-  static initLocal = async () => {};
+  static initLocal = async () => { };
 
   static initDev = () => {
     this.initStaging();
-    EnvironmentHelper.LessonsApi = process.env.NEXT_PUBLIC_LESSONS_API || EnvironmentHelper.LessonsApi;
+    EnvironmentHelper.LessonsApi = process.env.REACT_APP_LESSONS_API || EnvironmentHelper.LessonsApi;
+    console.log("LessonsAPI is", EnvironmentHelper.LessonsApi, process.env.REACT_APP_LESSONS_API);
   };
 
   //NOTE: None of these values are secret.

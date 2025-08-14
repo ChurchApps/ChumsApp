@@ -4,6 +4,7 @@ import { type PlanItemInterface } from "../../helpers";
 import { DraggableWrapper } from "../../components/DraggableWrapper";
 import { DroppableWrapper } from "../../components/DroppableWrapper";
 import { ApiHelper } from "@churchapps/apphelper";
+import { MarkdownPreviewLight } from "@churchapps/apphelper-markdown";
 
 interface Props {
   planItem: PlanItemInterface;
@@ -11,6 +12,7 @@ interface Props {
   onDragChange?: (isDragging: boolean) => void;
   setEditPlanItem: (pi: PlanItemInterface) => void;
   onChange?: () => void;
+  readOnly?: boolean;
 }
 
 export const PlanItem = React.memo((props: Props) => {
@@ -74,7 +76,7 @@ export const PlanItem = React.memo((props: Props) => {
               console.log("ISdragging", isDragging);
               props.onDragChange(isDragging);
             }}>
-            <PlanItem key={c.id} planItem={c} setEditPlanItem={props.setEditPlanItem} />
+            <PlanItem key={c.id} planItem={c} setEditPlanItem={props.setEditPlanItem} readOnly={props.readOnly} />
           </DraggableWrapper>
         </>
       );
@@ -99,38 +101,17 @@ export const PlanItem = React.memo((props: Props) => {
   const getHeaderRow = () => (
     <>
       <div className="planItemHeader">
-        <span style={{ float: "right", marginTop: -2, marginBottom: -2 }}>
-          <a
-            href="about:blank"
-            onClick={(e) => {
-              e.preventDefault();
-              setAnchorEl(e.currentTarget);
-            }}>
-            <Icon>add</Icon>
-          </a>
-          &nbsp;
-          <a
-            href="about:blank"
-            onClick={(e) => {
-              e.preventDefault();
-              props.setEditPlanItem(props.planItem);
-            }}>
-            <Icon>edit</Icon>
-          </a>
-        </span>
-        <Icon style={{ float: "left", color: "#777" }}>drag_indicator</Icon> <span>{props.planItem.label}</span>
-      </div>
-      {getChildren()}
-    </>
-  );
-
-  const getItemRow = () => (
-    <>
-      <div className="planItem">
-        <Icon style={{ float: "left", color: "#777" }}>drag_indicator</Icon>
-        <div>{formatTime(props.planItem.seconds)}</div>
-        <div>
+        {!props.readOnly && (
           <span style={{ float: "right", marginTop: -2, marginBottom: -2 }}>
+            <a
+              href="about:blank"
+              onClick={(e) => {
+                e.preventDefault();
+                setAnchorEl(e.currentTarget);
+              }}>
+              <Icon>add</Icon>
+            </a>
+            &nbsp;
             <a
               href="about:blank"
               onClick={(e) => {
@@ -140,7 +121,39 @@ export const PlanItem = React.memo((props: Props) => {
               <Icon>edit</Icon>
             </a>
           </span>
-          {props.planItem.label}
+        )}
+        {!props.readOnly && <Icon style={{ float: "left", color: "#777" }}>drag_indicator</Icon>}
+        <span>{props.planItem.label}</span>
+      </div>
+      {getChildren()}
+    </>
+  );
+
+  const getItemRow = () => (
+    <>
+      <div className="planItem">
+        {!props.readOnly && <Icon style={{ float: "left", color: "#777" }}>drag_indicator</Icon>}
+        <div>{formatTime(props.planItem.seconds)}</div>
+        <div>
+          {!props.readOnly && (
+            <span style={{ float: "right", marginTop: -2, marginBottom: -2 }}>
+              <a
+                href="about:blank"
+                onClick={(e) => {
+                  e.preventDefault();
+                  props.setEditPlanItem(props.planItem);
+                }}>
+                <Icon>edit</Icon>
+              </a>
+            </span>
+          )}
+          {props.planItem.link ? (
+            <a href={props.planItem.link} target="_blank" rel="noopener noreferrer">
+              {props.planItem.label}
+            </a>
+          ) : (
+            props.planItem.label
+          )}
         </div>
         {getDescriptionRow()}
       </div>
@@ -150,27 +163,50 @@ export const PlanItem = React.memo((props: Props) => {
   const getSongRow = () => (
     <>
       <div className="planItem">
-        <Icon style={{ float: "left", color: "#777" }}>drag_indicator</Icon>
+        {!props.readOnly && <Icon style={{ float: "left", color: "#777" }}>drag_indicator</Icon>}
         <div>{formatTime(props.planItem.seconds)}</div>
         <div>
-          <span style={{ float: "right", marginTop: -2, marginBottom: -2 }}>
-            <a
-              href="about:blank"
-              onClick={(e) => {
-                e.preventDefault();
-                props.setEditPlanItem(props.planItem);
-              }}>
-              <Icon>edit</Icon>
+          {!props.readOnly && (
+            <span style={{ float: "right", marginTop: -2, marginBottom: -2 }}>
+              <a
+                href="about:blank"
+                onClick={(e) => {
+                  e.preventDefault();
+                  props.setEditPlanItem(props.planItem);
+                }}>
+                <Icon>edit</Icon>
+              </a>
+            </span>
+          )}
+          {props.planItem.link ? (
+            <a href={props.planItem.link} target="_blank" rel="noopener noreferrer">
+              {props.planItem.label}
             </a>
-          </span>
-          {props.planItem.label}
+          ) : (
+            props.planItem.label
+          )}
         </div>
         {getDescriptionRow()}
       </div>
     </>
   );
 
-  const getDescriptionRow = () => <div className="planItemDescription">{props.planItem.description}</div>;
+  const getDescriptionRow = () => (
+    <div
+      className="planItemDescription"
+      style={{
+        clear: "both",
+        width: "100%",
+        paddingTop: "8px",
+        paddingBottom: "8px",
+        paddingLeft: "22px",
+        fontStyle: "italic",
+        color: "#777"
+      }}
+    >
+      <MarkdownPreviewLight value={props.planItem.description || ""} />
+    </div>
+  );
 
   const getPlanItem = () => {
     switch (props.planItem.itemType) {
@@ -193,7 +229,7 @@ export const PlanItem = React.memo((props: Props) => {
   return (
     <>
       {getPlanItem()}
-      {props.planItem?.itemType === "header" && (
+      {props.planItem?.itemType === "header" && !props.readOnly && (
         <Menu id="header-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
           <MenuItem onClick={addSong}>
             <Icon style={{ marginRight: 10 }}>music_note</Icon> Song
