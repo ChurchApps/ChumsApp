@@ -1,8 +1,9 @@
+import { ApiHelper, Locale, Permissions, UserHelper } from "@churchapps/apphelper";
 import React, { useEffect, useMemo } from "react";
-import { Locale, UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
-import UserContext from "../UserContext";
-import { SiteHeader } from "@churchapps/apphelper";
+
 import { SecondaryMenuHelper } from "../helpers/SecondaryMenuHelper";
+import { SiteHeader } from "@churchapps/apphelper";
+import UserContext from "../UserContext";
 import { useNavigate } from "react-router-dom";
 
 export const Header: React.FC = () => {
@@ -28,7 +29,7 @@ export const Header: React.FC = () => {
     const donationIcon = donationError ? "error" : "volunteer_activism";
     const menuItems: { url: string; icon: string; label: string }[] = [];
     menuItems.push({ url: "/", icon: "home", label: Locale.label("components.wrapper.dash") });
-    menuItems.push({ url: "/people", icon: "person", label: Locale.label("components.wrapper.ppl") });
+    if (UserHelper.checkAccess(Permissions.membershipApi.people.view)) menuItems.push({ url: "/people", icon: "person", label: Locale.label("components.wrapper.ppl") });
     if (UserHelper.checkAccess(Permissions.givingApi.donations.viewSummary)) menuItems.push({ url: "/donations", label: Locale.label("components.wrapper.don"), icon: donationIcon });
 
     if (UserHelper.checkAccess(Permissions.membershipApi.plans.edit)) menuItems.push({ url: "/plans", label: Locale.label("components.wrapper.serving"), icon: "assignment" });
