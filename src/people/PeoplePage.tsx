@@ -1,12 +1,11 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { UserHelper, type PersonInterface } from "@churchapps/helpers";
+import { type PersonInterface } from "@churchapps/helpers";
 import { Locale } from "@churchapps/apphelper";
 import { PeopleSearchResults, PeopleColumns } from "./components";
 import { ExportLink } from "@churchapps/apphelper";
 import { Grid, Box, Typography, Card, Stack, Button } from "@mui/material";
 import { ChumsPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
-import { Permissions } from "@churchapps/apphelper";
 import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { PageHeader } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
@@ -16,7 +15,6 @@ export const PeoplePage = memo(() => {
   const [searchResults, setSearchResults] = React.useState(null);
   const [selectedColumns, setSelectedColumns] = React.useState<string[]>(["photo", "displayName"]);
   const [isSearchPerformed, setIsSearchPerformed] = React.useState(false);
-  const canEdit = UserHelper.checkAccess(Permissions.membershipApi.people.edit);
 
   const recentPeople = useQuery<PersonInterface[]>({
     queryKey: ["/people/recent", "MembershipApi"],
@@ -120,38 +118,36 @@ export const PeoplePage = memo(() => {
             }
           }}
         />
-        {canEdit && (
-          <Button
-            variant="outlined"
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)",
-              },
-            }}
-            startIcon={<PersonAddIcon />}
-            onClick={() => {
-              // Scroll to the CreatePerson component at the bottom
-              const createPersonSection = document.querySelector('[data-cy="createPerson"]') || document.querySelector(".create-person") || document.getElementById("createPersonForm");
-              if (createPersonSection) {
-                createPersonSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                // Focus on first input field after scrolling
-                setTimeout(() => {
-                  const firstInput = createPersonSection.querySelector("input") as HTMLElement;
-                  if (firstInput) {
-                    firstInput.focus();
-                  }
-                }, 500);
-              } else {
-                // Fallback: scroll to bottom of page
-                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-              }
-            }}>
-            Add Person
-          </Button>
-        )}
+        <Button
+          variant="outlined"
+          sx={{
+            color: "#FFF",
+            borderColor: "rgba(255,255,255,0.5)",
+            "&:hover": {
+              borderColor: "#FFF",
+              backgroundColor: "rgba(255,255,255,0.1)",
+            },
+          }}
+          startIcon={<PersonAddIcon />}
+          onClick={() => {
+            // Scroll to the CreatePerson component at the bottom
+            const createPersonSection = document.querySelector('[data-cy="createPerson"]') || document.querySelector(".create-person") || document.getElementById("createPersonForm");
+            if (createPersonSection) {
+              createPersonSection.scrollIntoView({ behavior: "smooth", block: "start" });
+              // Focus on first input field after scrolling
+              setTimeout(() => {
+                const firstInput = createPersonSection.querySelector("input") as HTMLElement;
+                if (firstInput) {
+                  firstInput.focus();
+                }
+              }, 500);
+            } else {
+              // Fallback: scroll to bottom of page
+              window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+            }
+          }}>
+          Add Person
+        </Button>
       </PageHeader>
 
       {/* Main Content */}
