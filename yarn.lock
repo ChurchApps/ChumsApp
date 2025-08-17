@@ -237,10 +237,10 @@
     marked "^16.1.2"
     material-symbols "^0.33.0"
 
-"@churchapps/apphelper@^0.4.28", "@churchapps/apphelper@^0.4.31":
-  version "0.4.31"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper/-/apphelper-0.4.31.tgz"
-  integrity sha512-ijb3MqDBY7eEeu2VX4PVFhQmlY9fGlARuDcnCud8UbYl0faokQ99ExG+SfzWpqChTxRsnpUUQAwnEpvvJQ1gaQ==
+"@churchapps/apphelper@^0.4.28", "@churchapps/apphelper@^0.4.32":
+  version "0.4.32"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper/-/apphelper-0.4.32.tgz"
+  integrity sha512-OfZhRSBcVnmvITREZ6MVmPGCNzsbUpJlkjSxvUmu81M7wqiYekIKENR3U4PsrcjivJIe9cEs+ofMS4E+5RznLA==
   dependencies:
     "@churchapps/helpers" "^1.0.46"
     "@emotion/cache" "^11.14.0"
@@ -1316,7 +1316,7 @@
   resolved "https://registry.npmjs.org/@rollup/rollup-win32-ia32-msvc/-/rollup-win32-ia32-msvc-4.46.2.tgz"
   integrity sha512-gBgaUDESVzMgWZhcyjfs9QFK16D8K6QZpwAaVNJxYDLHWayOta4ZMjGm/vsAEy3hvlS2GosVFlBlP9/Wb85DqQ==
 
-"@rollup/rollup-win32-x64-msvc@^4.46.2", "@rollup/rollup-win32-x64-msvc@4.46.2":
+"@rollup/rollup-win32-x64-msvc@4.46.2":
   version "4.46.2"
   resolved "https://registry.npmjs.org/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.46.2.tgz"
   integrity sha512-CvUo2ixeIQGtF6WvuB87XWqPQkoFAFqW+HUo/WzHwuHDvIwZCtjdWXoYCcr06iKGydiqTclC4jU/TNObC/xKZg==
