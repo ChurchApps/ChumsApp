@@ -3,7 +3,7 @@ import React, { memo, useCallback, useMemo } from "react";
 import { CampusEdit, ServiceEdit, ServiceTimeEdit } from "./";
 import { Link } from "react-router-dom";
 import {
-  Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box, Typography, Button, Stack 
+  Icon, Table, TableBody, TableCell, TableRow, TableHead, IconButton, Menu, MenuItem, Paper, Box, Typography, Button, Stack
 } from "@mui/material";
 import {
   type AttendanceInterface,
@@ -226,7 +226,7 @@ export const AttendanceSetup = memo(() => {
         );
 
       const serviceHtml =
-        service === undefined || service?.name === lastService ? (
+        service === undefined ? (
           <></>
         ) : (
           <Stack direction="row" spacing={1} alignItems="center">
