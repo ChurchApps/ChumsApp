@@ -33,8 +33,8 @@ export const Form: React.FC<Props> = (props) => {
   };
   const moveUp = (e: React.MouseEvent) => {
     e.preventDefault();
-    const anchor = e.currentTarget as HTMLAnchorElement;
-    const row = anchor.parentNode.parentNode as HTMLElement;
+    const button = e.currentTarget as HTMLButtonElement;
+    const row = button.closest('tr') as HTMLElement;
     const idx = parseInt(row.getAttribute("data-index"));
     const tmpQuestions = [...questions];
     const question = tmpQuestions.splice(idx, 1)[0];
@@ -44,8 +44,8 @@ export const Form: React.FC<Props> = (props) => {
   };
   const moveDown = (e: React.MouseEvent) => {
     e.preventDefault();
-    const anchor = e.currentTarget as HTMLAnchorElement;
-    const row = anchor.parentNode.parentNode as HTMLElement;
+    const button = e.currentTarget as HTMLButtonElement;
+    const row = button.closest('tr') as HTMLElement;
     const idx = parseInt(row.getAttribute("data-index"));
     const tmpQuestions = [...questions];
     const question = tmpQuestions.splice(idx, 1)[0];
