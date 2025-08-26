@@ -2,11 +2,12 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  testMatch: [/.*\.spec\.ts/, /.*\.setup\.ts/],
+  testMatch: /.*\.spec\.ts/,
+  testIgnore: ['**/auth/**', '**/debug-login.spec.ts'],
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: 1, // Start with 1 worker for debugging, increase later
+  workers: 1,
   reporter: 'html',
   timeout: 30 * 1000,
   expect: { timeout: 10 * 1000 },
@@ -22,33 +23,12 @@ export default defineConfig({
   },
 
   projects: [
-    // Setup project for authentication
-    {
-      name: 'setup',
-      testMatch: /.*\.setup\.ts/,
-      use: {
-        ...devices['Desktop Chrome'],
-      },
-    },
-    
-    // Main test project with auth state
-    {
-      name: 'chromium',
-      use: { 
-        ...devices['Desktop Chrome'],
-        // Use saved authentication state
-        storageState: 'tests/.auth/user.json',
-      },
-      dependencies: ['setup'],
-    },
-    
-    // Project without auth for login tests
     {
       name: 'chromium-no-auth',
-      testMatch: /login\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
       },
+      testMatch: /.*smoke.*\.spec\.ts/,
     },
   ],
 });

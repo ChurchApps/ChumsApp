@@ -1,0 +1,85 @@
+{
+  "cookies": [
+    {
+      "name": "name",
+      "value": "Demo%20User",
+      "domain": "chumsdemo.churchapps.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "email",
+      "value": "demo%40chums.org",
+      "domain": "chumsdemo.churchapps.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "m",
+      "value": "c966f148-7fb3-4ce4-be15-f42806ad1d97e18a9d",
+      "domain": "m.stripe.com",
+      "path": "/",
+      "expires": 1790800576.249743,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "__stripe_mid",
+      "value": "60a89701-bd92-4664-ab0e-2b6bbbd625efa75ace",
+      "domain": ".chumsdemo.churchapps.org",
+      "path": "/",
+      "expires": 1787776576,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "__stripe_sid",
+      "value": "480f953b-f053-492d-b1ab-a7d91b9e60b07b27c9",
+      "domain": ".chumsdemo.churchapps.org",
+      "path": "/",
+      "expires": 1756242376,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "lastChurchId",
+      "value": "CHU00000001",
+      "domain": "chumsdemo.churchapps.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "jwt",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlVTUjAwMDAwMDAxIiwiZW1haWwiOiJkZW1vQGNodW1zLm9yZyIsImZpcnN0TmFtZSI6IkRlbW8iLCJsYXN0TmFtZSI6IlVzZXIiLCJjaHVyY2hJZCI6IkNIVTAwMDAwMDAxIiwicGVyc29uSWQiOiJQRVIwMDAwMDA4MiIsImFwaU5hbWUiOiJNZW1iZXJzaGlwQXBpIiwicGVybWlzc2lvbnMiOlsiRm9ybXNfX0FkbWluIiwiRm9ybXNfX0VkaXQiLCJQbGFuc19fRWRpdCIsIkdyb3VwIE1lbWJlcnNfX0VkaXQiLCJHcm91cHNfX0VkaXQiLCJIb3VzZWhvbGRzX19FZGl0IiwiUGVvcGxlX19FZGl0IiwiUGVvcGxlX19FZGl0IFNlbGYiLCJSb2xlc19fRWRpdCIsIkdyb3VwIE1lbWJlcnNfX1ZpZXciLCJQZW9wbGVfX1ZpZXcgTWVtYmVycyIsIlBlb3BsZV9fVmlldyIsIlJvbGVzX19WaWV3IiwiU2V0dGluZ3NfX0VkaXQiXSwiZ3JvdXBJZHMiOlsiR1JQMDAwMDAwMDEiLCJHUlAwMDAwMDAwNCIsIkdSUDAwMDAwMDE2IiwiR1JQMDAwMDAwMTkiLCJHUlAwMDAwMDAyMyIsIkdSUDAwMDAwMDBiIiwiR1JQMDAwMDAwMTQiXSwibGVhZGVyR3JvdXBJZHMiOlsiR1JQMDAwMDAwMDEiLCJHUlAwMDAwMDAwNCIsIkdSUDAwMDAwMDE2IiwiR1JQMDAwMDAwMTkiLCJHUlAwMDAwMDAyMyIsIkdSUDAwMDAwMDBiIiwiR1JQMDAwMDAwMTQiXSwibWVtYmVyc2hpcFN0YXR1cyI6Ik1lbWJlciIsImlhdCI6MTc1NjI0MDU3MiwiZXhwIjoxNzU2NDEzMzcyfQ.SRWBGnbU6lljs0zKnVUHv6VXxNCaJ_ropfN7NOvKnhk",
+      "domain": "chumsdemo.churchapps.org",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://chumsdemo.churchapps.org",
+      "localStorage": [
+        {
+          "name": "i18nextLng",
+          "value": "en-US"
+        }
+      ]
+    }
+  ]
+}
