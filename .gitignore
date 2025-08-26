@@ -35,6 +35,7 @@ coverage
 /test-results/
 /playwright-report/
 /playwright/.cache/
+/tests/screenshots/
 
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt

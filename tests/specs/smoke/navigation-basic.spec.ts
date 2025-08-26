@@ -9,7 +9,7 @@ test.describe('Navigation Tests (Authenticated)', () => {
     await page.waitForLoadState('networkidle');
     
     // Take screenshot to see current state
-    await page.screenshot({ path: 'debug-authenticated-home.png' });
+    await page.screenshot({ path: 'tests/screenshots/authenticated-home.png' });
     
     // Look for People navigation link
     const peopleLink = page.locator('a[href="/people"]');

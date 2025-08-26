@@ -39,8 +39,8 @@ test.describe('People Module Functionality', () => {
     // Wait for results
     await page.waitForTimeout(2000);
     
-    // Take screenshot of results
-    await page.screenshot({ path: 'people-search-clark-results.png' });
+    // Take screenshot of results  
+    await page.screenshot({ path: 'tests/screenshots/people-search-clark-results.png' });
     
     // Check if we have search results
     const resultsText = await page.textContent('body');
@@ -59,7 +59,7 @@ test.describe('People Module Functionality', () => {
     await page.waitForTimeout(2000);
     
     // Take screenshot to see what opened
-    await page.screenshot({ path: 'add-person-modal.png' });
+    await page.screenshot({ path: 'tests/screenshots/add-person-modal.png' });
     
     // Check if a modal opened or we navigated to a new page
     const currentUrl = page.url();
@@ -118,7 +118,7 @@ test.describe('People Module Functionality', () => {
       await page.waitForTimeout(1000);
       
       // Take screenshot
-      await page.screenshot({ path: 'advanced-search.png' });
+      await page.screenshot({ path: 'tests/screenshots/advanced-search.png' });
       
       // Check for additional search fields
       const allInputs = await page.locator('input').count();
@@ -157,7 +157,7 @@ test.describe('People Module Functionality', () => {
           await page.waitForTimeout(2000);
           
           // Take screenshot of AI search results
-          await page.screenshot({ path: 'ai-search-results.png' });
+          await page.screenshot({ path: 'tests/screenshots/ai-search-results.png' });
           
           console.log('AI search executed successfully');
         }
@@ -179,7 +179,7 @@ test.describe('People Module Functionality', () => {
       await page.waitForLoadState('networkidle');
       
       // Take screenshot of person profile
-      await page.screenshot({ path: 'person-profile.png' });
+      await page.screenshot({ path: 'tests/screenshots/person-profile.png' });
       
       const newUrl = page.url();
       console.log('Person profile URL:', newUrl);

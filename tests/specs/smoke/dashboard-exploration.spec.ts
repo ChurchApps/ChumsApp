@@ -18,7 +18,7 @@ test.describe('Dashboard Navigation Exploration', () => {
       await page.waitForTimeout(1000);
       
       // Take screenshot to see dropdown options
-      await page.screenshot({ path: 'dashboard-dropdown-open.png' });
+      await page.screenshot({ path: 'tests/screenshots/dashboard-dropdown-open.png' });
       
       // Look for navigation links in the dropdown
       const peopleOption = page.locator('a:has-text("People")').or(page.locator('li:has-text("People")')).or(page.locator('[role="menuitem"]:has-text("People")'));
@@ -35,7 +35,7 @@ test.describe('Dashboard Navigation Exploration', () => {
         console.log('Successfully navigated to People page');
         
         // Take screenshot of People page
-        await page.screenshot({ path: 'people-page.png' });
+        await page.screenshot({ path: 'tests/screenshots/people-page.png' });
       } else {
         console.log('No People option found in dropdown');
         
@@ -72,7 +72,7 @@ test.describe('Dashboard Navigation Exploration', () => {
       await page.waitForTimeout(2000);
       
       // Take screenshot of search results
-      await page.screenshot({ path: 'people-search-results.png' });
+      await page.screenshot({ path: 'tests/screenshots/people-search-results.png' });
       
       console.log('Performed search');
     }

@@ -16,7 +16,7 @@ test.describe('Groups and People Navigation', () => {
     await page.waitForLoadState('networkidle');
     
     // Take screenshot of group page
-    await page.screenshot({ path: 'group-page.png' });
+    await page.screenshot({ path: 'tests/screenshots/group-page.png' });
     
     // Check what's on the group page
     const url = page.url();
@@ -61,7 +61,7 @@ test.describe('Groups and People Navigation', () => {
     await page.waitForTimeout(2000);
     
     // Take screenshot of search results
-    await page.screenshot({ path: 'people-search-demo.png' });
+    await page.screenshot({ path: 'tests/screenshots/people-search-demo.png' });
     
     // Check if search results show any people
     const resultsText = await page.textContent('body');
@@ -83,7 +83,7 @@ test.describe('Groups and People Navigation', () => {
         await page.waitForLoadState('networkidle');
         
         console.log('New URL after click:', page.url());
-        await page.screenshot({ path: 'after-people-link-click.png' });
+        await page.screenshot({ path: 'tests/screenshots/after-people-link-click.png' });
         break;
       }
     }
@@ -98,7 +98,7 @@ test.describe('Groups and People Navigation', () => {
     console.log('Direct /people URL result:', url);
     
     // Take screenshot
-    await page.screenshot({ path: 'direct-people-url.png' });
+    await page.screenshot({ path: 'tests/screenshots/direct-people-url.png' });
     
     // Check if we got a valid People page or were redirected
     const pageContent = await page.textContent('body');
