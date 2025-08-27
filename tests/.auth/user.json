@@ -2,30 +2,30 @@
   "cookies": [
     {
       "name": "m",
-      "value": "93098b7e-8455-446c-bc6a-a0ed7696dc7823ca2c",
+      "value": "aac321d0-0073-4935-aeb3-aa18c4bbeb70ae9824",
       "domain": "m.stripe.com",
       "path": "/",
-      "expires": 1790804482.268128,
+      "expires": 1790827745.056364,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "__stripe_mid",
-      "value": "2c01dcb7-8c3d-4d7b-9a38-505375cb01bea3fe6d",
+      "value": "26fff3b5-c7d9-4fbf-893f-a44c169f0e78328d6f",
       "domain": ".chumsdemo.churchapps.org",
       "path": "/",
-      "expires": 1787780482,
+      "expires": 1787803745,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Strict"
     },
     {
       "name": "__stripe_sid",
-      "value": "e7c15bcd-e7c6-4afd-8ec9-b637724f8edb896b5d",
+      "value": "4ceb64ad-d43c-40e8-9e5e-beb7b56aa857eba543",
       "domain": ".chumsdemo.churchapps.org",
       "path": "/",
-      "expires": 1756246282,
+      "expires": 1756269545,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Strict"
@@ -62,7 +62,7 @@
     },
     {
       "name": "jwt",
-      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlVTUjAwMDAwMDAxIiwiZW1haWwiOiJkZW1vQGNodW1zLm9yZyIsImZpcnN0TmFtZSI6IkRlbW8iLCJsYXN0TmFtZSI6IlVzZXIiLCJjaHVyY2hJZCI6IkNIVTAwMDAwMDAxIiwicGVyc29uSWQiOiJQRVIwMDAwMDA4MiIsImFwaU5hbWUiOiJNZW1iZXJzaGlwQXBpIiwicGVybWlzc2lvbnMiOlsiRm9ybXNfX0FkbWluIiwiRm9ybXNfX0VkaXQiLCJQbGFuc19fRWRpdCIsIkdyb3VwIE1lbWJlcnNfX0VkaXQiLCJHcm91cHNfX0VkaXQiLCJIb3VzZWhvbGRzX19FZGl0IiwiUGVvcGxlX19FZGl0IiwiUGVvcGxlX19FZGl0IFNlbGYiLCJSb2xlc19fRWRpdCIsIkdyb3VwIE1lbWJlcnNfX1ZpZXciLCJQZW9wbGVfX1ZpZXcgTWVtYmVycyIsIlBlb3BsZV9fVmlldyIsIlJvbGVzX19WaWV3IiwiU2V0dGluZ3NfX0VkaXQiXSwiZ3JvdXBJZHMiOlsiR1JQMDAwMDAwMDEiLCJHUlAwMDAwMDAwNCIsIkdSUDAwMDAwMDE2IiwiR1JQMDAwMDAwMTkiLCJHUlAwMDAwMDAyMyIsIkdSUDAwMDAwMDBiIiwiR1JQMDAwMDAwMTQiXSwibGVhZGVyR3JvdXBJZHMiOlsiR1JQMDAwMDAwMDEiLCJHUlAwMDAwMDAwNCIsIkdSUDAwMDAwMDE2IiwiR1JQMDAwMDAwMTkiLCJHUlAwMDAwMDAyMyIsIkdSUDAwMDAwMDBiIiwiR1JQMDAwMDAwMTQiXSwibWVtYmVyc2hpcFN0YXR1cyI6Ik1lbWJlciIsImlhdCI6MTc1NjI0NDQ4MSwiZXhwIjoxNzU2NDE3MjgxfQ.IVAaO6JBJHP1CgzJvAAMz6IRfr6xR8ekYqGhKlpXljk",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlVTUjAwMDAwMDAxIiwiZW1haWwiOiJkZW1vQGNodW1zLm9yZyIsImZpcnN0TmFtZSI6IkRlbW8iLCJsYXN0TmFtZSI6IlVzZXIiLCJjaHVyY2hJZCI6IkNIVTAwMDAwMDAxIiwicGVyc29uSWQiOiJQRVIwMDAwMDA4MiIsImFwaU5hbWUiOiJNZW1iZXJzaGlwQXBpIiwicGVybWlzc2lvbnMiOlsiRm9ybXNfX0FkbWluIiwiRm9ybXNfX0VkaXQiLCJQbGFuc19fRWRpdCIsIkdyb3VwIE1lbWJlcnNfX0VkaXQiLCJHcm91cHNfX0VkaXQiLCJIb3VzZWhvbGRzX19FZGl0IiwiUGVvcGxlX19FZGl0IiwiUGVvcGxlX19FZGl0IFNlbGYiLCJSb2xlc19fRWRpdCIsIkdyb3VwIE1lbWJlcnNfX1ZpZXciLCJQZW9wbGVfX1ZpZXcgTWVtYmVycyIsIlBlb3BsZV9fVmlldyIsIlJvbGVzX19WaWV3IiwiU2V0dGluZ3NfX0VkaXQiXSwiZ3JvdXBJZHMiOlsiR1JQMDAwMDAwMDEiLCJHUlAwMDAwMDAwNCIsIkdSUDAwMDAwMDE2IiwiR1JQMDAwMDAwMTkiLCJHUlAwMDAwMDAyMyIsIkdSUDAwMDAwMDBiIiwiR1JQMDAwMDAwMTQiXSwibGVhZGVyR3JvdXBJZHMiOlsiR1JQMDAwMDAwMDEiLCJHUlAwMDAwMDAwNCIsIkdSUDAwMDAwMDE2IiwiR1JQMDAwMDAwMTkiLCJHUlAwMDAwMDAyMyIsIkdSUDAwMDAwMDBiIiwiR1JQMDAwMDAwMTQiXSwibWVtYmVyc2hpcFN0YXR1cyI6Ik1lbWJlciIsImlhdCI6MTc1NjI2NzczOSwiZXhwIjoxNzU2NDQwNTM5fQ.sMNRPdtcC3-c6lTwZv_Cx4z9tJIHqpngUUiKv2ekZ7I",
       "domain": "chumsdemo.churchapps.org",
       "path": "/",
       "expires": -1,
