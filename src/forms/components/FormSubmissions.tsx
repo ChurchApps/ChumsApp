@@ -27,7 +27,7 @@ interface Props {
 export const FormSubmissions: React.FC<Props> = memo((props) => {
   const [summary, setSummary] = useState<any>([]);
   const [summaryCsv, setSummaryCsv] = useState<any>([]);
-  const yesNoMap: any = { True: Locale.label("common.yes"), False: Locale.label("common.no") };
+  const yesNoMap = useMemo(() => ({ True: Locale.label("common.yes"), False: Locale.label("common.no") }), []);
   const yesNoDefault = useMemo(
     () => [
       { value: "Yes", text: Locale.label("common.yes") },
@@ -37,6 +37,63 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
   );
   const contentRef: any = useRef<HTMLDivElement>(null);
   const handleSummaryPrint = useReactToPrint({ content: () => contentRef.current });
+
+  const getPerson = useCallback((people: PersonInterface[], formSubmission: any) => {
+    let result = people.find((person: PersonInterface) => person.id === formSubmission.submittedBy);
+    if (formSubmission.contentType === "person") result = people.find((person: PersonInterface) => person.id === formSubmission.contentId);
+    return result;
+  }, []);
+
+  const setSummaryResultDefault = useCallback(
+    (question: QuestionInterface, answer: AnswerInterface) => {
+      const choices: any = [];
+      const questionChoices = question.choices || yesNoDefault;
+      questionChoices.forEach((choice: any) => {
+        const choiceCount = { [choice.value]: 0, text: choice.text };
+        if (question.fieldType === "Checkbox") {
+          if (answer && answer?.value) {
+            const splitAnswer = answer.value?.split(",");
+            if (splitAnswer.indexOf(choice.value) > -1) choiceCount[choice.value] = 1;
+          }
+        } else {
+          if (answer && answer?.value && choice.value === answer.value) choiceCount[choice.value] = 1;
+        }
+        choices.push(choiceCount);
+      });
+      return { title: question.title, values: choices };
+    },
+    [yesNoDefault]
+  );
+
+  const setSummaryResultData = useCallback((summaryData: any, question: QuestionInterface, answer: AnswerInterface) => {
+    const match = summaryData.find((result: any) => result.title === question.title);
+    if (match) {
+      match.values.forEach((resultValue: any) => {
+        const key: string = Object.keys(resultValue)[0];
+        if (question.fieldType === "Checkbox") {
+          const splitAnswer = answer?.value?.split(",");
+          if (splitAnswer?.indexOf(key) > -1) resultValue[key] = resultValue[key] + 1;
+        } else {
+          if (key === answer?.value) resultValue[key] = resultValue[key] + 1;
+        }
+      });
+    } else summaryData.push(setSummaryResultDefault(question, answer));
+  }, [setSummaryResultDefault]);
+
+  const setFormSubmissionData = useCallback(
+    (people: PersonInterface[], formSubmission: any) => {
+      const submittedBy = getPerson(people, formSubmission);
+
+      formSubmission.person = { name: submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon"), id: submittedBy?.id || null };
+      formSubmission.mappedQA = [];
+      formSubmission.csvData = [];
+      if (formSubmission.questions) {
+        formSubmission.questions = formSubmission.questions.sort((a: QuestionInterface, b: QuestionInterface) => (a.title > b.title ? 1 : -1));
+      }
+      return formSubmission;
+    },
+    [getPerson]
+  );
 
   const people = useQuery<PersonInterface[]>({
     queryKey: ["/people", "MembershipApi"],
@@ -74,62 +131,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
       setSummary(summaryData);
       setSummaryCsv(csv);
     }
-  }, [people.data, formSubmissions.data, yesNoMap]);
-
-  const setSummaryResultData = useCallback((summaryData: any, question: QuestionInterface, answer: AnswerInterface) => {
-    const match = summaryData.find((result: any) => result.title === question.title);
-    if (match) {
-      match.values.forEach((resultValue: any) => {
-        const key: string = Object.keys(resultValue)[0];
-        if (question.fieldType === "Checkbox") {
-          const splitAnswer = answer?.value?.split(",");
-          if (splitAnswer?.indexOf(key) > -1) resultValue[key] = resultValue[key] + 1;
-        } else {
-          if (key === answer?.value) resultValue[key] = resultValue[key] + 1;
-        }
-      });
-    } else summaryData.push(setSummaryResultDefault(question, answer));
-  }, []);
-
-  const getPerson = useCallback((people: PersonInterface[], formSubmission: any) => {
-    let result = people.find((person: PersonInterface) => person.id === formSubmission.submittedBy);
-    if (formSubmission.contentType === "person") result = people.find((person: PersonInterface) => person.id === formSubmission.contentId);
-    return result;
-  }, []);
-
-  const setFormSubmissionData = useCallback(
-    (people: PersonInterface[], formSubmission: any) => {
-      const submittedBy = getPerson(people, formSubmission);
-
-      formSubmission.person = { name: submittedBy?.name?.display || Locale.label("forms.formSubmissions.anon"), id: submittedBy?.id || null };
-      formSubmission.mappedQA = [];
-      formSubmission.csvData = [];
-      formSubmission.questions = formSubmission.questions.sort((a: QuestionInterface, b: QuestionInterface) => (a.title > b.title ? 1 : -1));
-      return formSubmission;
-    },
-    [getPerson]
-  );
-
-  const setSummaryResultDefault = useCallback(
-    (question: QuestionInterface, answer: AnswerInterface) => {
-      const choices: any = [];
-      const questionChoices = question.choices || yesNoDefault;
-      questionChoices.forEach((choice: any) => {
-        const choiceCount = { [choice.value]: 0, text: choice.text };
-        if (question.fieldType === "Checkbox") {
-          if (answer && answer?.value) {
-            const splitAnswer = answer.value?.split(",");
-            if (splitAnswer.indexOf(choice.value) > -1) choiceCount[choice.value] = 1;
-          }
-        } else {
-          if (answer && answer?.value && choice.value === answer.value) choiceCount[choice.value] = 1;
-        }
-        choices.push(choiceCount);
-      });
-      return { title: question.title, values: choices };
-    },
-    [yesNoDefault]
-  );
+  }, [people.data, formSubmissions.data, yesNoMap, getPerson, setFormSubmissionData, setSummaryResultData, setSummaryResultDefault]);
 
   const getResultCount = useCallback((summaryValues: any[]) => {
     const results: JSX.Element[] = [];
@@ -184,8 +186,9 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
 
   const getAnswers = useCallback((formSubmission: FormSubmissionInterface) => {
     const rows: JSX.Element[] = [];
-    formSubmission.questions.forEach((question: QuestionInterface) => {
-      const answer = formSubmission.answers.find((answer: AnswerInterface) => answer.questionId === question.id);
+    formSubmission.questions?.forEach((question: QuestionInterface) => {
+      if (!question?.id) return;
+      const answer = formSubmission.answers?.find((answer: AnswerInterface) => answer.questionId === question.id);
       rows.push(
         <TableCell key={question.id}>
           <Typography variant="body2">{answer?.value || "-"}</Typography>
@@ -215,6 +218,13 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     }
 
     formSubmissions.data?.forEach((submission: any, i: number) => {
+      // Process the submission data inline
+      const processedSubmission = people.data ? setFormSubmissionData(people.data, submission) : submission;
+      
+      // Allow submissions even without a person ID (anonymous submissions)
+      const personName = processedSubmission.person?.name || Locale.label("forms.formSubmissions.anon");
+      const personId = processedSubmission.person?.id;
+      
       rows.push(
         <TableRow
           key={i}
@@ -223,25 +233,31 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
             transition: "background-color 0.2s ease",
           }}>
           <TableCell key="personName">
-            <a
-              href={"/people/" + submission.person.id}
-              style={{
-                textDecoration: "none",
-                color: "var(--c1l2)",
-                fontWeight: 500,
-              }}>
-              {submission.person.name}
-            </a>
+            {personId ? (
+              <a
+                href={"/people/" + personId}
+                style={{
+                  textDecoration: "none",
+                  color: "var(--c1l2)",
+                  fontWeight: 500,
+                }}>
+                {personName}
+              </a>
+            ) : (
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                {personName}
+              </Typography>
+            )}
           </TableCell>
           <TableCell key="subDate">
-            <Typography variant="body2">{DateHelper.prettyDate(new Date(submission.submissionDate))}</Typography>
+            <Typography variant="body2">{DateHelper.prettyDate(new Date(processedSubmission.submissionDate))}</Typography>
           </TableCell>
-          {getAnswers(submission)}
+          {getAnswers(processedSubmission)}
         </TableRow>
       );
     });
     return rows;
-  }, [formSubmissions.data, getAnswers]);
+  }, [formSubmissions.data, people.data, getAnswers, setFormSubmissionData]);
 
   const editLinks = useMemo(() => {
     const formName = formSubmissions.data?.length ? formSubmissions.data[0].form?.name + ".csv" : "form_submissions.csv";
