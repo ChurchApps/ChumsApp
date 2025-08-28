@@ -15,7 +15,7 @@ import {
 } from "@churchapps/apphelper";
 import { useReactToPrint } from "react-to-print";
 import {
-  Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Card, Box, Typography, Stack 
+  Grid, Icon, Table, TableBody, TableRow, TableCell, TableHead, Card, Box, Typography, Stack
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
@@ -146,7 +146,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     const results: JSX.Element[] = [];
     summary.forEach((s: any, i: number) => {
       results.push(
-        <Grid xs={12} md={6} key={s.id + "-" + i}>
+        <Grid size={{ xs: 12, md: 6 }} key={s.id + "-" + i}>
           <h4>{s.title}</h4>
           {getResultCount(s.values)}
         </Grid>
@@ -220,11 +220,11 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     formSubmissions.data?.forEach((submission: any, i: number) => {
       // Process the submission data inline
       const processedSubmission = people.data ? setFormSubmissionData(people.data, submission) : submission;
-      
+
       // Allow submissions even without a person ID (anonymous submissions)
       const personName = processedSubmission.person?.name || Locale.label("forms.formSubmissions.anon");
       const personId = processedSubmission.person?.id;
-      
+
       rows.push(
         <TableRow
           key={i}
@@ -315,7 +315,7 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid xs={12} md={8} className="form-submission-summary">
+      <Grid size={{ xs: 12, md: 8 }} className="form-submission-summary">
         <div ref={contentRef} className="form-submission-summary">
           <DisplayBox headerText={Locale.label("forms.formSubmissions.subSum")} headerIcon="group" editContent={editLinks}>
             <Grid container spacing={3}>

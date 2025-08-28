@@ -39,13 +39,13 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
     else {
       return (
         <>
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField fullWidth name="publicKey" label={Locale.label("settings.givingSettingsEdit.pubKey")} value={publicKey} onChange={handleChange} />
           </Grid>
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField fullWidth name="privateKey" label={Locale.label("settings.givingSettingsEdit.secKey")} value={privateKey} placeholder="********" type="password" onChange={handleChange} />
           </Grid>
-          <Grid xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Stack direction="row" alignItems="center">
               <Typography>{Locale.label("settings.givingSettingsEdit.transFee")}</Typography>
               <Tooltip title={Locale.label("settings.givingSettingsEdit.forceMsg")} arrow>
@@ -113,7 +113,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
     <>
       {/* <div className="subHead">{Locale.label("settings.givingSettingsEdit.giving")}</div> */}
       <Grid container spacing={3} marginBottom={2}>
-        <Grid xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <FormControl fullWidth>
             <InputLabel>{Locale.label("settings.givingSettingsEdit.prov")}</InputLabel>
             <Select name="provider" label={Locale.label("settings.givingSettingsEdit.prov")} value={provider} onChange={handleChange}>

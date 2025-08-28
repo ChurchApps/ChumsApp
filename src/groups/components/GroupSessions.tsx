@@ -301,7 +301,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
       <Box sx={{ mb: 3 }}>
         <Grid container spacing={2} sx={{ mb: 2 }}>
           {paginatedSessions.map((sessionItem) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={sessionItem.id}>
+            <Grid item size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={sessionItem.id}>
               <SessionCard
                 session={sessionItem}
                 attendanceCount={sessionAttendanceCounts[sessionItem.id] || 0}

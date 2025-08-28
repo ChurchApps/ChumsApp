@@ -77,10 +77,10 @@ export const RolePage = () => {
         </Banner>
         <div id="mainContent">
           <Grid container spacing={3}>
-            <Grid xs={12} md={8}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <RoleMembers role={role} roleMembers={roleMembers} addFunction={handleShowAdd} setSelectedRoleMember={setSelectedRoleMemberId} updatedFunction={handleAdd} />
             </Grid>
-            <Grid xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               {getSidebar()}
             </Grid>
           </Grid>

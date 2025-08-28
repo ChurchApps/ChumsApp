@@ -168,12 +168,12 @@ export const FormMembers: React.FC<Props> = memo((props) => {
 
   return (
     <Grid container spacing={3}>
-      <Grid xs={12} md={8}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <DisplayBox headerText={Locale.label("forms.formMembers.formMem")} headerIcon="group" help="chums/forms">
           {getTable()}
         </DisplayBox>
       </Grid>
-      <Grid xs={12} md={4}>
+      <Grid size={{ xs: 12, md: 4 }}>
         <DisplayBox headerText={Locale.label("forms.formMembers.addPpl")} headerIcon="person_add">
           <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={addPerson} filterList={filterList} />
         </DisplayBox>

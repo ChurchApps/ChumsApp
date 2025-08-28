@@ -96,7 +96,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TextField
           fullWidth
           margin="dense"
@@ -110,7 +110,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           InputProps={{ startAdornment: <Icon fontSize="small">attach_money</Icon> }}
         />
       </Grid>
-      <Grid xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TextField
           fullWidth
           margin="dense"
@@ -124,7 +124,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           InputProps={{ endAdornment: <Icon fontSize="small">percent</Icon> }}
         />
       </Grid>
-      <Grid xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TextField
           fullWidth
           margin="dense"
@@ -138,7 +138,7 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
           InputProps={{ endAdornment: <Icon fontSize="small">percent</Icon> }}
         />
       </Grid>
-      <Grid xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TextField
           fullWidth
           margin="dense"
