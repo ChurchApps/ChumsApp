@@ -4,7 +4,7 @@ import { ArrayHelper, DateHelper, UniqueIdHelper, Loading, Locale } from "@churc
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import {
-  Box, Card, CardContent, Typography, Stack, Chip, Divider, Paper, List, ListItem 
+  Box, Card, CardContent, Typography, Stack, Chip, Divider, Paper, List, ListItem
 } from "@mui/material";
 import { CalendarMonth as CalendarIcon, Church as ChurchIcon, Schedule as ScheduleIcon, Group as GroupIcon, EventAvailable as EventIcon } from "@mui/icons-material";
 
@@ -80,7 +80,7 @@ export const PersonAttendance: React.FC<Props> = memo((props) => {
               <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                 <CalendarIcon sx={{ mr: 1, color: "primary.main" }} />
                 <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
-                  {new Date(date).toLocaleDateString("en-US", {
+                  {new Date(new Date(date).getTime() + new Date(date).getTimezoneOffset() * 60000).toLocaleDateString("en-US", {
                     weekday: "long",
                     year: "numeric",
                     month: "long",
