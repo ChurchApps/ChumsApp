@@ -271,7 +271,7 @@
     react-to-print "^3.1.1"
     slug "^11.0.0"
 
-"@churchapps/helpers@^1.1.5", "@churchapps/helpers@^1.1.6":
+"@churchapps/helpers@^1.1.6":
   version "1.1.6"
   resolved "https://registry.npmjs.org/@churchapps/helpers/-/helpers-1.1.6.tgz"
   integrity sha512-ZGW4BeUE4BaELdXnP9a3jiHPMIX+NYqXVvOxyA7gXbkWyHOc5IKSLB3iSlCPC6I2IvMYStga1TaWcLAQfnDOGw==
