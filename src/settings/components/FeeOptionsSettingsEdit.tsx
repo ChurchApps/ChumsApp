@@ -5,6 +5,7 @@ import React from "react";
 interface Props {
   churchId: string;
   saveTrigger: Date | null;
+  provider?: string;
 }
 
 export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
@@ -12,11 +13,15 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
   const [transFeeCC, setTransFeeCC] = React.useState<GenericSettingInterface>(null);
   const [flatRateACH, setFlatRateACH] = React.useState<GenericSettingInterface>(null);
   const [hardLimitACH, setHardLimitACH] = React.useState<GenericSettingInterface>(null);
+  const [flatRatePayPal, setFlatRatePayPal] = React.useState<GenericSettingInterface>(null);
+  const [transFeePayPal, setTransFeePayPal] = React.useState<GenericSettingInterface>(null);
   const [options, setOptions] = React.useState({
     flatRateCC: "0.30",
     transFeeCC: "2.9",
     flatRateACH: "0.8",
     hardLimitACH: "5",
+    flatRatePayPal: "0.30",
+    transFeePayPal: "2.9",
   });
 
   const loadData = async () => {
@@ -46,6 +51,18 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
       o.hardLimitACH = achHardLimit[0].value;
     }
 
+    const paypalFlatRate = allSettings.filter((s) => s.keyName === "flatRatePayPal");
+    if (paypalFlatRate.length > 0) {
+      setFlatRatePayPal(paypalFlatRate[0]);
+      o.flatRatePayPal = paypalFlatRate[0].value;
+    }
+
+    const paypalTransactionFee = allSettings.filter((s) => s.keyName === "transFeePayPal");
+    if (paypalTransactionFee.length > 0) {
+      setTransFeePayPal(paypalTransactionFee[0]);
+      o.transFeePayPal = paypalTransactionFee[0].value;
+    }
+
     setOptions(o);
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -65,6 +82,12 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
       case "achHardLimit":
         o.hardLimitACH = value;
         break;
+      case "paypalFlatRate":
+        o.flatRatePayPal = value;
+        break;
+      case "paypalTransactionFee":
+        o.transFeePayPal = value;
+        break;
     }
     setOptions(o);
   };
@@ -82,7 +105,13 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
     const hardLimitACHSett: GenericSettingInterface = hardLimitACH === null ? { churchId: props.churchId, public: 1, keyName: "hardLimitACH" } : hardLimitACH;
     hardLimitACHSett.value = options.hardLimitACH;
 
-    ApiHelper.post("/settings", [flatRateCCSett, transFeeCCSett, flatRateACHSett, hardLimitACHSett], "MembershipApi");
+    const flatRatePayPalSett: GenericSettingInterface = flatRatePayPal === null ? { churchId: props.churchId, public: 1, keyName: "flatRatePayPal" } : flatRatePayPal;
+    flatRatePayPalSett.value = options.flatRatePayPal;
+
+    const transFeePayPalSett: GenericSettingInterface = transFeePayPal === null ? { churchId: props.churchId, public: 1, keyName: "transFeePayPal" } : transFeePayPal;
+    transFeePayPalSett.value = options.transFeePayPal;
+
+    ApiHelper.post("/settings", [flatRateCCSett, transFeeCCSett, flatRateACHSett, hardLimitACHSett, flatRatePayPalSett, transFeePayPalSett], "MembershipApi");
   };
 
   const checkSave = () => {
@@ -94,64 +123,97 @@ export const FeeOptionsSettingsEdit: React.FC<Props> = (props) => {
   }, [props.churchId]); //eslint-disable-line
   React.useEffect(checkSave, [props.saveTrigger]); //eslint-disable-line
 
+  const showStripeFields = props.provider === "stripe";
+  const showPayPalFields = props.provider === "paypal";
+
   return (
     <Grid container spacing={2}>
-      <Grid size={{ xs: 12, md: 6 }}>
-        <TextField
-          fullWidth
-          margin="dense"
-          type="number"
-          label={Locale.label("settings.feeOptionsSettings.creditCardFlatRate")}
-          name="creditCardFlatRate"
-          onChange={handleChange}
-          value={options.flatRateCC}
-          defaultValue=""
-          // helperText="Credit Card"
-          InputProps={{ startAdornment: <Icon fontSize="small">attach_money</Icon> }}
-        />
-      </Grid>
-      <Grid size={{ xs: 12, md: 6 }}>
-        <TextField
-          fullWidth
-          margin="dense"
-          type="number"
-          label={Locale.label("settings.feeOptionsSettings.creditCardTransactionFee")}
-          name="creditCardTransactionFee"
-          onChange={handleChange}
-          value={options.transFeeCC}
-          defaultValue=""
-          // helperText="Credit Card"
-          InputProps={{ endAdornment: <Icon fontSize="small">percent</Icon> }}
-        />
-      </Grid>
-      <Grid size={{ xs: 12, md: 6 }}>
-        <TextField
-          fullWidth
-          margin="dense"
-          type="number"
-          label={Locale.label("settings.feeOptionsSettings.achFlatRate")}
-          name="achFlatRate"
-          onChange={handleChange}
-          value={options.flatRateACH}
-          defaultValue=""
-          // helperText="ACH"
-          InputProps={{ endAdornment: <Icon fontSize="small">percent</Icon> }}
-        />
-      </Grid>
-      <Grid size={{ xs: 12, md: 6 }}>
-        <TextField
-          fullWidth
-          margin="dense"
-          type="number"
-          label={Locale.label("settings.feeOptionsSettings.achHardLimit")}
-          name="achHardLimit"
-          onChange={handleChange}
-          value={options.hardLimitACH}
-          defaultValue=""
-          // helperText="ACH"
-          InputProps={{ startAdornment: <Icon fontSize="small">attach_money</Icon> }}
-        />
-      </Grid>
+      {showStripeFields && (
+        <>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              fullWidth
+              margin="dense"
+              type="number"
+              label={Locale.label("settings.feeOptionsSettings.creditCardFlatRate")}
+              name="creditCardFlatRate"
+              onChange={handleChange}
+              value={options.flatRateCC}
+              defaultValue=""
+              InputProps={{ startAdornment: <Icon fontSize="small">attach_money</Icon> }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              fullWidth
+              margin="dense"
+              type="number"
+              label={Locale.label("settings.feeOptionsSettings.creditCardTransactionFee")}
+              name="creditCardTransactionFee"
+              onChange={handleChange}
+              value={options.transFeeCC}
+              defaultValue=""
+              InputProps={{ endAdornment: <Icon fontSize="small">percent</Icon> }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              fullWidth
+              margin="dense"
+              type="number"
+              label={Locale.label("settings.feeOptionsSettings.achFlatRate")}
+              name="achFlatRate"
+              onChange={handleChange}
+              value={options.flatRateACH}
+              defaultValue=""
+              InputProps={{ endAdornment: <Icon fontSize="small">percent</Icon> }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              fullWidth
+              margin="dense"
+              type="number"
+              label={Locale.label("settings.feeOptionsSettings.achHardLimit")}
+              name="achHardLimit"
+              onChange={handleChange}
+              value={options.hardLimitACH}
+              defaultValue=""
+              InputProps={{ startAdornment: <Icon fontSize="small">attach_money</Icon> }}
+            />
+          </Grid>
+        </>
+      )}
+      {showPayPalFields && (
+        <>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              fullWidth
+              margin="dense"
+              type="number"
+              label={Locale.label("settings.feeOptionsSettings.paypalFlatRate") || "PayPal Flat Rate"}
+              name="paypalFlatRate"
+              onChange={handleChange}
+              value={options.flatRatePayPal}
+              defaultValue=""
+              InputProps={{ startAdornment: <Icon fontSize="small">attach_money</Icon> }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              fullWidth
+              margin="dense"
+              type="number"
+              label={Locale.label("settings.feeOptionsSettings.paypalTransactionFee") || "PayPal Transaction Fee"}
+              name="paypalTransactionFee"
+              onChange={handleChange}
+              value={options.transFeePayPal}
+              defaultValue=""
+              InputProps={{ endAdornment: <Icon fontSize="small">percent</Icon> }}
+            />
+          </Grid>
+        </>
+      )}
     </Grid>
   );
 };

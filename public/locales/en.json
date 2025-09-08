@@ -875,7 +875,9 @@
       "creditCardFlatRate": "Flat Rate [ Credit Card ]",
       "creditCardTransactionFee": "Transaction Fee [ Credit Card ]",
       "achFlatRate": "Flat Rate [ ACH ]",
-      "achHardLimit": "Hard limit [ ACH ]"
+      "achHardLimit": "Hard limit [ ACH ]",
+      "paypalFlatRate": "Flat Rate [ PayPal ]",
+      "paypalTransactionFee": "Transaction Fee [ PayPal ]"
     },
     "givingSettingsEdit": {
       "forceMsg": "Automatically forces users to cover the transaction fees",
@@ -885,6 +887,9 @@
       "pubKey": "Public Key",
       "secKey": "Secret Key",
       "stripe": "Stripe",
+      "paypal": "PayPal",
+      "clientId": "Client ID",
+      "clientSecret": "Client Secret",
       "transFee": "Transaction Fee"
     },
     "supportContactSettingsEdit": {

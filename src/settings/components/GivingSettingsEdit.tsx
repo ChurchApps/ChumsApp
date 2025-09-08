@@ -37,13 +37,20 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
   const getKeys = () => {
     if (provider === "") return null;
     else {
+      const publicLabel = provider === "paypal" 
+        ? Locale.label("settings.givingSettingsEdit.clientId") || "Client ID"
+        : Locale.label("settings.givingSettingsEdit.pubKey");
+      const privateLabel = provider === "paypal"
+        ? Locale.label("settings.givingSettingsEdit.clientSecret") || "Client Secret"
+        : Locale.label("settings.givingSettingsEdit.secKey");
+      
       return (
         <>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField fullWidth name="publicKey" label={Locale.label("settings.givingSettingsEdit.pubKey")} value={publicKey} onChange={handleChange} />
+            <TextField fullWidth name="publicKey" label={publicLabel} value={publicKey} onChange={handleChange} />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField fullWidth name="privateKey" label={Locale.label("settings.givingSettingsEdit.secKey")} value={privateKey} placeholder="********" type="password" onChange={handleChange} />
+            <TextField fullWidth name="privateKey" label={privateLabel} value={privateKey} placeholder="********" type="password" onChange={handleChange} />
           </Grid>
           <Grid size={{ xs: 12 }}>
             <Stack direction="row" alignItems="center">
@@ -118,13 +125,14 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
             <InputLabel>{Locale.label("settings.givingSettingsEdit.prov")}</InputLabel>
             <Select name="provider" label={Locale.label("settings.givingSettingsEdit.prov")} value={provider} onChange={handleChange}>
               <MenuItem value="">{Locale.label("settings.givingSettingsEdit.none")}</MenuItem>
-              <MenuItem value="Stripe">{Locale.label("settings.givingSettingsEdit.stripe")}</MenuItem>
+              <MenuItem value="stripe">{Locale.label("settings.givingSettingsEdit.stripe")}</MenuItem>
+              <MenuItem value="paypal">{Locale.label("settings.givingSettingsEdit.paypal")}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         {getKeys()}
       </Grid>
-      <FeeOptionsSettingsEdit churchId={props.churchId} saveTrigger={props.saveTrigger} />
+      <FeeOptionsSettingsEdit churchId={props.churchId} saveTrigger={props.saveTrigger} provider={provider} />
     </>
   );
 };
