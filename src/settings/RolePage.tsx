@@ -3,7 +3,7 @@ import { UserAdd, RolePermissions, RoleMembers } from "./components";
 import { type RoleInterface, type RoleMemberInterface } from "@churchapps/helpers";
 import { ApiHelper, UserHelper, Permissions, DisplayBox, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { Banner } from "@churchapps/apphelper";
 
 export const RolePage = () => {
@@ -75,8 +75,8 @@ export const RolePage = () => {
             {Locale.label("settings.rolePage.roleEdit")} {role?.name}
           </h1>
         </Banner>
-        <div id="mainContent">
-          <Grid container spacing={3}>
+        <Box id="mainContent" sx={{ p: 2 }}>
+          <Grid container spacing={2}>
             <Grid size={{ xs: 12, md: 8 }}>
               <RoleMembers role={role} roleMembers={roleMembers} addFunction={handleShowAdd} setSelectedRoleMember={setSelectedRoleMemberId} updatedFunction={handleAdd} />
             </Grid>
@@ -84,7 +84,7 @@ export const RolePage = () => {
               {getSidebar()}
             </Grid>
           </Grid>
-        </div>
+        </Box>
       </>
     );
   }

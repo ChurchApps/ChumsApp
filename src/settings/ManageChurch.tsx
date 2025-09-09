@@ -108,13 +108,13 @@ export const ManageChurch = () => {
 
       {/* Church Settings Modal/Component */}
       {showChurchSettings && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 2 }}>
           <ChurchSettingsEdit church={church.data} updatedFunction={handleUpdated} />
         </Box>
       )}
 
       {/* Tab Content */}
-      {selectedTab === "roles" && <Box sx={{ p: 3 }}>{getCurrentTab()}</Box>}
+      {selectedTab === "roles" && <Box sx={{ p: 2 }}>{getCurrentTab()}</Box>}
     </>
   );
 };

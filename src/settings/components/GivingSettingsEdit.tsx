@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  FormControl, InputLabel, MenuItem, Select, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton, type SelectChangeEvent 
+  FormControl, InputLabel, MenuItem, Select, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton, type SelectChangeEvent
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import { ApiHelper, Locale, UniqueIdHelper } from "@churchapps/apphelper";
@@ -37,13 +37,13 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
   const getKeys = () => {
     if (provider === "") return null;
     else {
-      const publicLabel = provider === "paypal" 
+      const publicLabel = provider === "paypal"
         ? Locale.label("settings.givingSettingsEdit.clientId") || "Client ID"
         : Locale.label("settings.givingSettingsEdit.pubKey");
       const privateLabel = provider === "paypal"
         ? Locale.label("settings.givingSettingsEdit.clientSecret") || "Client Secret"
         : Locale.label("settings.givingSettingsEdit.secKey");
-      
+
       return (
         <>
           <Grid size={{ xs: 12, md: 4 }}>
@@ -130,6 +130,20 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
             </Select>
           </FormControl>
         </Grid>
+        {provider === "stripe" && (
+          <Grid size={{ xs: 12 }}>
+            <Typography variant="body2" color="textSecondary" component="div">
+              Visit <a href="https://dashboard.stripe.com/" target="_blank" rel="noopener noreferrer">Stripe Dashboard</a> and go to <strong>Developers → API keys</strong> to copy your Publishable and Secret keys (test & live).
+            </Typography>
+          </Grid>
+        )}
+        {provider === "paypal" && (
+          <Grid size={{ xs: 12 }}>
+            <Typography variant="body2" color="textSecondary" component="div">
+              Go to <a href="https://developer.paypal.com/" target="_blank" rel="noopener noreferrer">PayPal Developer</a>, log in, then under <strong>API Credentials</strong> create an app to get your Client ID and Secret.
+            </Typography>
+          </Grid>
+        )}
         {getKeys()}
       </Grid>
       <FeeOptionsSettingsEdit churchId={props.churchId} saveTrigger={props.saveTrigger} provider={provider} />

@@ -40,4 +40,13 @@ If you'd like to set up the project locally, see our [development guide](https:/
 3. Run `npm run postinstall` to get language files
 4. run `npm start` to launch the project.
 
+### ⚙️ Payment Gateway Setup
+
+To accept online donations you must first register for developer credentials with Stripe and PayPal:
+
+- **Stripe**: Visit https://dashboard.stripe.com/register (or sign in at https://dashboard.stripe.com/login), then navigate to **Developers → API keys** to copy your Publishable Key and Secret Key for both test and live modes.
+- **PayPal**: Go to https://developer.paypal.com/, log in or create an account, then under **My Apps & Credentials** create a new application to obtain your Sandbox and Live Client ID and Secret.
+
+After obtaining your tokens, open **Settings → Giving Settings** in ChumsApp, select the provider (Stripe or PayPal), paste in your Public and Private keys, and toggle "Pay Fees" as desired. Finally, configure your fee parameters in **Fee Options**.
+
 [![ChumsApp Dev Setup](https://img.youtube.com/vi/5zsEJEp6yMw/0.jpg)](https://www.youtube.com/watch?v=5zsEJEp6yMw)

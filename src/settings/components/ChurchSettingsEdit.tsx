@@ -90,12 +90,12 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
       <ErrorMessages errors={errors} />
 
       {/* Church Information Section */}
-      <Box sx={{ mb: 3 }}>
+      <Box sx={{ mb: 2 }}>
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: "primary.main" }}>
           {Locale.label("settings.churchSettingsEdit.churchInfo")}
         </Typography>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField
               fullWidth
@@ -123,11 +123,11 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
           </Grid>
         </Grid>
 
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ mt: 2 }}>
           <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600, color: "text.secondary" }}>
             {Locale.label("person.address")}
           </Typography>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid size={{ xs: 12, md: 6 }}>
               <TextField
                 fullWidth
@@ -160,7 +160,7 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
       </Box>
 
       {/* General Settings Section */}
-      <Divider variant="middle" textAlign="center" sx={{ marginTop: 3, marginBottom: 3 }}>
+      <Divider variant="middle" textAlign="center" sx={{ marginTop: 2, marginBottom: 2 }}>
         <Chip label={Locale.label("settings.churchSettingsEdit.general")} size="small" color="primary" />
       </Divider>
       <SupportContactSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger} />
@@ -170,7 +170,7 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
       {/* Giving Settings Section */}
       {UserHelper.checkAccess(Permissions.givingApi.settings.edit) && (
         <>
-          <Divider variant="middle" textAlign="center" sx={{ marginTop: 3, marginBottom: 3 }}>
+        <Divider variant="middle" textAlign="center" sx={{ marginTop: 2, marginBottom: 2 }}>
             <Chip label={Locale.label("settings.givingSettingsEdit.giving")} size="small" color="primary" />
           </Divider>
           {giveSection()}
@@ -178,7 +178,7 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
       )}
 
       {/* Domains Section */}
-      <Divider variant="middle" textAlign="center" sx={{ marginTop: 3, marginBottom: 3 }}>
+      <Divider variant="middle" textAlign="center" sx={{ marginTop: 2, marginBottom: 2 }}>
         <Chip label={Locale.label("settings.domainSettingsEdit.domains")} size="small" color="primary" />
       </Divider>
       <DomainSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger} />
