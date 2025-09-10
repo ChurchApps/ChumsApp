@@ -37,10 +37,10 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
   const getKeys = () => {
     if (provider === "") return null;
     else {
-      const publicLabel = provider === "paypal"
+      const publicLabel = provider === "Paypal"
         ? Locale.label("settings.givingSettingsEdit.clientId") || "Client ID"
         : Locale.label("settings.givingSettingsEdit.pubKey");
-      const privateLabel = provider === "paypal"
+      const privateLabel = provider === "Paypal"
         ? Locale.label("settings.givingSettingsEdit.clientSecret") || "Client Secret"
         : Locale.label("settings.givingSettingsEdit.secKey");
 
@@ -104,9 +104,9 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
       setPayFees(false);
     } else {
       setGateway(gateways[0]);
-      setProvider(gateways[0].provider);
-      setPublicKey(gateways[0].publicKey);
-      setPayFees(gateways[0].payFees);
+      setProvider(gateways[0].provider || "");
+      setPublicKey(gateways[0].publicKey || "");
+      setPayFees(gateways[0].payFees || false);
     }
     setPrivateKey("");
   };
@@ -123,21 +123,21 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
         <Grid size={{ xs: 12, md: 4 }}>
           <FormControl fullWidth>
             <InputLabel>{Locale.label("settings.givingSettingsEdit.prov")}</InputLabel>
-            <Select name="provider" label={Locale.label("settings.givingSettingsEdit.prov")} value={provider} onChange={handleChange}>
+            <Select name="provider" label={Locale.label("settings.givingSettingsEdit.prov")} value={provider || ""} onChange={handleChange}>
               <MenuItem value="">{Locale.label("settings.givingSettingsEdit.none")}</MenuItem>
-              <MenuItem value="stripe">{Locale.label("settings.givingSettingsEdit.stripe")}</MenuItem>
-              <MenuItem value="paypal">{Locale.label("settings.givingSettingsEdit.paypal")}</MenuItem>
+              <MenuItem value="Stripe">{Locale.label("settings.givingSettingsEdit.stripe")}</MenuItem>
+              <MenuItem value="Paypal">{Locale.label("settings.givingSettingsEdit.paypal")}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
-        {provider === "stripe" && (
+        {provider === "Stripe" && (
           <Grid size={{ xs: 12 }}>
             <Typography variant="body2" color="textSecondary" component="div">
               Visit <a href="https://dashboard.stripe.com/" target="_blank" rel="noopener noreferrer">Stripe Dashboard</a> and go to <strong>Developers → API keys</strong> to copy your Publishable and Secret keys (test & live).
             </Typography>
           </Grid>
         )}
-        {provider === "paypal" && (
+        {provider === "Paypal" && (
           <Grid size={{ xs: 12 }}>
             <Typography variant="body2" color="textSecondary" component="div">
               Go to <a href="https://developer.paypal.com/" target="_blank" rel="noopener noreferrer">PayPal Developer</a>, log in, then under <strong>API Credentials</strong> create an app to get your Client ID and Secret.
