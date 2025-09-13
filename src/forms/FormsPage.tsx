@@ -4,12 +4,13 @@ import { type FormInterface } from "@churchapps/helpers";
 import { ApiHelper, UserHelper, Permissions, Loading, Locale } from "@churchapps/apphelper";
 import { Link } from "react-router-dom";
 import {
-  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Stack, Button, Card, Tab 
+  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Stack, Button, Card
 } from "@mui/material";
 import { Description as DescriptionIcon, Add as AddIcon, Archive as ArchiveIcon } from "@mui/icons-material";
 import { SmallButton } from "@churchapps/apphelper";
 import { PageHeader } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
+import { SmartTabs } from "../components/ui";
 
 export const FormsPage = () => {
   const [selectedFormId, setSelectedFormId] = React.useState("notset");
@@ -147,33 +148,63 @@ export const FormsPage = () => {
 
   if (forms.isLoading || archivedForms.isLoading) return <Loading />;
 
-  const contents = (
+  const renderTable = (rows: JSX.Element[]) => (
     <Table>
       <TableHead>{getTableHeader()}</TableHead>
-      <TableBody>{selectedTab === "forms" ? getRows() : getArchivedRows()}</TableBody>
+      <TableBody>{rows}</TableBody>
     </Table>
   );
 
-  const getTab = (keyName: string, icon: string, text: string) => (
-    <Tab
-      key={keyName}
-      style={{ textTransform: "none", color: "#000" }}
-      onClick={() => {
-        setSelectedTab(keyName);
-      }}
-      label={<>{text}</>}
-    />
+  const formsCount = forms.data?.length || 0;
+  const archivedCount = archivedForms.data?.length || 0;
+
+  const formsCard = (
+    <Card sx={{ mt: getSidebar() ? 2 : 0 }}>
+      <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Stack direction="row" spacing={1} alignItems="center">
+            <DescriptionIcon />
+            <Typography variant="h6">{Locale.label("forms.formsPage.forms")}</Typography>
+          </Stack>
+          <Typography variant="body2" color="text.secondary">
+            {`${formsCount} ${formsCount === 1 ? "form" : "forms"}`}
+          </Typography>
+        </Stack>
+      </Box>
+      <Box sx={{ p: 0 }}>{renderTable(getRows())}</Box>
+    </Card>
   );
 
-  const tabs = [];
-  let defaultTab = "";
-  tabs.push(getTab("forms", "format_align_left", Locale.label("forms.formsPage.forms")));
-  if (defaultTab === "") defaultTab = "forms";
-  if (archivedForms.data?.length > 0) {
-    tabs.push(getTab("archived", "archive", Locale.label("forms.formsPage.archForms")));
-    if (defaultTab === "") defaultTab = "archived";
-  }
-  // Default tab is initialized via useState; avoid setting state during render.
+  const archivedCard = (
+    <Card>
+      <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Stack direction="row" spacing={1} alignItems="center">
+            <ArchiveIcon />
+            <Typography variant="h6">{Locale.label("forms.formsPage.archForms")}</Typography>
+          </Stack>
+          <Typography variant="body2" color="text.secondary">
+            {`${archivedCount} archived ${archivedCount === 1 ? "form" : "forms"}`}
+          </Typography>
+        </Stack>
+      </Box>
+      <Box sx={{ p: 0 }}>{renderTable(getArchivedRows())}</Box>
+    </Card>
+  );
+
+  const tabs = [
+    {
+      key: "forms",
+      label: Locale.label("forms.formsPage.forms"),
+      content: (
+        <>
+          {getSidebar()}
+          {formsCard}
+        </>
+      )
+    },
+    { key: "archived", label: Locale.label("forms.formsPage.archForms"), content: archivedCard, hidden: archivedForms.data?.length === 0 },
+  ];
 
   return (
     <>
@@ -194,50 +225,10 @@ export const FormsPage = () => {
             {Locale.label("forms.formsPage.addForm") || "Add Form"}
           </Button>
         )}
-        {archivedForms.data?.length > 0 && (
-          <Button
-            variant="outlined"
-            onClick={() => {
-              setSelectedTab("archived");
-            }}
-            sx={{
-              color: "#FFF",
-              backgroundColor: "transparent",
-              borderColor: "#FFF",
-              fontWeight: selectedTab === "archived" ? 600 : 400,
-              "&:hover": {
-                backgroundColor: "rgba(255,255,255,0.1)",
-                color: "#FFF",
-                borderColor: "#FFF",
-              },
-            }}>
-            {Locale.label("forms.formsPage.archForms")}
-          </Button>
-        )}
       </PageHeader>
-
       {/* Tab Content */}
       <Box sx={{ p: 3 }}>
-        {getSidebar()}
-        <Card sx={{ mt: getSidebar() ? 2 : 0 }}>
-          {/* Card Header */}
-          <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Stack direction="row" spacing={1} alignItems="center">
-                {selectedTab === "forms" ? <DescriptionIcon /> : <ArchiveIcon />}
-                <Typography variant="h6">{selectedTab === "forms" ? Locale.label("forms.formsPage.forms") : Locale.label("forms.formsPage.archForms")}</Typography>
-              </Stack>
-              <Typography variant="body2" color="text.secondary">
-                {selectedTab === "forms"
-                  ? `${forms.data?.length || 0} ${forms.data?.length === 1 ? "form" : "forms"}`
-                  : `${archivedForms.data?.length || 0} archived ${archivedForms.data?.length === 1 ? "form" : "forms"}`}
-              </Typography>
-            </Stack>
-          </Box>
-
-          {/* Card Content */}
-          <Box sx={{ p: 0 }}>{contents}</Box>
-        </Card>
+        <SmartTabs tabs={tabs} value={selectedTab} onChange={setSelectedTab} ariaLabel="forms-tabs" />
       </Box>
     </>
   );

@@ -1,35 +1,18 @@
-import {
-  Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, Paper 
-} from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material";
 import React from "react";
 import { SelectGroup } from ".";
 import { type GroupInterface, Locale, PersonHelper, type PersonInterface } from "@churchapps/apphelper";
 import { PersonAdd } from "../../components";
 import { Person as PersonIcon, Group as GroupIcon, Close as CloseIcon } from "@mui/icons-material";
+import { SmartTabs } from "../../components/ui";
 
 interface Props {
   onClose: () => void;
   onSelect: (contentType: string, contentId: string, label: string) => void;
 }
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index } = props;
-
-  return (
-    <div role="tabpanel" hidden={value !== index} id={`contentPickerPanel-${index}`}>
-      {value === index && <Box sx={{ pt: 2 }}>{children}</Box>}
-    </div>
-  );
-}
-
 export const ContentPicker: React.FC<Props> = (props) => {
-  const [value, setValue] = React.useState(0);
+  const [activeKey, setActiveKey] = React.useState("person");
   const handlePersonAdd = (p: PersonInterface) => {
     props.onSelect("person", p.id, p.name.display);
   };
@@ -37,9 +20,34 @@ export const ContentPicker: React.FC<Props> = (props) => {
     props.onSelect("group", g.id, g.name);
   };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  const tabs = [
+    {
+      key: "person",
+      label: (
+        <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
+          <PersonIcon fontSize="small" /> {Locale.label("tasks.contentPicker.pers")}
+        </Box>
+      ),
+      content: (
+        <Box sx={{ pt: 2 }}>
+          <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} actionLabel={Locale.label("tasks.contentPicker.sel")} />
+        </Box>
+      ),
+    },
+    {
+      key: "group",
+      label: (
+        <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
+          <GroupIcon fontSize="small" /> {Locale.label("tasks.contentPicker.group")}
+        </Box>
+      ),
+      content: (
+        <Box sx={{ pt: 2 }}>
+          <SelectGroup addFunction={handleGroupAdd} />
+        </Box>
+      ),
+    },
+  ];
 
   return (
     <Dialog open={true} onClose={props.onClose} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: 2 } }}>
@@ -53,31 +61,9 @@ export const ContentPicker: React.FC<Props> = (props) => {
         {Locale.label("tasks.contentPicker.selPers")}
       </DialogTitle>
       <DialogContent sx={{ pt: 0 }}>
-        <Paper sx={{ borderRadius: 2, overflow: "hidden" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            variant="fullWidth"
-            sx={{
-              borderBottom: 1,
-              borderColor: "divider",
-              "& .MuiTab-root": {
-                textTransform: "none",
-                fontWeight: 600,
-                fontSize: "1rem",
-              },
-            }}>
-            <Tab label={Locale.label("tasks.contentPicker.pers")} icon={<PersonIcon />} iconPosition="start" />
-            <Tab label={Locale.label("tasks.contentPicker.group")} icon={<GroupIcon />} iconPosition="start" />
-          </Tabs>
-          <Box sx={{ p: 2, minHeight: 400 }}>
-            <TabPanel value={value} index={0}>
-              <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} actionLabel={Locale.label("tasks.contentPicker.sel")} />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <SelectGroup addFunction={handleGroupAdd} />
-            </TabPanel>
-          </Box>
+        <Paper sx={{ borderRadius: 2, overflow: "hidden", p: 2 }}>
+          <SmartTabs tabs={tabs} value={activeKey} onChange={(k) => setActiveKey(k)} ariaLabel="content-picker-tabs" />
+          <Box sx={{ minHeight: 400 }} />
         </Paper>
       </DialogContent>
       <DialogActions sx={{ p: 2, pt: 0 }}>
