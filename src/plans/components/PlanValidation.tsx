@@ -273,14 +273,9 @@ export const PlanValidation = (props: Props) => {
     else {
       return (
         <p>
-          <a
-            href="about:blank"
-            onClick={(e) => {
-              e.preventDefault();
-              notify();
-            }}>
+          <button type="button" onClick={notify} style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
             {Locale.label("plans.planValidation.notify")} {pending.length} {Locale.label("plans.planValidation.vol")}
-          </a>
+          </button>
         </p>
       );
     }

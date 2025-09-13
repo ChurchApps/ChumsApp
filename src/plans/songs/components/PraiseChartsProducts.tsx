@@ -138,25 +138,21 @@ export const PraiseChartsProducts = (props: Props) => {
     if (product.children?.length > 0) {
       if (expandedSkus.includes(product.sku)) {
         expand = (
-          <a
-            href="about:blank"
-            onClick={(e) => {
-              e.preventDefault();
-              setExpandedSkus(expandedSkus.filter((s) => s !== product.sku));
-            }}>
+          <button
+            type="button"
+            onClick={() => setExpandedSkus(expandedSkus.filter((s) => s !== product.sku))}
+            style={{ background: "none", border: 0, padding: 0, cursor: "pointer" }}>
             <Icon>expand_less</Icon>
-          </a>
+          </button>
         );
       } else {
         expand = (
-          <a
-            href="about:blank"
-            onClick={(e) => {
-              e.preventDefault();
-              setExpandedSkus([...expandedSkus, product.sku]);
-            }}>
+          <button
+            type="button"
+            onClick={() => setExpandedSkus([...expandedSkus, product.sku])}
+            style={{ background: "none", border: 0, padding: 0, cursor: "pointer" }}>
             <Icon>expand_more</Icon>
-          </a>
+          </button>
         );
       }
     }

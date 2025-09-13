@@ -79,14 +79,12 @@ export const DevicesPage = () => {
               {devices.map((device) => (
                 <TableRow key={device.id}>
                   <TableCell>
-                    <a
-                      href="about:blank"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setEditDevice(device);
-                      }}>
+                    <button
+                      type="button"
+                      onClick={() => setEditDevice(device)}
+                      style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
                       {device.label || "Device"}
-                    </a>
+                    </button>
                   </TableCell>
                   <TableCell>{DateHelper.toDate(device.registrationDate).toLocaleDateString()}</TableCell>
                   <TableCell>{DateHelper.toDate(device.lastActiveDate).toLocaleDateString()}</TableCell>

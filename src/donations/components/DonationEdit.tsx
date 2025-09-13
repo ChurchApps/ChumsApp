@@ -157,18 +157,18 @@ export const DonationEdit = memo((props: Props) => {
         <>
           <PersonAdd getPhotoUrl={PersonHelper.getPhotoUrl} addFunction={handlePersonAdd} />
           <hr />
-          <a href="about:blank" className="text-decoration" onClick={handleAnonymousSelect}>
+          <button type="button" className="text-decoration" onClick={handleAnonymousSelect} style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
             {Locale.label("donations.donationEdit.anon")}
-          </a>
+          </button>
         </>
       );
     } else {
       const personText = donation.person === undefined || donation.person === null ? Locale.label("donations.donationEdit.anon") : donation.person.name.display;
       return (
         <div>
-          <a href="about:blank" className="text-decoration" data-cy="donating-person" onClick={handlePersonSelect}>
+          <button type="button" className="text-decoration" data-cy="donating-person" onClick={handlePersonSelect} style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
             {personText}
-          </a>
+          </button>
         </div>
       );
     }

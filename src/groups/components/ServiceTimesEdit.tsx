@@ -42,9 +42,13 @@ export const ServiceTimesEdit = memo((props: Props) => {
           <Icon>schedule</Icon> {gst.serviceTime.name}
         </TableCell>
         <TableCell>
-          <a href="about:blank" style={{ color: "#dc3545" }} data-id={gst.id} onClick={handleRemove}>
+          <button
+            type="button"
+            style={{ color: "#dc3545", background: "none", border: 0, padding: 0, cursor: "pointer" }}
+            data-id={gst.id}
+            onClick={handleRemove}>
             <Icon>person_remove</Icon> {Locale.label("common.remove")}
-          </a>
+          </button>
         </TableCell>
       </TableRow>
     ));

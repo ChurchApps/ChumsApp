@@ -103,23 +103,19 @@ export const PlanItem = React.memo((props: Props) => {
       <div className="planItemHeader">
         {!props.readOnly && (
           <span style={{ float: "right", marginTop: -2, marginBottom: -2 }}>
-            <a
-              href="about:blank"
-              onClick={(e) => {
-                e.preventDefault();
-                setAnchorEl(e.currentTarget);
-              }}>
+            <button
+              type="button"
+              onClick={(e) => setAnchorEl(e.currentTarget)}
+              style={{ background: "none", border: 0, padding: 0, cursor: "pointer", color: "#1976d2" }}>
               <Icon>add</Icon>
-            </a>
+            </button>
             &nbsp;
-            <a
-              href="about:blank"
-              onClick={(e) => {
-                e.preventDefault();
-                props.setEditPlanItem(props.planItem);
-              }}>
+            <button
+              type="button"
+              onClick={() => props.setEditPlanItem(props.planItem)}
+              style={{ background: "none", border: 0, padding: 0, cursor: "pointer", color: "#1976d2" }}>
               <Icon>edit</Icon>
-            </a>
+            </button>
           </span>
         )}
         {!props.readOnly && <Icon style={{ float: "left", color: "#777" }}>drag_indicator</Icon>}
@@ -137,14 +133,12 @@ export const PlanItem = React.memo((props: Props) => {
         <div>
           {!props.readOnly && (
             <span style={{ float: "right", marginTop: -2, marginBottom: -2 }}>
-              <a
-                href="about:blank"
-                onClick={(e) => {
-                  e.preventDefault();
-                  props.setEditPlanItem(props.planItem);
-                }}>
+              <button
+                type="button"
+                onClick={() => props.setEditPlanItem(props.planItem)}
+                style={{ background: "none", border: 0, padding: 0, cursor: "pointer", color: "#1976d2" }}>
                 <Icon>edit</Icon>
-              </a>
+              </button>
             </span>
           )}
           {props.planItem.link ? (
@@ -168,14 +162,12 @@ export const PlanItem = React.memo((props: Props) => {
         <div>
           {!props.readOnly && (
             <span style={{ float: "right", marginTop: -2, marginBottom: -2 }}>
-              <a
-                href="about:blank"
-                onClick={(e) => {
-                  e.preventDefault();
-                  props.setEditPlanItem(props.planItem);
-                }}>
+              <button
+                type="button"
+                onClick={() => props.setEditPlanItem(props.planItem)}
+                style={{ background: "none", border: 0, padding: 0, cursor: "pointer", color: "#1976d2" }}>
                 <Icon>edit</Icon>
-              </a>
+              </button>
             </span>
           )}
           {props.planItem.link ? (

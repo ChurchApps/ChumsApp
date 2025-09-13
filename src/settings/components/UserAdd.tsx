@@ -187,9 +187,9 @@ export const UserAdd = (props: Props) => {
   const message = !showNameFields && !editMode && hasSearched && (
     <span>
       {Locale.label("settings.userAdd.noAcc")}{" "}
-      <a href="about:blank" onClick={CreateNewUser} data-testid="create-new-user-link" aria-label="Create new user">
+      <button type="button" onClick={CreateNewUser} data-testid="create-new-user-link" aria-label="Create new user" style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
         {Locale.label("settings.userAdd.createNew")}
-      </a>
+      </button>
     </span>
   );
   const nameField = (showNameFields || editMode) && (

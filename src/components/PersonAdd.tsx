@@ -106,14 +106,9 @@ export const PersonAdd: React.FC<Props> = ({
       {showCreatePersonOnNotFound && hasSearched && searchText && searchResults.length === 0 && (
         <Typography sx={{ marginTop: "7px" }}>
           {Locale.label("person.noRec")}{" "}
-          <a
-            href="about:blank"
-            onClick={(e) => {
-              e.preventDefault();
-              setOpen(true);
-            }}>
+          <button type="button" onClick={() => setOpen(true)} style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
             {Locale.label("createPerson.addNewPerson")}
-          </a>
+          </button>
         </Typography>
       )}
       <Table size="small" id="householdMemberAddTable">

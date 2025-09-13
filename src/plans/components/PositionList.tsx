@@ -51,15 +51,13 @@ export const PositionList = (props: Props) => {
       }
       if (canEdit) {
         return (
-          <a
-            href="about:blank"
-            onClick={(e) => {
-              e.preventDefault();
-              props.onAssignmentSelect(position, assignment || { positionId: position.id });
-            }}>
+          <button
+            type="button"
+            onClick={() => props.onAssignmentSelect(position, assignment || { positionId: position.id })}
+            style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
             {wrappedImage}
             {person.name.display}
-          </a>
+          </button>
         );
       } else {
         return (
@@ -80,14 +78,12 @@ export const PositionList = (props: Props) => {
     if (remaining > 0 && canEdit) {
       const label = remaining === 1 ? Locale.label("plans.positionList.persNeed") : remaining.toString() + Locale.label("plans.positionList.pplNeed");
       result.push(
-        <a
-          href="about:blank"
-          onClick={(e) => {
-            e.preventDefault();
-            props.onAssignmentSelect(position, { positionId: position.id });
-          }}>
+        <button
+          type="button"
+          onClick={() => props.onAssignmentSelect(position, { positionId: position.id })}
+          style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
           {label}
-        </a>
+        </button>
       );
     }
     return result;
@@ -98,14 +94,12 @@ export const PositionList = (props: Props) => {
       <TableCell style={{ paddingLeft: 10, fontWeight: "bold" }}>{first ? position.categoryName : ""}</TableCell>
       <TableCell>
         {canEdit ? (
-          <a
-            href="about:blank"
-            onClick={(e) => {
-              e.preventDefault();
-              props.onSelect(position);
-            }}>
+          <button
+            type="button"
+            onClick={() => props.onSelect(position)}
+            style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
             {position.name}
-          </a>
+          </button>
         ) : (
           <span>{position.name}</span>
         )}

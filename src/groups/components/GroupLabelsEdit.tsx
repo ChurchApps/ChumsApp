@@ -68,9 +68,9 @@ export const GroupLabelsEdit: React.FC<Props> = (props) => {
     <>
       <div style={{ marginTop: 10 }}>Labels</div>
       {getItems()}
-      <a href="about:blank" onClick={handleAdd} data-testid="add-new-label-link" aria-label="Add new label">
+      <button type="button" onClick={handleAdd} data-testid="add-new-label-link" aria-label="Add new label" style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
         Add New Label
-      </a>
+      </button>
     </>
   );
 };

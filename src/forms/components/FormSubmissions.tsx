@@ -264,15 +264,13 @@ export const FormSubmissions: React.FC<Props> = memo((props) => {
     return (
       <>
         <ExportLink data={summaryCsv} spaceAfter={true} filename={formName} />
-        <a
+        <button
+          type="button"
           aria-label="print-summary"
-          href="about:blank"
-          onClick={(e) => {
-            e.preventDefault();
-            handleSummaryPrint();
-          }}>
+          onClick={handleSummaryPrint}
+          style={{ background: "none", border: 0, padding: 0, cursor: "pointer", color: "inherit" }}>
           <Icon>print</Icon>
-        </a>
+        </button>
       </>
     );
   }, [formSubmissions.data, summaryCsv, handleSummaryPrint]);

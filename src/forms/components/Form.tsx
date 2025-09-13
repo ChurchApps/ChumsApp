@@ -96,16 +96,12 @@ export const Form: React.FC<Props> = (props) => {
             transition: "background-color 0.2s ease",
           }}>
           <TableCell>
-            <a
-              href="about:blank"
+            <button
+              type="button"
               onClick={handleClick}
-              style={{
-                textDecoration: "none",
-                color: "var(--c1l2)",
-                fontWeight: 500,
-              }}>
+              style={{ background: "none", border: 0, padding: 0, color: "var(--c1l2)", cursor: "pointer", fontWeight: 500 }}>
               {questions[i].title}
-            </a>
+            </button>
           </TableCell>
           <TableCell>
             <Typography variant="body2">{questions[i].fieldType}</Typography>

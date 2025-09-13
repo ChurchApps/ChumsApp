@@ -35,25 +35,21 @@ export const ChurchesTab = () => {
     churches.forEach((c, index) => {
       const currentChurch = c;
       const activeLink = c.archivedDate ? (
-        <a
-          href="about:blank"
+        <button
+          type="button"
           className="text-danger"
-          onClick={(e) => {
-            e.preventDefault();
-            handleArchive(currentChurch);
-          }}>
+          onClick={() => handleArchive(currentChurch)}
+          style={{ background: "none", border: 0, padding: 0, cursor: "pointer" }}>
           {Locale.label("serverAdmin.adminPage.arch")}
-        </a>
+        </button>
       ) : (
-        <a
-          href="about:blank"
+        <button
+          type="button"
           className="text-success"
-          onClick={(e) => {
-            e.preventDefault();
-            handleArchive(currentChurch);
-          }}>
+          onClick={() => handleArchive(currentChurch)}
+          style={{ background: "none", border: 0, padding: 0, cursor: "pointer" }}>
           {Locale.label("serverAdmin.adminPage.act")}
-        </a>
+        </button>
       );
 
       result.push(
@@ -77,9 +73,9 @@ export const ChurchesTab = () => {
   const getManageAccessLink = (church: ChurchInterface) => {
     let result: JSX.Element = null;
     result = (
-      <a href="about:blank" data-churchid={church.id} onClick={handleEditAccess} style={{ marginRight: 40 }}>
+      <button type="button" data-churchid={church.id} onClick={handleEditAccess} style={{ marginRight: 40, background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
         {church.name}
-      </a>
+      </button>
     );
     return result;
   };

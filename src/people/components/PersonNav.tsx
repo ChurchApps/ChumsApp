@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@mui/material";
+import { Icon, Button } from "@mui/material";
 import { type PersonInterface } from "@churchapps/helpers";
 import { Permissions, UserHelper, Locale } from "@churchapps/apphelper";
 interface Props {
@@ -35,27 +35,17 @@ export const PersonNav: React.FC<Props> = (props) => {
     if (tab.key === selectedTab) {
       return (
         <li className="active">
-          <a
-            href="about:blank"
-            onClick={(e) => {
-              e.preventDefault();
-              setSelectedTab(tab.key);
-            }}>
+          <Button variant="text" color="inherit" onClick={() => setSelectedTab(tab.key)} sx={{ p: 0, minWidth: 0 }}>
             <Icon>{tab.icon}</Icon> {tab.label}
-          </a>
+          </Button>
         </li>
       );
     }
     return (
       <li>
-        <a
-          href="about:blank"
-          onClick={(e) => {
-            e.preventDefault();
-            setSelectedTab(tab.key);
-          }}>
+        <Button variant="text" color="inherit" onClick={() => setSelectedTab(tab.key)} sx={{ p: 0, minWidth: 0 }}>
           <Icon>{tab.icon}</Icon> {tab.label}
-        </a>
+        </Button>
       </li>
     );
   };
@@ -65,16 +55,16 @@ export const PersonNav: React.FC<Props> = (props) => {
       <ul>
         {tabs.map((tab) => getItem(tab))}
         <li>
-          <a href="about:blank">
+          <Button variant="text" color="inherit" sx={{ p: 0, minWidth: 0 }}>
             <Icon>people</Icon> Groups
-          </a>
+          </Button>
         </li>
       </ul>
 
       <div className="subhead">Custom Forms</div>
       <ul>
         <li>
-          <a href="about:blank">Discipleship</a>
+          <Button variant="text" color="inherit" sx={{ p: 0, minWidth: 0 }}>Discipleship</Button>
         </li>
       </ul>
     </div>

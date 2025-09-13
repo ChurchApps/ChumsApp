@@ -118,14 +118,12 @@ export const SongDetailLinksEdit = (props: Props) => {
   const getRow = (link: SongDetailLinkInterface) => (
     <TableRow>
       <TableCell>
-        <a
-          href="about:blank"
-          onClick={(e) => {
-            e.preventDefault();
-            setEditLink(link);
-          }}>
+        <button
+          type="button"
+          onClick={() => setEditLink(link)}
+          style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
           {link.service}
-        </a>
+        </button>
       </TableCell>
       <TableCell>{link.serviceKey}</TableCell>
     </TableRow>

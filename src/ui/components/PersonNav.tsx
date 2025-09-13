@@ -1,4 +1,4 @@
-import { Icon } from "@mui/material";
+import { Icon, Button } from "@mui/material";
 import React from "react";
 
 export const PersonNav: React.FC = () => {
@@ -6,36 +6,36 @@ export const PersonNav: React.FC = () => {
     <div className="sideNav" style={{ height: "100vh", borderRight: "1px solid #CCC" }}>
       <ul>
         <li key="details" className="active">
-          <a href="about:blank">
+          <Button variant="text" color="inherit" sx={{ p: 0, minWidth: 0 }}>
             <Icon>person</Icon> Details
-          </a>
+          </Button>
         </li>
         <li key="notes">
-          <a href="about:blank">
+          <Button variant="text" color="inherit" sx={{ p: 0, minWidth: 0 }}>
             <Icon>sticky_note_2</Icon> Notes
-          </a>
+          </Button>
         </li>
         <li key="attendance">
-          <a href="about:blank">
+          <Button variant="text" color="inherit" sx={{ p: 0, minWidth: 0 }}>
             <Icon>calendar_month</Icon> Attendance
-          </a>
+          </Button>
         </li>
         <li key="giving">
-          <a href="about:blank">
+          <Button variant="text" color="inherit" sx={{ p: 0, minWidth: 0 }}>
             <Icon>volunteer_activism</Icon> Giving
-          </a>
+          </Button>
         </li>
         <li key="groups">
-          <a href="about:blank">
+          <Button variant="text" color="inherit" sx={{ p: 0, minWidth: 0 }}>
             <Icon>people</Icon> Groups
-          </a>
+          </Button>
         </li>
       </ul>
 
       <div className="subhead">Custom Forms</div>
       <ul>
         <li key="discipleship">
-          <a href="about:blank">Discipleship</a>
+          <Button variant="text" color="inherit" sx={{ p: 0, minWidth: 0 }}>Discipleship</Button>
         </li>
       </ul>
     </div>

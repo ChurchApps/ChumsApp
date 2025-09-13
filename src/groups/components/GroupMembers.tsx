@@ -250,15 +250,12 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
               </Select>
             </FormControl>
           ) : (
-            <a
-              href="about:blank"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowTemplates(!showTemplates);
-              }}
-              style={{ paddingLeft: "5px" }}>
+            <button
+              type="button"
+              onClick={() => setShowTemplates(!showTemplates)}
+              style={{ paddingLeft: "5px", background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
               {Locale.label("groups.groupMembers.showTemplates")}
-            </a>
+            </button>
           )}
           <TextField
             fullWidth

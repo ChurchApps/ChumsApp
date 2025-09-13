@@ -66,14 +66,12 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
         <TableRow>
           <TableCell>{d.domainName}</TableCell>
           <TableCell>
-            <a
-              href="about:blank"
-              onClick={(e) => {
-                e.preventDefault();
-                handleDelete(index);
-              }}>
+            <button
+              type="button"
+              onClick={() => handleDelete(index)}
+              style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
               {Locale.label("common.delete")}
-            </a>
+            </button>
           </TableCell>
         </TableRow>
       );
@@ -101,9 +99,9 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
         {Locale.label("settings.domainSettingsEdit.domMsg")} <i style={{ fontSize: 12 }}>CNAME: proxy.b1.church</i>
         {Locale.label("settings.domainSettingsEdit.domMsg2")} <i style={{ fontSize: 12 }}>A: 3.23.251.61</i>
         {Locale.label("settings.domainSettingsEdit.domMsg3")}{" "}
-        <a href="about:blank" onClick={relink}>
+        <button type="button" onClick={relink} style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
           {Locale.label("settings.domainSettingsEdit.domMsgConnect")}
-        </a>
+        </button>
         {Locale.label("settings.domainSettingsEdit.domMsg4")}
       </p>
       <Grid container spacing={3}>
@@ -122,9 +120,9 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
                   <TextField fullWidth name="domainName" size="small" value={addDomainName} onChange={handleChange} placeholder="yoursite.com" />
                 </TableCell>
                 <TableCell>
-                  <a href="about:blank" onClick={handleAdd}>
+                  <button type="button" onClick={handleAdd} style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
                     {Locale.label("common.add")}
-                  </a>
+                  </button>
                 </TableCell>
               </TableRow>
             </TableBody>

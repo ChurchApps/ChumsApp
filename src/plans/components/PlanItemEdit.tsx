@@ -107,14 +107,12 @@ export const PlanItemEdit = (props: Props) => {
       keys.forEach((k) => {
         links.push(
           <span style={{ paddingRight: 10 }}>
-            <a
-              href="about:blank"
-              onClick={(e) => {
-                e.preventDefault();
-                selectSong(k);
-              }}>
+            <button
+              type="button"
+              onClick={() => selectSong(k)}
+              style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
               {k.shortDescription} ({k.arrangementKeySignature})
-            </a>
+            </button>
           </span>
         );
       });

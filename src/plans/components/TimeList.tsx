@@ -71,14 +71,12 @@ export const TimeList = (props: Props) => {
           </td>
           <td style={{ width: "90%" }}>
             {canEdit ? (
-              <a
-                href="about:blank"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleSelect(t);
-                }}>
+              <button
+                type="button"
+                onClick={() => handleSelect(t)}
+                style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
                 {t.displayName}
-              </a>
+              </button>
             ) : (
               <span>{t.displayName}</span>
             )}

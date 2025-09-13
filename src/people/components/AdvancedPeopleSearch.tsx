@@ -88,17 +88,22 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
     if (showAddCondition) return <EditCondition conditionAdded={conditionAddedHandler} />;
     else {
       return (
-        <a
-          href="about:blank"
+        <button
+          type="button"
           style={{
             display: "flex",
             alignItems: "center",
             marginBottom: "10px",
             justifyContent: "flex-end",
+            background: "none",
+            border: 0,
+            padding: 0,
+            color: "#1976d2",
+            cursor: "pointer",
           }}
           onClick={showAddConditionHandler}>
           <Icon>add</Icon> {Locale.label("people.peopleSearch.addCon")}
-        </a>
+        </button>
       );
     }
   }, [showAddCondition, conditionAddedHandler, showAddConditionHandler]);
@@ -142,15 +147,12 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
       }
       result.push(
         <Box key={index} sx={{ display: "flex", alignItems: "center" }} mb={1}>
-          <a
-            href="about:blank"
-            style={{ display: "flex" }}
-            onClick={(e) => {
-              e.preventDefault();
-              removeCondition(index);
-            }}>
+          <button
+            type="button"
+            style={{ display: "flex", background: "none", border: 0, padding: 0, color: "#dc3545", cursor: "pointer" }}
+            onClick={() => removeCondition(index)}>
             <Icon sx={{ marginRight: "5px" }}>delete</Icon>
-          </a>
+          </button>
           <Box>
             <b>{displayField}</b> {displayOperator} <i>{displayValue}</i>
           </Box>

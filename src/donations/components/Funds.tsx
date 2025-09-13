@@ -59,9 +59,9 @@ export const Funds: React.FC = memo(() => {
     for (let i = 0; i < funds.data.length; i++) {
       const f = funds.data[i];
       const editLink = canEdit ? (
-        <a href="about:blank" data-cy={`edit-${i}`} onClick={handleEdit} data-index={i}>
+        <button type="button" data-cy={`edit-${i}`} onClick={handleEdit} data-index={i} style={{ background: "none", border: 0, padding: 0, cursor: "pointer" }}>
           <Icon>edit</Icon>
-        </a>
+        </button>
       ) : null;
       const viewLink = canViewIndividual ? <Link to={"/donations/funds/" + f.id}>{f.name}</Link> : <>{f.name}</>;
       result.push(

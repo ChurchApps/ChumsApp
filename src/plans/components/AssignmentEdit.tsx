@@ -54,14 +54,12 @@ export const AssignmentEdit = (props: Props) => {
             <Avatar src={PersonHelper.getPhotoUrl(gm.person)} sx={{ width: 32, height: 32 }} />
           </TableCell>
           <TableCell style={{ width: "80%" }}>
-            <a
-              href="about:blank"
-              onClick={(e) => {
-                e.preventDefault();
-                selectPerson(gm);
-              }}>
+            <button
+              type="button"
+              onClick={() => selectPerson(gm)}
+              style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
               {gm.person.name.display}
-            </a>
+            </button>
           </TableCell>
         </TableRow>
       );
