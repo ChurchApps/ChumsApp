@@ -30,7 +30,10 @@ export function DroppableWrapper(props: Props) {
     [dndDeps]
   );
 
-  if (canDrop !== isDragging) setIsDragging(canDrop);
+  // Update dragging state via effect to avoid state updates during render
+  useEffect(() => {
+    setIsDragging(canDrop);
+  }, [canDrop]);
 
   useEffect(() => {
     if (updateIsDragging) updateIsDragging(isDragging);

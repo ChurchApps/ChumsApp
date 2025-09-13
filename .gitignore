@@ -3,6 +3,7 @@
 /public/apphelper
 /test-results.json
 .serena
+CODE_REVIEW.md
 
 # Logs
 logs

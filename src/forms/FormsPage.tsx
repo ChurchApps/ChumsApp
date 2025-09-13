@@ -173,7 +173,7 @@ export const FormsPage = () => {
     tabs.push(getTab("archived", "archive", Locale.label("forms.formsPage.archForms")));
     if (defaultTab === "") defaultTab = "archived";
   }
-  if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
+  // Default tab is initialized via useState; avoid setting state during render.
 
   return (
     <>

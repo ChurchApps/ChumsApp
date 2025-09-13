@@ -59,20 +59,28 @@ export const Tabs: React.FC<Props> = (props) => {
     return currentTab;
   };
 
+  // Determine default tab based on access and group settings
+  const defaultTab = React.useMemo(() => {
+    if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) return "members";
+    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && props.group?.trackAttendance) return "sessions";
+    return "";
+  }, [props.group?.trackAttendance]);
+
+  // Initialize selected tab via effect to avoid state updates during render
+  React.useEffect(() => {
+    if (!selectedTab && defaultTab) setSelectedTab(defaultTab);
+  }, [selectedTab, defaultTab]);
+
   const getTabs = () => {
     if (props.group === null || props.group.id === undefined) return null;
     const tabs = [];
-    let defaultTab = "";
 
     if (UserHelper.checkAccess(Permissions.membershipApi.groupMembers.view)) {
       tabs.push(getTab(0, "members", "people", Locale.label("groups.tabs.mem")));
-      defaultTab = "members";
     }
     if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view) && props.group?.trackAttendance) {
       tabs.push(getTab(1, "sessions", "calendar_month", Locale.label("groups.tabs.ses")));
-      if (defaultTab === "") defaultTab = "sessions";
     }
-    if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
     return tabs;
   };
 

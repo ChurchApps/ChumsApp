@@ -9,7 +9,7 @@ import { Permissions } from "@churchapps/apphelper";
 import { ReportWithFilter } from "../components/reporting";
 
 export const AttendancePage = () => {
-  const [selectedTab, setSelectedTab] = React.useState("");
+  const [selectedTab, setSelectedTab] = React.useState("setup");
   const [stats, setStats] = React.useState({
     campuses: 0,
     serviceTimes: 0,
@@ -31,7 +31,7 @@ export const AttendancePage = () => {
       tabs.push({ key: "groups", icon: "people", label: Locale.label("attendance.tabs.groupAtt") });
       if (defaultTab === "") defaultTab = "groups";
     }
-    if (selectedTab === "" && defaultTab !== "") setSelectedTab(defaultTab);
+    // Default tab is initialized via useState; avoid setting state during render.
     return tabs;
   };
 
