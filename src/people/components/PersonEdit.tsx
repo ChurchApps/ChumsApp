@@ -113,6 +113,9 @@ export const PersonEdit = memo((props: Props) => {
         case "nametagNotes":
           p.nametagNotes = value;
           break;
+        case "donorNumber":
+          p.donorNumber = value;
+          break;
         case "anniversary":
           p.anniversary = DateHelper.toDate(value);
           break;
@@ -312,6 +315,11 @@ export const PersonEdit = memo((props: Props) => {
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
               <TextField inputProps={{ maxLength: 20 }} fullWidth name="nametagNotes" label={Locale.label("people.personEdit.nameNote")} id="nametagnotes" value={person.nametagNotes || ""} onChange={handleChange} />
+            </Grid>
+          </Grid>
+          <Grid container spacing={3}>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <TextField fullWidth name="donorNumber" label={Locale.label("people.personEdit.donorNumber")} id="donorNumber" value={person.donorNumber || ""} onChange={handleChange} data-testid="donor-number-input" aria-label="Donor number" />
             </Grid>
           </Grid>
         </Grid>

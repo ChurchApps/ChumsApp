@@ -29,7 +29,7 @@ export const PairScreen = (props: Props) => {
 
   const handleSave = () => {
     if (validate()) {
-      ApiHelper.get("/devices/pair/" + code, "MessagingApi").then((data) => {
+      ApiHelper.get("/devices/pair/" + code, "MembershipAPi").then((data) => {
         if (data.success) props.updatedFunction();
         else setErrors(["Invalid pairing code."]);
       });
