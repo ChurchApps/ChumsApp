@@ -310,15 +310,13 @@ export const PersonEdit = memo((props: Props) => {
             </Grid>
           </Grid>
           <Grid container spacing={3}>
-            <Grid size={{ xs: 12, md: 6 }}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <TextField fullWidth name="contactInfo.email" label={Locale.label("person.email")} type="email" id="email" value={person.contactInfo.email || ""} onChange={handleChange} data-testid="email-input" aria-label="Email address" />
             </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <TextField inputProps={{ maxLength: 20 }} fullWidth name="nametagNotes" label={Locale.label("people.personEdit.nameNote")} id="nametagnotes" value={person.nametagNotes || ""} onChange={handleChange} />
             </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid size={{ xs: 12, md: 6 }}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <TextField fullWidth name="donorNumber" label={Locale.label("people.personEdit.donorNumber")} id="donorNumber" value={person.donorNumber || ""} onChange={handleChange} data-testid="donor-number-input" aria-label="Donor number" />
             </Grid>
           </Grid>
