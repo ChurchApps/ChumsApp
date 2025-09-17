@@ -271,12 +271,12 @@
     react-to-print "^3.1.1"
     slug "^11.0.0"
 
-"@churchapps/helpers@^1.1.6":
-  version "1.1.6"
-  resolved "https://registry.npmjs.org/@churchapps/helpers/-/helpers-1.1.6.tgz"
-  integrity sha512-ZGW4BeUE4BaELdXnP9a3jiHPMIX+NYqXVvOxyA7gXbkWyHOc5IKSLB3iSlCPC6I2IvMYStga1TaWcLAQfnDOGw==
+"@churchapps/helpers@^1.1.6", "@churchapps/helpers@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.npmjs.org/@churchapps/helpers/-/helpers-1.1.8.tgz"
+  integrity sha512-+TzrWQnRHdt+xIknzWSRPLEoE5cOA/cJnaZ7PP1A1KBtV3oxOufS6Agj6YXZj8zpFOIDf2izRUuPctHZsc/n8A==
   dependencies:
-    dayjs "^1.11.13"
+    dayjs "^1.11.18"
     rrule "^2.8.1"
 
 "@cropper/element-canvas@^2.0.1":
@@ -1963,10 +1963,10 @@ date-fns@^4.1.0:
   resolved "https://registry.npmjs.org/date-fns/-/date-fns-4.1.0.tgz"
   integrity sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==
 
-dayjs@^1.11.13:
-  version "1.11.13"
-  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.13.tgz"
-  integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
+dayjs@^1.11.18:
+  version "1.11.18"
+  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.18.tgz"
+  integrity sha512-zFBQ7WFRvVRhKcWoUh+ZA1g2HVgUbsZm9sbddh8EC5iv93sui8DVVz1Npvz+r6meo9VKfa8NyLWBsQK1VvIKPA==
 
 debug@^4.1.0, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4, debug@^4.4.1:
   version "4.4.1"
