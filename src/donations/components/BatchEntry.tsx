@@ -1,4 +1,4 @@
-import type { PersonInterface, FundInterface, SearchCondition } from "@churchapps/helpers";
+import type { PersonInterface, FundInterface, SearchCondition, DonationInterface, FundDonationInterface } from "@churchapps/helpers";
 import React, { useContext } from "react";
 import { memo } from "react";
 import { ApiHelper, DateHelper, InputBox, Locale, PersonHelper } from "@churchapps/apphelper";
@@ -10,7 +10,8 @@ import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 
 interface Props {
-
+  batchId: string,
+  onAdded: () => void
 }
 
 export const BatchEntry = memo((props: Props) => {
@@ -79,7 +80,7 @@ export const BatchEntry = memo((props: Props) => {
     }
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     console.log("Clicked Save!");
     setHidden("none");
     setHiddenTwo("none");
@@ -87,6 +88,22 @@ export const BatchEntry = memo((props: Props) => {
     if (!defaultSet) {
       setToDefaults();
     }
+    const donation: DonationInterface = {
+      batchId: props.batchId, amount: 100,
+      personId: selectedPerson.id,
+      donationDate: new Date(defaultDate),
+      method: "check",
+      methodDetails: "123",
+      notes: ""
+    }
+    const results = await ApiHelper.post("/donations", [donation], "GivingApi");
+    const fundDonation: FundDonationInterface = {
+      donationId: results[0].id,
+      fundId: selectedFundId,
+      amount: 100
+    }
+    await ApiHelper.post("/fundDonations", [fundDonation], "GivingApi");
+    props.onAdded();
   }
 
   const handleEditClick = () => {

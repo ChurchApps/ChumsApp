@@ -6,11 +6,13 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Box, Card, Stack, Button } from "@mui/material";
 import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
+import { BatchEntry } from "./components/BatchEntry";
 
 export const DonationBatchPage = () => {
   const params = useParams();
   const [editDonationId, setEditDonationId] = React.useState("notset");
   const [editBatch, setEditBatch] = React.useState(false);
+  const [refreshKey, setRefreshKey] = React.useState(0);
 
   const batch = useQuery<DonationBatchInterface>({ queryKey: ["/donationbatches/" + params.id, "GivingApi"] });
 
@@ -23,6 +25,11 @@ export const DonationBatchPage = () => {
     queryKey: ["/donations?batchId=" + params.id, "GivingApi"],
     placeholderData: [],
   });
+
+  React.useEffect(() => {
+    setRefreshKey(Math.random())
+
+  }, [donations.data]);
 
   const showAddDonation = () => {
     setEditDonationId("");
@@ -126,13 +133,14 @@ export const DonationBatchPage = () => {
       </PageHeader>
 
       {/* Main Content */}
+      <BatchEntry batchId={batch.data.id} onAdded={() => { donations.refetch() }} />
       <Box sx={{ p: 3 }}>
         {/* Edit content appears above when editing */}
         {(editDonationId !== "notset" || editBatch) && <Box sx={{ mb: 3 }}>{getEditModules()}</Box>}
 
         {/* Main donations table */}
         <Card>
-          <Donations batch={batch.data} editFunction={showEditDonation} funds={funds.data} />
+          <Donations batch={batch.data} editFunction={showEditDonation} funds={funds.data} refreshKey={refreshKey} />
         </Card>
       </Box>
     </>
