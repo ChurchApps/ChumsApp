@@ -36,6 +36,12 @@ export const ProfilePage = () => {
     }
   }, []);
 
+  const sendEventToReactNative = (eventName: string, data?: any) => {
+    if ((window as any).ReactNativeWebView) {
+      (window as any).ReactNativeWebView.postMessage(JSON.stringify({ event: eventName, data }));
+    }
+  };
+
   const updateProfileMutation = useMutation({
     mutationFn: async () => {
       const promises: Promise<any>[] = [];
@@ -73,6 +79,7 @@ export const ProfilePage = () => {
       setSaveMessage(Locale.label("profile.profilePage.saveChange"));
       setPassword("");
       setPasswordVerify("");
+      sendEventToReactNative("profile_updated");
     },
     onError: (error) => {
       console.error("Error saving profile:", error);
@@ -83,6 +90,7 @@ export const ProfilePage = () => {
   const deleteAccountMutation = useMutation({
     mutationFn: () => ApiHelper.delete("/users", "MembershipApi"),
     onSuccess: () => {
+      sendEventToReactNative("profile_deleted");
       navigate("/logout", { replace: true });
     },
   });
