@@ -7,16 +7,21 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const Wrapper: React.FC<Props> = (props) => (
-  <>
-    <Header />
+export const Wrapper: React.FC<Props> = (props) => {
+  const isWebView = typeof (window as any).ReactNativeWebView !== "undefined";
+  const showHeader = !(isWebView && window.location.pathname === "/profile");
 
-    <Box sx={{ width: "100%" }}>
-      <div id="appBarSpacer"></div>
-      {props.children}
-    </Box>
-  </>
-);
+  return (
+    <>
+      {showHeader && <Header />}
+
+      <Box sx={{ width: "100%" }}>
+        {showHeader && <div id="appBarSpacer"></div>}
+        {props.children}
+      </Box>
+    </>
+  );
+};
 /*
   const [donationError, setDonationError] = React.useState<boolean>(false);
   const [isFormMember, setIsFormMember] = React.useState<boolean>(false);
