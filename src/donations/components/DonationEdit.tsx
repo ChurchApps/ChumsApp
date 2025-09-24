@@ -1,8 +1,8 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent } from "@mui/material";
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo, useRef } from "react";
 import { PersonAdd } from "../../components";
 import { ApiHelper, DateHelper, UniqueIdHelper, PersonHelper, Locale, InputBox } from "@churchapps/apphelper";
-import { FundDonations } from "@churchapps/apphelper-donations";
+import { FundDonations } from "./FundDonations";
 import { type DonationInterface, type FundDonationInterface, type FundInterface, type PersonInterface } from "@churchapps/helpers";
 
 interface Props {
@@ -17,12 +17,39 @@ export const DonationEdit = memo((props: Props) => {
   const [fundDonations, setFundDonations] = React.useState<FundDonationInterface[]>([]);
   const [showSelectPerson, setShowSelectPerson] = React.useState(false);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent<any>) => {
+  // Refs for form fields
+  const dateRef = useRef<HTMLInputElement>(null);
+  const methodRef = useRef<HTMLInputElement>(null);
+  const methodDetailsRef = useRef<HTMLInputElement>(null);
+  const notesRef = useRef<HTMLInputElement>(null);
+
+  const handleDateKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      handleSave();
+      methodRef.current?.focus();
     }
   }, []);
+
+  const handleMethodKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (donation.method === "Cash") {
+        // Skip to fund donations if cash (no method details)
+        // The FundDonations component will handle its own focus
+      } else {
+        methodDetailsRef.current?.focus();
+      }
+    }
+  }, [donation.method]);
+
+  const handleMethodDetailsKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      // Focus will move to the first amount field in FundDonations
+    }
+  }, []);
+
+  // Moved handleSave before handleNotesKeyDown to resolve dependency
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
@@ -80,6 +107,13 @@ export const DonationEdit = memo((props: Props) => {
     });
   }, [donation, fundDonations, props.updatedFunction]);
 
+  const handleNotesKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSave();
+    }
+  }, [handleSave]);
+
   const loadData = useCallback(() => {
     if (UniqueIdHelper.isMissing(props.donationId)) {
       setDonation({
@@ -105,8 +139,8 @@ export const DonationEdit = memo((props: Props) => {
   const methodDetails = useMemo(() => {
     if (donation.method === "Cash") return null;
     const label = donation.method === "Check" ? Locale.label("donations.donationEdit.checkNum") : Locale.label("donations.donationEdit.lastDig");
-    return <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails || ""} onChange={handleChange} />;
-  }, [donation.method, donation.methodDetails, handleChange]);
+    return <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails || ""} onChange={handleChange} onKeyDown={handleMethodDetailsKeyDown} inputRef={methodDetailsRef} />;
+  }, [donation.method, donation.methodDetails, handleChange, handleMethodDetailsKeyDown]);
 
   const handlePersonAdd = useCallback(
     (p: PersonInterface) => {
@@ -137,6 +171,10 @@ export const DonationEdit = memo((props: Props) => {
     },
     [donation]
   );
+
+  const handleLastFundFieldEnter = useCallback(() => {
+    notesRef.current?.focus();
+  }, []);
 
   const handlePersonSelect = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -196,7 +234,8 @@ export const DonationEdit = memo((props: Props) => {
         name="date"
         value={DateHelper.formatHtml5Date(donation.donationDate) || ""}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleDateKeyDown}
+        inputRef={dateRef}
         data-testid="donation-date-input"
         aria-label="Donation date"
       />
@@ -208,7 +247,8 @@ export const DonationEdit = memo((props: Props) => {
           label={Locale.label("donations.donationEdit.method")}
           value={donation.method || ""}
           onChange={handleChange}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleMethodKeyDown}
+          inputRef={methodRef}
           data-testid="payment-method-select"
           aria-label="Payment method">
           <MenuItem value="Check">{Locale.label("donations.donationEdit.check")}</MenuItem>
@@ -217,7 +257,8 @@ export const DonationEdit = memo((props: Props) => {
         </Select>
       </FormControl>
       {methodDetails}
-      <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
+      <label>{Locale.label("donations.funds.fund")}</label>
+      <FundDonations fundDonations={fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} onLastFieldEnter={handleLastFundFieldEnter} />
       <TextField
         fullWidth
         label={Locale.label("common.notes")}
@@ -225,7 +266,8 @@ export const DonationEdit = memo((props: Props) => {
         name="notes"
         value={donation.notes || ""}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleNotesKeyDown}
+        inputRef={notesRef}
         multiline
         data-testid="donation-notes-input"
         aria-label="Donation notes"
