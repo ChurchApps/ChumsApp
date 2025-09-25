@@ -1,7 +1,7 @@
 import React from "react";
 import { DonationEdit, Donations, BatchEdit } from "./components";
 import { UserHelper, Permissions, DateHelper, CurrencyHelper, PageHeader } from "@churchapps/apphelper";
-import { type DonationBatchInterface, type FundInterface, type DonationInterface } from "@churchapps/helpers";
+import { type DonationBatchInterface, type FundInterface, type DonationInterface, type FundDonationInterface, type PersonInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Box, Card, Stack, Button } from "@mui/material";
@@ -13,6 +13,18 @@ export const DonationBatchPage = () => {
   const [editDonationId, setEditDonationId] = React.useState("notset");
   const [editBatch, setEditBatch] = React.useState(false);
   const [refreshKey, setRefreshKey] = React.useState(0);
+  const [defaultsSet, setDefaultsSet] = React.useState(false);
+
+  // Default values that persist for the entire batch page session
+  const [defaultValues, setDefaultValues] = React.useState({
+    personId: "",
+    person: null as PersonInterface | null,
+    donationDate: new Date(),
+    method: "Check",
+    methodDetails: "",
+    notes: "",
+    fundDonations: [{ amount: 0, fundId: "" }] as FundDonationInterface[]
+  });
 
   const batch = useQuery<DonationBatchInterface>({ queryKey: ["/donationbatches/" + params.id, "GivingApi"] });
 
@@ -50,7 +62,19 @@ export const DonationBatchPage = () => {
 
   const getEditModules = () => {
     const result = [];
-    if (editDonationId !== "notset") result.push(<DonationEdit key="donationEdit" donationId={editDonationId} updatedFunction={donationUpdated} funds={funds.data} batchId={batch.data.id} />);
+    if (editDonationId !== "notset") result.push(
+      <DonationEdit
+        key="donationEdit"
+        donationId={editDonationId}
+        updatedFunction={donationUpdated}
+        funds={funds.data}
+        batchId={batch.data.id}
+        defaultValues={defaultValues}
+        setDefaultValues={setDefaultValues}
+        defaultsSet={defaultsSet}
+        setDefaultsSet={setDefaultsSet}
+      />
+    );
     if (editBatch && batch.data?.id) result.push(<BatchEdit key="batchEdit" batchId={batch.data.id} updatedFunction={batchUpdated} />);
     return result;
   };
@@ -133,7 +157,7 @@ export const DonationBatchPage = () => {
       </PageHeader>
 
       {/* Main Content */}
-      <BatchEntry batchId={batch.data.id} onAdded={() => { donations.refetch() }} />
+      <BatchEntry batchId={batch.data?.id} onAdded={() => { donations.refetch() }} />
       <Box sx={{ p: 3 }}>
         {/* Edit content appears above when editing */}
         {(editDonationId !== "notset" || editBatch) && <Box sx={{ mb: 3 }}>{getEditModules()}</Box>}

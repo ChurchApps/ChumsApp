@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, TextField, Box, type SelectChangeEvent } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, Box, Button, Typography, type SelectChangeEvent } from "@mui/material";
 import React, { memo, useCallback, useMemo, useRef } from "react";
 import { PersonAdd } from "../../components";
 import { ApiHelper, DateHelper, UniqueIdHelper, PersonHelper, Locale, InputBox } from "@churchapps/apphelper";
@@ -10,12 +10,43 @@ interface Props {
   batchId: string;
   funds: FundInterface[];
   updatedFunction: () => void;
+  defaultValues?: {
+    personId: string;
+    person: PersonInterface | null;
+    donationDate: Date;
+    method: string;
+    methodDetails: string;
+    notes: string;
+    fundDonations: FundDonationInterface[];
+  };
+  setDefaultValues?: (values: any) => void;
+  defaultsSet?: boolean;
+  setDefaultsSet?: (value: boolean) => void;
 }
 
 export const DonationEdit = memo((props: Props) => {
   const [donation, setDonation] = React.useState<DonationInterface>({});
   const [fundDonations, setFundDonations] = React.useState<FundDonationInterface[]>([]);
   const [showSelectPerson, setShowSelectPerson] = React.useState(false);
+  const [editingDefaults, setEditingDefaults] = React.useState(false);
+
+  // Use props for default values if provided, otherwise use local defaults
+  const defaultValues = props.defaultValues || {
+    personId: "",
+    person: null as PersonInterface | null,
+    donationDate: new Date(),
+    method: "Check",
+    methodDetails: "",
+    notes: "",
+    fundDonations: [{ amount: 0, fundId: "" }] as FundDonationInterface[]
+  };
+
+  const setDefaultValues = props.setDefaultValues || (() => {});
+  const defaultsSet = props.defaultsSet || false;
+  const setDefaultsSet = props.setDefaultsSet || (() => {});
+
+  // Temporary values while editing defaults
+  const [tempDefaultValues, setTempDefaultValues] = React.useState(defaultValues);
 
   // Refs for form fields
   const dateRef = useRef<HTMLInputElement>(null);
@@ -53,25 +84,45 @@ export const DonationEdit = memo((props: Props) => {
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
-      const d = { ...donation } as DonationInterface;
-      const value = e.target.value;
-      switch (e.target.name) {
-        case "notes":
-          d.notes = value;
-          break;
-        case "date":
-          d.donationDate = new Date(value);
-          break;
-        case "method":
-          d.method = value;
-          break;
-        case "methodDetails":
-          d.methodDetails = value;
-          break;
+      if (editingDefaults) {
+        const temp = { ...tempDefaultValues };
+        const value = e.target.value;
+        switch (e.target.name) {
+          case "notes":
+            temp.notes = value;
+            break;
+          case "date":
+            temp.donationDate = new Date(value);
+            break;
+          case "method":
+            temp.method = value;
+            break;
+          case "methodDetails":
+            temp.methodDetails = value;
+            break;
+        }
+        setTempDefaultValues(temp);
+      } else {
+        const d = { ...donation } as DonationInterface;
+        const value = e.target.value;
+        switch (e.target.name) {
+          case "notes":
+            d.notes = value;
+            break;
+          case "date":
+            d.donationDate = new Date(value);
+            break;
+          case "method":
+            d.method = value;
+            break;
+          case "methodDetails":
+            d.methodDetails = value;
+            break;
+        }
+        setDonation(d);
       }
-      setDonation(d);
     },
-    [donation]
+    [donation, editingDefaults, tempDefaultValues]
   );
 
   const handleCancel = useCallback(() => {
@@ -116,19 +167,29 @@ export const DonationEdit = memo((props: Props) => {
 
   const loadData = useCallback(() => {
     if (UniqueIdHelper.isMissing(props.donationId)) {
-      setDonation({
-        donationDate: new Date(),
-        batchId: props.batchId,
-        amount: 0,
-        method: "Check",
-      });
-      const fd: FundDonationInterface = { amount: 0, fundId: props.funds[0]?.id };
-      setFundDonations([fd]);
+      // Use default values if they've been set, otherwise use original defaults
+      if (defaultsSet && !editingDefaults) {
+        setDonation({
+          ...defaultValues,
+          batchId: props.batchId,
+          amount: defaultValues.fundDonations.reduce((sum, fd) => sum + fd.amount, 0)
+        });
+        setFundDonations([...defaultValues.fundDonations.map(fd => ({...fd, fundId: fd.fundId || props.funds[0]?.id}))]);
+      } else {
+        setDonation({
+          donationDate: new Date(),
+          batchId: props.batchId,
+          amount: 0,
+          method: "Check",
+        });
+        const fd: FundDonationInterface = { amount: 0, fundId: props.funds[0]?.id };
+        setFundDonations([fd]);
+      }
     } else {
       ApiHelper.get("/donations/" + props.donationId, "GivingApi").then((data) => populatePerson(data));
       ApiHelper.get("/funddonations?donationId=" + props.donationId, "GivingApi").then((data) => setFundDonations(data));
     }
-  }, [props.donationId, props.batchId, props.funds]);
+  }, [props.donationId, props.batchId, props.funds, defaultsSet, defaultValues, editingDefaults]);
 
   const populatePerson = useCallback(async (data: DonationInterface) => {
     if (!UniqueIdHelper.isMissing(data.personId)) data.person = await ApiHelper.get("/people/" + data.personId.toString(), "MembershipApi");
@@ -137,39 +198,60 @@ export const DonationEdit = memo((props: Props) => {
   }, []);
 
   const methodDetails = useMemo(() => {
-    if (donation.method === "Cash") return null;
-    const label = donation.method === "Check" ? Locale.label("donations.donationEdit.checkNum") : Locale.label("donations.donationEdit.lastDig");
-    return <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!donation?.methodDetails }} value={donation.methodDetails || ""} onChange={handleChange} onKeyDown={handleMethodDetailsKeyDown} inputRef={methodDetailsRef} />;
-  }, [donation.method, donation.methodDetails, handleChange, handleMethodDetailsKeyDown]);
+    const currentMethod = editingDefaults ? tempDefaultValues.method : donation.method;
+    const currentMethodDetails = editingDefaults ? tempDefaultValues.methodDetails : donation.methodDetails;
+    if (currentMethod === "Cash") return null;
+    const label = currentMethod === "Check" ? Locale.label("donations.donationEdit.checkNum") : Locale.label("donations.donationEdit.lastDig");
+    return <TextField fullWidth name="methodDetails" label={label} InputLabelProps={{ shrink: !!currentMethodDetails }} value={currentMethodDetails || ""} onChange={handleChange} onKeyDown={editingDefaults ? undefined : handleMethodDetailsKeyDown} inputRef={editingDefaults ? undefined : methodDetailsRef} />;
+  }, [donation.method, donation.methodDetails, tempDefaultValues.method, tempDefaultValues.methodDetails, editingDefaults, handleChange, handleMethodDetailsKeyDown]);
 
   const handlePersonAdd = useCallback(
     (p: PersonInterface) => {
-      const d = { ...donation } as DonationInterface;
-      if (p === null) {
-        d.person = null;
-        d.personId = "";
+      if (editingDefaults) {
+        const temp = { ...tempDefaultValues };
+        if (p === null) {
+          temp.person = null;
+          temp.personId = "";
+        } else {
+          temp.person = p;
+          temp.personId = p.id;
+        }
+        setTempDefaultValues(temp);
+        setShowSelectPerson(false);
       } else {
-        d.person = p;
-        d.personId = p.id;
+        const d = { ...donation } as DonationInterface;
+        if (p === null) {
+          d.person = null;
+          d.personId = "";
+        } else {
+          d.person = p;
+          d.personId = p.id;
+        }
+        setDonation(d);
+        setShowSelectPerson(false);
       }
-      setDonation(d);
-      setShowSelectPerson(false);
     },
-    [donation]
+    [donation, editingDefaults, tempDefaultValues]
   );
 
   const handleFundDonationsChange = useCallback(
     (fd: FundDonationInterface[]) => {
-      setFundDonations(fd);
-      let totalAmount = 0;
-      for (let i = 0; i < fd.length; i++) totalAmount += fd[i].amount;
-      if (totalAmount !== donation.amount) {
-        const d = { ...donation };
-        d.amount = totalAmount;
-        setDonation(d);
+      if (editingDefaults) {
+        const temp = { ...tempDefaultValues };
+        temp.fundDonations = fd;
+        setTempDefaultValues(temp);
+      } else {
+        setFundDonations(fd);
+        let totalAmount = 0;
+        for (let i = 0; i < fd.length; i++) totalAmount += fd[i].amount;
+        if (totalAmount !== donation.amount) {
+          const d = { ...donation };
+          d.amount = totalAmount;
+          setDonation(d);
+        }
       }
     },
-    [donation]
+    [donation, editingDefaults, tempDefaultValues]
   );
 
   const handleLastFundFieldEnter = useCallback(() => {
@@ -190,6 +272,7 @@ export const DonationEdit = memo((props: Props) => {
   );
 
   const personSection = useMemo(() => {
+    const currentPerson = editingDefaults ? tempDefaultValues.person : donation.person;
     if (showSelectPerson) {
       return (
         <>
@@ -201,7 +284,7 @@ export const DonationEdit = memo((props: Props) => {
         </>
       );
     } else {
-      const personText = donation.person === undefined || donation.person === null ? Locale.label("donations.donationEdit.anon") : donation.person.name.display;
+      const personText = currentPerson === undefined || currentPerson === null ? Locale.label("donations.donationEdit.anon") : currentPerson.name.display;
       return (
         <div>
           <a href="about:blank" className="text-decoration" data-cy="donating-person" onClick={handlePersonSelect}>
@@ -210,9 +293,127 @@ export const DonationEdit = memo((props: Props) => {
         </div>
       );
     }
-  }, [showSelectPerson, donation.person, handlePersonAdd, handlePersonSelect, handleAnonymousSelect]);
+  }, [showSelectPerson, donation.person, tempDefaultValues.person, editingDefaults, handlePersonAdd, handlePersonSelect, handleAnonymousSelect]);
+
+  const handleEditDefaults = useCallback(() => {
+    setEditingDefaults(true);
+    // Copy current values to temp defaults
+    // If defaults have been set already, use them, otherwise use current donation values
+    if (defaultsSet) {
+      setTempDefaultValues({...defaultValues});
+    } else {
+      setTempDefaultValues({
+        personId: donation.personId || "",
+        person: donation.person || null,
+        donationDate: donation.donationDate || new Date(),
+        method: donation.method || "Check",
+        methodDetails: donation.methodDetails || "",
+        notes: donation.notes || "",
+        fundDonations: [...fundDonations]
+      });
+    }
+  }, [donation, fundDonations, defaultValues, defaultsSet]);
+
+  const handleSaveDefaults = useCallback(() => {
+    setDefaultValues({...tempDefaultValues});
+    setDefaultsSet(true);
+    setEditingDefaults(false);
+    // Apply defaults to current donation
+    setDonation({
+      ...donation,
+      ...tempDefaultValues,
+      batchId: donation.batchId,
+      id: donation.id,
+      amount: tempDefaultValues.fundDonations.reduce((sum, fd) => sum + fd.amount, 0)
+    });
+    setFundDonations([...tempDefaultValues.fundDonations]);
+  }, [tempDefaultValues, donation, setDefaultValues, setDefaultsSet]);
+
+  const handleCancelDefaults = useCallback(() => {
+    setEditingDefaults(false);
+    setTempDefaultValues({...defaultValues});
+  }, [defaultValues]);
+
+  const handleResetDefaults = useCallback(() => {
+    const originalDefaults = {
+      personId: "",
+      person: null,
+      donationDate: new Date(),
+      method: "Check" as string,
+      methodDetails: "",
+      notes: "",
+      fundDonations: [{ amount: 0, fundId: props.funds[0]?.id }] as FundDonationInterface[]
+    };
+    setTempDefaultValues(originalDefaults);
+  }, [props.funds]);
+
+  // Update temp defaults when defaultValues change from props
+  React.useEffect(() => {
+    if (!editingDefaults) {
+      setTempDefaultValues(defaultValues);
+    }
+  }, [defaultValues, editingDefaults]);
 
   React.useEffect(loadData, [loadData]);
+
+  if (editingDefaults) {
+    return (
+      <InputBox
+        id="donationBox"
+        headerIcon="attach_money"
+        headerText="Edit Donation Defaults"
+        help="chums/donations">
+        <Box>
+          <label>{Locale.label("common.name")}</label>
+          {personSection}
+        </Box>
+        <TextField
+          fullWidth
+          label={Locale.label("donations.donationEdit.date")}
+          type="date"
+          name="date"
+          value={DateHelper.formatHtml5Date(tempDefaultValues.donationDate) || ""}
+          onChange={handleChange}
+          data-testid="donation-date-input"
+          aria-label="Donation date"
+        />
+        <FormControl fullWidth>
+          <InputLabel id="method">{Locale.label("donations.donationEdit.method")}</InputLabel>
+          <Select
+            name="method"
+            labelId="method"
+            label={Locale.label("donations.donationEdit.method")}
+            value={tempDefaultValues.method || ""}
+            onChange={handleChange}
+            data-testid="payment-method-select"
+            aria-label="Payment method">
+            <MenuItem value="Check">{Locale.label("donations.donationEdit.check")}</MenuItem>
+            <MenuItem value="Cash">{Locale.label("donations.donationEdit.cash")}</MenuItem>
+            <MenuItem value="Card">{Locale.label("donations.donationEdit.card")}</MenuItem>
+          </Select>
+        </FormControl>
+        {methodDetails}
+        <label>{Locale.label("donations.funds.fund")}</label>
+        <FundDonations fundDonations={tempDefaultValues.fundDonations} funds={props.funds} updatedFunction={handleFundDonationsChange} />
+        <TextField
+          fullWidth
+          label={Locale.label("common.notes")}
+          data-cy="note"
+          name="notes"
+          value={tempDefaultValues.notes || ""}
+          onChange={handleChange}
+          multiline
+          data-testid="donation-notes-input"
+          aria-label="Donation notes"
+        />
+        <Box sx={{ display: "flex", flexDirection: "row-reverse", gap: 1, mt: 2 }}>
+          <Button variant="contained" onClick={handleSaveDefaults}>Save Defaults</Button>
+          <Button color="warning" onClick={handleResetDefaults}>Reset to Original</Button>
+          <Button color="error" onClick={handleCancelDefaults}>Cancel</Button>
+        </Box>
+      </InputBox>
+    );
+  }
 
   return (
     <InputBox
@@ -224,7 +425,7 @@ export const DonationEdit = memo((props: Props) => {
       saveFunction={handleSave}
       help="chums/donations">
       <Box>
-        <label>{Locale.label("common.person")}</label>
+        <label>{Locale.label("common.name")}</label>
         {personSection}
       </Box>
       <TextField
@@ -272,6 +473,11 @@ export const DonationEdit = memo((props: Props) => {
         data-testid="donation-notes-input"
         aria-label="Donation notes"
       />
+      {UniqueIdHelper.isMissing(props.donationId) && (
+        <Box sx={{ display: "flex", flexDirection: "row", mt: 2 }}>
+          <Button color="primary" onClick={handleEditDefaults}>Edit Donation Defaults</Button>
+        </Box>
+      )}
     </InputBox>
   );
 });
