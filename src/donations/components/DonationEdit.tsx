@@ -154,9 +154,29 @@ export const DonationEdit = memo((props: Props) => {
         } else fd.donationId = id;
       }
       if (fDonations.length > 0) promises.push(ApiHelper.post("/funddonations", fDonations, "GivingApi"));
-      Promise.all(promises).then(() => props.updatedFunction());
+      Promise.all(promises).then(() => {
+        // Reset form to defaults after successful save
+        if (defaultsSet) {
+          setDonation({
+            ...defaultValues,
+            batchId: props.batchId,
+            amount: defaultValues.fundDonations.reduce((sum, fd) => sum + fd.amount, 0)
+          });
+          setFundDonations([...defaultValues.fundDonations.map(fd => ({...fd, fundId: fd.fundId || props.funds[0]?.id}))]);
+        } else {
+          setDonation({
+            donationDate: new Date(),
+            batchId: props.batchId,
+            amount: 0,
+            method: "Check",
+          });
+          const fd: FundDonationInterface = { amount: 0, fundId: props.funds[0]?.id };
+          setFundDonations([fd]);
+        }
+        props.updatedFunction();
+      });
     });
-  }, [donation, fundDonations, props.updatedFunction]);
+  }, [donation, fundDonations, props.updatedFunction, defaultsSet, defaultValues, props.batchId, props.funds]);
 
   const handleNotesKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
