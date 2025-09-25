@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Box, Card, Stack, Button, Alert } from "@mui/material";
 import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Edit as EditIcon } from "@mui/icons-material";
-import { BatchEntry } from "./components/BatchEntry";
 
 export const DonationBatchPage = () => {
   const params = useParams();
@@ -127,7 +126,6 @@ export const DonationBatchPage = () => {
       </PageHeader>
 
       {/* Main Content */}
-      <BatchEntry batchId={batch.data?.id} onAdded={() => { donations.refetch() }} />
       <Box sx={{ p: 3 }}>
         {/* Success Alert */}
         {showSuccessAlert && (

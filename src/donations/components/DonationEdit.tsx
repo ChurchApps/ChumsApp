@@ -41,9 +41,9 @@ export const DonationEdit = memo((props: Props) => {
     fundDonations: [{ amount: 0, fundId: "" }] as FundDonationInterface[]
   };
 
-  const setDefaultValues = props.setDefaultValues || (() => {});
+  const setDefaultValues = props.setDefaultValues || (() => { });
   const defaultsSet = props.defaultsSet || false;
-  const setDefaultsSet = props.setDefaultsSet || (() => {});
+  const setDefaultsSet = props.setDefaultsSet || (() => { });
 
   // Temporary values while editing defaults
   const [tempDefaultValues, setTempDefaultValues] = React.useState(defaultValues);
@@ -162,7 +162,7 @@ export const DonationEdit = memo((props: Props) => {
             batchId: props.batchId,
             amount: defaultValues.fundDonations.reduce((sum, fd) => sum + fd.amount, 0)
           });
-          setFundDonations([...defaultValues.fundDonations.map(fd => ({...fd, fundId: fd.fundId || props.funds[0]?.id}))]);
+          setFundDonations([...defaultValues.fundDonations.map(fd => ({ ...fd, fundId: fd.fundId || props.funds[0]?.id }))]);
         } else {
           setDonation({
             donationDate: new Date(),
@@ -194,7 +194,7 @@ export const DonationEdit = memo((props: Props) => {
           batchId: props.batchId,
           amount: defaultValues.fundDonations.reduce((sum, fd) => sum + fd.amount, 0)
         });
-        setFundDonations([...defaultValues.fundDonations.map(fd => ({...fd, fundId: fd.fundId || props.funds[0]?.id}))]);
+        setFundDonations([...defaultValues.fundDonations.map(fd => ({ ...fd, fundId: fd.fundId || props.funds[0]?.id }))]);
       } else {
         setDonation({
           donationDate: new Date(),
@@ -320,7 +320,7 @@ export const DonationEdit = memo((props: Props) => {
     // Copy current values to temp defaults
     // If defaults have been set already, use them, otherwise use current donation values
     if (defaultsSet) {
-      setTempDefaultValues({...defaultValues});
+      setTempDefaultValues({ ...defaultValues });
     } else {
       setTempDefaultValues({
         personId: donation.personId || "",
@@ -335,7 +335,7 @@ export const DonationEdit = memo((props: Props) => {
   }, [donation, fundDonations, defaultValues, defaultsSet]);
 
   const handleSaveDefaults = useCallback(() => {
-    setDefaultValues({...tempDefaultValues});
+    setDefaultValues({ ...tempDefaultValues });
     setDefaultsSet(true);
     setEditingDefaults(false);
     // Apply defaults to current donation
@@ -351,7 +351,7 @@ export const DonationEdit = memo((props: Props) => {
 
   const handleCancelDefaults = useCallback(() => {
     setEditingDefaults(false);
-    setTempDefaultValues({...defaultValues});
+    setTempDefaultValues({ ...defaultValues });
   }, [defaultValues]);
 
   const handleResetDefaults = useCallback(() => {
