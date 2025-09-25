@@ -4,16 +4,17 @@ import { UserHelper, Permissions, DateHelper, CurrencyHelper, PageHeader } from 
 import { type DonationBatchInterface, type FundInterface, type DonationInterface, type FundDonationInterface, type PersonInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Box, Card, Stack, Button } from "@mui/material";
-import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
+import { Box, Card, Stack, Button, Alert } from "@mui/material";
+import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Edit as EditIcon } from "@mui/icons-material";
 import { BatchEntry } from "./components/BatchEntry";
 
 export const DonationBatchPage = () => {
   const params = useParams();
-  const [editDonationId, setEditDonationId] = React.useState("notset");
+  const [editDonationId, setEditDonationId] = React.useState("");
   const [editBatch, setEditBatch] = React.useState(false);
   const [refreshKey, setRefreshKey] = React.useState(0);
   const [defaultsSet, setDefaultsSet] = React.useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
 
   // Default values that persist for the entire batch page session
   const [defaultValues, setDefaultValues] = React.useState({
@@ -43,16 +44,15 @@ export const DonationBatchPage = () => {
 
   }, [donations.data]);
 
-  const showAddDonation = () => {
-    setEditDonationId("");
-  };
   const showEditDonation = (id: string) => {
     setEditDonationId(id);
   };
   const donationUpdated = () => {
-    setEditDonationId("notset");
+    setEditDonationId("");
     batch.refetch();
     donations.refetch();
+    setShowSuccessAlert(true);
+    setTimeout(() => setShowSuccessAlert(false), 4000);
   };
 
   const batchUpdated = () => {
@@ -62,19 +62,6 @@ export const DonationBatchPage = () => {
 
   const getEditModules = () => {
     const result = [];
-    if (editDonationId !== "notset") result.push(
-      <DonationEdit
-        key="donationEdit"
-        donationId={editDonationId}
-        updatedFunction={donationUpdated}
-        funds={funds.data}
-        batchId={batch.data.id}
-        defaultValues={defaultValues}
-        setDefaultValues={setDefaultValues}
-        defaultsSet={defaultsSet}
-        setDefaultsSet={setDefaultsSet}
-      />
-    );
     if (editBatch && batch.data?.id) result.push(<BatchEdit key="batchEdit" batchId={batch.data.id} updatedFunction={batchUpdated} />);
     return result;
   };
@@ -136,31 +123,42 @@ export const DonationBatchPage = () => {
               Edit Batch
             </Button>
           )}
-          {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && funds.data?.length > 0 && (
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={showAddDonation}
-              data-testid="add-donation-button"
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                },
-              }}>
-              Add Donation
-            </Button>
-          )}
         </Stack>
       </PageHeader>
 
       {/* Main Content */}
       <BatchEntry batchId={batch.data?.id} onAdded={() => { donations.refetch() }} />
       <Box sx={{ p: 3 }}>
-        {/* Edit content appears above when editing */}
-        {(editDonationId !== "notset" || editBatch) && <Box sx={{ mb: 3 }}>{getEditModules()}</Box>}
+        {/* Success Alert */}
+        {showSuccessAlert && (
+          <Alert
+            severity="success"
+            onClose={() => setShowSuccessAlert(false)}
+            sx={{ mb: 3 }}
+          >
+            Donation Entered!
+          </Alert>
+        )}
+
+        {/* DonationEdit is always visible */}
+        {batch.data?.id && funds.data?.length > 0 && UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
+          <Box sx={{ mb: 3 }}>
+            <DonationEdit
+              key={`donationEdit-${editDonationId}`}
+              donationId={editDonationId}
+              updatedFunction={donationUpdated}
+              funds={funds.data}
+              batchId={batch.data.id}
+              defaultValues={defaultValues}
+              setDefaultValues={setDefaultValues}
+              defaultsSet={defaultsSet}
+              setDefaultsSet={setDefaultsSet}
+            />
+          </Box>
+        )}
+
+        {/* Edit batch form when editing */}
+        {editBatch && <Box sx={{ mb: 3 }}>{getEditModules()}</Box>}
 
         {/* Main donations table */}
         <Card>
