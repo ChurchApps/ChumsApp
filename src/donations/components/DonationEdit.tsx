@@ -420,9 +420,9 @@ export const DonationEdit = memo((props: Props) => {
       id="donationBox"
       headerIcon="attach_money"
       headerText={Locale.label("common.edit")}
-      cancelFunction={handleCancel}
+      cancelFunction={UniqueIdHelper.isMissing(props.donationId) ? undefined : handleCancel}
       deleteFunction={getDeleteFunction()}
-      saveFunction={handleSave}
+      saveFunction={UniqueIdHelper.isMissing(props.donationId) ? undefined : handleSave}
       help="chums/donations">
       <Box>
         <label>{Locale.label("common.name")}</label>
@@ -474,8 +474,10 @@ export const DonationEdit = memo((props: Props) => {
         aria-label="Donation notes"
       />
       {UniqueIdHelper.isMissing(props.donationId) && (
-        <Box sx={{ display: "flex", flexDirection: "row", mt: 2 }}>
+        <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 1, mt: 2 }}>
+          <Button onClick={handleCancel} color="warning" sx={{ "&:focus": { outline: "none" } }}>{Locale.label("common.cancel")}</Button>
           <Button color="primary" onClick={handleEditDefaults}>Edit Donation Defaults</Button>
+          <Button type="button" variant="contained" disableElevation aria-label="Save" onClick={handleSave} sx={{ "&:focus": { outline: "none" } }}>{Locale.label("common.save")}</Button>
         </Box>
       )}
     </InputBox>
