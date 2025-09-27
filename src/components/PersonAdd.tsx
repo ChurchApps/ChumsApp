@@ -17,10 +17,12 @@ interface Props {
   actionLabel?: string;
   showCreatePersonOnNotFound?: boolean;
   onCreate?: (person: PersonInterface) => void;
+  inputRef?: React.RefObject<HTMLInputElement>;
+  autoSearch?: boolean;
 }
 
 export const PersonAdd: React.FC<Props> = ({
-  addFunction, getPhotoUrl, searchClicked, filterList = [], includeEmail = false, actionLabel, showCreatePersonOnNotFound = false, onCreate 
+  addFunction, getPhotoUrl, searchClicked, filterList = [], includeEmail = false, actionLabel, showCreatePersonOnNotFound = false, onCreate, inputRef, autoSearch = false
 }) => {
   const [searchResults, setSearchResults] = useState<PersonInterface[]>([]);
   const [searchText, setSearchText] = useState("");
@@ -30,12 +32,29 @@ export const PersonAdd: React.FC<Props> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setHasSearched(false);
-    setSearchText(e.currentTarget.value);
+    const value = e.currentTarget.value;
+    setSearchText(value);
+    if (autoSearch && value.trim().length >= 2) {
+      const term = value.trim();
+      ApiHelper.post("/people/search", { term: term }, "MembershipApi").then((data: PersonInterface[]) => {
+        setHasSearched(true);
+        const filteredResult = data.filter((s) => !filterList.includes(s.id));
+        setSearchResults(filteredResult);
+        if (searchClicked) searchClicked();
+      });
+    } else if (autoSearch && value.trim().length < 2) {
+      setSearchResults([]);
+      setHasSearched(false);
+    }
   };
   const handleKeyDown = (e: React.KeyboardEvent<any>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      handleSearch(null);
+      if (autoSearch && searchResults.length > 0) {
+        handleAdd(searchResults[0]);
+      } else {
+        handleSearch(null);
+      }
     }
   };
 
@@ -70,7 +89,14 @@ export const PersonAdd: React.FC<Props> = ({
           <img src={getPhotoUrl(sr)} alt="avatar" />
         </TableCell>
         <TableCell>
-          {sr.name.display}
+          <button
+            type="button"
+            onClick={() => handleAdd(sr)}
+            style={{
+              background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer", textDecoration: "underline", textAlign: "left"
+            }}>
+            {sr.name.display}
+          </button>
           {includeEmail && (
             <>
               <br />
@@ -79,7 +105,7 @@ export const PersonAdd: React.FC<Props> = ({
           )}
         </TableCell>
         <TableCell>
-          <SmallButton color="success" icon="person" text={actionLabel || "Add"} ariaLabel="addPerson" onClick={() => handleAdd(sr)} data-testid={`add-person-${sr.id}`} />
+          <SmallButton color="success" icon="person" text={actionLabel || "Select"} ariaLabel="addPerson" onClick={() => handleAdd(sr)} data-testid={`add-person-${sr.id}`} />
         </TableCell>
       </TableRow>
     );
@@ -95,7 +121,8 @@ export const PersonAdd: React.FC<Props> = ({
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         data-testid="person-search-input"
-        InputProps={{
+        inputRef={inputRef}
+        InputProps={autoSearch ? undefined : {
           endAdornment: (
             <Button variant="contained" id="searchButton" data-testid="search-button" onClick={handleSearch}>
               {Locale.label("common.search")}

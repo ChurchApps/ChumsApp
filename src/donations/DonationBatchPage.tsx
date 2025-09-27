@@ -1,16 +1,17 @@
 import React from "react";
-import { DonationEdit, Donations, BatchEdit } from "./components";
+import { DonationEdit, Donations, BatchEdit, BulkDonationEntry } from "./components";
 import { UserHelper, Permissions, DateHelper, CurrencyHelper, PageHeader } from "@churchapps/apphelper";
 import { type DonationBatchInterface, type FundInterface, type DonationInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Box, Card, Stack, Button } from "@mui/material";
-import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
+import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Edit as EditIcon } from "@mui/icons-material";
 
 export const DonationBatchPage = () => {
   const params = useParams();
   const [editDonationId, setEditDonationId] = React.useState("notset");
   const [editBatch, setEditBatch] = React.useState(false);
+  const [donationsKey, setDonationsKey] = React.useState(0);
 
   const batch = useQuery<DonationBatchInterface>({ queryKey: ["/donationbatches/" + params.id, "GivingApi"] });
 
@@ -24,9 +25,6 @@ export const DonationBatchPage = () => {
     placeholderData: [],
   });
 
-  const showAddDonation = () => {
-    setEditDonationId("");
-  };
   const showEditDonation = (id: string) => {
     setEditDonationId(id);
   };
@@ -34,6 +32,7 @@ export const DonationBatchPage = () => {
     setEditDonationId("notset");
     batch.refetch();
     donations.refetch();
+    setDonationsKey(prev => prev + 1);
   };
 
   const batchUpdated = () => {
@@ -105,34 +104,27 @@ export const DonationBatchPage = () => {
               Edit Batch
             </Button>
           )}
-          {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && funds.data?.length > 0 && (
-            <Button
-              variant="outlined"
-              startIcon={<AddIcon />}
-              onClick={showAddDonation}
-              data-testid="add-donation-button"
-              sx={{
-                color: "#FFF",
-                borderColor: "rgba(255,255,255,0.5)",
-                "&:hover": {
-                  borderColor: "#FFF",
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                },
-              }}>
-              Add Donation
-            </Button>
-          )}
         </Stack>
       </PageHeader>
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>
-        {/* Edit content appears above when editing */}
+        {/* Bulk entry form - always visible when not editing existing donation */}
+        {editDonationId === "notset" && UserHelper.checkAccess(Permissions.givingApi.donations.edit) && funds.data?.length > 0 && (
+          <BulkDonationEntry
+            batchId={batch.data?.id}
+            batchDate={batch.data?.batchDate ? new Date(batch.data.batchDate.split("T")[0] + "T00:00:00") : new Date()}
+            funds={funds.data}
+            updatedFunction={donationUpdated}
+          />
+        )}
+
+        {/* Edit content appears when editing existing donation or batch */}
         {(editDonationId !== "notset" || editBatch) && <Box sx={{ mb: 3 }}>{getEditModules()}</Box>}
 
         {/* Main donations table */}
         <Card>
-          <Donations batch={batch.data} editFunction={showEditDonation} funds={funds.data} />
+          <Donations key={donationsKey} batch={batch.data} editFunction={showEditDonation} funds={funds.data} />
         </Card>
       </Box>
     </>

@@ -47,12 +47,15 @@
   },
   "common": {
     "add": "Add",
+    "amount": "Amount",
+    "change": "Change",
     "close": "Close",
     "delete": "Delete",
     "edit": "Edit",
     "name": "Name",
     "no": "No",
     "notes": "Notes",
+    "person": "Person",
     "remove": "Remove",
     "search": "Search",
     "searching": "Searching...",
@@ -209,6 +212,12 @@
       "edit": "Edit Batch",
       "opName": "Name (optional)"
     },
+    "bulkEntry": {
+      "selectPerson": "Select Person or Anonymous",
+      "optionalFields": "Optional Fields",
+      "pressEnter": "Press Enter to save and add another donation",
+      "addDonation": "Add Donation"
+    },
     "donationEdit": {
       "anon": "Anonymous",
       "card": "Card",
@@ -217,6 +226,7 @@
       "checkNum": "Check #",
       "date": "Date",
       "donEdit": "Edit Donation",
+      "fund": "Fund",
       "lastDig": "Last 4 digits",
       "method": "Method"
     },
