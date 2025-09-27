@@ -8,9 +8,10 @@ interface Props {
 }
 
 export const Wrapper: React.FC<Props> = (props) => {
-  const isWebView = typeof (window as any).ReactNativeWebView !== "undefined";
-  const showHeader = !(isWebView && window.location.pathname === "/profile");
+  const params = new URLSearchParams(window.location.search);
 
+  const showHeader = params.get("hideHeader") !== 'true';
+  
   return (
     <>
       {showHeader && <Header />}
