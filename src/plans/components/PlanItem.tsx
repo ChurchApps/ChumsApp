@@ -76,7 +76,7 @@ export const PlanItem = React.memo((props: Props) => {
               console.log("ISdragging", isDragging);
               props.onDragChange(isDragging);
             }}>
-            <PlanItem key={c.id} planItem={c} setEditPlanItem={props.setEditPlanItem} readOnly={props.readOnly} />
+            <PlanItem key={c.id} planItem={c} setEditPlanItem={props.setEditPlanItem} readOnly={props.readOnly} showItemDrop={props.showItemDrop} onDragChange={props.onDragChange} onChange={props.onChange} />
           </DraggableWrapper>
         </>
       );
