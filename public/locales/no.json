@@ -1,1015 +1,1298 @@
 {
-	"attendance": {
-		"attendancePage": {
-			"addCampus": "Legg til campus",
-			"addService": "Legg til tjeneste",
-			"addServiceTime": "Legg til tjenestetid",
-			"att": "Oppmøte",
-			"campus": "Campus",
-			"category": "Kategori",
-			"group": "Gruppe",
-			"groupAttMsg": "Gruppens oppmøte vil vises når økter er lagt til en gruppe og folk har deltatt på disse øktene.",
-			"groups": "Grupper",
-			"service": "Tjeneste",
-			"time": "Tid"
-		},
-		"campusEdit": {
-			"confirmDelete": "Er du sikker på at du vil slette denne campusen?",
-			"name": "Campusnavn",
-			"validate": {
-				"name": "Campusnavn er påkrevd."
-			}
-		},
-		"serviceEdit": {
-			"campus": "Campus",
-			"confirmDelete": "Er du sikker på at du ønsker å slette denne tjenesten permanent?",
-			"name": "Tjenestenavn",
-			"validate": {
-				"campus": "Vennligst velg en campus.",
-				"name": "Tjenestenavn er påkrevd."
-			}
-		},
-		"serviceTimeEdit": {
-			"confirmDelete": "Er du sikker på at du ønsker å slette denne tjenestetiden permanent?",
-			"name": "Tjenestetid",
-			"service": "Tjeneste",
-			"validate": {
-				"name": "Tjenestetid navn er påkrevd.",
-				"service": "Vennligst velg en tjeneste."
-			}
-		},
-		"tabs": {
-			"attTrend": "Oppmøtetrend",
-			"groupAtt": "Gruppens oppmøte",
-			"noImplement": "Ikke implementert"
-		}
-	},
-	"common": {
-		"add": "Legg til",
-		"close": "Lukk",
-		"delete": "Slett",
-		"edit": "Rediger",
-		"name": "Navn",
-		"no": "Nei",
-		"notes": "Notater",
-		"remove": "Fjern",
-		"search": "Søk",
-		"searching": "Searching...",
-		"title": "Tittel",
-		"yes": "Ja"
-	},
-	"components": {
-		"footer": {
-			"phone": "Telefon",
-			"rights": "Alle rettigheter reservert."
-		},
-		"wrapper": {
-			"att": "Oppmøte",
-			"dash": "Dashbord",
-			"don": "Donasjoner",
-			"forms": "Skjemaer",
-			"groups": "Grupper",
-			"plans": "Planer",
-			"ppl": "Personer",
-			"servAdmin": "Server Admin",
-			"serving": "Tjeneste",
-			"set": "Innstillinger",
-			"songs": "Sanger",
-			"tasks": "Oppgaver"
-		}
-	},
-	"dashboard": {
-		"dashboardPage": {
-			"dash": "Dashbord"
-		},
-		"myGroups": "Mine grupper",
-		"people": "Personer",
-		"peopleSearch": {
-			"photo": "Foto",
-			"ppl": "Personer"
-		},
-		"tasks": "Oppgaver"
-	},
-	"donations": {
-		"batchEdit": {
-			"confirmMsg": "Er du sikker på at du ønsker å slette denne batchen og alle donasjonene i den permanent?",
-			"date": "Dato",
-			"edit": "Rediger batch",
-			"opName": "Navn (valgfritt)"
-		},
-		"donationEdit": {
-			"anon": "Anonym",
-			"card": "Kort",
-			"cash": "Kontanter",
-			"check": "Sjekk",
-			"checkNum": "Sjekk #",
-			"date": "Dato",
-			"donEdit": "Rediger donasjon",
-			"lastDig": "Siste 4 sifre",
-			"method": "Metode"
-		},
-		"donationEvents": {
-			"event": "Hendelse: ",
-			"failed": "Mislykkede donasjoner - ",
-			"mark": "Merk som ",
-			"msg": "Melding: ",
-			"person": "Person: ",
-			"unres": " uløst"
-		},
-		"donations": {
-			"amt": "Beløp",
-			"anon": "Anonym",
-			"date": "Dato",
-			"don": "Donasjoner",
-			"errMsg": "Ingen fond funnet. Vennligst opprett et fond før du gir en donasjon",
-			"noDonMsg": "Ingen donasjoner er registrert. Når donasjoner er lagt inn, vil de vises her.",
-			"tableIdent": "ID",
-			"total": "Totalt"
-		},
-		"donationsPage": {
-			"batch": "Batch",
-			"date": "Dato",
-			"don": "Donasjoner",
-			"noBatch": "Ingen batcher funnet.",
-			"total": "Totalt"
-		},
-		"fundEdit": {
-			"confirmMsg": "Er du sikker på at du ønsker å slette denne batchen og alle donasjonene i den permanent?",
-			"edit": "Rediger fond",
-			"errBlank": "Skriv inn et fondnavn"
-		},
-		"funds": {
-			"fund": "Fonds",
-			"noFund": "Ingen fond funnet."
-		},
-		"fundsPage": {
-			"amt": "Beløp",
-			"anon": "Anonym",
-			"batch": "Batch",
-			"date": "Dato",
-			"dateEnd": "Sluttdato",
-			"dateStart": "Startdato",
-			"don": "Donasjoner",
-			"donFilt": "Donasjonsfilter",
-			"donor": "Giver",
-			"noDon": "Ingen donasjoner ennå"
-		}
-	},
-	"forms": {
-		"formsPage": {
-			"addForm": "Add Form"
-		},
-		"choicesEdit": {
-			"act": "Handling",
-			"choices": "Valg",
-			"txt": "Tekst",
-			"value": "Verdi"
-		},
-		"form": {
-			"act": "Handling",
-			"noCustomMsg": "Ingen tilpassede spørsmål er opprettet ennå. Spørsmålene vil bli oppført her.",
-			"question": "Spørsmål",
-			"questions": "Spørsmål",
-			"req": "Påkrevd",
-			"type": "Type"
-		},
-		"formEdit": {
-			"access": "Skjemaadgang",
-			"alone": "Stå alene",
-			"associate": "Assosier med",
-			"available": "Sett skjemaets tilgjengelighetstid",
-			"availableEnd": "Sluttdato for tilgjengelighet",
-			"availableStart": "Startdato for tilgjengelighet",
-			"confirmMsg": "Er du sikker på at du ønsker å slette dette skjemaet permanent?",
-			"editForm": "Rediger skjema",
-			"endReqMsg": "Sluttdato er påkrevd.",
-			"name": "Skjemanavn",
-			"nameReqMsg": "Skjemanavn er påkrevd.",
-			"ppl": "Personer",
-			"public": "Offentlig",
-			"restrict": "Begrenset",
-			"startReqMsg": "Startdato er påkrevd."
-		},
-		"formMembers": {
-			"act": "Handling",
-			"addPpl": "Legg til person",
-			"admin": "Administrator",
-			"emailNotif": "E-postvarsel",
-			"emailNotifMsg": "Når skjemaet sendes inn, vil du bli varslet via e-post.",
-			"formMem": "Skjemamedlemmer",
-			"perm": "Tillatelse",
-			"view": "Kun visning"
-		},
-		"formQuestionEdit": {
-			"ansReq": "Krever svar på dette spørsmålet",
-			"checkBox": "Avmerkingsboks",
-			"confirmMsg": "Er du sikker på at du ønsker å slette dette spørsmålet permanent?",
-			"date": "Dato",
-			"decNum": "Desimal",
-			"desc": "Beskrivelse",
-			"fieldReq": "Felttype er påkrevd.",
-			"multiChoice": "Flervalg",
-			"phoneNum": "Telefonnummer",
-			"plcOp": "Plassholder (valgfritt)",
-			"prov": "Tilbyder",
-			"questionEdit": "Rediger spørsmål",
-			"questionReq": "Spørsmål er påkrevd.",
-			"textArea": "Tekstområde",
-			"textBox": "Tekstboks",
-			"wholeNum": "Heltall",
-			"yesNo": "Ja/Nei"
-		},
-		"formsPage": {
-			"archForms": "Arkiverte skjemaer",
-			"confirmMsg1": "Er du sikker på at du vil arkivere dette skjemaet?",
-			"confirmMsg2": "Er du sikker på at du vil gjenopprette dette skjemaet?",
-			"forms": "Skjemaer",
-			"noArch": "Ingen arkiverte skjemaer.",
-			"noCustomMsg": "Ingen tilpassede skjemaer er opprettet ennå. De vil vises her når de er lagt til."
-		},
-		"formSubmissions": {
-			"anon": "Anonym",
-			"subBy": "Innsendt av",
-			"subDate": "Innsendelsesdato",
-			"subFor": "Innsendt for",
-			"subRes": "Skjemainnsendelsesresultater",
-			"subSum": "Sammendrag av skjemainnsendelse"
-		},
-		"tabs": {
-			"formMem": "Skjemamedlemmer",
-			"formSub": "Skjemainnsendelser",
-			"questions": "Spørsmål",
-			"unAuth": "Uautorisert"
-		}
-	},
-	"groups": {
-		"groupAdd": {
-			"catName": "Kategorinavn",
-			"catReq": "Kategorinavn er påkrevd.",
-			"group": "Gruppe",
-			"groupReq": "Gruppenavn er påkrevd.",
-			"ministry": "Ministry",
-			"new": "Ny",
-			"team": "Team"
-		},
-		"groupDetails": {
-			"attTrack": "Spor oppmøte:",
-			"cat": "Kategori",
-			"groupDet": "Gruppedetaljer",
-			"parPick": "Henting av foreldre:"
-		},
-		"groupDetailsEdit": {
-			"attTrack": "Spor oppmøte",
-			"catName": "Kategorinavn",
-			"catNameMsg": "Vennligst skriv inn et kategorinavn.",
-			"confirmMsg": "Er du sikker på at du ønsker å slette denne gruppen permanent?",
-			"groupDesc": "Gruppens beskrivelse",
-			"groupDet": "Gruppedetaljer",
-			"groupImg": "Gruppebilde",
-			"groupName": "Gruppenavn",
-			"groupNameMsg": "Vennligst skriv inn et gruppenavn.",
-			"parPick": "Henting av foreldre",
-			"selImg": "Velg bilde"
-		},
-		"groupMembers": {
-			"groupMem": "Gruppemedlemmer",
-			"noMem": "Ingen gruppemedlemmer funnet.",
-			"send": "Send",
-			"sendMemMsg": "Send en melding til medlemmer"
-		},
-		"groupPage": {
-			"addPpl": "Legg til person"
-		},
-		"groupSessions": {
-			"addSesMsg": "Vennligst legg til en ny økt for å fortsette.",
-			"attFor": "Oppmøte for",
-			"new": "Ny",
-			"noSesMsg": "Det er ingen økter.",
-			"session": "Økt",
-			"sessions": "Økter"
-		},
-		"groupsPage": {
-			"cat": "Kategori",
-			"groups": "Grupper",
-			"noGroupMsg": "Ingen grupper funnet. Vennligst opprett en gruppe.",
-			"pers": "1 person",
-			"ppl": "Personer",
-			"spPpl": " personer"
-		},
-		"membersAdd": {
-			"availableMem": "Tilgjengelige gruppemedlemmer",
-			"noMem": "Ingen gruppemedlemmer tilgjengelig."
-		},
-		"serviceTimes": {
-			"services": "Tjenester:"
-		},
-		"serviceTimesEdit": {
-			"srvTimeAdd": "Legg til tjenestetid",
-			"srvTimeOp": "Tjenestetider (valgfritt)"
-		},
-		"sessionAdd": {
-			"invDate": "Ugyldig dato",
-			"sesAdd": "Legg til økt",
-			"sesDate": "Øktsdato",
-			"srvTime": "Tjenestetid"
-		},
-		"tabs": {
-			"mem": "Medlemmer",
-			"noImplement": "Ikke implementert",
-			"ses": "Økter"
-		}
-	},
-	"month": {
-		"apr": "April",
-		"aug": "August",
-		"dec": "Desember",
-		"feb": "Februar",
-		"jan": "Januar",
-		"july": "Juli",
-		"june": "Juni",
-		"mar": "Mars",
-		"may": "Mai",
-		"nov": "November",
-		"oct": "Oktober",
-		"sep": "September"
-	},
-	"people": {
-		"personForm": {
-			"addForm": "Add Form",
-			"form": "Form",
-			"noFormMsg": "No form submission found for this person"
-		},
-		"editCondition": {
-			"act": "Aktivitet",
-			"anniMonth": "Jubileumsmåned",
-			"any": "Hvilken som helst",
-			"attCamp": "har deltatt (campus)",
-			"attGen": "har deltatt (generelt)",
-			"attGroup": "har deltatt (gruppe)",
-			"attServ": "har deltatt (tjeneste)",
-			"attServTime": "har deltatt (tjenestetid)",
-			"bMonth": "Fødselsmåned",
-			"contains": "inneholder",
-			"donTo": "har donert til",
-			"endW": "slutter med",
-			"field": "Felt",
-			"from": "Fra",
-			"groupMem": "Gruppemedlem",
-			"hasDon": "har donert (generelt)",
-			"isMem": "er medlem av",
-			"marYears": "År gift",
-			"memAtt": "Medlemsoppmøte",
-			"memDon": "Medlemsdonasjoner",
-			"notMem": "er ikke medlem av",
-			"operator": "Operator",
-			"saveCon": "Lagre betingelse",
-			"startW": "begynner med",
-			"to": "Til",
-			"value": "Verdi"
-		},
-		"groups": {
-			"groups": "Grupper",
-			"notMemMsg": "Ikke medlem av noen grupper for øyeblikket."
-		},
-		"household": {
-			"house": "Husholdning"
-		},
-		"householdEdit": {
-			"addMatch": "adresse for å matche",
-			"blankMsg": "Vennligst oppgi et husholdningsnavn.",
-			"child": "Barn",
-			"head": "Leder",
-			"house": "Husholdning",
-			"houseName": "Husholdningsnavn",
-			"other": "Annet",
-			"spouse": "Ektefelle",
-			"updQuestion": "Vil du oppdatere"
-		},
-		"merge": {
-			"merge": "slå sammen",
-			"mergeRec": "Slå sammen poster"
-		},
-		"mergeModal": {
-			"cancel": "Avbryt",
-			"confirm": "Bekreft",
-			"fieldCon": "Her er noen felt med konfliktfylte verdier:",
-			"merge": "Slår sammen poster...",
-			"mergeQuestion": "Vil du slå sammen",
-			"selMsg": "Vennligst velg minst 1 verdi for hvert felt",
-			"with": "med"
-		},
-		"peopleColumns": {
-			"appFilt": "Bruk filtre",
-			"cust": "Tilpasset",
-			"filt": "Filtre",
-			"noFilt": "Ingen filtre tilgjengelig.",
-			"stand": "Standard"
-		},
-		"peoplePage": {
-			"bDay": "Bursdag",
-			"bDayNo": "Bursdag (ingen år)",
-			"delete": "Slett",
-			"deleteOp": "Slettealternativ",
-			"first": "Fornavn",
-			"last": "Etternavn",
-			"middle": "Mellomnavn",
-			"nameNote": "Navnelappnotater",
-			"photo": "Foto",
-			"ppl": "Personer",
-			"primEmail": "Primær e-post",
-			"primPhone": "Primær telefon",
-			"searchPpl": "Søk etter personer"
-		},
-		"peopleSearch": {
-			"addCon": "Legg til betingelse",
-			"adv": "Avansert",
-			"advSearch": "Avansert søk",
-			"allPeeps": "Alle personer hvor:",
-			"for": "for",
-			"madeTo": "laget til",
-			"notIn": "Ikke i",
-			"simp": "Enkel",
-			"simpSearch": "Enkelt søk"
-		},
-		"peopleSearchResults": {
-			"noResMsg": "Ingen resultater funnet. Vennligst søk etter et annet navn eller legg til en ny person"
-		},
-		"personAttendance": {
-			"att": "Oppmøte",
-			"noAttMsg": "Ingen oppmøteregistreringer. Oppmøte vil vises når oppmøte er registrert for en gruppeøkt."
-		},
-		"personEdit": {
-			"applyQuestion": "Vil du bruke det på hele",
-			"confirmMsg": "Er du sikker på at du ønsker å slette denne personposten permanent?",
-			"exten": "Forlengelse",
-			"family": "familie",
-			"firstReq": "Fornavn er påkrevd",
-			"for": "for",
-			"home": "Hjem",
-			"invalForm": "Ugyldig format",
-			"lastReq": "Etternavn er påkrevd",
-			"merge": "Slå sammen",
-			"mobile": "Mobil",
-			"nameNote": "Navnelappnotater",
-			"nickName": "Kallenavn",
-			"persDet": "Personlige detaljer",
-			"upAddress": "Du oppdaterte adressen til",
-			"valEmail": "Vennligst skriv inn en gyldig e-postadresse.",
-			"work": "Arbeid"
-		},
-		"personView": {
-			"home": "Hjem",
-			"memShip": "Medlemskap:",
-			"mobile": "Mobil",
-			"persDet": "Personlige detaljer",
-			"work": "Arbeid"
-		},
-		"tabs": {
-			"att": "Oppmøte",
-			"don": "Donasjoner",
-			"noImplement": "Ikke implementert"
-		},
-		"updateHouseHold": {
-			"update": "Oppdater adresse"
-		}
-	},
-	"person": {
-		"age": "Alder",
-		"anniversary": "Jubileum",
-		"birthDate": "Fødselsdato",
-		"country": "Land",
-		"displayName": "Visningsnavn",
-		"divorced": "Skilt",
-		"email": "E-post",
-		"female": "Kvinne",
-		"firstName": "Fornavn",
-		"gender": "Kjønn",
-		"lastName": "Etternavn",
-		"line1": "Linje 1",
-		"line2": "Linje 2",
-		"male": "Mann",
-		"maritalStatus": "Sivilstatus",
-		"married": "Gift",
-		"member": "Medlem",
-		"membership": "Medlemskap",
-		"membershipStatus": "Medlemskapsstatus",
-		"middleName": "Mellomnavn",
-		"nickName": "Kallenavn",
-		"person": "Person",
-		"phone": "Telefon",
-		"prefix": "Prefiks",
-		"single": "Singel",
-		"staff": "Ansatte",
-		"state": "Stat/Provins",
-		"suffix": "Suffiks",
-		"unknown": "Ukjent",
-		"unspecified": "Uspesifisert",
-		"visitor": "Besøkende",
-		"widowed": "Enke/enkemann",
-		"zip": "Postnummer"
-	},
-	"plans": {
-		"planPage": {
-			"assign": "Team Assignments"
-		},
-		"assignmentEdit": {
-			"assignPos": "Tildel posisjon",
-			"done": "Ferdig",
-			"editAssign": "Rediger tildeling",
-			"noMem": "Ingen gruppemedlemmer funnet."
-		},
-		"ministryList": {
-			"mins": "Ministry",
-			"noMinMsg": "Ingen ministrier funnet. Vennligst opprett et ministrium."
-		},
-		"ministryPage": {
-			"plans": "Planer",
-			"teams": "Team"
-		},
-		"planEdit": {
-			"copy": "Kopier fra",
-			"none": "Ingen",
-			"planAdd": "Legg til plan",
-			"planEdit": "Rediger plan",
-			"planReq": "Plannavn er påkrevd.",
-			"servDate": "Tjenestedato",
-			"servReq": "Tjenestedato er påkrevd.",
-			"servOrder": "Inkluder tjenesteorden?"
-		},
-		"planList": {
-			"noPlan": "Ingen planer er lagt til ennå.",
-			"plans": "Planer"
-		},
-		"planPage": {
-			"assign": "Tildelinger",
-			"band": "Band",
-			"noteSave": "Notater lagret."
-		},
-		"plansPage": {
-			"selMin": "Velg et ministrium"
-		},
-		"planValidation": {
-			"and": "og",
-			"between": "mellom",
-			"blockCon": "Blokkeringsdato konflikt av",
-			"cons": "Konflikter",
-			"during": "under",
-			"more": "mer",
-			"needed": "trengs.",
-			"notify": "Varsle",
-			"person": "person",
-			"ppl": "folk",
-			"timeCon": "Tidskonflikt mellom",
-			"timeCon2": "Tidskonflikt ved",
-			"to": "til",
-			"val": "Validering",
-			"valPlan": "Planen er gyldig.",
-			"vol": "frivillig",
-			"volNotif": "Alle frivillige varslet.",
-			"volReq": "Frivillighetsforespørsler: "
-		},
-		"positionEdit": {
-			"catName": "Kategorinavn",
-			"catNameReq": "Kategorinavn er påkrevd.",
-			"nameReq": "Navn er påkrevd",
-			"posAdd": "Legg til en posisjon",
-			"posEdit": "Rediger posisjon",
-			"volCount": "Antall frivillige",
-			"volGroup": "Frivilliggruppe"
-		},
-		"positionList": {
-			"load": "Laster...",
-			"persNeed": "1 person trengs",
-			"pos": "Posisjon",
-			"ppl": "Personer",
-			"pplNeed": " Personer trengs",
-			"team": "Team"
-		},
-		"teamList": {
-			"noTeam": "Ingen team funnet. Vennligst opprett et team.",
-			"peeps": " personer",
-			"pers": "1 person",
-			"ppl": "Personer",
-			"teams": "Team"
-		},
-		"timeEdit": {
-			"disName": "Visningsnavn",
-			"disNameReq": "Visningsnavn er påkrevd.",
-			"endReq": "Slutttid er påkrevd",
-			"startReq": "Starttid er påkrevd",
-			"teamNeed": "Trengte team",
-			"timeAdd": "Legg til en tid",
-			"timeEdit": "Rediger tid",
-			"timeEnd": "Slutttid",
-			"timeStart": "Starttid"
-		},
-		"timeList": {
-			"noTime": "Ingen tider er lagt til ennå",
-			"sunServ": "Søndagstjeneste",
-			"times": "Tider"
-		},
-		"printPlan": {
-			"serviceOrder": "TJENESTEORDEN",
-			"time": "Tid",
-			"length": "Lengde"
-		}
-	},
-	"profile": {
-		"profilePage": {
-			"accDel": "Konto sletting",
-			"confirmMsg": "Er du sikker på at du ønsker å slette kontoen din permanent?",
-			"daily": "Daglig",
-			"delAcc": "Slett min konto",
-			"emailMsg": "Vennligst skriv inn en e-postadresse.",
-			"firstMsg": "Vennligst skriv inn fornavn",
-			"freqEmail": "E-postfrekvens",
-			"indiv": "Individuell",
-			"lastMsg": "Vennligst skriv inn etternavn",
-			"never": "Aldri",
-			"noDirect": "Avmelding fra katalog",
-			"notifMsg": "Velg hvordan du vil motta oppdateringer om private meldinger, samtaler, skjemaer og andre varsler.",
-			"notifPref": "Varslingsinnstillinger",
-			"notifPush": "Tillat push-varsler",
-			"passLong": "Vennligst skriv inn et passord som er minst 8 tegn langt.",
-			"passMatch": "Passordene stemmer ikke overens.",
-			"passNew": "Nytt passord",
-			"passVer": "Bekreft passord",
-			"permWarn": "Forsiktig, disse handlingene er permanente",
-			"profEdit": "Rediger profil",
-			"saveChange": "Endringer lagret.",
-			"valEmail": "Vennligst skriv inn en gyldig e-postadresse."
-		}
-	},
-	"reports": {
-		"reportPage": {
-			"report": "Rapport"
-		},
-		"reportsPage": {
-			"attTrend": "Oppmøtetrend",
-			"bDays": "Bursdager",
-			"dailyGroupAtt": "Daglig gruppeoppmøte",
-			"donSum": "Donasjonssammendrag",
-			"groupAtt": "Gruppens oppmøte",
-			"reports": "Rapporter"
-		}
-	},
-	"reporting": {
-		"fromDate": "Fra dato",
-		"toDate": "Til dato",
-		"runReport": "Kjør rapport",
-		"toDateBeforeFromDate": "Sluttdato kan ikke være før startdato"
-	},
-	"serverAdmin": {
-		"adminPage": {
-			"act": "Aktiv",
-			"arch": "Arkivert",
-			"church": "Kirke",
-			"churches": "Kirker",
-			"churchName": "Kirkenavn",
-			"noChurch": "Ingen kirker funnet. Vennligst søk etter et annet navn.",
-			"noteFour": "Sammenlignbar programvare er ProPresenter. Det koster $399 for en side-lisens. Jeg antok at gjennomsnittskirken installerer programvaren på 3 datamaskiner og delte våre totale installasjoner med 3 for å få antall kirker. Jeg antok også at kirker vil oppgradere til en nyere versjon hvert 5. år i gjennomsnitt. Så $399 / 5 år / 3 datamaskiner = $26,60 årlige kostnader per datamaskin. Hvis vi kan kvantifisere disse antakelsene, bør vi oppdatere dette tallet.",
-			"noteOne": "Sammenlignbar programvare er Breeze. De tar $72/måned eller $864/år.",
-			"noteThree": "Sammenlignbart innhold er Orange. De tar $1023/år for kirker med 26-50 seere for 252 Basic.",
-			"noteTwo": "Sammenlignbar programvare er SubSplash. De starter på $99/måned eller $1200/år. Dette inkluderer ikke kuttet de tar på donasjoner.",
-			"regist": "Registrert",
-			"servAdmin": "Serveradmin",
-			"valueNotes": "Notater om hvordan verdiene beregnes"
-		},
-		"reportPage": {
-			"report": "Rapport"
-		}
-	},
-	"settings": {
-		"associatePerson": {
-			"change": "Endre"
-		},
-		"churchSettings": {
-			"churchSet": "Kirkeinnstillinger",
-			"subdom": "Subdomene"
-		},
-		"churchSettingsEdit": {
-			"address1": "Adresse linje 1",
-			"address2": "Adresse linje 2",
-			"churchName": "Kirkenavn",
-			"noNameMsg": "Kirkenavn kan ikke være tomt.",
-			"noSubMsg": "Subdomene kan ikke være tomt.",
-			"subdom": "Subdomene"
-		},
-		"domainSettingsEdit": {
-			"act": "Handling",
-			"delete": "Slett",
-			"domain": "Domene",
-			"domains": "Domener",
-			"domMsg": "Du kan få B1-nettstedet ditt til å svare for alle egendefinerte domener du ønsker. Skriv inn det tilknyttede domenenavnet her og legg deretter til følgende post i DNS-en din:"
-		},
-		"givingSettingsEdit": {
-			"forceMsg": "Tvinger automatisk brukere til å dekke transaksjonsgebyrene",
-			"giving": "Donasjoner",
-			"none": "Ingen",
-			"prov": "Tilbyder",
-			"pubKey": "Offentlig nøkkel",
-			"secKey": "Hemmelig nøkkel",
-			"stripe": "Stripe",
-			"transFee": "Transaksjonsgebyr"
-		},
-		"imageEditor": {
-			"crop": "Beskjær",
-			"upload": "Last opp"
-		},
-		"manageChurch": {
-			"imEx": "Importer/eksporter",
-			"manage": "Administrer",
-			"tools": "Verktøy"
-		},
-		"preview": {
-			"preview": "Forhåndsvisning"
-		},
-		"roleEdit": {
-			"confirmMsg": "Er du sikker på at du ønsker å slette denne rollen permanent?",
-			"roleEdit": "Rediger rolle",
-			"roleName": "Rollenavn",
-			"valMsg": "Vennligst skriv inn et gyldig rollenavn."
-		},
-		"roleMembers": {
-			"confirmMsg": "Er du sikker på at du ønsker å slette denne brukeren fra",
-			"delete": "Slett",
-			"mem": "Medlemmer",
-			"roleAppMsg": "Denne rollen gjelder for alle medlemmer av kirken."
-		},
-		"rolePage": {
-			"noEditMsg": "Tillatelser kan ikke redigeres for rollen som domeneadmin. Domeneadministratorer har full tilgang.",
-			"permEdit": "Rediger tillatelser",
-			"roleEdit": "Rediger rolle:"
-		},
-		"rolePermissions": {
-			"permEdit": "Rediger tillatelser"
-		},
-		"roles": {
-			"acc": "Regnskap",
-			"accDesc": "Har tilgang til å se og administrere donasjoner.",
-			"canEdit": "Kan redigere de fleste data i",
-			"churchDesc": "inkludert personer, grupper, oppmøte og skjemaer.",
-			"churchStaff": "Kirkens personale",
-			"contAdmin": "Innholdsadministrator",
-			"contAdminDesc": "Kan redigere nettsideinnhold, mobilinnhold og prekener.",
-			"custAdd": "Legg til tilpasset rolle",
-			"everyone": "Alle",
-			"itMsg": "? Det",
-			"lesAdmin": "Leksjonsadministrator",
-			"lesAdminDesc": "Kan sette opp klasserom og planlegge leksjoner på",
-			"role": "Rolle",
-			"roleCreate": "Ønsker du å opprette en ny rolle av",
-			"roles": "Roller"
-		},
-		"userAdd": {
-			"addTo": "Legg til i",
-			"createNew": "Opprett ny bruker",
-			"errAnother": "Kan ikke lagres. En annen bruker eksisterer allerede for denne e-postadressen.",
-			"errDiff": "Brukerkontoen for denne e-posten er tilknyttet en annen person.",
-			"firstMsg": "Vennligst skriv inn fornavn",
-			"lastMsg": "Vennligst skriv inn etternavn",
-			"noAcc": "Har du ikke en brukerkonto?",
-			"valEmail": "Vennligst skriv inn en gyldig e-post",
-			"valEmailMsg": "Skriv inn en gyldig e-post"
-		},
-		"directoryApprovalSettingsEdit": {
-			"directoryApprovalGroup": "Kataloggodkjenningsgruppe",
-			"forceMsg": "Denne gruppen vil håndtere alle medlemskatalogoppdateringer. Endringer vil bare bli anvendt etter deres godkjenning.",
-			"groups": "Grupper",
-			"none": "Ingen",
-			"noGroups": "Ingen grupper tilgjengelig"
-		},
-		"feeOptionsSettings": {
-			"creditCardFlatRate": "Fast pris [ Kredittkort ]",
-			"creditCardTransactionFee": "Transaksjonsgebyr [ Kredittkort ]",
-			"achFlatRate": "Fast pris [ ACH ]",
-			"achHardLimit": "Hard grense [ ACH ]"
-		},
-		"supportContactSettingsEdit": {
-			"supportContact": "Støttekontakt",
-			"forceMsg": "Denne lenken vil bli brukt av brukere for å kontakte kirken",
-			"link": "Lenke",
-			"linkHelperText": "Dette må være enten kirkens e-post eller en lenke til kirkens kontaktskjema"
-		},
-		"visibilityPrefSettingsEdit": {
-			"visibilityPreference": "Synlighetspreferanse",
-			"forceMsg": "Dette vil sette standardverdien for personer som ennå ikke har konfigurert sine innstillinger",
-			"address": "Adresse",
-			"phoneNum": "Telefonnummer",
-			"email": "E-post",
-			"everyone": "Alle",
-			"members": "Medlemmer",
-			"groups": "Kun grupper"
-		}
-	},
-	"songs": {
-		"library": {
-			"empty": {
-				"title": "No Songs Found",
-				"message": "Get started by adding your first song to the library.",
-				"action": "Add First Song"
-			},
-			"noResults": "No songs match your search criteria."
-		},
-		"search": {
-			"placeholder": "Search songs by title or artist...",
-			"enterQuery": "Enter a search term to find songs.",
-			"noResults": "No songs found for your search.",
-			"createManually": "Create Manually",
-			"title": "Search for a Song",
-			"inputLabel": "Title or Artist",
-			"inputPlaceholder": "Enter song title or artist name..."
-		},
-		"arrangement": {
-			"title": "Arrangement",
-			"enterLyrics": "Skriv inn tekster manuelt eller importer fra PraiseCharts",
-			"edit": "Rediger arrangement",
-			"name": "Arrangementnavn",
-			"lyrics": "Tekster",
-			"deleteConfirm": "Er du sikker på at du vil slette dette arrangementet?"
-		},
-		"create": {
-			"title": "Opprett sang",
-			"songTitle": "Sangtittel",
-			"artist": "Artist"
-		},
-		"key": {
-			"edit": "Rediger toneart",
-			"signature": "Toneart",
-			"label": "Etikett",
-			"default": "Standard",
-			"defaultLabel": "Johns toneart",
-			"deleteConfirm": "Er du sikker på at du vil slette denne tonearten?"
-		},
-		"keys": {
-			"title": "Tonearter",
-			"add": "+ Legg til",
-			"import": "Importer",
-			"importPrompt": "Vil du importere sanger fra PraiseCharts?",
-			"addFiles": "Legg til filer",
-			"importFromPraiseCharts": "Importer filer fra PraiseCharts",
-			"addExternalLink": "Legg til ekstern lenke"
-		},
-		"link": {
-			"edit": "Rediger lenke",
-			"url": "Url",
-			"text": "Tekst",
-			"chordChart": "Akkorddiagram",
-			"deleteConfirm": "Er du sikker på at du vil slette denne lenken?"
-		},
-		"details": {
-			"artist": "Artist",
-			"releaseDate": "Utgivelsesdato",
-			"album": "Album",
-			"language": "Språk",
-			"bpm": "BPM",
-			"keySignature": "Toneart",
-			"keys": "Tonearter",
-			"meter": "Taktart",
-			"length": "Lengde",
-			"key": "Toneart"
-		}
-	},
-	"tasks": {
-		"actionEdit": {
-			"actType": "Handlingstype",
-			"assignTo": "Tildel til",
-			"editAct": "Rediger handling",
-			"taskAssign": "Tildel en oppgave",
-			"taskNote": "Oppgavenotat",
-			"taskTitle": "Oppgavetittel"
-		},
-		"automationDetails": {
-			"acts": "Handlinger",
-			"auto": "Automatiseringsdetaljer",
-			"rep": "Gjentas",
-			"task": "Oppgave"
-		},
-		"automationEdit": {
-			"autoEdit": "Rediger automatisering",
-			"monthly": "Månedlig",
-			"never": "Aldri",
-			"rep": "Gjenta",
-			"yearly": "Årlig"
-		},
-		"automationsPage": {
-			"auto": "Automatiserte oppgaver",
-			"manageAuto": "Administrer automatiserte oppgaver"
-		},
-		"conditionAttendance": {
-			"anywhere": "Hvor som helst",
-			"campus": "Campus",
-			"eventType": "Hendelsestype",
-			"group": "Gruppe",
-			"hasAtt": "har deltatt",
-			"hasNoAtt": "har ikke deltatt",
-			"op": "Operator",
-			"serv": "Tjeneste",
-			"servTime": "Tjenestetid"
-		},
-		"conditionDate": {
-			"absolute": "Absolutte verdier",
-			"curMonth": "Denne måneden",
-			"dateFull": "Full dato",
-			"datePart": "Datodel",
-			"dayOf": "Ukedag",
-			"fri": "Fredag",
-			"mon": "Mandag",
-			"month": "Måned",
-			"monthDay": "Dag i måneden",
-			"nextMonth": "Neste måned",
-			"op": "Operator",
-			"prevMonth": "Forrige måned",
-			"relative": "Relative verdier",
-			"sat": "Lørdag",
-			"sun": "Søndag",
-			"thurs": "Torsdag",
-			"tues": "Tirsdag",
-			"wed": "Onsdag",
-			"weekDay": "Ukedag",
-			"yearsE": "Forløpte år"
-		},
-		"conditionDetails": {
-			"addCon": "Legg til betingelse",
-			"addConj": "Legg til konjunksjon",
-			"all": "Alle",
-			"any": "Hvilken som helst",
-			"con": "Betingelser:",
-			"trueCon": "av disse betingelsene er sanne"
-		},
-		"conditionEdit": {
-			"conEdit": "Rediger betingelse",
-			"confirmMsg": "Er du sikker på at du ønsker å slette denne betingelsen?",
-			"conInfo": "Kontaktinformasjon",
-			"conType": "Betingelsestype",
-			"gen": "Generelt",
-			"persAtt": "Personlige attributter",
-			"today": "Dagens dato"
-		},
-		"conditionSelect": {
-			"is": "er",
-			"isNot": "er ikke",
-			"op": "Operator"
-		},
-		"conditionText": {
-			"contains": "inneholder",
-			"endW": "slutter med",
-			"op": "Operator",
-			"startW": "begynner med"
-		},
-		"conjunctionEdit": {
-			"and": "OG - Alle betingelsene er sanne",
-			"conjEdit": "Rediger konjunksjon",
-			"conjType": "Konjunksjonstype",
-			"or": "ELLER - Noen av betingelsene er sanne"
-		},
-		"contentPicker": {
-			"group": "Gruppe",
-			"sel": "Velg",
-			"selPers": "Velg en person eller gruppe"
-		},
-		"newTask": {
-			"assignPers": "Vennligst tildel denne oppgaven til en person.",
-			"assignTo": "Tildel til",
-			"associatePers": "Vennligst assosier denne oppgaven med en person.",
-			"associateW": "Assosier med",
-			"taskNew": "Ny oppgave",
-			"titleTask": "Vennligst skriv inn en tittel for denne oppgaven."
-		},
-		"selectGroup": {
-			"group": "Gruppe",
-			"sel": "Velg"
-		},
-		"taskList": {
-			"assignGroup": "Tildelt mine grupper",
-			"assignMe": "Tildelt meg",
-			"assignTo": "Tildelt til",
-			"associateW": "Assosiert med",
-			"reqMe": "Forespurt av meg",
-			"tasks": "Oppgaver"
-		},
-		"taskPage": {
-			"assignTo": "Tildelt til",
-			"associateW": "Assosiert med",
-			"change": "Endre",
-			"closed": "Lukket",
-			"createdBy": "Opprettet av",
-			"dateCreated": "Opprettelsesdato",
-			"open": "Åpen",
-			"stat": "Status",
-			"taskDet": "Oppgavedetaljer"
-		},
-		"tasksPage": {
-			"auto": "Automatiseringer",
-			"showClosed": "Vis lukkede",
-			"showOpen": "Vis åpne",
-			"tasks": "Oppgaver"
-		},
-		"requestedChanges": {
-			"requestedChanges": "Forespurte endringer",
-			"apply": "Bruk",
-			"field": "Felt",
-			"value": "Verdi"
-		}
-	}
+  "attendance": {
+    "attendancePage": {
+      "addCampus": "Legg til campus",
+      "addService": "Legg til tjeneste",
+      "addServiceTime": "Legg til tjenestetid",
+      "att": "Oppmøte",
+      "campus": "Campus",
+      "category": "Kategori",
+      "group": "Gruppe",
+      "groupAttMsg": "Gruppens oppmøte vil vises når økter er lagt til en gruppe og folk har deltatt på disse øktene.",
+      "groups": "Grupper",
+      "service": "Tjeneste",
+      "time": "Tid"
+    },
+    "campusEdit": {
+      "confirmDelete": "Er du sikker på at du vil slette denne campusen?",
+      "name": "Campusnavn",
+      "validate": {
+        "name": "Campusnavn er påkrevd."
+      }
+    },
+    "serviceEdit": {
+      "campus": "Campus",
+      "confirmDelete": "Er du sikker på at du ønsker å slette denne tjenesten permanent?",
+      "name": "Tjenestenavn",
+      "validate": {
+        "campus": "Vennligst velg en campus.",
+        "name": "Tjenestenavn er påkrevd."
+      }
+    },
+    "serviceTimeEdit": {
+      "confirmDelete": "Er du sikker på at du ønsker å slette denne tjenestetiden permanent?",
+      "name": "Tjenestetid",
+      "service": "Tjeneste",
+      "validate": {
+        "name": "Tjenestetid navn er påkrevd.",
+        "service": "Vennligst velg en tjeneste."
+      }
+    },
+    "tabs": {
+      "setup": "Oppsett",
+      "attTrend": "Oppmøtetrend",
+      "groupAtt": "Gruppens oppmøte",
+      "noImplement": "Ikke implementert"
+    }
+  },
+  "common": {
+    "add": "Legg til",
+    "amount": "Beløp",
+    "cancel": "Avbryt",
+    "change": "Endre",
+    "changePhoto": "Endre foto",
+    "close": "Lukk",
+    "delete": "Slett",
+    "edit": "Rediger",
+    "name": "Navn",
+    "no": "Nei",
+    "notes": "Notater",
+    "person": "Person",
+    "pleaseWait": "Vennligst vent...",
+    "remove": "Fjern",
+    "save": "Lagre",
+    "search": "Søk",
+    "searching": "Søker...",
+    "title": "Tittel",
+    "update": "Oppdater",
+    "yes": "Ja"
+  },
+  "components": {
+    "footer": {
+      "phone": "Telefon",
+      "rights": "Alle rettigheter reservert."
+    },
+    "wrapper": {
+      "att": "Oppmøte",
+      "dash": "Dashbord",
+      "don": "Donasjoner",
+      "form": "Skjema",
+      "forms": "Skjemaer",
+      "groups": "Grupper",
+      "plans": "Planer",
+      "ppl": "Personer",
+      "servAdmin": "Server Admin",
+      "serving": "Tjeneste",
+      "set": "Innstillinger",
+      "songs": "Sanger",
+      "tasks": "Oppgaver"
+    }
+  },
+  "createPerson": {
+    "addNewPerson": "Legg til ny person",
+    "email": "E-post",
+    "firstName": "Fornavn",
+    "lastName": "Etternavn"
+  },
+  "dashboard": {
+    "dashboardPage": {
+      "dash": "Dashbord"
+    },
+    "myGroups": "Mine grupper",
+    "people": "Personer",
+    "peopleSearch": {
+      "display": "Visning",
+      "photo": "Foto",
+      "ppl": "Personer"
+    },
+    "tasks": "Oppgaver"
+  },
+  "donation": {
+    "page": {
+      "amount": "Beløp",
+      "batch": "Batch",
+      "date": "Dato",
+      "fund": "Fond",
+      "method": "Metode",
+      "willAppear": "Donasjoner vil vises her når de er gjort."
+    },
+    "bankForm": {
+      "accountNumber": "Kontonummer",
+      "added": "Bankkonto har blitt lagt til.",
+      "company": "Selskap",
+      "firstDeposit": "Første innskuddsbeløp",
+      "individual": "Individuell",
+      "name": "Kontohavers navn",
+      "needVerified": "Denne bankkontoen må verifiseres før den kan brukes.",
+      "routingNumber": "Rutingsnummer",
+      "secondDeposit": "Andre innskuddsbeløp",
+      "twoDeposits": "To små innskudd er gjort til kontoen din. Vennligst skriv inn beløpene nedenfor for å verifisere.",
+      "updated": "Bankkonto har blitt oppdatert.",
+      "verified": "Denne bankkontoen er verifisert og kan brukes til donasjoner.",
+      "validate": {
+        "accountNumber": "Kontonummer er påkrevd.",
+        "holderName": "Kontohavers navn er påkrevd."
+      }
+    },
+    "cardForm": {
+      "addNew": "Legg til nytt kort",
+      "added": "Kredittkort har blitt lagt til.",
+      "expirationMonth": "Utløpsmåned",
+      "expirationYear": "Utløpsår",
+      "updated": "Kredittkort har blitt oppdatert."
+    },
+    "common": {
+      "cancel": "Avbryt",
+      "error": "Det oppstod en feil under behandling av forespørselen din."
+    },
+    "donationForm": {
+      "annually": "Årlig",
+      "biWeekly": "Annenhver uke",
+      "cancelled": "Gjentakende donasjon har blitt kansellert.",
+      "confirmDelete": "Er du sikker på at du vil kansellere denne gjentakende donasjonen?",
+      "cover": "Dekk transaksjonsgebyr",
+      "donate": "Doner",
+      "editRecurring": "Rediger gjentakende donasjon",
+      "fees": "Gebyrer",
+      "frequency": "Frekvens",
+      "fund": "Fond",
+      "funds": "Fond",
+      "make": "Gi en donasjon",
+      "makeRecurring": "Gjør dette til en gjentakende donasjon",
+      "method": "Betalingsmetode",
+      "monthly": "Månedlig",
+      "notes": "Notater",
+      "preview": "Forhåndsvisning av donasjon",
+      "quarterly": "Kvartalsvis",
+      "recurringUpdated": "Gjentakende donasjon har blitt oppdatert.",
+      "startDate": "Startdato",
+      "thankYou": "Takk for donasjonen din!",
+      "tooLow": "Donasjonsbeløpet er for lavt.",
+      "total": "Totalt",
+      "weekly": "Ukentlig",
+      "validate": {
+        "amount": "Vennligst skriv inn et donasjonsbeløp.",
+        "email": "E-post er påkrevd.",
+        "firstName": "Fornavn er påkrevd.",
+        "lastName": "Etternavn er påkrevd.",
+        "validEmail": "Vennligst skriv inn en gyldig e-postadresse."
+      }
+    },
+    "fundDonations": {
+      "addMore": "Legg til et annet fond",
+      "amount": "Beløp",
+      "fund": "Fond"
+    },
+    "paymentMethods": {
+      "addBank": "Legg til bankkonto",
+      "addCard": "Legg til kredittkort",
+      "confirmDelete": "Er du sikker på at du vil slette denne betalingsmetoden?",
+      "deleted": "Betalingsmetode har blitt slettet.",
+      "noMethod": "Vennligst velg en betalingsmetode.",
+      "verify": "Verifiser"
+    },
+    "preview": {
+      "date": "Dato",
+      "donate": "Fullfør donasjon",
+      "every": "Hver",
+      "fee": "Transaksjonsgebyr",
+      "funds": "Fond",
+      "method": "Betalingsmetode",
+      "startingOn": "Starter",
+      "total": "Totalt",
+      "type": "Type",
+      "weekly": "uke"
+    },
+    "recurring": {
+      "amount": "Beløp",
+      "every": "Hver",
+      "interval": "Intervall",
+      "notFound": "Ingen gjentakende donasjoner funnet.",
+      "noSubscriptions": "Ingen gjentakende donasjoner funnet.",
+      "paymentMethod": "Betalingsmetode",
+      "startDate": "Startdato"
+    }
+  },
+  "donations": {
+    "batchEdit": {
+      "confirmMsg": "Er du sikker på at du ønsker å slette denne batchen og alle donasjonene i den permanent?",
+      "date": "Dato",
+      "opName": "Navn (valgfritt)"
+    },
+    "bulkEntry": {
+      "addDonation": "Legg til donasjon",
+      "optionalFields": "Valgfrie felt",
+      "pressEnter": "Trykk Enter for å lagre og legge til en annen donasjon",
+      "selectPerson": "Velg person eller anonym"
+    },
+    "donationEdit": {
+      "anon": "Anonym",
+      "card": "Kort",
+      "cash": "Kontanter",
+      "check": "Sjekk",
+      "checkNum": "Sjekk #",
+      "date": "Dato",
+      "fund": "Fond",
+      "lastDig": "Siste 4 sifre",
+      "method": "Metode"
+    },
+    "donationEvents": {
+      "event": "Hendelse: ",
+      "failed": "Mislykkede donasjoner - ",
+      "mark": "Merk som ",
+      "msg": "Melding: ",
+      "unres": " uløst"
+    },
+    "donations": {
+      "amt": "Beløp",
+      "anon": "Anonym",
+      "date": "Dato",
+      "don": "Donasjoner",
+      "summary": "Sammendrag",
+      "batches": "Batcher",
+      "funds": "Fond",
+      "errMsg": "Ingen fond funnet. Vennligst opprett et fond før du gir en donasjon",
+      "noDonMsg": "Ingen donasjoner er registrert. Når donasjoner er lagt inn, vil de vises her.",
+      "tableIdent": "ID",
+      "total": "Totalt"
+    },
+    "donationsPage": {
+      "batch": "Batch",
+      "date": "Dato",
+      "don": "Donasjoner",
+      "noBatch": "Ingen batcher funnet.",
+      "total": "Totalt"
+    },
+    "fundEdit": {
+      "confirmMsg": "Er du sikker på at du ønsker å slette dette fondet og alle donasjonene i det permanent?",
+      "errBlank": "Skriv inn et fondnavn",
+      "taxDeductible": "Skattefradragsberettiget",
+      "trackDonations": "Sporer donasjoner.",
+      "trackNonDonations": "Sporer ikke-donasjonstransaksjoner som leirregistreringer, t-skjorter, arrangementssbilletter, etc."
+    },
+    "funds": {
+      "fund": "Fond",
+      "noFund": "Ingen fond funnet."
+    },
+    "fundsPage": {
+      "amt": "Beløp",
+      "anon": "Anonym",
+      "batch": "Batch",
+      "date": "Dato",
+      "dateEnd": "Sluttdato",
+      "dateStart": "Startdato",
+      "don": "Donasjoner",
+      "donFilt": "Donasjonsfilter",
+      "donor": "Giver",
+      "noDon": "Ingen donasjoner for valgt datoperiode"
+    }
+  },
+  "forms": {
+    "choicesEdit": {
+      "act": "Handling",
+      "choices": "Valg",
+      "txt": "Tekst",
+      "value": "Verdi"
+    },
+    "form": {
+      "act": "Handling",
+      "noCustomMsg": "Ingen tilpassede spørsmål er opprettet ennå. Spørsmålene vil bli oppført her.",
+      "question": "Spørsmål",
+      "questions": "Spørsmål",
+      "req": "Påkrevd",
+      "type": "Type"
+    },
+    "formEdit": {
+      "access": "Skjemaadgang",
+      "alone": "Stå alene",
+      "associate": "Assosier med",
+      "available": "Sett skjemaets tilgjengelighetstid",
+      "availableEnd": "Sluttdato for tilgjengelighet",
+      "availableStart": "Startdato for tilgjengelighet",
+      "confirmMsg": "Er du sikker på at du ønsker å slette dette skjemaet permanent?",
+      "editForm": "Rediger skjema",
+      "endReqMsg": "Sluttdato er påkrevd.",
+      "name": "Skjemanavn",
+      "nameReqMsg": "Skjemanavn er påkrevd.",
+      "ppl": "Personer",
+      "public": "Offentlig",
+      "restrict": "Begrenset",
+      "startReqMsg": "Startdato er påkrevd.",
+      "thankYouMessage": "Takkmelding"
+    },
+    "formMembers": {
+      "act": "Handling",
+      "addPpl": "Legg til person",
+      "admin": "Administrator",
+      "emailNotif": "E-postvarsel",
+      "emailNotifMsg": "Når skjemaet sendes inn, vil du bli varslet via e-post.",
+      "formMem": "Skjemamedlemmer",
+      "perm": "Tillatelse",
+      "view": "Kun visning"
+    },
+    "formQuestionEdit": {
+      "amt": "Beløp",
+      "ansReq": "Krever svar på dette spørsmålet",
+      "checkBox": "Avmerkingsboks",
+      "confirmMsg": "Er du sikker på at du ønsker å slette dette spørsmålet permanent?",
+      "date": "Dato",
+      "decNum": "Desimal",
+      "desc": "Beskrivelse",
+      "fieldReq": "Felttype er påkrevd.",
+      "fund": "Fond",
+      "multiChoice": "Flervalg",
+      "payment": "Betaling",
+      "phoneNum": "Telefonnummer",
+      "plcOp": "Plassholder (valgfritt)",
+      "prov": "Tilbyder",
+      "questionEdit": "Rediger spørsmål",
+      "questionReq": "Spørsmål er påkrevd.",
+      "textArea": "Tekstområde",
+      "textBox": "Tekstboks",
+      "wholeNum": "Heltall",
+      "yesNo": "Ja/Nei"
+    },
+    "formsPage": {
+      "addForm": "Legg til skjema",
+      "archForms": "Arkiverte skjemaer",
+      "confirmMsg1": "Er du sikker på at du vil arkivere dette skjemaet?",
+      "confirmMsg2": "Er du sikker på at du vil gjenopprette dette skjemaet?",
+      "forms": "Skjemaer",
+      "noArch": "Ingen arkiverte skjemaer.",
+      "noCustomMsg": "Ingen tilpassede skjemaer er opprettet ennå. De vil vises her når de er lagt til."
+    },
+    "formSubmissions": {
+      "anon": "Anonym",
+      "subBy": "Innsendt av",
+      "subDate": "Innsendelsesdato",
+      "subFor": "Innsendt for",
+      "subRes": "Skjemainnsendelsesresultater",
+      "subSum": "Sammendrag av skjemainnsendelse"
+    },
+    "tabs": {
+      "formMem": "Skjemamedlemmer",
+      "formSub": "Skjemainnsendelser",
+      "questions": "Spørsmål",
+      "unAuth": "Uautorisert"
+    }
+  },
+  "formSubmissionEdit": {
+    "confirmDelete": "Er du sikker på at du ønsker å slette denne skjemainnsendelsen permanent?",
+    "editForm": "Rediger skjemainnsendelse",
+    "isRequired": "er påkrevd",
+    "submit": "Send inn"
+  },
+  "gallery": {
+    "aspectRatio": "Sideforhold",
+    "confirmDelete": "Er du sikker på at du ønsker å slette dette bildet permanent?",
+    "freeForm": "Fri form"
+  },
+  "groups": {
+    "groupAdd": {
+      "catName": "Kategorinavn",
+      "catReq": "Kategorinavn er påkrevd.",
+      "group": "Gruppe",
+      "groupReq": "Gruppenavn er påkrevd.",
+      "ministry": "Ministry",
+      "new": "Ny ",
+      "team": "Team"
+    },
+    "groupDetails": {
+      "attTrack": "Spor oppmøte:",
+      "cat": "Kategori",
+      "groupDet": "Gruppedetaljer",
+      "meetingLocation": "Møtested",
+      "meetingTime": "Møtetid",
+      "parPick": "Henting av foreldre:",
+      "prinName": "Skriv ut navnelapp:"
+    },
+    "groupDetailsEdit": {
+      "attTrack": "Spor oppmøte",
+      "catName": "Kategorinavn",
+      "catNameMsg": "Vennligst skriv inn et kategorinavn.",
+      "confirmMsg": "Er du sikker på at du ønsker å slette denne gruppen permanent?",
+      "groupDesc": "Gruppens beskrivelse",
+      "groupDet": "Gruppedetaljer",
+      "groupImg": "Gruppebilde",
+      "groupName": "Gruppenavn",
+      "groupNameMsg": "Vennligst skriv inn et gruppenavn.",
+      "meetingLocation": "Møtested",
+      "meetingTime": "Møtetid",
+      "parPick": "Henting av foreldre",
+      "prinName": "Skriv ut navnelapp",
+      "selImg": "Velg bilde",
+      "slug": "Slug"
+    },
+    "groupMembers": {
+      "groupMem": "Gruppemedlemmer",
+      "noMem": "Ingen gruppemedlemmer funnet.",
+      "send": "Send",
+      "sendMemMsg": "Send en melding til medlemmer",
+      "showTemplates": "Vis maler",
+      "templates": {
+        "templates": "Maler",
+        "none": "Ingen",
+        "welcome_volunteers": {
+          "heading": "Velkommen frivillige",
+          "message": "Velkommen! Takk for at du er frivillig.\n\nVennligst last ned B1.Church-appen og logg inn for å administrere timeplanen din. https://support.churchapps.org/b1/download"
+        }
+      }
+    },
+    "groupPage": {
+      "addPpl": "Legg til person"
+    },
+    "groupSessions": {
+      "addSesMsg": "Vennligst legg til en ny økt for å fortsette.",
+      "attFor": "Oppmøte for",
+      "new": "Ny",
+      "noSesMsg": "Det er ingen økter.",
+      "sessions": "Økter"
+    },
+    "groupsPage": {
+      "cat": "Kategori",
+      "groups": "Grupper",
+      "labels": "Etiketter",
+      "noGroupMsg": "Ingen grupper funnet. Vennligst opprett en gruppe.",
+      "pers": "1 person",
+      "ppl": "Personer",
+      "spPpl": " personer"
+    },
+    "membersAdd": {
+      "availableMem": "Tilgjengelige gruppemedlemmer",
+      "noMem": "Ingen gruppemedlemmer tilgjengelig."
+    },
+    "serviceTimes": {
+      "services": "Tjenester:"
+    },
+    "serviceTimesEdit": {
+      "srvTimeAdd": "Legg til tjenestetid",
+      "srvTimeOp": "Tjenestetider (valgfritt)"
+    },
+    "sessionAdd": {
+      "invDate": "Ugyldig dato",
+      "sesAdd": "Legg til økt",
+      "sesDate": "Øktsdato",
+      "srvTime": "Tjenestetid"
+    },
+    "sessionEdit": {
+      "deleteConfirm": "Er du sikker på at du ønsker å slette denne økten permanent?",
+      "sesEdit": "Rediger økt"
+    },
+    "tabs": {
+      "mem": "Medlemmer",
+      "noImplement": "Ikke implementert",
+      "ses": "Økter"
+    }
+  },
+  "login": {
+    "email": "E-post",
+    "expiredLink": "Denne lenken har utløpt. Vennligst be om en ny.",
+    "forgot": "Glemt passord?",
+    "goLogin": "Gå til innlogging",
+    "login": "Logg inn",
+    "password": "Passord",
+    "register": "Registrer deg",
+    "registerThankYou": "Takk for at du registrerte deg!",
+    "requestLink": "Be om tilbakestillingslenke",
+    "reset": "Tilbakestill",
+    "resetInstructions": "Skriv inn e-postadressen din så sender vi deg en lenke for å tilbakestille passordet ditt.",
+    "resetPassword": "Tilbakestill passord",
+    "resetSent": "Lenke for tilbakestilling av passord sendt! Sjekk e-posten din.",
+    "setPassword": "Angi passord",
+    "signIn": "Logg inn",
+    "signInTitle": "Logg inn på kontoen din",
+    "validate": {
+      "email": "Vennligst skriv inn en gyldig e-postadresse.",
+      "firstName": "Fornavn er påkrevd.",
+      "invalid": "Ugyldig e-post eller passord.",
+      "lastName": "Etternavn er påkrevd.",
+      "password": "Passord er påkrevd.",
+      "passwordLength": "Passord må være minst 8 tegn.",
+      "passwordMatch": "Passordene stemmer ikke overens.",
+      "selectingChurch": "Vennligst velg en kirke."
+    },
+    "verifyPassword": "Bekreft passord",
+    "welcomeBack": "Velkommen tilbake!",
+    "welcomeName": "Velkommen"
+  },
+  "markdownEditor": {
+    "content": "Innhold",
+    "markdownGuide": "Markdown-guide"
+  },
+  "month": {
+    "apr": "April",
+    "april": "April",
+    "aug": "August",
+    "august": "August",
+    "dec": "Desember",
+    "december": "Desember",
+    "feb": "Februar",
+    "february": "Februar",
+    "jan": "Januar",
+    "january": "Januar",
+    "july": "Juli",
+    "june": "Juni",
+    "mar": "Mars",
+    "march": "Mars",
+    "may": "Mai",
+    "nov": "November",
+    "november": "November",
+    "oct": "Oktober",
+    "october": "Oktober",
+    "sep": "September",
+    "september": "September"
+  },
+  "people": {
+    "editCondition": {
+      "act": "Aktivitet",
+      "anniMonth": "Jubileumsmåned",
+      "any": "Hvilken som helst",
+      "attCamp": "har deltatt (campus)",
+      "attGen": "har deltatt (generelt)",
+      "attGroup": "har deltatt (gruppe)",
+      "attServ": "har deltatt (tjeneste)",
+      "attServTime": "har deltatt (tjenestetid)",
+      "bMonth": "Fødselsmåned",
+      "contains": "inneholder",
+      "donTo": "har donert til",
+      "endW": "slutter med",
+      "field": "Felt",
+      "from": "Fra",
+      "groupMem": "Gruppemedlem",
+      "hasDon": "har donert (generelt)",
+      "isMem": "er medlem av",
+      "marYears": "År gift",
+      "memAtt": "Medlemsoppmøte",
+      "memDon": "Medlemsdonasjoner",
+      "notMem": "er ikke medlem av",
+      "operator": "Operator",
+      "saveCon": "Lagre betingelse",
+      "startW": "begynner med",
+      "to": "Til",
+      "value": "Verdi"
+    },
+    "groups": {
+      "groups": "Grupper",
+      "notMemMsg": "Ikke medlem av noen grupper for øyeblikket."
+    },
+    "household": {
+      "house": " Husholdning"
+    },
+    "householdEdit": {
+      "addMatch": "adresse for å matche",
+      "blankMsg": "Vennligst oppgi et husholdningsnavn.",
+      "child": "Barn",
+      "head": "Leder",
+      "house": " Husholdning",
+      "houseName": "Husholdningsnavn",
+      "other": "Annet",
+      "spouse": "Ektefelle",
+      "updQuestion": "Vil du oppdatere"
+    },
+    "merge": {
+      "merge": "slå sammen",
+      "mergeRec": "Slå sammen poster"
+    },
+    "mergeModal": {
+      "mergeQuestion": "Slå sammen",
+      "with": "med",
+      "fieldCon": "Vennligst løs feltkonfliktene:",
+      "merge": "Slår sammen...",
+      "cancel": "Avbryt",
+      "confirm": "Bekreft",
+      "selMsg": "Vennligst velg en verdi for alle felt",
+      "contactInfo": "Kontaktinformasjon",
+      "householdId": "Husholdnings-ID",
+      "id": "ID",
+      "name": "Navn",
+      "profile": "Profil"
+    },
+    "peopleColumns": {
+      "appFilt": "Bruk filtre",
+      "cust": "Tilpasset",
+      "filt": "Filtre",
+      "noFilt": "Ingen filtre tilgjengelig.",
+      "stand": "Standard"
+    },
+    "peoplePage": {
+      "bDay": "Bursdag",
+      "bDayNo": "Bursdag (ingen år)",
+      "delete": "Slett",
+      "deleteOp": "Slettealternativ",
+      "first": "Fornavn",
+      "last": "Etternavn",
+      "middle": "Mellomnavn",
+      "nameNote": "Navnelappnotater",
+      "photo": "Foto",
+      "ppl": "Personer",
+      "primEmail": "Primær e-post",
+      "primPhone": "Primær telefon",
+      "searchPpl": "Søk etter personer",
+      "recentPpl": "Nylig lagt til personer"
+    },
+    "peopleSearch": {
+      "addCon": "Legg til betingelse",
+      "adv": "Avansert",
+      "advSearch": "Avansert søk",
+      "allPeeps": "Alle personer hvor:",
+      "for": "for",
+      "madeTo": "laget til",
+      "notIn": "Ikke i",
+      "simp": "Enkel",
+      "simpSearch": "Enkelt søk"
+    },
+    "peopleSearchResults": {
+      "noResMsg": "Ingen resultater funnet. Vennligst søk etter et annet navn eller legg til en ny person"
+    },
+    "personAttendance": {
+      "att": "Oppmøte",
+      "noAttMsg": "Ingen oppmøteregistreringer. Oppmøte vil vises når oppmøte er registrert for en gruppeøkt."
+    },
+    "personEdit": {
+      "applyQuestion": "Vil du bruke det på hele",
+      "confirmMsg": "Er du sikker på at du ønsker å slette denne personposten permanent?",
+      "donorNumber": "Givnummer",
+      "exten": "Forlengelse",
+      "family": "familie",
+      "firstReq": "Fornavn er påkrevd",
+      "for": "for",
+      "home": "Hjem",
+      "invalForm": "Ugyldig format",
+      "lastReq": "Etternavn er påkrevd",
+      "maritalStatus": "Sivilstatus",
+      "merge": "Slå sammen",
+      "mobile": "Mobil",
+      "nameNote": "Navnelappnotater",
+      "nickName": "Kallenavn",
+      "persDet": "Personlige detaljer",
+      "upAddress": "Du oppdaterte adressen til",
+      "valEmail": "Vennligst skriv inn en gyldig e-postadresse.",
+      "work": "Arbeid"
+    },
+    "personView": {
+      "home": "Hjem",
+      "memShip": "Medlemskap:",
+      "mobile": "Mobil",
+      "persDet": "Personlige detaljer",
+      "work": "Arbeid"
+    },
+    "tabs": {
+      "att": "Oppmøte",
+      "don": "Donasjoner",
+      "noImplement": "Ikke implementert"
+    },
+    "updateHouseHold": {
+      "update": "Oppdater adresse"
+    },
+    "personForm": {
+      "addForm": "Legg til skjema",
+      "form": "Skjema",
+      "noFormMsg": "Ingen skjemainnsendelser funnet for denne personen"
+    }
+  },
+  "person": {
+    "address": "Adresse",
+    "age": "Alder",
+    "anniversary": "Jubileum",
+    "birthDate": "Fødselsdato",
+    "city": "By",
+    "country": "Land",
+    "displayName": "Visningsnavn",
+    "divorced": "Skilt",
+    "email": "E-post",
+    "female": "Kvinne",
+    "firstName": "Fornavn",
+    "gender": "Kjønn",
+    "inactive": "Inaktiv",
+    "lastName": "Etternavn",
+    "line1": "Linje 1",
+    "line2": "Linje 2",
+    "male": "Mann",
+    "maritalStatus": "Sivilstatus",
+    "married": "Gift",
+    "member": "Medlem",
+    "membership": "Medlemskap",
+    "membershipStatus": "Medlemskapsstatus",
+    "membershp": "Medlemskap",
+    "middleName": "Mellomnavn",
+    "name": "Navn",
+    "nickName": "Kallenavn",
+    "noRec": "Ingen poster funnet",
+    "person": "Person",
+    "phone": "Telefon",
+    "prefix": "Prefiks",
+    "regularAttendee": "Fast deltaker",
+    "single": "Singel",
+    "staff": "Ansatte",
+    "state": "Stat/Provins",
+    "suffix": "Suffiks",
+    "unknown": "Ukjent",
+    "unspecified": "Uspesifisert",
+    "visitor": "Besøkende",
+    "widowed": "Enke/enkemann",
+    "years": "År",
+    "zip": "Postnummer"
+  },
+  "plans": {
+    "assignmentEdit": {
+      "assignPos": "Tildel posisjon",
+      "done": "Ferdig",
+      "editAssign": "Rediger tildeling",
+      "noMem": "Ingen gruppemedlemmer funnet."
+    },
+    "ministryList": {
+      "mins": "Ministry",
+      "noMinMsg": "Ingen ministrier funnet. Vennligst opprett et ministrium."
+    },
+    "ministryPage": {
+      "planTypes": "Plantyper",
+      "plans": "Planer",
+      "teams": "Team"
+    },
+    "planEdit": {
+      "copy": "Kopier fra",
+      "none": "Ingen",
+      "planAdd": "Legg til plan",
+      "planEdit": "Rediger plan",
+      "planReq": "Plannavn er påkrevd.",
+      "servDate": "Tjenestedato",
+      "servReq": "Tjenestedato er påkrevd.",
+      "servOrder": "Inkluder tjenesteorden?"
+    },
+    "planList": {
+      "noPlan": "Ingen planer er lagt til ennå.",
+      "plans": "Planer"
+    },
+    "planPage": {
+      "assign": "Teamtildelinger",
+      "assignments": "Tildelinger",
+      "band": "Band",
+      "noteSave": "Notat lagret",
+      "serviceOrder": "Tjenesteorden",
+      "servicePlan": "Tjenesteplan"
+    },
+    "plansPage": {
+      "selMin": "Velg et ministrium"
+    },
+    "planValidation": {
+      "and": "og",
+      "between": "mellom",
+      "blockCon": "Blokkeringsdato konflikt av",
+      "cons": "Konflikter",
+      "during": "under",
+      "more": "mer",
+      "needed": "trengs.",
+      "notify": "Varsle",
+      "person": "person",
+      "ppl": "folk",
+      "timeCon": "Tidskonflikt mellom",
+      "timeCon2": "Tidskonflikt ved",
+      "to": "til",
+      "val": "Validering",
+      "valPlan": "Planen er gyldig.",
+      "vol": "frivillig",
+      "volNotif": "Alle frivillige varslet.",
+      "volReq": "Frivillighetsforespørsler: ",
+      "pleaseConfirm": "Vennligst logg inn og bekreft."
+    },
+    "positionEdit": {
+      "catName": "Kategorinavn",
+      "catNameReq": "Kategorinavn er påkrevd.",
+      "nameReq": "Navn er påkrevd",
+      "posAdd": "Legg til en posisjon",
+      "posEdit": "Rediger posisjon",
+      "volCount": "Antall frivillige",
+      "volGroup": "Frivilliggruppe"
+    },
+    "positionList": {
+      "load": "Laster...",
+      "persNeed": "1 person trengs",
+      "pos": "Posisjon",
+      "ppl": "Personer",
+      "pplNeed": " personer trengs",
+      "team": "Team"
+    },
+    "teamList": {
+      "noTeam": "Ingen team funnet. Vennligst opprett et team.",
+      "teams": "Team"
+    },
+    "timeEdit": {
+      "disName": "Visningsnavn",
+      "disNameReq": "Visningsnavn er påkrevd.",
+      "endReq": "Slutttid er påkrevd",
+      "startReq": "Starttid er påkrevd",
+      "teamReq": "Vennligst velg team.",
+      "teamNeed": "Trengte team",
+      "timeAdd": "Legg til en tid",
+      "timeEdit": "Rediger tid",
+      "timeEnd": "Slutttid",
+      "timeStart": "Starttid"
+    },
+    "timeList": {
+      "noTime": "Ingen tider er lagt til ennå",
+      "sunServ": "Søndagstjeneste",
+      "times": "Tider"
+    },
+    "printPlan": {
+      "serviceOrder": "TJENESTEORDEN",
+      "time": "Tid",
+      "length": "Lengde"
+    }
+  },
+  "profile": {
+    "profilePage": {
+      "accDel": "Konto sletting",
+      "confirmMsg": "Er du sikker på at du ønsker å slette kontoen din permanent?",
+      "daily": "Daglig",
+      "delAcc": "Slett min konto",
+      "emailMsg": "Vennligst skriv inn en e-postadresse.",
+      "firstMsg": "Vennligst skriv inn fornavn",
+      "freqEmail": "E-postfrekvens",
+      "indiv": "Individuell",
+      "lastMsg": "Vennligst skriv inn etternavn",
+      "linkedAccounts": "Tilknyttede kontoer",
+      "never": "Aldri",
+      "noDirect": "Avmelding fra katalog",
+      "notifMsg": "Velg hvordan du vil motta oppdateringer om private meldinger, samtaler, skjemaer og andre varsler.",
+      "notifPref": "Varslingsinnstillinger",
+      "notifPush": "Tillat push-varsler",
+      "passLong": "Vennligst skriv inn et passord som er minst 8 tegn langt.",
+      "passMatch": "Passordene stemmer ikke overens.",
+      "passNew": "Nytt passord",
+      "passVer": "Bekreft passord",
+      "permWarn": "Forsiktig, disse handlingene er permanente",
+      "profEdit": "Rediger profil",
+      "saveChange": "Endringer lagret.",
+      "valEmail": "Vennligst skriv inn en gyldig e-postadresse."
+    }
+  },
+  "reports": {
+    "reportPage": {
+      "report": "Rapport"
+    },
+    "reportsPage": {
+      "attTrend": "Oppmøtetrend",
+      "bDays": "Bursdager",
+      "dailyGroupAtt": "Daglig gruppeoppmøte",
+      "donSum": "Donasjonssammendrag",
+      "groupAtt": "Gruppens oppmøte",
+      "reports": "Rapporter"
+    }
+  },
+  "reporting": {
+    "detailed": "Detaljert",
+    "downloadOptions": "Nedlastingsalternativer",
+    "fromDate": "Fra dato",
+    "noData": "Ingen data tilgjengelig",
+    "runReport": "Kjør rapport",
+    "sampleTemplate": "Eksempelmal",
+    "summary": "Sammendrag",
+    "toDate": "Til dato",
+    "toDateBeforeFromDate": "Sluttdato kan ikke være før startdato",
+    "useFilter": "Bruk filter"
+  },
+  "selectChurch": {
+    "address1": "Adresse linje 1",
+    "address2": "Adresse linje 2",
+    "another": "Eller søk etter en annen kirke",
+    "city": "By",
+    "confirmRegister": "Bekreft registrering",
+    "country": "Land",
+    "name": "Kirkenavn",
+    "noMatches": "Ingen treff funnet",
+    "register": "Registrer ny kirke",
+    "selectChurch": "Velg en kirke",
+    "state": "Stat/Provins",
+    "validate": {
+      "address": "Adresse er påkrevd.",
+      "city": "By er påkrevd.",
+      "country": "Land er påkrevd.",
+      "name": "Kirkenavn er påkrevd.",
+      "state": "Stat er påkrevd.",
+      "zip": "Postnummer er påkrevd."
+    },
+    "zip": "Postnummer"
+  },
+  "serverAdmin": {
+    "adminPage": {
+      "abb": "Forkortelser",
+      "act": "Aktiv",
+      "arch": "Arkivert",
+      "church": "Kirke",
+      "churches": "Kirker",
+      "churchName": "Kirkenavn",
+      "look": "Oppslag",
+      "noChurch": "Ingen kirker funnet. Vennligst søk etter et annet navn.",
+      "noteFour": "Sammenlignbar programvare er ProPresenter. Det koster $399 for en side-lisens. Jeg antok at gjennomsnittskirken installerer programvaren på 3 datamaskiner og delte våre totale installasjoner med 3 for å få antall kirker. Jeg antok også at kirker vil oppgradere til en nyere versjon hvert 5. år i gjennomsnitt. Så $399 / 5 år / 3 datamaskiner = $26,60 årlige kostnader per datamaskin. Hvis vi kan kvantifisere disse antakelsene, bør vi oppdatere dette tallet.",
+      "noteOne": "Sammenlignbar programvare er Breeze. De tar $72/måned eller $864/år.",
+      "notes": "Notater",
+      "noteThree": "Sammenlignbart innhold er Orange. De tar $1023/år for kirker med 26-50 seere for 252 Basic.",
+      "noteTwo": "Sammenlignbar programvare er SubSplash. De starter på $99/måned eller $1200/år. Dette inkluderer ikke kuttet de tar på donasjoner.",
+      "regist": "Registrert",
+      "servAdmin": "Serveradmin",
+      "usageTrends": "Brukstrender",
+      "valueNotes": "Notater om hvordan verdiene beregnes"
+    },
+    "reportPage": {
+      "report": "Rapport"
+    }
+  },
+  "settings": {
+    "associatePerson": {
+      "change": "Endre"
+    },
+    "churchSettings": {
+      "churchSet": "Kirkeinnstillinger",
+      "subdom": "Subdomene"
+    },
+    "churchSettingsEdit": {
+      "address1": "Adresse linje 1",
+      "address2": "Adresse linje 2",
+      "churchName": "Kirkenavn",
+      "noNameMsg": "Kirkenavn kan ikke være tomt.",
+      "noSubMsg": "Subdomene kan ikke være tomt.",
+      "subdom": "Subdomene",
+      "general": "Generelt",
+      "churchInfo": "Kirkeinformasjon",
+      "churchSettings": "Kirkeinnstillinger"
+    },
+    "domainSettingsEdit": {
+      "act": "Handling",
+      "delete": "Slett",
+      "domain": "Domene",
+      "domains": "Domener",
+      "domMsg": "Du kan få B1-nettstedet ditt til å svare for alle egendefinerte domener du ønsker. Skriv inn det tilknyttede domenenavnet her og legg deretter til følgende post i DNS-en din:",
+      "domMsg2": "Hvis DNS-leverandøren din ikke lar deg legge til en CNAME-post, kan du alternativt bruke en A-post:",
+      "domMsg3": "Hvis du får SSL-feil etter å ha lagt til DNS-oppføringen. Klikk her for å ",
+      "domMsgConnect": "koble til",
+      "domMsg4": ". Dette kan ta opptil 5 minutter."
+    },
+    "directoryApprovalSettingsEdit": {
+      "directoryApprovalGroup": "Kataloggodkjenningsgruppe",
+      "forceMsg": "Denne gruppen vil håndtere alle medlemskatalogoppdateringer. Endringer vil bare bli anvendt etter deres godkjenning.",
+      "groups": "Grupper",
+      "none": "Ingen",
+      "noGroups": "Ingen grupper tilgjengelig"
+    },
+    "feeOptionsSettings": {
+      "creditCardFlatRate": "Fast pris [ Kredittkort ]",
+      "creditCardTransactionFee": "Transaksjonsgebyr [ Kredittkort ]",
+      "achFlatRate": "Fast pris [ ACH ]",
+      "achHardLimit": "Hard grense [ ACH ]",
+      "paypalFlatRate": "Fast pris [ PayPal ]",
+      "paypalTransactionFee": "Transaksjonsgebyr [ PayPal ]"
+    },
+    "givingSettingsEdit": {
+      "forceMsg": "Tvinger automatisk brukere til å dekke transaksjonsgebyrene",
+      "giving": "Donasjoner",
+      "none": "Ingen",
+      "prov": "Tilbyder",
+      "pubKey": "Offentlig nøkkel",
+      "secKey": "Hemmelig nøkkel",
+      "stripe": "Stripe",
+      "paypal": "PayPal",
+      "clientId": "Klient-ID",
+      "clientSecret": "Klienthemmelighet",
+      "transFee": "Transaksjonsgebyr"
+    },
+    "supportContactSettingsEdit": {
+      "supportContact": "Støttekontakt",
+      "forceMsg": "Denne lenken vil bli brukt av brukere for å kontakte kirken",
+      "link": "Lenke",
+      "linkHelperText": "Dette må være enten kirkens e-post eller en lenke til kirkens kontaktskjema"
+    },
+    "visibilityPrefSettingsEdit": {
+      "visibilityPreference": "Synlighetspreferanse",
+      "forceMsg": "Dette vil sette standardverdien for personer som ennå ikke har konfigurert sine innstillinger",
+      "address": "Adresse",
+      "phoneNum": "Telefonnummer",
+      "email": "E-post",
+      "everyone": "Alle",
+      "members": "Medlemmer",
+      "groups": "Kun grupper"
+    },
+    "imageEditor": {
+      "crop": "Beskjær",
+      "upload": "Last opp"
+    },
+    "manageChurch": {
+      "imEx": "Importer/eksporter",
+      "manage": "Administrer",
+      "tools": "Verktøy"
+    },
+    "preview": {
+      "preview": "Forhåndsvisning"
+    },
+    "roleEdit": {
+      "confirmMsg": "Er du sikker på at du ønsker å slette denne rollen permanent?",
+      "roleEdit": "Rediger rolle",
+      "roleName": "Rollenavn",
+      "valMsg": "Vennligst skriv inn et gyldig rollenavn."
+    },
+    "roleMembers": {
+      "confirmMsg": "Er du sikker på at du ønsker å slette denne brukeren fra",
+      "delete": "Slett",
+      "mem": "Medlemmer",
+      "roleAppMsg": "Denne rollen gjelder for alle medlemmer av kirken."
+    },
+    "rolePage": {
+      "noEditMsg": "Tillatelser kan ikke redigeres for rollen som domeneadmin. Domeneadministratorer har full tilgang.",
+      "permEdit": "Rediger tillatelser",
+      "roleEdit": "Rediger rolle:"
+    },
+    "rolePermissions": {
+      "permEdit": "Rediger tillatelser"
+    },
+    "roles": {
+      "acc": "Regnskap",
+      "accDesc": "Har tilgang til å se og administrere donasjoner.",
+      "canEdit": "Kan redigere de fleste data i ",
+      "churchDesc": " inkludert personer, grupper, oppmøte og skjemaer.",
+      "churchStaff": "Kirkens personale",
+      "contAdmin": "Innholdsadministrator",
+      "contAdminDesc": "Kan redigere nettsideinnhold, mobilinnhold og prekener.",
+      "custAdd": "Legg til tilpasset rolle",
+      "everyone": "Alle",
+      "itMsg": "? Det ",
+      "lesAdmin": "Leksjonsadministrator",
+      "lesAdminDesc": "Kan sette opp klasserom og planlegge leksjoner på ",
+      "role": "Rolle",
+      "roleCreate": "Ønsker du å opprette en ny rolle av ",
+      "roles": "Roller"
+    },
+    "userAdd": {
+      "addTo": "Legg til i ",
+      "createNew": "Opprett ny bruker",
+      "errAnother": "Kan ikke lagres. En annen bruker eksisterer allerede for denne e-postadressen.",
+      "errDiff": "Brukerkontoen for denne e-posten er tilknyttet en annen person.",
+      "firstMsg": "Vennligst skriv inn fornavn",
+      "lastMsg": "Vennligst skriv inn etternavn",
+      "noAcc": "Har du ikke en brukerkonto?",
+      "valEmail": "Vennligst skriv inn en gyldig e-post",
+      "valEmailMsg": "Skriv inn en gyldig e-post"
+    }
+  },
+  "tasks": {
+    "actionEdit": {
+      "actType": "Handlingstype",
+      "assignTo": "Tildel til",
+      "editAct": "Rediger handling",
+      "taskAssign": "Tildel en oppgave",
+      "taskNote": "Oppgavenotat",
+      "taskTitle": "Oppgavetittel"
+    },
+    "automationDetails": {
+      "acts": "Handlinger",
+      "auto": "Automatiseringsdetaljer",
+      "rep": "Gjentas",
+      "task": "Oppgave"
+    },
+    "automationEdit": {
+      "autoEdit": "Rediger automatisering",
+      "monthly": "Månedlig",
+      "never": "Aldri",
+      "rep": "Gjenta",
+      "yearly": "Årlig"
+    },
+    "automationsPage": {
+      "auto": "Automatiserte oppgaver",
+      "manageAuto": "Administrer automatiserte oppgaver"
+    },
+    "conditionAttendance": {
+      "anywhere": "Hvor som helst",
+      "campus": "Campus",
+      "eventType": "Hendelsestype",
+      "group": "Gruppe",
+      "hasAtt": "har deltatt",
+      "hasNoAtt": "har ikke deltatt",
+      "op": "Operator",
+      "serv": "Tjeneste",
+      "servTime": "Tjenestetid"
+    },
+    "conditionDate": {
+      "absolute": "Absolutte verdier",
+      "curMonth": "Denne måneden",
+      "dateFull": "Full dato",
+      "datePart": "Datodel",
+      "dayOf": "Ukedag",
+      "fri": "Fredag",
+      "mon": "Mandag",
+      "month": "Måned",
+      "monthDay": "Dag i måneden",
+      "nextMonth": "Neste måned",
+      "op": "Operator",
+      "prevMonth": "Forrige måned",
+      "relative": "Relative verdier",
+      "sat": "Lørdag",
+      "sun": "Søndag",
+      "thurs": "Torsdag",
+      "tues": "Tirsdag",
+      "wed": "Onsdag",
+      "weekDay": "Ukedag",
+      "yearsE": "Forløpte år"
+    },
+    "conditionDetails": {
+      "addCon": "Legg til betingelse",
+      "addConj": "Legg til konjunksjon",
+      "all": "Alle",
+      "any": "Hvilken som helst",
+      "con": "Betingelser:",
+      "trueCon": "av disse betingelsene er sanne"
+    },
+    "conditionEdit": {
+      "conEdit": "Rediger betingelse",
+      "confirmMsg": "Er du sikker på at du ønsker å slette denne betingelsen?",
+      "conInfo": "Kontaktinformasjon",
+      "conType": "Betingelsestype",
+      "gen": "Generelt",
+      "persAtt": "Personlige attributter",
+      "today": "Dagens dato"
+    },
+    "conditionSelect": {
+      "is": "er",
+      "isNot": "er ikke",
+      "op": "Operator"
+    },
+    "conditionText": {
+      "op": "Operator",
+      "contains": "inneholder",
+      "startW": "begynner med",
+      "endW": "slutter med"
+    },
+    "conjunctionEdit": {
+      "and": "OG - Alle betingelsene er sanne",
+      "conjEdit": "Rediger konjunksjon",
+      "conjType": "Konjunksjonstype",
+      "or": "ELLER - Noen av betingelsene er sanne"
+    },
+    "contentPicker": {
+      "group": "Gruppe",
+      "pers": "Person",
+      "sel": "Velg",
+      "selPers": "Velg en person eller gruppe"
+    },
+    "newTask": {
+      "assignPers": "Vennligst tildel denne oppgaven til en person.",
+      "assignTo": "Tildel til",
+      "associatePers": "Vennligst assosier denne oppgaven med en person.",
+      "associateW": "Assosier med",
+      "taskNew": "Ny oppgave",
+      "titleTask": "Vennligst skriv inn en tittel for denne oppgaven."
+    },
+    "selectGroup": {
+      "group": "Gruppe",
+      "sel": "Velg"
+    },
+    "taskList": {
+      "assignGroup": "Tildelt mine grupper",
+      "assignMe": "Tildelt meg",
+      "reqMe": "Forespurt av meg",
+      "tasks": "Oppgaver"
+    },
+    "taskPage": {
+      "ago": "siden",
+      "assignTo": "Tildelt til",
+      "associateW": "Assosiert med",
+      "by": "av",
+      "change": "Endre",
+      "closed": "Lukket",
+      "createdBy": "Opprettet av",
+      "dateCreated": "Opprettelsesdato",
+      "open": "Åpen",
+      "opened": "Åpnet",
+      "stat": "Status",
+      "taskDet": "Oppgavedetaljer"
+    },
+    "tasksPage": {
+      "auto": "Automatiseringer",
+      "showClosed": "Vis lukkede",
+      "showOpen": "Vis åpne",
+      "tasks": "Oppgaver"
+    },
+    "requestedChanges": {
+      "requestedChanges": "Forespurte endringer",
+      "apply": "Bruk",
+      "field": "Felt",
+      "value": "Verdi"
+    }
+  },
+  "songs": {
+    "title": "Sanger",
+    "addSong": "Legg til sang",
+    "arrangement": {
+      "title": "Arrangement",
+      "enterLyrics": "Skriv inn tekster manuelt eller importer fra PraiseCharts",
+      "edit": "Rediger arrangement",
+      "name": "Arrangementnavn",
+      "lyrics": "Tekster",
+      "deleteConfirm": "Er du sikker på at du vil slette dette arrangementet?"
+    },
+    "create": {
+      "title": "Opprett sang",
+      "songTitle": "Sangtittel",
+      "artist": "Artist"
+    },
+    "key": {
+      "edit": "Rediger toneart",
+      "signature": "Toneart",
+      "label": "Etikett",
+      "default": "Standard",
+      "defaultLabel": "Johns toneart",
+      "deleteConfirm": "Er du sikker på at du vil slette denne tonearten?"
+    },
+    "keys": {
+      "title": "Tonearter",
+      "add": "+ Legg til",
+      "import": "Importer",
+      "importPrompt": "Vil du importere tekstsanger fra PraiseCharts?",
+      "addFiles": "Legg til filer",
+      "importFromPraiseCharts": "Importer filer fra PraiseCharts",
+      "addExternalLink": "Legg til ekstern lenke"
+    },
+    "link": {
+      "edit": "Rediger lenke",
+      "url": "Url",
+      "text": "Tekst",
+      "chordChart": "Akkorddiagram",
+      "deleteConfirm": "Er du sikker på at du vil slette denne lenken?"
+    },
+    "details": {
+      "artist": "Artist",
+      "releaseDate": "Utgivelsesdato",
+      "album": "Album",
+      "language": "Språk",
+      "bpm": "BPM",
+      "keySignature": "Toneart",
+      "keys": "Tonearter",
+      "meter": "Taktart",
+      "length": "Lengde",
+      "key": "Toneart",
+      "seconds": "Sekunder"
+    },
+    "library": {
+      "empty": {
+        "title": "Ingen sanger funnet",
+        "message": "Kom i gang ved å legge til din første sang i biblioteket.",
+        "action": "Legg til første sang"
+      },
+      "noResults": "Ingen sanger samsvarer med søkekriteriene dine."
+    },
+    "search": {
+      "placeholder": "Søk etter sanger etter tittel eller artist...",
+      "enterQuery": "Skriv inn et søkeord for å finne sanger.",
+      "noResults": "Ingen sanger funnet for søket ditt.",
+      "createManually": "Opprett manuelt",
+      "title": "Søk etter en sang",
+      "inputLabel": "Tittel eller artist",
+      "inputPlaceholder": "Skriv inn sangtittel eller artistnavn..."
+    }
+  },
+  "stockPhotos": {
+    "photoBy": "Foto av",
+    "providedBy": "Arkivbilder levert av"
+  },
+  "support": {
+    "discussions": "Diskusjoner",
+    "documentation": "Dokumentasjon"
+  }
 }
