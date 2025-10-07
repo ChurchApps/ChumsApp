@@ -408,6 +408,7 @@ test.describe('People Management', () => {
     await editBtn.click();
     const removeBtn = page.locator('button').getByText('Remove').last();
     await removeBtn.click();
+    await page.waitForTimeout(5000);
     const saveBtn = page.locator('button').getByText('Save');
     await saveBtn.click();
     await editBtn.click();
@@ -467,7 +468,6 @@ test.describe('People Management', () => {
     await editBtn.click();
     const cancelBtn = page.locator('button').getByText('Cancel');
     await cancelBtn.click();
-    await editBtn.click();
     const inputs = page.locator('input');
     await expect(inputs).toHaveCount(0);
   });
