@@ -48,7 +48,9 @@
   "common": {
     "add": "Add",
     "amount": "Amount",
+    "cancel": "Cancel",
     "change": "Change",
+    "changePhoto": "Change Photo",
     "close": "Close",
     "delete": "Delete",
     "edit": "Edit",
@@ -56,10 +58,13 @@
     "no": "No",
     "notes": "Notes",
     "person": "Person",
+    "pleaseWait": "Please wait...",
     "remove": "Remove",
+    "save": "Save",
     "search": "Search",
     "searching": "Searching...",
     "title": "Title",
+    "update": "Update",
     "yes": "Yes"
   },
   "components": {
@@ -71,6 +76,7 @@
       "att": "Attendance",
       "dash": "Dashboard",
       "don": "Donations",
+      "form": "Form",
       "forms": "Forms",
       "groups": "Groups",
       "plans": "Plans",
@@ -95,6 +101,7 @@
     "myGroups": "My Groups",
     "people": "People",
     "peopleSearch": {
+      "display": "Display",
       "photo": "Photo",
       "ppl": "People"
     },
@@ -201,6 +208,7 @@
       "every": "Every",
       "interval": "Interval",
       "notFound": "No recurring donations found.",
+      "noSubscriptions": "No recurring donations found.",
       "paymentMethod": "Payment Method",
       "startDate": "Start Date"
     }
@@ -209,14 +217,13 @@
     "batchEdit": {
       "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
       "date": "Date",
-      "edit": "Edit Batch",
       "opName": "Name (optional)"
     },
     "bulkEntry": {
-      "selectPerson": "Select Person or Anonymous",
+      "addDonation": "Add Donation",
       "optionalFields": "Optional Fields",
       "pressEnter": "Press Enter to save and add another donation",
-      "addDonation": "Add Donation"
+      "selectPerson": "Select Person or Anonymous"
     },
     "donationEdit": {
       "anon": "Anonymous",
@@ -225,7 +232,6 @@
       "check": "Check",
       "checkNum": "Check #",
       "date": "Date",
-      "donEdit": "Edit Donation",
       "fund": "Fund",
       "lastDig": "Last 4 digits",
       "method": "Method"
@@ -235,7 +241,6 @@
       "failed": "Failed Donations - ",
       "mark": "Mark as ",
       "msg": "Message: ",
-      "person": "Person: ",
       "unres": " unresolved"
     },
     "donations": {
@@ -259,8 +264,7 @@
       "total": "Total"
     },
     "fundEdit": {
-      "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
-      "edit": "Edit Fund",
+      "confirmMsg": "Are you sure you wish to permanently delete this fund and all donations within it?",
       "errBlank": "Enter a fund name",
       "taxDeductible": "Tax Deductible",
       "trackDonations": "Tracks donations.",
@@ -313,7 +317,8 @@
       "ppl": "People",
       "public": "Public",
       "restrict": "Restricted",
-      "startReqMsg": "Start date is required."
+      "startReqMsg": "Start date is required.",
+      "thankYouMessage": "Thank You Message"
     },
     "formMembers": {
       "act": "Action",
@@ -370,6 +375,17 @@
       "questions": "Questions",
       "unAuth": "Unauthorized"
     }
+  },
+  "formSubmissionEdit": {
+    "confirmDelete": "Are you sure you wish to permanently delete this form submission?",
+    "editForm": "Edit Form Submission",
+    "isRequired": "is required",
+    "submit": "Submit"
+  },
+  "gallery": {
+    "aspectRatio": "Aspect Ratio",
+    "confirmDelete": "Are you sure you wish to permanently delete this image?",
+    "freeForm": "Free Form"
   },
   "groups": {
     "groupAdd": {
@@ -430,7 +446,6 @@
       "attFor": "Attendance for",
       "new": "New",
       "noSesMsg": "There are no sessions.",
-      "session": "Session",
       "sessions": "Sessions"
     },
     "groupsPage": {
@@ -469,19 +484,63 @@
       "ses": "Sessions"
     }
   },
+  "login": {
+    "email": "Email",
+    "expiredLink": "This link has expired. Please request a new one.",
+    "forgot": "Forgot Password?",
+    "goLogin": "Go to Login",
+    "login": "Login",
+    "password": "Password",
+    "register": "Register",
+    "registerThankYou": "Thank you for registering!",
+    "requestLink": "Request Reset Link",
+    "reset": "Reset",
+    "resetInstructions": "Enter your email address and we'll send you a link to reset your password.",
+    "resetPassword": "Reset Password",
+    "resetSent": "Password reset link sent! Check your email.",
+    "setPassword": "Set Password",
+    "signIn": "Sign In",
+    "signInTitle": "Sign in to your account",
+    "validate": {
+      "email": "Please enter a valid email address.",
+      "firstName": "First name is required.",
+      "invalid": "Invalid email or password.",
+      "lastName": "Last name is required.",
+      "password": "Password is required.",
+      "passwordLength": "Password must be at least 8 characters.",
+      "passwordMatch": "Passwords do not match.",
+      "selectingChurch": "Please select a church."
+    },
+    "verifyPassword": "Verify Password",
+    "welcomeBack": "Welcome back!",
+    "welcomeName": "Welcome"
+  },
+  "markdownEditor": {
+    "content": "Content",
+    "markdownGuide": "Markdown Guide"
+  },
   "month": {
     "apr": "April",
+    "april": "April",
     "aug": "August",
+    "august": "August",
     "dec": "December",
+    "december": "December",
     "feb": "February",
+    "february": "February",
     "jan": "January",
+    "january": "January",
     "july": "July",
     "june": "June",
     "mar": "March",
+    "march": "March",
     "may": "May",
     "nov": "November",
+    "november": "November",
     "oct": "October",
-    "sep": "September"
+    "october": "October",
+    "sep": "September",
+    "september": "September"
   },
   "people": {
     "editCondition": {
@@ -592,6 +651,7 @@
     "personEdit": {
       "applyQuestion": "Would you like to apply that to the entire",
       "confirmMsg": "Are you sure you wish to permanently delete this person record?",
+      "donorNumber": "Donor Number",
       "exten": "Extension",
       "family": "family",
       "firstReq": "First name is required",
@@ -599,10 +659,10 @@
       "home": "Home",
       "invalForm": "Invalid Format",
       "lastReq": "Last name is required",
+      "maritalStatus": "Marital Status",
       "merge": "Merge",
       "mobile": "Mobile",
       "nameNote": "Name Tag Notes",
-      "donorNumber": "Donor Number",
       "nickName": "Nickname",
       "persDet": "Personal Details",
       "upAddress": "You updated the address to",
@@ -653,8 +713,11 @@
     "member": "Member",
     "membership": "Membership",
     "membershipStatus": "Membership Status",
+    "membershp": "Membership",
     "middleName": "Middle Name",
+    "name": "Name",
     "nickName": "Nick Name",
+    "noRec": "No records found",
     "person": "Person",
     "phone": "Phone",
     "prefix": "Prefix",
@@ -667,6 +730,7 @@
     "unspecified": "Unspecified",
     "visitor": "Visitor",
     "widowed": "Widowed",
+    "years": "Years",
     "zip": "Zip/Postal"
   },
   "plans": {
@@ -702,6 +766,8 @@
     "planPage": {
       "assign": "Team Assignments",
       "assignments": "Assignments",
+      "band": "Band",
+      "noteSave": "Note saved",
       "serviceOrder": "Service Order",
       "servicePlan": "Service Plan"
     },
@@ -748,9 +814,6 @@
     },
     "teamList": {
       "noTeam": "No teams found. Please create a team.",
-      "peeps": " people",
-      "pers": "1 person",
-      "ppl": "People",
       "teams": "Teams"
     },
     "timeEdit": {
@@ -817,10 +880,38 @@
     }
   },
   "reporting": {
+    "detailed": "Detailed",
+    "downloadOptions": "Download Options",
     "fromDate": "From Date",
-    "toDate": "To Date",
+    "noData": "No data available",
     "runReport": "Run Report",
-    "toDateBeforeFromDate": "End date cannot be before start date"
+    "sampleTemplate": "Sample Template",
+    "summary": "Summary",
+    "toDate": "To Date",
+    "toDateBeforeFromDate": "End date cannot be before start date",
+    "useFilter": "Use Filter"
+  },
+  "selectChurch": {
+    "address1": "Address Line 1",
+    "address2": "Address Line 2",
+    "another": "Or search for another church",
+    "city": "City",
+    "confirmRegister": "Confirm Registration",
+    "country": "Country",
+    "name": "Church Name",
+    "noMatches": "No matches found",
+    "register": "Register New Church",
+    "selectChurch": "Select a Church",
+    "state": "State/Province",
+    "validate": {
+      "address": "Address is required.",
+      "city": "City is required.",
+      "country": "Country is required.",
+      "name": "Church name is required.",
+      "state": "State is required.",
+      "zip": "Zip code is required."
+    },
+    "zip": "Zip/Postal Code"
   },
   "serverAdmin": {
     "adminPage": {
@@ -834,6 +925,7 @@
       "noChurch": "No churches found.  Please search for a different name.",
       "noteFour": "Comparable software is ProPresenter.  It's $399 for a site license.  I made assumptions that the average church installs the software on 3 computers and divided our total installs by 3 to get the number of churches.  I also made the assumption that churches will upgrade to a newer version every 5 years on average.  So $399 / 5 years / 3 computers = $26.60 annual cost per computer.  If we can quantify these assumptions we should update this number.",
       "noteOne": "Comparable software is Breeze.  They charge $72/mo or $864/year.",
+      "notes": "Notes",
       "noteThree": "Comparable content is Orange.  They charge $1023/year for churches with 26-50 viewers for 252 Basic.",
       "noteTwo": "Comparable software is SubSplash.  They start at $99/mo or $1200/year.  This does not include the cut they take on donations.",
       "regist": "Registered",
@@ -1018,18 +1110,26 @@
       "servTime": "Service Time"
     },
     "conditionDate": {
-      "datePart": "Date Part",
-      "dateFull": "Full Date",
-      "weekDay": "Day of Week",
-      "monthDay": "Day of Month",
-      "month": "Month",
-      "yearsE": "Years Elapsed",
-      "op": "Operator",
       "absolute": "Absolute",
-      "relative": "Relative",
-      "prevMonth": "Previous Month",
       "curMonth": "Current Month",
-      "nextMonth": "Next Month"
+      "dateFull": "Full Date",
+      "datePart": "Date Part",
+      "dayOf": "Day of",
+      "fri": "Friday",
+      "mon": "Monday",
+      "month": "Month",
+      "monthDay": "Day of Month",
+      "nextMonth": "Next Month",
+      "op": "Operator",
+      "prevMonth": "Previous Month",
+      "relative": "Relative",
+      "sat": "Saturday",
+      "sun": "Sunday",
+      "thurs": "Thursday",
+      "tues": "Tuesday",
+      "wed": "Wednesday",
+      "weekDay": "Day of Week",
+      "yearsE": "Years Elapsed"
     },
     "conditionDetails": {
       "addCon": "Add Condition",
@@ -1086,19 +1186,20 @@
     "taskList": {
       "assignGroup": "Assigned to My Groups",
       "assignMe": "Assigned to Me",
-      "assignTo": "Assigned to",
-      "associateW": "Associated with",
       "reqMe": "Requested by Me",
       "tasks": "Tasks"
     },
     "taskPage": {
+      "ago": "ago",
       "assignTo": "Assigned to",
       "associateW": "Associated With",
+      "by": "by",
       "change": "Change",
       "closed": "Closed",
       "createdBy": "Created By",
       "dateCreated": "Date Created",
       "open": "Open",
+      "opened": "Opened",
       "stat": "Status",
       "taskDet": "Task Details"
     },
@@ -1185,5 +1286,13 @@
       "inputLabel": "Title or Artist",
       "inputPlaceholder": "Enter song title or artist name..."
     }
+  },
+  "stockPhotos": {
+    "photoBy": "Photo by",
+    "providedBy": "Stock photos provided by"
+  },
+  "support": {
+    "discussions": "Discussions",
+    "documentation": "Documentation"
   }
 }
