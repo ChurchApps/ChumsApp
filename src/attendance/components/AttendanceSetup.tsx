@@ -226,7 +226,7 @@ export const AttendanceSetup = memo(() => {
         );
 
       const serviceHtml =
-        service === undefined ? (
+        service === undefined || service?.name === lastService ? (
           <></>
         ) : (
           <Stack direction="row" spacing={1} alignItems="center">
@@ -304,13 +304,12 @@ export const AttendanceSetup = memo(() => {
           key={key}
           sx={{
             "&:hover": { backgroundColor: "rgba(0,0,0,0.04)" },
-            borderBottom: "1px solid #e0e0e0",
           }}>
-          <TableCell sx={{ py: 2 }}>{campusHtml}</TableCell>
-          <TableCell sx={{ py: 2 }}>{serviceHtml}</TableCell>
-          <TableCell sx={{ py: 2 }}>{serviceTimeHtml}</TableCell>
-          <TableCell sx={{ py: 2 }}>{categoryHtml}</TableCell>
-          <TableCell sx={{ py: 2 }}>{groupHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{campusHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{serviceHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{serviceTimeHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{categoryHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{groupHtml}</TableCell>
         </TableRow>
       );
 
