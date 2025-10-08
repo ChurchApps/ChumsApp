@@ -113,42 +113,52 @@ export const DonationPage: React.FC<Props> = (props) => {
       { label: "methodDetails", key: "methodDetails" },
     ];
 
-    result.push(
-      <>
-        <Button
-          id="download-button"
-          aria-controls={open ? "download-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            setAnchorEl(e.currentTarget);
-          }}>
-          <Icon>download</Icon>
-        </Button>
-        <Menu id="download-menu" anchorEl={anchorEl} open={open} onClose={handleClose} MenuListProps={{ "aria-labelledby": "download-button" }}>
-          <MenuItem onClick={handleClose} dense>
-            <ExportLink data={current_year} filename="current_year_donations" customHeaders={customHeaders} text="Current Year (CSV)" icon="table_chart" />
-          </MenuItem>
-          <MenuItem onClick={handleClose} dense>
-            <Link href={"/donations/print/" + person?.id}>
-              <Button>
-                <Icon>print</Icon> &nbsp; Current Year (PRINT)
-              </Button>
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={handleClose} dense>
-            <ExportLink data={last_year} filename="last_year_donations" customHeaders={customHeaders} text="Last Year (CSV)" icon="table_chart" />
-          </MenuItem>
-          <MenuItem onClick={handleClose} dense>
-            <Link href={"/donations/print/" + person?.id + "?prev=1"}>
-              <Button>
-                <Icon>print</Icon> &nbsp; Last Year (PRINT)
-              </Button>
-            </Link>
-          </MenuItem>
-        </Menu>
-      </>
-    );
+    if (current_year.length > 0 || last_year.length > 0) {
+      result.push(
+        <>
+          <Button
+            id="download-button"
+            aria-controls={open ? "download-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              setAnchorEl(e.currentTarget);
+            }}>
+            <Icon>download</Icon>
+          </Button>
+          <Menu id="download-menu" anchorEl={anchorEl} open={open} onClose={handleClose} MenuListProps={{ "aria-labelledby": "download-button" }}>
+            {current_year.length > 0 && (
+              <MenuItem onClick={handleClose} dense>
+                <ExportLink data={current_year} filename="current_year_donations" customHeaders={customHeaders} text="Current Year (CSV)" icon="table_chart" />
+              </MenuItem>
+            )}
+            {current_year.length > 0 && (
+              <MenuItem onClick={handleClose} dense>
+                <Link href={"/donations/print/" + person?.id}>
+                  <Button>
+                    <Icon>print</Icon> &nbsp; Current Year (PRINT)
+                  </Button>
+                </Link>
+              </MenuItem>
+            )}
+            {last_year.length > 0 && (
+              <MenuItem onClick={handleClose} dense>
+                <ExportLink data={last_year} filename="last_year_donations" customHeaders={customHeaders} text="Last Year (CSV)" icon="table_chart" />
+              </MenuItem>
+            )}
+            {last_year.length > 0 && (
+              <MenuItem onClick={handleClose} dense>
+                <Link href={"/donations/print/" + person?.id + "?prev=1"}>
+                  <Button>
+                    <Icon>print</Icon> &nbsp; Last Year (PRINT)
+                  </Button>
+                </Link>
+              </MenuItem>
+            )}
+          </Menu>
+        </>
+      );
+    }
 
     return result;
   };
