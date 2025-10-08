@@ -54,14 +54,14 @@ export const PositionList = (props: Props) => {
           <button
             type="button"
             onClick={() => props.onAssignmentSelect(position, assignment || { positionId: position.id })}
-            style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
+            style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}>
             {wrappedImage}
             {person.name.display}
           </button>
         );
       } else {
         return (
-          <span>
+          <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             {wrappedImage}
             {person.name.display}
           </span>
@@ -73,7 +73,7 @@ export const PositionList = (props: Props) => {
   const getPeopleLinks = (position: PositionInterface) => {
     const assignments = ArrayHelper.getAll(props.assignments || [], "positionId", position.id);
     const result: JSX.Element[] = [];
-    assignments.forEach((assignment) => result.push(<div key={assignment.id}>{getPersonLink(assignment, position)}</div>));
+    assignments.forEach((assignment) => result.push(<div key={assignment.id} style={{ margin: "2px 0" }}>{getPersonLink(assignment, position)}</div>));
     const remaining = position.count - assignments.length;
     if (remaining > 0 && canEdit) {
       const label = remaining === 1 ? Locale.label("plans.positionList.persNeed") : remaining.toString() + Locale.label("plans.positionList.pplNeed");
@@ -89,24 +89,28 @@ export const PositionList = (props: Props) => {
     return result;
   };
 
-  const getPositionRow = (position: PositionInterface, color: string, first: boolean) => (
-    <TableRow style={{ backgroundColor: color }}>
-      <TableCell style={{ paddingLeft: 10, fontWeight: "bold" }}>{first ? position.categoryName : ""}</TableCell>
-      <TableCell>
-        {canEdit ? (
-          <button
-            type="button"
-            onClick={() => props.onSelect(position)}
-            style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
-            {position.name}
-          </button>
-        ) : (
-          <span>{position.name}</span>
-        )}
-      </TableCell>
-      <TableCell>{getPeopleLinks(position)}</TableCell>
-    </TableRow>
-  );
+  const getPositionRow = (position: PositionInterface, color: string, first: boolean) => {
+    const assignments = ArrayHelper.getAll(props.assignments || [], "positionId", position.id);
+    const hasPeople = assignments.length > 0;
+    return (
+      <TableRow style={{ backgroundColor: color }}>
+        <TableCell style={{ paddingLeft: 10, paddingTop: 10, paddingBottom: 10, fontWeight: "bold", verticalAlign: "top" }}>{first ? position.categoryName : ""}</TableCell>
+        <TableCell style={{ paddingTop: 10, paddingBottom: 10, verticalAlign: "top" }}>
+          {canEdit ? (
+            <button
+              type="button"
+              onClick={() => props.onSelect(position)}
+              style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
+              {position.name}
+            </button>
+          ) : (
+            <span>{position.name}</span>
+          )}
+        </TableCell>
+        <TableCell style={{ paddingTop: hasPeople ? 2 : 10, paddingBottom: hasPeople ? 2 : 10, verticalAlign: "top" }}>{getPeopleLinks(position)}</TableCell>
+      </TableRow>
+    );
+  };
 
   const getPositions = () => {
     let colorIndex = -1;
