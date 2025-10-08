@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "Tonalités",
-      "add": "+ Ajouter",
+      "add": "Ajouter",
       "import": "Importer",
       "importPrompt": "Voulez-vous importer les paroles texte depuis PraiseCharts ?",
       "addFiles": "Ajouter des fichiers",

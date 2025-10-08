@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "키",
-      "add": "+ 추가",
+      "add": "추가",
       "import": "가져오기",
       "importPrompt": "PraiseCharts에서 텍스트 가사를 가져오시겠습니까?",
       "addFiles": "파일 추가",

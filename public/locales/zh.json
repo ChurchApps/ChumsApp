@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "调式",
-      "add": "+ 添加",
+      "add": "添加",
       "import": "导入",
       "importPrompt": "您想从 PraiseCharts 导入文本歌词吗？",
       "addFiles": "添加文件",

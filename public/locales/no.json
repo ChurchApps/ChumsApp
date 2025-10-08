@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "Tonearter",
-      "add": "+ Legg til",
+      "add": "Legg til",
       "import": "Importer",
       "importPrompt": "Vil du importere tekstsanger fra PraiseCharts?",
       "addFiles": "Legg til filer",

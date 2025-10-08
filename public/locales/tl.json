@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "Mga Key",
-      "add": "+ Magdagdag",
+      "add": "Magdagdag",
       "import": "I-import",
       "importPrompt": "Gusto mo bang i-import ang mga text lyrics mula sa PraiseCharts?",
       "addFiles": "Magdagdag ng mga file",

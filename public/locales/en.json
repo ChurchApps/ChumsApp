@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "Keys",
-      "add": "+ Add",
+      "add": "Add",
       "import": "Import",
       "importPrompt": "Would you like to import the text lyrics from PraiseCharts?",
       "addFiles": "Add Files",

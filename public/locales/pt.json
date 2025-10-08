@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "Tons",
-      "add": "+ Adicionar",
+      "add": "Adicionar",
       "import": "Importar",
       "importPrompt": "Deseja importar as letras das músicas do PraiseCharts?",
       "addFiles": "Adicionar Arquivos",

@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "Tonalità",
-      "add": "+ Aggiungi",
+      "add": "Aggiungi",
       "import": "Importa",
       "importPrompt": "Vuoi importare i testi delle canzoni da PraiseCharts?",
       "addFiles": "Aggiungi File",

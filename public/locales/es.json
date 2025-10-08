@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "Tonalidades",
-      "add": "+ Agregar",
+      "add": "Agregar",
       "import": "Importar",
       "importPrompt": "¿Desea importar las letras de texto desde PraiseCharts?",
       "addFiles": "Agregar Archivos",

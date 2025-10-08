@@ -1243,7 +1243,7 @@
     },
     "keys": {
       "title": "Tonarten",
-      "add": "+ Hinzufügen",
+      "add": "Hinzufügen",
       "import": "Importieren",
       "importPrompt": "Möchten Sie die Textlieder von PraiseCharts importieren?",
       "addFiles": "Dateien hinzufügen",
