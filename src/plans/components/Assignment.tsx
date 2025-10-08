@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Grid, TextField, Card, CardContent, Typography, Stack, Button } from "@mui/material";
+import { Grid, TextField, Card, CardContent, Typography, Stack, Button, Snackbar, Alert } from "@mui/material";
 import { PublishedWithChanges as AutoAssignIcon, Add as AddIcon, StickyNote2 as NotesIcon, Save as SaveIcon } from "@mui/icons-material";
 import {
   type AssignmentInterface,
@@ -38,6 +38,7 @@ export const Assignment = (props: Props) => {
   const [assignment, setAssignment] = React.useState<AssignmentInterface>(null);
   const [times, setTimes] = React.useState<TimeInterface[]>([]);
   const [blockoutDates, setBlockoutDates] = React.useState<BlockoutDateInterface[]>([]);
+  const [showSuccessMessage, setShowSuccessMessage] = React.useState(false);
 
   const getAddPositionActions = () => canEdit ? (
     <Stack direction="row" spacing={1}>
@@ -119,9 +120,9 @@ export const Assignment = (props: Props) => {
   }, [props.plan]);
 
   const handleSave = () => {
-    ApiHelper.post("/plans", [plan], "DoingApi");
-    // Show success message - you could replace alert with a snackbar/toast
-    alert(Locale.label("plans.planPage.noteSave"));
+    ApiHelper.post("/plans", [plan], "DoingApi").then(() => {
+      setShowSuccessMessage(true);
+    });
   };
 
   const handleAutoAssign = async () => {
@@ -256,6 +257,21 @@ export const Assignment = (props: Props) => {
           <PlanValidation plan={plan} positions={positions} assignments={assignments} people={people} times={times} blockoutDates={blockoutDates} onUpdate={loadData} />
         </Stack>
       </Grid>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={showSuccessMessage}
+        autoHideDuration={3000}
+        onClose={() => setShowSuccessMessage(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+        <Alert
+          onClose={() => setShowSuccessMessage(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}>
+          {Locale.label("plans.planPage.noteSave") || "Notes saved successfully"}
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 };
