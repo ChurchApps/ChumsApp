@@ -174,12 +174,9 @@ export const DonationBatchesPage = () => {
             </Stack>
           </TableCell>
           <TableCell>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Icon sx={{ color: "success.main", fontSize: 18 }}>attach_money</Icon>
-              <Typography variant="body2" sx={{ fontWeight: 600, color: "success.main" }}>
-                {CurrencyHelper.formatCurrency(b.totalAmount)}
-              </Typography>
-            </Stack>
+            <Typography variant="body2" sx={{ fontWeight: 600, color: "success.main" }}>
+              {CurrencyHelper.formatCurrency(b.totalAmount)}
+            </Typography>
           </TableCell>
           <TableCell>{editLink}</TableCell>
         </TableRow>
