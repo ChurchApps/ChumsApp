@@ -2,7 +2,7 @@ import React, { useEffect, memo, useCallback, useMemo } from "react";
 import { type ArrangementInterface, type SongDetailInterface } from "../../../helpers";
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
 import { ApiHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
-import { Card, CardContent, Typography, Stack, IconButton, Box } from "@mui/material";
+import { Card, CardContent, Typography, Stack, IconButton, Box, Alert, Button } from "@mui/material";
 import { Edit as EditIcon, QueueMusic as ArrangementIcon } from "@mui/icons-material";
 import { Keys } from "./Keys";
 import { ArrangementEdit } from "./ArrangementEdit";
@@ -18,11 +18,14 @@ export const Arrangement = memo((props: Props) => {
   const [songDetail, setSongDetail] = React.useState<SongDetailInterface>(null);
   const canEdit = UserHelper.checkAccess(Permissions.contentApi.content.edit);
   const [edit, setEdit] = React.useState(false);
+  const [canImportLyrics, setCanImportLyrics] = React.useState(false);
 
   const loadData = useCallback(async () => {
     if (props.arrangement) {
       const sd: SongDetailInterface = await ApiHelper.get("/songDetails/" + props.arrangement.songDetailId, "ContentApi");
       setSongDetail(sd);
+      // Check if lyrics can be imported
+      if (!props.arrangement?.lyrics && sd?.praiseChartsId) setCanImportLyrics(true);
     }
   }, [props.arrangement]);
 
@@ -49,6 +52,7 @@ export const Arrangement = memo((props: Props) => {
     }
     a.lyrics = newLines.join("\n");
     ApiHelper.post("/arrangements", [a], "ContentApi").then(() => {
+      setCanImportLyrics(false);
       props.reload();
     });
   }, [songDetail?.praiseChartsId, props.arrangement, props.reload]);
@@ -89,6 +93,24 @@ export const Arrangement = memo((props: Props) => {
             )}
           </Stack>
 
+          {/* Import Lyrics Alert */}
+          {canImportLyrics && canEdit && (
+            <Alert
+              severity="success"
+              sx={{ mb: 2 }}
+              action={
+                <Button
+                  onClick={importLyrics}
+                  variant="contained"
+                  color="success"
+                  size="small">
+                  {Locale.label("songs.keys.import") || "Import"}
+                </Button>
+              }>
+              {Locale.label("songs.keys.importPrompt") || "Lyrics are available for import from PraiseCharts."}
+            </Alert>
+          )}
+
           <Box
             className="chordPro"
             sx={{
@@ -111,13 +133,13 @@ export const Arrangement = memo((props: Props) => {
         </CardContent>
       </Card>
     ),
-    [props.arrangement, canEdit]
+    [props.arrangement, canEdit, canImportLyrics, importLyrics]
   );
 
   return (
     <Stack spacing={3}>
-      <Keys arrangement={props.arrangement} songDetail={songDetail} importLyrics={canEdit ? importLyrics : undefined} />
       {!edit || !canEdit ? arrangementCard : <ArrangementEdit arrangement={props.arrangement} onSave={handleSave} onCancel={() => setEdit(false)} />}
+      <Keys arrangement={props.arrangement} songDetail={songDetail} />
     </Stack>
   );
 });
