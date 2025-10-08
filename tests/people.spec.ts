@@ -545,7 +545,6 @@ test.describe('People Management', () => {
     const deleteBtn = page.locator('button').getByText('Delete');
     await deleteBtn.click();
 
-    // await navigateToPeople(page);
     const menuBtn = page.locator('[id="primaryNavButton"]').getByText('expand_more');
     await menuBtn.click();
     const peopleHomeBtn = page.locator('[data-testid="nav-item-people"]');
