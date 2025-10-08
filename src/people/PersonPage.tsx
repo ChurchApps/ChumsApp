@@ -87,8 +87,8 @@ export const PersonPage = () => {
     const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
     const p = { ...person };
     p.conversationId = result[0].id;
-    ApiHelper.post("/people", [p], "MembershipApi");
-    refetch(); // Refetch data instead of updating local state
+    await ApiHelper.post("/people", [p], "MembershipApi");
+    refetch();
     return result[0].id;
   };
 
@@ -117,7 +117,7 @@ export const PersonPage = () => {
         );
         break;
       case "notes":
-        currentTab = <PersonNotes key="notes" context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />;
+        currentTab = <PersonNotes key={`notes-${person?.conversationId || 'new'}`} context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />;
         break;
       case "attendance":
         currentTab = <PersonAttendance key="attendance" personId={person.id} updatedFunction={refetch} />;
