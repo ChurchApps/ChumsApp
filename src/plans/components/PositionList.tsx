@@ -2,6 +2,7 @@ import React from "react";
 import { Badge, Table, TableBody, TableCell, TableHead, TableRow, Avatar } from "@mui/material";
 import {
   type AssignmentInterface,
+  type GroupInterface,
   type PersonInterface,
   type PositionInterface,
 } from "@churchapps/helpers";
@@ -17,6 +18,7 @@ interface Props {
   positions: PositionInterface[];
   assignments: AssignmentInterface[];
   people: PersonInterface[];
+  groups: GroupInterface[];
   onSelect?: (position: PositionInterface) => void;
   onAssignmentSelect?: (position: PositionInterface, assignment: AssignmentInterface) => void;
 }
@@ -92,6 +94,7 @@ export const PositionList = (props: Props) => {
   const getPositionRow = (position: PositionInterface, color: string, first: boolean) => {
     const assignments = ArrayHelper.getAll(props.assignments || [], "positionId", position.id);
     const hasPeople = assignments.length > 0;
+    const group = position.groupId && Array.isArray(props.groups) ? ArrayHelper.getOne(props.groups, "id", position.groupId) : null;
     return (
       <TableRow style={{ backgroundColor: color }}>
         <TableCell style={{ paddingLeft: 10, paddingTop: 10, paddingBottom: 10, fontWeight: "bold", verticalAlign: "top" }}>{first ? position.categoryName : ""}</TableCell>
@@ -102,9 +105,13 @@ export const PositionList = (props: Props) => {
               onClick={() => props.onSelect(position)}
               style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
               {position.name}
+              {group && <span style={{ color: "#999", marginLeft: "8px" }}>({group.name})</span>}
             </button>
           ) : (
-            <span>{position.name}</span>
+            <span>
+              {position.name}
+              {group && <span style={{ color: "#999", marginLeft: "8px" }}>({group.name})</span>}
+            </span>
           )}
         </TableCell>
         <TableCell style={{ paddingTop: hasPeople ? 2 : 10, paddingBottom: hasPeople ? 2 : 10, verticalAlign: "top" }}>{getPeopleLinks(position)}</TableCell>

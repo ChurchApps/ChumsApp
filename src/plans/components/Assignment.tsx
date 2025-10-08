@@ -4,6 +4,7 @@ import { PublishedWithChanges as AutoAssignIcon, Add as AddIcon, StickyNote2 as 
 import {
   type AssignmentInterface,
   type BlockoutDateInterface,
+  type GroupInterface,
   type PersonInterface,
   type PlanInterface,
   type PositionInterface,
@@ -32,6 +33,7 @@ export const Assignment = (props: Props) => {
   const [positions, setPositions] = React.useState<PositionInterface[]>([]);
   const [assignments, setAssignments] = React.useState<AssignmentInterface[]>([]);
   const [people, setPeople] = React.useState<PersonInterface[]>([]);
+  const [groups, setGroups] = React.useState<GroupInterface[]>([]);
   const [position, setPosition] = React.useState<PositionInterface>(null);
   const [assignment, setAssignment] = React.useState<AssignmentInterface>(null);
   const [times, setTimes] = React.useState<TimeInterface[]>([]);
@@ -90,9 +92,16 @@ export const Assignment = (props: Props) => {
 
   const loadData = useCallback(async () => {
     setPlan(props.plan);
-    ApiHelper.get("/positions/plan/" + props.plan?.id, "DoingApi").then((data) => {
-      setPositions(data);
-    });
+    const positionsData = await ApiHelper.get("/positions/plan/" + props.plan?.id, "DoingApi");
+    setPositions(positionsData);
+
+    const groupIds = ArrayHelper.getUniqueValues(positionsData, "groupId").filter(id => id);
+    if (groupIds.length > 0) {
+      ApiHelper.get("/groups/ids?ids=" + groupIds.join(","), "MembershipApi").then((data: GroupInterface[]) => {
+        setGroups(data);
+      });
+    }
+
     ApiHelper.get("/times/plan/" + props.plan?.id, "DoingApi").then((data) => {
       setTimes(data);
     });
@@ -156,7 +165,7 @@ export const Assignment = (props: Props) => {
               </Stack>
               {getAddPositionActions()}
             </Stack>
-            <PositionList positions={positions} assignments={assignments} people={people} onSelect={(p) => setPosition(p)} onAssignmentSelect={handleAssignmentSelect} />
+            <PositionList positions={positions} assignments={assignments} people={people} groups={groups} onSelect={(p) => setPosition(p)} onAssignmentSelect={handleAssignmentSelect} />
           </CardContent>
         </Card>
 
