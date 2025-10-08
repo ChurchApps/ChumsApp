@@ -1,4 +1,5 @@
 export * from "../../components";
+export { CategorySelect } from "./CategorySelect";
 export { GroupAdd } from "./GroupAdd";
 export { GroupBanner } from "./GroupBanner";
 export { GroupDetails } from "./GroupDetails";
