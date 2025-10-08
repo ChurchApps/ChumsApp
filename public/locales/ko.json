@@ -421,7 +421,7 @@
       "parPick": "부모 픽업",
       "prinName": "이름표 인쇄",
       "selImg": "사진 선택",
-      "slug": "슬러그"
+      "slug": "슬러그 (URL에 사용되는 키 이름)"
     },
     "groupMembers": {
       "groupMem": "그룹 멤버",

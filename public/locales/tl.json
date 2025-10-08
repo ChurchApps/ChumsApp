@@ -421,7 +421,7 @@
       "parPick": "Pagkuha ng Magulang",
       "prinName": "I-print ang Name Tag",
       "selImg": "Piliin ang Larawan",
-      "slug": "Slug"
+      "slug": "Slug (key na pangalan na ginagamit para sa mga url)"
     },
     "groupMembers": {
       "groupMem": "Mga Miyembro ng Grupo",

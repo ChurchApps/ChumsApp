@@ -421,7 +421,7 @@
       "parPick": "Retirada pelos Pais",
       "prinName": "Imprimir Etiqueta",
       "selImg": "Selecionar Foto",
-      "slug": "Slug"
+      "slug": "Slug (nome chave usado para urls)"
     },
     "groupMembers": {
       "groupMem": "Membros do Grupo",

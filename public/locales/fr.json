@@ -421,7 +421,7 @@
       "parPick": "Ramassage des parents",
       "prinName": "Imprimer l'Étiquette",
       "selImg": "Sélectionner une photo",
-      "slug": "Slug"
+      "slug": "Slug (nom de clé utilisé pour les urls)"
     },
     "groupMembers": {
       "groupMem": "Membres du groupe",

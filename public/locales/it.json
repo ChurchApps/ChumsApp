@@ -421,7 +421,7 @@
       "parPick": "Ritiro dei Genitori",
       "prinName": "Stampa Targhetta",
       "selImg": "Seleziona Foto",
-      "slug": "Slug"
+      "slug": "Slug (nome chiave usato per gli url)"
     },
     "groupMembers": {
       "groupMem": "Membri del Gruppo",

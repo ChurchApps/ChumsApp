@@ -421,7 +421,7 @@
       "parPick": "Abholung durch Eltern",
       "prinName": "Namensschild drucken",
       "selImg": "Foto auswählen",
-      "slug": "Slug"
+      "slug": "Slug (Schlüsselname für URLs)"
     },
     "groupMembers": {
       "groupMem": "Gruppenmitglieder",

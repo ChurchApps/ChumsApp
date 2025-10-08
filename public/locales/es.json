@@ -421,7 +421,7 @@
       "parPick": "Recogida de Padres",
       "prinName": "Imprimir Etiqueta de Nombre",
       "selImg": "Seleccionar Foto",
-      "slug": "Slug"
+      "slug": "Slug (nombre clave usado para urls)"
     },
     "groupMembers": {
       "groupMem": "Miembros del Grupo",

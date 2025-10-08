@@ -421,7 +421,7 @@
       "parPick": "Henting av foreldre",
       "prinName": "Skriv ut navnelapp",
       "selImg": "Velg bilde",
-      "slug": "Slug"
+      "slug": "Slug (nøkkelnavn brukt for url-er)"
     },
     "groupMembers": {
       "groupMem": "Gruppemedlemmer",
