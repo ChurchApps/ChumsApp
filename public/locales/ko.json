@@ -1236,6 +1236,7 @@
       "edit": "키 편집",
       "signature": "조표",
       "label": "레이블",
+      "labelOptional": "레이블 (선택사항)",
       "default": "기본값",
       "defaultLabel": "John의 키",
       "deleteConfirm": "이 키를 삭제하시겠습니까?"

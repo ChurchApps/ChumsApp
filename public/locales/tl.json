@@ -1236,6 +1236,7 @@
       "edit": "I-edit ang key",
       "signature": "Key signature",
       "label": "Label",
+      "labelOptional": "Label (opsyonal)",
       "default": "Default",
       "defaultLabel": "Key ni John",
       "deleteConfirm": "Sigurado ka bang gusto mong tanggalin ang key na ito?"

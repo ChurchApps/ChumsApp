@@ -1236,6 +1236,7 @@
       "edit": "Editar Tom",
       "signature": "Tom",
       "label": "Rótulo",
+      "labelOptional": "Rótulo (opcional)",
       "default": "Padrão",
       "defaultLabel": "Tom do John",
       "deleteConfirm": "Tem certeza que deseja excluir este tom?"

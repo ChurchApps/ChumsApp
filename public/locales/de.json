@@ -1236,6 +1236,7 @@
       "edit": "Tonart bearbeiten",
       "signature": "Tonart",
       "label": "Bezeichnung",
+      "labelOptional": "Bezeichnung (optional)",
       "default": "Standard",
       "defaultLabel": "Johns Tonart",
       "deleteConfirm": "Sind Sie sicher, dass Sie diese Tonart löschen möchten?"

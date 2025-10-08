@@ -1236,6 +1236,7 @@
       "edit": "编辑调式",
       "signature": "调号",
       "label": "标签",
+      "labelOptional": "标签（可选）",
       "default": "默认",
       "defaultLabel": "John 的调式",
       "deleteConfirm": "您确定要删除此调式吗？"

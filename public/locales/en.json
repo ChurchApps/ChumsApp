@@ -1236,6 +1236,7 @@
       "edit": "Edit Key",
       "signature": "Key Signature",
       "label": "Label",
+      "labelOptional": "Label (optional)",
       "default": "Default",
       "defaultLabel": "John's Key",
       "deleteConfirm": "Are you sure you want to delete this key?"

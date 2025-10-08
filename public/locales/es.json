@@ -1236,6 +1236,7 @@
       "edit": "Editar Tonalidad",
       "signature": "Armadura de Clave",
       "label": "Etiqueta",
+      "labelOptional": "Etiqueta (opcional)",
       "default": "Predeterminado",
       "defaultLabel": "Tonalidad de John",
       "deleteConfirm": "¿Está seguro de que desea eliminar esta tonalidad?"

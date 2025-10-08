@@ -1236,6 +1236,7 @@
       "edit": "Modifica Tonalità",
       "signature": "Tonalità",
       "label": "Etichetta",
+      "labelOptional": "Etichetta (facoltativo)",
       "default": "Predefinito",
       "defaultLabel": "Tonalità di John",
       "deleteConfirm": "Sei sicuro di voler eliminare questa tonalità?"

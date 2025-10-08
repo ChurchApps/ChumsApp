@@ -1236,6 +1236,7 @@
       "edit": "Rediger toneart",
       "signature": "Toneart",
       "label": "Etikett",
+      "labelOptional": "Etikett (valgfritt)",
       "default": "Standard",
       "defaultLabel": "Johns toneart",
       "deleteConfirm": "Er du sikker på at du vil slette denne tonearten?"
