@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Grid, Icon, Box, Card, CardContent, Container
+  Grid, Icon, Box, Card, CardContent, Container, Stack, Typography
 } from "@mui/material";
 import { CalendarMonth as CalendarIcon, Group as GroupIcon } from "@mui/icons-material";
 import { Locale, UserHelper, ApiHelper, PageHeader } from "@churchapps/apphelper";
@@ -78,14 +78,57 @@ export const AttendancePage = () => {
         icon={<CalendarIcon />}
         title={Locale.label("attendance.attendancePage.att")}
         subtitle="Track and manage church attendance across all services"
-        statistics={[
-          { icon: <Icon>church</Icon>, value: stats.campuses.toString(), label: "Campuses" },
-          { icon: <CalendarIcon />, value: stats.serviceTimes.toString(), label: "Service Times" },
-          { icon: <Icon>schedule</Icon>, value: stats.scheduledGroups.toString(), label: "Scheduled Groups" },
-          { icon: <Icon>groups</Icon>, value: stats.unscheduledGroups.toString(), label: "Unscheduled Groups" },
-          { icon: <GroupIcon />, value: stats.totalGroups.toString(), label: "Total Groups" },
-        ]}
-      />
+      >
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={{ xs: 2, sm: 2, md: 4 }}
+          sx={{
+            position: { xs: "static", md: "absolute" },
+            left: { md: "50%" },
+            top: { md: "50%" },
+            transform: { md: "translateY(-50%)" },
+            right: { md: "24px" },
+            justifyContent: { md: "space-between" },
+            flexWrap: "wrap"
+          }}
+        >
+          <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Icon sx={{ color: "#FFF", fontSize: 24 }}>church</Icon>
+              <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.campuses}</Typography>
+            </Stack>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Campuses</Typography>
+          </Stack>
+          <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <CalendarIcon sx={{ color: "#FFF", fontSize: 24 }} />
+              <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.serviceTimes}</Typography>
+            </Stack>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Services</Typography>
+          </Stack>
+          <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Icon sx={{ color: "#FFF", fontSize: 24 }}>schedule</Icon>
+              <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.scheduledGroups}</Typography>
+            </Stack>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Scheduled</Typography>
+          </Stack>
+          <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Icon sx={{ color: "#FFF", fontSize: 24 }}>groups</Icon>
+              <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.unscheduledGroups}</Typography>
+            </Stack>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Unscheduled</Typography>
+          </Stack>
+          <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <GroupIcon sx={{ color: "#FFF", fontSize: 24 }} />
+              <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalGroups}</Typography>
+            </Stack>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Total Groups</Typography>
+          </Stack>
+        </Stack>
+      </PageHeader>
       <AttendanceNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} />
 
       {/* Main Content */}
