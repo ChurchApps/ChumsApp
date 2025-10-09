@@ -89,7 +89,7 @@ export const PersonBanner = memo((props: Props) => {
   if (!person) return null;
 
   return (
-    <div style={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px" }}>
+    <div style={{ backgroundColor: "var(--c1l2)", color: "#FFF", padding: "24px", position: "relative" }}>
       <Stack direction={{ xs: "column", lg: "row" }} spacing={{ xs: 2, md: 4 }} alignItems={{ xs: "flex-start", md: "center" }} sx={{ width: "100%" }}>
         {/* Column 1: Avatar + Name + Status */}
         <Stack direction="row" spacing={2} alignItems="center" sx={{ flexShrink: 0 }}>
@@ -127,7 +127,7 @@ export const PersonBanner = memo((props: Props) => {
         </Stack>
 
         {/* Column 2: Contact Info */}
-        <Stack spacing={0.5} sx={{ flex: 1, minWidth: 0 }}>
+        <Stack spacing={0.5} sx={{ position: { xs: "static", lg: "absolute" }, left: { lg: "50%" }, top: { lg: "50%" }, transform: { lg: "translateY(-50%)" }, minWidth: 0 }}>
           {contactInfo.map((info, idx) => (
             <Stack key={idx} direction="row" spacing={1} alignItems="center" sx={{ minWidth: 0 }}>
               {info.icon}
