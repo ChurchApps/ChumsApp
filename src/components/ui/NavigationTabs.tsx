@@ -58,7 +58,7 @@ export const NavigationTabs = memo((props: Props) => {
             minHeight: 48,
             textTransform: "none",
             fontSize: "0.95rem",
-            fontWeight: 500,
+            fontWeight: 700,
           },
         }}>
         {tabs.map((tab) => (
