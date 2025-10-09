@@ -1,15 +1,15 @@
 import { type FormInterface } from "@churchapps/helpers";
-import { Tabs, Tab, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import {
   Group as GroupIcon,
   VolunteerActivism as DonationIcon,
   CalendarMonth as AttendanceIcon,
   Notes as NotesIcon,
   Assignment as FormIcon,
-  ExpandMore as ExpandMoreIcon,
   Person as PersonIcon,
 } from "@mui/icons-material";
-import React, { memo, useState } from "react";
+import React, { memo, useMemo } from "react";
+import { NavigationTabs, type NavigationTab, type NavigationDropdown } from "../../components/ui";
 
 interface Props {
   selectedTab: string;
@@ -20,119 +20,39 @@ interface Props {
 
 export const PersonNavigation = memo((props: Props) => {
   const { selectedTab, onTabChange, allForms, onFormSelect } = props;
-  const [formsMenuAnchor, setFormsMenuAnchor] = useState<null | HTMLElement>(null);
 
-  const handleFormsMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setFormsMenuAnchor(event.currentTarget);
-  };
+  const tabs: NavigationTab[] = useMemo(() => [
+    { value: "details", label: "Details", icon: <PersonIcon /> },
+    { value: "notes", label: "Notes", icon: <NotesIcon /> },
+    { value: "groups", label: "Groups", icon: <GroupIcon /> },
+    { value: "attendance", label: "Attendance", icon: <AttendanceIcon /> },
+    { value: "donations", label: "Donations", icon: <DonationIcon /> },
+  ], []);
 
-  const handleFormsMenuClose = () => {
-    setFormsMenuAnchor(null);
-  };
+  const dropdown: NavigationDropdown<FormInterface> | undefined = useMemo(() => {
+    if (!allForms || allForms.length === 0) return undefined;
 
-  const handleFormSelect = (form: FormInterface) => {
-    onFormSelect?.(form);
-    handleFormsMenuClose();
-  };
-
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
-    if (newValue !== "forms") onTabChange(newValue);
-  };
+    return {
+      value: "forms",
+      label: "Forms",
+      icon: <FormIcon />,
+      items: allForms,
+      renderItem: (form: FormInterface) => (
+        <Stack direction="row" spacing={1} alignItems="center">
+          <FormIcon sx={{ color: "text.secondary", fontSize: 20 }} />
+          <Typography variant="body2">{form.name}</Typography>
+        </Stack>
+      ),
+      onItemSelect: onFormSelect || (() => {}),
+    };
+  }, [allForms, onFormSelect]);
 
   return (
-    <div style={{ backgroundColor: "#fff", borderBottom: "1px solid #e0e0e0" }}>
-      <Tabs
-        value={selectedTab === "form" ? "forms" : selectedTab}
-        onChange={handleTabChange}
-        variant="fullWidth"
-        sx={{
-          minHeight: 48,
-          "& .MuiTab-root": {
-            minHeight: 48,
-            textTransform: "none",
-            fontSize: "0.95rem",
-            fontWeight: 500,
-          },
-        }}>
-        <Tab
-          value="details"
-          label="Details"
-          icon={<PersonIcon />}
-          iconPosition="start"
-          sx={{ gap: 1 }}
-        />
-        <Tab
-          value="notes"
-          label="Notes"
-          icon={<NotesIcon />}
-          iconPosition="start"
-          sx={{ gap: 1 }}
-        />
-        <Tab
-          value="groups"
-          label="Groups"
-          icon={<GroupIcon />}
-          iconPosition="start"
-          sx={{ gap: 1 }}
-        />
-        <Tab
-          value="attendance"
-          label="Attendance"
-          icon={<AttendanceIcon />}
-          iconPosition="start"
-          sx={{ gap: 1 }}
-        />
-        <Tab
-          value="donations"
-          label="Donations"
-          icon={<DonationIcon />}
-          iconPosition="start"
-          sx={{ gap: 1 }}
-        />
-        {allForms && allForms.length > 0 && (
-          <Tab
-            value="forms"
-            label={
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <span>Forms</span>
-                <ExpandMoreIcon sx={{ fontSize: 18 }} />
-              </Stack>
-            }
-            icon={<FormIcon />}
-            iconPosition="start"
-            onClick={handleFormsMenuOpen}
-            sx={{ gap: 1 }}
-          />
-        )}
-      </Tabs>
-      <Menu
-        anchorEl={formsMenuAnchor}
-        open={Boolean(formsMenuAnchor)}
-        onClose={handleFormsMenuClose}
-        PaperProps={{
-          sx: {
-            minWidth: 200,
-            maxHeight: 300,
-            mt: 0.5,
-          },
-        }}>
-        {allForms?.map((form) => (
-          <MenuItem
-            key={form.id}
-            onClick={() => handleFormSelect(form)}
-            sx={{
-              py: 1.5,
-              px: 2,
-              "&:hover": { backgroundColor: "action.hover" },
-            }}>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <FormIcon sx={{ color: "text.secondary", fontSize: 20 }} />
-              <Typography variant="body2">{form.name}</Typography>
-            </Stack>
-          </MenuItem>
-        ))}
-      </Menu>
-    </div>
+    <NavigationTabs
+      selectedTab={selectedTab === "form" ? "forms" : selectedTab}
+      onTabChange={onTabChange}
+      tabs={tabs}
+      dropdown={dropdown}
+    />
   );
 });
