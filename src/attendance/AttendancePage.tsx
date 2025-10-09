@@ -1,10 +1,11 @@
 import React from "react";
 import {
-  Grid, Icon, Box, Button, Stack, Card, CardContent, Container 
+  Grid, Icon, Box, Card, CardContent, Container
 } from "@mui/material";
-import { CalendarMonth as CalendarIcon, Group as GroupIcon, TrendingUp as TrendingIcon, Settings as SettingsIcon } from "@mui/icons-material";
+import { CalendarMonth as CalendarIcon, Group as GroupIcon } from "@mui/icons-material";
 import { Locale, UserHelper, ApiHelper, PageHeader } from "@churchapps/apphelper";
 import { AttendanceSetup } from "./components/AttendanceSetup";
+import { AttendanceNavigation } from "./components/AttendanceNavigation";
 import { Permissions } from "@churchapps/apphelper";
 import { ReportWithFilter } from "../components/reporting";
 
@@ -17,23 +18,6 @@ export const AttendancePage = () => {
     unscheduledGroups: 0,
     totalGroups: 0,
   });
-
-  let defaultTab = "setup";
-
-  const getTabs = () => {
-    const tabs: { key: string; icon: string; label: string }[] = [];
-    tabs.push({ key: "setup", icon: "settings", label: Locale.label("attendance.tabs.setup") });
-    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) {
-      tabs.push({ key: "attendance", icon: "calendar_month", label: Locale.label("attendance.tabs.attTrend") });
-      if (defaultTab === "") defaultTab = "attendance";
-    }
-    if (UserHelper.checkAccess(Permissions.attendanceApi.attendance.view)) {
-      tabs.push({ key: "groups", icon: "people", label: Locale.label("attendance.tabs.groupAtt") });
-      if (defaultTab === "") defaultTab = "groups";
-    }
-    // Default tab is initialized via useState; avoid setting state during render.
-    return tabs;
-  };
 
   const getCurrentTab = () => {
     let currentTab = null;
@@ -88,12 +72,6 @@ export const AttendancePage = () => {
     loadStats();
   }, [loadStats]);
 
-  const tabIcons = {
-    setup: <SettingsIcon />,
-    attendance: <TrendingIcon />,
-    groups: <GroupIcon />,
-  };
-
   return (
     <>
       <PageHeader
@@ -106,32 +84,9 @@ export const AttendancePage = () => {
           { icon: <Icon>schedule</Icon>, value: stats.scheduledGroups.toString(), label: "Scheduled Groups" },
           { icon: <Icon>groups</Icon>, value: stats.unscheduledGroups.toString(), label: "Unscheduled Groups" },
           { icon: <GroupIcon />, value: stats.totalGroups.toString(), label: "Total Groups" },
-        ]}>
-        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-          {getTabs().map((tab) => (
-            <Button
-              key={tab.key}
-              variant={selectedTab === tab.key ? "contained" : "outlined"}
-              startIcon={tabIcons[tab.key] || <Icon>{tab.icon}</Icon>}
-              onClick={() => setSelectedTab(tab.key)}
-              sx={{
-                color: selectedTab === tab.key ? "#1565C0" : "#FFF",
-                backgroundColor: selectedTab === tab.key ? "#FFF" : "transparent",
-                borderColor: "rgba(255,255,255,0.3)",
-                minWidth: "auto",
-                px: 2,
-                py: 1,
-                fontSize: "0.875rem",
-                "&:hover": {
-                  backgroundColor: selectedTab === tab.key ? "#FFF" : "rgba(255,255,255,0.1)",
-                  borderColor: "#FFF",
-                },
-              }}>
-              {tab.label}
-            </Button>
-          ))}
-        </Stack>
-      </PageHeader>
+        ]}
+      />
+      <AttendanceNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} />
 
       {/* Main Content */}
       <Container maxWidth="xl">
