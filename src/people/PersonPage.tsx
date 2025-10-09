@@ -4,6 +4,7 @@ import { type PersonInterface, type ConversationInterface, type FormInterface } 
 import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { PersonBanner } from "./components/PersonBanner";
+import { PersonNavigation } from "./components/PersonNavigation";
 import { PersonDetails } from "./components/PersonDetails";
 import UserContext from "../UserContext";
 import { PersonForm } from "./components/PersonForm";
@@ -142,18 +143,20 @@ export const PersonPage = () => {
     <>
       <PersonBanner
         person={person}
-        onTabChange={setSelectedTab}
         togglePhotoEditor={setInPhotoEditMode}
         onEdit={() => {
           setEditMode("edit");
           setSelectedTab("details");
         }}
+      />
+      <PersonNavigation
+        selectedTab={selectedTab}
+        onTabChange={setSelectedTab}
         allForms={allForms}
         onFormSelect={(form) => {
           setForm(form);
           setSelectedTab("form");
         }}
-        selectedTab={selectedTab}
       />
       <div style={{ padding: "24px" }}>{getCurrentTab()}</div>
     </>
