@@ -5,7 +5,7 @@ import {
 import { type DonationBatchInterface, type FundDonationInterface, type PersonInterface } from "@churchapps/helpers";
 import { useParams, Link } from "react-router-dom";
 import {
-  Table, TableBody, TableRow, TableCell, TableHead, TextField, Box, Typography, Card, Stack, Button 
+  Table, TableBody, TableRow, TableCell, TableHead, TextField, Box, Typography, Card, Stack, Button, Icon
 } from "@mui/material";
 import {
   VolunteerActivism as FundIcon,
@@ -237,24 +237,45 @@ export const FundPage = () => {
         icon={<FundIcon />}
         title={`${fund.name} ${Locale.label("donations.fundsPage.don")}`}
         subtitle="Track donations and contributions to this fund"
-        statistics={[
-          {
-            icon: <ReceiptIcon />,
-            value: stats.totalDonations,
-            label: "Total Donations",
-          },
-          {
-            icon: <PersonIcon />,
-            value: stats.uniqueDonors,
-            label: "Unique Donors",
-          },
-          {
-            icon: <MoneyIcon />,
-            value: CurrencyHelper.formatCurrency(stats.totalAmount),
-            label: "Total Amount",
-          },
-        ]}
-      />
+      >
+        {stats.totalDonations > 0 && (
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={{ xs: 2, sm: 4, md: 5 }}
+            sx={{
+              position: { xs: "static", md: "absolute" },
+              left: { md: "50%" },
+              top: { md: "50%" },
+              transform: { md: "translateY(-50%)" },
+              right: { md: "24px" },
+              justifyContent: { md: "space-between" },
+              flexWrap: "wrap"
+            }}
+          >
+            <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <ReceiptIcon sx={{ color: "#FFF", fontSize: 24 }} />
+                <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalDonations}</Typography>
+              </Stack>
+              <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Donations</Typography>
+            </Stack>
+            <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <PersonIcon sx={{ color: "#FFF", fontSize: 24 }} />
+                <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.uniqueDonors}</Typography>
+              </Stack>
+              <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Donors</Typography>
+            </Stack>
+            <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 100 }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <MoneyIcon sx={{ color: "#FFF", fontSize: 24 }} />
+                <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalAmount.toLocaleString("en-US", { style: "decimal", minimumFractionDigits: 0, maximumFractionDigits: 0 })}</Typography>
+              </Stack>
+              <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Total Amount</Typography>
+            </Stack>
+          </Stack>
+        )}
+      </PageHeader>
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>

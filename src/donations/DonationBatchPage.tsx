@@ -4,7 +4,7 @@ import { UserHelper, Permissions, DateHelper, CurrencyHelper, PageHeader } from 
 import { type DonationBatchInterface, type FundInterface, type DonationInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Box, Card, Stack, Button } from "@mui/material";
+import { Box, Card, Stack, Button, Typography, Icon } from "@mui/material";
 import { VolunteerActivism as DonationIcon, Receipt as ReceiptIcon, AttachMoney as MoneyIcon, Edit as EditIcon } from "@mui/icons-material";
 
 export const DonationBatchPage = () => {
@@ -74,19 +74,41 @@ export const DonationBatchPage = () => {
         icon={<DonationIcon />}
         title={batch.data?.name || "Donation Batch"}
         subtitle={batch.data?.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.data.batchDate.split("T")[0] + "T00:00:00"))}` : "Manage donations in this batch"}
-        statistics={[
-          {
-            icon: <ReceiptIcon />,
-            value: stats.totalDonations,
-            label: "Total Donations",
-          },
-          {
-            icon: <MoneyIcon />,
-            value: CurrencyHelper.formatCurrency(stats.totalAmount),
-            label: "Total Amount",
-          },
-        ]}>
-        <Stack direction="row" spacing={2}>
+      >
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={2}
+          alignItems={{ xs: "flex-start", md: "center" }}
+          sx={{ width: "100%" }}
+        >
+          {stats.totalDonations > 0 && (
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={{ xs: 2, sm: 4, md: 5 }}
+              sx={{
+                position: { xs: "static", md: "absolute" },
+                left: { md: "50%" },
+                top: { md: "50%" },
+                transform: { md: "translateY(-50%)" },
+                flexWrap: "wrap"
+              }}
+            >
+              <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <ReceiptIcon sx={{ color: "#FFF", fontSize: 24 }} />
+                  <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalDonations}</Typography>
+                </Stack>
+                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Donations</Typography>
+              </Stack>
+              <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 100 }}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <MoneyIcon sx={{ color: "#FFF", fontSize: 24 }} />
+                  <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalAmount.toLocaleString("en-US", { style: "decimal", minimumFractionDigits: 0, maximumFractionDigits: 0 })}</Typography>
+                </Stack>
+                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Total Amount</Typography>
+              </Stack>
+            </Stack>
+          )}
           {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
             <Button
               variant="outlined"
@@ -100,6 +122,9 @@ export const DonationBatchPage = () => {
                   borderColor: "#FFF",
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
+                position: { md: "relative" },
+                ml: { md: "auto" },
+                zIndex: 1
               }}>
               Edit Batch
             </Button>

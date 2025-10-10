@@ -6,7 +6,7 @@ import { Permissions } from "@churchapps/apphelper";
 import { type DonationBatchInterface } from "@churchapps/helpers";
 import { useQuery } from "@tanstack/react-query";
 import {
-  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 
+  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button
 } from "@mui/material";
 import { VolunteerActivism as DonationIcon, Add as AddIcon, FileDownload as ExportIcon, CalendarMonth as DateIcon } from "@mui/icons-material";
 
@@ -271,42 +271,71 @@ export const DonationBatchesPage = () => {
         icon={<DonationIcon />}
         title={Locale.label("donations.donations.batches")}
         subtitle="Manage donation batches and track giving records"
-        statistics={[
-          {
-            icon: <DonationIcon />,
-            value: stats.totalBatches,
-            label: "Total Batches",
-          },
-          {
-            icon: <Icon>receipt</Icon>,
-            value: stats.totalDonations,
-            label: "Total Donations",
-          },
-          {
-            icon: <Icon>attach_money</Icon>,
-            value: stats.totalAmount.toLocaleString("en-US", { style: "decimal", minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-            label: "Total Amount",
-          },
-        ]}>
-        {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
-          <Button
-            variant="outlined"
-            sx={{
-              color: "#FFF",
-              borderColor: "rgba(255,255,255,0.5)",
-              "&:hover": {
-                borderColor: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)",
-              },
-            }}
-            startIcon={<AddIcon />}
-            onClick={() => {
-              setEditBatchId("");
-            }}
-            data-testid="add-batch-button">
-            Add Batch
-          </Button>
-        )}
+      >
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={2}
+          alignItems={{ xs: "flex-start", md: "center" }}
+          sx={{ width: "100%" }}
+        >
+          {stats.totalBatches > 0 && (
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={{ xs: 2, sm: 4, md: 5 }}
+              sx={{
+                position: { xs: "static", md: "absolute" },
+                left: { md: "50%" },
+                top: { md: "50%" },
+                transform: { md: "translateY(-50%)" },
+                flexWrap: "wrap"
+              }}
+            >
+              <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <DonationIcon sx={{ color: "#FFF", fontSize: 24 }} />
+                  <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalBatches}</Typography>
+                </Stack>
+                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Batches</Typography>
+              </Stack>
+              <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Icon sx={{ color: "#FFF", fontSize: 24 }}>receipt</Icon>
+                  <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalDonations}</Typography>
+                </Stack>
+                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Donations</Typography>
+              </Stack>
+              <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 100 }}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Icon sx={{ color: "#FFF", fontSize: 24 }}>attach_money</Icon>
+                  <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalAmount.toLocaleString("en-US", { style: "decimal", minimumFractionDigits: 0, maximumFractionDigits: 0 })}</Typography>
+                </Stack>
+                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Total Amount</Typography>
+              </Stack>
+            </Stack>
+          )}
+          {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
+            <Button
+              variant="outlined"
+              sx={{
+                color: "#FFF",
+                borderColor: "rgba(255,255,255,0.5)",
+                "&:hover": {
+                  borderColor: "#FFF",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                },
+                position: { md: "relative" },
+                ml: { md: "auto" },
+                zIndex: 1
+              }}
+              startIcon={<AddIcon />}
+              onClick={() => {
+                setEditBatchId("");
+              }}
+              data-testid="add-batch-button">
+              Add Batch
+            </Button>
+          )}
+        </Stack>
       </PageHeader>
 
       {/* Main Content */}
