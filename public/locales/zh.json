@@ -421,7 +421,7 @@
       "parPick": "家长接送",
       "prinName": "打印名牌",
       "selImg": "选择照片",
-      "slug": "简称"
+      "slug": "简称（用于URL的键名）"
     },
     "groupMembers": {
       "groupMem": "群组成员",
@@ -1236,13 +1236,14 @@
       "edit": "编辑调式",
       "signature": "调号",
       "label": "标签",
+      "labelOptional": "标签（可选）",
       "default": "默认",
       "defaultLabel": "John 的调式",
       "deleteConfirm": "您确定要删除此调式吗？"
     },
     "keys": {
       "title": "调式",
-      "add": "+ 添加",
+      "add": "添加",
       "import": "导入",
       "importPrompt": "您想从 PraiseCharts 导入文本歌词吗？",
       "addFiles": "添加文件",

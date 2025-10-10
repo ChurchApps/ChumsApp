@@ -421,7 +421,7 @@
       "parPick": "Ramassage des parents",
       "prinName": "Imprimer l'Étiquette",
       "selImg": "Sélectionner une photo",
-      "slug": "Slug"
+      "slug": "Slug (nom de clé utilisé pour les urls)"
     },
     "groupMembers": {
       "groupMem": "Membres du groupe",
@@ -1236,13 +1236,14 @@
       "edit": "Modifier la tonalité",
       "signature": "Tonalité",
       "label": "Étiquette",
+      "labelOptional": "Étiquette (facultatif)",
       "default": "Par défaut",
       "defaultLabel": "Tonalité de Jean",
       "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette tonalité ?"
     },
     "keys": {
       "title": "Tonalités",
-      "add": "+ Ajouter",
+      "add": "Ajouter",
       "import": "Importer",
       "importPrompt": "Voulez-vous importer les paroles texte depuis PraiseCharts ?",
       "addFiles": "Ajouter des fichiers",

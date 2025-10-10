@@ -1,9 +1,9 @@
 import React from "react";
-import { Tabs } from "./components";
+import { Tabs, FormNavigation } from "./components";
 import { type FormInterface, type MemberPermissionInterface } from "@churchapps/helpers";
 import { UserHelper, Permissions, Locale, Loading, PageHeader } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
-import { Box, Stack, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { Description as DescriptionIcon } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
 
@@ -58,29 +58,8 @@ export const FormPage = () => {
 
   return form.data?.id ? (
     <>
-      <PageHeader icon={<DescriptionIcon />} title={form.data.name} subtitle="Form configuration and submissions">
-        <Stack direction="row" spacing={1}>
-          {availableTabs.map((tab) => (
-            <Button
-              key={tab.key}
-              variant={selectedTab === tab.key ? "contained" : "outlined"}
-              onClick={() => {
-                setSelectedTab(tab.key);
-              }}
-              sx={{
-                color: selectedTab === tab.key ? "primary.main" : "#FFF",
-                backgroundColor: selectedTab === tab.key ? "#FFF" : "transparent",
-                borderColor: "#FFF",
-                "&:hover": {
-                  backgroundColor: selectedTab === tab.key ? "#FFF" : "rgba(255,255,255,0.2)",
-                  color: selectedTab === tab.key ? "primary.main" : "#FFF",
-                },
-              }}>
-              {tab.label}
-            </Button>
-          ))}
-        </Stack>
-      </PageHeader>
+      <PageHeader icon={<DescriptionIcon />} title={form.data.name} subtitle="Form configuration and submissions" />
+      <FormNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} form={form.data} memberPermission={memberPermission.data} />
 
       {/* Tab Content */}
       <Box sx={{ p: 3 }}>

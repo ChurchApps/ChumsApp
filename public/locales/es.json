@@ -421,7 +421,7 @@
       "parPick": "Recogida de Padres",
       "prinName": "Imprimir Etiqueta de Nombre",
       "selImg": "Seleccionar Foto",
-      "slug": "Slug"
+      "slug": "Slug (nombre clave usado para urls)"
     },
     "groupMembers": {
       "groupMem": "Miembros del Grupo",
@@ -1236,13 +1236,14 @@
       "edit": "Editar Tonalidad",
       "signature": "Armadura de Clave",
       "label": "Etiqueta",
+      "labelOptional": "Etiqueta (opcional)",
       "default": "Predeterminado",
       "defaultLabel": "Tonalidad de John",
       "deleteConfirm": "¿Está seguro de que desea eliminar esta tonalidad?"
     },
     "keys": {
       "title": "Tonalidades",
-      "add": "+ Agregar",
+      "add": "Agregar",
       "import": "Importar",
       "importPrompt": "¿Desea importar las letras de texto desde PraiseCharts?",
       "addFiles": "Agregar Archivos",

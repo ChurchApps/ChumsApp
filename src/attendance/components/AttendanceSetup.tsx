@@ -25,9 +25,6 @@ export const AttendanceSetup = memo(() => {
   const [selectedService, setSelectedService] = React.useState<ServiceInterface>(null);
   const [selectedServiceTime, setSelectedServiceTime] = React.useState<ServiceTimeInterface>(null);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
   const attendance = useQuery<AttendanceInterface[]>({
     queryKey: ["/attendancerecords/tree", "AttendanceApi"],
     placeholderData: [],
@@ -43,13 +40,6 @@ export const AttendanceSetup = memo(() => {
     placeholderData: [],
   });
 
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    setAnchorEl(e.currentTarget);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setAnchorEl(null);
-  }, []);
 
   const removeEditors = useCallback(() => {
     setSelectedCampus(null);
@@ -119,48 +109,28 @@ export const AttendanceSetup = memo(() => {
   );
 
   const handleAddCampus = useCallback(() => {
-    handleClose();
     selectCampus({ id: "", name: "New Campus" });
-  }, [handleClose, selectCampus]);
+  }, [selectCampus]);
 
   const handleAddService = useCallback(() => {
-    handleClose();
     selectService({ id: "", campusId: "", name: "New Service" });
-  }, [handleClose, selectService]);
+  }, [selectService]);
 
   const handleAddServiceTime = useCallback(() => {
-    handleClose();
     selectServiceTime({ id: "", serviceId: "", name: "New Service Time" });
-  }, [handleClose, selectServiceTime]);
+  }, [selectServiceTime]);
 
   const editLinks = useMemo(
     () => (
-      <>
-        <IconButton
-          aria-label="Add attendance"
-          id="addBtnGroup"
-          data-cy="add-button"
-          aria-controls={open ? "add-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-haspopup="true"
-          onClick={handleClick}
-          data-testid="add-attendance-button">
-          <Icon color="primary">add</Icon>
-        </IconButton>
-        <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuItem data-cy="add-campus" onClick={handleAddCampus} data-testid="add-campus-menu-item" aria-label="Add campus">
-            <Icon sx={{ mr: "3px" }}>church</Icon> {Locale.label("attendance.attendancePage.addCampus")}
-          </MenuItem>
-          <MenuItem aria-label="addService" data-cy="add-service" onClick={handleAddService} data-testid="add-service-menu-item">
-            <Icon sx={{ mr: "3px" }}>calendar_month</Icon> {Locale.label("attendance.attendancePage.addService")}
-          </MenuItem>
-          <MenuItem data-cy="add-service-time" onClick={handleAddServiceTime} data-testid="add-service-time-menu-item" aria-label="Add service time">
-            <Icon sx={{ mr: "3px" }}>more_time</Icon> {Locale.label("attendance.attendancePage.addServiceTime")}
-          </MenuItem>
-        </Menu>
-      </>
+      <IconButton
+        aria-label="Add campus"
+        data-cy="add-campus-button"
+        onClick={handleAddCampus}
+        data-testid="add-campus-button">
+        <Icon color="primary">add</Icon>
+      </IconButton>
     ),
-    [open, anchorEl, handleClick, handleClose, handleAddCampus, handleAddService, handleAddServiceTime]
+    [handleAddCampus]
   );
 
   const tableHeader = useMemo(() => {
@@ -202,13 +172,16 @@ export const AttendanceSetup = memo(() => {
       return rows;
     }
 
-    const getRow = (campus: CampusInterface, service: ServiceInterface, serviceTime: ServiceTimeInterface, group: GroupInterface, key: string) => {
+    const getRow = (campus: CampusInterface, service: ServiceInterface, serviceTime: ServiceTimeInterface, group: GroupInterface, key: string, isLast?: { campus?: boolean; service?: boolean }) => {
+      const campusChanged = campus?.name !== lastCampus;
+      const serviceChanged = service?.name !== lastService;
+
       const campusHtml =
-        campus === undefined || campus?.name === lastCampus ? (
+        campus === undefined || !campusChanged ? (
           <></>
         ) : (
           <Stack direction="row" spacing={1} alignItems="center">
-            <Icon sx={{ color: "#666", fontSize: 18 }}>church</Icon>
+            <Icon sx={{ color: "#666", fontSize: 20 }}>church</Icon>
             <Button
               variant="text"
               size="small"
@@ -216,9 +189,10 @@ export const AttendanceSetup = memo(() => {
               sx={{
                 color: "#1565C0",
                 textTransform: "none",
-                fontWeight: 500,
+                fontWeight: 600,
                 minWidth: "auto",
                 p: 0,
+                fontSize: "0.95rem",
               }}>
               {campus.name}
             </Button>
@@ -226,11 +200,11 @@ export const AttendanceSetup = memo(() => {
         );
 
       const serviceHtml =
-        service === undefined ? (
+        service === undefined || (service?.name === lastService && !campusChanged) ? (
           <></>
         ) : (
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Icon sx={{ color: "#666", fontSize: 18 }}>calendar_month</Icon>
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ pl: 2 }}>
+            <Icon sx={{ color: "#999", fontSize: 18 }}>calendar_month</Icon>
             <Button
               variant="text"
               size="small"
@@ -248,11 +222,11 @@ export const AttendanceSetup = memo(() => {
         );
 
       const serviceTimeHtml =
-        serviceTime === undefined || serviceTime?.name === lastServiceTime ? (
+        serviceTime === undefined || (serviceTime?.name === lastServiceTime && !campusChanged && !serviceChanged) ? (
           <></>
         ) : (
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Icon sx={{ color: "#666", fontSize: 18 }}>schedule</Icon>
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ pl: 4 }}>
+            <Icon sx={{ color: "#bbb", fontSize: 16 }}>schedule</Icon>
             <Button
               variant="text"
               size="small"
@@ -260,9 +234,10 @@ export const AttendanceSetup = memo(() => {
               sx={{
                 color: "#1565C0",
                 textTransform: "none",
-                fontWeight: 500,
+                fontWeight: 400,
                 minWidth: "auto",
                 p: 0,
+                fontSize: "0.9rem",
               }}>
               {serviceTime.name}
             </Button>
@@ -273,9 +248,9 @@ export const AttendanceSetup = memo(() => {
         group === undefined || group?.categoryName === lastCategory ? (
           <></>
         ) : (
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Icon sx={{ color: "#666", fontSize: 18 }}>folder</Icon>
-            <Typography variant="body2" sx={{ color: "#666" }}>
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ pl: 6 }}>
+            <Icon sx={{ color: "#ccc", fontSize: 14 }}>folder</Icon>
+            <Typography variant="body2" sx={{ color: "#666", fontSize: "0.85rem" }}>
               {group.categoryName}
             </Typography>
           </Stack>
@@ -285,14 +260,15 @@ export const AttendanceSetup = memo(() => {
         group === undefined ? (
           <></>
         ) : (
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Icon sx={{ color: "#666", fontSize: 18 }}>list</Icon>
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ pl: 8 }}>
+            <Icon sx={{ color: "#ddd", fontSize: 12 }}>circle</Icon>
             <Link
               to={"/groups/" + group.id}
               style={{
                 textDecoration: "none",
                 color: "#1565C0",
-                fontWeight: 500,
+                fontWeight: 400,
+                fontSize: "0.85rem",
               }}>
               {group.name}
             </Link>
@@ -304,13 +280,12 @@ export const AttendanceSetup = memo(() => {
           key={key}
           sx={{
             "&:hover": { backgroundColor: "rgba(0,0,0,0.04)" },
-            borderBottom: "1px solid #e0e0e0",
           }}>
-          <TableCell sx={{ py: 2 }}>{campusHtml}</TableCell>
-          <TableCell sx={{ py: 2 }}>{serviceHtml}</TableCell>
-          <TableCell sx={{ py: 2 }}>{serviceTimeHtml}</TableCell>
-          <TableCell sx={{ py: 2 }}>{categoryHtml}</TableCell>
-          <TableCell sx={{ py: 2 }}>{groupHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{campusHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{serviceHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{serviceTimeHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{categoryHtml}</TableCell>
+          <TableCell sx={{ py: 0.5, border: 0 }}>{groupHtml}</TableCell>
         </TableRow>
       );
 
@@ -321,20 +296,98 @@ export const AttendanceSetup = memo(() => {
       return result;
     };
 
-    attendance.data.forEach((a, i) => {
-      const filteredGroups = a.serviceTime === undefined ? [] : getGroups(a.serviceTime.id);
-      const sortedGroups = filteredGroups.sort(compare);
-      if (sortedGroups.length > 0) {
-        sortedGroups.forEach((g) => {
-          rows.push(getRow(a.campus, a.service, a.serviceTime, g, g.id.toString()));
-        });
-      } else rows.push(getRow(a.campus, a.service, a.serviceTime, undefined, "index" + i.toString()));
+    const getAddServiceRow = (campus: CampusInterface, key: string) => (
+      <TableRow key={key}>
+        <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
+        <TableCell sx={{ py: 0.5, border: 0 }}>
+          <Button
+            size="small"
+            startIcon={<Icon sx={{ fontSize: 16 }}>add</Icon>}
+            onClick={() => selectService({ id: "", campusId: campus.id, name: "" })}
+            sx={{
+              color: "#666",
+              textTransform: "none",
+              fontSize: "0.85rem",
+              pl: 2,
+              "&:hover": { color: "#1565C0", backgroundColor: "rgba(21, 101, 192, 0.04)" },
+            }}>
+            Add Service
+          </Button>
+        </TableCell>
+        <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
+        <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
+        <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
+      </TableRow>
+    );
+
+    const getAddServiceTimeRow = (service: ServiceInterface, key: string) => (
+      <TableRow key={key}>
+        <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
+        <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
+        <TableCell sx={{ py: 0.5, border: 0 }}>
+          <Button
+            size="small"
+            startIcon={<Icon sx={{ fontSize: 14 }}>add</Icon>}
+            onClick={() => selectServiceTime({ id: "", serviceId: service.id, name: "" })}
+            sx={{
+              color: "#666",
+              textTransform: "none",
+              fontSize: "0.8rem",
+              pl: 4,
+              "&:hover": { color: "#1565C0", backgroundColor: "rgba(21, 101, 192, 0.04)" },
+            }}>
+            Add Service Time
+          </Button>
+        </TableCell>
+        <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
+        <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
+      </TableRow>
+    );
+
+    // Group data by campus and service
+    const campusGroups: { [key: string]: any } = {};
+    attendance.data.forEach((a) => {
+      const campusName = a.campus?.name || "Unknown";
+      if (!campusGroups[campusName]) campusGroups[campusName] = { campus: a.campus, services: {} };
+
+      const serviceName = a.service?.name || "Unknown";
+      if (!campusGroups[campusName].services[serviceName]) {
+        campusGroups[campusName].services[serviceName] = { service: a.service, serviceTimes: [] };
+      }
+
+      campusGroups[campusName].services[serviceName].serviceTimes.push(a);
     });
+
+    // Render grouped structure
+    Object.values(campusGroups).forEach((campusGroup: any, campusIdx) => {
+      const servicesList = Object.values(campusGroup.services);
+
+      servicesList.forEach((serviceGroup: any, serviceIdx) => {
+        serviceGroup.serviceTimes.forEach((a: any, stIdx: number) => {
+          const filteredGroups = a.serviceTime === undefined ? [] : getGroups(a.serviceTime.id);
+          const sortedGroups = filteredGroups.sort(compare);
+          if (sortedGroups.length > 0) {
+            sortedGroups.forEach((g) => {
+              rows.push(getRow(a.campus, a.service, a.serviceTime, g, g.id.toString()));
+            });
+          } else {
+            rows.push(getRow(a.campus, a.service, a.serviceTime, undefined, `st-${campusIdx}-${serviceIdx}-${stIdx}`));
+          }
+        });
+
+        // Add "Add Service Time" button after each service
+        rows.push(getAddServiceTimeRow(serviceGroup.service, `add-st-${campusIdx}-${serviceIdx}`));
+      });
+
+      // Add "Add Service" button after each campus
+      rows.push(getAddServiceRow(campusGroup.campus, `add-svc-${campusIdx}`));
+    });
+
     unassignedGroups.forEach((g) => {
       rows.push(getRow({ name: "Unassigned" }, undefined, undefined, g, g.id.toString()));
     });
     return rows;
-  }, [attendance.data, getGroups, compare, unassignedGroups, selectCampus, selectService, selectServiceTime]);
+  }, [attendance.data, getGroups, compare, unassignedGroups, selectCampus, selectService, selectServiceTime, handleAddService, handleAddServiceTime]);
 
   const table = useMemo(() => {
     if (attendance.isLoading) return <Loading />;

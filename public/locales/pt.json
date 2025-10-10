@@ -421,7 +421,7 @@
       "parPick": "Retirada pelos Pais",
       "prinName": "Imprimir Etiqueta",
       "selImg": "Selecionar Foto",
-      "slug": "Slug"
+      "slug": "Slug (nome chave usado para urls)"
     },
     "groupMembers": {
       "groupMem": "Membros do Grupo",
@@ -1236,13 +1236,14 @@
       "edit": "Editar Tom",
       "signature": "Tom",
       "label": "Rótulo",
+      "labelOptional": "Rótulo (opcional)",
       "default": "Padrão",
       "defaultLabel": "Tom do John",
       "deleteConfirm": "Tem certeza que deseja excluir este tom?"
     },
     "keys": {
       "title": "Tons",
-      "add": "+ Adicionar",
+      "add": "Adicionar",
       "import": "Importar",
       "importPrompt": "Deseja importar as letras das músicas do PraiseCharts?",
       "addFiles": "Adicionar Arquivos",

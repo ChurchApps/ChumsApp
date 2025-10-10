@@ -421,7 +421,7 @@
       "parPick": "Abholung durch Eltern",
       "prinName": "Namensschild drucken",
       "selImg": "Foto auswählen",
-      "slug": "Slug"
+      "slug": "Slug (Schlüsselname für URLs)"
     },
     "groupMembers": {
       "groupMem": "Gruppenmitglieder",
@@ -1236,13 +1236,14 @@
       "edit": "Tonart bearbeiten",
       "signature": "Tonart",
       "label": "Bezeichnung",
+      "labelOptional": "Bezeichnung (optional)",
       "default": "Standard",
       "defaultLabel": "Johns Tonart",
       "deleteConfirm": "Sind Sie sicher, dass Sie diese Tonart löschen möchten?"
     },
     "keys": {
       "title": "Tonarten",
-      "add": "+ Hinzufügen",
+      "add": "Hinzufügen",
       "import": "Importieren",
       "importPrompt": "Möchten Sie die Textlieder von PraiseCharts importieren?",
       "addFiles": "Dateien hinzufügen",

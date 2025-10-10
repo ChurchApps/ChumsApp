@@ -421,7 +421,7 @@
       "parPick": "Henting av foreldre",
       "prinName": "Skriv ut navnelapp",
       "selImg": "Velg bilde",
-      "slug": "Slug"
+      "slug": "Slug (nøkkelnavn brukt for url-er)"
     },
     "groupMembers": {
       "groupMem": "Gruppemedlemmer",
@@ -1236,13 +1236,14 @@
       "edit": "Rediger toneart",
       "signature": "Toneart",
       "label": "Etikett",
+      "labelOptional": "Etikett (valgfritt)",
       "default": "Standard",
       "defaultLabel": "Johns toneart",
       "deleteConfirm": "Er du sikker på at du vil slette denne tonearten?"
     },
     "keys": {
       "title": "Tonearter",
-      "add": "+ Legg til",
+      "add": "Legg til",
       "import": "Importer",
       "importPrompt": "Vil du importere tekstsanger fra PraiseCharts?",
       "addFiles": "Legg til filer",

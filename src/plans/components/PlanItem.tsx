@@ -65,7 +65,16 @@ export const PlanItem = React.memo((props: Props) => {
               onDrop={(item) => {
                 handleDrop(item, index + 0.5);
               }}>
-              &nbsp;
+              <div
+                style={{
+                  height: "30px",
+                  border: "2px dashed #1976d2",
+                  borderRadius: "4px",
+                  backgroundColor: "rgba(25, 118, 210, 0.1)",
+                  opacity: 0.3,
+                  marginBottom: "4px",
+                }}
+              />
             </DroppableWrapper>
           )}
 
@@ -90,7 +99,16 @@ export const PlanItem = React.memo((props: Props) => {
             onDrop={(item) => {
               handleDrop(item, props.planItem.children?.length + 1);
             }}>
-            &nbsp;
+            <div
+              style={{
+                height: "30px",
+                border: "2px dashed #1976d2",
+                borderRadius: "4px",
+                backgroundColor: "rgba(25, 118, 210, 0.1)",
+                opacity: 0.3,
+                marginBottom: "4px",
+              }}
+            />
           </DroppableWrapper>
         </>
       );
