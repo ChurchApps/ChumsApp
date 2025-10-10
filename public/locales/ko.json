@@ -639,7 +639,22 @@
       "madeTo": "에 대한",
       "notIn": "포함되지 않음",
       "simp": "단순",
-      "simpSearch": "단순 검색"
+      "simpSearch": "인물 검색",
+      "active": "활성:",
+      "clearAll": "모두 지우기",
+      "checkBoxes": "필터를 활성화하려면 확인란을 선택하세요",
+      "configure": "구성",
+      "names": "이름",
+      "demographics": "인구 통계",
+      "contact": "연락처 정보",
+      "membership": "회원 및 그룹",
+      "activity": "활동",
+      "type": "유형",
+      "fund": "기금",
+      "campus": "캠퍼스",
+      "service": "서비스",
+      "serviceTime": "서비스 시간",
+      "group": "그룹"
     },
     "peopleSearchResults": {
       "noResMsg": "검색 결과가 없습니다. 다른 이름으로 검색하거나 새 사람을 추가해주세요"

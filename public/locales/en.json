@@ -639,7 +639,22 @@
       "madeTo": "made to",
       "notIn": "Not In",
       "simp": "Simple",
-      "simpSearch": "Simple Search"
+      "simpSearch": "People Search",
+      "active": "active:",
+      "clearAll": "Clear All",
+      "checkBoxes": "Check boxes to enable filters",
+      "configure": "Configure",
+      "names": "Names",
+      "demographics": "Demographics",
+      "contact": "Contact Information",
+      "membership": "Membership & Groups",
+      "activity": "Activity",
+      "type": "Type",
+      "fund": "Fund",
+      "campus": "Campus",
+      "service": "Service",
+      "serviceTime": "Service Time",
+      "group": "Group"
     },
     "peopleSearchResults": {
       "noResMsg": "No results found.  Please search for a different name or add a new person"

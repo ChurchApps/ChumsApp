@@ -639,7 +639,22 @@
       "madeTo": "बनाया गया",
       "notIn": "में नहीं",
       "simp": "सरल",
-      "simpSearch": "सरल खोज"
+      "simpSearch": "लोगों की खोज",
+      "active": "सक्रिय:",
+      "clearAll": "सभी हटाएं",
+      "checkBoxes": "फ़िल्टर सक्षम करने के लिए चेक बॉक्स चुनें",
+      "configure": "कॉन्फ़िगर करें",
+      "names": "नाम",
+      "demographics": "जनसांख्यिकी",
+      "contact": "संपर्क जानकारी",
+      "membership": "सदस्यता और समूह",
+      "activity": "गतिविधि",
+      "type": "प्रकार",
+      "fund": "फंड",
+      "campus": "कैंपस",
+      "service": "सेवा",
+      "serviceTime": "सेवा समय",
+      "group": "समूह"
     },
     "peopleSearchResults": {
       "noResMsg": "कोई परिणाम नहीं मिला। कृपया किसी अन्य नाम की खोज करें या एक नया व्यक्ति जोड़ें"

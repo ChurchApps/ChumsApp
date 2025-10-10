@@ -639,7 +639,22 @@
       "madeTo": "捐赠给",
       "notIn": "不在",
       "simp": "简单",
-      "simpSearch": "简单搜索"
+      "simpSearch": "人员搜索",
+      "active": "活跃:",
+      "clearAll": "全部清除",
+      "checkBoxes": "选中复选框以启用过滤器",
+      "configure": "配置",
+      "names": "名称",
+      "demographics": "人口统计",
+      "contact": "联系信息",
+      "membership": "会员资格和小组",
+      "activity": "活动",
+      "type": "类型",
+      "fund": "基金",
+      "campus": "校园",
+      "service": "服务",
+      "serviceTime": "服务时间",
+      "group": "小组"
     },
     "peopleSearchResults": {
       "noResMsg": "未找到结果。请搜索其他姓名或添加新人"

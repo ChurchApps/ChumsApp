@@ -639,7 +639,22 @@
       "madeTo": "gemacht für",
       "notIn": "Nicht in",
       "simp": "Einfach",
-      "simpSearch": "Einfache Suche"
+      "simpSearch": "Personensuche",
+      "active": "aktiv:",
+      "clearAll": "Alle löschen",
+      "checkBoxes": "Kontrollkästchen aktivieren, um Filter zu aktivieren",
+      "configure": "Konfigurieren",
+      "names": "Namen",
+      "demographics": "Demografie",
+      "contact": "Kontaktinformationen",
+      "membership": "Mitgliedschaft & Gruppen",
+      "activity": "Aktivität",
+      "type": "Typ",
+      "fund": "Fonds",
+      "campus": "Campus",
+      "service": "Gottesdienst",
+      "serviceTime": "Gottesdienstzeit",
+      "group": "Gruppe"
     },
     "peopleSearchResults": {
       "noResMsg": "Keine Ergebnisse gefunden. Bitte suchen Sie nach einem anderen Namen oder fügen Sie eine neue Person hinzu"
