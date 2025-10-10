@@ -67,6 +67,79 @@ interface ComplexFilterConfig {
   toDate: string;
 }
 
+// Reusable style objects
+const styles = {
+  inputCommon: {
+    '& .MuiInputBase-input': { fontSize: '0.875rem', py: 0.75 },
+    '& .MuiSelect-select': { fontSize: '0.875rem', py: 0.75 }
+  },
+  operatorSelect: {
+    minWidth: 80,
+    fontSize: '0.875rem'
+  },
+  menuItem: {
+    fontSize: '0.875rem'
+  },
+  activeFiltersPaper: {
+    p: 1.5,
+    mb: 2,
+    bgcolor: (theme: any) => alpha(theme.palette.primary.main, 0.05),
+    borderRadius: 1
+  },
+  filterChip: {
+    height: 24,
+    fontSize: '0.75rem'
+  },
+  categoryChip: {
+    height: 20,
+    minWidth: 20,
+    '& .MuiChip-label': { px: 0.75, fontSize: '0.7rem', fontWeight: 600 }
+  },
+  accordion: {
+    mb: 1,
+    '&:before': { display: 'none' },
+    borderRadius: '4px !important',
+    overflow: 'hidden',
+    border: '1px solid',
+    borderColor: 'divider',
+  },
+  accordionSummary: {
+    bgcolor: (theme: any) => alpha(theme.palette.primary.main, 0.02),
+    minHeight: 42,
+    '&.Mui-expanded': {
+      minHeight: 42,
+      borderBottom: 1,
+      borderColor: 'divider',
+    },
+    py: 0,
+  },
+  accordionDetails: {
+    p: 1,
+    pt: 0.5
+  },
+  filterRow: {
+    py: 0.75,
+    px: 0.5,
+    borderRadius: 0.5,
+  },
+  filterRowActive: (theme: any) => ({
+    bgcolor: alpha(theme.palette.primary.main, 0.03)
+  }),
+  checkbox: {
+    p: 0.5
+  },
+  filterLabel: {
+    fontSize: '0.8125rem',
+    flex: 1,
+  },
+  complexButton: {
+    textTransform: "none",
+    justifyContent: "flex-start",
+    fontSize: '0.8125rem',
+    py: 0.5
+  }
+};
+
 export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Props) {
   const [activeFilters, setActiveFilters] = useState<Record<string, ActiveFilter>>({});
   const [expandedCategories, setExpandedCategories] = useState<string[]>(["names"]);
@@ -463,10 +536,10 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         onChange={(e) => updateFilterOperator(field.key, e.target.value)}
         variant="outlined"
         size="small"
-        sx={{ minWidth: 80, fontSize: '0.875rem' }}
+        sx={styles.operatorSelect}
       >
         {field.operators.map((op) => (
-          <MenuItem key={op} value={op} sx={{ fontSize: '0.875rem' }}>
+          <MenuItem key={op} value={op} sx={styles.menuItem}>
             {operatorLabels[op] || op}
           </MenuItem>
         ))}
@@ -477,11 +550,6 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
   const renderValueInput = (field: FilterField) => {
     if (!activeFilters[field.key]) return null;
 
-    const commonSx = {
-      '& .MuiInputBase-input': { fontSize: '0.875rem', py: 0.75 },
-      '& .MuiSelect-select': { fontSize: '0.875rem', py: 0.75 }
-    };
-
     if (field.type === "select" && field.options) {
       return (
         <Select
@@ -490,10 +558,10 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
           variant="outlined"
           size="small"
           fullWidth
-          sx={commonSx}
+          sx={styles.inputCommon}
         >
           {field.options.map((opt) => (
-            <MenuItem key={opt.value} value={opt.value} sx={{ fontSize: '0.875rem' }}>
+            <MenuItem key={opt.value} value={opt.value} sx={styles.menuItem}>
               {opt.label}
             </MenuItem>
           ))}
@@ -502,14 +570,14 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
     }
 
     if (field.type === "date") {
-      return <TextField size="small" type="date" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} InputLabelProps={{ shrink: true }} variant="outlined" sx={commonSx} />;
+      return <TextField size="small" type="date" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} InputLabelProps={{ shrink: true }} variant="outlined" sx={styles.inputCommon} />;
     }
 
     if (field.type === "number") {
-      return <TextField size="small" type="number" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} variant="outlined" placeholder="Value" sx={commonSx} />;
+      return <TextField size="small" type="number" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} variant="outlined" placeholder="Value" sx={styles.inputCommon} />;
     }
 
-    return <TextField size="small" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} placeholder="Enter value..." variant="outlined" sx={commonSx} />;
+    return <TextField size="small" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} placeholder="Enter value..." variant="outlined" sx={styles.inputCommon} />;
   };
 
   const renderComplexFilterButton = (field: FilterField) => {
@@ -549,7 +617,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
             }
           }
         }}
-        sx={{ textTransform: "none", justifyContent: "flex-start", fontSize: '0.8125rem', py: 0.5 }}>
+        sx={styles.complexButton}>
         {displayText}
       </Button>
     );
@@ -595,7 +663,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
 
         {/* Active Filters Summary */}
         {Object.keys(activeFilters).length > 0 && (
-          <Paper elevation={0} sx={{ p: 1.5, mb: 2, bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05), borderRadius: 1 }}>
+          <Paper elevation={0} sx={styles.activeFiltersPaper}>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap alignItems="center">
               <Typography variant="caption" color="primary" sx={{ fontWeight: 600, mr: 0.5 }}>
                 {Object.keys(activeFilters).length} active:
@@ -611,7 +679,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                     size="small"
                     color="primary"
                     variant="outlined"
-                    sx={{ height: 24, fontSize: '0.75rem' }}
+                    sx={styles.filterChip}
                   />
                 );
               })}
@@ -621,7 +689,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                 size="small"
                 variant="outlined"
                 color="default"
-                sx={{ height: 24, fontSize: '0.75rem' }}
+                sx={styles.filterChip}
               />
             </Stack>
           </Paper>
@@ -641,28 +709,12 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                 key={categoryKey}
                 expanded={expandedCategories.includes(categoryKey)}
                 onChange={handleCategoryExpand(categoryKey)}
-                sx={{
-                  mb: 1,
-                  '&:before': { display: 'none' },
-                  borderRadius: '4px !important',
-                  overflow: 'hidden',
-                  border: '1px solid',
-                  borderColor: 'divider',
-                }}
+                sx={styles.accordion}
                 disableGutters
               >
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
-                  sx={{
-                    bgcolor: (theme) => alpha(theme.palette.primary.main, 0.02),
-                    minHeight: 42,
-                    '&.Mui-expanded': {
-                      minHeight: 42,
-                      borderBottom: 1,
-                      borderColor: 'divider',
-                    },
-                    py: 0,
-                  }}
+                  sx={styles.accordionSummary}
                 >
                   <Stack direction="row" spacing={1} alignItems="center" sx={{ width: "100%" }}>
                     <Box sx={{ color: 'primary.main', display: 'flex', alignItems: 'center', fontSize: 18 }}>
@@ -674,25 +726,19 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                         label={activeCount}
                         size="small"
                         color="primary"
-                        sx={{
-                          height: 20,
-                          minWidth: 20,
-                          '& .MuiChip-label': { px: 0.75, fontSize: '0.7rem', fontWeight: 600 }
-                        }}
+                        sx={styles.categoryChip}
                       />
                     )}
                   </Stack>
                 </AccordionSummary>
-                <AccordionDetails sx={{ p: 1, pt: 0.5 }}>
+                <AccordionDetails sx={styles.accordionDetails}>
                   <Stack spacing={0}>
                     {fields.map((field, index) => (
                       <Box
                         key={field.key}
                         sx={{
-                          py: 0.75,
-                          px: 0.5,
-                          bgcolor: activeFilters[field.key] ? (theme) => alpha(theme.palette.primary.main, 0.03) : 'transparent',
-                          borderRadius: 0.5,
+                          ...styles.filterRow,
+                          ...(activeFilters[field.key] && styles.filterRowActive)
                         }}
                       >
                         <Stack spacing={0.5}>
@@ -701,14 +747,13 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                               checked={!!activeFilters[field.key]}
                               onChange={() => toggleFilter(field.key)}
                               size="small"
-                              sx={{ p: 0.5 }}
+                              sx={styles.checkbox}
                             />
                             <Typography
                               sx={{
+                                ...styles.filterLabel,
                                 color: activeFilters[field.key] ? "text.primary" : "text.secondary",
                                 fontWeight: activeFilters[field.key] ? 500 : 400,
-                                fontSize: '0.8125rem',
-                                flex: 1,
                               }}>
                               {field.label}
                             </Typography>
