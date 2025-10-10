@@ -4,6 +4,7 @@ import { type PersonInterface, type ConversationInterface, type FormInterface } 
 import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { PersonBanner } from "./components/PersonBanner";
+import { PersonNavigation } from "./components/PersonNavigation";
 import { PersonDetails } from "./components/PersonDetails";
 import UserContext from "../UserContext";
 import { PersonForm } from "./components/PersonForm";
@@ -87,8 +88,8 @@ export const PersonPage = () => {
     const result: ConversationInterface[] = await ApiHelper.post("/conversations", [conv], "MessagingApi");
     const p = { ...person };
     p.conversationId = result[0].id;
-    ApiHelper.post("/people", [p], "MembershipApi");
-    refetch(); // Refetch data instead of updating local state
+    await ApiHelper.post("/people", [p], "MembershipApi");
+    refetch();
     return result[0].id;
   };
 
@@ -117,7 +118,7 @@ export const PersonPage = () => {
         );
         break;
       case "notes":
-        currentTab = <PersonNotes key="notes" context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />;
+        currentTab = <PersonNotes key={`notes-${person?.conversationId || 'new'}`} context={context} conversationId={person?.conversationId} createConversation={handleCreateConversation} />;
         break;
       case "attendance":
         currentTab = <PersonAttendance key="attendance" personId={person.id} updatedFunction={refetch} />;
@@ -142,18 +143,20 @@ export const PersonPage = () => {
     <>
       <PersonBanner
         person={person}
-        onTabChange={setSelectedTab}
         togglePhotoEditor={setInPhotoEditMode}
         onEdit={() => {
           setEditMode("edit");
           setSelectedTab("details");
         }}
+      />
+      <PersonNavigation
+        selectedTab={selectedTab}
+        onTabChange={setSelectedTab}
         allForms={allForms}
         onFormSelect={(form) => {
           setForm(form);
           setSelectedTab("form");
         }}
-        selectedTab={selectedTab}
       />
       <div style={{ padding: "24px" }}>{getCurrentTab()}</div>
     </>

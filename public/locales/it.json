@@ -421,7 +421,7 @@
       "parPick": "Ritiro dei Genitori",
       "prinName": "Stampa Targhetta",
       "selImg": "Seleziona Foto",
-      "slug": "Slug"
+      "slug": "Slug (nome chiave usato per gli url)"
     },
     "groupMembers": {
       "groupMem": "Membri del Gruppo",
@@ -1236,13 +1236,14 @@
       "edit": "Modifica Tonalità",
       "signature": "Tonalità",
       "label": "Etichetta",
+      "labelOptional": "Etichetta (facoltativo)",
       "default": "Predefinito",
       "defaultLabel": "Tonalità di John",
       "deleteConfirm": "Sei sicuro di voler eliminare questa tonalità?"
     },
     "keys": {
       "title": "Tonalità",
-      "add": "+ Aggiungi",
+      "add": "Aggiungi",
       "import": "Importa",
       "importPrompt": "Vuoi importare i testi delle canzoni da PraiseCharts?",
       "addFiles": "Aggiungi File",

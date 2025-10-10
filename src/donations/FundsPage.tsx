@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Permissions } from "@churchapps/apphelper";
 import { type FundInterface } from "@churchapps/helpers";
 import {
-  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button 
+  Icon, Table, TableBody, TableCell, TableRow, TableHead, Box, Typography, Card, Stack, Button
 } from "@mui/material";
 import { VolunteerActivism as FundIcon, Add as AddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
@@ -220,13 +220,30 @@ export const FundsPage = () => {
         icon={<FundIcon />}
         title={Locale.label("donations.donations.funds")}
         subtitle="Manage donation funds and track giving categories"
-        statistics={[
-          {
-            icon: <FundIcon />,
-            value: stats.totalFunds,
-            label: "Total Funds",
-          },
-        ]}>
+      >
+        {stats.totalFunds > 0 && (
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={{ xs: 2, sm: 2, md: 4 }}
+            sx={{
+              position: { xs: "static", md: "absolute" },
+              left: { md: "50%" },
+              top: { md: "50%" },
+              transform: { md: "translateY(-50%)" },
+              right: { md: "24px" },
+              justifyContent: { md: "space-between" },
+              flexWrap: "wrap"
+            }}
+          >
+            <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <FundIcon sx={{ color: "#FFF", fontSize: 24 }} />
+                <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalFunds}</Typography>
+              </Stack>
+              <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Total Funds</Typography>
+            </Stack>
+          </Stack>
+        )}
         {UserHelper.checkAccess(Permissions.givingApi.donations.edit) && (
           <Button
             variant="outlined"

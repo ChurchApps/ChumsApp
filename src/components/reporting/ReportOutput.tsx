@@ -80,6 +80,7 @@ export const ReportOutput = (props: Props) => {
 
   const runReport = () => {
     if (props.report) {
+      setDetailedPersonSummary(null);
       const queryParams: string[] = [];
       props.report.parameters.forEach((p) => {
         if (p.value) queryParams.push(p.keyName + "=" + p.value);

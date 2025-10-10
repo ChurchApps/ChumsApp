@@ -62,9 +62,8 @@ export const TaskPage = () => {
       t.status = status;
       t.dateClosed = status === "Open" ? null : new Date();
       updateTaskMutation.mutate(t);
-      closeStatusMenu();
     },
-    [task.data, updateTaskMutation, closeStatusMenu]
+    [task.data, updateTaskMutation]
   );
 
   const handleModalClose = useCallback(() => {

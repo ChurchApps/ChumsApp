@@ -1,12 +1,11 @@
 import { type GroupInterface, type GroupServiceTimeInterface } from "@churchapps/helpers";
 import { UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
-import { Button, Typography, Chip, IconButton, Stack, Box } from "@mui/material";
+import { Typography, Chip, IconButton, Stack, Box } from "@mui/material";
 import {
   Edit as EditIcon,
   Schedule as ScheduleIcon,
   LocationOn as LocationIcon,
   Group as GroupIcon,
-  CalendarMonth as AttendanceIcon,
   CheckCircle as CheckIcon,
   Cancel as CancelIcon,
   Event as CalendarIcon,
@@ -15,15 +14,13 @@ import React, { memo, useMemo } from "react";
 
 interface Props {
   group: GroupInterface;
-  selectedTab?: string;
-  onTabChange?: (tab: string) => void;
   onEdit?: () => void;
   editMode?: boolean;
 }
 
 export const GroupBanner = memo((props: Props) => {
   const {
-    group, selectedTab, onTabChange, onEdit, editMode 
+    group, onEdit, editMode
   } = props;
   const [groupServiceTimes, setGroupServiceTimes] = React.useState<GroupServiceTimeInterface[]>([]);
 
@@ -123,25 +120,6 @@ export const GroupBanner = memo((props: Props) => {
 
     return info;
   }, [group, isStandard]);
-
-  const quickActions = [
-    {
-      label: "Members",
-      key: "members",
-      icon: <GroupIcon />,
-      onClick: () => onTabChange?.("members"),
-    },
-    ...(isStandard && group?.trackAttendance
-      ? [
-        {
-          label: "Sessions",
-          key: "sessions",
-          icon: <AttendanceIcon />,
-          onClick: () => onTabChange?.("sessions"),
-        },
-      ]
-      : []),
-  ];
 
   if (!group) return null;
 
@@ -326,46 +304,6 @@ export const GroupBanner = memo((props: Props) => {
                 })()}
               </Stack>
 
-              {/* Column 3: Action Buttons */}
-              <Stack
-                direction="row"
-                spacing={1}
-                flexWrap="wrap"
-                sx={{
-                  flex: 1,
-                  justifyContent: { xs: "center", md: "flex-end" },
-                  alignItems: "center",
-                }}
-                useFlexGap>
-                {!editMode &&
-                  quickActions.map((action) => {
-                    const isActive = selectedTab === action.key;
-                    return (
-                      <Button
-                        key={action.label}
-                        size="small"
-                        variant={isActive ? "contained" : "outlined"}
-                        sx={{
-                          color: isActive ? "var(--c1l2)" : "#FFF",
-                          backgroundColor: isActive ? "#FFF" : "transparent",
-                          borderColor: isActive ? "#FFF" : "rgba(255,255,255,0.5)",
-                          "&:hover": {
-                            borderColor: "#FFF",
-                            backgroundColor: isActive ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.1)",
-                            color: isActive ? "var(--c1l2)" : "#FFF",
-                          },
-                          minWidth: "auto",
-                          px: 2,
-                          py: 0.5,
-                          fontWeight: isActive ? 600 : 400,
-                        }}
-                        startIcon={action.icon}
-                        onClick={action.onClick}>
-                        {action.label}
-                      </Button>
-                    );
-                  })}
-              </Stack>
             </Stack>
           </Stack>
         </Stack>

@@ -3,7 +3,7 @@ import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetai
 import { type LinkInterface } from "@churchapps/helpers";
 import { ApiHelper, ArrayHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
 import {
-  Alert, Box, Button, Menu, MenuItem, Tab, Tabs, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemText, IconButton, Paper, Chip 
+  Box, Button, Menu, MenuItem, Tab, Tabs, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemText, IconButton, Paper, Chip
 } from "@mui/material";
 import { MusicNote as KeyIcon, Add as AddIcon, Download as DownloadIcon, Link as LinkIcon, Edit as EditIcon, CloudDownload as ImportIcon } from "@mui/icons-material";
 import { PraiseChartsProducts } from "./PraiseChartsProducts";
@@ -14,7 +14,6 @@ import { LinkEdit } from "./LinkEdit";
 interface Props {
   arrangement: ArrangementInterface;
   songDetail: SongDetailInterface;
-  importLyrics?: () => void;
 }
 
 export const Keys = memo((props: Props) => {
@@ -26,7 +25,6 @@ export const Keys = memo((props: Props) => {
   const [products, setProducts] = React.useState<any[]>([]);
   const [links, setLinks] = React.useState<LinkInterface[]>([]);
   const [showImport, setShowImport] = React.useState(false);
-  const [canImportLyrics, setCanImportLyrics] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -69,12 +67,11 @@ export const Keys = memo((props: Props) => {
       const products = data[selectedKey.keySignature];
       if (products) {
         setProducts(products);
-        if (!props.arrangement?.lyrics && products.length > 0) setCanImportLyrics(true);
       } else {
         setProducts([]);
       }
     }
-  }, [selectedKey, props.songDetail?.praiseChartsId, props.arrangement?.lyrics]);
+  }, [selectedKey, props.songDetail?.praiseChartsId]);
 
   const loadLinks = useCallback(() => {
     if (selectedKey) {
@@ -261,27 +258,6 @@ export const Keys = memo((props: Props) => {
           {/* Content */}
           {selectedKey ? (
             <Box>
-              {/* Import Lyrics Alert */}
-              {canImportLyrics && canEdit && props.importLyrics && (
-                <Alert
-                  severity="success"
-                  sx={{ mb: 2 }}
-                  action={
-                    <Button
-                      onClick={() => {
-                        props.importLyrics();
-                        setCanImportLyrics(false);
-                      }}
-                      variant="contained"
-                      color="success"
-                      size="small">
-                      {Locale.label("songs.keys.import") || "Import"}
-                    </Button>
-                  }>
-                  {Locale.label("songs.keys.importPrompt") || "Lyrics are available for import from PraiseCharts."}
-                </Alert>
-              )}
-
               {/* Products and Links */}
               {productsList}
               {linksList}

@@ -122,8 +122,7 @@ export const ServiceOrder = memo((props: Props) => {
     () => (
       <Stack direction="row" spacing={1}>
         <Button
-          component={Link}
-          to={`/plans/print/${props.plan?.id}`}
+          onClick={() => window.open(`/plans/print/${props.plan?.id}`, '_blank')}
           variant="outlined"
           startIcon={<PrintIcon />}
           size="small"
@@ -207,7 +206,17 @@ export const ServiceOrder = memo((props: Props) => {
             onDrop={(item) => {
               handleDrop(item, index + 0.5);
             }}>
-            &nbsp;
+            <Box
+              sx={{
+                height: 40,
+                border: "2px dashed",
+                borderColor: "primary.main",
+                borderRadius: 1,
+                backgroundColor: "primary.light",
+                opacity: 0.3,
+                mb: 1,
+              }}
+            />
           </DroppableWrapper>
         )}
         {canEdit && !itemsFromLesson ? (
