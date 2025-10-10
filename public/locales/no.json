@@ -639,7 +639,22 @@
       "madeTo": "laget til",
       "notIn": "Ikke i",
       "simp": "Enkel",
-      "simpSearch": "Personsøk"
+      "simpSearch": "Personsøk",
+      "active": "aktiv:",
+      "clearAll": "Fjern alle",
+      "checkBoxes": "Kryss av bokser for å aktivere filtre",
+      "configure": "Konfigurer",
+      "names": "Navn",
+      "demographics": "Demografi",
+      "contact": "Kontaktinformasjon",
+      "membership": "Medlemskap og Grupper",
+      "activity": "Aktivitet",
+      "type": "Type",
+      "fund": "Fond",
+      "campus": "Campus",
+      "service": "Tjeneste",
+      "serviceTime": "Tjenestehorário",
+      "group": "Gruppe"
     },
     "peopleSearchResults": {
       "noResMsg": "Ingen resultater funnet. Vennligst søk etter et annet navn eller legg til en ny person"

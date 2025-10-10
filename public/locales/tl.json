@@ -639,7 +639,22 @@
       "madeTo": "ginawa sa",
       "notIn": "Hindi sa",
       "simp": "Simple",
-      "simpSearch": "Paghahanap ng Tao"
+      "simpSearch": "Paghahanap ng Tao",
+      "active": "aktibo:",
+      "clearAll": "Linisin Lahat",
+      "checkBoxes": "Lagyan ng tsek ang mga kahon upang paganahin ang mga filter",
+      "configure": "I-configure",
+      "names": "Mga Pangalan",
+      "demographics": "Demograpiya",
+      "contact": "Impormasyon sa Contact",
+      "membership": "Pagiging Kasapi at Mga Grupo",
+      "activity": "Aktibidad",
+      "type": "Uri",
+      "fund": "Pondo",
+      "campus": "Campus",
+      "service": "Serbisyo",
+      "serviceTime": "Oras ng Serbisyo",
+      "group": "Grupo"
     },
     "peopleSearchResults": {
       "noResMsg": "Walang natagpuang resulta. Mangyaring maghanap ng ibang pangalan o magdagdag ng bagong tao"

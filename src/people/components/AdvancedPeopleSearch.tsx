@@ -584,11 +584,11 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
     if (!activeFilters[field.key]) return null;
 
     const filter = activeFilters[field.key];
-    let displayText = "Configure";
+    let displayText = Locale.label("people.peopleSearch.configure");
     if (filter.value) {
       try {
         const parsed = JSON.parse(filter.value);
-        displayText = `${parsed[0]?.text || "Any"}`;
+        displayText = `${parsed[0]?.text || Locale.label("people.editCondition.any")}`;
       } catch (e) {
         // ignore
       }
@@ -625,11 +625,11 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
 
   const getCategoryLabel = (key: string) => {
     const labels: Record<string, string> = {
-      names: "Names",
-      demographics: "Demographics",
-      contact: "Contact Information",
-      membership: "Membership & Groups",
-      activity: "Activity",
+      names: Locale.label("people.peopleSearch.names"),
+      demographics: Locale.label("people.peopleSearch.demographics"),
+      contact: Locale.label("people.peopleSearch.contact"),
+      membership: Locale.label("people.peopleSearch.membership"),
+      activity: Locale.label("people.peopleSearch.activity"),
     };
     return labels[key] || key;
   };
@@ -666,7 +666,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
           <Paper elevation={0} sx={styles.activeFiltersPaper}>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap alignItems="center">
               <Typography variant="caption" color="primary" sx={{ fontWeight: 600, mr: 0.5 }}>
-                {Object.keys(activeFilters).length} active:
+                {Object.keys(activeFilters).length} {Locale.label("people.peopleSearch.active")}
               </Typography>
               {Object.entries(activeFilters).map(([key, filter]) => {
                 const fieldConfig = Object.values(filterCategories).flat().find((f) => f.key === key);
@@ -684,7 +684,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                 );
               })}
               <Chip
-                label="Clear All"
+                label={Locale.label("people.peopleSearch.clearAll")}
                 onClick={clearAllFilters}
                 size="small"
                 variant="outlined"
@@ -696,7 +696,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         )}
 
         <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
-          Check boxes to enable filters
+          {Locale.label("people.peopleSearch.checkBoxes")}
         </Typography>
 
         <Box>
@@ -794,10 +794,10 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 1 }}>
             <FormControl fullWidth>
-              <InputLabel>Type</InputLabel>
+              <InputLabel>{Locale.label("people.peopleSearch.type")}</InputLabel>
               <Select
                 value={complexConfig?.operator || ""}
-                label="Type"
+                label={Locale.label("people.peopleSearch.type")}
                 onChange={(e) => {
                   const newConfig = complexConfig || {
                     type: complexFilterDialog.field === "memberDonations" ? "donation" : "attendance",
@@ -832,27 +832,27 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                 <FormControl fullWidth>
                   <InputLabel>
                     {complexFilterDialog.field === "memberDonations"
-                      ? "Fund"
+                      ? Locale.label("people.peopleSearch.fund")
                       : complexConfig.operator === "attendedCampus"
-                        ? "Campus"
+                        ? Locale.label("people.peopleSearch.campus")
                         : complexConfig.operator === "attendedService"
-                          ? "Service"
+                          ? Locale.label("people.peopleSearch.service")
                           : complexConfig.operator === "attendedServiceTime"
-                            ? "Service Time"
-                            : "Group"}
+                            ? Locale.label("people.peopleSearch.serviceTime")
+                            : Locale.label("people.peopleSearch.group")}
                   </InputLabel>
                   <Select
                     value={complexConfig?.entityValue || ""}
                     label={
                       complexFilterDialog.field === "memberDonations"
-                        ? "Fund"
+                        ? Locale.label("people.peopleSearch.fund")
                         : complexConfig.operator === "attendedCampus"
-                          ? "Campus"
+                          ? Locale.label("people.peopleSearch.campus")
                           : complexConfig.operator === "attendedService"
-                            ? "Service"
+                            ? Locale.label("people.peopleSearch.service")
                             : complexConfig.operator === "attendedServiceTime"
-                              ? "Service Time"
-                              : "Group"
+                              ? Locale.label("people.peopleSearch.serviceTime")
+                              : Locale.label("people.peopleSearch.group")
                     }
                     onChange={(e) => {
                       let text = "";
@@ -924,9 +924,9 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setComplexFilterDialog({ open: false, field: null })}>Cancel</Button>
+          <Button onClick={() => setComplexFilterDialog({ open: false, field: null })}>{Locale.label("common.cancel")}</Button>
           <Button onClick={handleComplexFilterSave} variant="contained">
-            Save
+            {Locale.label("common.save")}
           </Button>
         </DialogActions>
       </Dialog>
@@ -962,10 +962,10 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 1 }}>
             <FormControl fullWidth>
-              <InputLabel>Type</InputLabel>
+              <InputLabel>{Locale.label("people.peopleSearch.type")}</InputLabel>
               <Select
                 value={complexConfig?.operator || ""}
-                label="Type"
+                label={Locale.label("people.peopleSearch.type")}
                 onChange={(e) => {
                   const newConfig = complexConfig || {
                     type: complexFilterDialog.field === "memberDonations" ? "donation" : "attendance",
@@ -1000,27 +1000,27 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                 <FormControl fullWidth>
                   <InputLabel>
                     {complexFilterDialog.field === "memberDonations"
-                      ? "Fund"
+                      ? Locale.label("people.peopleSearch.fund")
                       : complexConfig.operator === "attendedCampus"
-                        ? "Campus"
+                        ? Locale.label("people.peopleSearch.campus")
                         : complexConfig.operator === "attendedService"
-                          ? "Service"
+                          ? Locale.label("people.peopleSearch.service")
                           : complexConfig.operator === "attendedServiceTime"
-                            ? "Service Time"
-                            : "Group"}
+                            ? Locale.label("people.peopleSearch.serviceTime")
+                            : Locale.label("people.peopleSearch.group")}
                   </InputLabel>
                   <Select
                     value={complexConfig?.entityValue || ""}
                     label={
                       complexFilterDialog.field === "memberDonations"
-                        ? "Fund"
+                        ? Locale.label("people.peopleSearch.fund")
                         : complexConfig.operator === "attendedCampus"
-                          ? "Campus"
+                          ? Locale.label("people.peopleSearch.campus")
                           : complexConfig.operator === "attendedService"
-                            ? "Service"
+                            ? Locale.label("people.peopleSearch.service")
                             : complexConfig.operator === "attendedServiceTime"
-                              ? "Service Time"
-                              : "Group"
+                              ? Locale.label("people.peopleSearch.serviceTime")
+                              : Locale.label("people.peopleSearch.group")
                     }
                     onChange={(e) => {
                       let text = "";
@@ -1092,9 +1092,9 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setComplexFilterDialog({ open: false, field: null })}>Cancel</Button>
+          <Button onClick={() => setComplexFilterDialog({ open: false, field: null })}>{Locale.label("common.cancel")}</Button>
           <Button onClick={handleComplexFilterSave} variant="contained">
-            Save
+            {Locale.label("common.save")}
           </Button>
         </DialogActions>
       </Dialog>
