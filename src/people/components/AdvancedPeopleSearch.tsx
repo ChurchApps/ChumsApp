@@ -22,29 +22,17 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Divider,
   Paper,
-  Grid,
-  IconButton,
-  Tooltip,
   alpha,
-  type SelectChangeEvent,
 } from "@mui/material";
 import {
   ExpandMore as ExpandMoreIcon,
-  TextFields as TextFieldsIcon,
-  Numbers as NumbersIcon,
-  CalendarMonth as CalendarIcon,
-  CheckCircle as CheckCircleIcon,
   Settings as SettingsIcon,
   Close as CloseIcon,
   Person as PersonIcon,
   Cake as CakeIcon,
   Email as EmailIcon,
-  Phone as PhoneIcon,
-  Home as HomeIcon,
   Group as GroupIcon,
-  AttachMoney as MoneyIcon,
   EventAvailable as AttendanceIcon,
 } from "@mui/icons-material";
 
@@ -81,7 +69,7 @@ interface ComplexFilterConfig {
 
 export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Props) {
   const [activeFilters, setActiveFilters] = useState<Record<string, ActiveFilter>>({});
-  const [expandedCategories, setExpandedCategories] = useState<string[]>(["names", "demographics"]);
+  const [expandedCategories, setExpandedCategories] = useState<string[]>(["names"]);
   const [complexFilterDialog, setComplexFilterDialog] = useState<{ open: boolean; field: string | null }>({ open: false, field: null });
   const [complexConfig, setComplexConfig] = useState<ComplexFilterConfig | null>(null);
   const debounceTimerRef = useRef<NodeJS.Timeout>();
@@ -94,30 +82,10 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
   const [serviceTimes, setServiceTimes] = useState<ServiceTimeInterface[]>([]);
   const [loadedCategories, setLoadedCategories] = useState<string[]>([]);
 
-  const getFieldIcon = (type: string, key: string) => {
-    if (key.includes("email")) return <EmailIcon sx={{ fontSize: 18 }} />;
-    if (key.includes("phone")) return <PhoneIcon sx={{ fontSize: 18 }} />;
-    if (key.includes("address") || key.includes("city") || key.includes("state") || key.includes("zip")) return <HomeIcon sx={{ fontSize: 18 }} />;
-    if (key.includes("birth") || key.includes("anniversary")) return <CakeIcon sx={{ fontSize: 18 }} />;
-    if (key.includes("Name") || key === "prefix" || key === "suffix") return <PersonIcon sx={{ fontSize: 18 }} />;
-    if (key.includes("group")) return <GroupIcon sx={{ fontSize: 18 }} />;
-    if (key.includes("Donation")) return <MoneyIcon sx={{ fontSize: 18 }} />;
-    if (key.includes("Attendance")) return <AttendanceIcon sx={{ fontSize: 18 }} />;
-
-    switch (type) {
-      case "text": return <TextFieldsIcon sx={{ fontSize: 18 }} />;
-      case "number": return <NumbersIcon sx={{ fontSize: 18 }} />;
-      case "date": return <CalendarIcon sx={{ fontSize: 18 }} />;
-      case "select": return <CheckCircleIcon sx={{ fontSize: 18 }} />;
-      case "complex": return <SettingsIcon sx={{ fontSize: 18 }} />;
-      default: return <TextFieldsIcon sx={{ fontSize: 18 }} />;
-    }
-  };
 
   const filterCategories = useMemo(() => {
     const categories: Record<string, FilterField[]> = {
       names: [
-        { key: "displayName", label: Locale.label("person.displayName"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
         { key: "firstName", label: Locale.label("person.firstName"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
         { key: "lastName", label: Locale.label("person.lastName"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
         { key: "middleName", label: Locale.label("person.middleName"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
@@ -495,10 +463,10 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         onChange={(e) => updateFilterOperator(field.key, e.target.value)}
         variant="outlined"
         size="small"
-        sx={{ minWidth: 100, maxWidth: 140 }}
+        sx={{ minWidth: 80, fontSize: '0.875rem' }}
       >
         {field.operators.map((op) => (
-          <MenuItem key={op} value={op}>
+          <MenuItem key={op} value={op} sx={{ fontSize: '0.875rem' }}>
             {operatorLabels[op] || op}
           </MenuItem>
         ))}
@@ -509,6 +477,11 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
   const renderValueInput = (field: FilterField) => {
     if (!activeFilters[field.key]) return null;
 
+    const commonSx = {
+      '& .MuiInputBase-input': { fontSize: '0.875rem', py: 0.75 },
+      '& .MuiSelect-select': { fontSize: '0.875rem', py: 0.75 }
+    };
+
     if (field.type === "select" && field.options) {
       return (
         <Select
@@ -517,9 +490,10 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
           variant="outlined"
           size="small"
           fullWidth
+          sx={commonSx}
         >
           {field.options.map((opt) => (
-            <MenuItem key={opt.value} value={opt.value}>
+            <MenuItem key={opt.value} value={opt.value} sx={{ fontSize: '0.875rem' }}>
               {opt.label}
             </MenuItem>
           ))}
@@ -528,14 +502,14 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
     }
 
     if (field.type === "date") {
-      return <TextField size="small" type="date" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} InputLabelProps={{ shrink: true }} variant="outlined" />;
+      return <TextField size="small" type="date" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} InputLabelProps={{ shrink: true }} variant="outlined" sx={commonSx} />;
     }
 
     if (field.type === "number") {
-      return <TextField size="small" type="number" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} variant="outlined" placeholder="Value" />;
+      return <TextField size="small" type="number" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} variant="outlined" placeholder="Value" sx={commonSx} />;
     }
 
-    return <TextField size="small" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} placeholder="Enter value..." variant="outlined" />;
+    return <TextField size="small" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} placeholder="Enter value..." variant="outlined" sx={commonSx} />;
   };
 
   const renderComplexFilterButton = (field: FilterField) => {
@@ -546,7 +520,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
     if (filter.value) {
       try {
         const parsed = JSON.parse(filter.value);
-        displayText = `${parsed[0]?.text || "Any"} [${parsed[1]?.from} - ${parsed[1]?.to}]`;
+        displayText = `${parsed[0]?.text || "Any"}`;
       } catch (e) {
         // ignore
       }
@@ -556,7 +530,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
       <Button
         size="small"
         variant="outlined"
-        startIcon={<SettingsIcon />}
+        startIcon={<SettingsIcon fontSize="small" />}
         onClick={() => {
           setComplexFilterDialog({ open: true, field: field.key });
           if (filter.value) {
@@ -575,7 +549,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
             }
           }
         }}
-        sx={{ textTransform: "none", justifyContent: "flex-start" }}>
+        sx={{ textTransform: "none", justifyContent: "flex-start", fontSize: '0.8125rem', py: 0.5 }}>
         {displayText}
       </Button>
     );
@@ -621,23 +595,23 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
 
         {/* Active Filters Summary */}
         {Object.keys(activeFilters).length > 0 && (
-          <Paper elevation={0} sx={{ p: 2, mb: 2, bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05), borderRadius: 2 }}>
-            <Typography variant="subtitle2" color="primary" sx={{ mb: 1, fontWeight: 600 }}>
-              Active Filters ({Object.keys(activeFilters).length})
-            </Typography>
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+          <Paper elevation={0} sx={{ p: 1.5, mb: 2, bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05), borderRadius: 1 }}>
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap alignItems="center">
+              <Typography variant="caption" color="primary" sx={{ fontWeight: 600, mr: 0.5 }}>
+                {Object.keys(activeFilters).length} active:
+              </Typography>
               {Object.entries(activeFilters).map(([key, filter]) => {
                 const fieldConfig = Object.values(filterCategories).flat().find((f) => f.key === key);
                 return (
                   <Chip
                     key={key}
-                    label={`${fieldConfig?.label}: ${getFilterDisplayValue(filter)}`}
+                    label={fieldConfig?.label}
                     onDelete={() => removeFilter(key)}
                     deleteIcon={<CloseIcon />}
                     size="small"
                     color="primary"
-                    variant="filled"
-                    sx={{ mb: 0.5 }}
+                    variant="outlined"
+                    sx={{ height: 24, fontSize: '0.75rem' }}
                   />
                 );
               })}
@@ -647,14 +621,14 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                 size="small"
                 variant="outlined"
                 color="default"
-                sx={{ mb: 0.5 }}
+                sx={{ height: 24, fontSize: '0.75rem' }}
               />
             </Stack>
           </Paper>
         )}
 
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Select filters below to refine your search. Check boxes to enable filters.
+        <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
+          Check boxes to enable filters
         </Typography>
 
         <Box>
@@ -668,14 +642,12 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                 expanded={expandedCategories.includes(categoryKey)}
                 onChange={handleCategoryExpand(categoryKey)}
                 sx={{
-                  mb: 1.5,
+                  mb: 1,
                   '&:before': { display: 'none' },
-                  borderRadius: '8px !important',
+                  borderRadius: '4px !important',
                   overflow: 'hidden',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-                  '&.Mui-expanded': {
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
-                  }
+                  border: '1px solid',
+                  borderColor: 'divider',
                 }}
                 disableGutters
               >
@@ -683,88 +655,77 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                   expandIcon={<ExpandMoreIcon />}
                   sx={{
                     bgcolor: (theme) => alpha(theme.palette.primary.main, 0.02),
-                    '&:hover': {
-                      bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05),
-                    },
-                    minHeight: 56,
+                    minHeight: 42,
                     '&.Mui-expanded': {
-                      minHeight: 56,
+                      minHeight: 42,
                       borderBottom: 1,
                       borderColor: 'divider',
-                    }
+                    },
+                    py: 0,
                   }}
                 >
-                  <Stack direction="row" spacing={1.5} alignItems="center" sx={{ width: "100%" }}>
-                    <Box sx={{ color: 'primary.main', display: 'flex', alignItems: 'center' }}>
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ width: "100%" }}>
+                    <Box sx={{ color: 'primary.main', display: 'flex', alignItems: 'center', fontSize: 18 }}>
                       {getCategoryIcon(categoryKey)}
                     </Box>
-                    <Typography sx={{ flexGrow: 1, fontWeight: 500 }}>{getCategoryLabel(categoryKey)}</Typography>
+                    <Typography sx={{ flexGrow: 1, fontWeight: 500, fontSize: '0.875rem' }}>{getCategoryLabel(categoryKey)}</Typography>
                     {activeCount > 0 && (
                       <Chip
                         label={activeCount}
                         size="small"
                         color="primary"
                         sx={{
-                          height: 22,
-                          minWidth: 22,
-                          '& .MuiChip-label': { px: 1, fontSize: '0.75rem', fontWeight: 600 }
+                          height: 20,
+                          minWidth: 20,
+                          '& .MuiChip-label': { px: 0.75, fontSize: '0.7rem', fontWeight: 600 }
                         }}
                       />
                     )}
                   </Stack>
                 </AccordionSummary>
-                <AccordionDetails sx={{ p: 2.5 }}>
-                  <Stack spacing={0} divider={<Divider />}>
-                    {fields.map((field) => (
+                <AccordionDetails sx={{ p: 1, pt: 0.5 }}>
+                  <Stack spacing={0}>
+                    {fields.map((field, index) => (
                       <Box
                         key={field.key}
                         sx={{
-                          py: 1.5,
-                          '&:hover': {
-                            bgcolor: (theme) => alpha(theme.palette.action.hover, 0.3),
-                          },
-                          transition: 'background-color 0.2s',
-                          borderRadius: 1,
-                          px: 1,
+                          py: 0.75,
+                          px: 0.5,
+                          bgcolor: activeFilters[field.key] ? (theme) => alpha(theme.palette.primary.main, 0.03) : 'transparent',
+                          borderRadius: 0.5,
                         }}
                       >
-                        <Grid container spacing={2} alignItems="center">
-                          <Grid item xs={12} sm={5}>
-                            <Stack direction="row" spacing={1} alignItems="center">
-                              <Checkbox
-                                checked={!!activeFilters[field.key]}
-                                onChange={() => toggleFilter(field.key)}
-                                size="small"
-                                sx={{
-                                  '&.Mui-checked': {
-                                    color: 'primary.main',
-                                  }
-                                }}
-                              />
-                              <Box sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center' }}>
-                                {getFieldIcon(field.type, field.key)}
-                              </Box>
-                              <Typography
-                                sx={{
-                                  color: activeFilters[field.key] ? "text.primary" : "text.secondary",
-                                  fontWeight: activeFilters[field.key] ? 500 : 400,
-                                  fontSize: '0.9rem',
-                                }}>
-                                {field.label}
-                              </Typography>
-                            </Stack>
-                          </Grid>
+                        <Stack spacing={0.5}>
+                          <Stack direction="row" spacing={0.75} alignItems="center">
+                            <Checkbox
+                              checked={!!activeFilters[field.key]}
+                              onChange={() => toggleFilter(field.key)}
+                              size="small"
+                              sx={{ p: 0.5 }}
+                            />
+                            <Typography
+                              sx={{
+                                color: activeFilters[field.key] ? "text.primary" : "text.secondary",
+                                fontWeight: activeFilters[field.key] ? 500 : 400,
+                                fontSize: '0.8125rem',
+                                flex: 1,
+                              }}>
+                              {field.label}
+                            </Typography>
+                          </Stack>
                           {activeFilters[field.key] && (
-                            <Grid item xs={12} sm={7}>
-                              <Stack direction="row" spacing={1} sx={{ width: "100%", alignItems: "center" }}>
-                                {field.type !== "complex" && field.type !== "select" && renderOperatorSelect(field)}
-                                <Box sx={{ flex: 1, minWidth: 0 }}>
-                                  {field.type === "complex" ? renderComplexFilterButton(field) : renderValueInput(field)}
+                            <Stack direction="row" spacing={1} sx={{ pl: 4.5, alignItems: "center" }}>
+                              {field.type !== "complex" && field.type !== "select" && (
+                                <Box sx={{ width: 100 }}>
+                                  {renderOperatorSelect(field)}
                                 </Box>
-                              </Stack>
-                            </Grid>
+                              )}
+                              <Box sx={{ flex: 1, minWidth: 0 }}>
+                                {field.type === "complex" ? renderComplexFilterButton(field) : renderValueInput(field)}
+                              </Box>
+                            </Stack>
                           )}
-                        </Grid>
+                        </Stack>
                       </Box>
                     ))}
                   </Stack>
