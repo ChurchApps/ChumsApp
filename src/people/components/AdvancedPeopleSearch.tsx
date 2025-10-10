@@ -117,13 +117,13 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
   const filterCategories = useMemo(() => {
     const categories: Record<string, FilterField[]> = {
       names: [
-        { key: "displayName", label: Locale.label("person.displayName"), type: "text", operators: ["equals", "contains", "startsWith", "endsWith"] },
-        { key: "firstName", label: Locale.label("person.firstName"), type: "text", operators: ["equals", "contains", "startsWith", "endsWith"] },
-        { key: "lastName", label: Locale.label("person.lastName"), type: "text", operators: ["equals", "contains", "startsWith", "endsWith"] },
-        { key: "middleName", label: Locale.label("person.middleName"), type: "text", operators: ["equals", "contains", "startsWith", "endsWith"] },
-        { key: "nickName", label: Locale.label("person.nickName"), type: "text", operators: ["equals", "contains", "startsWith", "endsWith"] },
-        { key: "prefix", label: Locale.label("person.prefix"), type: "text", operators: ["equals", "contains"] },
-        { key: "suffix", label: Locale.label("person.suffix"), type: "text", operators: ["equals", "contains"] },
+        { key: "displayName", label: Locale.label("person.displayName"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
+        { key: "firstName", label: Locale.label("person.firstName"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
+        { key: "lastName", label: Locale.label("person.lastName"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
+        { key: "middleName", label: Locale.label("person.middleName"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
+        { key: "nickName", label: Locale.label("person.nickName"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
+        { key: "prefix", label: Locale.label("person.prefix"), type: "text", operators: ["contains", "equals"] },
+        { key: "suffix", label: Locale.label("person.suffix"), type: "text", operators: ["contains", "equals"] },
       ],
       demographics: [
         {
@@ -196,12 +196,12 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         { key: "yearsMarried", label: Locale.label("people.editCondition.marYears"), type: "number", operators: ["equals", "greaterThan", "greaterThanEqual", "lessThan", "lessThanEqual"] },
       ],
       contact: [
-        { key: "email", label: Locale.label("person.email"), type: "text", operators: ["equals", "contains", "startsWith", "endsWith"] },
-        { key: "phone", label: Locale.label("person.phone"), type: "text", operators: ["equals", "contains", "startsWith", "endsWith"] },
-        { key: "address", label: Locale.label("person.address"), type: "text", operators: ["equals", "contains", "startsWith", "endsWith"] },
-        { key: "city", label: Locale.label("person.city"), type: "text", operators: ["equals", "contains", "startsWith", "endsWith"] },
-        { key: "state", label: Locale.label("person.state"), type: "text", operators: ["equals", "contains"] },
-        { key: "zip", label: Locale.label("person.zip"), type: "text", operators: ["equals", "contains", "startsWith"] },
+        { key: "email", label: Locale.label("person.email"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
+        { key: "phone", label: Locale.label("person.phone"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
+        { key: "address", label: Locale.label("person.address"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
+        { key: "city", label: Locale.label("person.city"), type: "text", operators: ["contains", "equals", "startsWith", "endsWith"] },
+        { key: "state", label: Locale.label("person.state"), type: "text", operators: ["contains", "equals"] },
+        { key: "zip", label: Locale.label("person.zip"), type: "text", operators: ["contains", "equals", "startsWith"] },
       ],
       membership: [
         {
@@ -389,6 +389,9 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
   const convertConditions = useCallback(async () => {
     const result: SearchCondition[] = [];
     for (const filter of Object.values(activeFilters)) {
+      // Skip filters with blank values
+      if (!filter.value || filter.value.trim() === "") continue;
+
       switch (filter.field) {
         case "groupMember":
           const members: GroupMemberInterface[] = await ApiHelper.get(`/groupmembers?groupId=${filter.value}`, "MembershipApi");
