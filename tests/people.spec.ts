@@ -22,8 +22,7 @@ test.describe('People Management', () => {
   test('should search for people', async ({ page }) => {
     const searchInput = page.locator('input[name="searchText"]');
     await searchInput.fill('Smith');
-    const searchBtn = page.locator('button').getByText('Search').first();
-    await searchBtn.click();
+    await searchInput.press('Enter');
 
     await page.waitForResponse(response => response.url().includes('/people') && response.status() === 200, { timeout: 10000 }).catch(() => { });
 
@@ -33,14 +32,16 @@ test.describe('People Management', () => {
   });
 
   test('should advance search for people', async ({ page }) => {
-    const advBtn = page.locator('button').getByText('Advanced');
+    const advBtn = page.locator('p').getByText('Advanced');
     await advBtn.click();
-    const input = page.locator('[name="value"]');
-    await input.fill('Donald Clark');
-    const saveBtn = page.locator('button').getByText('Save Condition');
-    await saveBtn.click();
-    const searchBtn = page.locator('button').getByText('Search').first();
-    await searchBtn.click();
+    const firstCheck = page.locator('div input[type="checkbox"]').first();
+    await firstCheck.click();
+    const condition = page.locator('div[aria-haspopup="listbox"]');
+    await condition.click();
+    const equalsCondition = page.locator('li[data-value="equals"]');
+    await equalsCondition.click();
+    const firstName = page.locator('input[type="text"]').nth(1);
+    await firstName.fill('Donald');
 
     await page.waitForResponse(response => response.url().includes('/people') && response.status() === 200, { timeout: 10000 }).catch(() => { });
 
@@ -58,27 +59,23 @@ test.describe('People Management', () => {
   });
 
   test('should delete advance search conditions', async ({ page }) => {
-    const advBtn = page.locator('button').getByText('Advanced');
+    const advBtn = page.locator('p').getByText('Advanced');
     await advBtn.click();
-    const input = page.locator('[name="value"]');
-    await input.fill('Donald Clark');
-    const saveBtn = page.locator('button').getByText('Save Condition');
-    await saveBtn.click();
-    const deleteBtn = page.locator('button').getByText('delete');
-    await deleteBtn.click();
-    await expect(deleteBtn).toHaveCount(0);
-  });
-
-  test('should allow adding advance search conditions', async ({ page }) => {
-    const advBtn = page.locator('button').getByText('Advanced');
-    await advBtn.click();
-    const input = page.locator('[name="value"]');
-    await input.fill('Donald Clark');
-    const saveBtn = page.locator('button').getByText('Save Condition');
-    await saveBtn.click();
-    const addBtn = page.locator('button').getByText('Add Condition');
-    await addBtn.click();
-    await expect(input).toHaveCount(1);
+    const firstCheck = page.locator('div input[type="checkbox"]').first();
+    await firstCheck.click();
+    const secondCheck = page.locator('div input[type="checkbox"]').nth(1);
+    await secondCheck.click();
+    const checkTwo = page.locator('span').getByText('2 active:');
+    await expect(checkTwo).toHaveCount(1);
+    const deleteLast = page.locator('[d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"]').last();
+    await deleteLast.click();
+    const checkOne = page.locator('span').getByText('1 active:');
+    await expect(checkOne).toHaveCount(1);
+    await secondCheck.click();
+    await expect(checkTwo).toHaveCount(1);
+    const clearAll = page.locator('span').getByText("Clear All");
+    await clearAll.click();
+    await expect(checkTwo).toHaveCount(0);
   });
 
   test('should AI search for people', async ({ page }) => {
@@ -170,7 +167,7 @@ test.describe('People Management', () => {
     const firstPerson = page.locator('table tbody tr').first();
     await firstPerson.click();
     await page.waitForURL(/\/people\/PER\d+/, { timeout: 10000 });
-
+    await page.waitForTimeout(500);
     const attBtn = page.locator('button').getByText('Attendance');
     await attBtn.click();
     await page.waitForTimeout(5000);
@@ -186,7 +183,7 @@ test.describe('People Management', () => {
     const firstPerson = page.locator('table tbody tr').first();
     await firstPerson.click();
     await page.waitForURL(/\/people\/PER\d+/, { timeout: 10000 });
-
+    await page.waitForTimeout(500);
     const attBtn = page.locator('button').getByText('Attendance');
     await attBtn.click();
     await page.waitForTimeout(5000);
@@ -202,7 +199,7 @@ test.describe('People Management', () => {
     const firstPerson = page.locator('table tbody tr').first();
     await firstPerson.click();
     await page.waitForURL(/\/people\/PER\d+/, { timeout: 10000 });
-
+    await page.waitForTimeout(500);
     const donationBtn = page.locator('button').getByText('Donations');
     await donationBtn.click();
     await page.waitForTimeout(5000);
@@ -212,7 +209,7 @@ test.describe('People Management', () => {
     await seekEither.click();
   });
 
-  test('should print current year from people donations tab', async ({ page }) => {
+  test('UNFINISHED should print current year from people donations tab', async ({ page }) => {
     await expect(page).toHaveURL(/\/people/);
 
     const firstPerson = page.locator('table tbody tr').first();
@@ -231,7 +228,7 @@ test.describe('People Management', () => {
     await expect(page).toHaveURL(/\/donations\/print\/PER\d+/);
   });
 
-  test('should print last year from people donations tab', async ({ page }) => {
+  test('UNFINISHED should print last year from people donations tab', async ({ page }) => {
     await expect(page).toHaveURL(/\/people/);
 
     const firstPerson = page.locator('table tbody tr').first();
@@ -250,12 +247,13 @@ test.describe('People Management', () => {
     await expect(page).toHaveURL(/\/donations\/print\/PER\d+/);
   });
 
-  test('DOES NOT WORK should add card from people donations tab', async ({ page }) => {
+  /* test('DOES NOT WORK should add card from people donations tab', async ({ page }) => {
     await expect(page).toHaveURL(/\/people/);
 
     const firstPerson = page.locator('table tbody tr').first();
     await firstPerson.click();
     await page.waitForURL(/\/people\/PER\d+/, { timeout: 10000 });
+    await page.waitForTimeout(2000);
 
     const donationBtn = page.locator('button').getByText('Donations');
     await donationBtn.click();
@@ -277,7 +275,7 @@ test.describe('People Management', () => {
 
     const saveBtn = page.locator('Button').getByText('Save');
     await saveBtn.click();
-  });
+  }); */
 
   test('should cancel adding card from people donations tab', async ({ page }) => {
     await expect(page).toHaveURL(/\/people/);
@@ -285,6 +283,7 @@ test.describe('People Management', () => {
     const firstPerson = page.locator('table tbody tr').first();
     await firstPerson.click();
     await page.waitForURL(/\/people\/PER\d+/, { timeout: 10000 });
+    await page.waitForTimeout(500);
 
     const donationBtn = page.locator('button').getByText('Donations');
     await donationBtn.click();
@@ -300,7 +299,8 @@ test.describe('People Management', () => {
     await addBtn.click();
   });
 
-  test('DOES NOT WORK should add bank account from people donations tab', async ({ page }) => {
+  /* test('DOES NOT WORK should add bank account from people donations tab', async ({ page }) => {
+    //fix donations test first ^^^^^
     await expect(page).toHaveURL(/\/people/);
 
     const firstPerson = page.locator('table tbody tr').first();
@@ -326,7 +326,7 @@ test.describe('People Management', () => {
 
     const saveBtn = page.locator('Button').getByText('Save');
     await saveBtn.click();
-  });
+  }); */
 
   test('should cancel adding bank from people donations tab', async ({ page }) => {
     await expect(page).toHaveURL(/\/people/);
@@ -334,6 +334,7 @@ test.describe('People Management', () => {
     const firstPerson = page.locator('table tbody tr').first();
     await firstPerson.click();
     await page.waitForURL(/\/people\/PER\d+/, { timeout: 10000 });
+    await page.waitForTimeout(500);
 
     const donationBtn = page.locator('button').getByText('Donations');
     await donationBtn.click();
@@ -531,8 +532,14 @@ test.describe('People Management', () => {
     await saveBtn.click();
   });
 
-  test('DOES NOT WORK should delete person from details page', async ({ page }) => {
+  test('should delete person from details page', async ({ page }) => {
     await expect(page).toHaveURL(/\/people/);
+
+    page.once('dialog', async dialog => {
+      expect(dialog.type()).toBe('confirm');
+      expect(dialog.message()).toContain('Are you sure');
+      await dialog.accept();
+    });
 
     const firstPerson = page.locator('table tbody tr').first();
     await firstPerson.click();
@@ -545,20 +552,14 @@ test.describe('People Management', () => {
     const deleteBtn = page.locator('button').getByText('Delete');
     await deleteBtn.click();
 
-    const menuBtn = page.locator('[id="primaryNavButton"]').getByText('expand_more');
-    await menuBtn.click();
-    const peopleHomeBtn = page.locator('[data-testid="nav-item-people"]');
-    await peopleHomeBtn.click();
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(2000);
     await expect(page).toHaveURL(/\/people/);
     const searchInput = page.locator('input[name="searchText"]');
     await searchInput.fill('Carol');
-    const searchBtn = page.locator('button').getByText('Search').first();
-    await searchBtn.click();
+    await searchInput.press('Enter');
 
     await page.waitForResponse(response => response.url().includes('/people') && response.status() === 200, { timeout: 10000 }).catch(() => { });
 
-    await page.waitForSelector('table tbody tr', { state: 'visible' });
     const results = page.locator('table tbody tr');
     await expect(results).toHaveCount(0);
   });

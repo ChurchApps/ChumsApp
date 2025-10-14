@@ -58,12 +58,14 @@ test.describe('Group Management', () => {
 
     const advBtn = page.locator('button').getByText('Advanced');
     await advBtn.click();
-    const condition = page.locator('input[name="value"]');
-    await condition.fill('Donald Clark');
-    const saveBtn = page.locator('button').getByText('Save Condition');
-    await saveBtn.click();
-    const searchBtn = page.locator('button').getByText('Search');
-    await searchBtn.click();
+    const firstCheck = page.locator('div input[type="checkbox"]').first();
+    await firstCheck.click();
+    const condition = page.locator('div[aria-haspopup="listbox"]');
+    await condition.click();
+    const equalsCondition = page.locator('li[data-value="equals"]');
+    await equalsCondition.click();
+    const firstName = page.locator('input[type="text"]');
+    await firstName.fill('Donald');
 
     await page.waitForResponse(response => response.url().includes('/people') && response.status() === 200, { timeout: 10000 }).catch(() => { });
 
@@ -83,13 +85,21 @@ test.describe('Group Management', () => {
 
     const advBtn = page.locator('button').getByText('Advanced');
     await advBtn.click();
-    const condition = page.locator('input[name="value"]');
-    await condition.fill('Donald Clark');
-    const saveBtn = page.locator('button').getByText('Save Condition');
-    await saveBtn.click();
-    const deleteBtn = page.locator('button').getByText('delete');
-    await deleteBtn.click();
-    await expect(deleteBtn).toHaveCount(0);
+    const firstCheck = page.locator('div input[type="checkbox"]').first();
+    await firstCheck.click();
+    const secondCheck = page.locator('div input[type="checkbox"]').nth(1);
+    await secondCheck.click();
+    const checkTwo = page.locator('span').getByText('2 active:');
+    await expect(checkTwo).toHaveCount(1);
+    const deleteLast = page.locator('[d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"]').last();
+    await deleteLast.click();
+    const checkOne = page.locator('span').getByText('1 active:');
+    await expect(checkOne).toHaveCount(1);
+    await secondCheck.click();
+    await expect(checkTwo).toHaveCount(1);
+    const clearAll = page.locator('span').getByText("Clear All");
+    await clearAll.click();
+    await expect(checkTwo).toHaveCount(0);
   });
 
   test('should remove person from group', async ({ page }) => {
@@ -198,7 +208,7 @@ test.describe('Group Management', () => {
     await expect(sessionCard).toHaveCount(1);
   });
 
-  test('DOES NOT WORK should add person to session', async ({ page }) => {
+  test('should add person to session', async ({ page }) => {
     const firstGroup = page.locator('table tbody tr a').first();
     await firstGroup.click();
     await page.waitForURL(/\/groups\/GRP\d+/, { timeout: 10000 });
@@ -210,15 +220,16 @@ test.describe('Group Management', () => {
     await newBtn.click();
     const saveBtn = page.locator('button').getByText('Save');
     await saveBtn.click();
+    await page.waitForTimeout(2000);
     const viewBtn = page.locator('button').getByText('View').first();
     await viewBtn.click();
-    const addBtn = page.locator('button').getByText('Add').first();
+    const addBtn = page.locator('button[data-testid="add-member-button"]').first();
     await addBtn.click();
     const addedPerson = page.locator('[id="groupMemberTable"] td a');
     await expect(addedPerson).toHaveCount(1);
   });
 
-  test('DOES NOT WORK should remove person from session', async ({ page }) => {
+  test('should remove person from session', async ({ page }) => {
     const firstGroup = page.locator('table tbody tr a').first();
     await firstGroup.click();
     await page.waitForURL(/\/groups\/GRP\d+/, { timeout: 10000 });
@@ -232,7 +243,7 @@ test.describe('Group Management', () => {
     await saveBtn.click();
     const viewBtn = page.locator('button').getByText('View').first();
     await viewBtn.click();
-    const addBtn = page.locator('button').getByText('Add').first();
+    const addBtn = page.locator('button[data-testid="add-member-button"]').first();
     await addBtn.click();
     const addedPerson = page.locator('[id="groupMemberTable"] td a');
     await expect(addedPerson).toHaveCount(1);
@@ -244,17 +255,21 @@ test.describe('Group Management', () => {
   test('should cancel adding group', async ({ page }) => {
     const addBtn = page.locator('button').getByText('Add Group');
     await addBtn.click();
-    const categoryInput = page.locator('[name="categoryName"]');
-    await expect(categoryInput).toHaveCount(1);
+    const nameInput = page.locator('input[id="groupName"]');
+    await expect(nameInput).toHaveCount(1);
     const cancelBtn = page.locator('button').getByText('Cancel');
     await cancelBtn.click();
-    await expect(categoryInput).toHaveCount(0);
+    await expect(nameInput).toHaveCount(0);
   });
 
   test('should add group', async ({ page }) => {
     const addBtn = page.locator('button').getByText('Add Group');
     await addBtn.click();
-    const categoryInput = page.locator('[name="categoryName"]');
+    const categorySelect = page.locator('div[role="combobox"]');
+    await categorySelect.click();
+    const newCat = page.locator('li[data-value="__ADD_NEW__"]');
+    await newCat.click();
+    const categoryInput = page.locator('input').first();
     await categoryInput.fill('Test Category');
     const nameInput = page.locator('[name="name"]');
     await nameInput.fill('Octavian Test Group');
@@ -264,7 +279,13 @@ test.describe('Group Management', () => {
     await expect(validateGroup).toHaveCount(1);
   });
 
-  test('DOES NOT WORK should delete group', async ({ page }) => {
+  test('should delete group', async ({ page }) => {
+    page.once('dialog', async dialog => {
+      expect(dialog.type()).toBe('confirm');
+      expect(dialog.message()).toContain('Are you sure');
+      await dialog.accept();
+    });
+
     const firstGroup = page.locator('table tbody tr a').first();
     await firstGroup.click();
     await page.waitForURL(/\/groups\/GRP\d+/, { timeout: 10000 });
