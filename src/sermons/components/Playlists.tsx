@@ -1,4 +1,4 @@
-import { Loading } from "@churchapps/apphelper";
+import { Loading, Locale } from "@churchapps/apphelper";
 import { ApiHelper } from "@churchapps/apphelper";
 import { UserHelper } from "@churchapps/apphelper";
 import { PageHeader } from "@churchapps/apphelper";
@@ -78,7 +78,7 @@ export const Playlists = () => {
   };
 
   const handleAdd = () => {
-    const v: PlaylistInterface = { churchId: UserHelper.currentUserChurch.church.id, title: "New Playlist", description: "", publishDate: new Date(), thumbnail: "" };
+    const v: PlaylistInterface = { churchId: UserHelper.currentUserChurch.church.id, title: Locale.label("sermons.playlists.playlistEdit.newPlaylist"), description: "", publishDate: new Date(), thumbnail: "" };
     setCurrentPlaylist(v);
     loadData();
   };
@@ -105,7 +105,7 @@ export const Playlists = () => {
         )}
       </TableCell>
       <TableCell align="right">
-        <Tooltip title="Edit playlist" arrow>
+        <Tooltip title={Locale.label("sermons.playlists.editPlaylist")} arrow>
           <IconButton
             size="small"
             onClick={() => setCurrentPlaylist(playlist)}
@@ -135,10 +135,10 @@ export const Playlists = () => {
           <Stack spacing={2} alignItems="center">
             <VideoLibraryIcon sx={{ fontSize: 48, color: 'text.secondary' }} />
             <Typography variant="h6" color="text.secondary">
-              {isSearching ? 'No playlists match your search' : 'No playlists found'}
+              {isSearching ? Locale.label("sermons.playlists.noPlaylistsMatch") : Locale.label("sermons.playlists.noPlaylistsFound")}
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-              {isSearching ? 'Try adjusting your search terms' : 'Get started by creating your first playlist'}
+              {isSearching ? Locale.label("sermons.playlists.adjustSearchTerms") : Locale.label("sermons.playlists.getStarted")}
             </Typography>
             {!isSearching && (
               <Button
@@ -147,7 +147,7 @@ export const Playlists = () => {
                 onClick={handleAdd}
                 data-testid="add-playlist-button"
               >
-                Create First Playlist
+                {Locale.label("sermons.playlists.createFirstPlaylist")}
               </Button>
             )}
           </Stack>
@@ -174,12 +174,12 @@ export const Playlists = () => {
             <TableRow>
               <TableCell>
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                  Playlist
+                  {Locale.label("sermons.playlist")}
                 </Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                  Actions
+                  {Locale.label("sermons.playlists.actions")}
                 </Typography>
               </TableCell>
             </TableRow>
@@ -236,8 +236,8 @@ export const Playlists = () => {
       <Box sx={{ mb: 3 }}>
         <PageHeader
           icon={<VideoLibraryIcon />}
-          title="Playlists"
-          subtitle="Manage video playlists and organize your content"
+          title={Locale.label("sermons.playlists.title")}
+          subtitle={Locale.label("sermons.playlists.subtitle")}
         >
           <Stack direction="row" spacing={1}>
             <Button
@@ -254,7 +254,7 @@ export const Playlists = () => {
                 }
               }}
             >
-              Search
+              {Locale.label("sermons.playlists.search")}
             </Button>
             <Button
               variant="outlined"
@@ -270,7 +270,7 @@ export const Playlists = () => {
                 }
               }}
             >
-              Add Playlist
+              {Locale.label("sermons.playlists.addPlaylist")}
             </Button>
           </Stack>
         </PageHeader>
@@ -290,7 +290,7 @@ export const Playlists = () => {
               <TextField
                 fullWidth
                 variant="outlined"
-                placeholder="Search playlists..."
+                placeholder={Locale.label("sermons.playlists.searchPlaceholder")}
                 value={searchTerm}
                 onChange={handleSearch}
                 size="small"

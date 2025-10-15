@@ -1,4 +1,4 @@
-import { Loading } from "@churchapps/apphelper";
+import { Loading, Locale } from "@churchapps/apphelper";
 import { ApiHelper } from "@churchapps/apphelper";
 import { UserHelper } from "@churchapps/apphelper";
 import { ArrayHelper } from "@churchapps/apphelper";
@@ -58,7 +58,7 @@ export const Sermons = () => {
           }
         }}
       >
-        Add Sermon
+        {Locale.label("sermons.addSermon")}
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -76,13 +76,13 @@ export const Sermons = () => {
         <MenuItem onClick={handleAddSermon}>
           <Stack direction="row" spacing={1} alignItems="center">
             <LiveTvIcon fontSize="small" />
-            <Typography>Add Sermon</Typography>
+            <Typography>{Locale.label("sermons.addSermon")}</Typography>
           </Stack>
         </MenuItem>
         <MenuItem onClick={handleAddPermanentLiveUrl}>
           <Stack direction="row" spacing={1} alignItems="center">
             <LiveTvIcon fontSize="small" sx={{ color: 'error.main' }} />
-            <Typography>Add Permanent Live URL</Typography>
+            <Typography>{Locale.label("sermons.addPermanentLiveUrl")}</Typography>
           </Stack>
         </MenuItem>
       </Menu>
@@ -116,12 +116,12 @@ export const Sermons = () => {
 
   const handleAdd = (permanentUrl: boolean) => {
     const v: SermonInterface = {
-      churchId: UserHelper.currentUserChurch.church.id, duration: 5400, videoType: "youtube", videoData: "", title: "New Sermon", permanentUrl 
+      churchId: UserHelper.currentUserChurch.church.id, duration: 5400, videoType: "youtube", videoData: "", title: Locale.label("sermons.sermonEdit.newSermon"), permanentUrl
     };
     if (permanentUrl) {
       v.videoType = "youtube_channel";
-      v.videoData = "This is not your channel url - See help link above";
-      v.title = "Current Live Service";
+      v.videoData = Locale.label("sermons.sermonEdit.channelIdPlaceholder");
+      v.title = Locale.label("sermons.sermonEdit.currentLiveService");
     }
     setCurrentSermon(v);
     loadData();
@@ -152,7 +152,7 @@ export const Sermons = () => {
             <Stack direction="row" spacing={1} alignItems="center">
               <PlaylistIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
               <Typography variant="body2">
-                {getPlaylistTitle(video.playlistId) || "No Playlist"}
+                {getPlaylistTitle(video.playlistId) || Locale.label("sermons.noPlaylist")}
               </Typography>
             </Stack>
           </TableCell>
@@ -165,7 +165,7 @@ export const Sermons = () => {
             <Stack direction="row" spacing={1} alignItems="center">
               <CalendarIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
               <Typography variant="body2" color="text.secondary">
-                {(video.publishDate) ? DateHelper.prettyDate(DateHelper.toDate(video.publishDate)) : "Not scheduled"}
+                {(video.publishDate) ? DateHelper.prettyDate(DateHelper.toDate(video.publishDate)) : Locale.label("sermons.notScheduled")}
               </Typography>
             </Stack>
           </TableCell>
@@ -194,10 +194,10 @@ export const Sermons = () => {
         <Stack spacing={2} alignItems="center">
           <LiveTvIcon sx={{ fontSize: 64, color: 'text.secondary' }} />
           <Typography variant="h6" color="text.secondary">
-            {searchTerm ? "No sermons found" : "No sermons yet"}
+            {searchTerm ? Locale.label("sermons.noSermonsFound") : Locale.label("sermons.noSermonsYet")}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {searchTerm ? "Try adjusting your search terms" : "Get started by adding your first sermon"}
+            {searchTerm ? Locale.label("sermons.adjustSearchTerms") : Locale.label("sermons.getStarted")}
           </Typography>
           {!searchTerm && (
             <Button
@@ -205,7 +205,7 @@ export const Sermons = () => {
               startIcon={<AddIcon />}
               onClick={() => handleAdd(false)}
             >
-              Add First Sermon
+              {Locale.label("sermons.addFirstSermon")}
             </Button>
           )}
         </Stack>
@@ -229,9 +229,9 @@ export const Sermons = () => {
           }}
         >
           <TableRow>
-            <TableCell sx={{ width: '25%' }}>Playlist</TableCell>
-            <TableCell sx={{ width: '45%' }}>Sermon</TableCell>
-            <TableCell sx={{ width: '25%' }}>Publish Date</TableCell>
+            <TableCell sx={{ width: '25%' }}>{Locale.label("sermons.playlist")}</TableCell>
+            <TableCell sx={{ width: '45%' }}>{Locale.label("sermons.sermon")}</TableCell>
+            <TableCell sx={{ width: '25%' }}>{Locale.label("sermons.publishDate")}</TableCell>
             <TableCell sx={{ width: '5%' }}></TableCell>
           </TableRow>
         </TableHead>
@@ -252,8 +252,8 @@ export const Sermons = () => {
       <Box sx={{ mb: 3 }}>
         <PageHeader
           icon={<LiveTvIcon />}
-          title="Sermons"
-          subtitle="Manage your sermon library and live streams"
+          title={Locale.label("sermons.title")}
+          subtitle={Locale.label("sermons.subtitle")}
         >
           <Stack
             direction="row"
@@ -281,7 +281,7 @@ export const Sermons = () => {
             <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
               <TextField
                 fullWidth
-                placeholder="Search sermons by title or playlist..."
+                placeholder={Locale.label("sermons.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 InputProps={{

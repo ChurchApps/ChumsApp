@@ -2,7 +2,7 @@ import React from "react";
 import {
   Grid, InputLabel, MenuItem, Select, TextField, FormControl, Button, Box, type SelectChangeEvent
 } from "@mui/material";
-import { Loading } from "@churchapps/apphelper";
+import { Loading, Locale } from "@churchapps/apphelper";
 import { InputBox } from "@churchapps/apphelper";
 import { ErrorMessages } from "@churchapps/apphelper";
 import { ApiHelper } from "@churchapps/apphelper";
@@ -48,14 +48,14 @@ export const SermonEdit: React.FC<Props> = (props) => {
 
   const handleDelete = () => {
     const errors = [];
-    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push("Unauthorized to delete sermons");
+    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push(Locale.label("sermons.sermonEdit.unauthorizedDelete"));
 
     if (errors.length > 0) {
       setErrors(errors);
       return;
     }
 
-    if (window.confirm("Are you sure you wish to delete this sermon?")) {
+    if (window.confirm(Locale.label("sermons.sermonEdit.deleteConfirm"))) {
       ApiHelper.delete("/sermons/" + currentSermon.id, "ContentApi").then(() => { setCurrentSermon(null); props.updatedFunction(); });
     }
   };
@@ -111,7 +111,7 @@ export const SermonEdit: React.FC<Props> = (props) => {
 
   const handleSave = () => {
     const errors: string[] = [];
-    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push("Unauthorized to create sermons");
+    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push(Locale.label("sermons.sermonEdit.unauthorized"));
 
     if (errors.length > 0) {
       setErrors(errors);
@@ -124,7 +124,7 @@ export const SermonEdit: React.FC<Props> = (props) => {
 
   const handleAdd = () => {
     const errors: string[] = [];
-    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push("Unauthorized to create sermons");
+    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push(Locale.label("sermons.sermonEdit.unauthorized"));
 
     if (errors.length > 0) {
       setErrors(errors);
@@ -190,27 +190,27 @@ export const SermonEdit: React.FC<Props> = (props) => {
 
   React.useEffect(() => { setCurrentSermon(props.currentSermon); loadData(); }, [props.currentSermon]);
 
-  let keyLabel = <>Sermon Embed Url</>;
+  let keyLabel = <>{Locale.label("sermons.sermonEdit.sermonEmbedUrl")}</>;
   let keyPlaceholder = "https://yourprovider.com/yoururl/";
   let endAdornment = <></>;
 
   switch (currentSermon?.videoType) {
     case "youtube_channel":
-      keyLabel = <>YouTube Channel ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}><a target="blank" rel="noreferrer noopener" href="https://support.churchapps.org/b1/admin/youtube-channel-id.html">Get Your Channel Id</a></span></>;
+      keyLabel = <>{Locale.label("sermons.sermonEdit.youtubeChannelId")} <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}><a target="blank" rel="noreferrer noopener" href="https://support.churchapps.org/b1/admin/youtube-channel-id.html">{Locale.label("sermons.sermonEdit.getYourChannelId")}</a></span></>;
       keyPlaceholder = "UCfiDl90gAfZMkgbeCqX1Wi0 - This is not your channel url";
       break;
     case "youtube":
-      keyLabel = <>YouTube ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://youtube.com/watch?v=<b style={{ color: "#24b8ff" }}>abcd1234</b></span></>;
+      keyLabel = <>{Locale.label("sermons.sermonEdit.youtubeId")} <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://youtube.com/watch?v=<b style={{ color: "#24b8ff" }}>abcd1234</b></span></>;
       keyPlaceholder = "abcd1234";
-      endAdornment = <Button variant="contained" onClick={() => fetchVideo("youtube")} data-testid="fetch-youtube-button" aria-label="Fetch YouTube video details">Fetch</Button>;
+      endAdornment = <Button variant="contained" onClick={() => fetchVideo("youtube")} data-testid="fetch-youtube-button" aria-label="Fetch YouTube video details">{Locale.label("sermons.sermonEdit.fetch")}</Button>;
       break;
     case "vimeo":
-      keyLabel = <>Vimeo ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://vimeo.com/<b style={{ color: "#24b8ff" }}>123456789</b></span></>;
+      keyLabel = <>{Locale.label("sermons.sermonEdit.vimeoId")} <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://vimeo.com/<b style={{ color: "#24b8ff" }}>123456789</b></span></>;
       keyPlaceholder = "123456789";
-      endAdornment = <Button variant="contained" onClick={() => fetchVideo("vimeo")} data-testid="fetch-vimeo-button" aria-label="Fetch Vimeo video details">Fetch</Button>;
+      endAdornment = <Button variant="contained" onClick={() => fetchVideo("vimeo")} data-testid="fetch-vimeo-button" aria-label="Fetch Vimeo video details">{Locale.label("sermons.sermonEdit.fetch")}</Button>;
       break;
     case "facebook":
-      keyLabel = <>Sermon ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://facebook.com/video.php?v=<b>123456789</b></span></>;
+      keyLabel = <>{Locale.label("sermons.sermonEdit.sermonId")} <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://facebook.com/video.php?v=<b>123456789</b></span></>;
       keyPlaceholder = "123456789";
       break;
   }
@@ -220,13 +220,13 @@ export const SermonEdit: React.FC<Props> = (props) => {
     return (
     <>
       {showImageEditor && <ImageEditor aspectRatio={16 / 9} outputWidth={640} outputHeight={360} photoUrl={currentSermon?.thumbnail || ""} onCancel={() => setShowImageEditor(false)} onUpdate={handlePhotoUpdated} />}
-      <InputBox headerIcon="calendar_month" headerText={(currentSermon?.permanentUrl) ? "Edit Permanent Live Url" : "Edit Sermon"} saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()} help="chums/streaming/sermons" data-testid="sermon-edit-box">
+      <InputBox headerIcon="calendar_month" headerText={(currentSermon?.permanentUrl) ? Locale.label("sermons.sermonEdit.editPermanentLiveUrl") : Locale.label("sermons.sermonEdit.editSermon")} saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()} help="chums/streaming/sermons" data-testid="sermon-edit-box">
         <ErrorMessages errors={errors} data-testid="sermon-errors" />
         <>
           {!currentSermon?.permanentUrl && (
             <FormControl fullWidth>
-              <InputLabel>Playlist</InputLabel>
-              <Select label="Playlist" name="playlistId" value={currentSermon?.playlistId || ""} onChange={handleChange} data-testid="sermon-playlist-select" aria-label="Select playlist">
+              <InputLabel>{Locale.label("sermons.playlist")}</InputLabel>
+              <Select label={Locale.label("sermons.playlist")} name="playlistId" value={currentSermon?.playlistId || ""} onChange={handleChange} data-testid="sermon-playlist-select" aria-label="Select playlist">
                 <MenuItem value="">None</MenuItem>
                 {getPlaylists()}
               </Select>
@@ -236,13 +236,13 @@ export const SermonEdit: React.FC<Props> = (props) => {
           <Grid container spacing={3}>
             <Grid size={{ xs: 6 }}>
               <FormControl fullWidth>
-                <InputLabel>Video Provider</InputLabel>
-                <Select label="Video Provider" name="videoType" value={currentSermon?.videoType || ""} onChange={handleChange} data-testid="video-provider-select" aria-label="Select video provider">
-                  {currentSermon?.permanentUrl && (<MenuItem value="youtube_channel">Current YouTube Live Stream</MenuItem>)}
-                  <MenuItem value="youtube">YouTube</MenuItem>
-                  <MenuItem value="vimeo">Vimeo</MenuItem>
-                  <MenuItem value="facebook">Facebook</MenuItem>
-                  <MenuItem value="custom">Custom Embed Url</MenuItem>
+                <InputLabel>{Locale.label("sermons.sermonEdit.videoProvider")}</InputLabel>
+                <Select label={Locale.label("sermons.sermonEdit.videoProvider")} name="videoType" value={currentSermon?.videoType || ""} onChange={handleChange} data-testid="video-provider-select" aria-label="Select video provider">
+                  {currentSermon?.permanentUrl && (<MenuItem value="youtube_channel">{Locale.label("sermons.sermonEdit.currentYouTubeLiveStream")}</MenuItem>)}
+                  <MenuItem value="youtube">{Locale.label("sermons.sermonEdit.youtube")}</MenuItem>
+                  <MenuItem value="vimeo">{Locale.label("sermons.sermonEdit.vimeo")}</MenuItem>
+                  <MenuItem value="facebook">{Locale.label("sermons.sermonEdit.facebook")}</MenuItem>
+                  <MenuItem value="custom">{Locale.label("sermons.sermonEdit.customEmbedUrl")}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -257,12 +257,12 @@ export const SermonEdit: React.FC<Props> = (props) => {
           <Grid container spacing={3}>
             {!currentSermon?.permanentUrl && (
               <Grid size={{ xs: 6 }}>
-                <label style={{ width: "100%" }}>Publish Date</label>
+                <label style={{ width: "100%" }}>{Locale.label("sermons.publishDate")}</label>
                 <TextField fullWidth type="date" name="publishDate" value={(currentSermon?.publishDate) ? DateHelper.formatHtml5Date(DateHelper.toDate(currentSermon?.publishDate)) : ""} onChange={handleChange} placeholder={keyPlaceholder} data-testid="publish-date-input" aria-label="Publish date" />
               </Grid>
             )}
             <Grid size={{ xs: 6 }}>
-              <label style={{ width: "100%" }}>Total Sermon Duration</label>
+              <label style={{ width: "100%" }}>{Locale.label("sermons.sermonEdit.totalSermonDuration")}</label>
               <Duration totalSeconds={currentSermon?.duration || 0} updatedFunction={totalSeconds => { const s = { ...currentSermon }; s.duration = totalSeconds; setCurrentSermon(s); }} />
             </Grid>
 
@@ -275,21 +275,21 @@ export const SermonEdit: React.FC<Props> = (props) => {
               </a>
             </Grid>
             <Grid size={{ xs: 9 }}>
-              <TextField fullWidth label="Title" name="title" value={currentSermon?.title || ""} onChange={handleChange} data-testid="sermon-title-input" aria-label="Sermon title" />
+              <TextField fullWidth label={Locale.label("sermons.sermonEdit.title")} name="title" value={currentSermon?.title || ""} onChange={handleChange} data-testid="sermon-title-input" aria-label="Sermon title" />
               <Box sx={{ mt: 2 }}>
-                <TextField fullWidth multiline label="Description" name="description" value={currentSermon?.description || ""} onChange={handleChange} placeholder={keyPlaceholder} data-testid="sermon-description-input" aria-label="Sermon description" />
+                <TextField fullWidth multiline label={Locale.label("sermons.sermonEdit.description")} name="description" value={currentSermon?.description || ""} onChange={handleChange} placeholder={keyPlaceholder} data-testid="sermon-description-input" aria-label="Sermon description" />
               </Box>
             </Grid>
           </Grid>
 
           {/* add to another playlist */}
           <div style={{ marginTop: 15 }}>
-            <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowOption(!showOption); }} data-testid="add-to-playlist-link" aria-label="Add sermon to another playlist">Add to another playlist</a>
+            <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowOption(!showOption); }} data-testid="add-to-playlist-link" aria-label="Add sermon to another playlist">{Locale.label("sermons.sermonEdit.addToAnotherPlaylist")}</a>
             {showOption && (
               <FormControl fullWidth>
-                <InputLabel>Playlist</InputLabel>
-                <Select label="Playlist" name="additionalPlaylistId" value={additionalPlaylistId} onChange={(e) => { e.preventDefault(); setAdditionalPlaylistId(e.target.value); }}
-                  endAdornment={<Button variant="contained" size="small" disabled={!additionalPlaylistId || additionalPlaylistId === ""} onClick={handleAdd} data-testid="add-to-playlist-button" aria-label="Add to selected playlist">add</Button>}
+                <InputLabel>{Locale.label("sermons.playlist")}</InputLabel>
+                <Select label={Locale.label("sermons.playlist")} name="additionalPlaylistId" value={additionalPlaylistId} onChange={(e) => { e.preventDefault(); setAdditionalPlaylistId(e.target.value); }}
+                  endAdornment={<Button variant="contained" size="small" disabled={!additionalPlaylistId || additionalPlaylistId === ""} onClick={handleAdd} data-testid="add-to-playlist-button" aria-label="Add to selected playlist">{Locale.label("sermons.sermonEdit.add")}</Button>}
                   data-testid="additional-playlist-select"
                   aria-label="Select additional playlist"
                 >

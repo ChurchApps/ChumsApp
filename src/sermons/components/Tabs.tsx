@@ -1,4 +1,4 @@
-import { SmallButton } from "@churchapps/apphelper";
+import { SmallButton, Locale } from "@churchapps/apphelper";
 import { DisplayBox } from "@churchapps/apphelper";
 import { ApiHelper } from "@churchapps/apphelper";
 import { UserHelper } from "@churchapps/apphelper";
@@ -15,7 +15,7 @@ export const Tabs: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleUpdated = () => { setCurrentTab(null); loadData(); };
-  const getEditContent = () => <SmallButton icon="add" text="Add" onClick={handleAdd} />;
+  const getEditContent = () => <SmallButton icon="add" text={Locale.label("sermons.liveStreamTimes.sidebarTabs.add")} onClick={handleAdd} />;
   const loadData = () => { ApiHelper.get("/links?category=streamingTab", "ContentApi").then((data: any) => { setTabs(data); setIsLoading(false); }); };
   const saveChanges = () => { ApiHelper.post("/links", tabs, "ContentApi").then(loadData); };
 
@@ -70,7 +70,7 @@ export const Tabs: React.FC = () => {
   if (currentTab !== null) return <TabEdit currentTab={currentTab} updatedFunction={handleUpdated} />;
   else {
     return (
-    <DisplayBox headerIcon="folder" headerText="Sidebar Tabs" editContent={getEditContent()}>
+    <DisplayBox headerIcon="folder" headerText={Locale.label("sermons.liveStreamTimes.sidebarTabs.title")} editContent={getEditContent()}>
       {getTable()}
     </DisplayBox>
 

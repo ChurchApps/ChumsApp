@@ -1,7 +1,7 @@
 import { Icon, Button, Typography, Stack, Chip } from "@mui/material";
 import { Add as AddIcon, VideoCall as VideoCallIcon } from "@mui/icons-material";
 import React from "react";
-import { ApiHelper } from "@churchapps/apphelper";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { DateHelper } from "@churchapps/apphelper";
 import { UserHelper } from "@churchapps/apphelper";
 import { DisplayBox } from "@churchapps/apphelper";
@@ -26,7 +26,7 @@ export const Services: React.FC = () => {
         fontWeight: 600
       }}
     >
-      Add Service
+      {Locale.label("sermons.liveStreamTimes.servicesTab.addService")}
     </Button>
   );
   const loadData = () => {
@@ -71,7 +71,7 @@ export const Services: React.FC = () => {
               </Typography>
               {service.recurring && (
                 <Chip
-                  label="Weekly"
+                  label={Locale.label("sermons.liveStreamTimes.servicesTab.weekly")}
                   size="small"
                   sx={{ backgroundColor: '#e8f5e9', color: '#2e7d32' }}
                 />
@@ -110,7 +110,7 @@ export const Services: React.FC = () => {
   if (currentService !== null) return <ServiceEdit currentService={currentService} updatedFunction={handleUpdated} />;
   else {
     return (
-    <DisplayBox headerIcon="calendar_month" headerText="Services" editContent={getEditContent()} id="servicesBox" data-testid="services-display-box">
+    <DisplayBox headerIcon="calendar_month" headerText={Locale.label("sermons.liveStreamTimes.servicesTab.title")} editContent={getEditContent()} id="servicesBox" data-testid="services-display-box">
       {getTable()}
     </DisplayBox>
     );

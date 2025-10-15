@@ -1,7 +1,7 @@
 import React, { memo } from "react";
-import { UserHelper, Permissions } from "@churchapps/apphelper";
+import { UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import {
-  Box, Typography, Grid, Paper, Stack, Card, CardContent, Button 
+  Box, Typography, Grid, Paper, Stack, Card, CardContent, Button
 } from "@mui/material";
 import { CloudUpload as CloudUploadIcon, YouTube as YouTubeIcon, VideoLibrary as VimeoIcon } from "@mui/icons-material";
 import { PageHeader } from "@churchapps/apphelper";
@@ -12,7 +12,7 @@ export const BulkImportPage = memo(() => {
   return (
     <>
       <Box sx={{ mb: 3 }}>
-        <PageHeader icon={<CloudUploadIcon />} title="Bulk Import" subtitle="Import videos from external platforms in bulk" />
+        <PageHeader icon={<CloudUploadIcon />} title={Locale.label("sermons.bulkImport.title")} subtitle={Locale.label("sermons.bulkImport.subtitle")} />
       </Box>
 
       <Box sx={{ p: 3 }}>
@@ -26,7 +26,7 @@ export const BulkImportPage = memo(() => {
               <Stack direction="row" spacing={1} alignItems="center">
                 <CloudUploadIcon sx={{ color: 'primary.main' }} />
                 <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
-                  Choose Import Source
+                  {Locale.label("sermons.bulkImport.chooseSource")}
                 </Typography>
               </Stack>
             </Box>
@@ -64,10 +64,10 @@ export const BulkImportPage = memo(() => {
                         <YouTubeIcon sx={{ fontSize: 40, color: '#FFF' }} />
                       </Box>
                       <Typography variant="h6" sx={{ fontWeight: 600, color: 'text.primary' }}>
-                        YouTube
+                        {Locale.label("sermons.bulkImport.youtube")}
                       </Typography>
                       <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 200 }}>
-                        Import videos from your YouTube channel or playlists
+                        {Locale.label("sermons.bulkImport.youtubeDescription")}
                       </Typography>
                       <Button
                         variant="contained"
@@ -80,10 +80,10 @@ export const BulkImportPage = memo(() => {
                           fontWeight: 600
                         }}
                       >
-                        Import from YouTube
+                        {Locale.label("sermons.bulkImport.importFromYouTube")}
                       </Button>
                       <Typography variant="caption" color="text.secondary">
-                        Coming soon...
+                        {Locale.label("sermons.bulkImport.comingSoon")}
                       </Typography>
                     </Stack>
                   </Paper>
@@ -120,10 +120,10 @@ export const BulkImportPage = memo(() => {
                         <VimeoIcon sx={{ fontSize: 40, color: '#FFF' }} />
                       </Box>
                       <Typography variant="h6" sx={{ fontWeight: 600, color: 'text.primary' }}>
-                        Vimeo
+                        {Locale.label("sermons.bulkImport.vimeo")}
                       </Typography>
                       <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 200 }}>
-                        Import videos from your Vimeo account or showcases
+                        {Locale.label("sermons.bulkImport.vimeoDescription")}
                       </Typography>
                       <Button
                         variant="contained"
@@ -136,10 +136,10 @@ export const BulkImportPage = memo(() => {
                           fontWeight: 600
                         }}
                       >
-                        Import from Vimeo
+                        {Locale.label("sermons.bulkImport.importFromVimeo")}
                       </Button>
                       <Typography variant="caption" color="text.secondary">
-                        Coming soon...
+                        {Locale.label("sermons.bulkImport.comingSoon")}
                       </Typography>
                     </Stack>
                   </Paper>

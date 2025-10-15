@@ -16,7 +16,7 @@ import {
   Title as TitleIcon,
   Description as DescriptionIcon
 } from "@mui/icons-material";
-import { InputBox } from "@churchapps/apphelper";
+import { InputBox, Locale } from "@churchapps/apphelper";
 import { ErrorMessages } from "@churchapps/apphelper";
 import { ApiHelper } from "@churchapps/apphelper";
 import { DateHelper } from "@churchapps/apphelper";
@@ -41,14 +41,14 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
 
   const handleDelete = () => {
     const errors = [];
-    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push("Unauthorized to delete playlists");
+    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push(Locale.label("sermons.playlists.playlistEdit.unauthorizedDelete"));
 
     if (errors.length > 0) {
       setErrors(errors);
       return;
     }
 
-    if (window.confirm("Are you sure you wish to delete this playlist?")) {
+    if (window.confirm(Locale.label("sermons.playlists.playlistEdit.deleteConfirm"))) {
       ApiHelper.delete("/playlists/" + currentPlaylist.id, "ContentApi").then(() => { setCurrentPlaylist(null); props.updatedFunction(); });
     }
   };
@@ -75,7 +75,7 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
 
   const handleSave = () => {
     const errors = [];
-    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push("Unauthorized to create playlists");
+    if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) errors.push(Locale.label("sermons.playlists.playlistEdit.unauthorized"));
 
     if (errors.length > 0) {
       setErrors(errors);
@@ -92,7 +92,7 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
     <>
       <InputBox
         headerIcon="calendar_month"
-        headerText={UniqueIdHelper.isMissing(currentPlaylist?.id) ? "Create New Playlist" : "Edit Playlist"}
+        headerText={UniqueIdHelper.isMissing(currentPlaylist?.id) ? Locale.label("sermons.playlists.playlistEdit.createNew") : Locale.label("sermons.playlists.playlistEdit.editPlaylist")}
         saveFunction={handleSave}
         cancelFunction={handleCancel}
         deleteFunction={checkDelete()}
@@ -107,7 +107,7 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
               <TitleIcon sx={{ color: 'primary.main', fontSize: 20 }} />
               <Typography variant="h6" sx={{ color: 'primary.main' }}>
-                Basic Information
+                {Locale.label("sermons.playlists.playlistEdit.basicInformation")}
               </Typography>
             </Stack>
 
@@ -115,13 +115,13 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
               <Grid size={12}>
                 <TextField
                   fullWidth
-                  label="Playlist Title"
+                  label={Locale.label("sermons.playlists.playlistEdit.playlistTitle")}
                   name="title"
                   value={currentPlaylist?.title || ""}
                   onChange={handleChange}
                   data-testid="playlist-title-input"
                   variant="outlined"
-                  placeholder="Enter playlist title..."
+                  placeholder={Locale.label("sermons.playlists.playlistEdit.enterTitle")}
                   sx={{ mb: 2 }}
                 />
               </Grid>
@@ -131,13 +131,13 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
                   fullWidth
                   multiline
                   rows={3}
-                  label="Description"
+                  label={Locale.label("sermons.playlists.playlistEdit.description")}
                   name="description"
                   value={currentPlaylist?.description || ""}
                   onChange={handleChange}
                   data-testid="playlist-description-input"
                   variant="outlined"
-                  placeholder="Describe this playlist..."
+                  placeholder={Locale.label("sermons.playlists.playlistEdit.describePlaylist")}
                   InputProps={{
                     startAdornment: (
                       <DescriptionIcon sx={{ color: 'text.secondary', mr: 1, mt: 1 }} />
@@ -155,21 +155,21 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
               <CalendarIcon sx={{ color: 'primary.main', fontSize: 20 }} />
               <Typography variant="h6" sx={{ color: 'primary.main' }}>
-                Publishing & Schedule
+                {Locale.label("sermons.playlists.playlistEdit.publishingSchedule")}
               </Typography>
             </Stack>
 
             <TextField
               fullWidth
               type="date"
-              label="Publish Date"
+              label={Locale.label("sermons.playlists.playlistEdit.publishDate")}
               name="publishDate"
               value={(currentPlaylist?.publishDate) ? DateHelper.formatHtml5Date(DateHelper.toDate(currentPlaylist?.publishDate)) : ""}
               onChange={handleChange}
               data-testid="playlist-publish-date-input"
               variant="outlined"
               InputLabelProps={{ shrink: true }}
-              helperText="When should this playlist be available to viewers?"
+              helperText={Locale.label("sermons.playlists.playlistEdit.publishHelp")}
             />
           </Grid>
 
@@ -180,7 +180,7 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
               <PhotoCameraIcon sx={{ color: 'primary.main', fontSize: 20 }} />
               <Typography variant="h6" sx={{ color: 'primary.main' }}>
-                Thumbnail Image
+                {Locale.label("sermons.playlists.playlistEdit.thumbnailImage")}
               </Typography>
             </Stack>
 
@@ -241,11 +241,11 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
                       }
                     }}
                   >
-                    {currentPlaylist?.thumbnail ? 'Change Thumbnail' : 'Add Thumbnail'}
+                    {currentPlaylist?.thumbnail ? Locale.label("sermons.playlists.playlistEdit.changeThumbnail") : Locale.label("sermons.playlists.playlistEdit.addThumbnail")}
                   </Button>
 
                   <Typography variant="caption" color="text.secondary" sx={{ textAlign: 'center' }}>
-                    Recommended size: 1280x720 pixels (16:9 aspect ratio)
+                    {Locale.label("sermons.playlists.playlistEdit.recommendedSize")}
                   </Typography>
                 </Stack>
               </CardContent>

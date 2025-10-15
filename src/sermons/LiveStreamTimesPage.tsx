@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { UserHelper, Permissions, PageHeader } from "@churchapps/apphelper";
+import { UserHelper, Permissions, PageHeader, Locale } from "@churchapps/apphelper";
 import { Box } from "@mui/material";
 import {
   Schedule as ScheduleIcon,
@@ -15,8 +15,8 @@ export const LiveStreamTimesPage = memo(() => {
   if (!UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) return <></>;
 
   const tabs = [
-    { value: "services", label: "Services", icon: <PlayArrowIcon /> },
-    { value: "settings", label: "Settings", icon: <SettingsIcon /> }
+    { value: "services", label: Locale.label("sermons.liveStreamTimes.services"), icon: <PlayArrowIcon /> },
+    { value: "settings", label: Locale.label("sermons.liveStreamTimes.settings"), icon: <SettingsIcon /> }
   ];
 
   const getCurrentTab = () => {
@@ -38,7 +38,7 @@ export const LiveStreamTimesPage = memo(() => {
 
   return (
     <>
-      <PageHeader icon={<ScheduleIcon />} title="Live Stream Times" subtitle="Configure your recurring service times" />
+      <PageHeader icon={<ScheduleIcon />} title={Locale.label("sermons.liveStreamTimes.title")} subtitle={Locale.label("sermons.liveStreamTimes.subtitle")} />
       <NavigationTabs selectedTab={selectedTab} onTabChange={setSelectedTab} tabs={tabs} />
       <Box sx={{ p: 3 }}>
         {getCurrentTab()}

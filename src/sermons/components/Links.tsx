@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "@mui/material";
 import { LinkEdit } from "./LinkEdit";
-import { ApiHelper } from "@churchapps/apphelper";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { UserHelper } from "@churchapps/apphelper";
 import { SmallButton } from "@churchapps/apphelper";
 import { DisplayBox } from "@churchapps/apphelper";
@@ -40,7 +40,7 @@ export const Links: React.FC<Props> = (props) => {
   const cat = props.category ? props.category : "website";
 
   const handleUpdated = () => { setCurrentLink(null); loadData(); };
-  const getEditContent = () => <SmallButton icon="add" text="Add" onClick={handleAdd} data-testid="add-link-button" />;
+  const getEditContent = () => <SmallButton icon="add" text={Locale.label("sermons.liveStreamTimes.navigationLinks.add")} onClick={handleAdd} data-testid="add-link-button" />;
   const loadData = () => { ApiHelper.get("/links?category=" + cat, "ContentApi").then((data: any) => { setLinks(data); setIsLoading(false); }); };
   const saveChanges = () => { ApiHelper.post("/links", links, "ContentApi").then(loadData); };
 
@@ -151,7 +151,7 @@ export const Links: React.FC<Props> = (props) => {
   if (currentLink !== null) return <LinkEdit links={links} currentLink={currentLink} updatedFunction={handleUpdated} />;
   else {
     return (
-    <DisplayBox headerIcon="link" headerText="Navigation Links" editContent={getEditContent()} data-testid="navigation-links-display-box">
+    <DisplayBox headerIcon="link" headerText={Locale.label("sermons.liveStreamTimes.navigationLinks.title")} editContent={getEditContent()} data-testid="navigation-links-display-box">
       {structuredLinks && getTable(structuredLinks)}
     </DisplayBox>
     );
