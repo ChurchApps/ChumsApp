@@ -1,5 +1,5 @@
 import React from "react";
-import { ServiceTimesEdit } from ".";
+import { CategorySelect, ServiceTimesEdit } from ".";
 import { ApiHelper, InputBox, ErrorMessages, Locale, GalleryModal } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import {
@@ -25,19 +25,18 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   const isMounted = useMountedState();
 
   const handleCancel = () => props.updatedFunction();
+
   const handleKeyDown = (e: React.KeyboardEvent<any>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSave();
     }
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     e.preventDefault();
     const g = { ...group };
     switch (e.target.name) {
-      case "categoryName":
-        g.categoryName = e.target.value;
-        break;
       case "name":
         g.name = e.target.value;
         break;
@@ -61,6 +60,10 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
         break;
     }
     setGroup(g);
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setGroup({ ...group, categoryName: value });
   };
 
   const handleArrayChange = (val: string[]) => {
@@ -205,16 +208,12 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
           <Grid container spacing={3}>
             {!teamMode && (
               <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  type="text"
-                  name="categoryName"
-                  label={Locale.label("groups.groupDetailsEdit.catName")}
+                <CategorySelect
                   value={group.categoryName || ""}
-                  onChange={handleChange}
-                  onKeyDown={handleKeyDown}
-                  data-testid="category-name-input"
-                  aria-label="Category name"
+                  onChange={handleCategoryChange}
+                  label={Locale.label("groups.groupDetailsEdit.catName")}
+                  tags={group.tags}
+                  testId="category-name"
                 />
               </Grid>
             )}

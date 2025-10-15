@@ -48,7 +48,9 @@
   "common": {
     "add": "Add",
     "amount": "Amount",
+    "cancel": "Cancel",
     "change": "Change",
+    "changePhoto": "Change Photo",
     "close": "Close",
     "delete": "Delete",
     "edit": "Edit",
@@ -56,10 +58,13 @@
     "no": "No",
     "notes": "Notes",
     "person": "Person",
+    "pleaseWait": "Please wait...",
     "remove": "Remove",
+    "save": "Save",
     "search": "Search",
     "searching": "Searching...",
     "title": "Title",
+    "update": "Update",
     "yes": "Yes"
   },
   "components": {
@@ -71,6 +76,7 @@
       "att": "Attendance",
       "dash": "Dashboard",
       "don": "Donations",
+      "form": "Form",
       "forms": "Forms",
       "groups": "Groups",
       "plans": "Plans",
@@ -95,6 +101,7 @@
     "myGroups": "My Groups",
     "people": "People",
     "peopleSearch": {
+      "display": "Display",
       "photo": "Photo",
       "ppl": "People"
     },
@@ -201,6 +208,7 @@
       "every": "Every",
       "interval": "Interval",
       "notFound": "No recurring donations found.",
+      "noSubscriptions": "No recurring donations found.",
       "paymentMethod": "Payment Method",
       "startDate": "Start Date"
     }
@@ -209,14 +217,13 @@
     "batchEdit": {
       "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
       "date": "Date",
-      "edit": "Edit Batch",
       "opName": "Name (optional)"
     },
     "bulkEntry": {
-      "selectPerson": "Select Person or Anonymous",
+      "addDonation": "Add Donation",
       "optionalFields": "Optional Fields",
       "pressEnter": "Press Enter to save and add another donation",
-      "addDonation": "Add Donation"
+      "selectPerson": "Select Person or Anonymous"
     },
     "donationEdit": {
       "anon": "Anonymous",
@@ -225,7 +232,6 @@
       "check": "Check",
       "checkNum": "Check #",
       "date": "Date",
-      "donEdit": "Edit Donation",
       "fund": "Fund",
       "lastDig": "Last 4 digits",
       "method": "Method"
@@ -235,7 +241,6 @@
       "failed": "Failed Donations - ",
       "mark": "Mark as ",
       "msg": "Message: ",
-      "person": "Person: ",
       "unres": " unresolved"
     },
     "donations": {
@@ -259,8 +264,7 @@
       "total": "Total"
     },
     "fundEdit": {
-      "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
-      "edit": "Edit Fund",
+      "confirmMsg": "Are you sure you wish to permanently delete this fund and all donations within it?",
       "errBlank": "Enter a fund name",
       "taxDeductible": "Tax Deductible",
       "trackDonations": "Tracks donations.",
@@ -313,7 +317,8 @@
       "ppl": "People",
       "public": "Public",
       "restrict": "Restricted",
-      "startReqMsg": "Start date is required."
+      "startReqMsg": "Start date is required.",
+      "thankYouMessage": "Thank You Message"
     },
     "formMembers": {
       "act": "Action",
@@ -371,6 +376,17 @@
       "unAuth": "Unauthorized"
     }
   },
+  "formSubmissionEdit": {
+    "confirmDelete": "Are you sure you wish to permanently delete this form submission?",
+    "editForm": "Edit Form Submission",
+    "isRequired": "is required",
+    "submit": "Submit"
+  },
+  "gallery": {
+    "aspectRatio": "Aspect Ratio",
+    "confirmDelete": "Are you sure you wish to permanently delete this image?",
+    "freeForm": "Free Form"
+  },
   "groups": {
     "groupAdd": {
       "catName": "Category Name",
@@ -405,7 +421,7 @@
       "parPick": "Parent Pickup",
       "prinName": "Print Nametag",
       "selImg": "Select Photo",
-      "slug": "Slug"
+      "slug": "Slug (key name used for urls)"
     },
     "groupMembers": {
       "groupMem": "Group Members",
@@ -430,7 +446,6 @@
       "attFor": "Attendance for",
       "new": "New",
       "noSesMsg": "There are no sessions.",
-      "session": "Session",
       "sessions": "Sessions"
     },
     "groupsPage": {
@@ -469,19 +484,63 @@
       "ses": "Sessions"
     }
   },
+  "login": {
+    "email": "Email",
+    "expiredLink": "This link has expired. Please request a new one.",
+    "forgot": "Forgot Password?",
+    "goLogin": "Go to Login",
+    "login": "Login",
+    "password": "Password",
+    "register": "Register",
+    "registerThankYou": "Thank you for registering!",
+    "requestLink": "Request Reset Link",
+    "reset": "Reset",
+    "resetInstructions": "Enter your email address and we'll send you a link to reset your password.",
+    "resetPassword": "Reset Password",
+    "resetSent": "Password reset link sent! Check your email.",
+    "setPassword": "Set Password",
+    "signIn": "Sign In",
+    "signInTitle": "Sign in to your account",
+    "validate": {
+      "email": "Please enter a valid email address.",
+      "firstName": "First name is required.",
+      "invalid": "Invalid email or password.",
+      "lastName": "Last name is required.",
+      "password": "Password is required.",
+      "passwordLength": "Password must be at least 8 characters.",
+      "passwordMatch": "Passwords do not match.",
+      "selectingChurch": "Please select a church."
+    },
+    "verifyPassword": "Verify Password",
+    "welcomeBack": "Welcome back!",
+    "welcomeName": "Welcome"
+  },
+  "markdownEditor": {
+    "content": "Content",
+    "markdownGuide": "Markdown Guide"
+  },
   "month": {
     "apr": "April",
+    "april": "April",
     "aug": "August",
+    "august": "August",
     "dec": "December",
+    "december": "December",
     "feb": "February",
+    "february": "February",
     "jan": "January",
+    "january": "January",
     "july": "July",
     "june": "June",
     "mar": "March",
+    "march": "March",
     "may": "May",
     "nov": "November",
+    "november": "November",
     "oct": "October",
-    "sep": "September"
+    "october": "October",
+    "sep": "September",
+    "september": "September"
   },
   "people": {
     "editCondition": {
@@ -580,7 +639,22 @@
       "madeTo": "made to",
       "notIn": "Not In",
       "simp": "Simple",
-      "simpSearch": "Simple Search"
+      "simpSearch": "People Search",
+      "active": "active:",
+      "clearAll": "Clear All",
+      "checkBoxes": "Check boxes to enable filters",
+      "configure": "Configure",
+      "names": "Names",
+      "demographics": "Demographics",
+      "contact": "Contact Information",
+      "membership": "Membership & Groups",
+      "activity": "Activity",
+      "type": "Type",
+      "fund": "Fund",
+      "campus": "Campus",
+      "service": "Service",
+      "serviceTime": "Service Time",
+      "group": "Group"
     },
     "peopleSearchResults": {
       "noResMsg": "No results found.  Please search for a different name or add a new person"
@@ -592,6 +666,7 @@
     "personEdit": {
       "applyQuestion": "Would you like to apply that to the entire",
       "confirmMsg": "Are you sure you wish to permanently delete this person record?",
+      "donorNumber": "Donor Number",
       "exten": "Extension",
       "family": "family",
       "firstReq": "First name is required",
@@ -599,10 +674,10 @@
       "home": "Home",
       "invalForm": "Invalid Format",
       "lastReq": "Last name is required",
+      "maritalStatus": "Marital Status",
       "merge": "Merge",
       "mobile": "Mobile",
       "nameNote": "Name Tag Notes",
-      "donorNumber": "Donor Number",
       "nickName": "Nickname",
       "persDet": "Personal Details",
       "upAddress": "You updated the address to",
@@ -653,8 +728,11 @@
     "member": "Member",
     "membership": "Membership",
     "membershipStatus": "Membership Status",
+    "membershp": "Membership",
     "middleName": "Middle Name",
+    "name": "Name",
     "nickName": "Nick Name",
+    "noRec": "No records found",
     "person": "Person",
     "phone": "Phone",
     "prefix": "Prefix",
@@ -667,6 +745,7 @@
     "unspecified": "Unspecified",
     "visitor": "Visitor",
     "widowed": "Widowed",
+    "years": "Years",
     "zip": "Zip/Postal"
   },
   "plans": {
@@ -702,6 +781,8 @@
     "planPage": {
       "assign": "Team Assignments",
       "assignments": "Assignments",
+      "band": "Band",
+      "noteSave": "Note saved",
       "serviceOrder": "Service Order",
       "servicePlan": "Service Plan"
     },
@@ -748,9 +829,6 @@
     },
     "teamList": {
       "noTeam": "No teams found. Please create a team.",
-      "peeps": " people",
-      "pers": "1 person",
-      "ppl": "People",
       "teams": "Teams"
     },
     "timeEdit": {
@@ -785,11 +863,11 @@
       "emailMsg": "Please enter an email address.",
       "firstMsg": "Please enter firstname",
       "freqEmail": "Email Frequency",
-      "indiv": "Individual",
+      "indiv": "Real-time",
       "lastMsg": "Please enter lastname",
       "linkedAccounts": "Linked Accounts",
       "never": "Never",
-      "noDirect": "Directory opt-out",
+      "noDirect": "Hide me from the member directory",
       "notifMsg": "Choose how you would like to receive updates about private messages, conversations, forms and other notifications.",
       "notifPref": "Notification Preferences",
       "notifPush": "Allow Push Notifications",
@@ -817,10 +895,38 @@
     }
   },
   "reporting": {
+    "detailed": "Detailed",
+    "downloadOptions": "Download Options",
     "fromDate": "From Date",
-    "toDate": "To Date",
+    "noData": "No data available",
     "runReport": "Run Report",
-    "toDateBeforeFromDate": "End date cannot be before start date"
+    "sampleTemplate": "Sample Template",
+    "summary": "Summary",
+    "toDate": "To Date",
+    "toDateBeforeFromDate": "End date cannot be before start date",
+    "useFilter": "Use Filter"
+  },
+  "selectChurch": {
+    "address1": "Address Line 1",
+    "address2": "Address Line 2",
+    "another": "Or search for another church",
+    "city": "City",
+    "confirmRegister": "Confirm Registration",
+    "country": "Country",
+    "name": "Church Name",
+    "noMatches": "No matches found",
+    "register": "Register New Church",
+    "selectChurch": "Select a Church",
+    "state": "State/Province",
+    "validate": {
+      "address": "Address is required.",
+      "city": "City is required.",
+      "country": "Country is required.",
+      "name": "Church name is required.",
+      "state": "State is required.",
+      "zip": "Zip code is required."
+    },
+    "zip": "Zip/Postal Code"
   },
   "serverAdmin": {
     "adminPage": {
@@ -834,6 +940,7 @@
       "noChurch": "No churches found.  Please search for a different name.",
       "noteFour": "Comparable software is ProPresenter.  It's $399 for a site license.  I made assumptions that the average church installs the software on 3 computers and divided our total installs by 3 to get the number of churches.  I also made the assumption that churches will upgrade to a newer version every 5 years on average.  So $399 / 5 years / 3 computers = $26.60 annual cost per computer.  If we can quantify these assumptions we should update this number.",
       "noteOne": "Comparable software is Breeze.  They charge $72/mo or $864/year.",
+      "notes": "Notes",
       "noteThree": "Comparable content is Orange.  They charge $1023/year for churches with 26-50 viewers for 252 Basic.",
       "noteTwo": "Comparable software is SubSplash.  They start at $99/mo or $1200/year.  This does not include the cut they take on donations.",
       "regist": "Registered",
@@ -1018,18 +1125,26 @@
       "servTime": "Service Time"
     },
     "conditionDate": {
-      "datePart": "Date Part",
-      "dateFull": "Full Date",
-      "weekDay": "Day of Week",
-      "monthDay": "Day of Month",
-      "month": "Month",
-      "yearsE": "Years Elapsed",
-      "op": "Operator",
       "absolute": "Absolute",
-      "relative": "Relative",
-      "prevMonth": "Previous Month",
       "curMonth": "Current Month",
-      "nextMonth": "Next Month"
+      "dateFull": "Full Date",
+      "datePart": "Date Part",
+      "dayOf": "Day of",
+      "fri": "Friday",
+      "mon": "Monday",
+      "month": "Month",
+      "monthDay": "Day of Month",
+      "nextMonth": "Next Month",
+      "op": "Operator",
+      "prevMonth": "Previous Month",
+      "relative": "Relative",
+      "sat": "Saturday",
+      "sun": "Sunday",
+      "thurs": "Thursday",
+      "tues": "Tuesday",
+      "wed": "Wednesday",
+      "weekDay": "Day of Week",
+      "yearsE": "Years Elapsed"
     },
     "conditionDetails": {
       "addCon": "Add Condition",
@@ -1086,19 +1201,20 @@
     "taskList": {
       "assignGroup": "Assigned to My Groups",
       "assignMe": "Assigned to Me",
-      "assignTo": "Assigned to",
-      "associateW": "Associated with",
       "reqMe": "Requested by Me",
       "tasks": "Tasks"
     },
     "taskPage": {
+      "ago": "ago",
       "assignTo": "Assigned to",
       "associateW": "Associated With",
+      "by": "by",
       "change": "Change",
       "closed": "Closed",
       "createdBy": "Created By",
       "dateCreated": "Date Created",
       "open": "Open",
+      "opened": "Opened",
       "stat": "Status",
       "taskDet": "Task Details"
     },
@@ -1113,6 +1229,222 @@
       "apply": "Apply",
       "field": "Field",
       "value": "Value"
+    }
+  },
+  "sermons": {
+    "title": "Sermons",
+    "subtitle": "Manage your sermon library and live streams",
+    "addSermon": "Add Sermon",
+    "addPermanentLiveUrl": "Add Permanent Live URL",
+    "searchPlaceholder": "Search sermons by title or playlist...",
+    "noSermonsFound": "No sermons found",
+    "noSermonsYet": "No sermons yet",
+    "adjustSearchTerms": "Try adjusting your search terms",
+    "getStarted": "Get started by adding your first sermon",
+    "addFirstSermon": "Add First Sermon",
+    "playlist": "Playlist",
+    "sermon": "Sermon",
+    "publishDate": "Publish Date",
+    "notScheduled": "Not scheduled",
+    "noPlaylist": "No Playlist",
+    "edit": "Edit",
+    "sermonEdit": {
+      "editSermon": "Edit Sermon",
+      "editPermanentLiveUrl": "Edit Permanent Live Url",
+      "videoProvider": "Video Provider",
+      "currentYouTubeLiveStream": "Current YouTube Live Stream",
+      "youtube": "YouTube",
+      "vimeo": "Vimeo",
+      "facebook": "Facebook",
+      "customEmbedUrl": "Custom Embed Url",
+      "sermonEmbedUrl": "Sermon Embed Url",
+      "youtubeChannelId": "YouTube Channel ID",
+      "getYourChannelId": "Get Your Channel Id",
+      "youtubeId": "YouTube ID",
+      "vimeoId": "Vimeo ID",
+      "sermonId": "Sermon ID",
+      "fetch": "Fetch",
+      "totalSermonDuration": "Total Sermon Duration",
+      "title": "Title",
+      "description": "Description",
+      "addToAnotherPlaylist": "Add to another playlist",
+      "add": "add",
+      "deleteConfirm": "Are you sure you wish to delete this sermon?",
+      "unauthorized": "Unauthorized to create sermons",
+      "unauthorizedDelete": "Unauthorized to delete sermons",
+      "newSermon": "New Sermon",
+      "currentLiveService": "Current Live Service",
+      "channelIdPlaceholder": "This is not your channel url - See help link above"
+    },
+    "playlists": {
+      "title": "Playlists",
+      "subtitle": "Manage video playlists and organize your content",
+      "addPlaylist": "Add Playlist",
+      "createFirstPlaylist": "Create First Playlist",
+      "search": "Search",
+      "searchPlaceholder": "Search playlists...",
+      "noPlaylistsFound": "No playlists found",
+      "noPlaylistsMatch": "No playlists match your search",
+      "adjustSearchTerms": "Try adjusting your search terms",
+      "getStarted": "Get started by creating your first playlist",
+      "editPlaylist": "Edit playlist",
+      "actions": "Actions",
+      "playlistEdit": {
+        "createNew": "Create New Playlist",
+        "editPlaylist": "Edit Playlist",
+        "basicInformation": "Basic Information",
+        "playlistTitle": "Playlist Title",
+        "enterTitle": "Enter playlist title...",
+        "description": "Description",
+        "describePlaylist": "Describe this playlist...",
+        "publishingSchedule": "Publishing & Schedule",
+        "publishDate": "Publish Date",
+        "publishHelp": "When should this playlist be available to viewers?",
+        "thumbnailImage": "Thumbnail Image",
+        "changeThumbnail": "Change Thumbnail",
+        "addThumbnail": "Add Thumbnail",
+        "recommendedSize": "Recommended size: 1280x720 pixels (16:9 aspect ratio)",
+        "deleteConfirm": "Are you sure you wish to delete this playlist?",
+        "unauthorized": "Unauthorized to create playlists",
+        "unauthorizedDelete": "Unauthorized to delete playlists",
+        "newPlaylist": "New Playlist"
+      }
+    },
+    "bulkImport": {
+      "title": "Bulk Import",
+      "subtitle": "Import videos from external platforms in bulk",
+      "chooseSource": "Choose Import Source",
+      "youtube": "YouTube",
+      "youtubeDescription": "Import videos from your YouTube channel or playlists",
+      "importFromYouTube": "Import from YouTube",
+      "vimeo": "Vimeo",
+      "vimeoDescription": "Import videos from your Vimeo account or showcases",
+      "importFromVimeo": "Import from Vimeo",
+      "backToSelection": "Back to Selection",
+      "import": "Import",
+      "fetch": "Fetch",
+      "fetching": "Fetching...",
+      "youtubeChannelId": "YouTube Channel ID",
+      "vimeoChannelId": "Vimeo Channel ID",
+      "importIntoPlaylist": "Import Into Playlist",
+      "autoImportNewVideos": "Auto Import New Videos",
+      "selectPlaylist": "Please select a playlist"
+    },
+    "liveStreamTimes": {
+      "title": "Live Stream Times",
+      "subtitle": "Configure your recurring service times",
+      "services": "Services",
+      "settings": "Settings",
+      "servicesTab": {
+        "title": "Services",
+        "addService": "Add Service",
+        "weekly": "Weekly",
+        "edit": "Edit"
+      },
+      "navigationLinks": {
+        "title": "Navigation Links",
+        "add": "Add"
+      },
+      "sidebarTabs": {
+        "title": "Sidebar Tabs",
+        "add": "Add"
+      },
+      "serviceEdit": {
+        "addNewService": "Add New Service",
+        "editService": "Edit Service",
+        "basicInformation": "Basic Information",
+        "serviceName": "Service Name",
+        "serviceNamePlaceholder": "e.g., Sunday Morning Service",
+        "serviceTime": "Service Time",
+        "recursWeekly": "Recurs Weekly",
+        "no": "No",
+        "yes": "Yes",
+        "oneTime": "One-time",
+        "weekly": "Weekly",
+        "chatSettings": "Chat Settings",
+        "enableChatMinutesBefore": "Enable Chat - Minutes Before",
+        "enableChatMinutesAfter": "Enable Chat - Minutes After",
+        "videoSettings": "Video Settings",
+        "startVideoEarly": "Start Video Early",
+        "startVideoEarlyHelp": "Optional: For countdown videos or pre-service content",
+        "sermon": "Sermon",
+        "latestSermon": "Latest Sermon",
+        "auto": "Auto",
+        "deleteConfirm": "Are you sure you wish to delete this service?",
+        "errorsCorrectionTitle": "Please correct the following errors:",
+        "serviceNameRequired": "Service name is required",
+        "serviceTimeRequired": "Service time is required"
+      },
+      "linkEdit": {
+        "editNavigationLink": "Edit Navigation Link",
+        "createNewLink": "Create New Link",
+        "configureSettings": "Configure navigation link settings",
+        "linkDetails": "Link Details",
+        "displayText": "Display Text",
+        "displayTextPlaceholder": "Enter text to display in navigation",
+        "linkUrl": "Link URL",
+        "linkUrlPlaceholder": "https://example.com or /internal-page",
+        "menuOrganization": "Menu Organization",
+        "submenuMessage": "This link will be placed under submenu:",
+        "optionalSubmenuMessage": "Optionally organize this link under an existing submenu:",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "saveLink": "Save Link",
+        "saving": "Saving...",
+        "deleteLink": "Delete Link",
+        "deleteConfirm": "Are you sure you want to delete this navigation link? This action cannot be undone.",
+        "deleteNestedLinksFirst": "This link has nested sublinks. Please delete those first.",
+        "deleting": "Deleting...",
+        "errors": {
+          "textRequired": "Please enter valid text",
+          "urlRequired": "Please enter link",
+          "unauthorized": "Unauthorized to create links",
+          "unauthorizedDelete": "Unauthorized to delete links",
+          "deleteNestedFirst": "Delete nested links first",
+          "saveFailed": "Failed to save link. Please try again.",
+          "deleteFailed": "Failed to delete link. Please try again."
+        }
+      },
+      "tabEdit": {
+        "editTab": "Edit Tab",
+        "createNewTab": "Create New Tab",
+        "configureSettings": "Configure streaming sidebar tab settings",
+        "tabDisplay": "Tab Display",
+        "tabText": "Tab Text",
+        "tabTextPlaceholder": "Enter tab display text",
+        "icon": "Icon",
+        "linkConfiguration": "Link Configuration",
+        "linkType": "Link Type",
+        "externalUrl": "External URL",
+        "externalUrlPlaceholder": "https://example.com",
+        "chat": "Chat",
+        "prayer": "Prayer",
+        "linkTypeHelp": {
+          "url": "External URL will open in a new tab",
+          "chat": "Built-in chat functionality",
+          "prayer": "Built-in prayer request feature",
+          "none": "Select a link type to configure the tab behavior"
+        },
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "saveTab": "Save Tab",
+        "saving": "Saving...",
+        "deleteTab": "Delete Tab",
+        "deleteConfirm": "Are you sure you want to delete this tab? This action cannot be undone.",
+        "deleting": "Deleting...",
+        "errors": {
+          "textRequired": "Please enter valid text",
+          "urlRequired": "Enter a valid URL",
+          "saveFailed": "Failed to save tab. Please try again.",
+          "deleteFailed": "Failed to delete tab. Please try again."
+        }
+      },
+      "externalLinks": {
+        "title": "External Resources",
+        "customizeAppearance": "Customize Appearance",
+        "editUsers": "Edit Users",
+        "viewYourStream": "View Your Stream"
+      }
     }
   },
   "songs": {
@@ -1135,13 +1467,14 @@
       "edit": "Edit Key",
       "signature": "Key Signature",
       "label": "Label",
+      "labelOptional": "Label (optional)",
       "default": "Default",
       "defaultLabel": "John's Key",
       "deleteConfirm": "Are you sure you want to delete this key?"
     },
     "keys": {
       "title": "Keys",
-      "add": "+ Add",
+      "add": "Add",
       "import": "Import",
       "importPrompt": "Would you like to import the text lyrics from PraiseCharts?",
       "addFiles": "Add Files",
@@ -1185,5 +1518,13 @@
       "inputLabel": "Title or Artist",
       "inputPlaceholder": "Enter song title or artist name..."
     }
+  },
+  "stockPhotos": {
+    "photoBy": "Photo by",
+    "providedBy": "Stock photos provided by"
+  },
+  "support": {
+    "discussions": "Discussions",
+    "documentation": "Documentation"
   }
 }

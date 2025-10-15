@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 import React from "react";
 import { type GroupInterface } from "@churchapps/helpers";
 import { ApiHelper, InputBox, ErrorMessages, Locale } from "@churchapps/apphelper";
+import { CategorySelect } from "./CategorySelect";
 
 interface Props {
   updatedFunction: () => void;
@@ -17,6 +18,7 @@ export const GroupAdd: React.FC<Props> = (props) => {
   const handleCancel = () => {
     props.updatedFunction();
   };
+
   const handleAdd = () => {
     if (validate()) {
       setIsSubmitting(true);
@@ -35,11 +37,13 @@ export const GroupAdd: React.FC<Props> = (props) => {
       case "name":
         g.name = value;
         break;
-      case "categoryName":
-        g.categoryName = value;
-        break;
     }
     setGroup(g);
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setErrors([]);
+    setGroup({ ...group, categoryName: value });
   };
 
   const validate = () => {
@@ -58,16 +62,12 @@ export const GroupAdd: React.FC<Props> = (props) => {
     <InputBox headerText={Locale.label("groups.groupAdd.new") + label} headerIcon="group" cancelFunction={handleCancel} saveFunction={handleAdd} saveText="Add" isSubmitting={isSubmitting}>
       <ErrorMessages errors={errors} />
       {props.tags === "standard" && (
-        <TextField
-          fullWidth={true}
-          label={Locale.label("groups.groupAdd.catName")}
-          type="text"
-          id="categoryName"
-          name="categoryName"
+        <CategorySelect
           value={group.categoryName}
-          onChange={handleChange}
-          data-testid="add-category-name-input"
-          aria-label="Category name"
+          onChange={handleCategoryChange}
+          label={Locale.label("groups.groupAdd.catName")}
+          tags={props.tags}
+          testId="add-category-name"
         />
       )}
       <TextField

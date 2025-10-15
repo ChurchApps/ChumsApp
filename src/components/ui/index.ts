@@ -4,3 +4,7 @@ export { EmptyState } from "./EmptyState";
 export { CardWithHeader } from "./CardWithHeader";
 export { LoadingButton } from "./LoadingButton";
 export { SmartTabs } from "./SmartTabs";
+export { NavigationTabs } from "./NavigationTabs";
+export type { NavigationTab, NavigationDropdown } from "./NavigationTabs";
+export { Breadcrumbs } from "./Breadcrumbs";
+export type { BreadcrumbItem } from "./Breadcrumbs";

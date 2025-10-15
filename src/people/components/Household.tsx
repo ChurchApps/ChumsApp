@@ -72,7 +72,7 @@ export const Household: React.FC<Props> = memo((props) => {
 
                 {age && (
                   <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
-                    Age: {age} years
+                    Age: {age}
                   </Typography>
                 )}
 

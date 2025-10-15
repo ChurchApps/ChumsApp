@@ -1,5 +1,5 @@
 import React from "react";
-import { GroupBanner, GroupDetailsEdit } from "./components";
+import { GroupBanner, GroupDetailsEdit, GroupNavigation } from "./components";
 import { type GroupInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { GroupMembersTab } from "./components/GroupMembersTab";
@@ -51,7 +51,8 @@ export const GroupPage = () => {
 
   return (
     <>
-      <GroupBanner group={group.data} selectedTab={selectedTab} onTabChange={setSelectedTab} onEdit={handleEdit} editMode={editMode} />
+      <GroupBanner group={group.data} onEdit={handleEdit} editMode={editMode} />
+      {!editMode && <GroupNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} group={group.data} />}
       <Grid container spacing={2}>
         <Grid size={{ xs: 12 }}>
           <div id="mainContent">{editMode ? <GroupDetailsEdit id="groupDetailsBox" group={group.data} updatedFunction={handleUpdated} /> : getCurrentTab()}</div>

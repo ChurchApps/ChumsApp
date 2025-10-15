@@ -1,17 +1,20 @@
 import {
-  Grid, Typography, Card, CardContent, Stack, Box, Button, Paper, List, ListItem, ListItemButton, ListItemIcon, ListItemText 
+  Grid, Typography, Card, CardContent, Stack, Box, Button, Paper, List, ListItem, ListItemButton, ListItemIcon, ListItemText
 } from "@mui/material";
 import React from "react";
 import { Locale, Loading, PageHeader } from "@churchapps/apphelper";
 import { type AutomationInterface } from "@churchapps/helpers";
 import { AutomationDetails } from "./components/AutomationDetails";
 import { AutomationEdit } from "./components/AutomationEdit";
+import { TasksNavigation } from "../components/TasksNavigation";
 import { useQuery } from "@tanstack/react-query";
 import { SettingsSuggest as AutomationsIcon, Add as AddIcon, PlayCircle as ActiveIcon, PauseCircle as InactiveIcon } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export const AutomationsPage = () => {
   const [showAdd, setShowAdd] = React.useState(false);
   const [editAutomation, setEditAutomation] = React.useState(null);
+  const navigate = useNavigate();
 
   const automations = useQuery<AutomationInterface[]>({
     queryKey: ["/automations", "DoingApi"],
@@ -86,6 +89,10 @@ export const AutomationsPage = () => {
     automations.refetch();
   };
 
+  const handleTabChange = (tab: string) => {
+    if (tab === "tasks") navigate("/tasks");
+  };
+
   return (
     <>
       <PageHeader icon={<AutomationsIcon />} title={Locale.label("tasks.automationsPage.manageAuto") || "Automations"} subtitle="Automate tasks and workflows for your organization">
@@ -107,6 +114,7 @@ export const AutomationsPage = () => {
           Add Automation
         </Button>
       </PageHeader>
+      <TasksNavigation selectedTab="automations" onTabChange={handleTabChange} />
 
       {/* Automations Content */}
       <Box sx={{ p: 3 }}>

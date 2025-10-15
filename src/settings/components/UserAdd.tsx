@@ -146,11 +146,23 @@ export const UserAdd = (props: Props) => {
     }
   };
 
-  const handleAssociatePerson = (person: PersonInterface) => {
+  const handleAssociatePerson = async (person: PersonInterface) => {
     setSelectedPerson(person);
 
     if (!person.contactInfo.email) {
       setShowEmailField(true);
+    } else {
+      // Auto-save when person with email is selected
+      const { first, last } = person.name;
+      const userEmail = person.contactInfo.email;
+      const user = await createUserAndToGroup(first, last, userEmail);
+      try {
+        await linkUserAndPerson(user.id, person.id);
+      } catch {
+        setErrors([Locale.label("settings.userAdd.errDiff")]);
+        return;
+      }
+      props.updatedFunction();
     }
   };
 

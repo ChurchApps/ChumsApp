@@ -8,6 +8,7 @@ export {
 export { ErrorBoundary } from "./ErrorBoundary";
 export { Footer } from "./Footer";
 export { AssociatedForms } from "./AssociatedForms";
+export { ComboBox } from "./ComboBox";
 export { FormSubmission } from "./FormSubmission";
 export { Question } from "./Question";
 export { Search } from "./Search";

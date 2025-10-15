@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 import { ChumsPersonHelper } from ".";
 import { type SearchCondition, type PersonInterface } from "@churchapps/helpers";
-import { DisplayBox, ApiHelper, Locale } from "@churchapps/apphelper";
-import { Button, OutlinedInput, FormControl, InputLabel } from "@mui/material";
+import { InputBox, ApiHelper, Locale } from "@churchapps/apphelper";
+import { TextField, Box, Typography, Stack } from "@mui/material";
 import { AdvancedPeopleSearch } from "./AdvancedPeopleSearch";
+import { Search as SearchIcon } from "@mui/icons-material";
 
 interface Props {
   updateSearchResults: (people: PersonInterface[]) => void;
@@ -12,69 +13,110 @@ interface Props {
 
 export function PeopleSearch(props: Props) {
   const [searchText, setSearchText] = React.useState("");
-  const [advanced, setAdvanced] = React.useState(false);
+  const [showAdvanced, setShowAdvanced] = React.useState(false);
+  const debounceTimerRef = useRef<NodeJS.Timeout>();
 
-  const handleKeyDown = (e: React.KeyboardEvent<any>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSubmit(null);
+  const performSearch = useCallback((term: string, advancedConditions?: SearchCondition[]) => {
+    if (advancedConditions && advancedConditions.length > 0) {
+      // Advanced search with conditions
+      ApiHelper.post("/people/advancedSearch", advancedConditions, "MembershipApi").then((data) => {
+        props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
+      });
+    } else if (term.trim()) {
+      // Simple search by name
+      const condition: SearchCondition = { field: "displayName", operator: "contains", value: term.trim() };
+      ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi").then((data) => {
+        props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
+      });
     }
+  }, [props]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    setSearchText(value);
+
+    // Debounce the search
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      performSearch(value);
+    }, 500); // 500ms debounce
   };
 
   const toggleAdvanced = () => {
-    setAdvanced(!advanced);
+    setShowAdvanced(!showAdvanced);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.currentTarget.value);
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
 
-  const handleSubmit = (e: React.MouseEvent) => {
-    if (e !== null) e.preventDefault();
-    const term = searchText.trim();
-    const condition: SearchCondition = { field: "displayName", operator: "contains", value: term };
-    ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi").then((data) => {
-      props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
-    });
-  };
-
-  const getSimpleSearch = () => (
-    <DisplayBox
+  return (
+    <InputBox
       id="peopleSearch"
       headerIcon="person"
       headerText={Locale.label("people.peopleSearch.simpSearch")}
       help="chums/advanced-search"
-      editContent={
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            toggleAdvanced();
-          }}
-          sx={{ textTransform: "none" }}
-          data-testid="toggle-advanced-search-button"
-          aria-label="Toggle advanced search">
-          {Locale.label("people.peopleSearch.adv")}
-        </Button>
-      }>
-      <FormControl fullWidth variant="outlined" onKeyDown={handleKeyDown}>
-        <InputLabel htmlFor="searchText">{Locale.label("common.name")}</InputLabel>
-        <OutlinedInput
-          id="searchText"
-          aria-label="searchBox"
-          name="searchText"
-          type="text"
-          label={Locale.label("common.name")}
-          value={searchText}
-          onChange={handleChange}
-          data-testid="people-search-input"
-          endAdornment={
-            <Button variant="contained" onClick={handleSubmit} data-testid="people-search-button" aria-label="Search people">
-              {Locale.label("common.search")}
-            </Button>
-          }
-        />
-      </FormControl>
-    </DisplayBox>
-  );
+    >
+      <Stack spacing={2}>
+        {/* Quick Search */}
+        <Box>
+          <TextField
+            fullWidth
+            id="searchText"
+            name="searchText"
+            type="text"
+            placeholder="Search by name..."
+            value={searchText}
+            onChange={handleChange}
+            data-testid="people-search-input"
+            variant="outlined"
+            size="small"
+            InputProps={{
+              startAdornment: <SearchIcon sx={{ mr: 1, color: 'text.secondary' }} />
+            }}
+          />
+          <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+            Type to search instantly
+          </Typography>
+        </Box>
 
-  if (!advanced) return getSimpleSearch();
-  return <AdvancedPeopleSearch updateSearchResults={props.updateSearchResults} toggleFunction={toggleAdvanced} updatedFunction={props.updatedFunction} />;
+        {/* Advanced Filters Toggle */}
+        <Box>
+          <Typography
+            variant="body2"
+            onClick={toggleAdvanced}
+            sx={{
+              color: 'primary.main',
+              cursor: 'pointer',
+              fontWeight: 500,
+              display: 'inline-flex',
+              alignItems: 'center',
+              '&:hover': {
+                textDecoration: 'underline',
+              }
+            }}
+          >
+            {showAdvanced ? '▼' : '▶'} {Locale.label("people.peopleSearch.adv")}
+          </Typography>
+        </Box>
+
+        {/* Advanced Search Section */}
+        {showAdvanced && (
+          <AdvancedPeopleSearch
+            updateSearchResults={props.updateSearchResults}
+            toggleFunction={toggleAdvanced}
+            updatedFunction={props.updatedFunction}
+            embedded={true}
+          />
+        )}
+      </Stack>
+    </InputBox>
+  );
 }

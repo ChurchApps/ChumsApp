@@ -1,51 +1,48 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { ApiHelper, Locale, PageHeader } from "@churchapps/apphelper";
-import { type PlanInterface } from "../helpers";
+import { type PlanInterface, type PlanTypeInterface } from "../helpers";
+import { type GroupInterface } from "@churchapps/helpers";
 import { Assignment } from "./components/Assignment";
-import { Box, Stack, Button, Container, Typography } from "@mui/material";
-import { Assignment as AssignmentIcon, Album as AlbumIcon } from "@mui/icons-material";
+import { PlanNavigation } from "./components/PlanNavigation";
+import { Box, Container, Typography } from "@mui/material";
+import { Assignment as AssignmentIcon } from "@mui/icons-material";
 import { ServiceOrder } from "./components/ServiceOrder";
+import { Breadcrumbs } from "../components/ui";
 
 
 
 export const PlanPage = () => {
   const params = useParams();
   const [plan, setPlan] = React.useState<PlanInterface>(null);
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const [ministry, setMinistry] = React.useState<GroupInterface>(null);
+  const [planType, setPlanType] = React.useState<PlanTypeInterface>(null);
+  const [selectedTab, setSelectedTab] = React.useState("assignments");
 
   const loadData = async () => {
-    ApiHelper.get("/plans/" + params.id, "DoingApi").then((data) => {
-      setPlan(data);
-    });
+    const planData = await ApiHelper.get("/plans/" + params.id, "DoingApi");
+    setPlan(planData);
+
+    if (planData.ministryId) {
+      const ministryData = await ApiHelper.get("/groups/" + planData.ministryId, "MembershipApi");
+      setMinistry(ministryData);
+    }
+
+    if (planData.planTypeId) {
+      const planTypeData = await ApiHelper.get("/planTypes/" + planData.planTypeId, "DoingApi");
+      setPlanType(planTypeData);
+    }
   };
 
   React.useEffect(() => {
     loadData();
   }, [params.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Available tabs based on plan configuration
-  const availableTabs = React.useMemo(() => {
-    const tabs = [
-      {
-        key: "assignments",
-        icon: <AssignmentIcon />,
-        label: Locale.label("plans.planPage.assignments"),
-        component: <Assignment plan={plan} />,
-      },
-    ];
-
-    if (plan?.serviceOrder) {
-      tabs.push({
-        key: "order",
-        icon: <AlbumIcon />,
-        label: Locale.label("plans.planPage.serviceOrder"),
-        component: <ServiceOrder plan={plan} />,
-      });
-    }
-
-    return tabs;
-  }, [plan]);
+  const getCurrentTab = () => {
+    if (selectedTab === "assignments") return <Assignment plan={plan} />;
+    if (selectedTab === "order") return <ServiceOrder plan={plan} />;
+    return null;
+  };
 
   if (!plan) {
     return (
@@ -59,34 +56,46 @@ export const PlanPage = () => {
     );
   }
 
+  const breadcrumbItems = [
+    { label: Locale.label("components.wrapper.plans") || "Plans", path: "/plans" }
+  ];
+
+  if (ministry) {
+    breadcrumbItems.push({ label: ministry.name, path: `/plans/ministries/${ministry.id}` });
+  }
+
+  if (planType) {
+    breadcrumbItems.push({ label: planType.name, path: `/plans/types/${planType.id}` });
+  }
+
+  breadcrumbItems.push({ label: plan.name || Locale.label("plans.planPage.servicePlan") });
+
   return (
     <>
-      <PageHeader icon={<AssignmentIcon />} title={plan.name || Locale.label("plans.planPage.servicePlan")} subtitle="Service plan details and team assignments">
-        <Stack direction="row" spacing={1}>
-          {availableTabs.map((tab, index) => (
-            <Button
-              key={tab.key}
-              variant={selectedTab === index ? "contained" : "outlined"}
-              startIcon={tab.icon}
-              onClick={() => setSelectedTab(index)}
-              size="medium"
-              sx={{
-                color: selectedTab === index ? "primary.main" : "#FFF",
-                backgroundColor: selectedTab === index ? "#FFF" : "transparent",
-                borderColor: "#FFF",
-                "&:hover": {
-                  backgroundColor: selectedTab === index ? "#FFF" : "rgba(255,255,255,0.2)",
-                  color: selectedTab === index ? "primary.main" : "#FFF",
-                },
-              }}>
-              {tab.label}
-            </Button>
-          ))}
-        </Stack>
-      </PageHeader>
+      <Box sx={{
+        backgroundColor: "var(--c1l2)",
+        color: "#FFF",
+        position: 'relative',
+        left: '50%',
+        right: '50%',
+        marginLeft: '-50vw',
+        marginRight: '-50vw',
+        width: '100vw',
+        '--c1l2': '#568BDA',
+        paddingX: { xs: 2, sm: 3, md: 4 },
+        paddingTop: 1.5,
+        paddingBottom: 0.5,
+        zIndex: 1
+      }}>
+        <Breadcrumbs items={breadcrumbItems} showHome={true} />
+      </Box>
+      <Box sx={{ marginTop: '-1.5rem' }}>
+        <PageHeader icon={<AssignmentIcon />} title={plan.name || Locale.label("plans.planPage.servicePlan")} subtitle="Service plan details and team assignments" />
+      </Box>
+      <PlanNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} plan={plan} />
 
       {/* Tab Content */}
-      <Box sx={{ p: 3 }}>{availableTabs[selectedTab]?.component}</Box>
+      <Box sx={{ p: 3 }}>{getCurrentTab()}</Box>
     </>
   );
 };
