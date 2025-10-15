@@ -35,6 +35,9 @@ export const Header: React.FC = () => {
     if (UserHelper.checkAccess(Permissions.membershipApi.plans.edit)) menuItems.push({ url: "/plans", label: Locale.label("components.wrapper.serving"), icon: "assignment" });
     else menuItems.push({ url: "/tasks", label: Locale.label("components.wrapper.serving"), icon: "assignment" });
 
+    // Hidden for now - sermons feature
+    // if (UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) menuItems.push({ url: "/sermons", label: "Sermons", icon: "live_tv" });
+
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) menuItems.push({ url: "/settings", label: Locale.label("components.wrapper.set"), icon: "settings" });
     else if (formPermission || isFormMember) menuItems.push({ url: "/forms", label: Locale.label("components.wrapper.set"), icon: "settings" });
     // if (UserHelper.checkAccess(Permissions.membershipApi.server.admin)) tabs.push(<NavItem key="/admin" url="/admin" label={Locale.label("components.wrapper.servAdmin")} icon="admin_panel_settings" selected={selectedTab === "admin"} />);
@@ -57,6 +60,7 @@ export const Header: React.FC = () => {
     else if (path.startsWith("/groups")) result = Locale.label("components.wrapper.ppl");
     else if (path.startsWith("/donations")) result = Locale.label("components.wrapper.don");
     else if (path.startsWith("/tasks") || path.startsWith("/plans") || window.location.search.indexOf("tag=") > -1) result = Locale.label("components.wrapper.serving");
+    else if (path.startsWith("/sermons")) result = "Sermons";
     else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = Locale.label("components.wrapper.set");
     return result;
   };
@@ -87,6 +91,7 @@ export const Header: React.FC = () => {
         "/plans/songs": "nav-item-songs",
         "/profile": "nav-item-profile",
         "/profile/devices": "nav-item-devices",
+        "/sermons": "nav-item-sermons",
       };
 
       // Find all navigation links
@@ -116,6 +121,7 @@ export const Header: React.FC = () => {
             songs: "nav-item-songs",
             profile: "nav-item-profile",
             devices: "nav-item-devices",
+            sermons: "nav-item-sermons",
           };
 
           for (const [key, testId] of Object.entries(textToTestId)) {

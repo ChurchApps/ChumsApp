@@ -38,6 +38,10 @@ const PrintPlan = React.lazy(() => import("./plans/PrintPlan").then((module) => 
 const DevicesPage = React.lazy(() => import("./profile/DevicesPage").then((module) => ({ default: module.DevicesPage })));
 const PrintDonationPage = React.lazy(() => import("./donations/PrintDonationPage").then((module) => ({ default: module.PrintDonationPage })));
 const OAuthPage = React.lazy(() => import("./OAuth").then((module) => ({ default: module.OAuthPage })));
+const SermonsPage = React.lazy(() => import("./sermons/SermonsPage").then((module) => ({ default: module.SermonsPage })));
+const PlaylistsPage = React.lazy(() => import("./sermons/PlaylistsPage").then((module) => ({ default: module.PlaylistsPage })));
+const LiveStreamTimesPage = React.lazy(() => import("./sermons/LiveStreamTimesPage").then((module) => ({ default: module.LiveStreamTimesPage })));
+const BulkImportPage = React.lazy(() => import("./sermons/BulkImportPage").then((module) => ({ default: module.BulkImportPage })));
 
 // Loading component for Suspense fallback
 const LoadingFallback: React.FC = () => (
@@ -108,6 +112,10 @@ export const Authenticated: React.FC = () => {
           <Route path="/plans" element={<PlansPage />} />
           <Route path="/plans/songs" element={<SongsPage />} />
           <Route path="/plans/songs/:id" element={<SongPage />} />
+          <Route path="/sermons/playlists" element={<PlaylistsPage />} />
+          <Route path="/sermons/times" element={<LiveStreamTimesPage />} />
+          <Route path="/sermons/bulk" element={<BulkImportPage />} />
+          <Route path="/sermons" element={<SermonsPage />} />
           <Route path="/" element={<DashboardPage />} />
         </Route>
 
