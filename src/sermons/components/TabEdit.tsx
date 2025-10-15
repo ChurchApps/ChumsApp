@@ -23,6 +23,7 @@ import { Close as CloseIcon, Delete as DeleteIcon, Save as SaveIcon } from "@mui
 import { ErrorMessages } from "@churchapps/apphelper";
 import { ApiHelper } from "@churchapps/apphelper";
 import type { LinkInterface } from "@churchapps/helpers";
+import { IconPicker } from "../../components/iconPicker";
 
 interface Props { currentTab: LinkInterface, updatedFunction?: () => void }
 
@@ -31,6 +32,7 @@ export const TabEdit: React.FC<Props> = (props) => {
   const [errors, setErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+  const [iconPickerOpen, setIconPickerOpen] = React.useState(false);
 
   const handleDelete = async () => {
     setIsLoading(true);
@@ -46,6 +48,12 @@ export const TabEdit: React.FC<Props> = (props) => {
     }
   };
 
+  const handleIconUpdate = (icon: string) => {
+    const t = { ...currentTab };
+    t.icon = icon;
+    setCurrentTab(t);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const val = e.target.value;
     const t = { ...currentTab };
@@ -53,7 +61,6 @@ export const TabEdit: React.FC<Props> = (props) => {
       case "text": t.text = val; break;
       case "type": t.linkType = val; break;
       case "url": t.url = val; break;
-      case "icon": t.icon = val; break;
     }
     setCurrentTab(t);
   };
@@ -120,7 +127,7 @@ export const TabEdit: React.FC<Props> = (props) => {
         }}
       >
         <DialogTitle sx={{
-          backgroundColor: "primary.main",
+          backgroundColor: "#1976d2",
           color: "#FFF",
           p: 3
         }}>
@@ -165,39 +172,53 @@ export const TabEdit: React.FC<Props> = (props) => {
             <Card sx={{ borderRadius: 2, border: '1px solid', borderColor: 'grey.200' }}>
               <CardContent>
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-                  <Icon sx={{ color: 'primary.main', fontSize: 18 }}>visibility</Icon>
-                  <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                  <Icon sx={{ color: '#1976d2', fontSize: 18 }}>visibility</Icon>
+                  <Typography variant="h6" sx={{ fontWeight: 600, color: '#1976d2' }}>
                     Tab Display
                   </Typography>
                 </Stack>
 
-                <Stack spacing={2}>
-                  <TextField
-                    fullWidth
-                    label="Tab Text"
-                    name="text"
-                    type="text"
-                    value={currentTab?.text || ""}
-                    onChange={handleChange}
-                    placeholder="Enter tab display text"
-                    size="small"
-                  />
-                  <TextField
-                    fullWidth
-                    label="Icon Name"
-                    name="icon"
-                    type="text"
-                    value={currentTab?.icon || ""}
-                    onChange={handleChange}
-                    placeholder="e.g., link, chat, favorite"
-                    size="small"
-                    helperText="Enter a Material Icon name (e.g., link, chat, favorite)"
-                    InputProps={{
-                      endAdornment: currentTab?.icon && (
-                        <Icon sx={{ color: 'primary.main' }}>{currentTab.icon}</Icon>
-                      )
-                    }}
-                  />
+                <Stack direction="row" spacing={2} alignItems="start">
+                  <Box sx={{ flex: 1 }}>
+                    <TextField
+                      fullWidth
+                      label="Tab Text"
+                      name="text"
+                      type="text"
+                      value={currentTab?.text || ""}
+                      onChange={handleChange}
+                      placeholder="Enter tab display text"
+                      size="small"
+                      sx={{ mb: 2 }}
+                    />
+                  </Box>
+                  <Box>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', mb: 1, display: 'block' }}>
+                      Icon
+                    </Typography>
+                    <Box
+                      onClick={() => setIconPickerOpen(true)}
+                      sx={{
+                        minWidth: 60,
+                        height: 40,
+                        borderRadius: 1,
+                        border: '1px solid',
+                        borderColor: 'grey.400',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#1976d2',
+                        backgroundColor: '#fff',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          borderColor: '#1976d2',
+                          backgroundColor: '#f5f5f5'
+                        }
+                      }}
+                    >
+                      <Icon>{currentTab?.icon || 'link'}</Icon>
+                    </Box>
+                  </Box>
                 </Stack>
               </CardContent>
             </Card>
@@ -206,8 +227,8 @@ export const TabEdit: React.FC<Props> = (props) => {
             <Card sx={{ borderRadius: 2, border: '1px solid', borderColor: 'grey.200' }}>
               <CardContent>
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-                  <Icon sx={{ color: 'primary.main', fontSize: 18 }}>settings</Icon>
-                  <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                  <Icon sx={{ color: '#1976d2', fontSize: 18 }}>settings</Icon>
+                  <Typography variant="h6" sx={{ fontWeight: 600, color: '#1976d2' }}>
                     Link Configuration
                   </Typography>
                 </Stack>
@@ -341,6 +362,15 @@ export const TabEdit: React.FC<Props> = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Icon Picker Dialog */}
+      {iconPickerOpen && (
+        <IconPicker
+          currentIcon={currentTab?.icon}
+          onUpdate={handleIconUpdate}
+          onClose={() => setIconPickerOpen(false)}
+        />
+      )}
     </>
   );
 };

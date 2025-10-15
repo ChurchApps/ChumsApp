@@ -129,7 +129,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
         }}
       >
         <DialogTitle sx={{
-          backgroundColor: "primary.main",
+          backgroundColor: "#1976d2",
           color: "#FFF",
           p: 3
         }}>
@@ -174,8 +174,8 @@ export const LinkEdit: React.FC<Props> = (props) => {
             <Card sx={{ borderRadius: 2, border: '1px solid', borderColor: 'grey.200' }}>
               <CardContent>
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-                  <Icon sx={{ color: 'primary.main', fontSize: 18 }}>edit</Icon>
-                  <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                  <Icon sx={{ color: '#1976d2', fontSize: 18 }}>edit</Icon>
+                  <Typography variant="h6" sx={{ fontWeight: 600, color: '#1976d2' }}>
                     Link Details
                   </Typography>
                 </Stack>
@@ -214,8 +214,8 @@ export const LinkEdit: React.FC<Props> = (props) => {
               <Card sx={{ borderRadius: 2, border: '1px solid', borderColor: 'grey.200' }}>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
-                    <Icon sx={{ color: 'primary.main', fontSize: 18 }}>account_tree</Icon>
-                    <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                    <Icon sx={{ color: '#1976d2', fontSize: 18 }}>account_tree</Icon>
+                    <Typography variant="h6" sx={{ fontWeight: 600, color: '#1976d2' }}>
                       Menu Organization
                     </Typography>
                   </Stack>
@@ -266,10 +266,10 @@ export const LinkEdit: React.FC<Props> = (props) => {
                               textTransform: 'none',
                               fontWeight: 500,
                               '&.Mui-selected': {
-                                backgroundColor: 'primary.main',
+                                backgroundColor: '#1976d2',
                                 color: '#FFF',
                                 '&:hover': {
-                                  backgroundColor: 'primary.dark'
+                                  backgroundColor: '#1565c0'
                                 }
                               }
                             }}
