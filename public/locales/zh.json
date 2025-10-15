@@ -1320,7 +1320,15 @@
       "vimeo": "Vimeo",
       "vimeoDescription": "从您的 Vimeo 账户或展示导入视频",
       "importFromVimeo": "从 Vimeo 导入",
-      "comingSoon": "即将推出..."
+      "backToSelection": "返回选择",
+      "import": "导入",
+      "fetch": "获取",
+      "fetching": "获取中...",
+      "youtubeChannelId": "YouTube 频道 ID",
+      "vimeoChannelId": "Vimeo 频道 ID",
+      "importIntoPlaylist": "导入到播放列表",
+      "autoImportNewVideos": "自动导入新视频",
+      "selectPlaylist": "请选择播放列表"
     },
     "liveStreamTimes": {
       "title": "直播时间",

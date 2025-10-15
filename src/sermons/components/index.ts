@@ -11,3 +11,5 @@ export { LinkEdit } from "./LinkEdit";
 export { Tabs } from "./Tabs";
 export { TabEdit } from "./TabEdit";
 export { ExternalLinks } from "./ExternalLinks";
+export { YouTubeImport } from "./YouTubeImport";
+export { VimeoImport } from "./VimeoImport";

@@ -1320,7 +1320,15 @@
       "vimeo": "Vimeo",
       "vimeoDescription": "Vimeo 계정 또는 쇼케이스에서 비디오 가져오기",
       "importFromVimeo": "Vimeo에서 가져오기",
-      "comingSoon": "곧 출시..."
+      "backToSelection": "선택으로 돌아가기",
+      "import": "가져오기",
+      "fetch": "가져오기",
+      "fetching": "가져오는 중...",
+      "youtubeChannelId": "YouTube 채널 ID",
+      "vimeoChannelId": "Vimeo 채널 ID",
+      "importIntoPlaylist": "재생목록으로 가져오기",
+      "autoImportNewVideos": "새 비디오 자동 가져오기",
+      "selectPlaylist": "재생목록을 선택하세요"
     },
     "liveStreamTimes": {
       "title": "라이브 스트림 시간",

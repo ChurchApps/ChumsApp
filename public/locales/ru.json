@@ -1320,7 +1320,15 @@
       "vimeo": "Vimeo",
       "vimeoDescription": "Импортируйте видео из вашей учетной записи или витрин Vimeo",
       "importFromVimeo": "Импорт из Vimeo",
-      "comingSoon": "Скоро..."
+      "backToSelection": "Вернуться к Выбору",
+      "import": "Импорт",
+      "fetch": "Получить",
+      "fetching": "Получение...",
+      "youtubeChannelId": "ID Канала YouTube",
+      "vimeoChannelId": "ID Канала Vimeo",
+      "importIntoPlaylist": "Импорт в Плейлист",
+      "autoImportNewVideos": "Автоматически Импортировать Новые Видео",
+      "selectPlaylist": "Пожалуйста, выберите плейлист"
     },
     "liveStreamTimes": {
       "title": "Время Прямых Трансляций",

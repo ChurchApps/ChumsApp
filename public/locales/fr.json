@@ -1320,7 +1320,15 @@
       "vimeo": "Vimeo",
       "vimeoDescription": "Importer des vidéos de votre compte Vimeo ou vitrines",
       "importFromVimeo": "Importer depuis Vimeo",
-      "comingSoon": "Bientôt disponible..."
+      "backToSelection": "Retour à la Sélection",
+      "import": "Importer",
+      "fetch": "Récupérer",
+      "fetching": "Récupération en cours...",
+      "youtubeChannelId": "ID de Chaîne YouTube",
+      "vimeoChannelId": "ID de Chaîne Vimeo",
+      "importIntoPlaylist": "Importer dans la Liste de Lecture",
+      "autoImportNewVideos": "Importer automatiquement les nouvelles vidéos",
+      "selectPlaylist": "Sélectionner une Liste de Lecture"
     },
     "liveStreamTimes": {
       "title": "Horaires de diffusion en direct",

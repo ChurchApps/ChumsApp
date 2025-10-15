@@ -1320,7 +1320,15 @@
       "vimeo": "Vimeo",
       "vimeoDescription": "Importe videos de su cuenta de Vimeo o escaparates",
       "importFromVimeo": "Importar desde Vimeo",
-      "comingSoon": "Próximamente..."
+      "backToSelection": "Volver a la Selección",
+      "import": "Importar",
+      "fetch": "Obtener",
+      "fetching": "Obteniendo...",
+      "youtubeChannelId": "ID del Canal de YouTube",
+      "vimeoChannelId": "ID del Canal de Vimeo",
+      "importIntoPlaylist": "Importar a Lista de Reproducción",
+      "autoImportNewVideos": "Importar automáticamente nuevos videos",
+      "selectPlaylist": "Seleccionar Lista de Reproducción"
     },
     "liveStreamTimes": {
       "title": "Horarios de Transmisión en Vivo",

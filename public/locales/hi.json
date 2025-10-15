@@ -1320,7 +1320,15 @@
       "vimeo": "Vimeo",
       "vimeoDescription": "अपने Vimeo खाते या शोकेस से वीडियो आयात करें",
       "importFromVimeo": "Vimeo से आयात करें",
-      "comingSoon": "जल्द आ रहा है..."
+      "backToSelection": "चयन पर वापस जाएं",
+      "import": "आयात करें",
+      "fetch": "प्राप्त करें",
+      "fetching": "प्राप्त किया जा रहा है...",
+      "youtubeChannelId": "YouTube चैनल ID",
+      "vimeoChannelId": "Vimeo चैनल ID",
+      "importIntoPlaylist": "प्लेलिस्ट में आयात करें",
+      "autoImportNewVideos": "नए वीडियो स्वचालित रूप से आयात करें",
+      "selectPlaylist": "कृपया एक प्लेलिस्ट चुनें"
     },
     "liveStreamTimes": {
       "title": "लाइव स्ट्रीम समय",

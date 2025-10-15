@@ -1320,7 +1320,15 @@
       "vimeo": "Vimeo",
       "vimeoDescription": "Mag-import ng mga video mula sa iyong Vimeo account o showcases",
       "importFromVimeo": "Mag-import mula sa Vimeo",
-      "comingSoon": "Paparating na..."
+      "backToSelection": "Bumalik sa Pagpili",
+      "import": "Mag-import",
+      "fetch": "Kunin",
+      "fetching": "Kinukuha...",
+      "youtubeChannelId": "YouTube Channel ID",
+      "vimeoChannelId": "Vimeo Channel ID",
+      "importIntoPlaylist": "Mag-import sa Playlist",
+      "autoImportNewVideos": "Awtomatikong Mag-import ng Mga Bagong Video",
+      "selectPlaylist": "Mangyaring pumili ng playlist"
     },
     "liveStreamTimes": {
       "title": "Mga Oras ng Live Stream",

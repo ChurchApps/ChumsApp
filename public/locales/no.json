@@ -1320,7 +1320,15 @@
       "vimeo": "Vimeo",
       "vimeoDescription": "Importer videoer fra Vimeo-kontoen eller utstillingene dine",
       "importFromVimeo": "Importer fra Vimeo",
-      "comingSoon": "Kommer snart..."
+      "backToSelection": "Tilbake til valg",
+      "import": "Importer",
+      "fetch": "Hent",
+      "fetching": "Henter...",
+      "youtubeChannelId": "YouTube kanal-ID",
+      "vimeoChannelId": "Vimeo kanal-ID",
+      "importIntoPlaylist": "Importer til spilleliste",
+      "autoImportNewVideos": "Importer nye videoer automatisk",
+      "selectPlaylist": "Vennligst velg en spilleliste"
     },
     "liveStreamTimes": {
       "title": "Direktesendings tider",

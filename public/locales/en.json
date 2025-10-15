@@ -1320,7 +1320,15 @@
       "vimeo": "Vimeo",
       "vimeoDescription": "Import videos from your Vimeo account or showcases",
       "importFromVimeo": "Import from Vimeo",
-      "comingSoon": "Coming soon..."
+      "backToSelection": "Back to Selection",
+      "import": "Import",
+      "fetch": "Fetch",
+      "fetching": "Fetching...",
+      "youtubeChannelId": "YouTube Channel ID",
+      "vimeoChannelId": "Vimeo Channel ID",
+      "importIntoPlaylist": "Import Into Playlist",
+      "autoImportNewVideos": "Auto Import New Videos",
+      "selectPlaylist": "Please select a playlist"
     },
     "liveStreamTimes": {
       "title": "Live Stream Times",
