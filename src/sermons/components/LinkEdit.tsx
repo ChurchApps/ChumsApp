@@ -17,7 +17,7 @@ import {
   IconButton
 } from "@mui/material";
 import { Close as CloseIcon, Save as SaveIcon, Delete as DeleteIcon, Link as LinkIcon } from "@mui/icons-material";
-import { ApiHelper } from "@churchapps/apphelper";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { ErrorMessages } from "@churchapps/apphelper";
 import { UserHelper } from "@churchapps/apphelper";
 import { Permissions } from "@churchapps/helpers";
@@ -48,8 +48,8 @@ export const LinkEdit: React.FC<Props> = (props) => {
       if (currentLink.id === link.parentId) { i++; }
     });
 
-    if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push("Unauthorized to delete links");
-    if (i > 0) errors.push("Delete nested links first");
+    if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push(Locale.label("sermons.liveStreamTimes.linkEdit.errors.unauthorizedDelete"));
+    if (i > 0) errors.push(Locale.label("sermons.liveStreamTimes.linkEdit.errors.deleteNestedFirst"));
 
     if (errors.length > 0) {
       setErrors(errors);
@@ -62,7 +62,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
       setCurrentLink(null);
       props.updatedFunction();
     } catch {
-      setErrors(["Failed to delete link. Please try again."]);
+      setErrors([Locale.label("sermons.liveStreamTimes.linkEdit.errors.deleteFailed")]);
     } finally {
       setIsLoading(false);
       setDeleteDialogOpen(false);
@@ -89,9 +89,9 @@ export const LinkEdit: React.FC<Props> = (props) => {
   const handleSave = async () => {
     setIsLoading(true);
     const errors: string[] = [];
-    if (!currentLink.text.trim()) errors.push("Please enter valid text");
-    if (!currentLink.url.trim()) errors.push("Please enter link");
-    if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push("Unauthorized to create links");
+    if (!currentLink.text.trim()) errors.push(Locale.label("sermons.liveStreamTimes.linkEdit.errors.textRequired"));
+    if (!currentLink.url.trim()) errors.push(Locale.label("sermons.liveStreamTimes.linkEdit.errors.urlRequired"));
+    if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push(Locale.label("sermons.liveStreamTimes.linkEdit.errors.unauthorized"));
 
     if (errors.length > 0) {
       setErrors(errors);
@@ -103,7 +103,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
       await ApiHelper.post("/links", [currentLink], "ContentApi");
       props.updatedFunction();
     } catch {
-      setErrors(["Failed to save link. Please try again."]);
+      setErrors([Locale.label("sermons.liveStreamTimes.linkEdit.errors.saveFailed")]);
     } finally {
       setIsLoading(false);
     }
@@ -149,10 +149,10 @@ export const LinkEdit: React.FC<Props> = (props) => {
               </Box>
               <Box>
                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
-                  {currentLink?.id ? 'Edit Navigation Link' : 'Create New Link'}
+                  {currentLink?.id ? Locale.label("sermons.liveStreamTimes.linkEdit.editNavigationLink") : Locale.label("sermons.liveStreamTimes.linkEdit.createNewLink")}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)' }}>
-                  Configure navigation link settings
+                  {Locale.label("sermons.liveStreamTimes.linkEdit.configureSettings")}
                 </Typography>
               </Box>
             </Stack>
@@ -176,33 +176,33 @@ export const LinkEdit: React.FC<Props> = (props) => {
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                   <Icon sx={{ color: '#1976d2', fontSize: 18 }}>edit</Icon>
                   <Typography variant="h6" sx={{ fontWeight: 600, color: '#1976d2' }}>
-                    Link Details
+                    {Locale.label("sermons.liveStreamTimes.linkEdit.linkDetails")}
                   </Typography>
                 </Stack>
 
                 <Stack spacing={2}>
                   <TextField
                     fullWidth
-                    label="Display Text"
+                    label={Locale.label("sermons.liveStreamTimes.linkEdit.displayText")}
                     name="text"
                     type="text"
                     value={currentLink?.text || ""}
                     onChange={handleChange}
                     data-testid="link-text-input"
                     aria-label="Link display text"
-                    placeholder="Enter text to display in navigation"
+                    placeholder={Locale.label("sermons.liveStreamTimes.linkEdit.displayTextPlaceholder")}
                     size="small"
                   />
                   <TextField
                     fullWidth
-                    label="Link URL"
+                    label={Locale.label("sermons.liveStreamTimes.linkEdit.linkUrl")}
                     name="url"
                     type="text"
                     value={currentLink?.url || ""}
                     onChange={handleChange}
                     data-testid="link-url-input"
                     aria-label="Link URL"
-                    placeholder="https://example.com or /internal-page"
+                    placeholder={Locale.label("sermons.liveStreamTimes.linkEdit.linkUrlPlaceholder")}
                     size="small"
                   />
                 </Stack>
@@ -216,7 +216,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
                   <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                     <Icon sx={{ color: '#1976d2', fontSize: 18 }}>account_tree</Icon>
                     <Typography variant="h6" sx={{ fontWeight: 600, color: '#1976d2' }}>
-                      Menu Organization
+                      {Locale.label("sermons.liveStreamTimes.linkEdit.menuOrganization")}
                     </Typography>
                   </Stack>
 
@@ -227,7 +227,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
                           <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                             <Icon sx={{ fontSize: 16, color: 'success.main' }}>check_circle</Icon>
                             <Typography variant="body2" color="success.main">
-                            This link will be placed under submenu: <strong>{subName}</strong>
+                            {Locale.label("sermons.liveStreamTimes.linkEdit.submenuMessage")} <strong>{subName}</strong>
                             </Typography>
                           </Stack>
                         )
@@ -235,7 +235,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
                           <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                             <Icon sx={{ fontSize: 16, color: 'text.secondary' }}>info</Icon>
                             <Typography variant="body2" color="text.secondary">
-                            Optionally organize this link under an existing submenu:
+                            {Locale.label("sermons.liveStreamTimes.linkEdit.optionalSubmenuMessage")}
                             </Typography>
                           </Stack>
                         )}
@@ -303,7 +303,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
                   fontWeight: 500
                 }}
               >
-                Delete
+                {Locale.label("sermons.liveStreamTimes.linkEdit.delete")}
               </Button>
             )}
             <Box sx={{ flex: 1 }} />
@@ -316,7 +316,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
                 fontWeight: 500
               }}
             >
-              Cancel
+              {Locale.label("sermons.liveStreamTimes.linkEdit.cancel")}
             </Button>
             <Button
               variant="contained"
@@ -329,7 +329,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
                 minWidth: 100
               }}
             >
-              {isLoading ? 'Saving...' : 'Save Link'}
+              {isLoading ? Locale.label("sermons.liveStreamTimes.linkEdit.saving") : Locale.label("sermons.liveStreamTimes.linkEdit.saveLink")}
             </Button>
           </Stack>
         </DialogActions>
@@ -340,19 +340,19 @@ export const LinkEdit: React.FC<Props> = (props) => {
         <DialogTitle>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Icon sx={{ color: 'error.main' }}>warning</Icon>
-            <Typography variant="h6">Delete Link</Typography>
+            <Typography variant="h6">{Locale.label("sermons.liveStreamTimes.linkEdit.deleteLink")}</Typography>
           </Stack>
         </DialogTitle>
         <DialogContent>
           <Typography>
-            Are you sure you want to delete this navigation link? This action cannot be undone.
+            {Locale.label("sermons.liveStreamTimes.linkEdit.deleteConfirm")}
           </Typography>
           {links?.some(link => link.parentId === currentLink.id) && (
             <Box sx={{ mt: 2, p: 2, backgroundColor: 'warning.light', borderRadius: 1 }}>
               <Stack direction="row" alignItems="center" spacing={1}>
                 <Icon sx={{ color: 'warning.main' }}>info</Icon>
                 <Typography variant="body2" color="warning.dark">
-                  This link has nested sublinks. Please delete those first.
+                  {Locale.label("sermons.liveStreamTimes.linkEdit.deleteNestedLinksFirst")}
                 </Typography>
               </Stack>
             </Box>
@@ -364,7 +364,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
             disabled={isLoading}
             sx={{ textTransform: 'none' }}
           >
-            Cancel
+            {Locale.label("sermons.liveStreamTimes.linkEdit.cancel")}
           </Button>
           <Button
             onClick={handleDelete}
@@ -373,7 +373,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
             disabled={isLoading}
             sx={{ textTransform: 'none' }}
           >
-            {isLoading ? 'Deleting...' : 'Delete'}
+            {isLoading ? Locale.label("sermons.liveStreamTimes.linkEdit.deleting") : Locale.label("sermons.liveStreamTimes.linkEdit.delete")}
           </Button>
         </DialogActions>
       </Dialog>

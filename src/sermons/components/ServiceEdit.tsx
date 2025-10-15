@@ -1,4 +1,4 @@
-import { InputBox } from "@churchapps/apphelper";
+import { InputBox, Locale } from "@churchapps/apphelper";
 import {
   Grid,
   InputLabel,
@@ -49,7 +49,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   };
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to delete this service?")) {
+    if (window.confirm(Locale.label("sermons.liveStreamTimes.serviceEdit.deleteConfirm"))) {
       ApiHelper.delete("/streamingServices/" + currentService.id, "ContentApi").then(() => { props.updatedFunction(); });
     }
   };
@@ -112,11 +112,11 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     const errors: string[] = [];
 
     if (!currentService?.label?.trim()) {
-      errors.push("Service name is required");
+      errors.push(Locale.label("sermons.liveStreamTimes.serviceEdit.serviceNameRequired"));
     }
 
     if (!currentService?.serviceTime) {
-      errors.push("Service time is required");
+      errors.push(Locale.label("sermons.liveStreamTimes.serviceEdit.serviceTimeRequired"));
     }
 
     setValidationErrors(errors);
@@ -175,7 +175,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     return (
       <InputBox
         headerIcon="video_settings"
-        headerText={UniqueIdHelper.isMissing(currentService?.id) ? "Add New Service" : "Edit Service"}
+        headerText={UniqueIdHelper.isMissing(currentService?.id) ? Locale.label("sermons.liveStreamTimes.serviceEdit.addNewService") : Locale.label("sermons.liveStreamTimes.serviceEdit.editService")}
         saveFunction={handleSave}
         cancelFunction={handleCancel}
         deleteFunction={checkDelete()}
@@ -186,7 +186,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
           {validationErrors.length > 0 && (
             <Alert severity="error">
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-                Please correct the following errors:
+                {Locale.label("sermons.liveStreamTimes.serviceEdit.errorsCorrectionTitle")}
               </Typography>
               <Stack component="ul" spacing={0.5} sx={{ m: 0, pl: 2 }}>
                 {validationErrors.map((error, index) => (
@@ -203,20 +203,20 @@ export const ServiceEdit: React.FC<Props> = (props) => {
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
               <VideoCallIcon sx={{ color: 'primary.main', fontSize: 20 }} />
               <Typography variant="h6" sx={{ color: 'primary.main' }}>
-                Basic Information
+                {Locale.label("sermons.liveStreamTimes.serviceEdit.basicInformation")}
               </Typography>
             </Stack>
 
             <Stack spacing={2}>
               <TextField
                 fullWidth
-                label="Service Name"
+                label={Locale.label("sermons.liveStreamTimes.serviceEdit.serviceName")}
                 name="serviceLabel"
                 value={currentService?.label || ""}
                 onChange={handleChange}
                 data-testid="service-name-input"
-                placeholder="e.g., Sunday Morning Service"
-                error={validationErrors.some(e => e.includes("Service name"))}
+                placeholder={Locale.label("sermons.liveStreamTimes.serviceEdit.serviceNamePlaceholder")}
+                error={validationErrors.some(e => e.includes(Locale.label("sermons.liveStreamTimes.serviceEdit.serviceNameRequired")))}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -230,14 +230,14 @@ export const ServiceEdit: React.FC<Props> = (props) => {
                 <Grid size={{ xs: 12, md: 6 }}>
                   <TextField
                     fullWidth
-                    label="Service Time"
+                    label={Locale.label("sermons.liveStreamTimes.serviceEdit.serviceTime")}
                     type="datetime-local"
                     name="serviceTime"
                     InputLabelProps={{ shrink: !!DateHelper.formatHtml5DateTime(localServiceTime) }}
                     defaultValue={DateHelper.formatHtml5DateTime(localServiceTime)}
                     onChange={handleChange}
                     data-testid="service-time-input"
-                    error={validationErrors.some(e => e.includes("Service time"))}
+                    error={validationErrors.some(e => e.includes(Locale.label("sermons.liveStreamTimes.serviceEdit.serviceTimeRequired")))}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -249,9 +249,9 @@ export const ServiceEdit: React.FC<Props> = (props) => {
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
                   <FormControl fullWidth>
-                    <InputLabel>Recurs Weekly</InputLabel>
+                    <InputLabel>{Locale.label("sermons.liveStreamTimes.serviceEdit.recursWeekly")}</InputLabel>
                     <Select
-                      label="Recurs Weekly"
+                      label={Locale.label("sermons.liveStreamTimes.serviceEdit.recursWeekly")}
                       name="recurs"
                       value={Boolean(currentService?.recurring).toString() || ""}
                       onChange={handleChange}
@@ -263,14 +263,14 @@ export const ServiceEdit: React.FC<Props> = (props) => {
                     >
                       <MenuItem value="false">
                         <Stack direction="row" spacing={1} alignItems="center">
-                          <Typography>No</Typography>
-                          <Chip label="One-time" size="small" sx={{ backgroundColor: '#fff3e0', color: '#f57c00' }} />
+                          <Typography>{Locale.label("sermons.liveStreamTimes.serviceEdit.no")}</Typography>
+                          <Chip label={Locale.label("sermons.liveStreamTimes.serviceEdit.oneTime")} size="small" sx={{ backgroundColor: '#fff3e0', color: '#f57c00' }} />
                         </Stack>
                       </MenuItem>
                       <MenuItem value="true">
                         <Stack direction="row" spacing={1} alignItems="center">
-                          <Typography>Yes</Typography>
-                          <Chip label="Weekly" size="small" sx={{ backgroundColor: '#e8f5e9', color: '#2e7d32' }} />
+                          <Typography>{Locale.label("sermons.liveStreamTimes.serviceEdit.yes")}</Typography>
+                          <Chip label={Locale.label("sermons.liveStreamTimes.serviceEdit.weekly")} size="small" sx={{ backgroundColor: '#e8f5e9', color: '#2e7d32' }} />
                         </Stack>
                       </MenuItem>
                     </Select>
@@ -287,7 +287,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
               <ChatIcon sx={{ color: 'primary.main', fontSize: 20 }} />
               <Typography variant="h6" sx={{ color: 'primary.main' }}>
-                Chat Settings
+                {Locale.label("sermons.liveStreamTimes.serviceEdit.chatSettings")}
               </Typography>
             </Stack>
 
@@ -295,7 +295,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
               <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
                   fullWidth
-                  label="Enable Chat - Minutes Before"
+                  label={Locale.label("sermons.liveStreamTimes.serviceEdit.enableChatMinutesBefore")}
                   type="number"
                   name="chatBefore"
                   value={currentService?.chatBefore / 60 || ""}
@@ -322,7 +322,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
               <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
                   fullWidth
-                  label="Enable Chat - Minutes After"
+                  label={Locale.label("sermons.liveStreamTimes.serviceEdit.enableChatMinutesAfter")}
                   type="number"
                   name="chatAfter"
                   value={currentService?.chatAfter / 60 || ""}
@@ -356,7 +356,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
               <PlayCircleIcon sx={{ color: 'primary.main', fontSize: 20 }} />
               <Typography variant="h6" sx={{ color: 'primary.main' }}>
-                Video Settings
+                {Locale.label("sermons.liveStreamTimes.serviceEdit.videoSettings")}
               </Typography>
             </Stack>
 
@@ -364,12 +364,12 @@ export const ServiceEdit: React.FC<Props> = (props) => {
               <Grid size={{ xs: 12, md: 6 }}>
                 <TextField
                   fullWidth
-                  label="Start Video Early"
+                  label={Locale.label("sermons.liveStreamTimes.serviceEdit.startVideoEarly")}
                   type="number"
                   name="earlyStart"
                   value={currentService?.earlyStart / 60 || ""}
                   onChange={handleChange}
-                  helperText="Optional: For countdown videos or pre-service content"
+                  helperText={Locale.label("sermons.liveStreamTimes.serviceEdit.startVideoEarlyHelp")}
                   InputProps={{
                     inputProps: { min: 0, step: 1 },
                     startAdornment: (
@@ -391,9 +391,9 @@ export const ServiceEdit: React.FC<Props> = (props) => {
               </Grid>
               <Grid size={{ xs: 12, md: 6 }}>
                 <FormControl fullWidth>
-                  <InputLabel>Sermon</InputLabel>
+                  <InputLabel>{Locale.label("sermons.liveStreamTimes.serviceEdit.sermon")}</InputLabel>
                   <Select
-                    label="Sermon"
+                    label={Locale.label("sermons.liveStreamTimes.serviceEdit.sermon")}
                     name="sermonId"
                     value={currentService?.sermonId || "latest"}
                     onChange={handleChange}
@@ -405,8 +405,8 @@ export const ServiceEdit: React.FC<Props> = (props) => {
                   >
                     <MenuItem value="latest">
                       <Stack direction="row" spacing={1} alignItems="center">
-                        <Typography>Latest Sermon</Typography>
-                        <Chip label="Auto" size="small" sx={{ backgroundColor: '#e8f5e9', color: '#2e7d32' }} />
+                        <Typography>{Locale.label("sermons.liveStreamTimes.serviceEdit.latestSermon")}</Typography>
+                        <Chip label={Locale.label("sermons.liveStreamTimes.serviceEdit.auto")} size="small" sx={{ backgroundColor: '#e8f5e9', color: '#2e7d32' }} />
                       </Stack>
                     </MenuItem>
                     {getSermons()}

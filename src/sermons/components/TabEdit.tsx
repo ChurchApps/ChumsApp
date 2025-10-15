@@ -20,7 +20,7 @@ import {
   type SelectChangeEvent
 } from "@mui/material";
 import { Close as CloseIcon, Delete as DeleteIcon, Save as SaveIcon } from "@mui/icons-material";
-import { ErrorMessages } from "@churchapps/apphelper";
+import { ErrorMessages, Locale } from "@churchapps/apphelper";
 import { ApiHelper } from "@churchapps/apphelper";
 import type { LinkInterface } from "@churchapps/helpers";
 import { IconPicker } from "../../components/iconPicker";
@@ -41,7 +41,7 @@ export const TabEdit: React.FC<Props> = (props) => {
       setCurrentTab(null);
       props.updatedFunction();
     } catch {
-      setErrors(["Failed to delete tab. Please try again."]);
+      setErrors([Locale.label("sermons.liveStreamTimes.tabEdit.errors.deleteFailed")]);
     } finally {
       setIsLoading(false);
       setDeleteDialogOpen(false);
@@ -69,8 +69,8 @@ export const TabEdit: React.FC<Props> = (props) => {
     setIsLoading(true);
     const errors: string[] = [];
 
-    if (!currentTab.text) errors.push("Please enter valid text");
-    if (currentTab?.linkType === "url" && !currentTab.url) errors.push("Enter a valid URL");
+    if (!currentTab.text) errors.push(Locale.label("sermons.liveStreamTimes.tabEdit.errors.textRequired"));
+    if (currentTab?.linkType === "url" && !currentTab.url) errors.push(Locale.label("sermons.liveStreamTimes.tabEdit.errors.urlRequired"));
 
     if (errors.length > 0) {
       setErrors(errors);
@@ -83,7 +83,7 @@ export const TabEdit: React.FC<Props> = (props) => {
       await ApiHelper.post("/links", [currentTab], "ContentApi");
       props.updatedFunction();
     } catch {
-      setErrors(["Failed to save tab. Please try again."]);
+      setErrors([Locale.label("sermons.liveStreamTimes.tabEdit.errors.saveFailed")]);
     } finally {
       setIsLoading(false);
     }
@@ -94,13 +94,13 @@ export const TabEdit: React.FC<Props> = (props) => {
       return (
         <TextField
           fullWidth
-          label="External URL"
+          label={Locale.label("sermons.liveStreamTimes.tabEdit.externalUrl")}
           name="url"
           type="text"
           value={currentTab?.url || ""}
           onChange={handleChange}
           data-testid="tab-url-input"
-          placeholder="https://example.com"
+          placeholder={Locale.label("sermons.liveStreamTimes.tabEdit.externalUrlPlaceholder")}
           size="small"
           sx={{ mt: 1 }}
         />
@@ -147,10 +147,10 @@ export const TabEdit: React.FC<Props> = (props) => {
               </Box>
               <Box>
                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
-                  {currentTab?.id ? 'Edit Tab' : 'Create New Tab'}
+                  {currentTab?.id ? Locale.label("sermons.liveStreamTimes.tabEdit.editTab") : Locale.label("sermons.liveStreamTimes.tabEdit.createNewTab")}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)' }}>
-                  Configure streaming sidebar tab settings
+                  {Locale.label("sermons.liveStreamTimes.tabEdit.configureSettings")}
                 </Typography>
               </Box>
             </Stack>
@@ -174,7 +174,7 @@ export const TabEdit: React.FC<Props> = (props) => {
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                   <Icon sx={{ color: '#1976d2', fontSize: 18 }}>visibility</Icon>
                   <Typography variant="h6" sx={{ fontWeight: 600, color: '#1976d2' }}>
-                    Tab Display
+                    {Locale.label("sermons.liveStreamTimes.tabEdit.tabDisplay")}
                   </Typography>
                 </Stack>
 
@@ -182,19 +182,19 @@ export const TabEdit: React.FC<Props> = (props) => {
                   <Box sx={{ flex: 1 }}>
                     <TextField
                       fullWidth
-                      label="Tab Text"
+                      label={Locale.label("sermons.liveStreamTimes.tabEdit.tabText")}
                       name="text"
                       type="text"
                       value={currentTab?.text || ""}
                       onChange={handleChange}
-                      placeholder="Enter tab display text"
+                      placeholder={Locale.label("sermons.liveStreamTimes.tabEdit.tabTextPlaceholder")}
                       size="small"
                       sx={{ mb: 2 }}
                     />
                   </Box>
                   <Box>
                     <Typography variant="caption" sx={{ color: 'text.secondary', mb: 1, display: 'block' }}>
-                      Icon
+                      {Locale.label("sermons.liveStreamTimes.tabEdit.icon")}
                     </Typography>
                     <Box
                       onClick={() => setIconPickerOpen(true)}
@@ -229,16 +229,16 @@ export const TabEdit: React.FC<Props> = (props) => {
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                   <Icon sx={{ color: '#1976d2', fontSize: 18 }}>settings</Icon>
                   <Typography variant="h6" sx={{ fontWeight: 600, color: '#1976d2' }}>
-                    Link Configuration
+                    {Locale.label("sermons.liveStreamTimes.tabEdit.linkConfiguration")}
                   </Typography>
                 </Stack>
 
                 <Stack spacing={2}>
                   <FormControl fullWidth size="small">
-                    <InputLabel id="type">Link Type</InputLabel>
+                    <InputLabel id="type">{Locale.label("sermons.liveStreamTimes.tabEdit.linkType")}</InputLabel>
                     <Select
                       labelId="type"
-                      label="Link Type"
+                      label={Locale.label("sermons.liveStreamTimes.tabEdit.linkType")}
                       name="type"
                       value={currentTab?.linkType || ""}
                       onChange={handleChange}
@@ -246,19 +246,19 @@ export const TabEdit: React.FC<Props> = (props) => {
                       <MenuItem value="url">
                         <Stack direction="row" alignItems="center" spacing={1}>
                           <Icon sx={{ fontSize: 18 }}>open_in_new</Icon>
-                          <Typography>External URL</Typography>
+                          <Typography>{Locale.label("sermons.liveStreamTimes.tabEdit.externalUrl")}</Typography>
                         </Stack>
                       </MenuItem>
                       <MenuItem value="chat">
                         <Stack direction="row" alignItems="center" spacing={1}>
                           <Icon sx={{ fontSize: 18 }}>chat</Icon>
-                          <Typography>Chat</Typography>
+                          <Typography>{Locale.label("sermons.liveStreamTimes.tabEdit.chat")}</Typography>
                         </Stack>
                       </MenuItem>
                       <MenuItem value="prayer">
                         <Stack direction="row" alignItems="center" spacing={1}>
                           <Icon sx={{ fontSize: 18 }}>favorite</Icon>
-                          <Typography>Prayer</Typography>
+                          <Typography>{Locale.label("sermons.liveStreamTimes.tabEdit.prayer")}</Typography>
                         </Stack>
                       </MenuItem>
                     </Select>
@@ -271,10 +271,10 @@ export const TabEdit: React.FC<Props> = (props) => {
                     <Stack direction="row" spacing={1} alignItems="center">
                       <Icon sx={{ fontSize: 16, color: 'text.secondary' }}>info</Icon>
                       <Typography variant="caption" color="text.secondary">
-                        {currentTab?.linkType === "url" && "External URL will open in a new tab"}
-                        {currentTab?.linkType === "chat" && "Built-in chat functionality"}
-                        {currentTab?.linkType === "prayer" && "Built-in prayer request feature"}
-                        {!currentTab?.linkType && "Select a link type to configure the tab behavior"}
+                        {currentTab?.linkType === "url" && Locale.label("sermons.liveStreamTimes.tabEdit.linkTypeHelp.url")}
+                        {currentTab?.linkType === "chat" && Locale.label("sermons.liveStreamTimes.tabEdit.linkTypeHelp.chat")}
+                        {currentTab?.linkType === "prayer" && Locale.label("sermons.liveStreamTimes.tabEdit.linkTypeHelp.prayer")}
+                        {!currentTab?.linkType && Locale.label("sermons.liveStreamTimes.tabEdit.linkTypeHelp.none")}
                       </Typography>
                     </Stack>
                   </Box>
@@ -298,7 +298,7 @@ export const TabEdit: React.FC<Props> = (props) => {
                   fontWeight: 500
                 }}
               >
-                Delete
+                {Locale.label("sermons.liveStreamTimes.tabEdit.delete")}
               </Button>
             )}
             <Box sx={{ flex: 1 }} />
@@ -311,7 +311,7 @@ export const TabEdit: React.FC<Props> = (props) => {
                 fontWeight: 500
               }}
             >
-              Cancel
+              {Locale.label("sermons.liveStreamTimes.tabEdit.cancel")}
             </Button>
             <Button
               variant="contained"
@@ -324,7 +324,7 @@ export const TabEdit: React.FC<Props> = (props) => {
                 minWidth: 100
               }}
             >
-              {isLoading ? 'Saving...' : 'Save Tab'}
+              {isLoading ? Locale.label("sermons.liveStreamTimes.tabEdit.saving") : Locale.label("sermons.liveStreamTimes.tabEdit.saveTab")}
             </Button>
           </Stack>
         </DialogActions>
@@ -335,12 +335,12 @@ export const TabEdit: React.FC<Props> = (props) => {
         <DialogTitle>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Icon sx={{ color: 'error.main' }}>warning</Icon>
-            <Typography variant="h6">Delete Tab</Typography>
+            <Typography variant="h6">{Locale.label("sermons.liveStreamTimes.tabEdit.deleteTab")}</Typography>
           </Stack>
         </DialogTitle>
         <DialogContent>
           <Typography>
-            Are you sure you want to delete this tab? This action cannot be undone.
+            {Locale.label("sermons.liveStreamTimes.tabEdit.deleteConfirm")}
           </Typography>
         </DialogContent>
         <DialogActions>
@@ -349,7 +349,7 @@ export const TabEdit: React.FC<Props> = (props) => {
             disabled={isLoading}
             sx={{ textTransform: 'none' }}
           >
-            Cancel
+            {Locale.label("sermons.liveStreamTimes.tabEdit.cancel")}
           </Button>
           <Button
             onClick={handleDelete}
@@ -358,7 +358,7 @@ export const TabEdit: React.FC<Props> = (props) => {
             disabled={isLoading}
             sx={{ textTransform: 'none' }}
           >
-            {isLoading ? 'Deleting...' : 'Delete'}
+            {isLoading ? Locale.label("sermons.liveStreamTimes.tabEdit.deleting") : Locale.label("sermons.liveStreamTimes.tabEdit.delete")}
           </Button>
         </DialogActions>
       </Dialog>
