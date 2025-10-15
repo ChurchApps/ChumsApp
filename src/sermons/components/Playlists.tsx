@@ -212,6 +212,8 @@ export const Playlists = () => {
   const imageEditor = (photoUrl || photoUrl === "") && (
     <ImageEditor
       aspectRatio={16 / 9}
+      outputWidth={640}
+      outputHeight={360}
       photoUrl={photoUrl}
       onCancel={() => { setPhotoUrl(null); setPhotoType(null); }}
       onUpdate={handlePhotoUpdated}
