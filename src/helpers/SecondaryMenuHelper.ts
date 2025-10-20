@@ -14,7 +14,9 @@ export class SecondaryMenuHelper {
     else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = this.getSettingsMenu(path, data);
     else if (path.startsWith("/plans") || path.startsWith("/tasks")) result = this.getServingMenu(path);
     else if (path.startsWith("/donations")) result = this.getDonationsMenu(path);
-    else if (path.startsWith("/sermons")) result = this.getSermonsMenu(path);
+    // Temporarily hidden
+    // else if (path.startsWith("/sermons")) result = this.getSermonsMenu(path);
+    // else if (path.startsWith("/calendars")) result = this.getCalendarsMenu(path);
     else if (path.startsWith("/profile")) result = this.getProfileMenu(path);
     else if (path === "/") result = this.getDashboardMenu(path);
     return result;
@@ -108,6 +110,16 @@ export class SecondaryMenuHelper {
     else if (path.startsWith("/sermons/times")) label = "Live Stream Times";
     else if (path.startsWith("/sermons/playlists")) label = "Playlists";
     else if (path.startsWith("/sermons")) label = "Sermons";
+
+    return { menuItems, label };
+  };
+
+  static getCalendarsMenu = (path: string) => {
+    const menuItems: MenuItem[] = [];
+    let label: string = "";
+    menuItems.push({ url: "/calendars", label: "Calendars", icon: "calendar_month" });
+
+    if (path.startsWith("/calendars")) label = "Calendars";
 
     return { menuItems, label };
   };
