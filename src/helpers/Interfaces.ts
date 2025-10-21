@@ -122,3 +122,33 @@ export interface VenueInterface {
   lessonId?: string;
   sort?: number;
 }
+
+export interface FileInterface {
+  id?: string;
+  contentType?: string;
+  contentId?: string;
+  fileName?: string;
+  contentPath?: string;
+  fileType?: string;
+  size?: number;
+  dateModified?: Date;
+  fileContents?: string;
+}
+
+export interface GlobalStyleInterface {
+  id?: string;
+  churchId?: string;
+  fonts?: string;
+  palette?: any;
+  customCss?: string;
+  customJS?: string;
+}
+
+export interface PageLink {
+  pageId?: string;
+  title: string;
+  url: string;
+  custom: boolean;
+  children?: PageLink[];
+  expanded?: boolean;
+}

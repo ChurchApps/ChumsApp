@@ -39,6 +39,8 @@ export const Header: React.FC = () => {
     // if (UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) menuItems.push({ url: "/sermons", label: "Sermons", icon: "live_tv" });
     // if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/calendars", label: "Calendars", icon: "calendar_month" });
 
+    if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/site/pages", label: "Site", icon: "language" });
+
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) menuItems.push({ url: "/settings", label: Locale.label("components.wrapper.set"), icon: "settings" });
     else if (formPermission || isFormMember) menuItems.push({ url: "/forms", label: Locale.label("components.wrapper.set"), icon: "settings" });
     // if (UserHelper.checkAccess(Permissions.membershipApi.server.admin)) tabs.push(<NavItem key="/admin" url="/admin" label={Locale.label("components.wrapper.servAdmin")} icon="admin_panel_settings" selected={selectedTab === "admin"} />);
@@ -64,6 +66,7 @@ export const Header: React.FC = () => {
     // Temporarily hidden
     // else if (path.startsWith("/sermons")) result = "Sermons";
     // else if (path.startsWith("/calendars")) result = "Calendars";
+    else if (path.startsWith("/site")) result = "Site";
     else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = Locale.label("components.wrapper.set");
     return result;
   };
@@ -85,6 +88,7 @@ export const Header: React.FC = () => {
         "/donations": "nav-item-donations",
         "/plans": "nav-item-plans",
         "/tasks": "nav-item-tasks",
+        "/site": "nav-item-site",
         "/settings": "nav-item-settings",
         "/attendance": "nav-item-attendance",
         "/forms": "nav-item-forms",
