@@ -5,4 +5,6 @@ export { CustomFontModal } from "./CustomFontModal";
 export { CssEdit } from "./CssEdit";
 export { Preview } from "./Preview";
 export { StylesManager } from "./StylesManager";
+export { AppearanceEdit } from "./AppearanceEdit";
 export { AddPageModal } from "./AddPageModal";
+export { BlockEdit } from "./BlockEdit";

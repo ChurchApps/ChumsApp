@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { Box } from "@mui/material";
-import { Palette as PaletteIcon } from "@mui/icons-material";
+import { Style as StyleIcon } from "@mui/icons-material";
 import { UserHelper, Permissions, PageHeader } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { StylesManager } from "./components";
@@ -19,9 +19,9 @@ export const AppearancePage = () => {
   return (
     <>
       <PageHeader
-        icon={<PaletteIcon />}
-        title="Appearance"
-        subtitle="Customize the look and feel of your website"
+        icon={<StyleIcon />}
+        title="Site Styles"
+        subtitle="Below is a preview of a sample site with your colors, fonts and logos. This is not your actual site content."
       />
       <Box sx={{ p: 3 }}>
         {UserHelper.currentUserChurch && UserHelper.checkAccess(Permissions.contentApi.content.edit) && (

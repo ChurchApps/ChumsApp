@@ -1,207 +1,185 @@
 import { useState, useEffect, useContext } from "react";
-import { Box, Grid, Button, Stack, Typography, Tabs, Tab } from "@mui/material";
-import { Palette as PaletteIcon, TextFields as TextFieldsIcon, Code as CodeIcon, Visibility as VisibilityIcon } from "@mui/icons-material";
-import { ApiHelper } from "@churchapps/apphelper";
-import type { GlobalStyleInterface } from "../../helpers/Interfaces";
-import { PaletteEdit, FontEdit, CssEdit, Preview } from "./";
+import { Box, Grid, Card, CardContent, Stack, Typography } from "@mui/material";
+import { Palette as PaletteIcon, TextFields as TextFieldsIcon, Code as CodeIcon, Image as ImageIcon, SmartButton as SmartButtonIcon, Style as StyleIcon } from "@mui/icons-material";
+import { ApiHelper, UserHelper } from "@churchapps/apphelper";
+import type { GlobalStyleInterface, BlockInterface, GenericSettingInterface } from "../../helpers/Interfaces";
+import { PaletteEdit, FontEdit, CssEdit, Preview, AppearanceEdit } from "./";
 import UserContext from "../../UserContext";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-  return (
-    <div role="tabpanel" hidden={value !== index} id={`style-tabpanel-${index}`} aria-labelledby={`style-tab-${index}`} {...other}>
-      {value === index && <Box>{children}</Box>}
-    </div>
-  );
-}
+import { useNavigate } from "react-router-dom";
+import { CardWithHeader } from "../../components/ui";
+import React from "react";
 
 export function StylesManager() {
   const context = useContext(UserContext);
+  const navigate = useNavigate();
   const [globalStyle, setGlobalStyle] = useState<GlobalStyleInterface>(null);
-  const [editSection, setEditSection] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState(0);
+  const [section, setSection] = useState<string>("");
+  const [churchSettings, setChurchSettings] = useState<any>(null);
+  const [currentSettings, setCurrentSettings] = useState<GenericSettingInterface[]>([]);
 
-  const loadData = async () => {
-    const data = await ApiHelper.get("/globalStyles/my", "ContentApi");
-    if (data) setGlobalStyle(data);
+  const loadData = () => {
+    ApiHelper.getAnonymous("/settings/public/" + UserHelper.currentUserChurch.church.id, "MembershipApi").then((s: any) => setChurchSettings(s));
+    ApiHelper.get("/settings", "MembershipApi").then((settings: any) => { setCurrentSettings(settings); });
+
+    ApiHelper.get("/globalStyles", "ContentApi").then((gs: any) => {
+      if (gs.palette) setGlobalStyle(gs);
+      else setGlobalStyle({
+        palette: JSON.stringify({
+          light: "#FFFFFF",
+          lightAccent: "#DDDDDD",
+          accent: "#0000DD",
+          darkAccent: "#9999DD",
+          dark: "#000000",
+        }),
+      });
+    });
+  };
+
+  const handlePaletteUpdate = (paletteJson: string) => {
+    if (paletteJson) {
+      const gs = { ...globalStyle };
+      gs.palette = paletteJson;
+      ApiHelper.post("/globalStyles", [gs], "ContentApi").then(() => loadData());
+    }
+    setSection("");
+  };
+
+  const handleFontsUpdate = (fontsJson: string) => {
+    if (fontsJson) {
+      const gs = { ...globalStyle };
+      gs.fonts = fontsJson;
+      ApiHelper.post("/globalStyles", [gs], "ContentApi").then(() => loadData());
+    }
+    setSection("");
+  };
+
+  const handleUpdate = (gs: GlobalStyleInterface) => {
+    if (gs) ApiHelper.post("/globalStyles", [gs], "ContentApi").then(() => loadData());
+    setSection("");
   };
 
   useEffect(() => { loadData(); }, []);
 
-  const handleSavePalette = async (paletteJson: string) => {
-    if (!paletteJson) {
-      setEditSection(null);
-      return;
+  const getFooter = async () => {
+    const existing = await ApiHelper.get("/blocks/blockType/footerBlock", "ContentApi");
+    if (existing.length > 0) navigate("/site/blocks/" + existing[0].id);
+    else {
+      const block: BlockInterface = { name: "Site Footer", blockType: "footerBlock" };
+      ApiHelper.post("/blocks", [block], "ContentApi").then((data: any) => {
+        navigate("/site/blocks/" + data[0].id);
+      });
     }
-    const gs = { ...globalStyle, palette: paletteJson };
-    await ApiHelper.post("/globalStyles", [gs], "ContentApi");
-    setGlobalStyle(gs);
-    setEditSection(null);
   };
 
-  const handleSaveFonts = async (fontsJson: string) => {
-    if (!fontsJson) {
-      setEditSection(null);
-      return;
+  const styleOptions = [
+    {
+      id: "palette",
+      icon: <PaletteIcon />,
+      title: "Color Palette",
+      description: "Customize your site's color scheme",
+      action: () => setSection("palette")
+    },
+    {
+      id: "fonts",
+      icon: <TextFieldsIcon />,
+      title: "Fonts",
+      description: "Select and customize typography",
+      action: () => setSection("fonts")
+    },
+    {
+      id: "css",
+      icon: <CodeIcon />,
+      title: "CSS & Javascript",
+      description: "Add custom styles and scripts",
+      action: () => setSection("css")
+    },
+    {
+      id: "logo",
+      icon: <ImageIcon />,
+      title: "Logo",
+      description: "Upload and manage your logo",
+      action: () => setSection("logo")
+    },
+    {
+      id: "footer",
+      icon: <SmartButtonIcon />,
+      title: "Site Footer",
+      description: "Customize your site footer",
+      action: getFooter
     }
-    const gs = { ...globalStyle, fonts: fontsJson };
-    await ApiHelper.post("/globalStyles", [gs], "ContentApi");
-    setGlobalStyle(gs);
-    setEditSection(null);
-  };
-
-  const handleSaveCss = async (gs: GlobalStyleInterface) => {
-    if (!gs) {
-      setEditSection(null);
-      return;
-    }
-    await ApiHelper.post("/globalStyles", [gs], "ContentApi");
-    setGlobalStyle(gs);
-    setEditSection(null);
-  };
-
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setActiveTab(newValue);
-  };
-
-  if (editSection === "palette") return <PaletteEdit globalStyle={globalStyle} updatedFunction={handleSavePalette} />;
-  if (editSection === "fonts") return <FontEdit globalStyle={globalStyle} updatedFunction={handleSaveFonts} />;
-  if (editSection === "css") return <CssEdit globalStyle={globalStyle} updatedFunction={handleSaveCss} />;
+  ];
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 8 }}>
-          <Box sx={{ backgroundColor: "#FFF", borderRadius: 2, border: "1px solid", borderColor: "grey.200", overflow: "hidden" }}>
-            <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", p: 2 }}>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Box sx={{
-                  backgroundColor: "rgba(255,255,255,0.2)", borderRadius: "8px", p: 1, display: "flex", alignItems: "center", justifyContent: "center" 
-                }}>
-                  <VisibilityIcon sx={{ fontSize: 24, color: "#FFF" }} />
-                </Box>
-                <Box>
-                  <Typography variant="h6" sx={{ fontWeight: 600 }}>Website Preview</Typography>
-                  <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)" }}>See how your styles look on your site</Typography>
-                </Box>
-              </Stack>
-            </Box>
-            <Box sx={{ p: 2, backgroundColor: "#f5f5f5" }}>
-              <Preview globalStyle={globalStyle} churchSettings={context.userChurch?.church} churchName={context.userChurch?.church?.name || "Your Church"} />
-            </Box>
-          </Box>
+          {section === "palette" && <PaletteEdit globalStyle={globalStyle} updatedFunction={handlePaletteUpdate} />}
+          {section === "fonts" && <FontEdit globalStyle={globalStyle} updatedFunction={handleFontsUpdate} />}
+          {section === "css" && <CssEdit globalStyle={globalStyle} updatedFunction={handleUpdate} />}
+          {section === "logo" && <AppearanceEdit settings={currentSettings} updatedFunction={() => { setSection(""); loadData(); }} />}
+          {section === "" && (
+            churchSettings
+              ? (<Preview globalStyle={globalStyle} churchSettings={churchSettings} churchName={UserHelper.currentUserChurch?.church?.name || "Your Church"} />)
+              : (<Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 400 }}>
+                <Typography color="text.secondary">Loading preview...</Typography>
+              </Box>)
+          )}
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <Box sx={{ backgroundColor: "#FFF", borderRadius: 2, border: "1px solid", borderColor: "grey.200", overflow: "hidden" }}>
-            <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", p: 2 }}>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Box sx={{
-                  backgroundColor: "rgba(255,255,255,0.2)", borderRadius: "8px", p: 1, display: "flex", alignItems: "center", justifyContent: "center" 
-                }}>
-                  <PaletteIcon sx={{ fontSize: 24, color: "#FFF" }} />
-                </Box>
-                <Box>
-                  <Typography variant="h6" sx={{ fontWeight: 600 }}>Style Settings</Typography>
-                  <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.9)" }}>Customize your website appearance</Typography>
-                </Box>
-              </Stack>
-            </Box>
-
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-              <Tabs value={activeTab} onChange={handleTabChange} variant="fullWidth" aria-label="style settings tabs">
-                <Tab label="Quick" id="style-tab-0" aria-controls="style-tabpanel-0" />
-                <Tab label="Advanced" id="style-tab-1" aria-controls="style-tabpanel-1" />
-              </Tabs>
-            </Box>
-
-            <TabPanel value={activeTab} index={0}>
-              <Box sx={{ p: 2 }}>
-                <Stack spacing={2}>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    startIcon={<PaletteIcon />}
-                    onClick={() => setEditSection("palette")}
-                    sx={{
-                      justifyContent: "flex-start",
-                      py: 1.5,
-                      textTransform: "none"
-                    }}
-                    data-testid="edit-palette-button">
-                    <Box sx={{ textAlign: "left", flex: 1 }}>
-                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                        Color Palette
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        Customize your site colors
-                      </Typography>
-                    </Box>
-                  </Button>
-
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    startIcon={<TextFieldsIcon />}
-                    onClick={() => setEditSection("fonts")}
-                    sx={{
-                      justifyContent: "flex-start",
-                      py: 1.5,
-                      textTransform: "none"
-                    }}
-                    data-testid="edit-fonts-button">
-                    <Box sx={{ textAlign: "left", flex: 1 }}>
-                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                        Typography
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        Select heading and body fonts
-                      </Typography>
-                    </Box>
-                  </Button>
-                </Stack>
-              </Box>
-            </TabPanel>
-
-            <TabPanel value={activeTab} index={1}>
-              <Box sx={{ p: 2 }}>
-                <Stack spacing={2}>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    startIcon={<CodeIcon />}
-                    onClick={() => setEditSection("css")}
-                    sx={{
-                      justifyContent: "flex-start",
-                      py: 1.5,
-                      textTransform: "none"
-                    }}
-                    data-testid="edit-css-button">
-                    <Box sx={{ textAlign: "left", flex: 1 }}>
-                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                        Custom CSS & JS
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        Add custom code
-                      </Typography>
-                    </Box>
-                  </Button>
-                </Stack>
-              </Box>
-            </TabPanel>
-
-            <Box sx={{ p: 2, backgroundColor: "grey.50", borderTop: "1px solid", borderColor: "divider" }}>
-              <Typography variant="caption" color="text.secondary">
-                Changes will be visible immediately on your website after saving
-              </Typography>
-            </Box>
-          </Box>
+          <CardWithHeader title="Style Settings" icon={<StyleIcon sx={{ color: "primary.main" }} />}>
+            <Stack spacing={2}>
+              {styleOptions.map((option) => (
+                <Card
+                  key={option.id}
+                  sx={{
+                    cursor: "pointer",
+                    transition: "all 0.2s ease-in-out",
+                    border: "1px solid",
+                    borderColor: section === option.id ? "primary.main" : "grey.200",
+                    backgroundColor: section === option.id ? "primary.50" : "transparent",
+                    "&:hover": {
+                      transform: "translateY(-2px)",
+                      boxShadow: 2,
+                      borderColor: "primary.main"
+                    }
+                  }}
+                  onClick={option.action}
+                  data-testid={`style-option-${option.id}`}>
+                  <CardContent sx={{ p: 2 }}>
+                    <Stack direction="row" spacing={2} alignItems="center">
+                      <Box
+                        sx={{
+                          backgroundColor: section === option.id ? "primary.main" : "rgba(25, 118, 210, 0.1)",
+                          borderRadius: "8px",
+                          p: 1,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          minWidth: 40,
+                          height: 40
+                        }}>
+                        {React.cloneElement(option.icon, {
+                          sx: {
+                            fontSize: 20,
+                            color: section === option.id ? "#FFF" : "primary.main"
+                          }
+                        })}
+                      </Box>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: section === option.id ? "primary.main" : "text.primary" }}>
+                          {option.title}
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: "text.secondary", fontSize: "0.875rem" }}>
+                          {option.description}
+                        </Typography>
+                      </Box>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              ))}
+            </Stack>
+          </CardWithHeader>
         </Grid>
       </Grid>
     </Box>

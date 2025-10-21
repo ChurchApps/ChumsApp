@@ -144,6 +144,69 @@ export interface GlobalStyleInterface {
   customJS?: string;
 }
 
+export interface ColumnInterface {
+  size: number;
+  elements: ElementInterface[];
+}
+
+export interface ElementInterface {
+  id?: string;
+  churchId?: string;
+  sectionId?: string;
+  blockId?: string;
+  parentId?: string;
+  size?: number;
+  answersJSON?: string;
+  answers?: any;
+  stylesJSON?: string;
+  styles?: { all?: any; desktop?: any; mobile?: any };
+  animationsJSON?: string;
+  animations?: { onShow: string; onShowSpeed: string };
+  sort?: number;
+  elementType: string;
+  elements?: ElementInterface[];
+}
+
+export interface SectionInterface {
+  id?: string;
+  churchId?: string;
+  pageId?: string;
+  blockId?: string;
+  zone?: string;
+  background?: string;
+  textColor?: string;
+  headingColor?: string;
+  linkColor?: string;
+  sort?: number;
+  targetBlockId?: string;
+  answersJSON?: string;
+  answers?: any;
+  stylesJSON?: string;
+  styles?: any;
+  animationsJSON?: string;
+  animations?: any;
+  sourceId?: string;
+  sections?: SectionInterface[];
+  elements?: ElementInterface[];
+}
+
+export interface PageInterface {
+  id?: string;
+  churchId?: string;
+  url?: string;
+  title?: string;
+  layout?: string;
+  sections?: SectionInterface[];
+}
+
+export interface BlockInterface {
+  id?: string;
+  churchId?: string;
+  blockType?: string;
+  name?: string;
+  sections?: SectionInterface[];
+}
+
 export interface PageLink {
   pageId?: string;
   title: string;
@@ -151,4 +214,12 @@ export interface PageLink {
   custom: boolean;
   children?: PageLink[];
   expanded?: boolean;
+}
+
+export interface GenericSettingInterface {
+  id?: string;
+  churchId?: string;
+  keyName?: string;
+  value?: string;
+  public?: number;
 }

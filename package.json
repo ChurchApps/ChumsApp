@@ -27,6 +27,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.1.0",
+    "react-image-file-resizer": "^0.4.8",
     "react-router-dom": "^7.6.2",
     "react-select": "^5.8.1",
     "react-select-material-ui": "^9.3.1",
