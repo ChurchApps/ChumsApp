@@ -104,7 +104,7 @@ export class SecondaryMenuHelper {
 
   static getSiteMenu = (path: string) => {
     const menuItems: MenuItem[] = [];
-    let label: string = "Site";
+    let label: string = "Website";
 
     menuItems.push({ url: "/site/pages", label: "Pages", icon: "article" });
     menuItems.push({ url: "/site/blocks", label: "Blocks", icon: "widgets" });
@@ -115,7 +115,7 @@ export class SecondaryMenuHelper {
     else if (path.startsWith("/site/blocks")) label = "Blocks";
     else if (path.startsWith("/site/appearance")) label = "Appearance";
     else if (path.startsWith("/site/files")) label = "Files";
-    else if (path.startsWith("/site")) label = "Site";
+    else if (path.startsWith("/site")) label = "Website";
 
     return { menuItems, label };
   };
