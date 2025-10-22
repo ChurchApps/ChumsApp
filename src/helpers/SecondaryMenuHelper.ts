@@ -14,6 +14,7 @@ export class SecondaryMenuHelper {
     else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = this.getSettingsMenu(path, data);
     else if (path.startsWith("/plans") || path.startsWith("/tasks")) result = this.getServingMenu(path);
     else if (path.startsWith("/donations")) result = this.getDonationsMenu(path);
+    else if (path.startsWith("/site")) result = this.getSiteMenu(path);
     // Temporarily hidden
     // else if (path.startsWith("/sermons")) result = this.getSermonsMenu(path);
     // else if (path.startsWith("/calendars")) result = this.getCalendarsMenu(path);
@@ -97,6 +98,24 @@ export class SecondaryMenuHelper {
     menuItems.push({ url: "/", label: Locale.label("components.wrapper.dash"), icon: "dashboard" });
 
     if (path === "/") label = Locale.label("components.wrapper.dash");
+
+    return { menuItems, label };
+  };
+
+  static getSiteMenu = (path: string) => {
+    const menuItems: MenuItem[] = [];
+    let label: string = "Website";
+
+    menuItems.push({ url: "/site/pages", label: "Pages", icon: "article" });
+    menuItems.push({ url: "/site/blocks", label: "Blocks", icon: "widgets" });
+    menuItems.push({ url: "/site/appearance", label: "Appearance", icon: "palette" });
+    menuItems.push({ url: "/site/files", label: "Files", icon: "folder_open" });
+
+    if (path.startsWith("/site/pages")) label = "Pages";
+    else if (path.startsWith("/site/blocks")) label = "Blocks";
+    else if (path.startsWith("/site/appearance")) label = "Appearance";
+    else if (path.startsWith("/site/files")) label = "Files";
+    else if (path.startsWith("/site")) label = "Website";
 
     return { menuItems, label };
   };

@@ -44,6 +44,7 @@ const LiveStreamTimesPage = React.lazy(() => import("./sermons/LiveStreamTimesPa
 const BulkImportPage = React.lazy(() => import("./sermons/BulkImportPage").then((module) => ({ default: module.BulkImportPage })));
 const CalendarsPage = React.lazy(() => import("./calendars/CalendarsPage").then((module) => ({ default: module.CalendarsPage })));
 const CalendarPage = React.lazy(() => import("./calendars/CalendarPage").then((module) => ({ default: module.CalendarPage })));
+const Site = React.lazy(() => import("./site").then((module) => ({ default: module.Site })));
 
 // Loading component for Suspense fallback
 const LoadingFallback: React.FC = () => (
@@ -120,6 +121,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/sermons" element={<SermonsPage />} />
           <Route path="/calendars/:id" element={<CalendarPage />} />
           <Route path="/calendars" element={<CalendarsPage />} />
+          <Route path="/site/*" element={<Site />} />
           <Route path="/" element={<DashboardPage />} />
         </Route>
 
