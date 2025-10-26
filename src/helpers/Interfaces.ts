@@ -223,3 +223,52 @@ export interface GenericSettingInterface {
   value?: string;
   public?: number;
 }
+
+export interface InlineStylesInterface {
+  all?: any;
+  desktop?: any;
+  mobile?: any;
+}
+
+export interface AnimationsInterface {
+  onShow: string;
+  onShowSpeed: string;
+}
+
+export interface StyleOption {
+  label: string;
+  key: string;
+  type: "color" | "px" | "select" | "text" | "text-shadow";
+  default: string | number;
+  options?: string[];
+}
+
+export const allStyleOptions: StyleOption[] = [
+  { label: "Border Color", key: "border-color", type: "color", default: "#FF0000" },
+  { label: "Border Radius", key: "border-radius", type: "px", default: "5" },
+  { label: "Border Style", key: "border-style", type: "select", default: "solid", options: ["none", "solid", "dotted", "dashed", "double", "groove", "ridge", "inset", "outset"] },
+  { label: "Border Width", key: "border-width", type: "px", default: "1" },
+  { label: "Background Color", key: "background-color", type: "color", default: "#FF0000" },
+  { label: "Color", key: "color", type: "color", default: "#FF0000" },
+  { label: "Font Family", key: "font-family", type: "text", default: "Roboto" },
+  { label: "Font Size", key: "font-size", type: "px", default: "14" },
+  { label: "Font Style", key: "font-style", type: "select", default: "italic", options: ["normal", "italic"] },
+  { label: "Height", key: "height", type: "px", default: 500 },
+  { label: "Line Height", key: "line-height", type: "px", default: "14" },
+  { label: "Margin", key: "margin", type: "px", default: 0 },
+  { label: "Margin Left", key: "margin-left", type: "px", default: 0 },
+  { label: "Margin Right", key: "margin-right", type: "px", default: 0 },
+  { label: "Margin Top", key: "margin-top", type: "px", default: 0 },
+  { label: "Margin Bottom", key: "margin-bottom", type: "px", default: 0 },
+  { label: "Max Width", key: "max-width", type: "px", default: 500 },
+  { label: "Max Height", key: "max-height", type: "px", default: 500 },
+  { label: "Min Width", key: "min-width", type: "px", default: 500 },
+  { label: "Min Height", key: "min-height", type: "px", default: 500 },
+  { label: "Padding", key: "padding", type: "px", default: 0 },
+  { label: "Padding Left", key: "padding-left", type: "px", default: 0 },
+  { label: "Padding Right", key: "padding-right", type: "px", default: 0 },
+  { label: "Padding Top", key: "padding-top", type: "px", default: 0 },
+  { label: "Padding Bottom", key: "padding-bottom", type: "px", default: 0 },
+  { label: "Text Shadow", key: "text-shadow", type: "text-shadow", default: "1px 1px 2px black;" },
+  { label: "Width", key: "width", type: "px", default: 500 }
+];

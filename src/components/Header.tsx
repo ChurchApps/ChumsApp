@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
     // if (UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) menuItems.push({ url: "/sermons", label: "Sermons", icon: "live_tv" });
     // if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/calendars", label: "Calendars", icon: "calendar_month" });
 
-    //if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/site/pages", label: "Website", icon: "language" });
+    if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/site/pages", label: "Website", icon: "language" });
 
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) menuItems.push({ url: "/settings", label: Locale.label("components.wrapper.set"), icon: "settings" });
     else if (formPermission || isFormMember) menuItems.push({ url: "/forms", label: Locale.label("components.wrapper.set"), icon: "settings" });

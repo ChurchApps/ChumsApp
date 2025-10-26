@@ -15,3 +15,4 @@ export { ConditionHelper } from "./ConditionHelper";
 export { EnvironmentHelper } from "./EnvironmentHelper";
 export { PageHelper } from "./PageHelper";
 export { ReportHelper } from "./ReportHelper";
+export { StyleHelper } from "./StyleHelper";
