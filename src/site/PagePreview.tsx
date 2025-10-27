@@ -8,6 +8,7 @@ import { EnvironmentHelper } from "../helpers/EnvironmentHelper";
 import type { PageInterface } from "../helpers/Interfaces";
 import type { LinkInterface } from "@churchapps/helpers";
 import { PageLinkEdit } from "./components/PageLinkEdit";
+import { SiteWrapper } from "../components/SiteWrapper";
 
 export const PagePreview: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -122,46 +123,48 @@ export const PagePreview: React.FC = () => {
         />
       )}
 
-      <Box sx={{ p: 3 }}>
-        <Paper
-          elevation={0}
-          sx={{
-            borderRadius: 2,
-            overflow: 'hidden',
-            border: '1px solid',
-            borderColor: 'grey.200'
-          }}
-        >
-          <Box
+      <SiteWrapper>
+        <Box sx={{ p: 3 }}>
+          <Paper
+            elevation={0}
             sx={{
-              backgroundColor: 'grey.50',
-              p: 2,
-              borderBottom: '1px solid',
-              borderColor: 'divider'
+              borderRadius: 2,
+              overflow: 'hidden',
+              border: '1px solid',
+              borderColor: 'grey.200'
             }}
           >
-            <Stack direction="row" alignItems="center" justifyContent="center">
-              <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
-                {pageData.title}
-              </Typography>
-            </Stack>
-          </Box>
-
-          <Box sx={{ position: 'relative' }}>
-            <iframe
-              src={previewUrl}
-              style={{
-                width: '100%',
-                height: '80vh',
-                minHeight: '600px',
-                border: 'none',
-                display: 'block'
+            <Box
+              sx={{
+                backgroundColor: 'grey.50',
+                p: 2,
+                borderBottom: '1px solid',
+                borderColor: 'divider'
               }}
-              title={`Preview of ${pageData.title}`}
-            />
-          </Box>
-        </Paper>
-      </Box>
+            >
+              <Stack direction="row" alignItems="center" justifyContent="center">
+                <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
+                  {pageData.title}
+                </Typography>
+              </Stack>
+            </Box>
+
+            <Box sx={{ position: 'relative' }}>
+              <iframe
+                src={previewUrl}
+                style={{
+                  width: '100%',
+                  height: '80vh',
+                  minHeight: '600px',
+                  border: 'none',
+                  display: 'block'
+                }}
+                title={`Preview of ${pageData.title}`}
+              />
+            </Box>
+          </Paper>
+        </Box>
+      </SiteWrapper>
     </>
   );
 };
