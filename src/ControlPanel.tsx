@@ -12,6 +12,7 @@ import { AnalyticsHelper } from "./helpers";
 import { UserHelper, ErrorHelper } from "@churchapps/apphelper";
 import { UI } from "./ui/Test";
 import { Pingback } from "./Pingback";
+import { SitePreview } from "./site";
 
 export const ControlPanel = () => {
   const [errors] = React.useState([]);
@@ -55,6 +56,7 @@ export const ControlPanel = () => {
         <Route path="/ui" element={<UI />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/preview/:churchId/*" element={<SitePreview />} />
         <Route
           path="/*"
           element={

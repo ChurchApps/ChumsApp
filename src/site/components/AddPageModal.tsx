@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
-import { ErrorMessages } from "@churchapps/apphelper";
-import { InputBox } from "@churchapps/apphelper";
-import { UserHelper } from "@churchapps/apphelper";
-import { Permissions } from "@churchapps/helpers";
-import { SlugHelper } from "@churchapps/apphelper";
-import { ApiHelper } from "@churchapps/apphelper";
-import type { LinkInterface } from "@churchapps/helpers";
+import { ErrorMessages, InputBox, UserHelper, SlugHelper, ApiHelper } from "@churchapps/apphelper";
+import { Permissions, type LinkInterface } from "@churchapps/helpers";
 import { Button, Dialog, Grid, Icon, InputLabel, type SelectChangeEvent, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -154,21 +149,15 @@ export function AddPageModal(props: Props) {
         </Grid>
 
         <Grid container spacing={2}>
-          {(pageTemplate !== "link")
-            && <Grid size={(props.mode === "navigation") ? 6 : 12}>
-              <TextField size="small" fullWidth label="Page Title" name="title" value={page.title || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="page-title-input" />
-            </Grid>
-          }
-          {(pageTemplate === "link")
-            && <Grid size={(props.mode === "navigation") ? 6 : 12}>
-              <TextField size="small" fullWidth label="Link Url" name="linkUrl" value={link.url || ""} onChange={handleLinkChange} onKeyDown={handleKeyDown} />
-            </Grid>
-          }
-          {(props.mode === "navigation")
-            && <Grid size={6}>
-              <TextField size="small" fullWidth label="Link Text" name="linkText" value={link.text || ""} onChange={handleLinkChange} onKeyDown={handleKeyDown} />
-            </Grid>
-          }
+          {(pageTemplate !== "link") && <Grid size={(props.mode === "navigation") ? 6 : 12}>
+            <TextField size="small" fullWidth label="Page Title" name="title" value={page.title || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="page-title-input" />
+          </Grid>}
+          {(pageTemplate === "link") && <Grid size={(props.mode === "navigation") ? 6 : 12}>
+            <TextField size="small" fullWidth label="Link Url" name="linkUrl" value={link.url || ""} onChange={handleLinkChange} onKeyDown={handleKeyDown} />
+          </Grid>}
+          {(props.mode === "navigation") && <Grid size={6}>
+            <TextField size="small" fullWidth label="Link Text" name="linkText" value={link.text || ""} onChange={handleLinkChange} onKeyDown={handleKeyDown} />
+          </Grid>}
         </Grid>
       </InputBox>
 

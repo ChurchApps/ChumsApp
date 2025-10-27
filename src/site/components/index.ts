@@ -8,3 +8,7 @@ export { StylesManager } from "./StylesManager";
 export { AppearanceEdit } from "./AppearanceEdit";
 export { AddPageModal } from "./AddPageModal";
 export { BlockEdit } from "./BlockEdit";
+export { PageLinkEdit } from "./PageLinkEdit";
+export { NavLinkEdit } from "./NavLinkEdit";
+export { WebsiteHeader } from "./WebsiteHeader";
+export { WebsiteFooter } from "./WebsiteFooter";
