@@ -9,3 +9,4 @@ export { AppearanceEdit } from "./AppearanceEdit";
 export { AddPageModal } from "./AddPageModal";
 export { BlockEdit } from "./BlockEdit";
 export { PageLinkEdit } from "./PageLinkEdit";
+export { NavLinkEdit } from "./NavLinkEdit";
