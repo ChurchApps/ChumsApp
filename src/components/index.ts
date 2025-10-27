@@ -13,7 +13,6 @@ export { FileUpload } from "./FileUpload";
 export { FormSubmission } from "./FormSubmission";
 export { Question } from "./Question";
 export { Search } from "./Search";
-export { SiteWrapper } from "./SiteWrapper";
 export { StateOptions } from "./StateOptions";
 export { Wrapper } from "./Wrapper";
 
