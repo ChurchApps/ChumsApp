@@ -2,11 +2,13 @@ import React, { useEffect, useState, CSSProperties } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { Box, Container, Typography, CssBaseline } from "@mui/material";
 import { ApiHelper } from "@churchapps/apphelper";
-import { Theme, Element, YoutubeBackground } from "@churchapps/apphelper-website";
+import { Theme, Element, YoutubeBackground, Animate } from "@churchapps/apphelper-website";
 import { StyleHelper } from "../helpers/StyleHelper";
 import type { PageInterface, SectionInterface, GlobalStyleInterface } from "../helpers/Interfaces";
 import { CuratedCalendar } from "../calendars/components/CuratedCalendar";
 import { WebsiteHeader, WebsiteFooter } from "./components";
+import "@churchapps/apphelper-website/dist/styles/pages.css";
+import "@churchapps/apphelper-website/dist/styles/animations.css";
 
 interface ElementRendererProps {
   element: any;
@@ -206,6 +208,7 @@ export const SitePreview: React.FC = () => {
         </div>
       </main>
       <WebsiteFooter church={church} appearance={churchSettings} globalStyles={globalStyles} footerSections={footerSections} />
+      <Animate />
     </>
   );
 };
