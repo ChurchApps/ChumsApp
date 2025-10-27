@@ -57,7 +57,11 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
       ApiHelper.get("/visitsessions?sessionId=" + session.id, "AttendanceApi").then((vs: VisitSessionInterface[]) => {
         setVisitSessions(vs);
         const peopleIds = ArrayHelper.getUniqueValues(vs, "visit.personId");
-        ApiHelper.get("/people/ids?ids=" + escape(peopleIds.join(",")), "MembershipApi").then((data) => setPeople(data));
+        if (peopleIds.length > 0) {
+          ApiHelper.get("/people/ids?ids=" + escape(peopleIds.join(",")), "MembershipApi").then((data) => setPeople(data));
+        } else {
+          setPeople([]);
+        }
         setHiddenPeople?.(peopleIds);
       });
     }

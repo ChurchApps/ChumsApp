@@ -3,8 +3,9 @@ import { type ChurchInterface } from "@churchapps/helpers";
 import { UserHelper, Permissions, Locale, ApiHelper, Loading, PageHeader } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { Box, Stack, Button, IconButton } from "@mui/material";
-import { Settings as SettingsIcon, Lock as LockIcon, PlayArrow as PlayArrowIcon, Edit as EditIcon } from "@mui/icons-material";
+import { Settings as SettingsIcon, Lock as LockIcon, PlayArrow as PlayArrowIcon, Edit as EditIcon, PhoneIphone as PhoneIphoneIcon } from "@mui/icons-material";
 import { RolesTab, ChurchSettingsEdit } from "./components";
+import { MobileAppSettingsPage } from "./MobileAppSettingsPage";
 import { useQuery } from "@tanstack/react-query";
 
 export const ManageChurch = () => {
@@ -31,6 +32,8 @@ export const ManageChurch = () => {
       switch (selectedTab) {
         case "roles":
           return <RolesTab church={church.data} />;
+        case "mobileApps":
+          return <MobileAppSettingsPage />;
         default:
           return <div></div>;
       }
@@ -46,7 +49,7 @@ export const ManageChurch = () => {
   React.useEffect(checkAccess, [checkAccess]);
 
   React.useEffect(() => {
-    if (selectedTab === "" || selectedTab === "settings") setSelectedTab("roles");
+    if (selectedTab === "" || selectedTab === "settings") setSelectedTab("mobileApps");
   }, [selectedTab]);
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
@@ -71,6 +74,21 @@ export const ManageChurch = () => {
               <EditIcon />
             </IconButton>
           )}
+          <Button
+            variant={selectedTab === "mobileApps" ? "contained" : "outlined"}
+            startIcon={<PhoneIphoneIcon />}
+            onClick={() => setSelectedTab("mobileApps")}
+            sx={{
+              color: selectedTab === "mobileApps" ? "primary.main" : "#FFF",
+              backgroundColor: selectedTab === "mobileApps" ? "#FFF" : "transparent",
+              borderColor: "#FFF",
+              "&:hover": {
+                backgroundColor: selectedTab === "mobileApps" ? "#FFF" : "rgba(255,255,255,0.2)",
+                color: selectedTab === "mobileApps" ? "primary.main" : "#FFF",
+              },
+            }}>
+            Mobile Apps
+          </Button>
           <Button
             variant={selectedTab === "roles" ? "contained" : "outlined"}
             startIcon={<LockIcon />}
@@ -114,7 +132,7 @@ export const ManageChurch = () => {
       )}
 
       {/* Tab Content */}
-      {selectedTab === "roles" && <Box sx={{ p: 2 }}>{getCurrentTab()}</Box>}
+      {(selectedTab === "roles" || selectedTab === "mobileApps") && <Box sx={{ p: 2 }}>{getCurrentTab()}</Box>}
     </>
   );
 };

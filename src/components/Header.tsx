@@ -35,8 +35,11 @@ export const Header: React.FC = () => {
     if (UserHelper.checkAccess(Permissions.membershipApi.plans.edit)) menuItems.push({ url: "/plans", label: Locale.label("components.wrapper.serving"), icon: "assignment" });
     else menuItems.push({ url: "/tasks", label: Locale.label("components.wrapper.serving"), icon: "assignment" });
 
-    // Hidden for now - sermons feature
+    // Temporarily hidden
     // if (UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) menuItems.push({ url: "/sermons", label: "Sermons", icon: "live_tv" });
+    // if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/calendars", label: "Calendars", icon: "calendar_month" });
+
+    //if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/site/pages", label: "Website", icon: "language" });
 
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) menuItems.push({ url: "/settings", label: Locale.label("components.wrapper.set"), icon: "settings" });
     else if (formPermission || isFormMember) menuItems.push({ url: "/forms", label: Locale.label("components.wrapper.set"), icon: "settings" });
@@ -60,7 +63,10 @@ export const Header: React.FC = () => {
     else if (path.startsWith("/groups")) result = Locale.label("components.wrapper.ppl");
     else if (path.startsWith("/donations")) result = Locale.label("components.wrapper.don");
     else if (path.startsWith("/tasks") || path.startsWith("/plans") || window.location.search.indexOf("tag=") > -1) result = Locale.label("components.wrapper.serving");
-    else if (path.startsWith("/sermons")) result = "Sermons";
+    // Temporarily hidden
+    // else if (path.startsWith("/sermons")) result = "Sermons";
+    // else if (path.startsWith("/calendars")) result = "Calendars";
+    else if (path.startsWith("/site")) result = "Website";
     else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = Locale.label("components.wrapper.set");
     return result;
   };
@@ -82,6 +88,7 @@ export const Header: React.FC = () => {
         "/donations": "nav-item-donations",
         "/plans": "nav-item-plans",
         "/tasks": "nav-item-tasks",
+        "/site": "nav-item-site",
         "/settings": "nav-item-settings",
         "/attendance": "nav-item-attendance",
         "/forms": "nav-item-forms",
@@ -91,7 +98,9 @@ export const Header: React.FC = () => {
         "/plans/songs": "nav-item-songs",
         "/profile": "nav-item-profile",
         "/profile/devices": "nav-item-devices",
-        "/sermons": "nav-item-sermons",
+        // Temporarily hidden
+        // "/sermons": "nav-item-sermons",
+        // "/calendars": "nav-item-calendars",
       };
 
       // Find all navigation links
@@ -121,7 +130,9 @@ export const Header: React.FC = () => {
             songs: "nav-item-songs",
             profile: "nav-item-profile",
             devices: "nav-item-devices",
-            sermons: "nav-item-sermons",
+            // Temporarily hidden
+            // sermons: "nav-item-sermons",
+            // calendars: "nav-item-calendars",
           };
 
           for (const [key, testId] of Object.entries(textToTestId)) {
