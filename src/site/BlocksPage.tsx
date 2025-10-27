@@ -1,24 +1,8 @@
 import { JSX, useEffect, useState, useCallback } from "react";
 import { ApiHelper, Loading, PageHeader, UserHelper, Permissions } from "@churchapps/apphelper";
 import type { BlockInterface } from "../helpers";
-import {
-  TableRow,
-  TableCell,
-  Table,
-  TableBody,
-  TableHead,
-  Box,
-  Typography,
-  Stack,
-  Button,
-  Card,
-  Icon
-} from "@mui/material";
-import {
-  SmartButton as BlockIcon,
-  Add as AddIcon,
-  Edit as EditIcon
-} from "@mui/icons-material";
+import { TableRow, TableCell, Table, TableBody, TableHead, Box, Typography, Stack, Button, Card, Icon } from "@mui/material";
+import { SmartButton as BlockIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 import { Navigate, Link } from "react-router-dom";
 import { BlockEdit } from "./components";
 
@@ -71,14 +55,7 @@ export const BlocksPage = () => {
               <Typography variant="body1" color="text.secondary">
                 Get started by creating your first reusable block
               </Typography>
-              <Button
-                variant="contained"
-                startIcon={<AddIcon />}
-                onClick={() => setEditBlock({ blockType: "elementBlock" })}
-                sx={{ mt: 2 }}
-              >
-                Create First Block
-              </Button>
+              <Button variant="contained" startIcon={<AddIcon />} onClick={() => setEditBlock({ blockType: "elementBlock" })} sx={{ mt: 2 }}>Create First Block</Button>
             </Stack>
           </TableCell>
         </TableRow>
@@ -88,13 +65,7 @@ export const BlocksPage = () => {
 
     blocks.forEach((block) => {
       result.push(
-        <TableRow
-          key={block.id}
-          sx={{
-            "&:hover": { backgroundColor: "action.hover" },
-            transition: "background-color 0.2s ease",
-          }}
-        >
+        <TableRow key={block.id} sx={{ "&:hover": { backgroundColor: "action.hover" }, transition: "background-color 0.2s ease" }}>
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
               <BlockIcon sx={{ color: "primary.main", fontSize: 20 }} />
@@ -121,20 +92,7 @@ export const BlocksPage = () => {
             </Stack>
           </TableCell>
           <TableCell align="right">
-            <Button
-              size="small"
-              variant="outlined"
-              component={Link}
-              to={`/site/blocks/${block.id}`}
-              startIcon={<EditIcon />}
-              data-testid={`edit-block-${block.id}-button`}
-              sx={{
-                textTransform: "none",
-                minWidth: "auto"
-              }}
-            >
-              Edit
-            </Button>
+            <Button size="small" variant="outlined" component={Link} to={`/site/blocks/${block.id}`} startIcon={<EditIcon />} data-testid={`edit-block-${block.id}-button`} sx={{ textTransform: "none", minWidth: "auto" }}>Edit</Button>
           </TableCell>
         </TableRow>
       );
@@ -172,15 +130,7 @@ export const BlocksPage = () => {
 
     return (
       <Table sx={{ minWidth: 650 }}>
-        <TableHead
-          sx={{
-            backgroundColor: "grey.50",
-            "& .MuiTableCell-root": {
-              borderBottom: "2px solid",
-              borderBottomColor: "divider",
-            },
-          }}
-        >
+        <TableHead sx={{ backgroundColor: "grey.50", "& .MuiTableCell-root": { borderBottom: "2px solid", borderBottomColor: "divider" } }}>
           {getTableHeader()}
         </TableHead>
         <TableBody>{getRows()}</TableBody>
@@ -207,34 +157,8 @@ export const BlocksPage = () => {
 
   return (
     <>
-      <PageHeader
-        icon={<BlockIcon />}
-        title="Reusable Blocks"
-        subtitle="Create and manage reusable content blocks for your website"
-        statistics={[
-          {
-            icon: <BlockIcon />,
-            value: stats.totalBlocks.toString(),
-            label: "Total Blocks"
-          }
-        ]}
-      >
-        <Button
-          variant="outlined"
-          startIcon={<AddIcon />}
-          onClick={() => setEditBlock({ blockType: "elementBlock" })}
-          data-testid="add-block-button"
-          sx={{
-            color: "#FFF",
-            borderColor: "rgba(255,255,255,0.5)",
-            "&:hover": {
-              borderColor: "#FFF",
-              backgroundColor: "rgba(255,255,255,0.1)",
-            },
-          }}
-        >
-          Add Block
-        </Button>
+      <PageHeader icon={<BlockIcon />} title="Reusable Blocks" subtitle="Create and manage reusable content blocks for your website" statistics={[{ icon: <BlockIcon />, value: stats.totalBlocks.toString(), label: "Total Blocks" }]}>
+        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => setEditBlock({ blockType: "elementBlock" })} data-testid="add-block-button" sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>Add Block</Button>
       </PageHeader>
 
       {/* Main Content */}
@@ -242,22 +166,12 @@ export const BlocksPage = () => {
         {/* Edit Block Modal/Form */}
         {editBlock && (
           <Box sx={{ mb: 3 }}>
-            <BlockEdit
-              block={editBlock}
-              updatedCallback={() => {
-                setEditBlock(null);
-                loadData();
-              }}
-            />
+            <BlockEdit block={editBlock} updatedCallback={() => { setEditBlock(null); loadData(); }} />
           </Box>
         )}
 
         {/* Main Table Card */}
-        <Card sx={{
-          borderRadius: 2,
-          border: "1px solid",
-          borderColor: "grey.200"
-        }}>
+        <Card sx={{ borderRadius: 2, border: "1px solid", borderColor: "grey.200" }}>
           <Box sx={{ p: 2, borderBottom: 1, borderColor: "divider" }}>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
               <Stack direction="row" spacing={1} alignItems="center">

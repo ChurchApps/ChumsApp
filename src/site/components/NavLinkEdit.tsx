@@ -93,9 +93,7 @@ export function NavLinkEdit(props: Props) {
     >
       <InputBox id="pageDetailsBox" headerText={link?.id ? "Link Settings" : "Add Link"} headerIcon="article" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete}>
         <ErrorMessages errors={errors} />
-        <Autocomplete disablePortal limitTags={3} freeSolo options={getPageOptions()} onChange={handleUrlChange} onInputChange={handleUrlChange} sx={{ width: 300 }} ListboxProps={{ style: { maxHeight: 150 } }} value={link.url} renderInput={(params) =>
-          <TextField {...params} size="small" fullWidth label="Url" name="linkUrl" onKeyDown={handleKeyDown} />
-        } />
+        <Autocomplete disablePortal limitTags={3} freeSolo options={getPageOptions()} onChange={handleUrlChange} onInputChange={handleUrlChange} sx={{ width: 300 }} ListboxProps={{ style: { maxHeight: 150 } }} value={link.url} renderInput={(params) => <TextField {...params} size="small" fullWidth label="Url" name="linkUrl" onKeyDown={handleKeyDown} />} />
         <TextField size="small" fullWidth label="Link Text" name="linkText" value={link.text || ""} onChange={handleLinkChange} onKeyDown={handleKeyDown} />
       </InputBox>
     </Dialog>

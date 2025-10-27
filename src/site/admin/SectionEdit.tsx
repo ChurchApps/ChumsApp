@@ -1,10 +1,6 @@
-
 import type { SelectChangeEvent } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { ErrorMessages } from "@churchapps/apphelper";
-import { InputBox } from "@churchapps/apphelper";
-import { ApiHelper } from "@churchapps/apphelper";
-import { ArrayHelper } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, ApiHelper, ArrayHelper } from "@churchapps/apphelper";
 import type { AnimationsInterface, BlockInterface, GlobalStyleInterface, SectionInterface } from "../../helpers";
 import { Button, Dialog, FormControl, Icon, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { PickColors } from "./elements/PickColors";
@@ -151,14 +147,7 @@ export function SectionEdit(props: Props) {
         cancelFunction={handleCancel}
         deleteFunction={handleDelete}
         data-testid="edit-section-inputbox"
-        headerActionContent={
-          props.section.id && (
-            <>
-              <Button size="small" variant="outlined" onClick={handleConvertToBlock} title="Convert to Block" endIcon={<Icon>smart_button</Icon>} sx={{ marginRight: 2 }} data-testid="convert-to-block-button" aria-label="Convert section to block">Convert to</Button>
-              <Button size="small" variant="outlined" onClick={handleDuplicate} data-testid="duplicate-section-button" aria-label="Duplicate section">duplicate</Button>
-            </>
-          )
-        }
+        headerActionContent={props.section.id && (<><Button size="small" variant="outlined" onClick={handleConvertToBlock} title="Convert to Block" endIcon={<Icon>smart_button</Icon>} sx={{ marginRight: 2 }} data-testid="convert-to-block-button" aria-label="Convert section to block">Convert to</Button><Button size="small" variant="outlined" onClick={handleDuplicate} data-testid="duplicate-section-button" aria-label="Duplicate section">duplicate</Button></>)}
       >
         <div id="dialogFormContent">
           {(section?.targetBlockId) ? getBlockFields() : getStandardFields()}

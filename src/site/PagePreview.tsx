@@ -70,76 +70,18 @@ export const PagePreview: React.FC = () => {
 
   return (
     <>
-      <PageHeader
-        icon={<WebIcon />}
-        title="Website Preview"
-        subtitle={`Previewing: ${pageData.title}`}
-      >
+      <PageHeader icon={<WebIcon />} title="Website Preview" subtitle={`Previewing: ${pageData.title}`}>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} sx={{ width: { xs: '100%', sm: 'auto' } }}>
-          <Button
-            variant="outlined"
-            startIcon={<EditIcon />}
-            onClick={handleEditContent}
-            sx={{
-              color: '#FFF',
-              borderColor: 'rgba(255,255,255,0.5)',
-              textTransform: 'none',
-              fontWeight: 600,
-              '&:hover': {
-                borderColor: '#FFF',
-                backgroundColor: 'rgba(255,255,255,0.1)'
-              }
-            }}
-          >
-            Edit Content
-          </Button>
-          <Button
-            variant="outlined"
-            startIcon={<SettingsIcon />}
-            onClick={() => setShowSettings(true)}
-            sx={{
-              color: '#FFF',
-              borderColor: 'rgba(255,255,255,0.5)',
-              textTransform: 'none',
-              fontWeight: 600,
-              '&:hover': {
-                borderColor: '#FFF',
-                backgroundColor: 'rgba(255,255,255,0.1)'
-              }
-            }}
-          >
-            Page Settings
-          </Button>
+          <Button variant="outlined" startIcon={<EditIcon />} onClick={handleEditContent} sx={{ color: '#FFF', borderColor: 'rgba(255,255,255,0.5)', textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#FFF', backgroundColor: 'rgba(255,255,255,0.1)' } }}>Edit Content</Button>
+          <Button variant="outlined" startIcon={<SettingsIcon />} onClick={() => setShowSettings(true)} sx={{ color: '#FFF', borderColor: 'rgba(255,255,255,0.5)', textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#FFF', backgroundColor: 'rgba(255,255,255,0.1)' } }}>Page Settings</Button>
         </Stack>
       </PageHeader>
 
-      {showSettings && (
-        <PageLinkEdit
-          link={link || undefined}
-          page={pageData}
-          updatedCallback={handlePageUpdated}
-          onDone={() => setShowSettings(false)}
-        />
-      )}
+      {showSettings && (<PageLinkEdit link={link || undefined} page={pageData} updatedCallback={handlePageUpdated} onDone={() => setShowSettings(false)} />)}
 
       <Box sx={{ p: 3 }}>
-        <Paper
-          elevation={0}
-          sx={{
-            borderRadius: 2,
-            overflow: 'hidden',
-            border: '1px solid',
-            borderColor: 'grey.200'
-          }}
-        >
-          <Box
-            sx={{
-              backgroundColor: 'grey.50',
-              p: 2,
-              borderBottom: '1px solid',
-              borderColor: 'divider'
-            }}
-          >
+        <Paper elevation={0} sx={{ borderRadius: 2, overflow: 'hidden', border: '1px solid', borderColor: 'grey.200' }}>
+          <Box sx={{ backgroundColor: 'grey.50', p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
             <Stack direction="row" alignItems="center" justifyContent="center">
               <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
                 {pageData.title}
@@ -148,17 +90,7 @@ export const PagePreview: React.FC = () => {
           </Box>
 
           <Box sx={{ position: 'relative' }}>
-            <iframe
-              src={previewUrl}
-              style={{
-                width: '100%',
-                height: '80vh',
-                minHeight: '600px',
-                border: 'none',
-                display: 'block'
-              }}
-              title={`Preview of ${pageData.title}`}
-            />
+            <iframe src={previewUrl} style={{ width: '100%', height: '80vh', minHeight: '600px', border: 'none', display: 'block' }} title={`Preview of ${pageData.title}`} />
           </Box>
         </Paper>
       </Box>

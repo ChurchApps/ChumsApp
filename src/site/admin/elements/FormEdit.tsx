@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import type { SelectChangeEvent } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem, Typography, Link } from "@mui/material";
-import { Loading } from "@churchapps/apphelper";
-import { ApiHelper } from "@churchapps/apphelper";
+import { Loading, ApiHelper } from "@churchapps/apphelper";
 import type { FormInterface } from "@churchapps/helpers";
 import { EnvironmentHelper } from "../../../helpers/EnvironmentHelper";
 
@@ -29,13 +28,7 @@ export const FormEdit = ({ parsedData, handleChange }: Props) => {
       <Typography fontSize="15px" fontStyle="italic" align="center">
         No forms available!
         <br />
-        <Link
-          href={`${EnvironmentHelper.Common.ChumsRoot}/forms`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Create a new form
-        </Link>
+        <Link href={`${EnvironmentHelper.Common.ChumsRoot}/forms`} target="_blank" rel="noreferrer">Create a new form</Link>
       </Typography>
     );
   }
@@ -44,17 +37,8 @@ export const FormEdit = ({ parsedData, handleChange }: Props) => {
     <>
       <FormControl fullWidth>
         <InputLabel>Select</InputLabel>
-        <Select
-          fullWidth
-          size="small"
-          label="Select"
-          name="formId"
-          onChange={handleChange}
-          value={parsedData.formId || ""}
-        >
-          {standaloneForms?.map((form: FormInterface) => (
-            <MenuItem value={form.id}>{form.name}</MenuItem>
-          ))}
+        <Select fullWidth size="small" label="Select" name="formId" onChange={handleChange} value={parsedData.formId || ""}>
+          {standaloneForms?.map((form: FormInterface) => (<MenuItem value={form.id}>{form.name}</MenuItem>))}
         </Select>
       </FormControl>
     </>

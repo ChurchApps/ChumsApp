@@ -3,20 +3,7 @@ import { ErrorMessages, InputBox, ApiHelper, UserHelper, SlugHelper } from "@chu
 import { Permissions } from "@churchapps/helpers";
 import type { LinkInterface } from "@churchapps/helpers";
 import type { PageInterface } from "../../helpers/Interfaces";
-import {
-  Button,
-  Dialog,
-  FormControl,
-  Grid,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Stack,
-  TextField,
-  Typography
-} from "@mui/material";
+import { Button, Dialog, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -183,91 +170,37 @@ export function PageLinkEdit(props: Props) {
         >
           <ErrorMessages errors={errors} />
           <Grid container spacing={2} style={{ minWidth: 500 }}>
-            {page && (
-              <Grid size={{ xs: 6 }}>
-                <TextField
-                  size="small"
-                  fullWidth
-                  label="Page Title"
-                  name="title"
-                  value={page.title || ""}
-                  onChange={handleChange}
-                  onKeyDown={handleKeyDown}
-                />
-              </Grid>
-            )}
-            {link && (
-              <Grid size={{ xs: 6 }}>
-                <TextField
-                  size="small"
-                  fullWidth
-                  label="Link Text"
-                  name="linkText"
-                  value={link.text || ""}
-                  onChange={handleLinkChange}
-                  onKeyDown={handleKeyDown}
-                />
-              </Grid>
-            )}
-            {page && (
-              <Grid size={{ xs: 6 }}>
-                {!props.embedded && (
-                  <FormControl fullWidth size="small">
-                    <InputLabel>Layout</InputLabel>
-                    <Select size="small" fullWidth label="Layout" value={page.layout || ""} name="layout" onChange={handleChange}>
-                      <MenuItem value="headerFooter">Header & Footer</MenuItem>
-                      <MenuItem value="cleanCentered">Clean Centered Content</MenuItem>
-                    </Select>
-                  </FormControl>
-                )}
-              </Grid>
-            )}
-            {page && (
-              <Grid size={{ xs: 6 }}>
-                {checked ? (
-                  <div style={{ marginTop: "5px", paddingLeft: "4px" }}>
-                    <Paper elevation={0}>
-                      <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Typography>{page.url}</Typography>
-                        <IconButton color="primary" onClick={() => setChecked(false)}>
-                          <EditIcon />
-                        </IconButton>
-                      </Stack>
-                    </Paper>
-                  </div>
-                ) : (
-                  <TextField
-                    size="small"
-                    fullWidth
-                    label="Url Path"
-                    name="url"
-                    value={page.url || ""}
-                    onChange={handleChange}
-                    helperText="ex: /camper-registration  (**Make sure to check before saving)"
-                    InputProps={{
-                      endAdornment: (
-                        <Button variant="contained" color="primary" size="small" onClick={handleSlugValidation}>
-                          Check
-                        </Button>
-                      )
-                    }}
-                  />
-                )}
-              </Grid>
-            )}
-            {!page && link && (
-              <Grid size={{ xs: 6 }}>
-                <TextField
-                  size="small"
-                  fullWidth
-                  label="Url"
-                  name="linkUrl"
-                  value={link.url || ""}
-                  onChange={handleLinkChange}
-                  onKeyDown={handleKeyDown}
-                />
-              </Grid>
-            )}
+            {page && <Grid size={{ xs: 6 }}>
+              <TextField size="small" fullWidth label="Page Title" name="title" value={page.title || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+            </Grid>}
+            {link && <Grid size={{ xs: 6 }}>
+              <TextField size="small" fullWidth label="Link Text" name="linkText" value={link.text || ""} onChange={handleLinkChange} onKeyDown={handleKeyDown} />
+            </Grid>}
+            {page && <Grid size={{ xs: 6 }}>
+              {!props.embedded && <FormControl fullWidth size="small">
+                <InputLabel>Layout</InputLabel>
+                <Select size="small" fullWidth label="Layout" value={page.layout || ""} name="layout" onChange={handleChange}>
+                  <MenuItem value="headerFooter">Header & Footer</MenuItem>
+                  <MenuItem value="cleanCentered">Clean Centered Content</MenuItem>
+                </Select>
+              </FormControl>}
+            </Grid>}
+            {page && <Grid size={{ xs: 6 }}>
+              {checked
+                ? (<div style={{ marginTop: "5px", paddingLeft: "4px" }}>
+                  <Paper elevation={0}>
+                    <Stack direction="row" alignItems="center" justifyContent="space-between">
+                      <Typography>{page.url}</Typography>
+                      <IconButton color="primary" onClick={() => setChecked(false)}><EditIcon /></IconButton>
+                    </Stack>
+                  </Paper>
+                </div>)
+                : (<TextField size="small" fullWidth label="Url Path" name="url" value={page.url || ""} onChange={handleChange} helperText="ex: /camper-registration  (**Make sure to check before saving)" InputProps={{ endAdornment: (<Button variant="contained" color="primary" size="small" onClick={handleSlugValidation}>Check</Button>) }} />)
+              }
+            </Grid>}
+            {!page && link && <Grid size={{ xs: 6 }}>
+              <TextField size="small" fullWidth label="Url" name="linkUrl" value={link.url || ""} onChange={handleLinkChange} onKeyDown={handleKeyDown} />
+            </Grid>}
           </Grid>
         </InputBox>
       </Dialog>
