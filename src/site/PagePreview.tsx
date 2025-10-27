@@ -4,6 +4,7 @@ import { Box, Button, Stack, Typography, Paper } from "@mui/material";
 import { Edit as EditIcon, Settings as SettingsIcon, Web as WebIcon } from "@mui/icons-material";
 import { ApiHelper, PageHeader } from "@churchapps/apphelper";
 import UserContext from "../UserContext";
+import { EnvironmentHelper } from "../helpers/EnvironmentHelper";
 import type { PageInterface } from "../helpers/Interfaces";
 import type { LinkInterface } from "@churchapps/helpers";
 import { PageLinkEdit } from "./components/PageLinkEdit";
@@ -65,7 +66,7 @@ export const PagePreview: React.FC = () => {
     );
   }
 
-  const previewUrl = `${window.location.protocol}//${context.userChurch?.church?.subDomain}.${window.location.host.split('.').slice(1).join('.')}${pageData.url}`;
+  const previewUrl = EnvironmentHelper.B1Url.replace('{subdomain}', context.userChurch?.church?.subDomain || '') + pageData.url;
 
   return (
     <>

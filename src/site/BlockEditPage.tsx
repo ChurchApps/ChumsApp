@@ -11,18 +11,18 @@ interface ConfigInterface {
   church?: any;
 }
 
-export const PageEdit: React.FC = () => {
+export const BlockEditPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const context = useContext(UserContext);
   const [config, setConfig] = useState<ConfigInterface>(null);
 
   const loadData = async (id: string) =>
-    await ApiHelper.get("/pages/" + UserHelper.currentUserChurch.church.id + "/tree?id=" + id, "ContentApi");
+    await ApiHelper.get("/blocks/" + UserHelper.currentUserChurch.church.id + "/tree/" + id, "ContentApi");
 
   const handleDone = (url?: string) => {
     if (url && url !== '') navigate(url);
-    else navigate("/site/pages/preview/" + id);
+    else navigate("/site/blocks");
   };
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export const PageEdit: React.FC = () => {
   return (
     <ContentEditor
       loadData={loadData}
-      pageId={id}
+      blockId={id}
       onDone={handleDone}
       config={config}
     />

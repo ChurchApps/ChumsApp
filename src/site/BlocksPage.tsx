@@ -19,7 +19,7 @@ import {
   Add as AddIcon,
   Edit as EditIcon
 } from "@mui/icons-material";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { BlockEdit } from "./components";
 
 export const BlocksPage = () => {
@@ -98,17 +98,16 @@ export const BlocksPage = () => {
           <TableCell>
             <Stack direction="row" spacing={1} alignItems="center">
               <BlockIcon sx={{ color: "primary.main", fontSize: 20 }} />
-              <Typography
-                sx={{
+              <Link
+                to={`/site/blocks/${block.id}`}
+                style={{
                   textDecoration: "none",
-                  color: "primary.main",
-                  fontWeight: 500,
-                  cursor: "pointer"
+                  color: "var(--primary-main, #1976d2)",
+                  fontWeight: 500
                 }}
-                onClick={() => setEditBlock(block)}
               >
                 {block.name}
-              </Typography>
+              </Link>
             </Stack>
           </TableCell>
           <TableCell>
@@ -125,8 +124,9 @@ export const BlocksPage = () => {
             <Button
               size="small"
               variant="outlined"
+              component={Link}
+              to={`/site/blocks/${block.id}`}
               startIcon={<EditIcon />}
-              onClick={() => setEditBlock(block)}
               data-testid={`edit-block-${block.id}-button`}
               sx={{
                 textTransform: "none",

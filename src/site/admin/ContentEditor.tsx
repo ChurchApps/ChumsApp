@@ -10,7 +10,7 @@ import { Section } from "./Section";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import React from "react";
-import { DroppableArea } from "@churchapps/apphelper-website";
+import { DroppableArea, Theme } from "@churchapps/apphelper-website";
 import { SectionBlock } from "./SectionBlock";
 import { StyleHelper } from "../../helpers/StyleHelper";
 import { ElementAdd } from "./elements/ElementAdd";
@@ -19,12 +19,18 @@ import { SectionEdit } from "./SectionEdit";
 import { DroppableScroll } from "./DroppableScroll";
 import UserContext from "../../UserContext";
 
+interface ConfigInterface {
+  globalStyles?: GlobalStyleInterface;
+  appearance?: any;
+  church?: any;
+}
+
 interface Props {
   loadData: (id: string) => Promise<any>,
   pageId?: string,
   blockId?: string
   onDone?: (url?: string) => void
-  globalStyles?: GlobalStyleInterface
+  config?: ConfigInterface
 };
 
 export function ContentEditor(props: Props) {
@@ -50,7 +56,7 @@ export function ContentEditor(props: Props) {
     headerFooter: ["main", "footer"],
   }
 
-  const churchSettings = context?.userChurch?.settings || {};
+  const churchSettings = props.config?.appearance || context?.userChurch?.settings || {};
 
   useEffect(() => {
     if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) navigate("/site");
@@ -105,8 +111,10 @@ export function ContentEditor(props: Props) {
   }
 
   const handleSectionEdit = (s: SectionInterface, e: ElementInterface) => {
-    if (s) setEditSection(s);
-    else if (e) setEditElement(e);
+    if (s) {
+      if (s.targetBlockId) navigate(`/site/blocks/${s.targetBlockId}`);
+      else setEditSection(s);
+    } else if (e) setEditElement(e);
   }
 
   let rightBarStyle: CSSProperties = {}
@@ -220,6 +228,7 @@ export function ContentEditor(props: Props) {
 
 
   return (<>
+    <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
     <style>{css}</style>
 
     <div style={{ backgroundColor: "#FFF", position: "sticky", top: 0, width: "100%", zIndex: 1000, boxShadow: "0px 2px 2px black", marginBottom: 10 }}>
@@ -270,8 +279,8 @@ export function ContentEditor(props: Props) {
         } else {
           loadDataInternal();
         }
-      }} onRealtimeChange={handleRealtimeChange} globalStyles={props.globalStyles} />}
-      {editSection && <SectionEdit section={editSection} updatedCallback={() => { setEditSection(null); loadDataInternal(); }} globalStyles={props.globalStyles} />}
+      }} onRealtimeChange={handleRealtimeChange} globalStyles={props.config?.globalStyles} />}
+      {editSection && <SectionEdit section={editSection} updatedCallback={() => { setEditSection(null); loadDataInternal(); }} globalStyles={props.config?.globalStyles} />}
 
       <div>
         {scrollTop > 150

@@ -2,7 +2,7 @@ import React, { CSSProperties, useState } from "react";
 import type { ElementInterface, SectionInterface } from "../../helpers";
 import { ApiHelper, StyleHelper } from "../../helpers";
 import { Box, Container } from "@mui/material";
-import { DroppableArea, DraggableWrapper, Element } from "@churchapps/apphelper-website";
+import { DroppableArea, DraggableWrapper, Element, YoutubeBackground } from "@churchapps/apphelper-website";
 import type { ChurchInterface } from "@churchapps/helpers";
 
 interface Props {
@@ -135,7 +135,11 @@ export const Section: React.FC<Props> = props => {
   }
 
   let result = <></>;
-  result = (<>{getSectionAnchor()}<Box component="div" sx={{ ":before": { opacity: (props.section.answers?.backgroundOpacity) ? props.section.answers.backgroundOpacity + " !important" : "" } }} style={getStyle()} className={getClassName()} id={getId()}>{contents}</Box></>);
+  if (props.section.background && props.section.background.indexOf("youtube:") > -1) {
+    const youtubeId = props.section.background.split(":")[1];
+    result = (<>{getSectionAnchor()}<YoutubeBackground isDragging={isDragging} id={getId()} videoId={youtubeId} overlay="rgba(0,0,0,.4)" contentClassName={getVideoClassName()}>{contents}</YoutubeBackground></>);
+  }
+  else result = (<>{getSectionAnchor()}<Box component="div" sx={{ ":before": { opacity: (props.section.answers?.backgroundOpacity) ? props.section.answers.backgroundOpacity + " !important" : "" } }} style={getStyle()} className={getClassName()} id={getId()}>{contents}</Box></>);
 
   if (props.onEdit) {
     return (

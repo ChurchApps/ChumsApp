@@ -88,17 +88,20 @@ export class EnvironmentHelper {
   static initDev = () => {
     this.initStaging();
     EnvironmentHelper.LessonsApi = process.env.REACT_APP_LESSONS_API || EnvironmentHelper.LessonsApi;
+    EnvironmentHelper.B1Url = process.env.REACT_APP_B1_WEBSITE_URL || EnvironmentHelper.B1Url;
     console.log("LessonsAPI is", EnvironmentHelper.LessonsApi, process.env.REACT_APP_LESSONS_API);
   };
 
   //NOTE: None of these values are secret.
   static initStaging = () => {
     EnvironmentHelper.LessonsApi = "https://api.staging.lessons.church";
+    EnvironmentHelper.B1Url = "https://{subdomain}.staging.b1.church";
   };
 
   //NOTE: None of these values are secret.
   static initProd = () => {
     EnvironmentHelper.Common.GoogleAnalyticsTag = "G-JB7VCG51LF";
     EnvironmentHelper.LessonsApi = "https://api.lessons.church";
+    EnvironmentHelper.B1Url = "https://{subdomain}.b1.church";
   };
 }
