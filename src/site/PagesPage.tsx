@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Card, Chip, Grid, Icon, IconButton, Stack, Switch, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
-import { Add as AddIcon, Article as ArticleIcon, ChevronRight as ChevronRightIcon, Description as DescriptionIcon, Edit as EditIcon, ExpandMore as ExpandMoreIcon, Public as PublicIcon, Transform as TransformIcon } from "@mui/icons-material";
+import { Add as AddIcon, Article as ArticleIcon, ChevronRight as ChevronRightIcon, Description as DescriptionIcon, Edit as EditIcon, ExpandMore as ExpandMoreIcon, Public as PublicIcon, Transform as TransformIcon, Visibility as VisibilityIcon } from "@mui/icons-material";
 import { ApiHelper, ErrorMessages, PageHeader, SmallButton, UserHelper } from "@churchapps/apphelper";
 import { useWindowWidth } from "@react-hook/window-size";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -48,9 +48,10 @@ export const PagesPage = () => {
           <TableCell>
             <Stack direction="row" alignItems="center" spacing={1}>
               {getExpandControl(item, level)}
-              <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+              <Typography variant="body2" sx={{ fontFamily: 'monospace', cursor: 'pointer', color: 'primary.main', '&:hover': { textDecoration: 'underline' } }} onClick={() => navigate(`/preview/${UserHelper.currentUserChurch.church.id}${item.url}`)}>
                 {item.url}
               </Typography>
+              <Tooltip title="Preview page"><IconButton size="small" onClick={() => navigate(`/preview/${UserHelper.currentUserChurch.church.id}${item.url}`)} sx={{ p: 0.5 }}><VisibilityIcon sx={{ fontSize: 16 }} /></IconButton></Tooltip>
               {!item.custom && (<Chip label="Generated" size="small" color="default" sx={{ fontSize: '0.7rem', height: 18 }} />)}
             </Stack>
           </TableCell>
