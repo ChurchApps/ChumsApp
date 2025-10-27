@@ -13,11 +13,12 @@ import "@churchapps/apphelper-website/dist/styles/animations.css";
 interface ElementRendererProps {
   element: any;
   churchId: string;
+  church: any;
   churchSettings: any;
   textColor: string;
 }
 
-const ElementRenderer: React.FC<ElementRendererProps> = ({ element, churchId, churchSettings, textColor }) => {
+const ElementRenderer: React.FC<ElementRendererProps> = ({ element, churchId, church, churchSettings, textColor }) => {
   if (element.elementType === "calendar") {
     return (
       <div id={"el-" + element.id} style={{ backgroundColor: "white", padding: 50, borderRadius: 15 }}>
@@ -25,7 +26,7 @@ const ElementRenderer: React.FC<ElementRendererProps> = ({ element, churchId, ch
       </div>
     );
   }
-  return <Element element={element} churchSettings={churchSettings} textColor={textColor} />;
+  return <Element element={element} church={church} churchSettings={churchSettings} textColor={textColor} />;
 };
 
 interface SectionProps {
@@ -34,14 +35,15 @@ interface SectionProps {
   churchSettings: any;
   globalStyles: GlobalStyleInterface;
   churchId: string;
+  church: any;
 }
 
-const SectionRenderer: React.FC<SectionProps> = ({ section, first, churchSettings, globalStyles, churchId }) => {
+const SectionRenderer: React.FC<SectionProps> = ({ section, first, churchSettings, globalStyles, churchId, church }) => {
   const getElements = () => {
     const result: React.ReactElement[] = [];
     const textColor = StyleHelper.getTextColor(section?.textColor, globalStyles || {}, churchSettings);
     section?.elements?.forEach(e => {
-      result.push(<ElementRenderer key={e.id} element={e} churchId={churchId} churchSettings={churchSettings} textColor={textColor} />);
+      result.push(<ElementRenderer key={e.id} element={e} churchId={churchId} church={church} churchSettings={churchSettings} textColor={textColor} />);
     });
     return result;
   };
@@ -141,6 +143,9 @@ export const SitePreview: React.FC = () => {
       setError(null);
 
       try {
+        console.log("Loading page data for church:", churchId, "URL:", pageUrl);
+        console.log("API Configs:", ApiHelper.apiConfigs?.map(c => ({ name: c.keyName, url: c.url })));
+
         const [page, settings, styles, links, churchData] = await Promise.all([
           ApiHelper.getAnonymous(`/pages/${churchId}/tree?url=${pageUrl}`, "ContentApi"),
           ApiHelper.getAnonymous(`/settings/public/${churchId}`, "MembershipApi"),
@@ -148,6 +153,9 @@ export const SitePreview: React.FC = () => {
           ApiHelper.getAnonymous(`/links/church/${churchId}?category=website`, "ContentApi"),
           ApiHelper.getAnonymous(`/churches/${churchId}`, "MembershipApi")
         ]);
+
+        console.log("API Responses:", { page: !!page?.sections, settings: !!settings, styles: !!styles, links: links?.length, church: !!churchData?.name });
+        console.log("Page data:", page);
 
         setPageData(page);
         setChurchSettings(settings);
@@ -203,7 +211,7 @@ export const SitePreview: React.FC = () => {
       <main>
         <div className="page">
           {mainSections.map((section, index) => (
-            <SectionRenderer key={section.id} section={section} first={index === 0} churchSettings={churchSettings} globalStyles={globalStyles} churchId={churchId!} />
+            <SectionRenderer key={section.id} section={section} first={index === 0} churchSettings={churchSettings} globalStyles={globalStyles} churchId={churchId!} church={church} />
           ))}
         </div>
       </main>
