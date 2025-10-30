@@ -37,19 +37,19 @@ export const Login: React.FC = () => {
           <br />
           You can log into a test church of "Grace Community Church"
           <br />
-          Use the email "<b>demo@chums.org</b>" and password "<b>password</b>".
+          Use the email "<b>demo@b1.church</b>" and password "<b>password</b>".
         </Alert>
       )}
       <LoginPage
         auth={auth}
         context={context}
         jwt={jwt}
-        appName="CHUMS"
+        appName="B1Admin"
         appUrl={window.location.href}
         callbackErrors={errors}
         returnUrl={returnUrl}
         handleRedirect={handleRedirect}
-        defaultEmail={process.env.REACT_APP_STAGE === "demo" ? "demo@chums.org" : undefined}
+        defaultEmail={process.env.REACT_APP_STAGE === "demo" ? "demo@b1.church" : undefined}
         defaultPassword={process.env.REACT_APP_STAGE === "demo" ? "password" : undefined}
         showFooter={true}
       />

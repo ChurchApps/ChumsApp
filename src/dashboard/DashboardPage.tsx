@@ -11,7 +11,7 @@ export const DashboardPage = () => {
     <>
       <PageHeader
         icon={<DashboardIcon />}
-        title={`Chums ${Locale.label("dashboard.dashboardPage.dash")}`}
+        title={`B1.church ${Locale.label("dashboard.dashboardPage.dash")}`}
         subtitle="Welcome to your church management dashboard. Search for people, view your groups, and manage your open tasks."
       />
 

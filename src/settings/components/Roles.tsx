@@ -49,7 +49,7 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
       },
       {
         name: Locale.label("settings.roles.churchStaff"),
-        description: Locale.label("settings.roles.canEdit") + "Chums.org," + Locale.label("settings.roles.churchDesc"),
+        description: Locale.label("settings.roles.canEdit") + "B1.church," + Locale.label("settings.roles.churchDesc"),
         permissions: [
           Permissions.membershipApi.people.view,
           Permissions.membershipApi.people.edit,

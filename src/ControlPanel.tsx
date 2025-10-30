@@ -28,7 +28,7 @@ export const ControlPanel = () => {
       churchId: UserHelper.currentUserChurch?.church?.id || "",
       userId: UserHelper.user?.id || "",
       originUrl: location?.toString(),
-      application: "CHUMS",
+      application: "B1Admin",
     };
     return result;
   };

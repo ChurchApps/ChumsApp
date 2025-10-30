@@ -16,7 +16,7 @@
     <p>This page helps verify that data-testid attributes are being added to navigation elements.</p>
     
     <button onclick="checkNavigation()">Check Navigation Elements</button>
-    <button onclick="window.open('/', '_blank')">Open CHUMS App</button>
+    <button onclick="window.open('/', '_blank')">Open B1Admin App</button>
     
     <div id="results" class="results"></div>
 
@@ -57,8 +57,8 @@
         results.innerHTML += `<h4>Total navigation elements with data-testid: ${allNavElements.length}</h4>`;
 
         if (allNavElements.length === 0) {
-            results.innerHTML += '<div class="not-found">⚠ No navigation elements found. Make sure you are on the CHUMS app page and logged in.</div>';
-            results.innerHTML += '<div>This checker needs to be run from within the CHUMS application context.</div>';
+            results.innerHTML += '<div class="not-found">⚠ No navigation elements found. Make sure you are on the B1Admin app page and logged in.</div>';
+            results.innerHTML += '<div>This checker needs to be run from within the B1Admin application context.</div>';
         }
     }
 
@@ -68,7 +68,7 @@
             checkNavigation();
         } else {
             document.getElementById('results').innerHTML = 
-                '<div>No navigation elements detected. Please open the CHUMS app and run the check from there.</div>';
+                '<div>No navigation elements detected. Please open the B1Admin app and run the check from there.</div>';
         }
     }, 1000);
     </script>
