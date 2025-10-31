@@ -1,8 +1,8 @@
 <img align="right" width="150" src="https://raw.githubusercontent.com/ChurchApps/ChumsApp/main/public/images/logo.png">
 
-# CHUMS
+# B1Admin
 
-> **CHUMS** is completely free, open-source **CHU**rch **M**anagement **S**oftware that allows you to manage key data on church members and visitors. It offers comprehensive features including member and guest information tracking, attendance management with a self check-in app, group coordination, donation tracking with detailed reports, and custom form creation. Visit <a href="https://chums.org/">https://chums.org/</a> to learn more.
+> **B1Admin** is completely free, open-source church management software that allows you to manage key data on church members and visitors. It offers comprehensive features including member and guest information tracking, attendance management with a self check-in app, group coordination, donation tracking with detailed reports, and custom form creation. Visit <a href="https://b1.church/">https://b1.church/</a> to learn more.
 
 <div style="display: flex;gap: 10px;">
     <img style="width: 49%;" src="https://github.com/ChurchApps/ChumsApp/assets/1447203/ccb5dc7b-8c0d-4320-abac-a3128c42beff">
@@ -47,6 +47,6 @@ To accept online donations you must first register for developer credentials wit
 - **Stripe**: Visit https://dashboard.stripe.com/register (or sign in at https://dashboard.stripe.com/login), then navigate to **Developers → API keys** to copy your Publishable Key and Secret Key for both test and live modes.
 - **PayPal**: Go to https://developer.paypal.com/, log in or create an account, then under **My Apps & Credentials** create a new application to obtain your Sandbox and Live Client ID and Secret.
 
-After obtaining your tokens, open **Settings → Giving Settings** in ChumsApp, select the provider (Stripe or PayPal), paste in your Public and Private keys, and toggle "Pay Fees" as desired. Finally, configure your fee parameters in **Fee Options**.
+After obtaining your tokens, open **Settings → Giving Settings** in B1Admin, select the provider (Stripe or PayPal), paste in your Public and Private keys, and toggle "Pay Fees" as desired. Finally, configure your fee parameters in **Fee Options**.
 
-[![ChumsApp Dev Setup](https://img.youtube.com/vi/5zsEJEp6yMw/0.jpg)](https://www.youtube.com/watch?v=5zsEJEp6yMw)
+[![B1Admin Dev Setup](https://img.youtube.com/vi/5zsEJEp6yMw/0.jpg)](https://www.youtube.com/watch?v=5zsEJEp6yMw)

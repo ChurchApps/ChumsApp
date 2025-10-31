@@ -4,7 +4,7 @@ export async function login(page: Page) {
   await page.goto('/');
   await page.waitForLoadState('networkidle');
 
-  await page.fill('input[type="email"]', 'demo@chums.org');
+  await page.fill('input[type="email"]', 'demo@b1.church');
   await page.fill('input[type="password"]', 'password');
   await page.click('button[type="submit"]');
 

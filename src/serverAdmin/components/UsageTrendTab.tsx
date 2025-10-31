@@ -9,8 +9,8 @@ export const UsageTrendsTab = () => (
       <div>
         <h4>{Locale.label("serverAdmin.adminPage.notes")}</h4>
         <ul>
-          <li key="chums">
-            <b>Chums</b> - {Locale.label("serverAdmin.adminPage.noteOne")}
+          <li key="b1admin">
+            <b>B1Admin</b> - {Locale.label("serverAdmin.adminPage.noteOne")}
           </li>
           <li key="b1">
             <b>B1</b> - {Locale.label("serverAdmin.adminPage.noteTwo")}
