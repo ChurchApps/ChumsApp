@@ -28,6 +28,11 @@ export const ChurchesTab = () => {
     setChurches(tmpChurches);
   };
 
+  const getLocation = (church: ChurchInterface) => {
+    const parts = [church.city, church.state, church.country].filter(part => part && part.trim());
+    return parts.length > 0 ? parts.join(", ") : "-";
+  };
+
   const getChurchRows = () => {
     console.log("getChurchRows");
     if (churches === null) return;
@@ -55,6 +60,7 @@ export const ChurchesTab = () => {
       result.push(
         <tr key={index}>
           <td>{getManageAccessLink(c)}</td>
+          <td>{getLocation(c)}</td>
           <td>{DateHelper.prettyDate(DateHelper.toDate(c.registrationDate))}</td>
           <td>{activeLink}</td>
         </tr>
@@ -63,6 +69,7 @@ export const ChurchesTab = () => {
     result.unshift(
       <tr>
         <th>{Locale.label("serverAdmin.adminPage.church")}</th>
+        <th>Location</th>
         <th>{Locale.label("serverAdmin.adminPage.regist")}</th>
         <th>{Locale.label("serverAdmin.adminPage.act")}</th>
       </tr>
