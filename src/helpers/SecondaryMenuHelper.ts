@@ -41,8 +41,7 @@ export class SecondaryMenuHelper {
     const menuItems: MenuItem[] = [];
     let label: string = "";
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) menuItems.push({ url: "/settings", label: Locale.label("components.wrapper.set"), icon: "settings" });
-    // Temporarily hidden - mobile apps menu item
-    // if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/settings/mobile", label: "Mobile Apps", icon: "phone_iphone" });
+    if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/settings/mobile", label: "Mobile Apps", icon: "phone_iphone" });
     if (UserHelper.checkAccess(Permissions.membershipApi.server.admin)) menuItems.push({ url: "/admin", label: Locale.label("components.wrapper.servAdmin"), icon: "admin_panel_settings" });
     if (data.formPermission) menuItems.push({ url: "/forms", label: Locale.label("components.wrapper.forms"), icon: "description" });
 
