@@ -1,4 +1,5 @@
 import { CommonEnvironmentHelper, ApiHelper, Locale } from "@churchapps/apphelper";
+import { EnvironmentHelper as WebsiteEnvironmentHelper } from "@churchapps/apphelper-website";
 
 export class EnvironmentHelper {
   private static LessonsApi = "";
@@ -23,46 +24,11 @@ export class EnvironmentHelper {
     }
     EnvironmentHelper.Common.init(stage);
 
-    ApiHelper.apiConfigs = [
-      {
-        keyName: "AttendanceApi",
-        url: EnvironmentHelper.Common.AttendanceApi,
-        jwt: "",
-        permissions: [],
-      },
-      {
-        keyName: "GivingApi",
-        url: EnvironmentHelper.Common.GivingApi,
-        jwt: "",
-        permissions: [],
-      },
-      {
-        keyName: "MembershipApi",
-        url: EnvironmentHelper.Common.MembershipApi,
-        jwt: "",
-        permissions: [],
-      },
+    WebsiteEnvironmentHelper.init();
+    ApiHelper.apiConfigs.push(
       {
         keyName: "ReportingApi",
         url: EnvironmentHelper.Common.ReportingApi,
-        jwt: "",
-        permissions: [],
-      },
-      {
-        keyName: "DoingApi",
-        url: EnvironmentHelper.Common.DoingApi,
-        jwt: "",
-        permissions: [],
-      },
-      {
-        keyName: "MessagingApi",
-        url: EnvironmentHelper.Common.MessagingApi,
-        jwt: "",
-        permissions: [],
-      },
-      {
-        keyName: "ContentApi",
-        url: EnvironmentHelper.Common.ContentApi,
         jwt: "",
         permissions: [],
       },
@@ -77,8 +43,8 @@ export class EnvironmentHelper {
         url: EnvironmentHelper.Common.AskApi,
         jwt: "",
         permissions: [],
-      },
-    ];
+      }
+    );
 
     await Locale.init([`/locales/{{lng}}.json?v=1`, `/apphelper/locales/{{lng}}.json`]);
   };
