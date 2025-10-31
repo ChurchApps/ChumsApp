@@ -3,13 +3,14 @@ import {
   FormControl, InputLabel, MenuItem, Select, TextField, Grid, Stack, Switch, Typography, Tooltip, IconButton, type SelectChangeEvent
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
-import { ApiHelper, Locale, UniqueIdHelper } from "@churchapps/apphelper";
+import { ApiHelper, ErrorMessages, Locale, UniqueIdHelper } from "@churchapps/apphelper";
 import { type PaymentGatewaysInterface } from "../../helpers";
 import { FeeOptionsSettingsEdit } from "./FeeOptionsSettingsEdit";
 
 interface Props {
   churchId: string;
   saveTrigger: Date | null;
+  onError?: (errors: string[]) => void;
 }
 
 export const GivingSettingsEdit: React.FC<Props> = (props) => {
@@ -18,6 +19,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
   const [publicKey, setPublicKey] = React.useState("");
   const [privateKey, setPrivateKey] = React.useState("");
   const [payFees, setPayFees] = React.useState<boolean>(false);
+  const [errors, setErrors] = React.useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     e.preventDefault();
@@ -73,16 +75,30 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
     }
   };
 
-  const save = () => {
-    if (provider === "") {
-      if (!UniqueIdHelper.isMissing(gateway?.id)) ApiHelper.delete("/gateways/" + gateway.id, "GivingApi");
-    } else {
-      const gw: PaymentGatewaysInterface = gateway === null ? { churchId: props.churchId } : { ...gateway };
-      gw.provider = provider;
-      gw.publicKey = publicKey;
-      gw.payFees = payFees;
-      if (privateKey !== "") gw.privateKey = privateKey;
-      ApiHelper.post("/gateways", [gw], "GivingApi");
+  const save = async () => {
+    try {
+      if (provider === "") {
+        if (!UniqueIdHelper.isMissing(gateway?.id)) await ApiHelper.delete("/gateways/" + gateway.id, "GivingApi");
+      } else {
+        const gw: PaymentGatewaysInterface = gateway === null ? { churchId: props.churchId } : { ...gateway };
+        gw.provider = provider;
+        gw.publicKey = publicKey;
+        gw.payFees = payFees;
+        if (privateKey !== "") gw.privateKey = privateKey;
+        await ApiHelper.post("/gateways", [gw], "GivingApi");
+      }
+    } catch (error: any) {
+      let message = "An error occurred while saving gateway settings";
+      if (error?.message) {
+        try {
+          const parsed = JSON.parse(error.message);
+          message = parsed.message || error.message;
+        } catch {
+          message = error.message;
+        }
+      }
+      setErrors([message]);
+      if (props.onError) props.onError([message]);
     }
   };
 
@@ -113,6 +129,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
 
   return (
     <>
+      <ErrorMessages errors={errors} />
       {/* <div className="subHead">{Locale.label("settings.givingSettingsEdit.giving")}</div> */}
       <Grid container spacing={3} marginBottom={2}>
         <Grid size={{ xs: 12, md: 4 }}>

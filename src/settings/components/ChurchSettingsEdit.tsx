@@ -17,10 +17,15 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
   const [church, setChurch] = React.useState({} as ChurchInterface);
   const [errors, setErrors] = React.useState([]);
   const [saveTrigger, setSaveTrigger] = React.useState<Date | null>(null);
+  const childErrorsRef = React.useRef<string[]>([]);
 
   const handleSave = async () => {
     if (validate()) {
+      setErrors([]);
+      childErrorsRef.current = [];
       setSaveTrigger(new Date());
+      await new Promise(resolve => setTimeout(resolve, 500));
+      if (childErrorsRef.current.length > 0) return;
       const resp = await ApiHelper.post("/churches", [church], "MembershipApi");
       if (resp.errors !== undefined) setErrors(resp.errors);
       else props.updatedFunction();
@@ -76,9 +81,14 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
     setChurch(c);
   };
 
+  const handleGivingError = (givingErrors: string[]) => {
+    childErrorsRef.current = givingErrors;
+    setErrors(givingErrors);
+  };
+
   const giveSection = () => {
     if (!UserHelper.checkAccess(Permissions.givingApi.settings.edit)) return null;
-    return <GivingSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger} />;
+    return <GivingSettingsEdit churchId={church?.id || ""} saveTrigger={saveTrigger} onError={handleGivingError} />;
   };
 
   React.useEffect(() => setChurch(props.church), [props.church]);
