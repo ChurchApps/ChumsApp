@@ -1,4 +1,5 @@
-import { CSSProperties, useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
+import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Dialog, Grid, Icon, ThemeProvider, ToggleButton, ToggleButtonGroup, Tooltip, createTheme } from "@mui/material";
 import { useWindowWidth } from "@react-hook/window-size";
@@ -62,9 +63,23 @@ export function ContentEditor(props: Props) {
     if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) navigate("/site");
   }, []);
 
+  const normalizeElements = (elements: ElementInterface[]): ElementInterface[] => {
+    if (!elements) return elements;
+    return elements.map(element => {
+      if (!element.elements) element.elements = [];
+      if (element.elements && element.elements.length > 0) element.elements = normalizeElements(element.elements);
+      return element;
+    });
+  }
+
   const loadDataInternal = () => {
     if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) {
       props.loadData(props.pageId || props.blockId).then((p: PageInterface | BlockInterface) => {
+        if (p?.sections) {
+          p.sections.forEach(section => {
+            if (section.elements) section.elements = normalizeElements(section.elements);
+          });
+        }
         setContainer(p);
       });
     }
