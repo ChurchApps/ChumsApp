@@ -36,7 +36,7 @@ export class ReportsHelper {
     // Try direct navigation
     const currentUrl = page.url();
     if (!currentUrl.includes('/reports')) {
-      await page.goto('https://chumsdemo.churchapps.org/reports');
+      await page.goto('https://demo.b1.church/reports');
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(2000);
     }

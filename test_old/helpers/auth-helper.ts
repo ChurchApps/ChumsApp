@@ -6,7 +6,7 @@ export class AuthHelper {
    */
   static async login(page: Page, email = 'demo@chums.org', password = 'password') {
     // Navigate to the login page
-    await page.goto('https://chumsdemo.churchapps.org/');
+    await page.goto('https://demo.b1.church/');
     
     // Verify we're on the login page
     await expect(page).toHaveURL(/.*login/);
@@ -115,7 +115,7 @@ export class AuthHelper {
    * Navigate to the login page
    */
   static async goToLogin(page: Page) {
-    await page.goto('https://chumsdemo.churchapps.org/');
+    await page.goto('https://demo.b1.church/');
     await expect(page).toHaveURL(/.*login/);
   }
 }

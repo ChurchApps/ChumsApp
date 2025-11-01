@@ -36,7 +36,7 @@ export class PlansHelper {
     // Try direct navigation
     const currentUrl = page.url();
     if (!currentUrl.includes('/plans')) {
-      await page.goto('https://chumsdemo.churchapps.org/plans');
+      await page.goto('https://demo.b1.church/plans');
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(2000);
     }
@@ -63,7 +63,7 @@ export class PlansHelper {
     }
     
     // Try direct navigation
-    await page.goto('https://chumsdemo.churchapps.org/ministries');
+    await page.goto('https://demo.b1.church/ministries');
     await page.waitForLoadState('networkidle');
     console.log('Ministries navigation completed');
   }
@@ -87,7 +87,7 @@ export class PlansHelper {
     }
     
     // Try direct navigation
-    await page.goto('https://chumsdemo.churchapps.org/songs');
+    await page.goto('https://demo.b1.church/songs');
     await page.waitForLoadState('networkidle');
     console.log('Songs navigation completed');
   }

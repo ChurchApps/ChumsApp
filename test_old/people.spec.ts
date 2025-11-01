@@ -139,7 +139,7 @@ test.describe('People Management - Production Patterns', () => {
     console.log('✓ Successfully logged in and selected church');
 
     // Verify we're on the dashboard page
-    expect(page.url()).toBe('https://chumsdemo.churchapps.org/');
+    expect(page.url()).toBe('https://demo.b1.church/');
 
     console.log('✓ Verified we are on the dashboard page');
 
@@ -234,7 +234,7 @@ test.describe('People Management - Production Patterns', () => {
   });
 
   test('household management operations', async ({ page }) => {
-    await page.goto('https://chumsdemo.churchapps.org/login');
+    await page.goto('https://demo.b1.church/login');
     await page.waitForLoadState('networkidle');
     await page.getByRole('button', { name: 'Sign In' }).click();
     await page.waitForLoadState('networkidle');

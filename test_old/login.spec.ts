@@ -4,7 +4,7 @@ import { AuthHelper } from './helpers/auth-helper';
 test.describe('Login Page', () => {
   test('should display form elements and accept credentials', async ({ page }) => {
     // Navigate to the login page
-    await page.goto('https://chumsdemo.churchapps.org/');
+    await page.goto('https://demo.b1.church/');
     
     // Verify we're on the login page
     await expect(page).toHaveURL(/.*login/);
@@ -30,7 +30,7 @@ test.describe('Login Page', () => {
 
   test('should reject bad password and have forgot/reset password links', async ({ page }) => {
     // Navigate to the login page
-    await page.goto('https://chumsdemo.churchapps.org/');
+    await page.goto('https://demo.b1.church/');
     
     // First test: Look for forgot password link
     const forgotPasswordSelectors = [

@@ -73,7 +73,7 @@ export class DonationsHelper {
     }
     
     // Try direct navigation
-    await page.goto('https://chumsdemo.churchapps.org/funds');
+    await page.goto('https://demo.b1.church/funds');
     await page.waitForLoadState('networkidle');
     console.log('Funds navigation completed');
   }

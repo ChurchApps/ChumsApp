@@ -36,7 +36,7 @@ export class TasksHelper {
     // Try direct navigation
     const currentUrl = page.url();
     if (!currentUrl.includes('/tasks')) {
-      await page.goto('https://chumsdemo.churchapps.org/tasks');
+      await page.goto('https://demo.b1.church/tasks');
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(2000);
     }
@@ -63,7 +63,7 @@ export class TasksHelper {
     }
     
     // Try direct navigation
-    await page.goto('https://chumsdemo.churchapps.org/automations');
+    await page.goto('https://demo.b1.church/automations');
     await page.waitForLoadState('networkidle');
     console.log('Automations navigation completed');
   }

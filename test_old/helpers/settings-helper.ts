@@ -36,7 +36,7 @@ export class SettingsHelper {
     // Try direct navigation
     const currentUrl = page.url();
     if (!currentUrl.includes('/settings')) {
-      await page.goto('https://chumsdemo.churchapps.org/settings');
+      await page.goto('https://demo.b1.church/settings');
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(2000);
     }
@@ -63,7 +63,7 @@ export class SettingsHelper {
     }
     
     // Try direct navigation
-    await page.goto('https://chumsdemo.churchapps.org/roles');
+    await page.goto('https://demo.b1.church/roles');
     await page.waitForLoadState('networkidle');
     console.log('Roles management navigation completed');
   }

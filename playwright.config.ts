@@ -12,7 +12,7 @@ export default defineConfig({
   expect: { timeout: 5 * 1000 },
 
   use: {
-    baseURL: 'https://chumsdemo.churchapps.org',
+    baseURL: 'https://demo.b1.church',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

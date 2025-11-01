@@ -39,7 +39,7 @@ export class FormsHelper {
     // Try direct navigation
     const currentUrl = page.url();
     if (!currentUrl.includes('/forms')) {
-      await page.goto('https://chumsdemo.churchapps.org/forms');
+      await page.goto('https://demo.b1.church/forms');
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(2000);
     }

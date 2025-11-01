@@ -39,7 +39,7 @@ export class AttendanceHelper {
     // Try direct navigation
     const currentUrl = page.url();
     if (!currentUrl.includes('/attendance')) {
-      await page.goto('https://chumsdemo.churchapps.org/attendance');
+      await page.goto('https://demo.b1.church/attendance');
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(2000);
     }
