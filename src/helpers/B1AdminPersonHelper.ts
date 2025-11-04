@@ -1,11 +1,11 @@
 import { type PersonInterface } from "@churchapps/helpers";
 import { PersonHelper } from "@churchapps/apphelper";
 
-export class ChumsPersonHelper {
+export class B1AdminPersonHelper {
   static getBirthDay(person: PersonInterface) {
     if (person?.birthDate === null) return "";
     else {
-      const parts = ChumsPersonHelper.getDateStringFromDate(person.birthDate).split(" ");
+      const parts = B1AdminPersonHelper.getDateStringFromDate(person.birthDate).split(" ");
 
       return parts[1] + " " + parts[2];
     }

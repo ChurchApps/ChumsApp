@@ -2,7 +2,7 @@ import React from "react";
 import { type PersonInterface } from "@churchapps/helpers";
 import { ApiHelper, DisplayBox, ErrorMessages } from "@churchapps/apphelper";
 import { Button, TextField, Typography } from "@mui/material";
-import { ChumsPersonHelper } from "../../helpers";
+import { B1AdminPersonHelper } from "../../helpers";
 
 interface Props {
   updateSearchResults: (people: PersonInterface[]) => void;
@@ -23,7 +23,7 @@ export const AISearch = (props: Props) => {
       // Then use those filters to search for people
       const response = await ApiHelper.post("/people/advancedSearch", filters, "MembershipApi");
 
-      props.updateSearchResults(response?.map((p: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(p)));
+      props.updateSearchResults(response?.map((p: PersonInterface) => B1AdminPersonHelper.getExpandedPersonObject(p)));
     } catch (error) {
       setErrors([error as string]);
     } finally {

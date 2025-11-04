@@ -60,7 +60,7 @@ export const CampusEdit: React.FC<Props> = (props) => {
       headerText={campus.name}
       headerIcon="church"
       isSubmitting={isSubmitting}
-      help="chums/attendance">
+      help="b1Admin/attendance">
       <ErrorMessages errors={errors} />
       <TextField
         fullWidth

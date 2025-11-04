@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, memo, type JSX } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChumsPersonHelper } from ".";
+import { B1AdminPersonHelper } from ".";
 import { CreatePerson } from "../../components";
 import { type PersonInterface } from "@churchapps/helpers";
 import { PersonHelper, Loading, ApiHelper, ArrayHelper, Locale, PersonAvatar } from "@churchapps/apphelper";
@@ -154,10 +154,10 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
           );
           break;
         case "birthDate":
-          result = <>{p.birthDate === null ? "" : ChumsPersonHelper.getDateStringFromDate(p.birthDate)}</>;
+          result = <>{p.birthDate === null ? "" : B1AdminPersonHelper.getDateStringFromDate(p.birthDate)}</>;
           break;
         case "birthDay":
-          result = <>{ChumsPersonHelper.getBirthDay(p)}</>;
+          result = <>{B1AdminPersonHelper.getBirthDay(p)}</>;
           break;
         case "age":
           result = (
@@ -187,7 +187,7 @@ const PeopleSearchResults = memo(function PeopleSearchResults(props: Props) {
           result = <>{p.maritalStatus}</>;
           break;
         case "anniversary":
-          result = <>{p.anniversary === null ? "" : ChumsPersonHelper.getDateStringFromDate(p.anniversary)}</>;
+          result = <>{p.anniversary === null ? "" : B1AdminPersonHelper.getDateStringFromDate(p.anniversary)}</>;
           break;
         case "nametagNotes":
           result = <>{p.nametagNotes}</>;

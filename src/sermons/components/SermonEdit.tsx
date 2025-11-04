@@ -220,7 +220,7 @@ export const SermonEdit: React.FC<Props> = (props) => {
     return (
     <>
       {showImageEditor && <ImageEditor aspectRatio={16 / 9} outputWidth={640} outputHeight={360} photoUrl={currentSermon?.thumbnail || ""} onCancel={() => setShowImageEditor(false)} onUpdate={handlePhotoUpdated} />}
-      <InputBox headerIcon="calendar_month" headerText={(currentSermon?.permanentUrl) ? Locale.label("sermons.sermonEdit.editPermanentLiveUrl") : Locale.label("sermons.sermonEdit.editSermon")} saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()} help="chums/streaming/sermons" data-testid="sermon-edit-box">
+      <InputBox headerIcon="calendar_month" headerText={(currentSermon?.permanentUrl) ? Locale.label("sermons.sermonEdit.editPermanentLiveUrl") : Locale.label("sermons.sermonEdit.editSermon")} saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()} help="b1Admin/streaming/sermons" data-testid="sermon-edit-box">
         <ErrorMessages errors={errors} data-testid="sermon-errors" />
         <>
           {!currentSermon?.permanentUrl && (

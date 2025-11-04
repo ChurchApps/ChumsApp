@@ -72,7 +72,7 @@ export const TimeEdit = (props: Props) => {
       return (
         <Typography sx={{ fontSize: "13px", fontStyle: "italic" }}>
           Tip: Start with creating teams first.{" "}
-          <a href="https://support.churchapps.org/chums/plans.html" target="_blank" rel="noopener noreferrer">
+          <a href="https://support.churchapps.org/b1Admin/plans.html" target="_blank" rel="noopener noreferrer">
             Follow this guide
           </a>
         </Typography>

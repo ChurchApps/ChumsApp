@@ -203,7 +203,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
     return (
       <>
         {galleryModal}
-        <InputBox id="groupDetailsBox" headerText={Locale.label("groups.groupDetailsEdit.groupDet")} headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} help="chums/groups">
+        <InputBox id="groupDetailsBox" headerText={Locale.label("groups.groupDetailsEdit.groupDet")} headerIcon="group" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} help="b1Admin/groups">
           <ErrorMessages errors={errors} />
           <Grid container spacing={3}>
             {!teamMode && (

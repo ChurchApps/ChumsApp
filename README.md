@@ -1,16 +1,16 @@
-<img align="right" width="150" src="https://raw.githubusercontent.com/ChurchApps/ChumsApp/main/public/images/logo.png">
+<img align="right" width="150" src="https://raw.githubusercontent.com/ChurchApps/B1Admin/main/public/images/logo.png">
 
 # B1Admin
 
 > **B1Admin** is completely free, open-source church management software that allows you to manage key data on church members and visitors. It offers comprehensive features including member and guest information tracking, attendance management with a self check-in app, group coordination, donation tracking with detailed reports, and custom form creation. Visit <a href="https://b1.church/">https://b1.church/</a> to learn more.
 
 <div style="display: flex;gap: 10px;">
-    <img style="width: 49%;" src="https://github.com/ChurchApps/ChumsApp/assets/1447203/ccb5dc7b-8c0d-4320-abac-a3128c42beff">
-    <img style="width: 49%;" src="https://github.com/ChurchApps/ChumsApp/assets/1447203/ac8593f1-0ae7-45aa-972e-82eaaf0dd639">
+    <img style="width: 49%;" src="https://github.com/ChurchApps/B1Admin/assets/1447203/ccb5dc7b-8c0d-4320-abac-a3128c42beff">
+    <img style="width: 49%;" src="https://github.com/ChurchApps/B1Admin/assets/1447203/ac8593f1-0ae7-45aa-972e-82eaaf0dd639">
 </div>
 <div style="display: flex;gap: 10px;margin-top: 10px;">
-    <img style="width: 49%;" src="https://github.com/ChurchApps/ChumsApp/assets/1447203/20f41345-da7d-460a-a64f-224b612ad976">
-    <img style="width: 49%;" src="https://github.com/ChurchApps/ChumsApp/assets/1447203/ab7c109b-e4e4-4ac5-8b10-fa8cd633ccfd">
+    <img style="width: 49%;" src="https://github.com/ChurchApps/B1Admin/assets/1447203/20f41345-da7d-460a-a64f-224b612ad976">
+    <img style="width: 49%;" src="https://github.com/ChurchApps/B1Admin/assets/1447203/ab7c109b-e4e4-4ac5-8b10-fa8cd633ccfd">
 </div>
 
 ## Get Involved

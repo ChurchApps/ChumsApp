@@ -28,7 +28,7 @@ export const FormEdit = ({ parsedData, handleChange }: Props) => {
       <Typography fontSize="15px" fontStyle="italic" align="center">
         No forms available!
         <br />
-        <Link href={`${EnvironmentHelper.Common.ChumsRoot}/forms`} target="_blank" rel="noreferrer">Create a new form</Link>
+        <Link href={`${EnvironmentHelper.Common.B1AdminRoot}/forms`} target="_blank" rel="noreferrer">Create a new form</Link>
       </Typography>
     );
   }

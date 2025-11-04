@@ -1,6 +1,6 @@
 import React, { useState, memo, useCallback, useMemo } from "react";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
-import { ChumsPersonHelper, UpdateHouseHold } from ".";
+import { B1AdminPersonHelper, UpdateHouseHold } from ".";
 import { type PersonInterface } from "@churchapps/helpers";
 import {
   PersonHelper, DateHelper, InputBox, ApiHelper, Loading, ErrorMessages, Locale, PersonAvatar 
@@ -168,7 +168,7 @@ export const PersonEdit = memo((props: Props) => {
       p.contactInfo.homePhone = p.contactInfo.homePhone?.length <= 4 ? null : p.contactInfo.homePhone;
       p.contactInfo.workPhone = p.contactInfo.workPhone?.length <= 4 ? null : p.contactInfo.workPhone;
       p.contactInfo.mobilePhone = p.contactInfo.mobilePhone?.length <= 4 ? null : p.contactInfo.mobilePhone;
-      if (ChumsPersonHelper.getExpandedPersonObject(person).id === context.person?.id) context.setPerson(person);
+      if (B1AdminPersonHelper.getExpandedPersonObject(person).id === context.person?.id) context.setPerson(person);
 
       const { contactInfo: contactFromProps } = props.person;
 

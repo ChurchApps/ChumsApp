@@ -191,7 +191,7 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
   }, [sortedRoles, canEdit, selectRoleId]);
 
   return (
-    <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={editContent} help="chums/assigning-roles">
+    <DisplayBox id="rolesBox" headerText={Locale.label("settings.roles.roles")} headerIcon="lock" editContent={editContent} help="b1Admin/assigning-roles">
       <Table id="roleMemberTable">
         <TableHead>
           <TableRow>

@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useRef } from "react";
-import { ChumsPersonHelper } from ".";
+import { B1AdminPersonHelper } from ".";
 import { type SearchCondition, type PersonInterface } from "@churchapps/helpers";
 import { InputBox, ApiHelper, Locale } from "@churchapps/apphelper";
 import { TextField, Box, Typography, Stack } from "@mui/material";
@@ -20,13 +20,13 @@ export function PeopleSearch(props: Props) {
     if (advancedConditions && advancedConditions.length > 0) {
       // Advanced search with conditions
       ApiHelper.post("/people/advancedSearch", advancedConditions, "MembershipApi").then((data) => {
-        props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
+        props.updateSearchResults(data.map((d: PersonInterface) => B1AdminPersonHelper.getExpandedPersonObject(d)));
       });
     } else if (term.trim()) {
       // Simple search by name
       const condition: SearchCondition = { field: "displayName", operator: "contains", value: term.trim() };
       ApiHelper.post("/people/advancedSearch", [condition], "MembershipApi").then((data) => {
-        props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
+        props.updateSearchResults(data.map((d: PersonInterface) => B1AdminPersonHelper.getExpandedPersonObject(d)));
       });
     }
   }, [props]);
@@ -62,7 +62,7 @@ export function PeopleSearch(props: Props) {
       id="peopleSearch"
       headerIcon="person"
       headerText={Locale.label("people.peopleSearch.simpSearch")}
-      help="chums/advanced-search"
+      help="b1Admin/advanced-search"
     >
       <Stack spacing={2}>
         {/* Quick Search */}

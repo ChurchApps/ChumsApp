@@ -125,7 +125,7 @@ export const SessionEdit: React.FC<Props> = (props) => {
 
   if (loading) {
     return (
-      <InputBox data-cy="edit-session-box" headerIcon="edit" headerText={Locale.label("groups.sessionEdit.sesEdit")} cancelFunction={handleCancel} help="chums/attendance">
+      <InputBox data-cy="edit-session-box" headerIcon="edit" headerText={Locale.label("groups.sessionEdit.sesEdit")} cancelFunction={handleCancel} help="b1Admin/attendance">
         <Loading />
       </InputBox>
     );
@@ -139,7 +139,7 @@ export const SessionEdit: React.FC<Props> = (props) => {
       saveFunction={handleSave}
       cancelFunction={handleCancel}
       deleteFunction={handleDelete}
-      help="chums/attendance">
+      help="b1Admin/attendance">
       <ErrorMessages errors={errors} />
       {getServiceTimes()}
 

@@ -10,7 +10,7 @@ export { DonationHelper } from "@churchapps/apphelper-donations";
 
 // Local helpers
 export { AnalyticsHelper } from "./AnalyticsHelper";
-export { ChumsPersonHelper } from "./ChumsPersonHelper";
+export { B1AdminPersonHelper } from "./B1AdminPersonHelper";
 export { ConditionHelper } from "./ConditionHelper";
 export { EnvironmentHelper } from "./EnvironmentHelper";
 export { PageHelper } from "./PageHelper";

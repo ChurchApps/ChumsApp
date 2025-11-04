@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useState, useMemo, useEffect, useRef } from "react";
-import { ChumsPersonHelper } from ".";
+import { B1AdminPersonHelper } from ".";
 import { type GroupMemberInterface, type SearchCondition, type GroupInterface, type CampusInterface, type ServiceInterface, type ServiceTimeInterface } from "@churchapps/helpers";
 import { ArrayHelper, InputBox, ApiHelper, Locale, DateHelper, Permissions } from "@churchapps/apphelper";
 import { type PersonInterface, type FundDonationInterface, type FundInterface } from "@churchapps/helpers";
@@ -390,7 +390,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
       debounceTimerRef.current = setTimeout(async () => {
         const postConditions = await convertConditions();
         ApiHelper.post("/people/advancedSearch", postConditions, "MembershipApi").then((data) => {
-          props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
+          props.updateSearchResults(data.map((d: PersonInterface) => B1AdminPersonHelper.getExpandedPersonObject(d)));
         });
       }, 500);
     }
@@ -479,7 +479,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
   const handleAdvancedSearch = useCallback(async () => {
     const postConditions = await convertConditions();
     ApiHelper.post("/people/advancedSearch", postConditions, "MembershipApi").then((data) => {
-      props.updateSearchResults(data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d)));
+      props.updateSearchResults(data.map((d: PersonInterface) => B1AdminPersonHelper.getExpandedPersonObject(d)));
     });
   }, [convertConditions, props]);
 
@@ -950,7 +950,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         saveFunction={handleAdvancedSearch}
         saveText="Search"
         isSubmitting={Object.keys(activeFilters).length < 1}
-        help="chums/advanced-search">
+        help="b1Admin/advanced-search">
         {renderContent()}
       </InputBox>
 

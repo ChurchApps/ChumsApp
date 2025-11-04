@@ -4,7 +4,7 @@ import { Locale } from "@churchapps/apphelper";
 import { PeopleSearchResults, PeopleColumns } from "./components";
 import { ExportLink } from "@churchapps/apphelper";
 import { Grid, Box, Typography, Card, Stack, Button } from "@mui/material";
-import { ChumsPersonHelper } from "../helpers";
+import { B1AdminPersonHelper } from "../helpers";
 import { PeopleSearch } from "./components/PeopleSearch";
 import { Search as SearchIcon, People as PeopleIcon, PersonAdd as PersonAddIcon, FileDownload as ExportIcon } from "@mui/icons-material";
 import { PageHeader } from "@churchapps/apphelper";
@@ -70,7 +70,7 @@ export const PeoplePage = memo(() => {
 
   const expandedRecentPeople = useMemo(() => {
     if (!recentPeople.data) return [];
-    return recentPeople.data.map((d: PersonInterface) => ChumsPersonHelper.getExpandedPersonObject(d));
+    return recentPeople.data.map((d: PersonInterface) => B1AdminPersonHelper.getExpandedPersonObject(d));
   }, [recentPeople.data]);
 
   React.useEffect(() => {

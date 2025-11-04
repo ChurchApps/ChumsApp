@@ -91,7 +91,7 @@ export const ServiceTimeEdit: React.FC<Props> = (props) => {
       headerText={serviceTime.name}
       isSubmitting={isSubmitting}
       headerIcon="schedule"
-      help="chums/attendance">
+      help="b1Admin/attendance">
       <ErrorMessages errors={errors} />
       <FormControl fullWidth>
         <InputLabel id="service">{Locale.label("attendance.serviceTimeEdit.service")}</InputLabel>

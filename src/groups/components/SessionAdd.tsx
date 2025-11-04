@@ -92,7 +92,7 @@ export const SessionAdd: React.FC<Props> = (props) => {
       headerText={Locale.label("groups.sessionAdd.sesAdd")}
       saveFunction={handleSave}
       cancelFunction={handleCancel}
-      help="chums/attendance">
+      help="b1Admin/attendance">
       <ErrorMessages errors={errors} />
       {getServiceTimes()}
 
