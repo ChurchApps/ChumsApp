@@ -107,7 +107,7 @@ export const ManageChurch = () => {
           <Button
             variant="outlined"
             startIcon={<PlayArrowIcon />}
-            href={`https://transfer.chums.org/login?jwt=${jwt}&churchId=${churchId}`}
+            href={`https://transfer.b1.church/login?jwt=${jwt}&churchId=${churchId}`}
             target="_blank"
             rel="noreferrer noopener"
             sx={{
