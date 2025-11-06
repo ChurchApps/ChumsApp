@@ -1,0 +1,244 @@
+import { test, expect } from '@playwright/test';
+import { login } from './helpers/auth';
+
+// OCTAVIAN/OCTAVIUS are the names used for testing. If you see Octavian or Octavius entered anywhere, it is a result of these tests.
+test.describe('Settings Management', () => {
+  test.beforeEach(async ({ page }) => {
+    await login(page);
+    const menuBtn = page.locator('[id="primaryNavButton"]').getByText('expand_more');
+    await menuBtn.click();
+    const settingsHomeBtn = page.locator('[data-testid="nav-item-settings"]');
+    await settingsHomeBtn.click();
+    await page.waitForTimeout(5000);
+    await expect(page).toHaveURL(/\/settings/);
+  });
+
+  /* test('should load settings home', async ({ page }) => {
+    const settingsHeader = page.locator('h4').getByText('Grace Community Church');
+    await settingsHeader.click();
+  }); */
+
+  test('should edit church', async ({ page }) => {
+    const settingsHeader = page.locator('h4').getByText('Grace Community Church');
+    const editBtn = page.locator('[d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"]');
+    await editBtn.click();
+    const churchName = page.locator('[name="churchName"]');
+    await churchName.fill('Grace Community Church Lol');
+    const saveBtn = page.locator('button').getByText('Save');
+    await saveBtn.click();
+    const settingHeaderTwo = page.locator('h4').getByText('Grace Community Church Lol');
+    await expect(settingHeaderTwo).toHaveCount(1);
+    // reset
+    editBtn.click();
+    churchName.fill('Grace Community Church');
+    saveBtn.click();
+    await expect(settingsHeader).toHaveCount(1);
+  });
+
+  test('should cancel editing church', async ({ page }) => {
+    const editBtn = page.locator('[d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"]');
+    await editBtn.click();
+    const churchName = page.locator('[name="churchName"]');
+    await expect(churchName).toHaveCount(1)
+    const cancelBtn = page.locator('button').getByText('Cancel');
+    await cancelBtn.click();
+    await expect(churchName).toHaveCount(0);
+  });
+
+  test('should create role', async ({ page }) => {
+    const addBtn = page.locator('[data-testid="add-role-button"]');
+    await addBtn.click();
+    const custom = page.locator('li').getByText('Add Custom Role');
+    await custom.click();
+    const roleName = page.locator('[name="roleName"]');
+    await roleName.fill('Octavian Test Role');
+    const saveBtn = page.locator('button').getByText('Save');
+    await saveBtn.click();
+    const validatedRole = page.locator('a').getByText('Octavian Test Role');
+    await expect(validatedRole).toHaveCount(1);
+  });
+
+  test('should add person to role', async ({ page }) => {
+    const role = page.locator('a').getByText('Octavian Test Role');
+    await role.click();
+    const addBtn = page.locator('[data-testid="add-role-member-button"]');
+    await addBtn.click();
+    const searchBox = page.locator('[name="personAddText"]');
+    await searchBox.fill('Demo User');
+    const searchBtn = page.locator('[data-testid="search-button"]');
+    await searchBtn.click();
+    const selectBtn = page.locator('button').getByText('Select');
+    await selectBtn.click();
+    await page.waitForTimeout(500);
+    const validatedPerson = page.locator('td').getByText('Demo User');
+    await expect(validatedPerson).toHaveCount(1);
+  });
+
+  test('should edit role', async ({ page }) => {
+    const editBtn = page.locator('[data-testid="edit-role-button"]').last();
+    await editBtn.click();
+    const roleName = page.locator('[name="roleName"]');
+    await roleName.fill('Octavius Test Role');
+    const saveBtn = page.locator('button').getByText('Save');
+    await saveBtn.click();
+    const validatedRole = page.locator('a').getByText('Octavius Test Role');
+    await expect(validatedRole).toHaveCount(1);
+  });
+
+  test('should cancel editing role', async ({ page }) => {
+    const editBtn = page.locator('[data-testid="edit-role-button"]').last();
+    await editBtn.click();
+    const roleName = page.locator('[name="roleName"]');
+    await expect(roleName).toHaveCount(1);
+    const cancelBtn = page.locator('button').getByText('Cancel');
+    await cancelBtn.click();
+    await expect(roleName).toHaveCount(0);
+  });
+
+  test('should delete role', async ({ page }) => {
+    page.once('dialog', async dialog => {
+      expect(dialog.type()).toBe('confirm');
+      expect(dialog.message()).toContain('Are you sure');
+      await dialog.accept();
+    });
+
+    const editBtn = page.locator('[data-testid="edit-role-button"]').last();
+    await editBtn.click();
+    const deleteBtn = page.locator('button').getByText('Delete');
+    await deleteBtn.click();
+    const validatedDeletion = page.locator('a').getByText('Octavius Test Role');
+    await expect(validatedDeletion).toHaveCount(0);
+  });
+
+  test('should create mobile app tab', async ({ page }) => {
+    const mobileTab = page.locator('[id="secondaryMenu"]').getByText('Mobile Apps');
+    await mobileTab.click();
+
+    const addBtn = page.locator('button').getByText('Add Tab');
+    await addBtn.click();
+    const tabName = page.locator('[name="text"]');
+    await tabName.fill('Octavian Test Tab')
+    const url = page.locator('[name="url"]');
+    await url.fill('https://pony.town/');
+    const saveBtn = page.locator('button').getByText('Save Tab');
+    await saveBtn.click();
+    const validatedTab = page.locator('h6').getByText('Octavian Test Tab');
+    await expect(validatedTab).toHaveCount(1);
+  });
+
+  test('should edit mobile app tab', async ({ page }) => {
+    const mobileTab = page.locator('[id="secondaryMenu"]').getByText('Mobile Apps');
+    await mobileTab.click();
+
+    const editBtn = page.locator('[d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"]');
+    await editBtn.click();
+    const tabName = page.locator('[name="text"]');
+    await tabName.fill('Octavius Test Tab')
+    const saveBtn = page.locator('button').getByText('Save Tab');
+    await saveBtn.click();
+    const validatedTab = page.locator('h6').getByText('Octavius Test Tab');
+    await expect(validatedTab).toHaveCount(1);
+  });
+
+  test('should cancel edit mobile app tab', async ({ page }) => {
+    const mobileTab = page.locator('[id="secondaryMenu"]').getByText('Mobile Apps');
+    await mobileTab.click();
+
+    const editBtn = page.locator('[d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"]');
+    await editBtn.click();
+    const tabName = page.locator('[name="text"]');
+    await expect(tabName).toHaveCount(1);
+    const cancelBtn = page.locator('button').getByText('Cancel');
+    await cancelBtn.click();
+    await expect(tabName).toHaveCount(0);
+  });
+
+  test('should delete mobile app tab', async ({ page }) => {
+    page.once('dialog', async dialog => {
+      expect(dialog.type()).toBe('confirm');
+      expect(dialog.message()).toContain('Are you sure');
+      await dialog.accept();
+    });
+
+    const mobileTab = page.locator('[id="secondaryMenu"]').getByText('Mobile Apps');
+    await mobileTab.click();
+
+    const editBtn = page.locator('[d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"]');
+    await editBtn.click();
+    const deleteBtn = page.locator('button').getByText('Delete');
+    await deleteBtn.click();
+    const validatedDeletion = page.locator('h6').getByText('Octavius Test Tab');
+    await expect(validatedDeletion).toHaveCount(0);
+  });
+
+  test('should create form', async ({ page }) => {
+    const formTab = page.locator('[id="secondaryMenu"]').getByText('Form');
+    await formTab.click();
+
+    const addBtn = page.locator('[data-testid="add-form-button"]');
+    await addBtn.click();
+    const formName = page.locator('[name="name"]');
+    await formName.fill('Octavian Test Form');
+    const association = page.locator('[id="mui-component-select-contentType"]');
+    await association.click();
+    const selAssociation = page.locator('li').getByText('Stand Alone');
+    await selAssociation.click();
+    const restriction = page.locator('[id="mui-component-select-restricted"]');
+    await restriction.click();
+    const selRestriction = page.locator('li').getByText('Public');
+    await selRestriction.click();
+    const thanksMsg = page.locator('[name="thankYouMessage"]');
+    await thanksMsg.fill('Thanks from Octavian');
+    const saveBtn = page.locator('button').getByText('Save');
+    await saveBtn.click();
+    const validatedForm = page.locator('a').getByText('Octavian Test Form');
+    await expect(validatedForm).toHaveCount(1);
+  });
+
+  test('DOES NOT WORK should edit form', async ({ page }) => {
+    const formTab = page.locator('[id="secondaryMenu"]').getByText('Form');
+    await formTab.click();
+    //creates duplicate form
+    const editBtn = page.locator('button').getByText('edit');
+    await editBtn.click();
+    const formName = page.locator('[name="name"]');
+    await formName.fill('Octavius Test Form');
+    const saveBtn = page.locator('button').getByText('Save');
+    await saveBtn.click();
+    const validatedForm = page.locator('a').getByText('Octavius Test Form');
+    await expect(validatedForm).toHaveCount(1);
+  });
+
+  test('should cancel editing form', async ({ page }) => {
+    const formTab = page.locator('[id="secondaryMenu"]').getByText('Form');
+    await formTab.click();
+
+    const editBtn = page.locator('button').getByText('edit');
+    await editBtn.click();
+    const formName = page.locator('[name="name"]');
+    await expect(formName).toHaveCount(1);
+    const cancelBtn = page.locator('button').getByText('Cancel');
+    await cancelBtn.click();
+    await expect(formName).toHaveCount(0);
+  });
+
+  test('DOES NOT WORK should delete form', async ({ page }) => {
+    page.once('dialog', async dialog => {
+      expect(dialog.type()).toBe('confirm');
+      expect(dialog.message()).toContain('Are you sure');
+      await dialog.accept();
+    });
+
+    const formTab = page.locator('[id="secondaryMenu"]').getByText('Form');
+    await formTab.click();
+
+    const editBtn = page.locator('button').getByText('edit');
+    await editBtn.click();
+    const deleteBtn = page.locator('button').getByText('Delete').first();
+    await deleteBtn.click();
+    await page.waitForTimeout(2000);
+    const validatedDeletion = page.locator('a').getByText('Octavian Test Form');
+    await expect(validatedDeletion).toHaveCount(0);
+  });
+
+});
