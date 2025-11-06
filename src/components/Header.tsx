@@ -37,7 +37,6 @@ export const Header: React.FC = () => {
 
     // Temporarily hidden
     if (UserHelper.checkAccess(Permissions.contentApi.streamingServices.edit)) menuItems.push({ url: "/sermons", label: "Sermons", icon: "live_tv" });
-    if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/calendars", label: "Calendars", icon: "calendar_month" });
     if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) menuItems.push({ url: "/site/pages", label: "Website", icon: "language" });
 
     if (UserHelper.checkAccess(Permissions.membershipApi.roles.view)) menuItems.push({ url: "/settings", label: Locale.label("components.wrapper.set"), icon: "settings" });
@@ -62,10 +61,8 @@ export const Header: React.FC = () => {
     else if (path.startsWith("/groups")) result = Locale.label("components.wrapper.ppl");
     else if (path.startsWith("/donations")) result = Locale.label("components.wrapper.don");
     else if (path.startsWith("/tasks") || path.startsWith("/plans") || window.location.search.indexOf("tag=") > -1) result = Locale.label("components.wrapper.serving");
-    // Temporarily hidden
-    // else if (path.startsWith("/sermons")) result = "Sermons";
-    // else if (path.startsWith("/calendars")) result = "Calendars";
-    // else if (path.startsWith("/site")) result = "Website";
+    else if (path.startsWith("/sermons")) result = "Sermons";
+    else if (path.startsWith("/calendars") || path.startsWith("/site")) result = "Website";
     else if (path.startsWith("/settings") || path.startsWith("/admin") || path.startsWith("/forms")) result = Locale.label("components.wrapper.set");
     return result;
   };
