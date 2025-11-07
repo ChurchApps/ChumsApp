@@ -5,7 +5,7 @@ import { ApiHelper, ErrorMessages, PageHeader, SmallButton, UserHelper } from "@
 import { useWindowWidth } from "@react-hook/window-size";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AddPageModal, NavLinkEdit } from "./components";
-import { PageHelper } from "../helpers";
+import { PageHelper, EnvironmentHelper } from "../helpers";
 import type { PageLink } from "../helpers";
 import type { GenericSettingInterface, LinkInterface } from "@churchapps/helpers";
 import { DndProvider } from "react-dnd";
@@ -48,10 +48,10 @@ export const PagesPage = () => {
           <TableCell>
             <Stack direction="row" alignItems="center" spacing={1}>
               {getExpandControl(item, level)}
-              <Typography variant="body2" sx={{ fontFamily: 'monospace', cursor: 'pointer', color: 'primary.main', '&:hover': { textDecoration: 'underline' } }} onClick={() => navigate(`/preview/${UserHelper.currentUserChurch.church.id}${item.url}`)}>
+              <Typography variant="body2" sx={{ fontFamily: 'monospace', cursor: 'pointer', color: 'primary.main', '&:hover': { textDecoration: 'underline' } }} onClick={() => window.open(EnvironmentHelper.B1Url.replace('{subdomain}', UserHelper.currentUserChurch.church.subDomain) + item.url, '_blank')}>
                 {item.url}
               </Typography>
-              <Tooltip title="Preview page"><IconButton size="small" onClick={() => navigate(`/preview/${UserHelper.currentUserChurch.church.id}${item.url}`)} sx={{ p: 0.5 }}><VisibilityIcon sx={{ fontSize: 16 }} /></IconButton></Tooltip>
+              <Tooltip title="Preview page"><IconButton size="small" onClick={() => window.open(EnvironmentHelper.B1Url.replace('{subdomain}', UserHelper.currentUserChurch.church.subDomain) + item.url, '_blank')} sx={{ p: 0.5 }}><VisibilityIcon sx={{ fontSize: 16 }} /></IconButton></Tooltip>
               {!item.custom && (<Chip label="Generated" size="small" color="default" sx={{ fontSize: '0.7rem', height: 18 }} />)}
             </Stack>
           </TableCell>
