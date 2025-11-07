@@ -247,10 +247,10 @@
   dependencies:
     rrule "^2.8.1"
 
-"@churchapps/apphelper@^0.5.6", "@churchapps/apphelper@^0.5.7":
-  version "0.5.7"
-  resolved "https://registry.npmjs.org/@churchapps/apphelper/-/apphelper-0.5.7.tgz"
-  integrity sha512-6yi2V4Byrmka3IccqSNH6ePBq1js4WH0r5uwF8cg4/DOOB3Y4nx8E+hB8ZOv93m7CTVMfuVFB7qfUxfpDM5ypw==
+"@churchapps/apphelper@^0.5.6", "@churchapps/apphelper@^0.5.8":
+  version "0.5.8"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper/-/apphelper-0.5.8.tgz"
+  integrity sha512-nDNcEXVa5UdrjuOLjBX99vjjNXQsOeFQf7MVdhp1DDFYxL2ePAQAt9pO6/jAVQkcw97aootxd6Xulgc3ZMNBcQ==
   dependencies:
     "@churchapps/helpers" "^1.2.4"
     "@emotion/cache" "^11.14.0"
