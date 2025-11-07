@@ -13,6 +13,7 @@
     "@churchapps/helpers": "^1.2.4",
     "@mui/icons-material": "^7.1.2",
     "@mui/material": "^7.1.2",
+    "@react-google-maps/api": "^2.20.0",
     "@react-hook/window-size": "^3.1.1",
     "@stripe/react-stripe-js": "^3.8.0",
     "@stripe/stripe-js": "^7.6.1",

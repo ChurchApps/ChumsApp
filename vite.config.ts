@@ -12,7 +12,6 @@ export default defineConfig(({ mode }) => {
 
     build: {
       rollupOptions: {
-        external: ['@react-google-maps/api'],
         output: {
           manualChunks: {
             // Core React libraries
