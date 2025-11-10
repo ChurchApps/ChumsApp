@@ -24,7 +24,7 @@ export const MobileAppSettingsPage = () => {
       icon: "home",
       linkData: "",
       linkType: "url",
-      category: "chumsTab"
+      category: "b1Tab"
     };
     setSelectedTab(newTab);
   };
