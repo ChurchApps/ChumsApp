@@ -28,7 +28,7 @@ export function EmptyState() {
             mb: 3,
           }}
         >
-          <span className="material-icons" style={{ fontSize: 48, color: '#9e9e9e' }}>
+          <span className="material-icons" style={{ fontSize: '3rem', color: '#9e9e9e' }}>
             dashboard_customize
           </span>
         </Box>
@@ -62,11 +62,11 @@ export function EmptyState() {
             px: 3,
             py: 1.5,
             backgroundColor: '#f8f9fa',
-            borderRadius: '8px',
+            borderRadius: 1,
             border: '1px dashed #e0e0e0',
           }}
         >
-          <span className="material-icons" style={{ fontSize: 20, color: '#616161' }}>
+          <span className="material-icons" style={{ fontSize: '1.25rem', color: '#616161' }}>
             add_circle_outline
           </span>
           <Typography variant="body2" sx={{ color: '#616161', fontWeight: 500 }}>

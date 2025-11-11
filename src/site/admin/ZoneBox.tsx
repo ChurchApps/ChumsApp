@@ -1,4 +1,4 @@
-import { Chip } from "@mui/material";
+import { Chip, Box, useTheme } from "@mui/material";
 import type { SectionInterface } from "../../helpers/Interfaces";
 
 interface ZoneBoxProps {
@@ -11,17 +11,26 @@ interface ZoneBoxProps {
 
 export function ZoneBox(props: ZoneBoxProps) {
   const { keyName, deviceType, children } = props;
+  const theme = useTheme();
 
   return (
-    <div key={"zone-" + keyName} style={{ minHeight: 100, position: "relative" }}>
-      <div style={{
-        position: "absolute",
-        right: 16,
-        top: 8,
-        zIndex: 99,
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)"
-      }}>
+    <Box
+      key={"zone-" + keyName}
+      sx={{
+        minHeight: '100px',
+        position: "relative"
+      }}
+    >
+      <Box
+        sx={{
+          position: "absolute",
+          right: 2,
+          top: 1,
+          zIndex: 99,
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)"
+        }}
+      >
         <Chip
           label={`Zone: ${keyName}`}
           size="small"
@@ -38,15 +47,13 @@ export function ZoneBox(props: ZoneBoxProps) {
             }
           }}
         />
-      </div>
-      <div style={{ minHeight: 100 }}>
-        <>
-          <div className="page" style={(deviceType === "mobile" ? { width: 400, marginLeft: "auto", marginRight: "auto" } : {})}>
-            {children}
-          </div>
-        </>
-      </div>
-      <div style={{ height: "31px" }}></div>
-    </div>
+      </Box>
+      <Box sx={{ minHeight: '100px' }}>
+        <div className="page" style={(deviceType === "mobile" ? { width: 400, marginLeft: "auto", marginRight: "auto" } : {})}>
+          {children}
+        </div>
+      </Box>
+      <Box sx={{ height: theme.spacing(3.875) }}></Box>
+    </Box>
   );
 }

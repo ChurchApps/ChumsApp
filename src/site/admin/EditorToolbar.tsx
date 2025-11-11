@@ -101,13 +101,19 @@ export function EditorToolbar(props: EditorToolbarProps) {
             sx={toggleButtonStyles}
           >
             <ToggleButton value="desktop">
-              <Tooltip title="Desktop View" placement="top">
-                <Icon>computer</Icon>
+              <Tooltip title="Switch to Desktop View" placement="top">
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <Icon fontSize="small">computer</Icon>
+                  <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>Desktop</span>
+                </div>
               </Tooltip>
             </ToggleButton>
             <ToggleButton value="mobile">
-              <Tooltip title="Mobile View" placement="top">
-                <Icon>smartphone</Icon>
+              <Tooltip title="Switch to Mobile View" placement="top">
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <Icon fontSize="small">smartphone</Icon>
+                  <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>Mobile</span>
+                </div>
               </Tooltip>
             </ToggleButton>
           </ToggleButtonGroup>

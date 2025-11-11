@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import { useWindowWidth } from "@react-hook/window-size";
 import type { BlockInterface, ElementInterface, PageInterface, SectionInterface, GlobalStyleInterface } from "../../helpers/Interfaces";
 import { ApiHelper, ArrayHelper, UserHelper } from "../../helpers";
@@ -46,6 +46,7 @@ export function ContentEditor(props: Props) {
   const [scrollTop, setScrollTop] = useState(0);
   const [deviceType, setDeviceType] = useState("desktop");
   const windowWidth = useWindowWidth();
+  const isMobileViewport = useMediaQuery('(max-width:900px)');
 
   const [showAdd, setShowAdd] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
@@ -91,8 +92,8 @@ export function ContentEditor(props: Props) {
   useEffect(loadDataInternal, [props.pageId, props.blockId]);
 
   useEffect(() => {
-    if (windowWidth < 883) navigate("/site");
-  }, [windowWidth]);
+    if (isMobileViewport) navigate("/site");
+  }, [isMobileViewport]);
 
   const handleDrop = (data: any, sort: number, zone: string) => {
     if (data.data) {
@@ -143,7 +144,7 @@ export function ContentEditor(props: Props) {
     const editorBar = document.getElementById("editorBar");
     if (window.innerWidth > 900) {
       if (window?.innerHeight) {
-        if (scrollTop < 50) rightBarStyle = { paddingTop: 70 };
+        if (scrollTop < 50) rightBarStyle = { paddingTop: '70px' };
       }
     }
   }
@@ -276,7 +277,7 @@ export function ContentEditor(props: Props) {
           <>
             <div style={{
               position: "fixed",
-              bottom: 30,
+              bottom: '30px',
               left: "50%",
               transform: "translateX(-50%)",
               zIndex: 1000,
@@ -287,7 +288,7 @@ export function ContentEditor(props: Props) {
             </div>
             <div style={{
               position: "fixed",
-              top: 50,
+              top: '50px',
               left: "50%",
               transform: "translateX(-50%)",
               zIndex: 1000,
