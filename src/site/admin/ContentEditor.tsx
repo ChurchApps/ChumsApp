@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, ThemeProvider, createTheme } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material";
 import { useWindowWidth } from "@react-hook/window-size";
 import type { BlockInterface, ElementInterface, PageInterface, SectionInterface, GlobalStyleInterface } from "../../helpers/Interfaces";
 import { ApiHelper, ArrayHelper, UserHelper } from "../../helpers";
@@ -21,6 +21,7 @@ import UserContext from "../../UserContext";
 import { EditorToolbar } from "./EditorToolbar";
 import { HelpDialog } from "./HelpDialog";
 import { ZoneBox } from "./ZoneBox";
+import { EmptyState } from "./EmptyState";
 
 interface ConfigInterface {
   globalStyles?: GlobalStyleInterface;
@@ -123,7 +124,9 @@ export function ContentEditor(props: Props) {
       result.push(getAddSection(section.sort + 0.1, zone));
     });
 
-    if (sections.length === 0) result.push(<Container key="empty"><p>Add a section to get started</p></Container>)
+    if (sections.length === 0) {
+      result.push(<EmptyState key="empty" />);
+    }
     return result;
   }
 
