@@ -201,7 +201,7 @@ export function ContentEditor(props: Props) {
   }
 
   const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => <div key={"zone-" + keyName} style={{ minHeight: 100 }}>
-    <div style={{ position: "absolute", backgroundColor: "#FFF", zIndex: 99, padding: 10, border: "1px solid #999", opacity: 0.5 }}>Zone: {keyName}</div>
+    <div style={{ position: "absolute", right: 0, backgroundColor: "#FFF", zIndex: 99, padding: 10, border: "1px solid #999", opacity: 0.5 }}>Zone: {keyName}</div>
     <div style={{ minHeight: 100 }}>
       <>
         <div className="page" style={(deviceType === "mobile" ? { width: 400, marginLeft: "auto", marginRight: "auto" } : {})}>
@@ -246,12 +246,12 @@ export function ContentEditor(props: Props) {
     <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
     <style>{css}</style>
 
-    <div style={{ backgroundColor: "#FFF", position: "sticky", top: 0, width: "100%", zIndex: 1000, boxShadow: "0px 2px 2px black", marginBottom: 10 }}>
-      <Grid container spacing={2}>
+    <div style={{ backgroundColor: "#FFF", position: "sticky", top: 0, width: "100%", zIndex: 1000, boxShadow: "0px 2px 2px black" }}>
+      <Grid container spacing={2} sx={{ margin: 0, padding: 0 }}>
         <Grid size={{ xs: 4 }} style={{ paddingLeft: 40, paddingTop: 8 }}>
           <SmallButton icon={"done"} text="Done" onClick={handleDone} data-testid="content-editor-done-button" />
         </Grid>
-        <Grid size={{ xs: 4 }} style={{ textAlign: "center" }}>
+        <Grid size={{ xs: 4 }} style={{ textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <b>
             {props.pageId && "Page: " + (container as PageInterface)?.title}
             {props.blockId && "Block: " + (container as BlockInterface)?.name}
@@ -297,7 +297,7 @@ export function ContentEditor(props: Props) {
       }} onRealtimeChange={handleRealtimeChange} globalStyles={props.config?.globalStyles} />}
       {editSection && <SectionEdit section={editSection} updatedCallback={() => { setEditSection(null); loadDataInternal(); }} globalStyles={props.config?.globalStyles} />}
 
-      <div>
+      <div style={{ marginTop: 0, paddingTop: 0 }}>
         {scrollTop > 150
           && <div style={{ position: "fixed", bottom: 30, zIndex: 1000, width: 500, marginLeft: 300 }}>
             <DroppableScroll key={"scrollDown"} text={"Scroll Down"} direction="down" />
@@ -307,7 +307,7 @@ export function ContentEditor(props: Props) {
         </div>}
 
 
-        <h1 style={{ marginTop: -50 }}>Edit Page</h1>
+
         <ThemeProvider theme={getTheme()}>
           {getZoneBoxes()}
         </ThemeProvider>
