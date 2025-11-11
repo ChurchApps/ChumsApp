@@ -1,12 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Dialog, Grid, Icon, ThemeProvider, ToggleButton, ToggleButtonGroup, Tooltip, createTheme, Chip } from "@mui/material";
+import { Container, ThemeProvider, createTheme } from "@mui/material";
 import { useWindowWidth } from "@react-hook/window-size";
 import type { BlockInterface, ElementInterface, PageInterface, SectionInterface, GlobalStyleInterface } from "../../helpers/Interfaces";
 import { ApiHelper, ArrayHelper, UserHelper } from "../../helpers";
 import { Permissions } from "@churchapps/helpers";
-import { SmallButton, DisplayBox } from "@churchapps/apphelper";
 import { Section } from "./Section";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -19,6 +18,9 @@ import { ElementEdit } from "./elements/ElementEdit";
 import { SectionEdit } from "./SectionEdit";
 import { DroppableScroll } from "./DroppableScroll";
 import UserContext from "../../UserContext";
+import { EditorToolbar } from "./EditorToolbar";
+import { HelpDialog } from "./HelpDialog";
+import { ZoneBox } from "./ZoneBox";
 
 interface ConfigInterface {
   globalStyles?: GlobalStyleInterface;
@@ -200,41 +202,11 @@ export function ContentEditor(props: Props) {
     });
   }
 
-  const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => <div key={"zone-" + keyName} style={{ minHeight: 100, position: "relative" }}>
-    <div style={{
-      position: "absolute",
-      right: 16,
-      top: 8,
-      zIndex: 99,
-      backdropFilter: "blur(8px)",
-      WebkitBackdropFilter: "blur(8px)"
-    }}>
-      <Chip
-        label={`Zone: ${keyName}`}
-        size="small"
-        sx={{
-          backgroundColor: "rgba(25, 118, 210, 0.9)",
-          color: "#ffffff",
-          border: "1px solid rgba(25, 118, 210, 1)",
-          fontWeight: 600,
-          fontSize: "0.75rem",
-          letterSpacing: "0.5px",
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
-          "&:hover": {
-            backgroundColor: "rgba(21, 101, 192, 0.95)",
-          }
-        }}
-      />
-    </div>
-    <div style={{ minHeight: 100 }}>
-      <>
-        <div className="page" style={(deviceType === "mobile" ? { width: 400, marginLeft: "auto", marginRight: "auto" } : {})}>
-          {getSections(keyName)}
-        </div>
-      </>
-    </div>
-    <div style={{ height: "31px" }}></div>
-  </div>
+  const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => (
+    <ZoneBox sections={sections} name={name} keyName={keyName} deviceType={deviceType}>
+      {getSections(keyName)}
+    </ZoneBox>
+  )
 
   const getZoneBoxes = () => {
     let result: any[] = [];
@@ -254,15 +226,6 @@ export function ContentEditor(props: Props) {
     return <>{result}</>
   }
 
-  const getHelp = () => (
-    <Dialog open={true} onClose={() => { setShowHelp(false) }} fullWidth maxWidth="sm">
-      <DisplayBox id="dialogForm" headerIcon="help" headerText="Help">
-        <p>Use the plus icon in the corner to add new sections and elements to a page.  All elements must go within a section.</p>
-        <p>Doubleclick any section or element to edit or remove it.</p>
-        <p>Click and drag and section or element to rearrange content.</p>
-      </DisplayBox>
-    </Dialog>
-  )
 
 
 
@@ -270,129 +233,22 @@ export function ContentEditor(props: Props) {
     <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
     <style>{css}</style>
 
-    <div style={{
-      backgroundColor: "#FFF",
-      position: "sticky",
-      top: 0,
-      width: "100%",
-      zIndex: 1000,
-      boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)",
-      borderBottom: "1px solid rgba(0, 0, 0, 0.12)"
-    }}>
-      <Grid container spacing={0} sx={{ margin: 0, padding: 2 }}>
-        <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center" }}>
-          <SmallButton icon={"done"} text="Done" onClick={handleDone} data-testid="content-editor-done-button" />
-        </Grid>
-        <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <b style={{ fontSize: "1rem", fontWeight: 600, color: "#333" }}>
-            {props.pageId && "Page: " + (container as PageInterface)?.title}
-            {props.blockId && "Block: " + (container as BlockInterface)?.name}
-          </b>
-        </Grid>
-        <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
-          <ToggleButtonGroup
-            value={showHelp ? "true" : "false"}
-            exclusive
-            size="small"
-            sx={{
-              "& .MuiToggleButton-root": {
-                border: "1px solid rgba(0, 0, 0, 0.23)",
-                backgroundColor: "#f5f5f5",
-                color: "#666",
-                "&:hover": {
-                  backgroundColor: "#e0e0e0"
-                },
-                "&.Mui-selected": {
-                  backgroundColor: "#1976d2",
-                  color: "#FFF",
-                  border: "1px solid #1976d2",
-                  "&:hover": {
-                    backgroundColor: "#1565c0"
-                  }
-                }
-              }
-            }}
-          >
-            <ToggleButton value="true" onClick={() => setShowHelp(!showHelp)}>
-              <Tooltip title="Help" placement="top">
-                <Icon>help</Icon>
-              </Tooltip>
-            </ToggleButton>
-          </ToggleButtonGroup>
-
-          <ToggleButtonGroup
-            value={showAdd ? "true" : "false"}
-            exclusive
-            size="small"
-            sx={{
-              "& .MuiToggleButton-root": {
-                border: "1px solid rgba(0, 0, 0, 0.23)",
-                backgroundColor: "#f5f5f5",
-                color: "#666",
-                "&:hover": {
-                  backgroundColor: "#e0e0e0"
-                },
-                "&.Mui-selected": {
-                  backgroundColor: "#1976d2",
-                  color: "#FFF",
-                  border: "1px solid #1976d2",
-                  "&:hover": {
-                    backgroundColor: "#1565c0"
-                  }
-                }
-              }
-            }}
-          >
-            <ToggleButton value="true" onClick={() => setShowAdd(!showAdd)}>
-              <Tooltip title="Add Content" placement="top">
-                <Icon>add</Icon>
-              </Tooltip>
-            </ToggleButton>
-          </ToggleButtonGroup>
-
-          <ToggleButtonGroup
-            size="small"
-            value={deviceType}
-            exclusive
-            onChange={(e, newDeviceType) => { if (newDeviceType !== null) setDeviceType(newDeviceType) }}
-            sx={{
-              "& .MuiToggleButton-root": {
-                border: "1px solid rgba(0, 0, 0, 0.23)",
-                backgroundColor: "#f5f5f5",
-                color: "#666",
-                "&:hover": {
-                  backgroundColor: "#e0e0e0"
-                },
-                "&.Mui-selected": {
-                  backgroundColor: "#1976d2",
-                  color: "#FFF",
-                  border: "1px solid #1976d2",
-                  "&:hover": {
-                    backgroundColor: "#1565c0"
-                  }
-                }
-              }
-            }}
-          >
-            <ToggleButton value="desktop">
-              <Tooltip title="Desktop View" placement="top">
-                <Icon>computer</Icon>
-              </Tooltip>
-            </ToggleButton>
-            <ToggleButton value="mobile">
-              <Tooltip title="Mobile View" placement="top">
-                <Icon>smartphone</Icon>
-              </Tooltip>
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Grid>
-      </Grid>
-    </div>
+    <EditorToolbar
+      onDone={handleDone}
+      container={container}
+      isPageMode={!!props.pageId}
+      showHelp={showHelp}
+      onToggleHelp={() => setShowHelp(!showHelp)}
+      showAdd={showAdd}
+      onToggleAdd={() => setShowAdd(!showAdd)}
+      deviceType={deviceType}
+      onDeviceTypeChange={setDeviceType}
+    />
 
 
 
     <DndProvider backend={HTML5Backend}>
-      {showHelp && getHelp()}
+      <HelpDialog open={showHelp} onClose={() => setShowHelp(false)} />
       {showAdd && <ElementAdd includeBlocks={!elementOnlyMode} includeSection={!elementOnlyMode} updateCallback={() => { setShowAdd(false); }} draggingCallback={() => setShowAdd(false)} />}
       {editElement && <ElementEdit element={editElement} updatedCallback={(updatedElement) => {
         setEditElement(null);
