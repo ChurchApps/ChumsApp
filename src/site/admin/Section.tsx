@@ -38,6 +38,7 @@ export const Section: React.FC<Props> = props => {
       result = { background: props.section.background };
     }
     if (props.section.textColor?.startsWith("var(")) result.color = props.section.textColor;
+    if (props.onEdit) result.minHeight = 100;
 
     result = { ...result };
     //console.log("SECTION STYLE", result)
