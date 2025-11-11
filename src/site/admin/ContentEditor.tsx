@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Dialog, Grid, Icon, ThemeProvider, ToggleButton, ToggleButtonGroup, Tooltip, createTheme } from "@mui/material";
+import { Container, Dialog, Grid, Icon, ThemeProvider, ToggleButton, ToggleButtonGroup, Tooltip, createTheme, Chip } from "@mui/material";
 import { useWindowWidth } from "@react-hook/window-size";
 import type { BlockInterface, ElementInterface, PageInterface, SectionInterface, GlobalStyleInterface } from "../../helpers/Interfaces";
 import { ApiHelper, ArrayHelper, UserHelper } from "../../helpers";
@@ -200,8 +200,32 @@ export function ContentEditor(props: Props) {
     });
   }
 
-  const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => <div key={"zone-" + keyName} style={{ minHeight: 100 }}>
-    <div style={{ position: "absolute", right: 0, backgroundColor: "#FFF", zIndex: 99, padding: 10, border: "1px solid #999", opacity: 0.5 }}>Zone: {keyName}</div>
+  const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => <div key={"zone-" + keyName} style={{ minHeight: 100, position: "relative" }}>
+    <div style={{
+      position: "absolute",
+      right: 16,
+      top: 8,
+      zIndex: 99,
+      backdropFilter: "blur(8px)",
+      WebkitBackdropFilter: "blur(8px)"
+    }}>
+      <Chip
+        label={`Zone: ${keyName}`}
+        size="small"
+        sx={{
+          backgroundColor: "rgba(25, 118, 210, 0.9)",
+          color: "#ffffff",
+          border: "1px solid rgba(25, 118, 210, 1)",
+          fontWeight: 600,
+          fontSize: "0.75rem",
+          letterSpacing: "0.5px",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
+          "&:hover": {
+            backgroundColor: "rgba(21, 101, 192, 0.95)",
+          }
+        }}
+      />
+    </div>
     <div style={{ minHeight: 100 }}>
       <>
         <div className="page" style={(deviceType === "mobile" ? { width: 400, marginLeft: "auto", marginRight: "auto" } : {})}>
@@ -246,30 +270,121 @@ export function ContentEditor(props: Props) {
     <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
     <style>{css}</style>
 
-    <div style={{ backgroundColor: "#FFF", position: "sticky", top: 0, width: "100%", zIndex: 1000, boxShadow: "0px 2px 2px black" }}>
-      <Grid container spacing={2} sx={{ margin: 0, padding: 0 }}>
-        <Grid size={{ xs: 4 }} style={{ paddingLeft: 40, paddingTop: 8 }}>
+    <div style={{
+      backgroundColor: "#FFF",
+      position: "sticky",
+      top: 0,
+      width: "100%",
+      zIndex: 1000,
+      boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)",
+      borderBottom: "1px solid rgba(0, 0, 0, 0.12)"
+    }}>
+      <Grid container spacing={0} sx={{ margin: 0, padding: 2 }}>
+        <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center" }}>
           <SmallButton icon={"done"} text="Done" onClick={handleDone} data-testid="content-editor-done-button" />
         </Grid>
-        <Grid size={{ xs: 4 }} style={{ textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <b>
+        <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <b style={{ fontSize: "1rem", fontWeight: 600, color: "#333" }}>
             {props.pageId && "Page: " + (container as PageInterface)?.title}
             {props.blockId && "Block: " + (container as BlockInterface)?.name}
           </b>
         </Grid>
-        <Grid size={{ xs: 4 }} style={{ textAlign: "right", paddingTop: 5, paddingBottom: 5, paddingRight: 15 }}>
-          <div style={{ float: "right", display: "flex", backgroundColor: "#1976d2" }}>
-            <ToggleButtonGroup value={showHelp.toString()} exclusive size="small">
-              <ToggleButton value="true" onClick={() => setShowHelp(!showHelp)} style={{ borderRight: "1px solid #FFF", color: "#FFF" }}><Tooltip title="Help" placement="top"><Icon>help</Icon></Tooltip></ToggleButton>
-            </ToggleButtonGroup>
-            <ToggleButtonGroup value={showAdd.toString()} exclusive size="small">
-              <ToggleButton value="true" onClick={() => setShowAdd(!showAdd)} style={{ borderRight: "1px solid #FFF", color: "#FFF" }}><Tooltip title="Add Content" placement="top"><Icon>add</Icon></Tooltip></ToggleButton>
-            </ToggleButtonGroup>
-            <ToggleButtonGroup size="small" value={deviceType} exclusive onChange={(e, newDeviceType) => { if (newDeviceType !== null) setDeviceType(newDeviceType) }}>
-              {deviceType === "desktop" && <ToggleButton size="small" value="mobile" style={{ color: "#FFF" }}><Tooltip title="Desktop" placement="top"><Icon>computer</Icon></Tooltip></ToggleButton>}
-              {deviceType === "mobile" && <ToggleButton size="small" value="desktop" style={{ color: "#FFF" }}><Tooltip title="Mobile" placement="top"><Icon>smartphone</Icon></Tooltip></ToggleButton>}
-            </ToggleButtonGroup>
-          </div>
+        <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
+          <ToggleButtonGroup
+            value={showHelp ? "true" : "false"}
+            exclusive
+            size="small"
+            sx={{
+              "& .MuiToggleButton-root": {
+                border: "1px solid rgba(0, 0, 0, 0.23)",
+                backgroundColor: "#f5f5f5",
+                color: "#666",
+                "&:hover": {
+                  backgroundColor: "#e0e0e0"
+                },
+                "&.Mui-selected": {
+                  backgroundColor: "#1976d2",
+                  color: "#FFF",
+                  border: "1px solid #1976d2",
+                  "&:hover": {
+                    backgroundColor: "#1565c0"
+                  }
+                }
+              }
+            }}
+          >
+            <ToggleButton value="true" onClick={() => setShowHelp(!showHelp)}>
+              <Tooltip title="Help" placement="top">
+                <Icon>help</Icon>
+              </Tooltip>
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          <ToggleButtonGroup
+            value={showAdd ? "true" : "false"}
+            exclusive
+            size="small"
+            sx={{
+              "& .MuiToggleButton-root": {
+                border: "1px solid rgba(0, 0, 0, 0.23)",
+                backgroundColor: "#f5f5f5",
+                color: "#666",
+                "&:hover": {
+                  backgroundColor: "#e0e0e0"
+                },
+                "&.Mui-selected": {
+                  backgroundColor: "#1976d2",
+                  color: "#FFF",
+                  border: "1px solid #1976d2",
+                  "&:hover": {
+                    backgroundColor: "#1565c0"
+                  }
+                }
+              }
+            }}
+          >
+            <ToggleButton value="true" onClick={() => setShowAdd(!showAdd)}>
+              <Tooltip title="Add Content" placement="top">
+                <Icon>add</Icon>
+              </Tooltip>
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          <ToggleButtonGroup
+            size="small"
+            value={deviceType}
+            exclusive
+            onChange={(e, newDeviceType) => { if (newDeviceType !== null) setDeviceType(newDeviceType) }}
+            sx={{
+              "& .MuiToggleButton-root": {
+                border: "1px solid rgba(0, 0, 0, 0.23)",
+                backgroundColor: "#f5f5f5",
+                color: "#666",
+                "&:hover": {
+                  backgroundColor: "#e0e0e0"
+                },
+                "&.Mui-selected": {
+                  backgroundColor: "#1976d2",
+                  color: "#FFF",
+                  border: "1px solid #1976d2",
+                  "&:hover": {
+                    backgroundColor: "#1565c0"
+                  }
+                }
+              }
+            }}
+          >
+            <ToggleButton value="desktop">
+              <Tooltip title="Desktop View" placement="top">
+                <Icon>computer</Icon>
+              </Tooltip>
+            </ToggleButton>
+            <ToggleButton value="mobile">
+              <Tooltip title="Mobile View" placement="top">
+                <Icon>smartphone</Icon>
+              </Tooltip>
+            </ToggleButton>
+          </ToggleButtonGroup>
         </Grid>
       </Grid>
     </div>
