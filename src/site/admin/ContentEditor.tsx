@@ -275,26 +275,10 @@ export function ContentEditor(props: Props) {
       <div style={{ marginTop: 0, paddingTop: 0 }}>
         {scrollTop > 150 && (
           <>
-            <div style={{
-              position: "fixed",
-              bottom: '30px',
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 1000,
-              width: "min(600px, 80%)",
-              maxWidth: "600px"
-            }}>
+            <div style={{ position: "fixed", bottom: '30px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" }}>
               <DroppableScroll key={"scrollDown"} text={"Scroll Down"} direction="down" />
             </div>
-            <div style={{
-              position: "fixed",
-              top: '50px',
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 1000,
-              width: "min(600px, 80%)",
-              maxWidth: "600px"
-            }}>
+            <div style={{ position: "fixed", top: '50px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" }}>
               <DroppableScroll key={"scrollUp"} text={"Scroll Up"} direction="up" />
             </div>
           </>
