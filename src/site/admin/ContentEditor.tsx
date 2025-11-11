@@ -269,13 +269,32 @@ export function ContentEditor(props: Props) {
       {editSection && <SectionEdit section={editSection} updatedCallback={() => { setEditSection(null); loadDataInternal(); }} globalStyles={props.config?.globalStyles} />}
 
       <div style={{ marginTop: 0, paddingTop: 0 }}>
-        {scrollTop > 150
-          && <div style={{ position: "fixed", bottom: 30, zIndex: 1000, width: 500, marginLeft: 300 }}>
-            <DroppableScroll key={"scrollDown"} text={"Scroll Down"} direction="down" />
-          </div>}
-        {scrollTop > 150 && <div style={{ position: "fixed", top: 50, zIndex: 1000, width: 500, marginLeft: 300 }}>
-          <DroppableScroll key={"scrollUp"} text={"Scroll Up"} direction="up" />
-        </div>}
+        {scrollTop > 150 && (
+          <>
+            <div style={{
+              position: "fixed",
+              bottom: 30,
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 1000,
+              width: "min(600px, 80%)",
+              maxWidth: "600px"
+            }}>
+              <DroppableScroll key={"scrollDown"} text={"Scroll Down"} direction="down" />
+            </div>
+            <div style={{
+              position: "fixed",
+              top: 50,
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 1000,
+              width: "min(600px, 80%)",
+              maxWidth: "600px"
+            }}>
+              <DroppableScroll key={"scrollUp"} text={"Scroll Up"} direction="up" />
+            </div>
+          </>
+        )}
 
 
 
