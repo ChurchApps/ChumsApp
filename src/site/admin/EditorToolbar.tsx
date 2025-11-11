@@ -1,0 +1,116 @@
+import { Grid, Icon, ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
+import { SmallButton } from "@churchapps/apphelper";
+import type { PageInterface, BlockInterface } from "../../helpers/Interfaces";
+
+interface EditorToolbarProps {
+  onDone: () => void;
+  container: PageInterface | BlockInterface | null;
+  isPageMode: boolean;
+  showHelp: boolean;
+  onToggleHelp: () => void;
+  showAdd: boolean;
+  onToggleAdd: () => void;
+  deviceType: string;
+  onDeviceTypeChange: (deviceType: string) => void;
+}
+
+export function EditorToolbar(props: EditorToolbarProps) {
+  const {
+    onDone,
+    container,
+    isPageMode,
+    showHelp,
+    onToggleHelp,
+    showAdd,
+    onToggleAdd,
+    deviceType,
+    onDeviceTypeChange
+  } = props;
+
+  const toggleButtonStyles = {
+    "& .MuiToggleButton-root": {
+      border: "1px solid rgba(0, 0, 0, 0.23)",
+      backgroundColor: "#f5f5f5",
+      color: "#666",
+      "&:hover": {
+        backgroundColor: "#e0e0e0"
+      },
+      "&.Mui-selected": {
+        backgroundColor: "#1976d2",
+        color: "#FFF",
+        border: "1px solid #1976d2",
+        "&:hover": {
+          backgroundColor: "#1565c0"
+        }
+      }
+    }
+  };
+
+  return (
+    <div style={{ backgroundColor: "#FFF", position: "sticky", top: 0, width: "100%", zIndex: 1000, boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)", borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}>
+      <Grid container spacing={0} sx={{ margin: 0, padding: 2 }}>
+        <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center" }}>
+          <SmallButton icon={"done"} text="Done" onClick={onDone} data-testid="content-editor-done-button" />
+        </Grid>
+        <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <b style={{ fontSize: "1rem", fontWeight: 600, color: "#333" }}>
+            {isPageMode && "Page: " + (container as PageInterface)?.title}
+            {!isPageMode && "Block: " + (container as BlockInterface)?.name}
+          </b>
+        </Grid>
+        <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
+          <ToggleButtonGroup
+            value={showHelp ? "true" : "false"}
+            exclusive
+            size="small"
+            sx={toggleButtonStyles}
+          >
+            <ToggleButton value="true" onClick={onToggleHelp}>
+              <Tooltip title="Help" placement="top">
+                <Icon>help</Icon>
+              </Tooltip>
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          <ToggleButtonGroup
+            value={showAdd ? "true" : "false"}
+            exclusive
+            size="small"
+            sx={toggleButtonStyles}
+          >
+            <ToggleButton value="true" onClick={onToggleAdd}>
+              <Tooltip title="Add Content" placement="top">
+                <Icon>add</Icon>
+              </Tooltip>
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          <ToggleButtonGroup
+            size="small"
+            value={deviceType}
+            exclusive
+            onChange={(e, newDeviceType) => { if (newDeviceType !== null) onDeviceTypeChange(newDeviceType) }}
+            sx={toggleButtonStyles}
+          >
+            <ToggleButton value="desktop">
+              <Tooltip title="Switch to Desktop View" placement="top">
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <Icon fontSize="small">computer</Icon>
+                  <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>Desktop</span>
+                </div>
+              </Tooltip>
+            </ToggleButton>
+            <ToggleButton value="mobile">
+              <Tooltip title="Switch to Mobile View" placement="top">
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                  <Icon fontSize="small">smartphone</Icon>
+                  <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>Mobile</span>
+                </div>
+              </Tooltip>
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
+      </Grid>
+    </div>
+  );
+}

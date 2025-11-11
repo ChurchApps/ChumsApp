@@ -1,12 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Dialog, Grid, Icon, ThemeProvider, ToggleButton, ToggleButtonGroup, Tooltip, createTheme } from "@mui/material";
+import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import { useWindowWidth } from "@react-hook/window-size";
 import type { BlockInterface, ElementInterface, PageInterface, SectionInterface, GlobalStyleInterface } from "../../helpers/Interfaces";
 import { ApiHelper, ArrayHelper, UserHelper } from "../../helpers";
 import { Permissions } from "@churchapps/helpers";
-import { SmallButton, DisplayBox } from "@churchapps/apphelper";
 import { Section } from "./Section";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -19,6 +18,10 @@ import { ElementEdit } from "./elements/ElementEdit";
 import { SectionEdit } from "./SectionEdit";
 import { DroppableScroll } from "./DroppableScroll";
 import UserContext from "../../UserContext";
+import { EditorToolbar } from "./EditorToolbar";
+import { HelpDialog } from "./HelpDialog";
+import { ZoneBox } from "./ZoneBox";
+import { EmptyState } from "./EmptyState";
 
 interface ConfigInterface {
   globalStyles?: GlobalStyleInterface;
@@ -43,6 +46,7 @@ export function ContentEditor(props: Props) {
   const [scrollTop, setScrollTop] = useState(0);
   const [deviceType, setDeviceType] = useState("desktop");
   const windowWidth = useWindowWidth();
+  const isMobileViewport = useMediaQuery('(max-width:900px)');
 
   const [showAdd, setShowAdd] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
@@ -88,8 +92,8 @@ export function ContentEditor(props: Props) {
   useEffect(loadDataInternal, [props.pageId, props.blockId]);
 
   useEffect(() => {
-    if (windowWidth < 883) navigate("/site");
-  }, [windowWidth]);
+    if (isMobileViewport) navigate("/site");
+  }, [isMobileViewport]);
 
   const handleDrop = (data: any, sort: number, zone: string) => {
     if (data.data) {
@@ -121,7 +125,9 @@ export function ContentEditor(props: Props) {
       result.push(getAddSection(section.sort + 0.1, zone));
     });
 
-    if (sections.length === 0) result.push(<Container key="empty"><p>Add a section to get started</p></Container>)
+    if (sections.length === 0) {
+      result.push(<EmptyState key="empty" />);
+    }
     return result;
   }
 
@@ -138,7 +144,7 @@ export function ContentEditor(props: Props) {
     const editorBar = document.getElementById("editorBar");
     if (window.innerWidth > 900) {
       if (window?.innerHeight) {
-        if (scrollTop < 50) rightBarStyle = { paddingTop: 70 };
+        if (scrollTop < 50) rightBarStyle = { paddingTop: '70px' };
       }
     }
   }
@@ -200,17 +206,11 @@ export function ContentEditor(props: Props) {
     });
   }
 
-  const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => <div key={"zone-" + keyName} style={{ minHeight: 100 }}>
-    <div style={{ position: "absolute", right: 0, backgroundColor: "#FFF", zIndex: 99, padding: 10, border: "1px solid #999", opacity: 0.5 }}>Zone: {keyName}</div>
-    <div style={{ minHeight: 100 }}>
-      <>
-        <div className="page" style={(deviceType === "mobile" ? { width: 400, marginLeft: "auto", marginRight: "auto" } : {})}>
-          {getSections(keyName)}
-        </div>
-      </>
-    </div>
-    <div style={{ height: "31px" }}></div>
-  </div>
+  const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => (
+    <ZoneBox sections={sections} name={name} keyName={keyName} deviceType={deviceType}>
+      {getSections(keyName)}
+    </ZoneBox>
+  )
 
   const getZoneBoxes = () => {
     let result: any[] = [];
@@ -230,15 +230,6 @@ export function ContentEditor(props: Props) {
     return <>{result}</>
   }
 
-  const getHelp = () => (
-    <Dialog open={true} onClose={() => { setShowHelp(false) }} fullWidth maxWidth="sm">
-      <DisplayBox id="dialogForm" headerIcon="help" headerText="Help">
-        <p>Use the plus icon in the corner to add new sections and elements to a page.  All elements must go within a section.</p>
-        <p>Doubleclick any section or element to edit or remove it.</p>
-        <p>Click and drag and section or element to rearrange content.</p>
-      </DisplayBox>
-    </Dialog>
-  )
 
 
 
@@ -246,38 +237,22 @@ export function ContentEditor(props: Props) {
     <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
     <style>{css}</style>
 
-    <div style={{ backgroundColor: "#FFF", position: "sticky", top: 0, width: "100%", zIndex: 1000, boxShadow: "0px 2px 2px black" }}>
-      <Grid container spacing={2} sx={{ margin: 0, padding: 0 }}>
-        <Grid size={{ xs: 4 }} style={{ paddingLeft: 40, paddingTop: 8 }}>
-          <SmallButton icon={"done"} text="Done" onClick={handleDone} data-testid="content-editor-done-button" />
-        </Grid>
-        <Grid size={{ xs: 4 }} style={{ textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <b>
-            {props.pageId && "Page: " + (container as PageInterface)?.title}
-            {props.blockId && "Block: " + (container as BlockInterface)?.name}
-          </b>
-        </Grid>
-        <Grid size={{ xs: 4 }} style={{ textAlign: "right", paddingTop: 5, paddingBottom: 5, paddingRight: 15 }}>
-          <div style={{ float: "right", display: "flex", backgroundColor: "#1976d2" }}>
-            <ToggleButtonGroup value={showHelp.toString()} exclusive size="small">
-              <ToggleButton value="true" onClick={() => setShowHelp(!showHelp)} style={{ borderRight: "1px solid #FFF", color: "#FFF" }}><Tooltip title="Help" placement="top"><Icon>help</Icon></Tooltip></ToggleButton>
-            </ToggleButtonGroup>
-            <ToggleButtonGroup value={showAdd.toString()} exclusive size="small">
-              <ToggleButton value="true" onClick={() => setShowAdd(!showAdd)} style={{ borderRight: "1px solid #FFF", color: "#FFF" }}><Tooltip title="Add Content" placement="top"><Icon>add</Icon></Tooltip></ToggleButton>
-            </ToggleButtonGroup>
-            <ToggleButtonGroup size="small" value={deviceType} exclusive onChange={(e, newDeviceType) => { if (newDeviceType !== null) setDeviceType(newDeviceType) }}>
-              {deviceType === "desktop" && <ToggleButton size="small" value="mobile" style={{ color: "#FFF" }}><Tooltip title="Desktop" placement="top"><Icon>computer</Icon></Tooltip></ToggleButton>}
-              {deviceType === "mobile" && <ToggleButton size="small" value="desktop" style={{ color: "#FFF" }}><Tooltip title="Mobile" placement="top"><Icon>smartphone</Icon></Tooltip></ToggleButton>}
-            </ToggleButtonGroup>
-          </div>
-        </Grid>
-      </Grid>
-    </div>
+    <EditorToolbar
+      onDone={handleDone}
+      container={container}
+      isPageMode={!!props.pageId}
+      showHelp={showHelp}
+      onToggleHelp={() => setShowHelp(!showHelp)}
+      showAdd={showAdd}
+      onToggleAdd={() => setShowAdd(!showAdd)}
+      deviceType={deviceType}
+      onDeviceTypeChange={setDeviceType}
+    />
 
 
 
     <DndProvider backend={HTML5Backend}>
-      {showHelp && getHelp()}
+      <HelpDialog open={showHelp} onClose={() => setShowHelp(false)} />
       {showAdd && <ElementAdd includeBlocks={!elementOnlyMode} includeSection={!elementOnlyMode} updateCallback={() => { setShowAdd(false); }} draggingCallback={() => setShowAdd(false)} />}
       {editElement && <ElementEdit element={editElement} updatedCallback={(updatedElement) => {
         setEditElement(null);
@@ -298,13 +273,16 @@ export function ContentEditor(props: Props) {
       {editSection && <SectionEdit section={editSection} updatedCallback={() => { setEditSection(null); loadDataInternal(); }} globalStyles={props.config?.globalStyles} />}
 
       <div style={{ marginTop: 0, paddingTop: 0 }}>
-        {scrollTop > 150
-          && <div style={{ position: "fixed", bottom: 30, zIndex: 1000, width: 500, marginLeft: 300 }}>
-            <DroppableScroll key={"scrollDown"} text={"Scroll Down"} direction="down" />
-          </div>}
-        {scrollTop > 150 && <div style={{ position: "fixed", top: 50, zIndex: 1000, width: 500, marginLeft: 300 }}>
-          <DroppableScroll key={"scrollUp"} text={"Scroll Up"} direction="up" />
-        </div>}
+        {scrollTop > 150 && (
+          <>
+            <div style={{ position: "fixed", bottom: '30px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" }}>
+              <DroppableScroll key={"scrollDown"} text={"Scroll Down"} direction="down" />
+            </div>
+            <div style={{ position: "fixed", top: '50px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" }}>
+              <DroppableScroll key={"scrollUp"} text={"Scroll Up"} direction="up" />
+            </div>
+          </>
+        )}
 
 
 
