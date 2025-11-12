@@ -144,7 +144,7 @@ export const DonationBatchesPage = () => {
         </Typography>
       );
 
-      const dateObj = new Date(b.batchDate + "T00:00:00");
+      const dateObj = new Date(b.batchDate.toString().split("T")[0] + "T00:00:00");
 
       result.push(
         <TableRow
