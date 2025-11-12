@@ -345,6 +345,15 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         .find((f) => f.key === field);
       if (fieldConfig) {
         if (fieldConfig.type === "complex") {
+          const defaultOperator = fieldConfig.operators?.[0] || (field === "memberDonations" ? "donatedToAny" : "attendedAny");
+          setComplexConfig({
+            type: field === "memberDonations" ? "donation" : "attendance",
+            operator: defaultOperator,
+            entityValue: "any",
+            entityText: "Any",
+            fromDate: DateHelper.formatHtml5Date(new Date()),
+            toDate: DateHelper.formatHtml5Date(new Date()),
+          });
           setComplexFilterDialog({ open: true, field });
           return;
         }
@@ -437,7 +446,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
         case "groupMember":
           const members: GroupMemberInterface[] = await ApiHelper.get(`/groupmembers?groupId=${filter.value}`, "MembershipApi");
           const peopleIds = ArrayHelper.getIds(members, "personId");
-          result.push({ field: "id", operator: filter.operator, value: peopleIds.join(",") });
+          result.push({ field: "id", operator: "in", value: peopleIds.join(",") });
           break;
         case "memberDonations":
           const fundVal = JSON.parse(filter.value);
@@ -448,7 +457,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
             memberDonations = await ApiHelper.get(`/funddonations?fundId=${fundVal[0].value}&startDate=${fundVal[1].from}&endDate=${fundVal[1].to}`, "GivingApi");
           }
           const memberIds = ArrayHelper.getUniqueValues(memberDonations, "donation.personId").filter((f) => f !== null);
-          result.push({ field: "id", operator: filter.operator, value: memberIds.join(",") });
+          result.push({ field: "id", operator: "in", value: memberIds.join(",") });
           break;
         case "memberAttendance":
           const attendanceValue = JSON.parse(filter.value);
@@ -466,7 +475,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
             attendees = await ApiHelper.get(`/attendancerecords/search?${dateParams}`, "AttendanceApi");
           }
           const attendeeIds = ArrayHelper.getIds(attendees, "personId");
-          result.push({ field: "id", operator: filter.operator, value: attendeeIds.join(",") });
+          result.push({ field: "id", operator: "in", value: attendeeIds.join(",") });
           break;
         default:
           result.push(filter);
@@ -809,20 +818,16 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                   };
                   setComplexConfig({ ...newConfig, operator: e.target.value });
                 }}>
-                {complexFilterDialog.field === "memberDonations" ? (
-                  <>
-                    <MenuItem value="donatedToAny">{Locale.label("people.editCondition.hasDon")}</MenuItem>
-                    <MenuItem value="donatedTo">{Locale.label("people.editCondition.donTo")}</MenuItem>
-                  </>
-                ) : (
-                  <>
-                    <MenuItem value="attendedAny">{Locale.label("people.editCondition.attGen")}</MenuItem>
-                    <MenuItem value="attendedCampus">{Locale.label("people.editCondition.attCamp")}</MenuItem>
-                    <MenuItem value="attendedService">{Locale.label("people.editCondition.attServ")}</MenuItem>
-                    <MenuItem value="attendedServiceTime">{Locale.label("people.editCondition.attServTime")}</MenuItem>
-                    <MenuItem value="attendedGroup">{Locale.label("people.editCondition.attGroup")}</MenuItem>
-                  </>
-                )}
+                {complexFilterDialog.field === "memberDonations" ? [
+                  <MenuItem key="donatedToAny" value="donatedToAny">{Locale.label("people.editCondition.hasDon")}</MenuItem>,
+                  <MenuItem key="donatedTo" value="donatedTo">{Locale.label("people.editCondition.donTo")}</MenuItem>
+                ] : [
+                  <MenuItem key="attendedAny" value="attendedAny">{Locale.label("people.editCondition.attGen")}</MenuItem>,
+                  <MenuItem key="attendedCampus" value="attendedCampus">{Locale.label("people.editCondition.attCamp")}</MenuItem>,
+                  <MenuItem key="attendedService" value="attendedService">{Locale.label("people.editCondition.attServ")}</MenuItem>,
+                  <MenuItem key="attendedServiceTime" value="attendedServiceTime">{Locale.label("people.editCondition.attServTime")}</MenuItem>,
+                  <MenuItem key="attendedGroup" value="attendedGroup">{Locale.label("people.editCondition.attGroup")}</MenuItem>
+                ]}
               </Select>
             </FormControl>
 
@@ -977,20 +982,16 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                   };
                   setComplexConfig({ ...newConfig, operator: e.target.value });
                 }}>
-                {complexFilterDialog.field === "memberDonations" ? (
-                  <>
-                    <MenuItem value="donatedToAny">{Locale.label("people.editCondition.hasDon")}</MenuItem>
-                    <MenuItem value="donatedTo">{Locale.label("people.editCondition.donTo")}</MenuItem>
-                  </>
-                ) : (
-                  <>
-                    <MenuItem value="attendedAny">{Locale.label("people.editCondition.attGen")}</MenuItem>
-                    <MenuItem value="attendedCampus">{Locale.label("people.editCondition.attCamp")}</MenuItem>
-                    <MenuItem value="attendedService">{Locale.label("people.editCondition.attServ")}</MenuItem>
-                    <MenuItem value="attendedServiceTime">{Locale.label("people.editCondition.attServTime")}</MenuItem>
-                    <MenuItem value="attendedGroup">{Locale.label("people.editCondition.attGroup")}</MenuItem>
-                  </>
-                )}
+                {complexFilterDialog.field === "memberDonations" ? [
+                  <MenuItem key="donatedToAny" value="donatedToAny">{Locale.label("people.editCondition.hasDon")}</MenuItem>,
+                  <MenuItem key="donatedTo" value="donatedTo">{Locale.label("people.editCondition.donTo")}</MenuItem>
+                ] : [
+                  <MenuItem key="attendedAny" value="attendedAny">{Locale.label("people.editCondition.attGen")}</MenuItem>,
+                  <MenuItem key="attendedCampus" value="attendedCampus">{Locale.label("people.editCondition.attCamp")}</MenuItem>,
+                  <MenuItem key="attendedService" value="attendedService">{Locale.label("people.editCondition.attServ")}</MenuItem>,
+                  <MenuItem key="attendedServiceTime" value="attendedServiceTime">{Locale.label("people.editCondition.attServTime")}</MenuItem>,
+                  <MenuItem key="attendedGroup" value="attendedGroup">{Locale.label("people.editCondition.attGroup")}</MenuItem>
+                ]}
               </Select>
             </FormControl>
 
