@@ -749,3 +749,9 @@ label .description {
   #secondaryMenuAlt { display:none; width:100%; text-align: center;}
 
 }
+
+/* Website Editor: Disable links in edit mode to prevent navigation when editing elements */
+.elementWrapper a {
+  pointer-events: none;
+  cursor: default;
+}
