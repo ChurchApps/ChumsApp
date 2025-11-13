@@ -2,7 +2,8 @@ import React, { CSSProperties, useState } from "react";
 import type { ElementInterface, SectionInterface } from "../../helpers";
 import { ApiHelper, StyleHelper } from "../../helpers";
 import { Box, Container } from "@mui/material";
-import { DroppableArea, DraggableWrapper, Element, YoutubeBackground } from "@churchapps/apphelper-website";
+import { DraggableWrapper, YoutubeBackground, DroppableArea } from "@churchapps/apphelper-website";
+import { ElementWrapper } from "./ElementWrapper";
 import type { ChurchInterface } from "@churchapps/helpers";
 
 interface Props {
@@ -22,7 +23,8 @@ export const Section: React.FC<Props> = props => {
     const result: React.ReactElement[] = []
     props.section?.elements?.forEach(e => {
       const textColor = StyleHelper.getTextColor(props.section?.textColor, {}, props.churchSettings);
-      result.push(<Element key={e.id} element={e} onEdit={props.onEdit} onMove={props.onMove} church={props.church} churchSettings={props.churchSettings} textColor={textColor} />)
+      result.push(<ElementWrapper key={e.id} element={e} onEdit={props.onEdit} onMove={props.onMove} church={props.church} churchSettings={props.churchSettings} textColor={textColor} />)
+      if (props.onEdit) result.push(getAddElement(e.sort + 0.1));
     });
     return result;
   }
@@ -114,8 +116,7 @@ export const Section: React.FC<Props> = props => {
 
   const getAddElement = (s: number) => {
     const sort = s;
-    return (<DroppableArea accept={["element", "elementBlock"]} onDrop={(data) => handleDrop(data, sort)} updateIsDragging={(dragging) => setIsDragging(dragging)} />);
-    //return (<div style={{ textAlign: "center", background: "rgba(230,230,230,0.25)" }}><SmallButton icon="add" onClick={() => props.onEdit(null, { sectionId: props.section.id, elementType: "textWithPhoto", sort })} toolTip="Add Element" /></div>)
+    return (<DroppableArea accept={["element", "elementBlock"]} text="Drop here to add element" onDrop={(data) => handleDrop(data, sort)} updateIsDragging={(dragging) => setIsDragging(dragging)} />);
   }
 
   let contents = (<Container>

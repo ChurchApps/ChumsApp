@@ -10,7 +10,7 @@ import { Section } from "./Section";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import React from "react";
-import { DroppableArea, Theme } from "@churchapps/apphelper-website";
+import { Theme, DroppableArea } from "@churchapps/apphelper-website";
 import { SectionBlock } from "./SectionBlock";
 import { StyleHelper } from "../../helpers/StyleHelper";
 import { ElementAdd } from "./elements/ElementAdd";
@@ -110,9 +110,9 @@ export function ContentEditor(props: Props) {
     }
   }
 
-  const getAddSection = (s: number, zone: string, droppableAreaText?: string) => {
+  const getAddSection = (s: number, zone: string) => {
     const sort = s;
-    return (<DroppableArea key={"addSection_" + zone + "_" + s.toString()} text={droppableAreaText} accept={["section", "sectionBlock"]} onDrop={(data) => handleDrop(data, sort, zone)} />);
+    return (<DroppableArea key={"addSection_" + zone + "_" + s.toString()} text="Drop here to add section" accept={["section", "sectionBlock"]} onDrop={(data) => handleDrop(data, sort, zone)} />);
   }
 
   const getSections = (zone: string) => {
