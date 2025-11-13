@@ -31,7 +31,7 @@ export function DraggableWrapper(props: Props) {
   }, [isDragging, draggingCallback]);
 
   return (
-    <div ref={dragRef} style={{ opacity }} className="dragButton" onDoubleClick={onDoubleClick} data-testid="draggable-wrapper" aria-label="Draggable item">
+    <div ref={dragRef} style={{ opacity, transition: "opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1)" }} className="dragButton" onDoubleClick={onDoubleClick} data-testid="draggable-wrapper" aria-label="Draggable item">
       {children}
     </div>
   );

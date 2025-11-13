@@ -39,7 +39,14 @@ export function DroppableWrapper(props: Props) {
     if (updateIsDragging) updateIsDragging(isDragging);
   }, [isDragging, updateIsDragging]);
 
-  const droppableStyle: CSSProperties = { width: "100%", zIndex: 1, backgroundColor: isOver ? "rgba(25,118,210, 1)" : "rgba(25,118,210, 0.1)" };
+  const droppableStyle: CSSProperties = {
+    width: "100%",
+    zIndex: 1,
+    backgroundColor: isOver ? "rgba(25, 118, 210, 0.15)" : "rgba(25, 118, 210, 0.08)",
+    border: isOver ? "2px dashed rgba(25, 118, 210, 0.8)" : "2px dashed rgba(25, 118, 210, 0.3)",
+    borderRadius: "4px",
+    transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+  };
 
   if (canDrop) {
     return (

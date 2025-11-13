@@ -56,7 +56,21 @@ export function DroppableScroll(props: Props) {
     stepsRef.current = 0;
   }
 
-  let droppableStyle:CSSProperties = { position: "absolute", top: 0, left: 0, height: 30, width: "100%", zIndex: 1, backgroundColor: (isOver) ? "#00FF00" : "#28a745" }
+  let droppableStyle:CSSProperties = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: 30,
+    width: "100%",
+    zIndex: 1,
+    backgroundColor: isOver ? "rgba(25, 118, 210, 0.9)" : "rgba(25, 118, 210, 0.75)",
+    borderRadius: "4px",
+    background: isOver
+      ? "linear-gradient(to bottom, rgba(25, 118, 210, 0.9), rgba(21, 101, 192, 0.9))"
+      : "linear-gradient(to bottom, rgba(25, 118, 210, 0.75), rgba(21, 101, 192, 0.75))",
+    backdropFilter: "blur(8px)",
+    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+  }
 
 
   if (canDrop) return (

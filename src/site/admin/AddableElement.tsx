@@ -33,10 +33,10 @@ export function AddableElement(props: Props) {
   drag(dragRef);
 
   const opacity = isDragging ? 0.5 : 1
-  const baseStyle: any = { paddingLeft: 10, borderRadius: 5, paddingTop: 10, paddingBottom: 10, opacity, cursor: "pointer", color: "#FFF" }
+  const baseStyle: any = { paddingLeft: 10, borderRadius: 8, paddingTop: 10, paddingBottom: 10, opacity, cursor: "pointer", color: "#FFF", transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)" }
   const style = (props.dndType === "section" || props.dndType === "sectionBlock")
-    ? { ...baseStyle, border: "1px solid #007bff", backgroundColor: "#007bff" }
-    : { ...baseStyle, border: "1px solid #28a745", backgroundColor: "#28a745" }
+    ? { ...baseStyle, border: "1px solid rgba(25, 118, 210, 1)", backgroundColor: "rgba(25, 118, 210, 1)" }
+    : { ...baseStyle, border: "1px solid rgba(46, 125, 50, 1)", backgroundColor: "rgba(46, 125, 50, 1)" }
 
   return (
     <Grid size={{ xs: 12 }}>
