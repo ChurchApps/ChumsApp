@@ -2,8 +2,7 @@ import React, { CSSProperties, useState } from "react";
 import type { ElementInterface, SectionInterface } from "../../helpers";
 import { ApiHelper, StyleHelper } from "../../helpers";
 import { Box, Container } from "@mui/material";
-import { DraggableWrapper, YoutubeBackground, DroppableArea } from "@churchapps/apphelper-website";
-import { ElementWrapper } from "./ElementWrapper";
+import { DraggableWrapper, YoutubeBackground, DroppableArea, Element } from "@churchapps/apphelper-website";
 import type { ChurchInterface } from "@churchapps/helpers";
 
 interface Props {
@@ -23,8 +22,8 @@ export const Section: React.FC<Props> = props => {
     const result: React.ReactElement[] = []
     props.section?.elements?.forEach(e => {
       const textColor = StyleHelper.getTextColor(props.section?.textColor, {}, props.churchSettings);
-      result.push(<ElementWrapper key={e.id} element={e} onEdit={props.onEdit} onMove={props.onMove} church={props.church} churchSettings={props.churchSettings} textColor={textColor} />)
-      if (props.onEdit) result.push(getAddElement(e.sort + 0.1));
+      result.push(<Element key={e.id} element={e} onEdit={props.onEdit} onMove={props.onMove} church={props.church} churchSettings={props.churchSettings} textColor={textColor} />)
+      // Don't add DroppableArea here - Element already adds its own when onEdit is provided
     });
     return result;
   }
