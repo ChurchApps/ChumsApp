@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
+import { ThemeProvider, createTheme, useMediaQuery, Container, Skeleton } from "@mui/material";
 import { useWindowWidth } from "@react-hook/window-size";
 import type { BlockInterface, ElementInterface, PageInterface, SectionInterface, GlobalStyleInterface } from "../../helpers/Interfaces";
 import { ApiHelper, ArrayHelper, UserHelper } from "../../helpers";
@@ -10,7 +10,7 @@ import { Section } from "./Section";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import React from "react";
-import { DroppableArea, Theme } from "@churchapps/apphelper-website";
+import { Theme, DroppableArea } from "@churchapps/apphelper-website";
 import { SectionBlock } from "./SectionBlock";
 import { StyleHelper } from "../../helpers/StyleHelper";
 import { ElementAdd } from "./elements/ElementAdd";
@@ -110,9 +110,9 @@ export function ContentEditor(props: Props) {
     }
   }
 
-  const getAddSection = (s: number, zone: string, droppableAreaText?: string) => {
+  const getAddSection = (s: number, zone: string) => {
     const sort = s;
-    return (<DroppableArea key={"addSection_" + zone + "_" + s.toString()} text={droppableAreaText} accept={["section", "sectionBlock"]} onDrop={(data) => handleDrop(data, sort, zone)} />);
+    return (<DroppableArea key={"addSection_" + zone + "_" + s.toString()} text="Drop here to add section" accept={["section", "sectionBlock"]} onDrop={(data) => handleDrop(data, sort, zone)} />);
   }
 
   const getSections = (zone: string) => {
@@ -232,6 +232,30 @@ export function ContentEditor(props: Props) {
 
 
 
+
+  if (!container) {
+    return (
+      <>
+        <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
+        <EditorToolbar
+          onDone={handleDone}
+          container={container}
+          isPageMode={!!props.pageId}
+          showHelp={showHelp}
+          onToggleHelp={() => setShowHelp(!showHelp)}
+          showAdd={showAdd}
+          onToggleAdd={() => setShowAdd(!showAdd)}
+          deviceType={deviceType}
+          onDeviceTypeChange={setDeviceType}
+        />
+        <Container sx={{ mt: 5 }}>
+          <Skeleton variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 2 }} animation="wave" />
+          <Skeleton variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 2 }} animation="wave" />
+          <Skeleton variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 2 }} animation="wave" />
+        </Container>
+      </>
+    );
+  }
 
   return (<>
     <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
