@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
+import { ThemeProvider, createTheme, useMediaQuery, Container, Skeleton } from "@mui/material";
 import { useWindowWidth } from "@react-hook/window-size";
 import type { BlockInterface, ElementInterface, PageInterface, SectionInterface, GlobalStyleInterface } from "../../helpers/Interfaces";
 import { ApiHelper, ArrayHelper, UserHelper } from "../../helpers";
@@ -232,6 +232,30 @@ export function ContentEditor(props: Props) {
 
 
 
+
+  if (!container) {
+    return (
+      <>
+        <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
+        <EditorToolbar
+          onDone={handleDone}
+          container={container}
+          isPageMode={!!props.pageId}
+          showHelp={showHelp}
+          onToggleHelp={() => setShowHelp(!showHelp)}
+          showAdd={showAdd}
+          onToggleAdd={() => setShowAdd(!showAdd)}
+          deviceType={deviceType}
+          onDeviceTypeChange={setDeviceType}
+        />
+        <Container sx={{ mt: 5 }}>
+          <Skeleton variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 2 }} animation="wave" />
+          <Skeleton variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 2 }} animation="wave" />
+          <Skeleton variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 2 }} animation="wave" />
+        </Container>
+      </>
+    );
+  }
 
   return (<>
     <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />

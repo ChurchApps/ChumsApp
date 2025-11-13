@@ -28,16 +28,18 @@ export function DroppableScroll(props: Props) {
 
   const scrollUp = () => {
     stepsRef.current++;
-    const newY = window.scrollY - 50;
+    const acceleration = Math.min(10 + stepsRef.current * 2, 100);
+    const newY = window.scrollY - acceleration;
     if (newY < 0 && intervalIdRef.current) clearInterval(intervalIdRef.current);
-    else window.scrollTo(0, newY);
+    else window.scrollTo({ top: newY, behavior: 'auto' });
     if (stepsRef.current > 100) handleMouseOut();
   }
 
   const scrollDown = () => {
     stepsRef.current++;
-    const newY = window.scrollY + 50;
-    window.scrollTo(0, newY);
+    const acceleration = Math.min(10 + stepsRef.current * 2, 100);
+    const newY = window.scrollY + acceleration;
+    window.scrollTo({ top: newY, behavior: 'auto' });
     if (stepsRef.current > 100) handleMouseOut();
   }
 
@@ -69,7 +71,8 @@ export function DroppableScroll(props: Props) {
       ? "linear-gradient(to bottom, rgba(25, 118, 210, 0.9), rgba(21, 101, 192, 0.9))"
       : "linear-gradient(to bottom, rgba(25, 118, 210, 0.75), rgba(21, 101, 192, 0.75))",
     backdropFilter: "blur(8px)",
-    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+    animation: canDrop && !isOver ? "pulse 1.5s ease-in-out infinite" : "none"
   }
 
 

@@ -16,6 +16,7 @@ interface Props {
 
 export const Section: React.FC<Props> = props => {
   const [isDragging, setIsDragging] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
 
   const getElements = () => {
@@ -39,7 +40,13 @@ export const Section: React.FC<Props> = props => {
       result = { background: props.section.background };
     }
     if (props.section.textColor?.startsWith("var(")) result.color = props.section.textColor;
-    if (props.onEdit) result.minHeight = 100;
+    if (props.onEdit) {
+      result.minHeight = 100;
+      result.boxShadow = isHovered
+        ? "0 4px 16px rgba(0, 0, 0, 0.12)"
+        : "0 2px 8px rgba(0, 0, 0, 0.08)";
+      result.transition = "box-shadow 0.2s ease";
+    }
 
     result = { ...result };
     //console.log("SECTION STYLE", result)
@@ -144,9 +151,14 @@ export const Section: React.FC<Props> = props => {
 
   if (props.onEdit) {
     return (
-      <DraggableWrapper  dndType="section" elementType="section" data={props.section} onDoubleClick={() => props.onEdit(props.section, null)}>
-        {result}
-      </DraggableWrapper>
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <DraggableWrapper  dndType="section" elementType="section" data={props.section} onDoubleClick={() => props.onEdit(props.section, null)}>
+          {result}
+        </DraggableWrapper>
+      </div>
     );
   } else return result;
 }
