@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import { ApiHelper, ArrayHelper } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { type DeviceInterface } from "../DevicesPage";
 
 interface Props {
@@ -46,7 +46,7 @@ export const DeviceContent = (props: Props) => {
   return (
     <>
       <hr />
-      <h3>Associated Content</h3>
+      <h3>{Locale.label("profile.deviceContent.associatedContent")}</h3>
       <FormGroup>
         {classRooms.map((c) => (
           <FormControlLabel

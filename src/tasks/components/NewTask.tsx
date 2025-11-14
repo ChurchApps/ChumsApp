@@ -83,7 +83,7 @@ export const NewTask = (props: Props) => {
       peopleIds: [id],
       contentType: "task",
       contentId: task.id,
-      message: `New Task Assignment: ${task.title}`,
+      message: `${Locale.label("tasks.newTask.newAssign")}: ${task.title}`,
     };
 
     if (type === "group") {
@@ -266,7 +266,7 @@ export const NewTask = (props: Props) => {
                 textTransform: "none",
                 fontWeight: 600,
               }}>
-              {createTaskMutation.isPending ? "Saving..." : Locale.label("common.save")}
+              {createTaskMutation.isPending ? Locale.label("tasks.newTask.saving") : Locale.label("common.save")}
             </Button>
           </Stack>
         </Stack>

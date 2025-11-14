@@ -133,7 +133,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
               marginTop: 20,
               marginBottom: 20,
             }}>
-            <b>Attendance</b>
+            <b>{Locale.label("groups.groupDetailsEdit.attendance")}</b>
           </div>
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
@@ -238,7 +238,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                   fullWidth
                   type="text"
                   name="meetingTime"
-                  placeholder="Tuesdays at 7pm"
+                  placeholder={Locale.label("groups.groupDetails.meetingTimePlaceholder")}
                   label={Locale.label("groups.groupDetailsEdit.meetingTime")}
                   value={group.meetingTime || ""}
                   onChange={handleChange}
@@ -253,7 +253,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                 fullWidth
                 type="text"
                 name="meetingLocation"
-                placeholder="Johnson Home"
+                placeholder={Locale.label("groups.groupDetails.locationPlaceholder")}
                 label={Locale.label("groups.groupDetailsEdit.meetingLocation")}
                 value={group.meetingLocation || ""}
                 onChange={handleChange}
@@ -314,7 +314,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                         <Stack alignItems="center" spacing={1} sx={{ color: "grey.500" }}>
                           <PhotoCameraIcon sx={{ fontSize: 32 }} />
                           <Typography variant="body2" color="grey.500">
-                            Click to add photo
+                            {Locale.label("groups.groupDetailsEdit.clickToAddPhoto")}
                           </Typography>
                         </Stack>
                       )}
@@ -328,7 +328,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                       data-testid="change-photo-button"
                       aria-label="Change group photo"
                       size="small">
-                      {group.photoUrl ? Locale.label("common.changePhoto") : "Add Photo"}
+                      {group.photoUrl ? Locale.label("common.changePhoto") : Locale.label("groups.groupDetailsEdit.addPhoto")}
                     </Button>
                   </Box>
                 </Grid>
@@ -342,7 +342,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                     value={group.slug || ""}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
-                    placeholder="group-name"
+                    placeholder={Locale.label("groups.groupDetails.slugPlaceholder")}
                     data-testid="group-slug-input"
                     aria-label="Group slug"
                   />

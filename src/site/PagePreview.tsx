@@ -70,10 +70,10 @@ export const PagePreview: React.FC = () => {
 
   return (
     <>
-      <PageHeader icon={<WebIcon />} title="Website Preview" subtitle={`Previewing: ${pageData.title}`}>
+      <PageHeader icon={<WebIcon />} title={Locale.label("site.pagePreview.title")} subtitle={Locale.label("site.pagePreview.subtitle").replace("{title}", pageData.title)}>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} sx={{ width: { xs: '100%', sm: 'auto' } }}>
-          <Button variant="outlined" startIcon={<EditIcon />} onClick={handleEditContent} sx={{ color: '#FFF', borderColor: 'rgba(255,255,255,0.5)', textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#FFF', backgroundColor: 'rgba(255,255,255,0.1)' } }}>Edit Content</Button>
-          <Button variant="outlined" startIcon={<SettingsIcon />} onClick={() => setShowSettings(true)} sx={{ color: '#FFF', borderColor: 'rgba(255,255,255,0.5)', textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#FFF', backgroundColor: 'rgba(255,255,255,0.1)' } }}>Page Settings</Button>
+          <Button variant="outlined" startIcon={<EditIcon />} onClick={handleEditContent} sx={{ color: '#FFF', borderColor: 'rgba(255,255,255,0.5)', textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#FFF', backgroundColor: 'rgba(255,255,255,0.1)' } }}>{Locale.label("site.pagePreview.editContent")}</Button>
+          <Button variant="outlined" startIcon={<SettingsIcon />} onClick={() => setShowSettings(true)} sx={{ color: '#FFF', borderColor: 'rgba(255,255,255,0.5)', textTransform: 'none', fontWeight: 600, '&:hover': { borderColor: '#FFF', backgroundColor: 'rgba(255,255,255,0.1)' } }}>{Locale.label("site.pagePreview.pageSettings")}</Button>
         </Stack>
       </PageHeader>
 

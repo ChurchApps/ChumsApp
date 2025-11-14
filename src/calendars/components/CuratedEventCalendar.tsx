@@ -4,7 +4,7 @@ import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import { Button, Icon, Snackbar, Stack, Menu, MenuItem } from "@mui/material";
 import { EventNote as EventNoteIcon, ArrowDropDown as ArrowDropDownIcon } from "@mui/icons-material";
-import { EventHelper, UserHelper } from "@churchapps/apphelper";
+import { EventHelper, UserHelper, Locale } from "@churchapps/apphelper";
 import { type CuratedEventWithEventInterface } from "@churchapps/helpers";
 import { EditCalendarEventModal } from "./EditCalendarEventModal";
 import { DisplayCalendarEventModal } from "./DisplayCalendarEventModal";
@@ -99,22 +99,22 @@ export function CuratedEventCalendar(props: Props) {
           <Button
             startIcon={<Icon>link</Icon>}
             endIcon={<ArrowDropDownIcon />}
-            title="Subscribe to calendar"
+            title={Locale.label("calendars.calendar.subscribeTitle")}
             size="small"
             variant="contained"
             onClick={handleSubscribeClick}
             data-testid="calendar-subscribe-button"
           >
-            Subscribe
+            {Locale.label("calendars.calendar.subscribe")}
           </Button>
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose} data-testid="calendar-subscribe-menu">
             <MenuItem onClick={handleCopyIcsLink} data-testid="copy-ics-link-option">
               <Icon sx={{ marginRight: 1 }}>content_copy</Icon>
-              Copy ICS Link
+              {Locale.label("calendars.calendar.copyIcsLink")}
             </MenuItem>
             <MenuItem onClick={handleDownloadIcsFile} data-testid="download-ics-file-option">
               <Icon sx={{ marginRight: 1 }}>download</Icon>
-              Download ICS File
+              {Locale.label("calendars.calendar.downloadIcsFile")}
             </MenuItem>
           </Menu>
         </div>
@@ -126,7 +126,7 @@ export function CuratedEventCalendar(props: Props) {
             onClick={() => setOpen(true)}
             data-testid="calendar-add-event-button"
           >
-            Add
+            {Locale.label("calendars.calendar.add")}
           </Button>
         )}
       </Stack>
@@ -148,7 +148,7 @@ export function CuratedEventCalendar(props: Props) {
         open={showCopy}
         onClose={() => setShowCopy(false)}
         autoHideDuration={2000}
-        message="Copied to clipboard!"
+        message={Locale.label("calendars.calendar.copiedToClipboard")}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         ContentProps={{ sx: { background: "green" } }}
       />

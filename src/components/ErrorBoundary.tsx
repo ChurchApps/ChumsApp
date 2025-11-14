@@ -1,5 +1,6 @@
 import React from "react";
 import { Alert, AlertTitle, Button, Typography, Box } from "@mui/material";
+import { Locale } from "@churchapps/apphelper";
 
 interface Props {
   children: React.ReactNode;
@@ -22,12 +23,12 @@ interface ErrorInfo {
 const DefaultErrorFallback: React.FC<ErrorInfo> = ({ error, resetError }) => (
   <Box sx={{ p: 3 }}>
     <Alert severity="error">
-      <AlertTitle>Something went wrong</AlertTitle>
+      <AlertTitle>{Locale.label("common.errorBoundary.title")}</AlertTitle>
       <Typography variant="body2" sx={{ mt: 1, mb: 2 }}>
-        {error?.message || "An unexpected error occurred"}
+        {error?.message || Locale.label("common.errorBoundary.message")}
       </Typography>
-      <Button variant="outlined" onClick={resetError} size="small" data-testid="error-retry-button" aria-label="Try again">
-        Try again
+      <Button variant="outlined" onClick={resetError} size="small" data-testid="error-retry-button" aria-label={Locale.label("common.errorBoundary.retry")}>
+        {Locale.label("common.errorBoundary.retry")}
       </Button>
     </Alert>
   </Box>

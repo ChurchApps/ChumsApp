@@ -3,7 +3,9 @@ import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { ErrorMessages } from "@churchapps/apphelper";
 import { InputBox } from "@churchapps/apphelper";
 import type { PlaylistInterface, SermonInterface } from "@churchapps/helpers";
-import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
+import {
+  Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField 
+} from "@mui/material";
 
 interface Props {
   handleDone: () => void;
@@ -27,11 +29,10 @@ export const VimeoImport = (props: Props) => {
   const loadSettings = () => {
     if (playlistId && channelId) {
       ApiHelper.get(`/settings/imports?type=vimeo&playlistId=${playlistId}&channelId=${channelId}`, "ContentApi").then((data: any) => {
-        if (data.length === 1) { setAutoImportSettings(data[0]); setAutoImportSermons(true); }
-        else { setAutoImportSettings(null); setAutoImportSermons(false); }
+        if (data.length === 1) { setAutoImportSettings(data[0]); setAutoImportSermons(true); } else { setAutoImportSettings(null); setAutoImportSermons(false); }
       });
     }
-  }
+  };
 
   const handleCheck = (sermon: SermonInterface, checked: boolean) => {
     let newSelectedSermons = [...selectedSermons];
@@ -41,7 +42,7 @@ export const VimeoImport = (props: Props) => {
   };
 
   const getRows = () => {
-    let rows: React.ReactElement[] = [];
+    const rows: React.ReactElement[] = [];
     sermons.forEach((sermon) => {
       rows.push(
         <TableRow key={sermon.videoData}>
@@ -79,14 +80,14 @@ export const VimeoImport = (props: Props) => {
     if (playlistId === "") setErrors([Locale.label("sermons.bulkImport.selectPlaylist")]);
     else {
       if (autoImportSettings && autoImportSermons === false) {
-        ApiHelper.post("/settings", [{...autoImportSettings, value: "", public: 1}], "ContentApi");
+        ApiHelper.post("/settings", [{ ...autoImportSettings, value: "", public: 1 }], "ContentApi");
       }
       if (!autoImportSettings && autoImportSermons === true) {
         ApiHelper.post("/settings", [{ keyName: "vimeoChannelId", value: channelId, public: 1 }], "ContentApi").then((data: any) => {
           ApiHelper.post("/settings", [{ keyName: "autoImportSermons", value: `${playlistId}|#${data[0].id}`, public: 1 }], "ContentApi");
-        })
+        });
       }
-      let data = [...selectedSermons];
+      const data = [...selectedSermons];
       data.forEach((sermon) => { sermon.playlistId = playlistId; });
       ApiHelper.post("/sermons", data, "ContentApi").then(() => { props.handleDone(); });
     }

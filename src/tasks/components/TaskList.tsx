@@ -75,7 +75,7 @@ export const TaskList = memo((props: Props) => {
         textTransform: "none",
         fontWeight: 600,
       }}>
-      Add Task
+      {Locale.label("tasks.taskList.addTask")}
     </Button>
   );
 
@@ -160,11 +160,11 @@ export const TaskList = memo((props: Props) => {
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <GroupIcon sx={{ fontSize: 18, color: "secondary.main" }} />
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      Associated with:
+                      {Locale.label("tasks.taskList.associatedWith")}:
                     </Typography>
                   </Stack>
                   <Typography variant="body2" color="text.secondary" sx={{ ml: 3 }}>
-                    {task.associatedWithLabel || "Not specified"}
+                    {task.associatedWithLabel || Locale.label("tasks.taskList.notSpecified")}
                   </Typography>
                 </Grid>
 
@@ -172,11 +172,11 @@ export const TaskList = memo((props: Props) => {
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <PersonIcon sx={{ fontSize: 18, color: "info.main" }} />
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      Assigned to:
+                      {Locale.label("tasks.taskList.assignedTo")}:
                     </Typography>
                   </Stack>
                   <Typography variant="body2" color="text.secondary" sx={{ ml: 3 }}>
-                    {task.assignedToLabel || "Unassigned"}
+                    {task.assignedToLabel || Locale.label("tasks.taskList.unassigned")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -311,7 +311,7 @@ export const TaskList = memo((props: Props) => {
                       textTransform: "none",
                       fontWeight: 600,
                     }}>
-                    {Locale.label("tasks.tasksPage.showClosed") || "Show Closed"}
+                    {Locale.label("tasks.tasksPage.showClosed")}
                   </Button>
                 ) : (
                   <Button
@@ -325,7 +325,7 @@ export const TaskList = memo((props: Props) => {
                       textTransform: "none",
                       fontWeight: 600,
                     }}>
-                    {Locale.label("tasks.tasksPage.showOpen") || "Show Open"}
+                    {Locale.label("tasks.tasksPage.showOpen")}
                   </Button>
                 ))}
               {editContent}
@@ -350,7 +350,7 @@ export const TaskList = memo((props: Props) => {
               }}>
               <TaskIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
               <Typography variant="body1" color="text.secondary">
-                No tasks found. Create your first task to get started!
+                {Locale.label("tasks.taskList.noTasks")}
               </Typography>
             </Paper>
           )}

@@ -99,7 +99,9 @@ export const Form: React.FC<Props> = (props) => {
             <button
               type="button"
               onClick={handleClick}
-              style={{ background: "none", border: 0, padding: 0, color: "var(--c1l2)", cursor: "pointer", fontWeight: 500 }}>
+              style={{
+                background: "none", border: 0, padding: 0, color: "var(--c1l2)", cursor: "pointer", fontWeight: 500 
+              }}>
               {questions[i].title}
             </button>
           </TableCell>

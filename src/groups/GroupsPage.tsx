@@ -124,7 +124,7 @@ const GroupsPage = () => {
       <PageHeader
         icon={<GroupsIcon />}
         title={Locale.label("groups.groupsPage.groups")}
-        subtitle={groups.length > 0 ? `Manage ${groups.length} groups and their members` : "Create and organize groups for your church community"}
+        subtitle={groups.length > 0 ? Locale.label("groups.groupsPage.subtitle.manage").replace("{count}", groups.length.toString()) : Locale.label("groups.groupsPage.subtitle.create")}
       >
         <Stack
           direction={{ xs: "column", md: "row" }}
@@ -149,21 +149,21 @@ const GroupsPage = () => {
                   <GroupIcon sx={{ color: "#FFF", fontSize: 24 }} />
                   <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{groups.length}</Typography>
                 </Stack>
-                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Total Groups</Typography>
+                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>{Locale.label("groups.groupsPage.totalGroups")}</Typography>
               </Stack>
               <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
                 <Stack direction="row" spacing={1} alignItems="center">
                   <FolderIcon sx={{ color: "#FFF", fontSize: 24 }} />
                   <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{[...new Set(groups.map((g) => g.categoryName))].length}</Typography>
                 </Stack>
-                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Categories</Typography>
+                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>{Locale.label("groups.groupsPage.categories")}</Typography>
               </Stack>
               <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
                 <Stack direction="row" spacing={1} alignItems="center">
                   <Icon sx={{ color: "#FFF", fontSize: 24 }}>people</Icon>
                   <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{groups.reduce((total, group) => total + (group.memberCount || 0), 0)}</Typography>
                 </Stack>
-                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Total Members</Typography>
+                <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>{Locale.label("groups.groupsPage.totalMembers")}</Typography>
               </Stack>
             </Stack>
           )}
@@ -184,7 +184,7 @@ const GroupsPage = () => {
                 zIndex: 1
               }}
               data-testid="add-group-button">
-              Add Group
+              {Locale.label("groups.groupsPage.addGroup")}
             </Button>
           )}
         </Stack>

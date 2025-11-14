@@ -20,8 +20,8 @@ export const FilesPage = () => {
     <>
       <PageHeader
         icon={<FolderOpenIcon />}
-        title="Files"
-        subtitle="Manage files and media for your website"
+        title={Locale.label("site.filesPage.title")}
+        subtitle={Locale.label("site.filesPage.subtitle")}
       />
       <Box sx={{ p: 3 }}>
         {UserHelper.currentUserChurch && UserHelper.checkAccess(Permissions.contentApi.content.edit) && (

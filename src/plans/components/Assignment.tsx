@@ -1,5 +1,7 @@
 import React, { useCallback } from "react";
-import { Grid, TextField, Card, CardContent, Typography, Stack, Button, Snackbar, Alert } from "@mui/material";
+import {
+  Grid, TextField, Card, CardContent, Typography, Stack, Button, Snackbar, Alert 
+} from "@mui/material";
 import { PublishedWithChanges as AutoAssignIcon, Add as AddIcon, StickyNote2 as NotesIcon, Save as SaveIcon } from "@mui/icons-material";
 import {
   type AssignmentInterface,
@@ -53,7 +55,7 @@ export const Assignment = (props: Props) => {
           borderRadius: 2,
           fontWeight: 600,
         }}>
-        Auto Assign
+        {Locale.label("plans.assignment.autoAssign")}
       </Button>
       <Button
         variant="contained"
@@ -73,7 +75,7 @@ export const Assignment = (props: Props) => {
           borderRadius: 2,
           fontWeight: 600,
         }}>
-        Add Position
+        {Locale.label("plans.assignment.addPosition")}
       </Button>
     </Stack>
   ) : null;
@@ -198,7 +200,7 @@ export const Assignment = (props: Props) => {
                     borderRadius: 2,
                     fontWeight: 600,
                   }}>
-                  Save Notes
+                  {Locale.label("plans.assignment.saveNotes")}
                 </Button>
               )}
             </Stack>

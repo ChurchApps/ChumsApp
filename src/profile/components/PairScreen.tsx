@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import { ApiHelper, ErrorMessages, InputBox } from "@churchapps/apphelper";
+import { ApiHelper, ErrorMessages, InputBox, Locale } from "@churchapps/apphelper";
 
 interface Props {
   updatedFunction: () => void;
@@ -22,7 +22,7 @@ export const PairScreen = (props: Props) => {
 
   const validate = () => {
     const result = [];
-    if (!code) result.push("Please enter a pairing code.");
+    if (!code) result.push(Locale.label("profile.pairScreen.codeRequired"));
     setErrors(result);
     return result.length === 0;
   };
@@ -31,7 +31,7 @@ export const PairScreen = (props: Props) => {
     if (validate()) {
       ApiHelper.get("/devices/pair/" + code, "MessagingApi").then((data) => {
         if (data.success) props.updatedFunction();
-        else setErrors(["Invalid pairing code."]);
+        else setErrors([Locale.label("profile.pairScreen.invalidCode")]);
       });
     }
   };
@@ -39,8 +39,8 @@ export const PairScreen = (props: Props) => {
   return (
     <>
       <ErrorMessages errors={errors} />
-      <InputBox headerText="Add Screen" headerIcon="tv" saveFunction={handleSave} cancelFunction={props.updatedFunction}>
-        <TextField fullWidth label="Pairing Code" id="code" name="code" type="text" value={code} onChange={handleChange} />
+      <InputBox headerText={Locale.label("profile.devices.addScreen")} headerIcon="tv" saveFunction={handleSave} cancelFunction={props.updatedFunction}>
+        <TextField fullWidth label={Locale.label("profile.pairScreen.pairingCode")} id="code" name="code" type="text" value={code} onChange={handleChange} />
       </InputBox>
     </>
   );

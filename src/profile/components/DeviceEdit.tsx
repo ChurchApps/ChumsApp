@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { TextField } from "@mui/material";
-import { ApiHelper, ErrorMessages, InputBox } from "@churchapps/apphelper";
+import { ApiHelper, ErrorMessages, InputBox, Locale } from "@churchapps/apphelper";
 import { type DeviceInterface } from "../DevicesPage";
 import { DeviceContent } from "./DeviceContent";
 
@@ -31,7 +31,7 @@ export const DeviceEdit = (props: Props) => {
 
   const validate = () => {
     const result = [];
-    if (!device.label) result.push("Please enter a label for this device.");
+    if (!device.label) result.push(Locale.label("profile.deviceEdit.labelRequired"));
     setErrors(result);
     return result.length === 0;
   };
@@ -47,8 +47,8 @@ export const DeviceEdit = (props: Props) => {
   return (
     <>
       <ErrorMessages errors={errors} />
-      <InputBox headerText="Edit Device" headerIcon="tv" saveFunction={handleSave} cancelFunction={props.updatedFunction}>
-        <TextField fullWidth label="Label" name="label" type="text" value={device?.label} onChange={handleChange} />
+      <InputBox headerText={Locale.label("profile.devices.editDevice")} headerIcon="tv" saveFunction={handleSave} cancelFunction={props.updatedFunction}>
+        <TextField fullWidth label={Locale.label("profile.deviceEdit.label")} name="label" type="text" value={device?.label} onChange={handleChange} />
         <DeviceContent device={device} />
       </InputBox>
     </>

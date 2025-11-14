@@ -29,7 +29,7 @@ export const PlanTypePage = () => {
       <Container maxWidth="lg" sx={{ py: 3 }}>
         <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
           <Typography variant="body1" color="text.secondary">
-            Plan type not found
+            {Locale.label("plans.planTypePage.notFound")}
           </Typography>
         </Box>
       </Container>
@@ -64,8 +64,8 @@ export const PlanTypePage = () => {
       <Box sx={{ marginTop: '-1.5rem' }}>
         <PageHeader
           icon={<AssignmentIcon />}
-          title={planType.data.name || "Plan Type"}
-          subtitle="Manage service plans for this type"
+          title={planType.data.name || Locale.label("plans.planTypePage.planType")}
+          subtitle={Locale.label("plans.planTypePage.subtitle")}
         />
       </Box>
 

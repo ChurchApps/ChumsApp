@@ -12,31 +12,31 @@ export const ReportsPage = () => {
       path: "/reports/birthdays",
       label: Locale.label("reports.reportsPage.bDays"),
       icon: <BirthdayIcon />,
-      description: "View upcoming birthdays and anniversaries",
+      description: Locale.label("reports.reportsPage.bDaysDesc"),
     },
     {
       path: "/reports/attendanceTrend",
       label: Locale.label("reports.reportsPage.attTrend"),
       icon: <TrendIcon />,
-      description: "Analyze attendance patterns over time",
+      description: Locale.label("reports.reportsPage.attTrendDesc"),
     },
     {
       path: "/reports/groupAttendance",
       label: Locale.label("reports.reportsPage.groupAtt"),
       icon: <GroupsIcon />,
-      description: "Review group attendance statistics",
+      description: Locale.label("reports.reportsPage.groupAttDesc"),
     },
     {
       path: "/reports/dailyGroupAttendance",
       label: Locale.label("reports.reportsPage.dailyGroupAtt"),
       icon: <DailyIcon />,
-      description: "Daily breakdown of group attendance",
+      description: Locale.label("reports.reportsPage.dailyGroupAttDesc"),
     },
     {
       path: "/reports/donationSummary",
       label: Locale.label("reports.reportsPage.donSum"),
       icon: <DonationIcon />,
-      description: "Financial giving and donation summaries",
+      description: Locale.label("reports.reportsPage.donSumDesc"),
     },
   ];
 
@@ -45,7 +45,7 @@ export const ReportsPage = () => {
       <PageHeader
         icon={<SummarizeIcon />}
         title={Locale.label("reports.reportsPage.reports")}
-        subtitle="Generate detailed reports and analytics for your church management needs. Choose from various report types to gain insights into attendance, membership, and giving patterns."
+        subtitle={Locale.label("reports.reportsPage.subtitle")}
       />
 
       <Container maxWidth="lg">
@@ -132,7 +132,7 @@ export const ReportsPage = () => {
               borderRadius: 2,
             }}>
             <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
-              Need help with reports? Each report includes filters and export options to customize your data view.
+              {Locale.label("reports.reportsPage.helpText")}
             </Typography>
           </Paper>
         </Box>

@@ -9,7 +9,7 @@ type Props = {
 };
 
 export function RowMobileOrder(props: Props) {
-  const mobileOrder: number[] = []
+  const mobileOrder: number[] = [];
   props.parsedData.columns?.split(",").forEach((c: string, idx:number) => mobileOrder.push(idx+1));
   props.parsedData.mobileOrder?.split(",").forEach((c: string, idx:number) => mobileOrder[idx] = parseInt(c));
 
@@ -17,19 +17,19 @@ export function RowMobileOrder(props: Props) {
     const data = { ...props.parsedData };
     data.mobileOrder = mobileOrder.toString();
     props.onRealtimeChange(data);
-  }
+  };
 
   const handleColumnChange = (e: SelectChangeEvent<number>, idx: number) => {
     const val = parseInt(e.target.value.toString());
     mobileOrder[idx] = val;
     updateMobileOrders();
-  }
+  };
 
   const getCustomOrders = () => {
-    let result: React.ReactElement[] = [];
+    const result: React.ReactElement[] = [];
     props.cols.forEach((c:number, idx:number) => {
       const index = idx;
-      let order = (mobileOrder.length > idx) ? mobileOrder[idx] || idx + 1 : idx + 1;
+      const order = (mobileOrder.length > idx) ? mobileOrder[idx] || idx + 1 : idx + 1;
       result.push(<TableRow key={idx}>
         <TableCell>{idx+1}</TableCell>
         <TableCell>
@@ -48,11 +48,11 @@ export function RowMobileOrder(props: Props) {
             <MenuItem value="12" data-testid="mobile-order-12" aria-label="Order 12">12</MenuItem>
           </Select>
         </TableCell>
-      </TableRow>)
+      </TableRow>);
     });
 
     return (<>
-      <div style={{marginTop:10}}><b>Customize Mobile Order</b></div>
+      <div style={{ marginTop: 10 }}><b>Customize Mobile Order</b></div>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -64,7 +64,7 @@ export function RowMobileOrder(props: Props) {
           {result}
         </TableBody>
       </Table><br /></>);
-  }
+  };
 
   return (
     <>

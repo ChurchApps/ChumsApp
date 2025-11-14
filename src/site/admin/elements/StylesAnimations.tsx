@@ -25,7 +25,7 @@ export const StylesAnimations: React.FC<Props> = (props) => {
     </div>
 */
   return <>
-    <div style={{backgroundColor:"#f0f0f0", padding:10, marginBottom:10}}>
+    <div style={{ backgroundColor: "#f0f0f0", padding: 10, marginBottom: 10 }}>
       <Accordion expanded={expanded === "styles"} onChange={() => setExpanded((expanded==="styles") ? "" : "styles")}>
         <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
           <Typography sx={{ width: "33%", flexShrink: 0 }}>Styles</Typography>
@@ -47,6 +47,6 @@ export const StylesAnimations: React.FC<Props> = (props) => {
       </Accordion>
 
     </div>
-  </>
+  </>;
 
-}
+};

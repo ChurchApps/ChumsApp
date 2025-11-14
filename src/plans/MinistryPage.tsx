@@ -31,7 +31,7 @@ export const MinistryPage = () => {
 
   return (
     <>
-      <PageHeader icon={<GroupIcon />} title={ministry.data.name} subtitle="Manage plan types, plans, and teams for this ministry" />
+      <PageHeader icon={<GroupIcon />} title={ministry.data.name} subtitle={Locale.label("plans.ministryPage.subtitle")} />
       <MinistryNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} />
 
       {/* Tab Content */}

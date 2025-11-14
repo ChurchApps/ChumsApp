@@ -46,7 +46,7 @@ export const ReportFilter = (props: Props) => {
       const toDate = new Date(toParam.value + "T00:00:00");
 
       if (toDate < fromDate) {
-        alert(Locale.label("reporting.toDateBeforeFromDate") || "To date cannot be before From date");
+        alert(Locale.label("reporting.toDateBeforeFromDate"));
         return false;
       }
     }
@@ -93,7 +93,7 @@ export const ReportFilter = (props: Props) => {
   const inputs = getInputs();
   if (inputs.length > 0) {
     return (
-      <InputBox id="formSubmissionBox" headerText="Filter Report" headerIcon="summarize" saveFunction={handleRunReport} saveText={Locale.label("reporting.runReport")}>
+      <InputBox id="formSubmissionBox" headerText={Locale.label("common.reportFilter.title")} headerIcon="summarize" saveFunction={handleRunReport} saveText={Locale.label("reporting.runReport")}>
         {inputs}
       </InputBox>
     );

@@ -59,7 +59,7 @@ export const GroupAdd: React.FC<Props> = (props) => {
   else if (props.tags === "ministry") label = Locale.label("groups.groupAdd.ministry");
 
   return (
-    <InputBox headerText={Locale.label("groups.groupAdd.new") + label} headerIcon="group" cancelFunction={handleCancel} saveFunction={handleAdd} saveText="Add" isSubmitting={isSubmitting}>
+    <InputBox headerText={Locale.label("groups.groupAdd.new") + label} headerIcon="group" cancelFunction={handleCancel} saveFunction={handleAdd} saveText={Locale.label("groups.groupAdd.add")} isSubmitting={isSubmitting}>
       <ErrorMessages errors={errors} />
       {props.tags === "standard" && (
         <CategorySelect

@@ -19,7 +19,7 @@ import {
   ArrowDownward as ArrowDownIcon,
   Tab as TabIcon
 } from "@mui/icons-material";
-import { ApiHelper } from "@churchapps/apphelper";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 import type { LinkInterface } from "@churchapps/helpers";
 import { CardWithHeader, EmptyState } from "../../components/ui";
 import { ensureSequentialSort, moveItemDown, moveItemUp } from "../../helpers/SortHelper";
@@ -77,7 +77,7 @@ export function AppTabs({ onSelected = () => {}, refreshKey = 0 }: Props) {
         <ListItemText
           primary={
             <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-              {tab.text || "Untitled Tab"}
+              {tab.text || Locale.label("settings.appTabs.untitled")}
             </Typography>
           }
           secondary={
@@ -88,7 +88,7 @@ export function AppTabs({ onSelected = () => {}, refreshKey = 0 }: Props) {
         />
         <ListItemSecondaryAction>
           <Stack direction="row" spacing={0.5}>
-            <Tooltip title="Move up" arrow>
+            <Tooltip title={Locale.label("settings.appTabs.moveUp")} arrow>
               <span>
                 <IconButton
                   size="small"
@@ -100,7 +100,7 @@ export function AppTabs({ onSelected = () => {}, refreshKey = 0 }: Props) {
                 </IconButton>
               </span>
             </Tooltip>
-            <Tooltip title="Move down" arrow>
+            <Tooltip title={Locale.label("settings.appTabs.moveDown")} arrow>
               <span>
                 <IconButton
                   size="small"
@@ -112,7 +112,7 @@ export function AppTabs({ onSelected = () => {}, refreshKey = 0 }: Props) {
                 </IconButton>
               </span>
             </Tooltip>
-            <Tooltip title="Edit tab" arrow>
+            <Tooltip title={Locale.label("settings.appTabs.editTab")} arrow>
               <IconButton
                 size="small"
                 onClick={() => handleEdit(tab)}
@@ -133,15 +133,15 @@ export function AppTabs({ onSelected = () => {}, refreshKey = 0 }: Props) {
 
   return (
     <CardWithHeader
-      title="Navigation Tabs"
+      title={Locale.label("settings.appTabs.title")}
       icon={<TabIcon />}
     >
       {tabs.length === 0
         ? (
           <EmptyState
             icon={<TabIcon />}
-            title="No navigation tabs"
-            description="Create your first navigation tab to get started with your mobile app."
+            title={Locale.label("settings.appTabs.noTabs")}
+            description={Locale.label("settings.appTabs.noTabsDesc")}
             variant="card"
           />
         )

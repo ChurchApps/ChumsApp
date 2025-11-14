@@ -1,8 +1,11 @@
-import { FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import {
+  FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow 
+} from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { RowMobileSizes } from "./RowMobileSizes";
 import { RowMobileOrder } from "./RowMobileOrder";
+import { Locale } from "@churchapps/apphelper";
 
 type Props = {
   parsedData: any;
@@ -11,7 +14,7 @@ type Props = {
 };
 
 export function RowEdit(props: Props) {
-  const cols: number[] = []
+  const cols: number[] = [];
   props.parsedData.columns?.split(",").forEach((c: string) => cols.push(parseInt(c)));
   const [showMobileSizes, setShowMobileSizes] = React.useState(false);
   const [showMobileOrder, setShowMobileOrder] = React.useState(false);
@@ -20,16 +23,18 @@ export function RowEdit(props: Props) {
     e.preventDefault();
     const data = { ...props.parsedData };
     if (e.target.name === "columns") data.columns = (e.target.value === "custom") ? "6,3,3" : e.target.value;
-    props.onRealtimeChange(data)
+    props.onRealtimeChange(data);
     props.setErrors([]);
   };
 
   const getPreviewTable = () => {
-    const colors = ["#FBF8CC", "#FDE4CF", "#FFCFD2", "#F1C0E8", "#CFBAF0", "#A3C4F3", "#90DBF4", "#8EECF5", "#98F5E1", "B9FBC0", "#FBF8CC", "#FDE4CF"]
-    let result: React.ReactElement[] = [];
+    const colors = [
+      "#FBF8CC", "#FDE4CF", "#FFCFD2", "#F1C0E8", "#CFBAF0", "#A3C4F3", "#90DBF4", "#8EECF5", "#98F5E1", "B9FBC0", "#FBF8CC", "#FDE4CF"
+    ];
+    const result: React.ReactElement[] = [];
     let idx = 0;
     cols.forEach(c => {
-      result.push(<TableCell key={idx} style={{ backgroundColor: colors[idx], width: Math.round(c / 12 * 100).toString() + "%" }} colSpan={c}>{c}</TableCell>)
+      result.push(<TableCell key={idx} style={{ backgroundColor: colors[idx], width: Math.round(c / 12 * 100).toString() + "%" }} colSpan={c}>{c}</TableCell>);
       idx++;
     });
     return (<Table size="small">
@@ -39,7 +44,7 @@ export function RowEdit(props: Props) {
         </TableRow>
       </TableBody>
     </Table>);
-  }
+  };
 
   const updateColumns = () => {
     const data = { ...props.parsedData };
@@ -47,13 +52,13 @@ export function RowEdit(props: Props) {
     props.onRealtimeChange(data);
     let total = 0;
     cols.forEach(c => total += c);
-    if (total === 12) props.setErrors([]); else props.setErrors(["Columns must add up to 12"]);
-  }
+    if (total === 12) props.setErrors([]); else props.setErrors([Locale.label("site.row.columnsError")]);
+  };
 
   const handleRemove = (idx: number) => {
     cols.splice(idx, 1);
     updateColumns();
-  }
+  };
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -62,16 +67,16 @@ export function RowEdit(props: Props) {
     const newVal = (total >= 12) ? 1 : 12 - total;
     cols.push(newVal);
     updateColumns();
-  }
+  };
 
   const handleColumnChange = (e: SelectChangeEvent<number>, idx: number) => {
     const val = parseInt(e.target.value.toString());
     cols[idx] = val;
     updateColumns();
-  }
+  };
 
   const getCustomSizes = () => {
-    let result: React.ReactElement[] = [];
+    const result: React.ReactElement[] = [];
     let idx = 0;
     let total = 0;
     cols.forEach(c => {
@@ -80,79 +85,79 @@ export function RowEdit(props: Props) {
       result.push(<TableRow>
         <TableCell key={idx}>
           <Select name="width" fullWidth size="small" value={c} onChange={(e) => handleColumnChange(e, index)}>
-            <MenuItem value="1">1 - 1/12th</MenuItem>
-            <MenuItem value="2">2 - 1/6th</MenuItem>
-            <MenuItem value="3">3 - 1/4th</MenuItem>
-            <MenuItem value="4">4 - 1/3rd</MenuItem>
-            <MenuItem value="5">5 - 5/12th</MenuItem>
-            <MenuItem value="6">6 - half</MenuItem>
-            <MenuItem value="7">7 - 7/12th</MenuItem>
-            <MenuItem value="8">8 - 2/3rd</MenuItem>
-            <MenuItem value="9">9 - 3/4th</MenuItem>
-            <MenuItem value="10">10 - 5/6th</MenuItem>
-            <MenuItem value="11">11 - 11/12th</MenuItem>
-            <MenuItem value="12">12 - whole</MenuItem>
+            <MenuItem value="1">{Locale.label("site.row.size1")}</MenuItem>
+            <MenuItem value="2">{Locale.label("site.row.size2")}</MenuItem>
+            <MenuItem value="3">{Locale.label("site.row.size3")}</MenuItem>
+            <MenuItem value="4">{Locale.label("site.row.size4")}</MenuItem>
+            <MenuItem value="5">{Locale.label("site.row.size5")}</MenuItem>
+            <MenuItem value="6">{Locale.label("site.row.size6")}</MenuItem>
+            <MenuItem value="7">{Locale.label("site.row.size7")}</MenuItem>
+            <MenuItem value="8">{Locale.label("site.row.size8")}</MenuItem>
+            <MenuItem value="9">{Locale.label("site.row.size9")}</MenuItem>
+            <MenuItem value="10">{Locale.label("site.row.size10")}</MenuItem>
+            <MenuItem value="11">{Locale.label("site.row.size11")}</MenuItem>
+            <MenuItem value="12">{Locale.label("site.row.size12")}</MenuItem>
           </Select>
         </TableCell>
-        <TableCell><a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemove(index); }}>Remove</a></TableCell>
-      </TableRow>)
+        <TableCell><a href="about:blank" onClick={(e) => { e.preventDefault(); handleRemove(index); }}>{Locale.label("site.row.remove")}</a></TableCell>
+      </TableRow>);
       idx++;
     });
 
-    if (total === 12) result.push(<TableRow><TableCell colSpan={2}><div className="text-success">Total: 12/12</div></TableCell></TableRow>)
-    else result.push(<TableRow><TableCell colSpan={2}><div className="text-danger">Total: {total}/12</div></TableCell></TableRow>);
+    if (total === 12) result.push(<TableRow><TableCell colSpan={2}><div className="text-success">{Locale.label("site.row.totalValid")}</div></TableCell></TableRow>);
+    else result.push(<TableRow><TableCell colSpan={2}><div className="text-danger">{Locale.label("site.row.totalInvalid").replace("{total}", total.toString())}</div></TableCell></TableRow>);
 
 
     return (<>
-      <div><b>Custom</b> - <small>Numbers represent twelfths of page.</small></div>
+      <div><b>{Locale.label("common.custom")}</b> - <small>{Locale.label("site.row.columnsHelper")}</small></div>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Width</TableCell>
-            <TableCell><a href="about:blank" onClick={handleAdd}>Add Column</a></TableCell>
+            <TableCell>{Locale.label("site.row.width")}</TableCell>
+            <TableCell><a href="about:blank" onClick={handleAdd}>{Locale.label("site.row.addColumn")}</a></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {result}
         </TableBody>
       </Table><br /></>);
-  }
+  };
 
   const getMobileSize = () => {
-    if (!showMobileSizes) return <a href="about:blank" style={{marginTop:10, display:"block"}} onClick={(e) => {e.preventDefault(); setShowMobileSizes(true)}}>Show Mobile Sizes</a>
+    if (!showMobileSizes) return <a href="about:blank" style={{ marginTop: 10, display: "block" }} onClick={(e) => { e.preventDefault(); setShowMobileSizes(true); }}>{Locale.label("site.row.showMobileSizes")}</a>;
     else {
       return <>
-        <a href="about:blank" style={{marginTop:10, display:"block"}} onClick={(e) => {e.preventDefault(); setShowMobileSizes(false)}}>Hide Mobile Sizes</a>
+        <a href="about:blank" style={{ marginTop: 10, display: "block" }} onClick={(e) => { e.preventDefault(); setShowMobileSizes(false); }}>{Locale.label("site.row.hideMobileSizes")}</a>
         <RowMobileSizes cols={cols} parsedData={props.parsedData} onRealtimeChange={props.onRealtimeChange} />
-      </>
+      </>;
     }
-  }
+  };
 
   const getMobileOrder = () => {
-    if (!showMobileOrder) return <a href="about:blank" style={{marginTop:10, display:"block"}} onClick={(e) => {e.preventDefault(); setShowMobileOrder(true)}}>Show Mobile Order</a>
+    if (!showMobileOrder) return <a href="about:blank" style={{ marginTop: 10, display: "block" }} onClick={(e) => { e.preventDefault(); setShowMobileOrder(true); }}>{Locale.label("site.row.showMobileOrder")}</a>;
     else {
       return <>
-        <a href="about:blank" style={{marginTop:10, display:"block"}} onClick={(e) => {e.preventDefault(); setShowMobileOrder(false)}}>Hide Mobile Order</a>
+        <a href="about:blank" style={{ marginTop: 10, display: "block" }} onClick={(e) => { e.preventDefault(); setShowMobileOrder(false); }}>{Locale.label("site.row.hideMobileOrder")}</a>
         <RowMobileOrder cols={cols} parsedData={props.parsedData} onRealtimeChange={props.onRealtimeChange} />
-      </>
+      </>;
     }
-  }
+  };
 
   let commonValue = props.parsedData?.columns || "custom";
   if (["6,6", "4,4,4", "3,3,3,3"].indexOf(commonValue) === -1) commonValue = "custom";
   return (
     <>
       <FormControl fullWidth>
-        <InputLabel>Common Options</InputLabel>
-        <Select name="columns" fullWidth label={"Common Options"} size="small" value={commonValue} onChange={handleChange}>
-          <MenuItem value="6,6">Halves</MenuItem>
-          <MenuItem value="4,4,4">Thirds</MenuItem>
-          <MenuItem value="3,3,3,3">Quarters</MenuItem>
-          <MenuItem value="custom">Custom</MenuItem>
+        <InputLabel>{Locale.label("site.row.commonOptions")}</InputLabel>
+        <Select name="columns" fullWidth label={Locale.label("site.row.commonOptions")} size="small" value={commonValue} onChange={handleChange}>
+          <MenuItem value="6,6">{Locale.label("site.row.halves")}</MenuItem>
+          <MenuItem value="4,4,4">{Locale.label("site.row.thirds")}</MenuItem>
+          <MenuItem value="3,3,3,3">{Locale.label("site.row.quarters")}</MenuItem>
+          <MenuItem value="custom">{Locale.label("common.custom")}</MenuItem>
         </Select>
       </FormControl>
       {(commonValue === "custom") && getCustomSizes()}
-      <div><b>Preview</b> - <small>Numbers represent twelfths of page.</small></div>
+      <div><b>{Locale.label("site.row.preview")}</b> - <small>{Locale.label("site.row.previewHelper")}</small></div>
       {getPreviewTable()}
       {getMobileSize()}
       {getMobileOrder()}

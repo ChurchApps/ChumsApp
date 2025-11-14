@@ -52,7 +52,7 @@ export const AutomationDetails = (props: Props) => {
     if (actions.length === 0) {
       return (
         <Typography variant="body2" color="text.secondary" sx={{ fontStyle: "italic", textAlign: "center", py: 2 }}>
-          No actions configured
+          {Locale.label("tasks.automationDetails.noAct")}
         </Typography>
       );
     }
@@ -192,12 +192,12 @@ export const AutomationDetails = (props: Props) => {
               <Stack direction="row" spacing={2} flexWrap="wrap">
                 <Chip
                   icon={automation?.active ? <ActiveIcon /> : <InactiveIcon />}
-                  label={automation?.active ? "Active" : "Inactive"}
+                  label={automation?.active ? Locale.label("tasks.automationDetails.active") : Locale.label("tasks.automationDetails.inactive")}
                   color={automation?.active ? "success" : "default"}
                   size="small"
                   sx={{ fontWeight: 600 }}
                 />
-                <Chip icon={<RepeatIcon />} label={`Recurs: ${automation?.recurs}`} variant="outlined" size="small" />
+                <Chip icon={<RepeatIcon />} label={`${Locale.label("tasks.automationDetails.recurs")}: ${automation?.recurs}`} variant="outlined" size="small" />
               </Stack>
             </Stack>
 
@@ -210,7 +210,7 @@ export const AutomationDetails = (props: Props) => {
                   {Locale.label("tasks.automationDetails.acts")}:
                 </Typography>
                 <Button size="small" startIcon={<AddIcon />} onClick={() => setEditAction({ automationId: automation.id, actionType: "task" })} sx={{ textTransform: "none" }}>
-                  Add Action
+                  {Locale.label("tasks.automationDetails.addAct")}
                 </Button>
               </Stack>
               {getActions()}

@@ -72,17 +72,17 @@ export const LinkedAccounts = () => {
                       const newWindow = window.open("https://www.praisecharts.com/?XID=churchapps", "_blank");
                       if (newWindow) newWindow.opener = null;
                     }}>
-                    Sign-up
+                    {Locale.label("profile.linkedAccounts.signUp")}
                   </Button>
                   &nbsp;
                   <Button variant="contained" color="success" onClick={() => openOAuthPopup()}>
-                    Link
+                    {Locale.label("profile.linkedAccounts.link")}
                   </Button>
                 </>
               )}
               {praiseChartsAccessToken && (
                 <Button variant="contained" color="error" onClick={unlinkPraiseCharts}>
-                  Unlink
+                  {Locale.label("profile.linkedAccounts.unlink")}
                 </Button>
               )}
             </CardContent>

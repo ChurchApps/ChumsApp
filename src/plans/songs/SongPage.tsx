@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { ApiHelper, ArrayHelper, PageHeader, UserHelper, Permissions } from "@churchapps/apphelper";
+import { ApiHelper, ArrayHelper, PageHeader, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import { useParams } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { useQuery } from "@tanstack/react-query";
@@ -212,7 +212,7 @@ export const SongPage = memo(() => {
 
   return (
     <>
-      <PageHeader icon={<MusicIcon />} title={songDetail.data?.title || song.data?.name || "Loading..."} subtitle="Manage song arrangements and details">
+      <PageHeader icon={<MusicIcon />} title={songDetail.data?.title || song.data?.name || Locale.label("songs.songPage.loading")} subtitle={Locale.label("songs.songPage.subtitle")}>
         {canEdit && (
           <IconButton
             onClick={() => setEditSongDetails(true)}

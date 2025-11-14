@@ -11,7 +11,13 @@
       "groupAttMsg": "Group attendance will show up once sessions have been added to a group and people have attended those sessions.",
       "groups": "Groups",
       "service": "Service",
-      "time": "Time"
+      "time": "Time",
+      "campuses": "Campuses",
+      "scheduled": "Scheduled",
+      "services": "Services",
+      "subtitle": "Track attendance for services and groups",
+      "totalGroups": "Total Groups",
+      "unscheduled": "Unscheduled"
     },
     "campusEdit": {
       "confirmDelete": "Are you sure you want to delete this campus?",
@@ -43,28 +49,163 @@
       "attTrend": "Attendance Trend",
       "groupAtt": "Group Attendance",
       "noImplement": "Not Implemented"
+    },
+    "attendanceSetup": {
+      "addService": "Add Service",
+      "addServiceTime": "Add Service Time",
+      "newCampus": "New Campus",
+      "newService": "New Service",
+      "newServiceTime": "New Service Time",
+      "setupMessage": "Set up campuses, services, and service times to begin tracking attendance.",
+      "unassigned": "Unassigned"
+    }
+  },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "Calendar Name",
+      "namePlaceholder": "Enter a name for this calendar",
+      "calendarDetails": "Calendar Details",
+      "calendarDetailsDesc": "Configure your calendar settings",
+      "calendarNameAria": "Calendar Name",
+      "cancel": "Cancel",
+      "confirmDelete": "Are you sure you wish to delete this calendar?",
+      "create": "Create",
+      "createCalendar": "Create Calendar",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "editCalendar": "Edit Calendar",
+      "nameRequired": "Calendar name is required",
+      "save": "Save",
+      "saving": "Saving...",
+      "unauthorizedCreate": "Unauthorized to create calendars",
+      "unauthorizedDelete": "Unauthorized to delete calendars"
+    },
+    "calendarList": {
+      "active": "Active",
+      "aboutParagraph1": "Calendars allow you to organize and display events for your church.",
+      "aboutParagraph2": "You can create multiple calendars for different purposes like worship services, youth events, and community outreach.",
+      "aboutParagraph3": "Share your calendars with members through ICS feeds or embed them on your website.",
+      "aboutTitle": "About Calendars",
+      "actions": "Actions",
+      "addCalendar": "Add Calendar",
+      "calendar": "Calendar",
+      "calendars": "Calendars",
+      "createCalendar": "Create Calendar",
+      "createFirstCalendar": "Create First Calendar",
+      "curatedCalendar": "Curated Calendar",
+      "edit": "Edit",
+      "manageEvents": "Manage Events",
+      "noCalendars": "No calendars found",
+      "status": "Status",
+      "subtitleEmpty": "Get started by creating your first calendar",
+      "title": "Calendars"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "Are you sure you wish to remove this group from the calendar?",
+      "actions": "Actions",
+      "addEventsHint": "Add events by selecting groups",
+      "calendar": "Calendar",
+      "calendarEvents": "Calendar Events",
+      "groupName": "Group Name",
+      "groupsInCalendar": "Groups in Calendar",
+      "noGroupsAdded": "No groups added yet",
+      "removeGroup": "Remove Group",
+      "subtitle": "Manage calendar events and groups"
+    },
+    "calendarEvent": {
+      "confirmDelete": "Are you sure you wish to delete this event?",
+      "noGroups": "No groups found.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "editEvent": {
+      "selectGroup": "Select a Group",
+      "addAllEvents": "Add all the events of the group",
+      "addSpecificEvents": "Add specific events",
+      "addGroup": "Add Group",
+      "cancel": "Cancel",
+      "clickToAdd": "Click to add",
+      "noEventsFound": "No events found",
+      "save": "Save"
+    },
+    "calendar": {
+      "add": "Add",
+      "copiedToClipboard": "Copied to clipboard",
+      "copyIcsLink": "Copy ICS Link",
+      "downloadIcsFile": "Download ICS File",
+      "subscribe": "Subscribe",
+      "subscribeTitle": "Subscribe to Calendar"
     }
   },
   "common": {
     "add": "Add",
     "amount": "Amount",
+    "bottom": "Bottom",
     "cancel": "Cancel",
+    "center": "Center",
     "change": "Change",
     "changePhoto": "Change Photo",
     "close": "Close",
+    "comboBox": {
+      "addNew": "Add New..."
+    },
+    "createPerson": {
+      "confirmDuplicate": "{{existingName}} already exists with an email of {{existingEmail}}. Are you sure you wish to add {{firstName}} {{lastName}}?",
+      "validate": {
+        "firstName": "Please enter a first name.",
+        "lastName": "Please enter a last name.",
+        "validEmail": "Please enter a valid email address."
+      }
+    },
+    "custom": "Custom",
     "delete": "Delete",
+    "done": "Done",
+    "duplicate": "Duplicate",
     "edit": "Edit",
+    "errorBoundary": {
+      "title": "Oops! An Error Occurred",
+      "message": "Something went wrong. Please try again or contact support if the problem persists.",
+      "retry": "Retry"
+    },
+    "formSubmission": {
+      "noData": "No data available",
+      "edit": "Edit",
+      "noQuestions": "No questions found"
+    },
+    "help": "Help",
+    "iconPicker": {
+      "searchLabel": "Search Icons",
+      "searchPlaceholder": "Type to search (e.g., person, home, church)...",
+      "title": "Select Icon",
+      "noResults": "No icons found matching \"{{searchText}}\"",
+      "tryDifferent": "Try a different search term",
+      "showingMatching": "Showing {{count}} icons matching \"{{searchText}}\"",
+      "showingDefault": "Showing {{count}} commonly used icons. Use search to find more."
+    },
+    "left": "Left",
     "name": "Name",
     "no": "No",
     "notes": "Notes",
     "person": "Person",
     "pleaseWait": "Please wait...",
     "remove": "Remove",
+    "reportFilter": {
+      "title": "Filter Report"
+    },
+    "reportFilterField": {
+      "any": "Any"
+    },
+    "right": "Right",
     "save": "Save",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
     "search": "Search",
     "searching": "Searching...",
+    "sermons": "Sermons",
     "title": "Title",
+    "top": "Top",
     "update": "Update",
+    "website": "Website",
     "yes": "Yes"
   },
   "components": {
@@ -96,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "Dashboard"
+      "dash": "Dashboard",
+      "subtitle": "Welcome to your church management dashboard. Search for people, view your groups, and manage your open tasks."
     },
     "myGroups": "My Groups",
     "people": "People",
@@ -108,13 +250,23 @@
     "tasks": "Tasks"
   },
   "donation": {
+    "donationPage": {
+      "donations": "Donations"
+    },
+    "nonAuthDonation": {
+      "donate": "Donate"
+    },
     "page": {
       "amount": "Amount",
       "batch": "Batch",
       "date": "Date",
       "fund": "Fund",
       "method": "Method",
-      "willAppear": "Donations will appear here once they have been made."
+      "willAppear": "Donations will appear here once they have been made.",
+      "currentYearCsv": "Current Year CSV",
+      "currentYearPrint": "Current Year Print",
+      "lastYearCsv": "Last Year CSV",
+      "lastYearPrint": "Last Year Print"
     },
     "bankForm": {
       "accountNumber": "Account Number",
@@ -155,6 +307,7 @@
       "editRecurring": "Edit Recurring Donation",
       "fees": "Fees",
       "frequency": "Frequency",
+      "frequencyLabel": "Frequency",
       "fund": "Fund",
       "funds": "Funds",
       "make": "Make a Donation",
@@ -176,7 +329,8 @@
         "firstName": "First name is required.",
         "lastName": "Last name is required.",
         "validEmail": "Please enter a valid email address."
-      }
+      },
+      "totalAmount": "Total Amount"
     },
     "fundDonations": {
       "addMore": "Add Another Fund",
@@ -214,6 +368,23 @@
     }
   },
   "donations": {
+    "donationBatchPage": {
+      "title": "Donation Batch",
+      "subtitle": "Manage donations in this batch",
+      "batchDate": "Batch Date:"
+    },
+    "donationBatchesPage": {
+      "subtitle": "Manage donation batches and track giving records"
+    },
+    "donationsPage": {
+      "subtitle": "View donation summaries and analyze giving trends"
+    },
+    "fundPage": {
+      "subtitle": "Track donations and contributions to this fund"
+    },
+    "fundsPage": {
+      "subtitle": "Manage donation funds and track giving categories"
+    },
     "batchEdit": {
       "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
       "date": "Date",
@@ -288,6 +459,12 @@
     }
   },
   "forms": {
+    "formsPage": {
+      "subtitleManage": "Create and manage custom forms"
+    },
+    "formPage": {
+      "subtitleConfig": "Form configuration and submissions"
+    },
     "choicesEdit": {
       "act": "Action",
       "choices": "Choices",
@@ -389,6 +566,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "Add",
       "catName": "Category Name",
       "catReq": "Category name is required.",
       "group": "Group",
@@ -397,14 +575,36 @@
       "new": "New ",
       "team": "Team"
     },
+    "groupBanner": {
+      "team": "Team",
+      "associatedServices": "Associated Services",
+      "labels": "Labels",
+      "meetingInfo": "Meeting Information",
+      "moreLabels": "More Labels",
+      "parentPickup": "Parent Pickup",
+      "printNametag": "Print Nametag",
+      "settings": "Settings",
+      "trackAttendance": "Track Attendance"
+    },
     "groupDetails": {
       "attTrack": "Track Attendance:",
       "cat": "Category",
       "groupDet": "Group Details",
+      "locationPlaceholder": "Johnson Home",
       "meetingLocation": "Meeting Location",
       "meetingTime": "Meeting Time",
+      "meetingTimePlaceholder": "Tuesdays at 7pm",
       "parPick": "Parent Pickup:",
-      "prinName": "Print Nametag:"
+      "prinName": "Print Nametag:",
+      "slugPlaceholder": "group-name",
+      "about": "About",
+      "attendanceSettings": "Attendance Settings",
+      "labels": "Labels",
+      "meetingInfo": "Meeting Information",
+      "noPhoto": "No photo available",
+      "parentPickup": "Parent Pickup",
+      "printNametag": "Print Nametag",
+      "trackAttendance": "Track Attendance"
     },
     "groupDetailsEdit": {
       "attTrack": "Track Attendance",
@@ -421,7 +621,10 @@
       "parPick": "Parent Pickup",
       "prinName": "Print Nametag",
       "selImg": "Select Photo",
-      "slug": "Slug (key name used for urls)"
+      "slug": "Slug (key name used for urls)",
+      "addPhoto": "Add Photo",
+      "attendance": "Attendance",
+      "clickToAddPhoto": "Click to add photo"
     },
     "groupMembers": {
       "groupMem": "Group Members",
@@ -446,7 +649,13 @@
       "attFor": "Attendance for",
       "new": "New",
       "noSesMsg": "There are no sessions.",
-      "sessions": "Sessions"
+      "sessions": "Sessions",
+      "allYears": "All Years",
+      "noAttendance": "No attendance records found",
+      "noSessionsFound": "No sessions found",
+      "selectSession": "Select Session",
+      "session": "Session",
+      "tryAdjusting": "Try adjusting your search"
     },
     "groupsPage": {
       "cat": "Category",
@@ -455,7 +664,15 @@
       "noGroupMsg": "No groups found. Please create a group.",
       "pers": "1 person",
       "ppl": "People",
-      "spPpl": " people"
+      "spPpl": " people",
+      "addGroup": "Add Group",
+      "categories": "Categories",
+      "subtitle": {
+        "create": "Get started by creating your first group",
+        "manage": "Organize and manage your church groups"
+      },
+      "totalGroups": "Total Groups",
+      "totalMembers": "Total Members"
     },
     "membersAdd": {
       "availableMem": "Available Group Members",
@@ -474,6 +691,13 @@
       "sesDate": "Session Date",
       "srvTime": "Service Time"
     },
+    "sessionCard": {
+      "active": "Active",
+      "edit": "Edit",
+      "people": "people",
+      "person": "person",
+      "view": "View"
+    },
     "sessionEdit": {
       "deleteConfirm": "Are you sure you wish to permanently delete this session?",
       "sesEdit": "Edit Session"
@@ -482,6 +706,14 @@
       "mem": "Members",
       "noImplement": "Not Implemented",
       "ses": "Sessions"
+    },
+    "groupLabelsEdit": {
+      "addNewLabel": "Add New Label",
+      "labels": "Labels"
+    },
+    "groupNavigation": {
+      "members": "Members",
+      "sessions": "Sessions"
     }
   },
   "login": {
@@ -543,6 +775,15 @@
     "september": "September"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "Enter value...",
+      "search": "Search",
+      "valuePlaceholder": "Value"
+    },
+    "aiSearch": {
+      "placeholder": "Show me men over 30 with birthdays in July",
+      "title": "AI Search"
+    },
     "editCondition": {
       "act": "Activity",
       "anniMonth": "Anniversary Month",
@@ -569,7 +810,8 @@
       "saveCon": "Save Condition",
       "startW": "starts with",
       "to": "To",
-      "value": "Value"
+      "value": "Value",
+      "valuePlaceholder": "Value"
     },
     "groups": {
       "groups": "Groups",
@@ -638,6 +880,7 @@
       "for": "for",
       "madeTo": "made to",
       "notIn": "Not In",
+      "placeholder": "Search by name...",
       "simp": "Simple",
       "simpSearch": "People Search",
       "active": "active:",
@@ -655,6 +898,9 @@
       "service": "Service",
       "serviceTime": "Service Time",
       "group": "Group"
+    },
+    "personNav": {
+      "customForms": "Custom Forms"
     },
     "peopleSearchResults": {
       "noResMsg": "No results found.  Please search for a different name or add a new person"
@@ -755,14 +1001,25 @@
       "editAssign": "Edit Assignment",
       "noMem": "No group members found."
     },
+    "planType": {
+      "details": "Plan Type Details"
+    },
+    "songs": {
+      "links": "Links"
+    },
     "ministryList": {
       "mins": "Ministries",
-      "noMinMsg": "No ministries found. Please create a ministry."
+      "noMinMsg": "No ministries found. Please create a ministry.",
+      "getStarted": "Get started by creating your first ministry",
+      "manage": "Manage",
+      "member": "member",
+      "members": "members"
     },
     "ministryPage": {
       "planTypes": "Plan Types",
       "plans": "Plans",
-      "teams": "Teams"
+      "teams": "Teams",
+      "subtitle": "Organize ministry teams and service plans"
     },
     "planEdit": {
       "copy": "Copy From",
@@ -776,7 +1033,12 @@
     },
     "planList": {
       "noPlan": "No plans have been added yet.",
-      "plans": "Plans"
+      "plans": "Plans",
+      "createFirst": "Create First Plan",
+      "createPlan": "Create Plan",
+      "newPlan": "New Plan",
+      "noPlans": "No plans found",
+      "serviceOrder": "Service Order"
     },
     "planPage": {
       "assign": "Team Assignments",
@@ -784,10 +1046,14 @@
       "band": "Band",
       "noteSave": "Note saved",
       "serviceOrder": "Service Order",
-      "servicePlan": "Service Plan"
+      "servicePlan": "Service Plan",
+      "loadingPlan": "Loading plan...",
+      "subtitle": "Plan and schedule your service"
     },
     "plansPage": {
-      "selMin": "Select a Ministry"
+      "selMin": "Select a Ministry",
+      "addMinistry": "Add Ministry",
+      "subtitle": "Manage ministries and service plans"
     },
     "planValidation": {
       "and": "and",
@@ -829,7 +1095,14 @@
     },
     "teamList": {
       "noTeam": "No teams found. Please create a team.",
-      "teams": "Teams"
+      "teams": "Teams",
+      "createTeam": "Create Team",
+      "createTeams": "Create Teams",
+      "manage": "Manage",
+      "member": "member",
+      "members": "members",
+      "newTeam": "New Team",
+      "team": "Team"
     },
     "timeEdit": {
       "disName": "Display Name",
@@ -841,7 +1114,9 @@
       "timeAdd": "Add a Time",
       "timeEdit": "Edit Time",
       "timeEnd": "End Time",
-      "timeStart": "Start Time"
+      "timeStart": "Start Time",
+      "followGuide": "Follow the guide below to set up service times",
+      "tip": "Tip"
     },
     "timeList": {
       "noTime": "No times have been added yet",
@@ -852,9 +1127,73 @@
       "serviceOrder": "SERVICE ORDER",
       "time": "Time",
       "length": "Length"
+    },
+    "assignment": {
+      "addPosition": "Add Position",
+      "autoAssign": "Auto Assign",
+      "saveNotes": "Save Notes"
+    },
+    "lessonSelector": {
+      "associateLesson": "Associate Lesson",
+      "lesson": "Lesson",
+      "program": "Program",
+      "study": "Study",
+      "venue": "Venue"
+    },
+    "planItem": {
+      "item": "Item",
+      "song": "Song"
+    },
+    "planItemEdit": {
+      "description": "Description",
+      "edit": "Edit",
+      "editHeader": "Edit Header",
+      "editSong": "Edit Song",
+      "enterSearch": "Enter search term",
+      "key": "Key",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "planTypeEdit": {
+      "add": "Add",
+      "edit": "Edit",
+      "errorSaving": "Error saving plan type",
+      "nameRequired": "Plan type name is required",
+      "planType": "Plan Type",
+      "planTypeName": "Plan Type Name"
+    },
+    "planTypeList": {
+      "addPlanType": "Add Plan Type",
+      "createPlanType": "Create Plan Type",
+      "createPlanTypes": "Create Plan Types",
+      "noPlanTypes": "No plan types found",
+      "planTypes": "Plan Types"
+    },
+    "planTypePage": {
+      "notFound": "Plan type not found",
+      "planType": "Plan Type",
+      "subtitle": "Configure plan type settings"
+    },
+    "serviceOrder": {
+      "addSection": "Add Section",
+      "associateLesson": "Associate Lesson",
+      "customize": "Customize",
+      "noItems": "No items in service order",
+      "orderOfService": "Order of Service",
+      "print": "Print",
+      "switchLesson": "Switch Lesson"
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "Add Screen",
+      "editDevice": "Edit Device",
+      "title": "Devices",
+      "device": "Device",
+      "label": "Label",
+      "lastActiveDate": "Last Active Date",
+      "registrationDate": "Registration Date"
+    },
     "profilePage": {
       "accDel": "Account Deletion",
       "confirmMsg": "Are you sure you wish to permanently delete your account?",
@@ -875,10 +1214,32 @@
       "passMatch": "Passwords do not match.",
       "passNew": "New password",
       "passVer": "Verify password",
+      "passwordHelper": "Leave blank to keep current password",
       "permWarn": "Careful, these actions are permanent",
       "profEdit": "Edit Profile",
       "saveChange": "Changes saved.",
-      "valEmail": "Please enter a valid email address."
+      "valEmail": "Please enter a valid email address.",
+      "deleteError": "Failed to delete account",
+      "saveChanges": "Save Changes",
+      "saveError": "Failed to save changes",
+      "subtitle": "Manage your profile and preferences"
+    },
+    "deviceContent": {
+      "associatedContent": "Associated Content"
+    },
+    "deviceEdit": {
+      "label": "Label",
+      "labelRequired": "Label is required"
+    },
+    "linkedAccounts": {
+      "link": "Link",
+      "signUp": "Sign Up",
+      "unlink": "Unlink"
+    },
+    "pairScreen": {
+      "codeRequired": "Pairing code is required",
+      "invalidCode": "Invalid pairing code",
+      "pairingCode": "Pairing Code"
     }
   },
   "reports": {
@@ -891,7 +1252,14 @@
       "dailyGroupAtt": "Daily Group Attendance",
       "donSum": "Donation Summary",
       "groupAtt": "Group Attendance",
-      "reports": "Reports"
+      "reports": "Reports",
+      "attTrendDesc": "View attendance trends over time",
+      "bDaysDesc": "View upcoming birthdays",
+      "dailyGroupAttDesc": "View daily group attendance",
+      "donSumDesc": "View donation summary",
+      "groupAttDesc": "View group attendance",
+      "helpText": "Select a report to view detailed information",
+      "subtitle": "View and download church reports"
     }
   },
   "reporting": {
@@ -946,15 +1314,36 @@
       "regist": "Registered",
       "servAdmin": "Server Admin",
       "usageTrends": "Usage Trends",
-      "valueNotes": "Notes on How Values are Calculated"
+      "valueNotes": "Notes on How Values are Calculated",
+      "location": "Location",
+      "subtitle": "Manage server-wide settings and churches",
+      "translationLookups": "Translation Lookups"
     },
     "reportPage": {
-      "report": "Report"
+      "report": "Report",
+      "adminOnly": "Admin Only",
+      "serverAdmin": "Server Admin"
+    },
+    "translation": {
+      "title": "Bible Translation Lookups",
+      "abbreviations": "Abbreviations",
+      "endDate": "End Date",
+      "lookups": "Lookups",
+      "search": "Search",
+      "startDate": "Start Date"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "Are you sure you wish to delete this tab?",
+      "tabNameHelper": "Choose a descriptive name for your tab",
+      "urlHelper": "Enter the full URL (e.g., https://example.com)"
+    },
     "associatePerson": {
       "change": "Change"
+    },
+    "church": {
+      "subdomainHelper": "Your church's unique web address"
     },
     "churchSettings": {
       "churchSet": "Church Settings",
@@ -970,6 +1359,10 @@
       "general": "General",
       "churchInfo": "Church Information",
       "churchSettings": "Church Settings"
+    },
+    "domain": {
+      "domainPlaceholder": "yoursite.com",
+      "doneAlert": "Done.  Please only click this link once."
     },
     "domainSettingsEdit": {
       "act": "Action",
@@ -997,18 +1390,41 @@
       "paypalFlatRate": "Flat Rate [ PayPal ]",
       "paypalTransactionFee": "Transaction Fee [ PayPal ]"
     },
+    "giving": {
+      "secretPlaceholder": "********"
+    },
     "givingSettingsEdit": {
+      "apiCredentials": "API Credentials",
+      "developersApiKeys": "Developers → API keys",
       "forceMsg": "Automatically forces users to cover the transaction fees",
       "giving": "Giving",
       "none": "None",
+      "paypalCreateApp": "create an app to get your Client ID and Secret.",
+      "paypalDeveloper": "PayPal Developer",
+      "paypalGoTo": "Go to",
+      "paypalLogin": "log in, then under",
       "prov": "Provider",
       "pubKey": "Public Key",
       "secKey": "Secret Key",
+      "stripeCopyKeys": "to copy your Publishable and Secret keys (test & live).",
+      "stripeDashboard": "Stripe Dashboard",
+      "stripeGoTo": "and go to",
       "stripe": "Stripe",
+      "stripeVisit": "Visit",
       "paypal": "PayPal",
       "clientId": "Client ID",
       "clientSecret": "Client Secret",
-      "transFee": "Transaction Fee"
+      "transFee": "Transaction Fee",
+      "saveError": "Failed to save giving settings"
+    },
+    "manageChurch": {
+      "imEx": "Import/Export",
+      "manage": "Manage",
+      "tools": "Tools",
+      "mobileApps": "Mobile Apps",
+      "noData": "No church data available",
+      "subtitle": "Configure church settings and preferences",
+      "title": "Manage Church"
     },
     "supportContactSettingsEdit": {
       "supportContact": "Support Contact",
@@ -1029,11 +1445,6 @@
     "imageEditor": {
       "crop": "Crop",
       "upload": "Upload"
-    },
-    "manageChurch": {
-      "imEx": "Import/Export",
-      "manage": "Manage",
-      "tools": "Tools"
     },
     "preview": {
       "preview": "Preview"
@@ -1085,6 +1496,42 @@
       "noAcc": "Don't have a user account?",
       "valEmail": "Please enter a valid Email",
       "valEmailMsg": "Enter a valid Email"
+    },
+    "appEdit": {
+      "addTab": "Add Tab",
+      "bible": "Bible",
+      "checkin": "Check-in",
+      "deleteTab": "Delete Tab",
+      "donation": "Donation",
+      "donationLanding": "Donation Landing",
+      "editTab": "Edit Tab",
+      "externalUrl": "External URL",
+      "internalPage": "Internal Page",
+      "lessons": "Lessons",
+      "liveStream": "Live Stream",
+      "memberDirectory": "Member Directory",
+      "myGroups": "My Groups",
+      "page": "Page",
+      "saveTab": "Save Tab",
+      "saving": "Saving...",
+      "tabName": "Tab Name",
+      "tabType": "Tab Type",
+      "url": "URL",
+      "verseOfDay": "Verse of the Day"
+    },
+    "appTabs": {
+      "editTab": "Edit Tab",
+      "moveDown": "Move Down",
+      "moveUp": "Move Up",
+      "noTabs": "No tabs configured",
+      "noTabsDesc": "Add tabs to customize your app navigation",
+      "title": "App Tabs",
+      "untitled": "Untitled"
+    },
+    "mobileAppSettings": {
+      "addTab": "Add Tab",
+      "subtitle": "Configure mobile app settings",
+      "title": "Mobile App Settings"
     }
   },
   "tasks": {
@@ -1094,24 +1541,45 @@
       "editAct": "Action Edit",
       "taskAssign": "Assign a Task",
       "taskNote": "Task Note",
-      "taskTitle": "Task Title"
+      "taskTitle": "Task Title",
+      "actTypeHelp": "Select the type of action to perform"
+    },
+    "selectGroup": {
+      "group": "Group",
+      "sel": "Select",
+      "noResults": "No groups found matching your search",
+      "searchPrompt": "Search for a group to select"
     },
     "automationDetails": {
       "acts": "Actions",
       "auto": "Automation Details",
       "rep": "Repeats",
-      "task": "Task"
+      "task": "Task",
+      "active": "Active",
+      "addAct": "Add Action",
+      "inactive": "Inactive",
+      "noAct": "No actions configured",
+      "recurs": "Recurs"
     },
     "automationEdit": {
       "autoEdit": "Edit Automation",
       "monthly": "Monthly",
       "never": "Never",
       "rep": "Repeat",
-      "yearly": "Yearly"
+      "yearly": "Yearly",
+      "active": "Active",
+      "inactive": "Inactive",
+      "recurHelp": "Set how often this automation should run"
     },
     "automationsPage": {
       "auto": "Automated Tasks",
-      "manageAuto": "Managed Automated Tasks"
+      "manageAuto": "Managed Automated Tasks",
+      "active": "Active",
+      "addAuto": "Add Automation",
+      "inactive": "Inactive",
+      "noAuto": "No automations configured",
+      "recurs": "Recurs",
+      "subtitle": "Automate tasks based on conditions"
     },
     "conditionAttendance": {
       "anywhere": "Anywhere",
@@ -1152,7 +1620,11 @@
       "all": "All",
       "any": "Any",
       "con": "Conditions:",
-      "trueCon": "of these conditions are true"
+      "trueCon": "of these conditions are true",
+      "addCondition": "Add Condition",
+      "and": "AND",
+      "noCond": "No conditions added",
+      "or": "OR"
     },
     "conditionEdit": {
       "conEdit": "Edit Condition",
@@ -1161,7 +1633,8 @@
       "conType": "Condition Type",
       "gen": "General",
       "persAtt": "Personal Attributes",
-      "today": "Today's Date"
+      "today": "Today's Date",
+      "conDetails": "Condition Details"
     },
     "conditionSelect": {
       "is": "is",
@@ -1192,17 +1665,21 @@
       "associatePers": "Please associate this task with a person.",
       "associateW": "Associate with",
       "taskNew": "New Task",
-      "titleTask": "Please enter a title for this task."
-    },
-    "selectGroup": {
-      "group": "Group",
-      "sel": "Select"
+      "titleTask": "Please enter a title for this task.",
+      "newAssign": "New Assignment",
+      "saving": "Saving..."
     },
     "taskList": {
       "assignGroup": "Assigned to My Groups",
       "assignMe": "Assigned to Me",
       "reqMe": "Requested by Me",
-      "tasks": "Tasks"
+      "tasks": "Tasks",
+      "addTask": "Add Task",
+      "assignedTo": "Assigned to",
+      "associatedWith": "Associated with",
+      "noTasks": "No tasks found",
+      "notSpecified": "Not specified",
+      "unassigned": "Unassigned"
     },
     "taskPage": {
       "ago": "ago",
@@ -1216,19 +1693,31 @@
       "open": "Open",
       "opened": "Opened",
       "stat": "Status",
-      "taskDet": "Task Details"
+      "taskDet": "Task Details",
+      "assign": "Assign",
+      "assigned": "Assigned",
+      "associate": "Associate",
+      "associated": "Associated",
+      "created": "Created",
+      "editAssigned": "Edit Assigned",
+      "editAssoc": "Edit Associated",
+      "notSpec": "Not specified",
+      "unassigned": "Unassigned"
     },
     "tasksPage": {
       "auto": "Automations",
       "showClosed": "Show Closed",
       "showOpen": "Show Open",
-      "tasks": "Tasks"
+      "tasks": "Tasks",
+      "subtitle": "Manage tasks and automations"
     },
     "requestedChanges": {
       "requestedChanges": "Requested Changes",
       "apply": "Apply",
       "field": "Field",
-      "value": "Value"
+      "value": "Value",
+      "applied": "Changes applied",
+      "newProfile": "New Profile"
     }
   },
   "sermons": {
@@ -1274,7 +1763,8 @@
       "unauthorizedDelete": "Unauthorized to delete sermons",
       "newSermon": "New Sermon",
       "currentLiveService": "Current Live Service",
-      "channelIdPlaceholder": "This is not your channel url - See help link above"
+      "channelIdPlaceholder": "This is not your channel url - See help link above",
+      "none": "None"
     },
     "playlists": {
       "title": "Playlists",
@@ -1343,7 +1833,8 @@
       },
       "navigationLinks": {
         "title": "Navigation Links",
-        "add": "Add"
+        "add": "Add",
+        "home": "Home"
       },
       "sidebarTabs": {
         "title": "Sidebar Tabs",
@@ -1445,6 +1936,10 @@
         "editUsers": "Edit Users",
         "viewYourStream": "View Your Stream"
       }
+    },
+    "duration": {
+      "minutes": "Minutes",
+      "seconds": "Seconds"
     }
   },
   "songs": {
@@ -1517,6 +2012,286 @@
       "title": "Search for a Song",
       "inputLabel": "Title or Artist",
       "inputPlaceholder": "Enter song title or artist name..."
+    },
+    "songPage": {
+      "loading": "Loading...",
+      "subtitle": "Manage song details and arrangements"
+    },
+    "songsPage": {
+      "songs": "Songs",
+      "subtitle": "Manage your music library"
+    }
+  },
+  "site": {
+    "appearancePage": {
+      "title": "Site Styles",
+      "subtitle": "Below is a preview of a sample site with your colors, fonts and logos. This is not your actual site content."
+    },
+    "filesPage": {
+      "title": "Files",
+      "subtitle": "Manage files and media for your website"
+    },
+    "pagePreview": {
+      "title": "Website Preview",
+      "subtitle": "Previewing: {title}",
+      "editContent": "Edit Content",
+      "pageSettings": "Page Settings"
+    },
+    "sectionEdit": {
+      "convertToBlock": "Convert to Block",
+      "convertTo": "Convert to",
+      "duplicate": "duplicate",
+      "duplicateSection": "Duplicate section"
+    },
+    "addPage": {
+      "newLink": "New Link",
+      "newPage": "New Page",
+      "pageType": "Page Type"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Logo Management"
+    },
+    "cssEdit": {
+      "customCss": "Custom CSS",
+      "customHtml": "Custom HTML"
+    },
+    "animations": {
+      "colorize": "Colorize",
+      "editAnimations": "Edit Animations",
+      "fadeIn": "Fade In",
+      "fast": "Fast",
+      "focus": "Focus",
+      "grow": "Grow",
+      "none": "None",
+      "normal": "Normal",
+      "onShowAnimation": "On Show Animation",
+      "onShowSpeed": "On Show Speed",
+      "pulse": "Pulse",
+      "shrink": "Shrink",
+      "slideDown": "Slide Down",
+      "slideLeft": "Slide Left",
+      "slideRight": "Slide Right",
+      "slideUp": "Slide Up",
+      "slow": "Slow"
+    },
+    "blocks": {
+      "confirmDelete": "Are you sure you wish to permanently delete this block?",
+      "editBlock": "Edit Block"
+    },
+    "blocksPage": {
+      "actions": "Actions",
+      "addBlock": "Add Block",
+      "block": "block",
+      "blocks": "Blocks",
+      "createFirstBlock": "Create First Block",
+      "elements": "Element(s)",
+      "getStarted": "Get started by creating your first reusable block",
+      "noBlocksFound": "No blocks found",
+      "reusableBlocks": "Reusable Blocks",
+      "sections": "Section(s)",
+      "subtitle": "Create and manage reusable content blocks for your website",
+      "totalBlocks": "Total Blocks",
+      "type": "Type"
+    },
+    "donateLink": {
+      "add": "Add",
+      "addAmount": "Add donation amount",
+      "amount": "Amount",
+      "amountPlaceholder": "10",
+      "donationAmount": "Donation amount",
+      "donationAmounts": "Donation Amounts",
+      "donationAmountsHelper": "You can suggest some donation amounts like $5, $10, $20, etc..",
+      "funds": "Funds",
+      "maxAmountsAlert": "You are only allowed to add five donation amounts.",
+      "noFunds": "No Funds",
+      "selectFund": "Select donation fund",
+      "textHelper": "Ex: (Donate now), (Yes, I will help!), (Donate $10 to Youth Camp), etc..",
+      "textLabel": "Text",
+      "urlHelper": "Tip: you must link the page from the website builder that has the donation element.",
+      "urlLabel": "Url",
+      "urlPlaceholder": "/donate"
+    },
+    "editorToolbar": {
+      "addContent": "Add Content",
+      "block": "Block",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "page": "Page",
+      "switchToDesktop": "Switch to Desktop View",
+      "switchToMobile": "Switch to Mobile View"
+    },
+    "elements": {
+      "addressHelper": "ex: City Hall, New York, NY",
+      "categoriesHelper": "ex: Small Groups, Sunday School",
+      "confirmDelete": "Are you sure you wish to permanently delete this element?",
+      "confirmDuplicate": "Are you sure you wish to make a copy of this element and all of it's children?",
+      "editElement": "Edit Element",
+      "heightPlaceholder": "1000",
+      "nameHelper": "ex: First Baptist Church",
+      "alignCenter": "Center",
+      "alignLeft": "Left",
+      "alignRight": "Right",
+      "answersJSON": "Answers JSON",
+      "answersJSONData": "JSON data format for form answers",
+      "imageDescribingTopic": "Image describing the topic",
+      "linkUrlOptional": "Link URL (optional)",
+      "loadingEditor": "Loading editor...",
+      "photoAlternativeText": "Photo alternative text",
+      "photoLabel": "Photo Label",
+      "photoPosition": "Photo Position",
+      "positionPhotoBottom": "Bottom",
+      "positionPhotoLeft": "Left",
+      "positionPhotoRight": "Right",
+      "positionPhotoTop": "Top",
+      "roundedCorners": "Rounded Corners",
+      "selectPhoto": "Select Photo",
+      "selectPhotoPosition": "Select photo position",
+      "textAlignment": "Text Alignment",
+      "title": "Title",
+      "titleAlignment": "Title Alignment",
+      "translucent": "Translucent"
+    },
+    "files": {
+      "confirmDelete": "Are you sure you wish to delete",
+      "storageInfo": "100 MB of storage space is provided for free for storing PDFs and other documents commonly needed for church websites. We suggest using Google Drive or Dropbox to store files if additional space is needed.",
+      "upload": "Upload",
+      "uploadFiles": "Upload Files"
+    },
+    "filesManager": {
+      "noFilesYet": "No files uploaded yet",
+      "getStarted": "Get started by uploading your first file",
+      "files": "Files"
+    },
+    "fontEdit": {
+      "fontSelection": "Font Selection",
+      "typographyPreview": "Typography Preview",
+      "popularFontCombinations": "Popular Font Combinations"
+    },
+    "paletteEdit": {
+      "savePalette": "Save Palette",
+      "colorValues": "Color Values",
+      "suggestedPalettes": "Suggested Palettes",
+      "colorCombinationsPreview": "Color Combinations Preview"
+    },
+    "stylesManager": {
+      "styleSettings": "Style Settings"
+    },
+    "navLink": {
+      "addLink": "Add Link",
+      "linkSettings": "Link Settings"
+    },
+    "pageLink": {
+      "check": "Check",
+      "confirmDelete": "Are you sure you wish to permanently delete this page?",
+      "confirmDuplicate": "Are you sure you wish to make a copy of this page and all of it's contents?",
+      "linkSettings": "Link Settings",
+      "pageSettings": "Page Settings",
+      "urlHelper": "ex: /camper-registration  (**Make sure to check before saving)"
+    },
+    "pages": {
+      "convert": "Convert"
+    },
+    "pagesPage": {
+      "confirmConvert": "Would you like to convert this auto-generated page to a custom page?",
+      "actions": "Actions",
+      "addFirstPage": "Add First Page",
+      "addPage": "Add Page",
+      "autoGenerated": "Auto-generated",
+      "customPages": "Custom Pages",
+      "description": "Below is a list of custom and auto-generated pages. You can add new pages, edit existing ones, or convert auto-generated pages to custom pages.",
+      "desktopOnly": "Page editor is only available in desktop mode",
+      "generated": "Generated",
+      "getStarted": "Get started by adding your first page.",
+      "mainNavigation": "Main Navigation",
+      "noPagesFound": "No pages found",
+      "pages": "Pages",
+      "path": "Path",
+      "previewPage": "Preview page",
+      "showLogin": "Show Login",
+      "showLoginTooltip": "Show login button in the navigation bar",
+      "subtitle": "Manage your website pages, content, and navigation",
+      "toggleLoginVisibility": "Toggle login button visibility",
+      "totalPages": "Total Pages",
+      "websitePages": "Website Pages"
+    },
+    "pickColors": {
+      "headingColor": "Heading Color",
+      "linkColor": "Link Color",
+      "opacityHelper": "The opacity of black gradient layer on top of the image. Max value: 1",
+      "textColor": "Text Color"
+    },
+    "row": {
+      "columnsHelper": "Numbers represent twelfths of page.",
+      "addColumn": "Add Column",
+      "columnsError": "Columns must add up to 12",
+      "commonOptions": "Common Options",
+      "halves": "Halves",
+      "hideMobileOrder": "Hide Mobile Order",
+      "hideMobileSizes": "Hide Mobile Sizes",
+      "preview": "Preview",
+      "previewHelper": "Numbers represent twelfths of page",
+      "quarters": "Quarters",
+      "remove": "Remove",
+      "showMobileOrder": "Show Mobile Order",
+      "showMobileSizes": "Show Mobile Sizes",
+      "size1": "1 - 1/12th",
+      "size10": "10 - 5/6ths",
+      "size11": "11 - 11/12ths",
+      "size12": "12 - Full",
+      "size2": "2 - 1/6th",
+      "size3": "3 - 1/4th",
+      "size4": "4 - 1/3rd",
+      "size5": "5 - 5/12ths",
+      "size6": "6 - 1/2",
+      "size7": "7 - 7/12ths",
+      "size8": "8 - 2/3rds",
+      "size9": "9 - 3/4ths",
+      "thirds": "Thirds",
+      "totalInvalid": "Total: {total}/12",
+      "totalValid": "Total: 12/12",
+      "width": "Width"
+    },
+    "section": {
+      "confirmDelete": "Are you sure you wish to permanently delete this section?",
+      "confirmDuplicate": "Are you sure you wish to make a copy of this section and all of it's contents?",
+      "editSection": "Edit Section"
+    },
+    "style": {
+      "editStyle": "Edit Style"
+    },
+    "styleEdit": {
+      "property": "Property"
+    },
+    "templates": {
+      "viewSermons": "View Sermons"
+    },
+    "elementAdd": {
+      "blocks": "Blocks",
+      "box": "Box",
+      "calendar": "Calendar",
+      "card": "Card",
+      "carousel": "Carousel",
+      "churchSpecific": "Church Specific",
+      "donateLink": "Donate Link",
+      "donation": "Donation",
+      "dragAndDrop": "Drag and drop onto page",
+      "embedPage": "Embed Page",
+      "expandable": "Expandable",
+      "form": "Form",
+      "groupList": "Group List",
+      "html": "HTML",
+      "image": "Image",
+      "location": "Location",
+      "logo": "Logo",
+      "noBlocksFound": "No blocks found",
+      "row": "Row",
+      "section": "Section",
+      "simpleElements": "Simple Elements",
+      "stream": "Stream",
+      "table": "Table",
+      "text": "Text",
+      "textWithPhoto": "Text with Photo",
+      "video": "Video"
     }
   },
   "stockPhotos": {

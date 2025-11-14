@@ -178,7 +178,7 @@ export const SongsPage = memo(() => {
 
   return (
     <>
-      <PageHeader icon={<LibraryIcon />} title={Locale.label("songs.title") || "Songs"} subtitle="Manage your song library and arrangements">
+      <PageHeader icon={<LibraryIcon />} title={Locale.label("songs.title") || Locale.label("songs.songsPage.songs")} subtitle={Locale.label("songs.songsPage.subtitle")}>
         <Button
           variant="outlined"
           startIcon={<SearchIcon />}
