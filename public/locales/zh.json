@@ -11,7 +11,13 @@
       "groupAttMsg": "一旦会议被添加到小组并且人们参加了这些会议，小组出席情况就会显示出来。",
       "groups": "团体",
       "service": "服务",
-      "time": "时间"
+      "time": "时间",
+      "campuses": "校园",
+      "scheduled": "预定",
+      "services": "服务",
+      "subtitle": "跟踪服务和团体的出席情况",
+      "totalGroups": "总组数",
+      "unscheduled": "计划外"
     },
     "campusEdit": {
       "confirmDelete": "您确定要删除该校园吗？",
@@ -43,27 +49,92 @@
       "attTrend": "出席趋势",
       "groupAtt": "团体出席",
       "noImplement": "未实现"
+    },
+    "attendanceSetup": {
+      "addService": "添加服务",
+      "addServiceTime": "添加服务时间",
+      "newCampus": "新校区",
+      "newService": "新服务",
+      "newServiceTime": "新服务时间",
+      "setupMessage": "设置校园、服务和服务时间以开始跟踪出勤情况。",
+      "unassigned": "未分配"
     }
   },
   "calendars": {
     "calendarEdit": {
       "calendarName": "日历名称",
-      "namePlaceholder": "输入此日历的名称"
+      "namePlaceholder": "输入此日历的名称",
+      "calendarDetails": "日历详情",
+      "calendarDetailsDesc": "配置您的日历设置",
+      "calendarNameAria": "日历名称",
+      "cancel": "取消",
+      "confirmDelete": "您确定要删除此日历吗？",
+      "create": "创造",
+      "createCalendar": "创建日历",
+      "delete": "删除",
+      "deleting": "删除中...",
+      "editCalendar": "编辑日历",
+      "nameRequired": "日历名称为必填项",
+      "save": "保存",
+      "saving": "保存中...",
+      "unauthorizedCreate": "无权创建日历",
+      "unauthorizedDelete": "无权删除日历"
     },
     "calendarList": {
-      "active": "活跃"
+      "active": "活跃",
+      "aboutParagraph1": "日历允许您组织和显示教堂的活动。",
+      "aboutParagraph2": "您可以为不同目的创建多个日历，例如礼拜服务、青少年活动和社区外展。",
+      "aboutParagraph3": "通过 ICS 源与会员共享您的日历或将其嵌入您的网站。",
+      "aboutTitle": "关于日历",
+      "actions": "操作",
+      "addCalendar": "添加日历",
+      "calendar": "日历",
+      "calendars": "日历",
+      "createCalendar": "创建日历",
+      "createFirstCalendar": "创建第一个日历",
+      "curatedCalendar": "策划日历",
+      "edit": "编辑",
+      "manageEvents": "管理活动",
+      "noCalendars": "没有找到日历",
+      "status": "状态",
+      "subtitleEmpty": "从创建您的第一个日历开始",
+      "title": "日历"
     },
     "calendarPage": {
-      "confirmRemoveGroup": "您确定要从日历中删除此组吗？"
+      "confirmRemoveGroup": "您确定要从日历中删除此组吗？",
+      "actions": "操作",
+      "addEventsHint": "通过选择组添加事件",
+      "calendar": "日历",
+      "calendarEvents": "日历活动",
+      "groupName": "群组名称",
+      "groupsInCalendar": "日历中的组",
+      "noGroupsAdded": "尚未添加群组",
+      "removeGroup": "删除组",
+      "subtitle": "管理日历事件和组"
     },
     "calendarEvent": {
       "confirmDelete": "您确定要删除此活动吗？",
-      "noGroups": "未找到组。"
+      "noGroups": "未找到组。",
+      "cancel": "取消",
+      "delete": "删除"
     },
     "editEvent": {
       "selectGroup": "选择一个组",
       "addAllEvents": "添加组的所有活动",
-      "addSpecificEvents": "添加特定活动"
+      "addSpecificEvents": "添加特定活动",
+      "addGroup": "添加组",
+      "cancel": "取消",
+      "clickToAdd": "点击添加",
+      "noEventsFound": "未找到活动",
+      "save": "保存"
+    },
+    "calendar": {
+      "add": "添加",
+      "copiedToClipboard": "已复制到剪贴板",
+      "copyIcsLink": "复制 ICS 链接",
+      "downloadIcsFile": "下载ICS文件",
+      "subscribe": "订阅",
+      "subscribeTitle": "订阅日历"
     }
   },
   "common": {
@@ -83,7 +154,12 @@
     "help": "帮助",
     "iconPicker": {
       "searchLabel": "搜索图标",
-      "searchPlaceholder": "输入搜索（例如：person、home、church）..."
+      "searchPlaceholder": "输入搜索（例如：person、home、church）...",
+      "title": "选择图标",
+      "noResults": "未找到与“{{searchText}}”匹配的图标",
+      "tryDifferent": "尝试不同的搜索词",
+      "showingMatching": "显示与“{{searchText}}”匹配的 {{count}} 个图标",
+      "showingDefault": "显示 {{count}} 常用图标。使用搜索来查找更多信息。"
     },
     "left": "左",
     "name": "姓名",
@@ -101,7 +177,34 @@
     "top": "顶部",
     "update": "更新",
     "website": "网站",
-    "yes": "是"
+    "yes": "是",
+    "comboBox": {
+      "addNew": "添加新..."
+    },
+    "createPerson": {
+      "confirmDuplicate": "{{existingName}} 已存在，电子邮件地址为 {{existingEmail}}。您确定要添加 {{firstName}} {{lastName}} 吗？",
+      "validate": {
+        "firstName": "请输入名字。",
+        "lastName": "请输入姓氏。",
+        "validEmail": "请输入有效的电子邮件地址。"
+      }
+    },
+    "errorBoundary": {
+      "title": "哎呀！发生错误",
+      "message": "出了点问题。如果问题仍然存在，请重试或联系支持人员。",
+      "retry": "重试"
+    },
+    "formSubmission": {
+      "noData": "无可用数据",
+      "edit": "编辑",
+      "noQuestions": "没有找到问题"
+    },
+    "reportFilter": {
+      "title": "过滤报告"
+    },
+    "reportFilterField": {
+      "any": "任何"
+    }
   },
   "components": {
     "footer": {
@@ -156,7 +259,11 @@
       "date": "日期",
       "fund": "基金",
       "method": "方法",
-      "willAppear": "捐款将在完成后显示在此处。"
+      "willAppear": "捐款将在完成后显示在此处。",
+      "currentYearCsv": "本年度 CSV",
+      "currentYearPrint": "当年打印",
+      "lastYearCsv": "去年 CSV",
+      "lastYearPrint": "去年印刷"
     },
     "bankForm": {
       "accountNumber": "账号",
@@ -219,7 +326,8 @@
         "firstName": "名字为必填项。",
         "lastName": "姓氏为必填项。",
         "validEmail": "请输入有效的电子邮件地址。"
-      }
+      },
+      "totalAmount": "总金额"
     },
     "fundDonations": {
       "addMore": "添加另一个基金",
@@ -442,7 +550,15 @@
       "team": "团队"
     },
     "groupBanner": {
-      "team": "团队"
+      "team": "团队",
+      "associatedServices": "相关服务",
+      "labels": "标签",
+      "meetingInfo": "会议信息",
+      "moreLabels": "更多标签",
+      "parentPickup": "家长接送",
+      "printNametag": "打印名牌",
+      "settings": "设置",
+      "trackAttendance": "追踪出席"
     },
     "groupDetails": {
       "attTrack": "追踪出席：",
@@ -454,7 +570,15 @@
       "meetingTimePlaceholder": "每周二晚上7点",
       "parPick": "家长接送：",
       "prinName": "打印名牌：",
-      "slugPlaceholder": "group-name"
+      "slugPlaceholder": "group-name",
+      "about": "关于",
+      "attendanceSettings": "考勤设置",
+      "labels": "标签",
+      "meetingInfo": "会议信息",
+      "noPhoto": "没有可用的照片",
+      "parentPickup": "家长接送",
+      "printNametag": "打印名牌",
+      "trackAttendance": "追踪出席"
     },
     "groupDetailsEdit": {
       "attTrack": "追踪出席",
@@ -471,7 +595,10 @@
       "parPick": "家长接送",
       "prinName": "打印名牌",
       "selImg": "选择照片",
-      "slug": "简称（用于URL的键名）"
+      "slug": "简称（用于URL的键名）",
+      "addPhoto": "添加照片",
+      "attendance": "出席率",
+      "clickToAddPhoto": "点击添加照片"
     },
     "groupMembers": {
       "groupMem": "群组成员",
@@ -496,7 +623,13 @@
       "attFor": "出席",
       "new": "新建",
       "noSesMsg": "没有会话。",
-      "sessions": "会话"
+      "sessions": "会话",
+      "allYears": "所有年份",
+      "noAttendance": "未找到考勤记录",
+      "noSessionsFound": "未找到会话",
+      "selectSession": "选择会话",
+      "session": "会议",
+      "tryAdjusting": "尝试调整您的搜索"
     },
     "groupsPage": {
       "cat": "类别",
@@ -505,7 +638,15 @@
       "noGroupMsg": "未找到任何群组。请创建一个群组。",
       "pers": "1人",
       "ppl": "人员",
-      "spPpl": " 人"
+      "spPpl": " 人",
+      "addGroup": "添加组",
+      "categories": "类别",
+      "subtitle": {
+        "create": "首先创建您的第一个组",
+        "manage": "组织和管理您的教会团体"
+      },
+      "totalGroups": "总组数",
+      "totalMembers": "会员总数"
     },
     "membersAdd": {
       "availableMem": "可用的群组成员",
@@ -525,7 +666,11 @@
       "srvTime": "服务时间"
     },
     "sessionCard": {
-      "active": "活跃"
+      "active": "活跃",
+      "edit": "编辑",
+      "people": "人",
+      "person": "人",
+      "view": "看法"
     },
     "sessionEdit": {
       "deleteConfirm": "您确定要永久删除此会话吗？",
@@ -535,6 +680,14 @@
       "mem": "成员",
       "noImplement": "未实现",
       "ses": "会话"
+    },
+    "groupLabelsEdit": {
+      "addNewLabel": "添加新标签",
+      "labels": "标签"
+    },
+    "groupNavigation": {
+      "members": "成员",
+      "sessions": "会话"
     }
   },
   "login": {
@@ -830,12 +983,17 @@
     },
     "ministryList": {
       "mins": "事工",
-      "noMinMsg": "未找到任何事工。请创建一个事工。"
+      "noMinMsg": "未找到任何事工。请创建一个事工。",
+      "getStarted": "从创建你的第一个事工开始",
+      "manage": "管理",
+      "member": "成员",
+      "members": "会员"
     },
     "ministryPage": {
       "planTypes": "计划类型",
       "plans": "计划",
-      "teams": "团队"
+      "teams": "团队",
+      "subtitle": "组织事工团队和服务计划"
     },
     "planEdit": {
       "copy": "复制自",
@@ -849,7 +1007,12 @@
     },
     "planList": {
       "noPlan": "尚未添加任何计划。",
-      "plans": "计划"
+      "plans": "计划",
+      "createFirst": "创建第一个计划",
+      "createPlan": "创建计划",
+      "newPlan": "新计划",
+      "noPlans": "没有找到计划",
+      "serviceOrder": "服务顺序"
     },
     "planPage": {
       "assign": "团队分配",
@@ -857,10 +1020,14 @@
       "band": "乐队",
       "noteSave": "备注已保存",
       "serviceOrder": "服务顺序",
-      "servicePlan": "服务计划"
+      "servicePlan": "服务计划",
+      "loadingPlan": "加载计划...",
+      "subtitle": "计划并安排您的服务"
     },
     "plansPage": {
-      "selMin": "选择一个事工"
+      "selMin": "选择一个事工",
+      "addMinistry": "添加事工",
+      "subtitle": "管理部门和服务计划"
     },
     "planValidation": {
       "and": "和",
@@ -902,7 +1069,14 @@
     },
     "teamList": {
       "noTeam": "未找到团队。请创建一个团队。",
-      "teams": "团队"
+      "teams": "团队",
+      "createTeam": "创建团队",
+      "createTeams": "创建团队",
+      "manage": "管理",
+      "member": "成员",
+      "members": "会员",
+      "newTeam": "新团队",
+      "team": "团队"
     },
     "timeEdit": {
       "disName": "显示名称",
@@ -914,7 +1088,9 @@
       "timeAdd": "添加时间",
       "timeEdit": "编辑时间",
       "timeEnd": "结束时间",
-      "timeStart": "开始时间"
+      "timeStart": "开始时间",
+      "followGuide": "请按照以下指南设置服务时间",
+      "tip": "提示"
     },
     "timeList": {
       "noTime": "尚未添加任何时间",
@@ -925,13 +1101,72 @@
       "serviceOrder": "服务顺序",
       "time": "时间",
       "length": "长度"
+    },
+    "assignment": {
+      "addPosition": "添加职位",
+      "autoAssign": "自动分配",
+      "saveNotes": "保存笔记"
+    },
+    "lessonSelector": {
+      "associateLesson": "副课",
+      "lesson": "课",
+      "program": "程序",
+      "study": "学习",
+      "venue": "场地"
+    },
+    "planItem": {
+      "item": "物品",
+      "song": "歌曲"
+    },
+    "planItemEdit": {
+      "description": "描述",
+      "edit": "编辑",
+      "editHeader": "编辑标题",
+      "editSong": "编辑歌曲",
+      "enterSearch": "输入搜索词",
+      "key": "调式",
+      "minutes": "分钟",
+      "seconds": "秒"
+    },
+    "planTypeEdit": {
+      "add": "添加",
+      "edit": "编辑",
+      "errorSaving": "保存计划类型时出错",
+      "nameRequired": "计划类型名称为必填项",
+      "planType": "计划类型",
+      "planTypeName": "计划类型名称"
+    },
+    "planTypeList": {
+      "addPlanType": "添加计划类型",
+      "createPlanType": "创建计划类型",
+      "createPlanTypes": "创建计划类型",
+      "noPlanTypes": "未找到计划类型",
+      "planTypes": "计划类型"
+    },
+    "planTypePage": {
+      "notFound": "未找到计划类型",
+      "planType": "计划类型",
+      "subtitle": "配置计划类型设置"
+    },
+    "serviceOrder": {
+      "addSection": "添加部分",
+      "associateLesson": "副课",
+      "customize": "定制",
+      "noItems": "服务订单中没有项目",
+      "orderOfService": "服务顺序",
+      "print": "打印",
+      "switchLesson": "切换课程"
     }
   },
   "profile": {
     "devices": {
       "addScreen": "添加屏幕",
       "editDevice": "编辑设备",
-      "title": "设备"
+      "title": "设备",
+      "device": "设备",
+      "label": "标签",
+      "lastActiveDate": "最后活跃日期",
+      "registrationDate": "报名日期"
     },
     "profilePage": {
       "accDel": "账户删除",
@@ -957,7 +1192,28 @@
       "permWarn": "注意，这些操作是永久性的",
       "profEdit": "编辑个人资料",
       "saveChange": "更改已保存。",
-      "valEmail": "请输入有效的电子邮件地址。"
+      "valEmail": "请输入有效的电子邮件地址。",
+      "deleteError": "删除账户失败",
+      "saveChanges": "保存更改",
+      "saveError": "无法保存更改",
+      "subtitle": "管理您的个人资料和偏好"
+    },
+    "deviceContent": {
+      "associatedContent": "相关内容"
+    },
+    "deviceEdit": {
+      "label": "标签",
+      "labelRequired": "需要标签"
+    },
+    "linkedAccounts": {
+      "link": "链接",
+      "signUp": "报名",
+      "unlink": "取消链接"
+    },
+    "pairScreen": {
+      "codeRequired": "需要配对码",
+      "invalidCode": "配对码无效",
+      "pairingCode": "配对码"
     }
   },
   "reports": {
@@ -970,7 +1226,14 @@
       "dailyGroupAtt": "每日团体出席",
       "donSum": "捐款摘要",
       "groupAtt": "团体出席",
-      "reports": "报告"
+      "reports": "报告",
+      "attTrendDesc": "查看随时间变化的出席率趋势",
+      "bDaysDesc": "查看即将到来的生日",
+      "dailyGroupAttDesc": "查看每日团体出席情况",
+      "donSumDesc": "查看捐款摘要",
+      "groupAttDesc": "查看团体出席情况",
+      "helpText": "选择报告以查看详细信息",
+      "subtitle": "查看和下载教会报告"
     }
   },
   "reporting": {
@@ -1025,13 +1288,23 @@
       "regist": "已注册",
       "servAdmin": "服务器管理",
       "usageTrends": "使用趋势",
-      "valueNotes": "关于值计算方式的说明"
+      "valueNotes": "关于值计算方式的说明",
+      "location": "地点",
+      "subtitle": "管理服务器范围的设置和教堂",
+      "translationLookups": "翻译查找"
     },
     "reportPage": {
-      "report": "报告"
+      "report": "报告",
+      "adminOnly": "仅限管理员",
+      "serverAdmin": "服务器管理员"
     },
     "translation": {
-      "title": "圣经翻译查找"
+      "title": "圣经翻译查找",
+      "abbreviations": "缩写",
+      "endDate": "结束日期",
+      "lookups": "查找",
+      "search": "搜索",
+      "startDate": "开始日期"
     }
   },
   "settings": {
@@ -1115,10 +1388,17 @@
       "paypal": "PayPal",
       "clientId": "客户端 ID",
       "clientSecret": "客户端密钥",
-      "transFee": "交易费"
+      "transFee": "交易费",
+      "saveError": "无法保存给予设置"
     },
     "manageChurch": {
-      "noData": "没有可用的教会数据"
+      "imEx": "导入/导出",
+      "manage": "管理",
+      "tools": "工具",
+      "mobileApps": "移动应用程序",
+      "noData": "没有可用的教会数据",
+      "subtitle": "配置教会设置和首选项",
+      "title": "管理教会"
     },
     "supportContactSettingsEdit": {
       "supportContact": "支持联系人",
@@ -1139,11 +1419,6 @@
     "imageEditor": {
       "crop": "裁剪",
       "upload": "上传"
-    },
-    "manageChurch": {
-      "imEx": "导入/导出",
-      "manage": "管理",
-      "tools": "工具"
     },
     "preview": {
       "preview": "预览"
@@ -1195,6 +1470,42 @@
       "noAcc": "没有用户账户？",
       "valEmail": "请输入有效的电子邮件",
       "valEmailMsg": "输入有效的电子邮件"
+    },
+    "appEdit": {
+      "addTab": "添加选项卡",
+      "bible": "圣经",
+      "checkin": "报到",
+      "deleteTab": "删除标签",
+      "donation": "捐款",
+      "donationLanding": "捐款登陆",
+      "editTab": "编辑标签",
+      "externalUrl": "外部URL",
+      "internalPage": "内部页面",
+      "lessons": "教训",
+      "liveStream": "直播",
+      "memberDirectory": "会员名录",
+      "myGroups": "我的群组",
+      "page": "页",
+      "saveTab": "保存标签",
+      "saving": "保存中...",
+      "tabName": "选项卡名称",
+      "tabType": "标签类型",
+      "url": "网址",
+      "verseOfDay": "每日诗句"
+    },
+    "appTabs": {
+      "editTab": "编辑标签",
+      "moveDown": "下移",
+      "moveUp": "向上移动",
+      "noTabs": "没有配置选项卡",
+      "noTabsDesc": "添加选项卡以自定义您的应用导航",
+      "title": "应用程序选项卡",
+      "untitled": "无题"
+    },
+    "mobileAppSettings": {
+      "addTab": "添加选项卡",
+      "subtitle": "配置移动应用程序设置",
+      "title": "移动应用程序设置"
     }
   },
   "tasks": {
@@ -1204,7 +1515,8 @@
       "editAct": "编辑操作",
       "taskAssign": "分配任务",
       "taskNote": "任务备注",
-      "taskTitle": "任务标题"
+      "taskTitle": "任务标题",
+      "actTypeHelp": "选择要执行的操作类型"
     },
     "selectGroup": {
       "group": "团体",
@@ -1216,18 +1528,32 @@
       "acts": "操作",
       "auto": "自动化详情",
       "rep": "重复",
-      "task": "任务"
+      "task": "任务",
+      "active": "活跃",
+      "addAct": "添加动作",
+      "inactive": "不活跃",
+      "noAct": "未配置任何操作",
+      "recurs": "重复出现"
     },
     "automationEdit": {
       "autoEdit": "编辑自动化",
       "monthly": "每月",
       "never": "从不",
       "rep": "重复",
-      "yearly": "每年"
+      "yearly": "每年",
+      "active": "活跃",
+      "inactive": "不活跃",
+      "recurHelp": "设置此自动化运行的频率"
     },
     "automationsPage": {
       "auto": "自动化任务",
-      "manageAuto": "管理自动化任务"
+      "manageAuto": "管理自动化任务",
+      "active": "活跃",
+      "addAuto": "添加自动化",
+      "inactive": "不活跃",
+      "noAuto": "未配置自动化",
+      "recurs": "重复出现",
+      "subtitle": "根据条件自动执行任务"
     },
     "conditionAttendance": {
       "anywhere": "任何地方",
@@ -1268,7 +1594,11 @@
       "all": "全部",
       "any": "任何",
       "con": "条件：",
-      "trueCon": "这些条件中的一个为真"
+      "trueCon": "这些条件中的一个为真",
+      "addCondition": "添加条件",
+      "and": "和",
+      "noCond": "没有添加任何条件",
+      "or": "或者"
     },
     "conditionEdit": {
       "conEdit": "编辑条件",
@@ -1277,7 +1607,8 @@
       "conType": "条件类型",
       "gen": "常规",
       "persAtt": "个人属性",
-      "today": "今天的日期"
+      "today": "今天的日期",
+      "conDetails": "状况详情"
     },
     "conditionSelect": {
       "is": "是",
@@ -1308,13 +1639,21 @@
       "associatePers": "请将此任务与一个人关联。",
       "associateW": "关联到",
       "taskNew": "新任务",
-      "titleTask": "请输入此任务的标题。"
+      "titleTask": "请输入此任务的标题。",
+      "newAssign": "新任务",
+      "saving": "保存中..."
     },
     "taskList": {
       "assignGroup": "分配给我的团体",
       "assignMe": "分配给我",
       "reqMe": "我请求的",
-      "tasks": "任务"
+      "tasks": "任务",
+      "addTask": "添加任务",
+      "assignedTo": "分配给",
+      "associatedWith": "关联于",
+      "noTasks": "没有找到任务",
+      "notSpecified": "未指定",
+      "unassigned": "未分配"
     },
     "taskPage": {
       "ago": "前",
@@ -1328,19 +1667,31 @@
       "open": "打开",
       "opened": "已打开",
       "stat": "状态",
-      "taskDet": "任务详情"
+      "taskDet": "任务详情",
+      "assign": "分配",
+      "assigned": "已分配",
+      "associate": "联系",
+      "associated": "联系",
+      "created": "已创建",
+      "editAssigned": "编辑已分配",
+      "editAssoc": "编辑关联",
+      "notSpec": "未指定",
+      "unassigned": "未分配"
     },
     "tasksPage": {
       "auto": "自动化",
       "showClosed": "显示已关闭",
       "showOpen": "显示打开",
-      "tasks": "任务"
+      "tasks": "任务",
+      "subtitle": "管理任务和自动化"
     },
     "requestedChanges": {
       "requestedChanges": "请求的更改",
       "apply": "应用",
       "field": "字段",
-      "value": "值"
+      "value": "值",
+      "applied": "已应用更改",
+      "newProfile": "新档案"
     }
   },
   "site": {
@@ -1365,7 +1716,8 @@
       "slideLeft": "向左滑动",
       "slideRight": "向右滑动",
       "slideUp": "向上滑动",
-      "slow": "慢速"
+      "slow": "慢速",
+      "onShowSpeed": "展示速度"
     },
     "blocks": {
       "confirmDelete": "您确定要永久删除此块吗？",
@@ -1380,7 +1732,14 @@
       "textLabel": "文本",
       "urlHelper": "提示：您必须从网站构建器链接具有捐赠元素的页面。",
       "urlLabel": "网址",
-      "urlPlaceholder": "/donate"
+      "urlPlaceholder": "/donate",
+      "addAmount": "添加捐款金额",
+      "amount": "金额",
+      "donationAmount": "捐款金额",
+      "donationAmounts": "捐款金额",
+      "donationAmountsHelper": "您可以建议一些捐款金额，例如 5 美元、10 美元、20 美元等。",
+      "funds": "基金",
+      "selectFund": "选择捐赠基金"
     },
     "elements": {
       "addressHelper": "例如：市政厅，纽约，纽约",
@@ -1389,7 +1748,29 @@
       "confirmDuplicate": "您确定要复制此元素及其所有子元素吗？",
       "editElement": "编辑元素",
       "heightPlaceholder": "1000",
-      "nameHelper": "例如：第一浸信会教堂"
+      "nameHelper": "例如：第一浸信会教堂",
+      "alignCenter": "居中",
+      "alignLeft": "左",
+      "alignRight": "右",
+      "answersJSON": "答案 JSON",
+      "answersJSONData": "表单答案的 JSON 数据格式",
+      "imageDescribingTopic": "描述主题的图片",
+      "linkUrlOptional": "链接网址（可选）",
+      "loadingEditor": "正在加载编辑器...",
+      "photoAlternativeText": "照片替代文字",
+      "photoLabel": "照片标签",
+      "photoPosition": "照片位置",
+      "positionPhotoBottom": "底部",
+      "positionPhotoLeft": "左",
+      "positionPhotoRight": "右",
+      "positionPhotoTop": "顶部",
+      "roundedCorners": "圆角",
+      "selectPhoto": "选择照片",
+      "selectPhotoPosition": "选择照片位置",
+      "textAlignment": "文本对齐",
+      "title": "标题",
+      "titleAlignment": "标题对齐",
+      "translucent": "半透明"
     },
     "files": {
       "confirmDelete": "您确定要删除",
@@ -1413,7 +1794,27 @@
       "convert": "转换"
     },
     "pagesPage": {
-      "confirmConvert": "您想将此自动生成的页面转换为自定义页面吗？"
+      "confirmConvert": "您想将此自动生成的页面转换为自定义页面吗？",
+      "actions": "操作",
+      "addFirstPage": "添加首页",
+      "addPage": "添加页面",
+      "autoGenerated": "自动生成",
+      "customPages": "自定义页面",
+      "description": "以下是自定义页面和自动生成页面的列表。您可以添加新页面、编辑现有页面或将自动生成的页面转换为自定义页面。",
+      "desktopOnly": "页面编辑器仅在桌面模式下可用",
+      "generated": "生成",
+      "getStarted": "首先添加您的第一页。",
+      "mainNavigation": "主导航",
+      "noPagesFound": "没有找到页面",
+      "pages": "页数",
+      "path": "小路",
+      "previewPage": "预览页面",
+      "showLogin": "显示登录",
+      "showLoginTooltip": "在导航栏中显示登录按钮",
+      "subtitle": "管理您的网站页面、内容和导航",
+      "toggleLoginVisibility": "切换登录按钮可见性",
+      "totalPages": "总页数",
+      "websitePages": "网站页面"
     },
     "pickColors": {
       "headingColor": "标题颜色",
@@ -1422,7 +1823,35 @@
       "textColor": "文本颜色"
     },
     "row": {
-      "columnsHelper": "数字表示页面的十二分之一。"
+      "columnsHelper": "数字表示页面的十二分之一。",
+      "addColumn": "添加列",
+      "columnsError": "列的总和必须达到 12",
+      "commonOptions": "常用选项",
+      "halves": "一半",
+      "hideMobileOrder": "隐藏手机订单",
+      "hideMobileSizes": "隐藏手机尺寸",
+      "preview": "预览",
+      "previewHelper": "数字代表第十二页",
+      "quarters": "宿舍",
+      "remove": "移除",
+      "showMobileOrder": "显示手机订单",
+      "showMobileSizes": "显示手机尺寸",
+      "size1": "1 - 1/12 日",
+      "size10": "10 - 5/6 分",
+      "size11": "11 - 11/12 分",
+      "size12": "12 - 完整",
+      "size2": "2 - 1/6 号",
+      "size3": "3 - 1/4 号",
+      "size4": "4 - 1/3 号",
+      "size5": "5 - 5/12 分",
+      "size6": "6 - 1/2",
+      "size7": "7 - 7/12 分",
+      "size8": "8 - 2/3 分",
+      "size9": "9 - 3/4 分",
+      "thirds": "三分之二",
+      "totalInvalid": "总计：{total}/12",
+      "totalValid": "总计：12/12",
+      "width": "宽度"
     },
     "section": {
       "confirmDelete": "您确定要永久删除此部分吗？",
@@ -1437,6 +1866,58 @@
     },
     "templates": {
       "viewSermons": "查看讲道"
+    },
+    "blocksPage": {
+      "actions": "操作",
+      "addBlock": "添加区块",
+      "block": "堵塞",
+      "blocks": "积木",
+      "createFirstBlock": "创建第一个块",
+      "elements": "元素",
+      "getStarted": "首先创建您的第一个可重用块",
+      "noBlocksFound": "没有找到块",
+      "reusableBlocks": "可重复使用的块",
+      "sections": "部分",
+      "subtitle": "为您的网站创建和管理可重复使用的内容块",
+      "totalBlocks": "总块数",
+      "type": "类型"
+    },
+    "editorToolbar": {
+      "addContent": "添加内容",
+      "block": "堵塞",
+      "desktop": "桌面",
+      "mobile": "手机",
+      "page": "页",
+      "switchToDesktop": "切换到桌面视图",
+      "switchToMobile": "切换到移动视图"
+    },
+    "elementAdd": {
+      "blocks": "积木",
+      "box": "盒子",
+      "calendar": "日历",
+      "card": "卡",
+      "carousel": "轮播",
+      "churchSpecific": "特定教会",
+      "donateLink": "捐赠链接",
+      "donation": "捐款",
+      "dragAndDrop": "拖放到页面上",
+      "embedPage": "嵌入页面",
+      "expandable": "可扩展",
+      "form": "表单",
+      "groupList": "团体名单",
+      "html": "超文本标记语言",
+      "image": "图像",
+      "location": "地点",
+      "logo": "标识",
+      "noBlocksFound": "没有找到块",
+      "row": "排",
+      "section": "部分",
+      "simpleElements": "简单的元素",
+      "stream": "溪流",
+      "table": "桌子",
+      "text": "文本",
+      "textWithPhoto": "文字与照片",
+      "video": "视频"
     }
   },
   "sermons": {
@@ -1482,7 +1963,8 @@
       "unauthorizedDelete": "未授权删除讲道",
       "newSermon": "新讲道",
       "currentLiveService": "当前直播服务",
-      "channelIdPlaceholder": "这不是您的频道网址 - 请参阅上方的帮助链接"
+      "channelIdPlaceholder": "这不是您的频道网址 - 请参阅上方的帮助链接",
+      "none": "无"
     },
     "playlists": {
       "title": "播放列表",
@@ -1551,7 +2033,8 @@
       },
       "navigationLinks": {
         "title": "导航链接",
-        "add": "添加"
+        "add": "添加",
+        "home": "家庭"
       },
       "sidebarTabs": {
         "title": "侧边栏标签",
@@ -1653,6 +2136,10 @@
         "editUsers": "编辑用户",
         "viewYourStream": "查看您的直播"
       }
+    },
+    "duration": {
+      "minutes": "分钟",
+      "seconds": "秒"
     }
   },
   "songs": {
@@ -1725,6 +2212,14 @@
       "title": "搜索歌曲",
       "inputLabel": "标题或艺术家",
       "inputPlaceholder": "输入歌曲标题或艺术家姓名..."
+    },
+    "songPage": {
+      "loading": "加载中...",
+      "subtitle": "管理歌曲详细信息和安排"
+    },
+    "songsPage": {
+      "songs": "歌曲",
+      "subtitle": "管理您的音乐库"
     }
   },
   "stockPhotos": {
