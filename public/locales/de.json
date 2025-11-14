@@ -237,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "Dashboard"
+      "dash": "Dashboard",
+      "subtitle": "Willkommen zu Ihrem Kirchenverwaltungs-Dashboard. Suchen Sie nach Personen, sehen Sie Ihre Gruppen ein und verwalten Sie Ihre offenen Aufgaben."
     },
     "myGroups": "Meine Gruppen",
     "people": "Personen",
@@ -444,6 +445,11 @@
     },
     "fundPage": {
       "subtitle": "Spenden und Beiträge zu diesem Fonds verfolgen"
+    },
+    "donationBatchPage": {
+      "title": "Spendenstapel",
+      "subtitle": "Spenden in diesem Stapel verwalten",
+      "batchDate": "Stapeldatum:"
     }
   },
   "forms": {

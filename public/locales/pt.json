@@ -237,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "Painel"
+      "dash": "Painel",
+      "subtitle": "Bem-vindo ao painel de gerenciamento da sua igreja. Pesquise pessoas, veja seus grupos e gerencie suas tarefas abertas."
     },
     "myGroups": "Meus Grupos",
     "people": "Pessoas",
@@ -444,6 +445,11 @@
     },
     "fundPage": {
       "subtitle": "Rastrear doações e contribuições para este fundo"
+    },
+    "donationBatchPage": {
+      "title": "Lote de doações",
+      "subtitle": "Gerenciar doações neste lote",
+      "batchDate": "Data do lote:"
     }
   },
   "forms": {

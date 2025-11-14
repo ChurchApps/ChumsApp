@@ -237,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "Dashboard"
+      "dash": "Dashboard",
+      "subtitle": "Benvenuto nel tuo dashboard di gestione della chiesa. Cerca persone, visualizza i tuoi gruppi e gestisci le tue attività aperte."
     },
     "myGroups": "I Miei Gruppi",
     "people": "Persone",
@@ -444,6 +445,11 @@
     },
     "fundPage": {
       "subtitle": "Traccia donazioni e contributi a questo fondo"
+    },
+    "donationBatchPage": {
+      "title": "Lotto di donazioni",
+      "subtitle": "Gestisci donazioni in questo lotto",
+      "batchDate": "Data lotto:"
     }
   },
   "forms": {

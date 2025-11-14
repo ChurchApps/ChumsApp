@@ -237,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "Dashbord"
+      "dash": "Dashbord",
+      "subtitle": "Velkommen til kirkens administrasjonspanel. Søk etter personer, se gruppene dine og administrer åpne oppgaver."
     },
     "myGroups": "Mine grupper",
     "people": "Personer",
@@ -444,6 +445,11 @@
     },
     "fundPage": {
       "subtitle": "Spor donasjoner og bidrag til dette fondet"
+    },
+    "donationBatchPage": {
+      "title": "Donasjonsbunt",
+      "subtitle": "Administrer donasjoner i denne bunten",
+      "batchDate": "Buntdato:"
     }
   },
   "forms": {

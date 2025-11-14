@@ -237,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "대시보드"
+      "dash": "대시보드",
+      "subtitle": "교회 관리 대시보드에 오신 것을 환영합니다. 사람들을 검색하고, 그룹을 보고, 열린 작업을 관리하세요."
     },
     "myGroups": "내 그룹",
     "people": "사람들",
@@ -444,6 +445,11 @@
     },
     "fundPage": {
       "subtitle": "이 기금에 대한 기부 및 기여 추적"
+    },
+    "donationBatchPage": {
+      "title": "기부 배치",
+      "subtitle": "이 배치의 기부 관리",
+      "batchDate": "배치 날짜:"
     }
   },
   "forms": {

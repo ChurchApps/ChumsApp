@@ -237,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "Dashboard"
+      "dash": "Dashboard",
+      "subtitle": "Welcome to your church management dashboard. Search for people, view your groups, and manage your open tasks."
     },
     "myGroups": "My Groups",
     "people": "People",
@@ -367,6 +368,11 @@
     }
   },
   "donations": {
+    "donationBatchPage": {
+      "title": "Donation Batch",
+      "subtitle": "Manage donations in this batch",
+      "batchDate": "Batch Date:"
+    },
     "donationBatchesPage": {
       "subtitle": "Manage donation batches and track giving records"
     },

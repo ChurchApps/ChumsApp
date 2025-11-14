@@ -237,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "仪表板"
+      "dash": "仪表板",
+      "subtitle": "欢迎使用教会管理仪表板。搜索人员，查看您的群组并管理您的未完成任务。"
     },
     "myGroups": "我的群组",
     "people": "人们",
@@ -444,6 +445,11 @@
     },
     "fundPage": {
       "subtitle": "跟踪此基金的捐赠和贡献"
+    },
+    "donationBatchPage": {
+      "title": "捐赠批次",
+      "subtitle": "管理此批次中的捐赠",
+      "batchDate": "批次日期："
     }
   },
   "forms": {

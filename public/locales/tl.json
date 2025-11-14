@@ -237,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "Dashboard"
+      "dash": "Dashboard",
+      "subtitle": "Maligayang pagdating sa iyong church management dashboard. Maghanap ng mga tao, tingnan ang iyong mga grupo at pamahalaan ang iyong mga bukas na gawain."
     },
     "myGroups": "Aking mga Grupo",
     "people": "Mga Tao",
@@ -444,6 +445,11 @@
     },
     "fundPage": {
       "subtitle": "Subaybayan ang mga donasyon at kontribusyon sa pondo"
+    },
+    "donationBatchPage": {
+      "title": "Batch ng Donasyon",
+      "subtitle": "Pamahalaan ang mga donasyon sa batch na ito",
+      "batchDate": "Petsa ng Batch:"
     }
   },
   "forms": {

@@ -237,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "Tableau de bord"
+      "dash": "Tableau de bord",
+      "subtitle": "Bienvenue sur votre tableau de bord de gestion d'église. Recherchez des personnes, consultez vos groupes et gérez vos tâches ouvertes."
     },
     "myGroups": "Mes Groupes",
     "people": "Personnes",
@@ -444,6 +445,11 @@
     },
     "fundPage": {
       "subtitle": "Suivre les dons et contributions à ce fonds"
+    },
+    "donationBatchPage": {
+      "title": "Lot de dons",
+      "subtitle": "Gérer les dons de ce lot",
+      "batchDate": "Date du lot:"
     }
   },
   "forms": {

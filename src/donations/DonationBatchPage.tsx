@@ -1,6 +1,6 @@
 import React from "react";
 import { DonationEdit, Donations, BatchEdit, BulkDonationEntry } from "./components";
-import { UserHelper, Permissions, DateHelper, CurrencyHelper, PageHeader } from "@churchapps/apphelper";
+import { UserHelper, Permissions, DateHelper, CurrencyHelper, PageHeader, Locale } from "@churchapps/apphelper";
 import { type DonationBatchInterface, type FundInterface, type DonationInterface } from "@churchapps/helpers";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -72,8 +72,8 @@ export const DonationBatchPage = () => {
     <>
       <PageHeader
         icon={<DonationIcon />}
-        title={batch.data?.name || "Donation Batch"}
-        subtitle={batch.data?.batchDate ? `Batch Date: ${DateHelper.prettyDate(new Date(batch.data.batchDate.split("T")[0] + "T00:00:00"))}` : "Manage donations in this batch"}
+        title={batch.data?.name || Locale.label("donations.donationBatchPage.title")}
+        subtitle={batch.data?.batchDate ? `${Locale.label("donations.donationBatchPage.batchDate")} ${DateHelper.prettyDate(new Date(batch.data.batchDate.split("T")[0] + "T00:00:00"))}` : Locale.label("donations.donationBatchPage.subtitle")}
       >
         <Stack
           direction={{ xs: "column", md: "row" }}
