@@ -49,7 +49,7 @@ export const RequestedChanges = (props: Props) => {
               border: "2px solid",
               borderColor: "primary.main",
             }}
-            alt="New Profile Pic"
+            alt={Locale.label("tasks.requestedChanges.newProfile")}
           />
         );
       }
@@ -207,7 +207,7 @@ export const RequestedChanges = (props: Props) => {
                 textAlign: "center",
               }}>
               <Typography variant="body2" sx={{ color: "success.dark", fontWeight: 600 }}>
-                These changes have been applied
+                {Locale.label("tasks.requestedChanges.applied")}
               </Typography>
             </Box>
           )}

@@ -88,7 +88,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
         await ApiHelper.post("/gateways", [gw], "GivingApi");
       }
     } catch (error: any) {
-      let message = "An error occurred while saving gateway settings";
+      let message = Locale.label("settings.givingSettingsEdit.saveError");
       if (error?.message) {
         try {
           const parsed = JSON.parse(error.message);

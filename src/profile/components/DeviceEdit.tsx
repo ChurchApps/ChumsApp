@@ -31,7 +31,7 @@ export const DeviceEdit = (props: Props) => {
 
   const validate = () => {
     const result = [];
-    if (!device.label) result.push("Please enter a label for this device.");
+    if (!device.label) result.push(Locale.label("profile.deviceEdit.labelRequired"));
     setErrors(result);
     return result.length === 0;
   };
@@ -48,7 +48,7 @@ export const DeviceEdit = (props: Props) => {
     <>
       <ErrorMessages errors={errors} />
       <InputBox headerText={Locale.label("profile.devices.editDevice")} headerIcon="tv" saveFunction={handleSave} cancelFunction={props.updatedFunction}>
-        <TextField fullWidth label="Label" name="label" type="text" value={device?.label} onChange={handleChange} />
+        <TextField fullWidth label={Locale.label("profile.deviceEdit.label")} name="label" type="text" value={device?.label} onChange={handleChange} />
         <DeviceContent device={device} />
       </InputBox>
     </>

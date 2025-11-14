@@ -77,7 +77,7 @@ export const AttendancePage = () => {
       <PageHeader
         icon={<CalendarIcon />}
         title={Locale.label("attendance.attendancePage.att")}
-        subtitle="Track and manage church attendance across all services"
+        subtitle={Locale.label("attendance.attendancePage.subtitle")}
       >
         <Stack
           direction={{ xs: "column", sm: "row" }}
@@ -97,35 +97,35 @@ export const AttendancePage = () => {
               <Icon sx={{ color: "#FFF", fontSize: 24 }}>church</Icon>
               <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.campuses}</Typography>
             </Stack>
-            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Campuses</Typography>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>{Locale.label("attendance.attendancePage.campuses")}</Typography>
           </Stack>
           <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
             <Stack direction="row" spacing={1} alignItems="center">
               <CalendarIcon sx={{ color: "#FFF", fontSize: 24 }} />
               <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.serviceTimes}</Typography>
             </Stack>
-            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Services</Typography>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>{Locale.label("attendance.attendancePage.services")}</Typography>
           </Stack>
           <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
             <Stack direction="row" spacing={1} alignItems="center">
               <Icon sx={{ color: "#FFF", fontSize: 24 }}>schedule</Icon>
               <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.scheduledGroups}</Typography>
             </Stack>
-            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Scheduled</Typography>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>{Locale.label("attendance.attendancePage.scheduled")}</Typography>
           </Stack>
           <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
             <Stack direction="row" spacing={1} alignItems="center">
               <Icon sx={{ color: "#FFF", fontSize: 24 }}>groups</Icon>
               <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.unscheduledGroups}</Typography>
             </Stack>
-            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Unscheduled</Typography>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>{Locale.label("attendance.attendancePage.unscheduled")}</Typography>
           </Stack>
           <Stack spacing={0.5} alignItems="center" sx={{ minWidth: 80 }}>
             <Stack direction="row" spacing={1} alignItems="center">
               <GroupIcon sx={{ color: "#FFF", fontSize: 24 }} />
               <Typography variant="h5" sx={{ color: "#FFF", fontWeight: 700 }}>{stats.totalGroups}</Typography>
             </Stack>
-            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>Total Groups</Typography>
+            <Typography variant="caption" sx={{ color: "rgba(255,255,255,0.85)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: 0.5 }}>{Locale.label("attendance.attendancePage.totalGroups")}</Typography>
           </Stack>
         </Stack>
       </PageHeader>

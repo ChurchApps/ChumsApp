@@ -53,8 +53,8 @@ export function CalendarEdit(props: Props) {
 
   const validate = () => {
     const errors = [];
-    if (!calendar?.name || calendar.name === "") errors.push("Please enter a name.");
-    if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push("Unauthorized to create calendars");
+    if (!calendar?.name || calendar.name === "") errors.push(Locale.label("calendars.calendarEdit.nameRequired"));
+    if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push(Locale.label("calendars.calendarEdit.unauthorizedCreate"));
     setErrors(errors);
     return errors.length === 0;
   };
@@ -74,7 +74,7 @@ export function CalendarEdit(props: Props) {
 
   const handleDelete = () => {
     const errors = [];
-    if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push("Unauthorized to delete calendars");
+    if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push(Locale.label("calendars.calendarEdit.unauthorizedDelete"));
 
     if (errors.length > 0) {
       setErrors(errors);
@@ -112,7 +112,7 @@ export function CalendarEdit(props: Props) {
           <Stack direction="row" spacing={1} alignItems="center">
             <CalendarIcon sx={{ color: 'primary.main' }} />
             <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
-              {isNew ? 'Create Calendar' : 'Edit Calendar'}
+              {isNew ? Locale.label("calendars.calendarEdit.createCalendar") : Locale.label("calendars.calendarEdit.editCalendar")}
             </Typography>
           </Stack>
           <IconButton
@@ -148,17 +148,17 @@ export function CalendarEdit(props: Props) {
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             data-testid="calendar-name-input"
-            aria-label="Calendar name"
+            aria-label={Locale.label("calendars.calendarEdit.calendarNameAria")}
             placeholder={Locale.label("calendars.calendarEdit.namePlaceholder")}
             variant="outlined"
           />
 
           <Box>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-              Calendar Details
+              {Locale.label("calendars.calendarEdit.calendarDetails")}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              This calendar will be available for use across your church. You can add events from any group to this curated calendar.
+              {Locale.label("calendars.calendarEdit.calendarDetailsDesc")}
             </Typography>
           </Box>
 
@@ -174,7 +174,7 @@ export function CalendarEdit(props: Props) {
                 borderRadius: 2
               }}
             >
-              Cancel
+              {Locale.label("calendars.calendarEdit.cancel")}
             </Button>
 
             {!isNew && (
@@ -190,7 +190,7 @@ export function CalendarEdit(props: Props) {
                 }}
                 data-testid="delete-calendar-button"
               >
-                {deleting ? 'Deleting...' : 'Delete'}
+                {deleting ? Locale.label("calendars.calendarEdit.deleting") : Locale.label("calendars.calendarEdit.delete")}
               </Button>
             )}
 
@@ -206,7 +206,7 @@ export function CalendarEdit(props: Props) {
               }}
               data-testid="save-calendar-button"
             >
-              {saving ? 'Saving...' : (isNew ? 'Create' : 'Save')}
+              {saving ? Locale.label("calendars.calendarEdit.saving") : (isNew ? Locale.label("calendars.calendarEdit.create") : Locale.label("calendars.calendarEdit.save"))}
             </Button>
           </Stack>
         </Stack>

@@ -71,9 +71,9 @@ export const TimeEdit = (props: Props) => {
     if (result.length === 0) {
       return (
         <Typography sx={{ fontSize: "13px", fontStyle: "italic" }}>
-          Tip: Start with creating teams first.{" "}
+          {Locale.label("plans.timeEdit.tip")}{" "}
           <a href="https://support.churchapps.org/b1Admin/plans.html" target="_blank" rel="noopener noreferrer">
-            Follow this guide
+            {Locale.label("plans.timeEdit.followGuide")}
           </a>
         </Typography>
       );

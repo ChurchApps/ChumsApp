@@ -134,7 +134,7 @@ export function EditCalendarEventModal(props: Props) {
 
   return (
     <Dialog open={true} onClose={handleDone} fullWidth scroll="body" fullScreen={fullScreen}>
-      <DialogTitle>Add a Group</DialogTitle>
+      <DialogTitle>{Locale.label("calendars.editEvent.addGroup")}</DialogTitle>
       <DialogContent>
         {isLoadingGroups ? (
           <Loading />
@@ -175,7 +175,7 @@ export function EditCalendarEventModal(props: Props) {
         {addType === "events" && groupEvents.length > 0 && (
           <div style={{ marginTop: 11 }}>
             <Typography align="center" fontSize="15px" fontStyle="italic" marginBottom={3} color="#757575">
-              *Click on an event to add it to the Curated Calendar.*
+              {Locale.label("calendars.editEvent.clickToAdd")}
             </Typography>
             <Calendar
               localizer={localizer}
@@ -192,14 +192,14 @@ export function EditCalendarEventModal(props: Props) {
         {addType === "events" && groupEvents.length <= 0 && (
           <div style={{ marginTop: 11 }}>
             <Alert sx={{ align: "center", fontSize: "15px", fontStyle: "italic", marginBottom: "3" }} severity="error">
-              *No events found. Please add events to the individual group before adding to the Curated Calendar.*
+              {Locale.label("calendars.editEvent.noEventsFound")}
             </Alert>
           </div>
         )}
       </DialogContent>
       <DialogActions>
         <Button variant="text" onClick={handleDone} data-testid="calendar-edit-cancel-button">
-          cancel
+          {Locale.label("calendars.editEvent.cancel")}
         </Button>
         <Button
           variant="contained"
@@ -207,7 +207,7 @@ export function EditCalendarEventModal(props: Props) {
           disabled={!selectedGroupId || (addType === "events" && eventIdsList.length === 0)}
           data-testid="calendar-edit-save-button"
         >
-          Save
+          {Locale.label("calendars.editEvent.save")}
         </Button>
       </DialogActions>
     </Dialog>

@@ -133,7 +133,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
               marginTop: 20,
               marginBottom: 20,
             }}>
-            <b>Attendance</b>
+            <b>{Locale.label("groups.groupDetailsEdit.attendance")}</b>
           </div>
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
@@ -314,7 +314,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                         <Stack alignItems="center" spacing={1} sx={{ color: "grey.500" }}>
                           <PhotoCameraIcon sx={{ fontSize: 32 }} />
                           <Typography variant="body2" color="grey.500">
-                            Click to add photo
+                            {Locale.label("groups.groupDetailsEdit.clickToAddPhoto")}
                           </Typography>
                         </Stack>
                       )}
@@ -328,7 +328,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                       data-testid="change-photo-button"
                       aria-label="Change group photo"
                       size="small">
-                      {group.photoUrl ? Locale.label("common.changePhoto") : "Add Photo"}
+                      {group.photoUrl ? Locale.label("common.changePhoto") : Locale.label("groups.groupDetailsEdit.addPhoto")}
                     </Button>
                   </Box>
                 </Grid>

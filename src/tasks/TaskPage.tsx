@@ -98,7 +98,7 @@ export const TaskPage = () => {
         <PageHeader
           icon={<TaskIcon />}
           title={`#${task.data.taskNumber} - ${task.data?.title}`}
-          subtitle={`Created ${DateHelper.getDisplayDuration(DateHelper.toDate(task.data?.dateCreated))} ago by ${task.data.createdByLabel} • Associated: ${task.data.associatedWithLabel || "Not specified"} • Assigned: ${task.data.assignedToLabel || "Unassigned"}`}>
+          subtitle={`${Locale.label("tasks.taskPage.created")} ${DateHelper.getDisplayDuration(DateHelper.toDate(task.data?.dateCreated))} ${Locale.label("tasks.taskPage.ago")} ${Locale.label("tasks.taskPage.by")} ${task.data.createdByLabel} • ${Locale.label("tasks.taskPage.associated")}: ${task.data.associatedWithLabel || Locale.label("tasks.taskPage.notSpec")} • ${Locale.label("tasks.taskPage.assigned")}: ${task.data.assignedToLabel || Locale.label("tasks.taskPage.unassigned")}`}>
           <Stack direction="row" spacing={1}>
             <Button
               variant={task.data.status === "Open" ? "contained" : "outlined"}
@@ -131,8 +131,8 @@ export const TaskPage = () => {
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
               }}
-              title="Edit Assigned To">
-              Assign
+              title={Locale.label("tasks.taskPage.editAssigned")}>
+              {Locale.label("tasks.taskPage.assign")}
             </Button>
             <Button
               variant="outlined"
@@ -148,8 +148,8 @@ export const TaskPage = () => {
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
               }}
-              title="Edit Associated With">
-              Associate
+              title={Locale.label("tasks.taskPage.editAssoc")}>
+              {Locale.label("tasks.taskPage.associate")}
             </Button>
           </Stack>
         </PageHeader>

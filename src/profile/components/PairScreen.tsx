@@ -22,7 +22,7 @@ export const PairScreen = (props: Props) => {
 
   const validate = () => {
     const result = [];
-    if (!code) result.push("Please enter a pairing code.");
+    if (!code) result.push(Locale.label("profile.pairScreen.codeRequired"));
     setErrors(result);
     return result.length === 0;
   };
@@ -31,7 +31,7 @@ export const PairScreen = (props: Props) => {
     if (validate()) {
       ApiHelper.get("/devices/pair/" + code, "MessagingApi").then((data) => {
         if (data.success) props.updatedFunction();
-        else setErrors(["Invalid pairing code."]);
+        else setErrors([Locale.label("profile.pairScreen.invalidCode")]);
       });
     }
   };
@@ -40,7 +40,7 @@ export const PairScreen = (props: Props) => {
     <>
       <ErrorMessages errors={errors} />
       <InputBox headerText={Locale.label("profile.devices.addScreen")} headerIcon="tv" saveFunction={handleSave} cancelFunction={props.updatedFunction}>
-        <TextField fullWidth label="Pairing Code" id="code" name="code" type="text" value={code} onChange={handleChange} />
+        <TextField fullWidth label={Locale.label("profile.pairScreen.pairingCode")} id="code" name="code" type="text" value={code} onChange={handleChange} />
       </InputBox>
     </>
   );

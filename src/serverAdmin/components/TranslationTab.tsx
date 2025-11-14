@@ -31,8 +31,8 @@ export const TranslationTab = () => {
     const rows: JSX.Element[] = [];
     rows.push(
       <TableRow sx={{ textAlign: "left" }} key="header">
-        <th>{"Abbreviations"}</th>
-        <th>{"Lookups"}</th>
+        <th>{Locale.label("serverAdmin.translation.abbreviations")}</th>
+        <th>{Locale.label("serverAdmin.translation.lookups")}</th>
       </TableRow>
     );
     return rows;
@@ -76,7 +76,7 @@ export const TranslationTab = () => {
           <div style={{ fontSize: 18, marginBottom: 15 }}>
             <Grid container alignItems="center">
               <Grid size={{ md: 1 }}>
-                <p>Start Date:</p>
+                <p>{Locale.label("serverAdmin.translation.startDate")}</p>
               </Grid>
               <Grid size={{ md: 3 }}>
                 <TextField
@@ -90,7 +90,7 @@ export const TranslationTab = () => {
                 />
               </Grid>
               <Grid size={{ md: 1 }}>
-                <p>End Date:</p>
+                <p>{Locale.label("serverAdmin.translation.endDate")}</p>
               </Grid>
               <Grid size={{ md: 3 }}>
                 <TextField id="end" name="end" value={DateHelper.formatHtml5Date(endDate)} type="date" onChange={handleChange} data-testid="translation-end-date-input" aria-label="End date" />
@@ -98,7 +98,7 @@ export const TranslationTab = () => {
               <Grid size={{ md: 1 }}>
                 <Button variant="outlined" style={{ height: 56, width: 200, marginTop: 8 }} onClick={loadData} data-testid="search-translation-stats-button" aria-label="Search translation statistics">
                   <ManageSearchIcon fontSize="small" />
-                  &nbsp;Search
+                  &nbsp;{Locale.label("serverAdmin.translation.search")}
                 </Button>
               </Grid>
             </Grid>

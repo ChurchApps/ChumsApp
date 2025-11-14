@@ -80,7 +80,7 @@ export const CalendarsPage = () => {
                 {calendar.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Curated Calendar
+                {Locale.label("calendars.calendarList.curatedCalendar")}
               </Typography>
             </Box>
           </Stack>
@@ -99,7 +99,7 @@ export const CalendarsPage = () => {
         </TableCell>
         <TableCell align="right">
           <Stack direction="row" spacing={1} justifyContent="flex-end">
-            <Tooltip title="Manage Events" arrow>
+            <Tooltip title={Locale.label("calendars.calendarList.manageEvents")} arrow>
               <IconButton
                 size="small"
                 onClick={(e) => {
@@ -121,7 +121,7 @@ export const CalendarsPage = () => {
               </IconButton>
             </Tooltip>
             {UserHelper.checkAccess(Permissions.contentApi.content.edit) && (
-              <Tooltip title="Edit" arrow>
+              <Tooltip title={Locale.label("calendars.calendarList.edit")} arrow>
                 <IconButton
                   size="small"
                   onClick={(e) => {
@@ -156,11 +156,11 @@ export const CalendarsPage = () => {
     <>
       <PageHeader
         icon={<CalendarIcon />}
-        title="Event Calendars"
+        title={Locale.label("calendars.calendarList.title")}
         subtitle={
           calendars.length > 0
-            ? `Manage ${calendars.length} curated ${calendars.length === 1 ? 'calendar' : 'calendars'} for your church`
-            : "Create curated calendars to organize and share events across your church"
+            ? Locale.label("calendars.calendarList.subtitleWithCount", calendars.length.toString(), calendars.length === 1 ? Locale.label("calendars.calendarList.calendar") : Locale.label("calendars.calendarList.calendars"))
+            : Locale.label("calendars.calendarList.subtitleEmpty")
         }
       >
         {UserHelper.checkAccess(Permissions.contentApi.content.edit) && (
@@ -178,7 +178,7 @@ export const CalendarsPage = () => {
             }}
             data-testid="add-calendar"
           >
-            Add Calendar
+            {Locale.label("calendars.calendarList.addCalendar")}
           </Button>
         )}
       </PageHeader>
@@ -201,10 +201,10 @@ export const CalendarsPage = () => {
               >
                 <CalendarIcon sx={{ fontSize: 64, color: "grey.400", mb: 2 }} />
                 <Typography variant="h6" color="text.secondary" gutterBottom>
-                  No Calendars Found
+                  {Locale.label("calendars.calendarList.noCalendars")}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                  Create your first curated calendar to organize and share events
+                  {Locale.label("calendars.calendarList.createFirstCalendar")}
                 </Typography>
                 {UserHelper.checkAccess(Permissions.contentApi.content.edit) && (
                   <Button
@@ -213,7 +213,7 @@ export const CalendarsPage = () => {
                     onClick={() => setCurrentCalendar({} as CuratedCalendarInterface)}
                     data-testid="empty-state-add-calendar"
                   >
-                    Create Calendar
+                    {Locale.label("calendars.calendarList.createCalendar")}
                   </Button>
                 )}
               </Paper>
@@ -230,13 +230,13 @@ export const CalendarsPage = () => {
                   <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
                     <TableRow>
                       <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>
-                        Calendar
+                        {Locale.label("calendars.calendarList.calendar")}
                       </TableCell>
                       <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>
-                        Status
+                        {Locale.label("calendars.calendarList.status")}
                       </TableCell>
                       <TableCell align="right" sx={{ fontWeight: 600, color: "text.secondary" }}>
-                        Actions
+                        {Locale.label("calendars.calendarList.actions")}
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -263,13 +263,13 @@ export const CalendarsPage = () => {
                     <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
                       <TableRow>
                         <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>
-                          Calendar
+                          {Locale.label("calendars.calendarList.calendar")}
                         </TableCell>
                         <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>
-                          Status
+                          {Locale.label("calendars.calendarList.status")}
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: 600, color: "text.secondary" }}>
-                          Actions
+                          {Locale.label("calendars.calendarList.actions")}
                         </TableCell>
                       </TableRow>
                     </TableHead>
@@ -297,16 +297,16 @@ export const CalendarsPage = () => {
                 <DescriptionIcon sx={{ color: "primary.main", fontSize: 28 }} />
                 <Box>
                   <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                    About Curated Calendars
+                    {Locale.label("calendars.calendarList.aboutTitle")}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" paragraph>
-                    Each group has its own calendar which can be managed by group leaders. You can also create curated calendars to share with the entire church.
+                    {Locale.label("calendars.calendarList.aboutParagraph1")}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" paragraph>
-                    For example, create a calendar for all small groups, youth events, or a whole church events calendar highlighting major events.
+                    {Locale.label("calendars.calendarList.aboutParagraph2")}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    You can create as many curated calendars as you like and add events from any group to any calendar.
+                    {Locale.label("calendars.calendarList.aboutParagraph3")}
                   </Typography>
                 </Box>
               </Stack>

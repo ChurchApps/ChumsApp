@@ -3,7 +3,7 @@ import { Icon, Menu, MenuItem } from "@mui/material";
 import { type PlanItemInterface } from "../../helpers";
 import { DraggableWrapper } from "../../components/DraggableWrapper";
 import { DroppableWrapper } from "../../components/DroppableWrapper";
-import { ApiHelper } from "@churchapps/apphelper";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 import { MarkdownPreviewLight } from "@churchapps/apphelper-markdown";
 
 interface Props {
@@ -242,10 +242,10 @@ export const PlanItem = React.memo((props: Props) => {
       {props.planItem?.itemType === "header" && !props.readOnly && (
         <Menu id="header-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
           <MenuItem onClick={addSong}>
-            <Icon style={{ marginRight: 10 }}>music_note</Icon> Song
+            <Icon style={{ marginRight: 10 }}>music_note</Icon> {Locale.label("plans.planItem.song")}
           </MenuItem>
           <MenuItem onClick={addItem}>
-            <Icon style={{ marginRight: 10 }}>format_list_bulleted</Icon> Item
+            <Icon style={{ marginRight: 10 }}>format_list_bulleted</Icon> {Locale.label("plans.planItem.item")}
           </MenuItem>
         </Menu>
       )}

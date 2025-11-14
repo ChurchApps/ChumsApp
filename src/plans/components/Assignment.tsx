@@ -53,7 +53,7 @@ export const Assignment = (props: Props) => {
           borderRadius: 2,
           fontWeight: 600,
         }}>
-        Auto Assign
+        {Locale.label("plans.assignment.autoAssign")}
       </Button>
       <Button
         variant="contained"
@@ -73,7 +73,7 @@ export const Assignment = (props: Props) => {
           borderRadius: 2,
           fontWeight: 600,
         }}>
-        Add Position
+        {Locale.label("plans.assignment.addPosition")}
       </Button>
     </Stack>
   ) : null;
@@ -198,7 +198,7 @@ export const Assignment = (props: Props) => {
                     borderRadius: 2,
                     fontWeight: 600,
                   }}>
-                  Save Notes
+                  {Locale.label("plans.assignment.saveNotes")}
                 </Button>
               )}
             </Stack>

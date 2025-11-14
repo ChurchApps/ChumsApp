@@ -69,7 +69,7 @@ export const ChurchesTab = () => {
     result.unshift(
       <tr>
         <th>{Locale.label("serverAdmin.adminPage.church")}</th>
-        <th>Location</th>
+        <th>{Locale.label("serverAdmin.adminPage.location")}</th>
         <th>{Locale.label("serverAdmin.adminPage.regist")}</th>
         <th>{Locale.label("serverAdmin.adminPage.act")}</th>
       </tr>

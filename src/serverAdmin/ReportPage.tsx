@@ -36,13 +36,13 @@ export const ReportPage = () => {
         breadcrumbs={[
           {
             href: "/admin",
-            text: "Server Admin",
+            text: Locale.label("serverAdmin.reportPage.serverAdmin"),
             icon: <BackIcon />,
           },
         ]}
         bgColor="error.main">
         <Chip
-          label="Admin Only"
+          label={Locale.label("serverAdmin.reportPage.adminOnly")}
           size="small"
           color="error"
           sx={{

@@ -54,11 +54,11 @@ export const ManageChurch = () => {
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   if (church.isLoading) return <Loading />;
-  if (!church.data) return <Typography>{Locale.label("settings.manageChurch.noData")}</Typography>;
+  if (!church.data) return <div>{Locale.label("settings.manageChurch.noData")}</div>;
 
   return (
     <>
-      <PageHeader icon={<SettingsIcon />} title={church.data?.name || "Church Management"} subtitle={church.data?.subDomain ? `${church.data.subDomain}.churchapps.org` : "Church Settings"}>
+      <PageHeader icon={<SettingsIcon />} title={church.data?.name || Locale.label("settings.manageChurch.title")} subtitle={church.data?.subDomain ? `${church.data.subDomain}.churchapps.org` : Locale.label("settings.manageChurch.subtitle")}>
         <Stack direction="row" spacing={1}>
           {UserHelper.checkAccess(Permissions.membershipApi.settings.edit) && (
             <IconButton
@@ -87,7 +87,7 @@ export const ManageChurch = () => {
                 color: selectedTab === "mobileApps" ? "primary.main" : "#FFF",
               },
             }}>
-            Mobile Apps
+            {Locale.label("settings.manageChurch.mobileApps")}
           </Button>
           <Button
             variant={selectedTab === "roles" ? "contained" : "outlined"}

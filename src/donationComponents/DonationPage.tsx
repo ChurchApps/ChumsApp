@@ -129,28 +129,28 @@ export const DonationPage: React.FC<Props> = (props) => {
           <Menu id="download-menu" anchorEl={anchorEl} open={open} onClose={handleClose} MenuListProps={{ "aria-labelledby": "download-button" }}>
             {current_year.length > 0 && (
               <MenuItem onClick={handleClose} dense>
-                <ExportLink data={current_year} filename="current_year_donations" customHeaders={customHeaders} text="Current Year (CSV)" icon="table_chart" />
+                <ExportLink data={current_year} filename="current_year_donations" customHeaders={customHeaders} text={Locale.label("donation.page.currentYearCsv")} icon="table_chart" />
               </MenuItem>
             )}
             {current_year.length > 0 && (
               <MenuItem onClick={handleClose} dense>
                 <Link href={"/donations/print/" + person?.id}>
                   <Button>
-                    <Icon>print</Icon> &nbsp; Current Year (PRINT)
+                    <Icon>print</Icon> &nbsp; {Locale.label("donation.page.currentYearPrint")}
                   </Button>
                 </Link>
               </MenuItem>
             )}
             {last_year.length > 0 && (
               <MenuItem onClick={handleClose} dense>
-                <ExportLink data={last_year} filename="last_year_donations" customHeaders={customHeaders} text="Last Year (CSV)" icon="table_chart" />
+                <ExportLink data={last_year} filename="last_year_donations" customHeaders={customHeaders} text={Locale.label("donation.page.lastYearCsv")} icon="table_chart" />
               </MenuItem>
             )}
             {last_year.length > 0 && (
               <MenuItem onClick={handleClose} dense>
                 <Link href={"/donations/print/" + person?.id + "?prev=1"}>
                   <Button>
-                    <Icon>print</Icon> &nbsp; Last Year (PRINT)
+                    <Icon>print</Icon> &nbsp; {Locale.label("donation.page.lastYearPrint")}
                   </Button>
                 </Link>
               </MenuItem>

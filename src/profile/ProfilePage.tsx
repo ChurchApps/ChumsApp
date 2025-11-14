@@ -83,7 +83,7 @@ export const ProfilePage = () => {
     },
     onError: (error) => {
       console.error("Error saving profile:", error);
-      setSaveMessage("An error occurred while saving your profile.");
+      setSaveMessage(Locale.label("profile.profilePage.saveError"));
     },
   });
 
@@ -157,7 +157,7 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <PageHeader icon={<PersonIcon />} title={Locale.label("profile.profilePage.profEdit")} subtitle="Manage your personal information and account settings" />
+      <PageHeader icon={<PersonIcon />} title={Locale.label("profile.profilePage.profEdit")} subtitle={Locale.label("profile.profilePage.subtitle")} />
 
       <Box sx={{ p: 3 }}>
         <Stack spacing={3}>
@@ -173,9 +173,9 @@ export const ProfilePage = () => {
           )}
 
           {/* Display mutation errors if any */}
-          {updateProfileMutation.error && <Alert severity="error">{updateProfileMutation.error.message || "An error occurred while saving your profile."}</Alert>}
+          {updateProfileMutation.error && <Alert severity="error">{updateProfileMutation.error.message || Locale.label("profile.profilePage.saveError")}</Alert>}
 
-          {deleteAccountMutation.error && <Alert severity="error">{deleteAccountMutation.error.message || "An error occurred while deleting your account."}</Alert>}
+          {deleteAccountMutation.error && <Alert severity="error">{deleteAccountMutation.error.message || Locale.label("profile.profilePage.deleteError")}</Alert>}
 
           {/* Display success message if any */}
           {saveMessage && <Alert severity="success">{saveMessage}</Alert>}
@@ -249,7 +249,7 @@ export const ProfilePage = () => {
 
                 <Box sx={{ pt: 2 }}>
                   <LoadingButton variant="contained" color="primary" loading={updateProfileMutation.isPending} onClick={handleSave}>
-                    Save Changes
+                    {Locale.label("profile.profilePage.saveChanges")}
                   </LoadingButton>
                 </Box>
               </Stack>

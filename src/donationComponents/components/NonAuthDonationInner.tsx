@@ -360,7 +360,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
                   />
                 </FormGroup>
               )}
-              <p>Total Donation Amount: ${total}</p>
+              <p>{Locale.label("donation.donationForm.totalAmount").replace("{}", CurrencyHelper.formatCurrency(total))}</p>
             </>
           )}
         </div>
