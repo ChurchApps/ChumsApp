@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, IconButton 
 } from "@mui/material";
-import { LibraryMusic as MusicIcon, Add as AddIcon, QueueMusic as ArrangementIcon, Edit as EditIcon } from "@mui/icons-material";
+import { LibraryMusic as MusicIcon, Add as AddIcon, QueueMusic as ArrangementIcon, Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { Arrangement } from "./components/Arrangement";
 import { SongSearchDialog } from "./SongSearchDialog";
 import { SongDetailsEdit } from "./components/SongDetailsEdit";
@@ -73,6 +73,14 @@ export const SongPage = memo(() => {
       }
     }
   }, [song, arrangements, songDetail, selectedArrangement?.id]);
+
+  const handleDeleteSong = useCallback(() => {
+    if (window.confirm(Locale.label("songs.deleteSong.confirm") || "Are you sure you want to delete this song from your library?")) {
+      ApiHelper.delete("/songs/" + song.data?.id, "ContentApi").then(() => {
+        window.location.href = "/plans/songs";
+      });
+    }
+  }, [song.data?.id]);
 
   const handleAdd = useCallback(
     async (songDetail: SongDetailInterface) => {
@@ -225,6 +233,20 @@ export const SongPage = memo(() => {
             }}
             size="small">
             <EditIcon fontSize="small" />
+          </IconButton>
+        )}
+        {canEdit && (
+          <IconButton
+            onClick={handleDeleteSong}
+            sx={{
+              color: "rgba(255,255,255,0.8)",
+              "&:hover": {
+                color: "#FFF",
+                backgroundColor: "rgba(255,255,255,0.1)",
+              },
+            }}
+            size="small">
+            <DeleteIcon fontSize="small" />
           </IconButton>
         )}
         {canEdit && (
