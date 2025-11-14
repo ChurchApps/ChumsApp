@@ -238,7 +238,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                   fullWidth
                   type="text"
                   name="meetingTime"
-                  placeholder="Tuesdays at 7pm"
+                  placeholder={Locale.label("groups.groupDetails.meetingTimePlaceholder")}
                   label={Locale.label("groups.groupDetailsEdit.meetingTime")}
                   value={group.meetingTime || ""}
                   onChange={handleChange}
@@ -253,7 +253,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                 fullWidth
                 type="text"
                 name="meetingLocation"
-                placeholder="Johnson Home"
+                placeholder={Locale.label("groups.groupDetails.locationPlaceholder")}
                 label={Locale.label("groups.groupDetailsEdit.meetingLocation")}
                 value={group.meetingLocation || ""}
                 onChange={handleChange}
@@ -342,7 +342,7 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
                     value={group.slug || ""}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
-                    placeholder="group-name"
+                    placeholder={Locale.label("groups.groupDetails.slugPlaceholder")}
                     data-testid="group-slug-input"
                     aria-label="Group slug"
                   />

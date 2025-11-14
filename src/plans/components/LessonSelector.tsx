@@ -11,7 +11,7 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import { ApiHelper } from "@churchapps/apphelper";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   open: boolean;
@@ -184,7 +184,7 @@ export const LessonSelector: React.FC<Props> = ({ open, onClose, onSelect }) => 
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>{Locale.label("common.cancel")}</Button>
         <Button onClick={handleSelect} disabled={!selectedVenue} variant="contained">
           Associate Lesson
         </Button>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Dialog } from "@mui/material";
-import { DisplayBox, ApiHelper } from "@churchapps/apphelper";
+import { DisplayBox, ApiHelper, Locale } from "@churchapps/apphelper";
 import type { BlockInterface } from "../../../helpers";
 import { AddableElement } from "../AddableElement";
 
@@ -32,7 +32,7 @@ export function ElementAdd(props: Props) {
   return (
     <Dialog open={true} onClose={props.updateCallback} fullWidth maxWidth="md">
       <div>
-        <DisplayBox id="dialogForm" headerText="Add" headerIcon="article" editContent={<a href="about:blank" onClick={e => { e.preventDefault(); props.updateCallback() }}>Close</a>}>
+        <DisplayBox id="dialogForm" headerText={Locale.label("common.add")} headerIcon="article" editContent={<a href="about:blank" onClick={e => { e.preventDefault(); props.updateCallback() }}>{Locale.label("common.close")}</a>}>
           <p>Drag and drop onto page<br /></p>
 
           <Grid container spacing={0}>
@@ -74,7 +74,7 @@ export function ElementAdd(props: Props) {
             <Grid size={3}>
               <Grid container spacing={0.5}>
                 <AddableElement dndType="element" elementType="logo" icon="home_app_logo" label="Logo" draggingCallback={props.draggingCallback} />
-                <AddableElement dndType="element" elementType="sermons" icon="video_library" label="Sermons" draggingCallback={props.draggingCallback} />
+                <AddableElement dndType="element" elementType="sermons" icon="video_library" label={Locale.label("common.sermons")} draggingCallback={props.draggingCallback} />
                 <AddableElement dndType="element" elementType="stream" icon="live_tv" label="Stream" draggingCallback={props.draggingCallback} />
                 <AddableElement dndType="element" elementType="donation" icon="volunteer_activism" label="Donation" draggingCallback={props.draggingCallback} />
                 <AddableElement dndType="element" elementType="donateLink" icon="link" label="Donate Link" draggingCallback={props.draggingCallback} />

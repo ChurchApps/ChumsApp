@@ -3,6 +3,7 @@ import type { SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { RowMobileSizes } from "./RowMobileSizes";
 import { RowMobileOrder } from "./RowMobileOrder";
+import { Locale } from "@churchapps/apphelper";
 
 type Props = {
   parsedData: any;
@@ -104,7 +105,7 @@ export function RowEdit(props: Props) {
 
 
     return (<>
-      <div><b>Custom</b> - <small>Numbers represent twelfths of page.</small></div>
+      <div><b>{Locale.label("common.custom")}</b> - <small>{Locale.label("site.row.columnsHelper")}</small></div>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -148,7 +149,7 @@ export function RowEdit(props: Props) {
           <MenuItem value="6,6">Halves</MenuItem>
           <MenuItem value="4,4,4">Thirds</MenuItem>
           <MenuItem value="3,3,3,3">Quarters</MenuItem>
-          <MenuItem value="custom">Custom</MenuItem>
+          <MenuItem value="custom">{Locale.label("common.custom")}</MenuItem>
         </Select>
       </FormControl>
       {(commonValue === "custom") && getCustomSizes()}

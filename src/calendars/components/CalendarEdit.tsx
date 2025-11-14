@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ApiHelper, UserHelper } from "@churchapps/apphelper";
+import { ApiHelper, UserHelper, Locale } from "@churchapps/apphelper";
 import { Permissions, type CuratedCalendarInterface } from "@churchapps/helpers";
 import {
   Box,
@@ -81,7 +81,7 @@ export function CalendarEdit(props: Props) {
       return;
     }
 
-    if (window.confirm("Are you sure you wish to permanently delete this calendar?")) {
+    if (window.confirm(Locale.label("calendars.calendarEdit.confirmDelete"))) {
       setDeleting(true);
       ApiHelper.delete("/curatedCalendars/" + calendar?.id?.toString(), "ContentApi").then(() => {
         setDeleting(false);
@@ -142,14 +142,14 @@ export function CalendarEdit(props: Props) {
 
           <TextField
             fullWidth
-            label="Calendar Name"
+            label={Locale.label("calendars.calendarEdit.calendarName")}
             name="name"
             value={calendar.name || ''}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             data-testid="calendar-name-input"
             aria-label="Calendar name"
-            placeholder="Enter a name for this calendar"
+            placeholder={Locale.label("calendars.calendarEdit.namePlaceholder")}
             variant="outlined"
           />
 

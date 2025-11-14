@@ -1,6 +1,6 @@
-import { ApiHelper, DateHelper, DisplayBox } from "@churchapps/apphelper";
+import { ApiHelper, DateHelper, DisplayBox, Locale } from "@churchapps/apphelper";
 import {
-  Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField 
+  Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField
 } from "@mui/material";
 import React from "react";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
@@ -71,7 +71,7 @@ export const TranslationTab = () => {
 
   return (
     <>
-      <DisplayBox headerIcon="summarize" headerText="Bible Translation Lookups">
+      <DisplayBox headerIcon="summarize" headerText={Locale.label("serverAdmin.translation.title")}>
         <div>
           <div style={{ fontSize: 18, marginBottom: 15 }}>
             <Grid container alignItems="center">

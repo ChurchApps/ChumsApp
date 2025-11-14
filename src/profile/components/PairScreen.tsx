@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import { ApiHelper, ErrorMessages, InputBox } from "@churchapps/apphelper";
+import { ApiHelper, ErrorMessages, InputBox, Locale } from "@churchapps/apphelper";
 
 interface Props {
   updatedFunction: () => void;
@@ -39,7 +39,7 @@ export const PairScreen = (props: Props) => {
   return (
     <>
       <ErrorMessages errors={errors} />
-      <InputBox headerText="Add Screen" headerIcon="tv" saveFunction={handleSave} cancelFunction={props.updatedFunction}>
+      <InputBox headerText={Locale.label("profile.devices.addScreen")} headerIcon="tv" saveFunction={handleSave} cancelFunction={props.updatedFunction}>
         <TextField fullWidth label="Pairing Code" id="code" name="code" type="text" value={code} onChange={handleChange} />
       </InputBox>
     </>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Resizer from "react-image-file-resizer";
 import { Box, Typography, Stack, Button, Card, CardContent, alpha } from "@mui/material";
 import { Image as ImageIcon, CloudUpload as CloudUploadIcon, Edit as EditIcon } from "@mui/icons-material";
-import { ArrayHelper, ApiHelper, ImageEditor } from "@churchapps/apphelper";
+import { ArrayHelper, ApiHelper, ImageEditor, Locale } from "@churchapps/apphelper";
 import { CardWithHeader, LoadingButton } from "../../components/ui";
 import type { GenericSettingInterface } from "@churchapps/helpers";
 
@@ -204,7 +204,7 @@ export function AppearanceEdit(props: Props) {
             </Box>
           </Stack>
           <Stack direction="row" spacing={1}>
-            <Button variant="outlined" onClick={handleCancel} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>Cancel</Button>
+            <Button variant="outlined" onClick={handleCancel} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>{Locale.label("common.cancel")}</Button>
             <LoadingButton loading={isSubmitting} loadingText="Saving..." variant="contained" onClick={handleSave} sx={{ backgroundColor: "#FFF", color: "var(--c1l2)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }} data-testid="save-appearance-button">Save Changes</LoadingButton>
           </Stack>
         </Stack>

@@ -13,6 +13,7 @@ import {
   Pagination
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
+import { Locale } from "@churchapps/apphelper";
 import { IconNamesList } from "./IconNamesList";
 
 interface Props {
@@ -135,8 +136,8 @@ export const IconPicker: React.FC<Props> = (props) => {
           {/* Search Field */}
           <TextField
             fullWidth
-            label="Search Icons"
-            placeholder="Type to search (e.g., person, home, church)..."
+            label={Locale.label("common.iconPicker.searchLabel")}
+            placeholder={Locale.label("common.iconPicker.searchPlaceholder")}
             value={searchText}
             onChange={handleSearchChange}
             size="small"

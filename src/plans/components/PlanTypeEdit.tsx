@@ -55,7 +55,7 @@ export const PlanTypeEdit: React.FC<Props> = ({ planType, onClose }) => {
           
           <InputBox
             headerIcon="assignment"
-            headerText="Plan Type Details">
+            headerText={Locale.label("plans.planType.details")}>
             <TextField
               fullWidth
               label="Plan Type Name"

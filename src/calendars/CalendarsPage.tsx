@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ApiHelper, UserHelper, Loading, PageHeader } from "@churchapps/apphelper";
+import { ApiHelper, UserHelper, Loading, PageHeader, Locale } from "@churchapps/apphelper";
 import { Permissions, type CuratedCalendarInterface } from "@churchapps/helpers";
 import { useNavigate } from "react-router-dom";
 import {
@@ -88,7 +88,7 @@ export const CalendarsPage = () => {
         <TableCell>
           <Chip
             icon={<EventIcon />}
-            label="Active"
+            label={Locale.label("calendars.calendarList.active")}
             size="small"
             sx={{
               backgroundColor: '#e8f5e9',

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Card, Chip, Grid, Icon, IconButton, Stack, Switch, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
 import { Add as AddIcon, Article as ArticleIcon, ChevronRight as ChevronRightIcon, Description as DescriptionIcon, Edit as EditIcon, ExpandMore as ExpandMoreIcon, Public as PublicIcon, Transform as TransformIcon, Visibility as VisibilityIcon } from "@mui/icons-material";
-import { ApiHelper, ErrorMessages, PageHeader, SmallButton, UserHelper } from "@churchapps/apphelper";
+import { ApiHelper, ErrorMessages, PageHeader, SmallButton, UserHelper, Locale } from "@churchapps/apphelper";
 import { useWindowWidth } from "@react-hook/window-size";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AddPageModal, NavLinkEdit } from "./components";
@@ -42,8 +42,8 @@ export const PagesPage = () => {
         <TableRow key={item.url} sx={{ '&:hover': { backgroundColor: 'action.hover' }, transition: 'background-color 0.2s ease' }}>
           <TableCell sx={{ width: 120 }}>
             {item.custom
-              ? (<Button variant="outlined" size="small" startIcon={<EditIcon />} onClick={() => { navigate("/site/pages/preview/" + item.pageId) }} data-testid="edit-page-button" sx={{ textTransform: 'none', minWidth: 'auto', fontSize: '0.75rem' }}>Edit</Button>)
-              : (<Button variant="outlined" size="small" startIcon={<TransformIcon />} onClick={() => { if (confirm("Would you like to convert this auto-generated page to a custom page?")) { setRequestedSlug(item.url); setAddMode("unlinked"); } }} color="secondary" data-testid="convert-page-button" sx={{ textTransform: 'none', minWidth: 'auto', fontSize: '0.75rem' }}>Convert</Button>)}
+              ? (<Button variant="outlined" size="small" startIcon={<EditIcon />} onClick={() => { navigate("/site/pages/preview/" + item.pageId) }} data-testid="edit-page-button" sx={{ textTransform: 'none', minWidth: 'auto', fontSize: '0.75rem' }}>{Locale.label("common.edit")}</Button>)
+              : (<Button variant="outlined" size="small" startIcon={<TransformIcon />} onClick={() => { if (confirm(Locale.label("site.pagesPage.confirmConvert"))) { setRequestedSlug(item.url); setAddMode("unlinked"); } }} color="secondary" data-testid="convert-page-button" sx={{ textTransform: 'none', minWidth: 'auto', fontSize: '0.75rem' }}>{Locale.label("site.pages.convert")}</Button>)}
           </TableCell>
           <TableCell>
             <Stack direction="row" alignItems="center" spacing={1}>

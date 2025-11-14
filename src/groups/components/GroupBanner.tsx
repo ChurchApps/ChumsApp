@@ -1,5 +1,5 @@
 import { type GroupInterface, type GroupServiceTimeInterface } from "@churchapps/helpers";
-import { UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
+import { UserHelper, Permissions, ApiHelper, Locale } from "@churchapps/apphelper";
 import { Typography, Chip, IconButton, Stack, Box } from "@mui/material";
 import {
   Edit as EditIcon,
@@ -41,7 +41,7 @@ export const GroupBanner = memo((props: Props) => {
     if (group.tags.indexOf("team") > -1) {
       return (
         <Chip
-          label="Team"
+          label={Locale.label("groups.groupBanner.team")}
           size="small"
           sx={{
             backgroundColor: "#e3f2fd",

@@ -1,6 +1,6 @@
 import React from "react";
 import { type PersonInterface } from "@churchapps/helpers";
-import { ApiHelper, DisplayBox, ErrorMessages } from "@churchapps/apphelper";
+import { ApiHelper, DisplayBox, ErrorMessages, Locale } from "@churchapps/apphelper";
 import { Button, TextField, Typography } from "@mui/material";
 import { B1AdminPersonHelper } from "../../helpers";
 
@@ -33,14 +33,14 @@ export const AISearch = (props: Props) => {
   };
 
   return (
-    <DisplayBox headerText="AI Search" headerIcon="person_search">
+    <DisplayBox headerText={Locale.label("people.aiSearch.title")} headerIcon="person_search">
       <ErrorMessages errors={errors} />
       <TextField
         fullWidth
         multiline
         minRows={4}
         maxRows={6}
-        placeholder="Show me men over 30 with birthdays in July"
+        placeholder={Locale.label("people.aiSearch.placeholder")}
         value={text}
         onChange={(e) => {
           setText(e.target.value);

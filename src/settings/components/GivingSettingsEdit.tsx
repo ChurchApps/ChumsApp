@@ -52,7 +52,7 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
             <TextField fullWidth name="publicKey" label={publicLabel} value={publicKey} onChange={handleChange} />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField fullWidth name="privateKey" label={privateLabel} value={privateKey} placeholder="********" type="password" onChange={handleChange} />
+            <TextField fullWidth name="privateKey" label={privateLabel} value={privateKey} placeholder={Locale.label("settings.giving.secretPlaceholder")} type="password" onChange={handleChange} />
           </Grid>
           <Grid size={{ xs: 12 }}>
             <Stack direction="row" alignItems="center">
@@ -145,14 +145,14 @@ export const GivingSettingsEdit: React.FC<Props> = (props) => {
         {provider === "Stripe" && (
           <Grid size={{ xs: 12 }}>
             <Typography variant="body2" color="textSecondary" component="div">
-              Visit <a href="https://dashboard.stripe.com/" target="_blank" rel="noopener noreferrer">Stripe Dashboard</a> and go to <strong>Developers → API keys</strong> to copy your Publishable and Secret keys (test & live).
+              {Locale.label("settings.givingSettingsEdit.stripeVisit")} <a href="https://dashboard.stripe.com/" target="_blank" rel="noopener noreferrer">{Locale.label("settings.givingSettingsEdit.stripeDashboard")}</a> {Locale.label("settings.givingSettingsEdit.stripeGoTo")} <strong>{Locale.label("settings.givingSettingsEdit.developersApiKeys")}</strong> {Locale.label("settings.givingSettingsEdit.stripeCopyKeys")}
             </Typography>
           </Grid>
         )}
         {provider === "Paypal" && (
           <Grid size={{ xs: 12 }}>
             <Typography variant="body2" color="textSecondary" component="div">
-              Go to <a href="https://developer.paypal.com/" target="_blank" rel="noopener noreferrer">PayPal Developer</a>, log in, then under <strong>API Credentials</strong> create an app to get your Client ID and Secret.
+              {Locale.label("settings.givingSettingsEdit.paypalGoTo")} <a href="https://developer.paypal.com/" target="_blank" rel="noopener noreferrer">{Locale.label("settings.givingSettingsEdit.paypalDeveloper")}</a>, {Locale.label("settings.givingSettingsEdit.paypalLogin")} <strong>{Locale.label("settings.givingSettingsEdit.apiCredentials")}</strong> {Locale.label("settings.givingSettingsEdit.paypalCreateApp")}
             </Typography>
           </Grid>
         )}

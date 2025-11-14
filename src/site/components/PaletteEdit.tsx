@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Grid, TextField, Box, Typography, Card, CardContent, Stack, Button, alpha } from "@mui/material";
 import { Palette as PaletteIcon, Visibility as VisibilityIcon, ColorLens as ColorLensIcon } from "@mui/icons-material";
+import { Locale } from "@churchapps/apphelper";
 import type { GlobalStyleInterface } from "../../helpers/Interfaces";
 import { CardWithHeader, LoadingButton } from "../../components/ui";
 
@@ -177,7 +178,7 @@ export function PaletteEdit(props: Props) {
             </Box>
           </Stack>
           <Stack direction="row" spacing={1}>
-            <Button variant="outlined" onClick={() => props.updatedFunction(null)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>Cancel</Button>
+            <Button variant="outlined" onClick={() => props.updatedFunction(null)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>{Locale.label("common.cancel")}</Button>
             <LoadingButton loading={isSubmitting} loadingText="Saving..." variant="contained" onClick={handleSave} sx={{ backgroundColor: "#FFF", color: "var(--c1l2)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }} data-testid="save-palette-button">Save Palette</LoadingButton>
           </Stack>
         </Stack>

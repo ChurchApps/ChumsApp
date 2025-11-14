@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ErrorMessages, InputBox, UserHelper, SlugHelper, ApiHelper } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, UserHelper, SlugHelper, ApiHelper, Locale } from "@churchapps/apphelper";
 import { Permissions, type LinkInterface } from "@churchapps/helpers";
 import { Button, Dialog, Grid, Icon, InputLabel, type SelectChangeEvent, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -108,7 +108,7 @@ export function AddPageModal(props: Props) {
     const l = { ...link };
     const churchName = UserHelper.currentUserChurch.church.name || "";
     switch (template) {
-      case "sermons": p.title = "View Sermons"; l.text = "Sermons"; break;
+      case "sermons": p.title = Locale.label("site.templates.viewSermons"); l.text = Locale.label("common.sermons"); break;
       case "about": p.title = "About " + churchName; l.text = "About Us"; break;
       case "donate": p.title = "Support " + churchName; l.text = "Donate"; break;
       case "location": p.title = "Directions to " + churchName; l.text = "Location"; break;
@@ -133,15 +133,15 @@ export function AddPageModal(props: Props) {
   else return (
 
     <Dialog open={true} onClose={props.onDone} className="dialogForm">
-      <InputBox id="dialogForm" headerText={(pageTemplate === "link") ? "New Link" : "New Page"} headerIcon="article" saveFunction={handleSave} cancelFunction={handleCancel} data-testid="add-page-modal" isSubmitting={isSubmitting}>
+      <InputBox id="dialogForm" headerText={(pageTemplate === "link") ? Locale.label("site.addPage.newLink") : Locale.label("site.addPage.newPage")} headerIcon="article" saveFunction={handleSave} cancelFunction={handleCancel} data-testid="add-page-modal" isSubmitting={isSubmitting}>
         <ErrorMessages errors={errors} />
 
-        <InputLabel>Page Type</InputLabel>
+        <InputLabel>{Locale.label("site.addPage.pageType")}</InputLabel>
 
 
         <Grid container spacing={2}>
           {getTemplateButton("blank", "article", "Blank")}
-          {getTemplateButton("sermons", "subscriptions", "Sermons")}
+          {getTemplateButton("sermons", "subscriptions", Locale.label("common.sermons"))}
           {getTemplateButton("about", "quiz", "About Us")}
           {getTemplateButton("donate", "volunteer_activism", "Donate")}
           {getTemplateButton("location", "location_on", "Location")}

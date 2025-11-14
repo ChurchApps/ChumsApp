@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, Typography, Button, Box, Chip, Avatar } from "@mui/material";
 import { Icon } from "@mui/material";
 import { type SessionInterface } from "@churchapps/helpers";
-import { DateHelper } from "@churchapps/apphelper";
+import { DateHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   session: SessionInterface;
@@ -62,7 +62,7 @@ export const SessionCard: React.FC<Props> = ({
           <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
             {getSessionTitle()}
           </Typography>
-          {isSelected && <Chip label="Active" color="primary" size="small" variant="outlined" />}
+          {isSelected && <Chip label={Locale.label("groups.sessionCard.active")} color="primary" size="small" variant="outlined" />}
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>

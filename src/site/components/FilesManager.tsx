@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { FileInterface } from "../../helpers/Interfaces";
 import { FileUpload } from "../../components/FileUpload";
 import { Box, Grid, Table, TableBody, TableCell, TableHead, TableRow, Typography, Stack, LinearProgress } from "@mui/material";
-import { InputBox, ApiHelper, SmallButton } from "@churchapps/apphelper";
+import { InputBox, ApiHelper, SmallButton, Locale } from "@churchapps/apphelper";
 import { Folder as FolderIcon, InsertDriveFile as FileIcon } from "@mui/icons-material";
 import { CardWithHeader, EmptyState } from "../../components/ui";
 
@@ -27,7 +27,7 @@ export function FilesManager() {
   };
 
   const handleDelete = async (file: FileInterface) => {
-    if (confirm("Are you sure you wish to delete '" + file.fileName + "'?")) {
+    if (confirm(Locale.label("site.files.confirmDelete") + " '" + file.fileName + "'?")) {
       await ApiHelper.delete("/files/" + file.id, "ContentApi");
       loadData();
     }
@@ -129,10 +129,10 @@ export function FilesManager() {
           </CardWithHeader>
         </Grid>
         <Grid size={{ md: 4, xs: 12 }}>
-          <InputBox headerIcon="cloud_upload" headerText="Upload Files" saveFunction={handleSave} saveText="Upload" data-testid="file-upload-inputbox">
+          <InputBox headerIcon="cloud_upload" headerText={Locale.label("site.files.uploadFiles")} saveFunction={handleSave} saveText={Locale.label("site.files.upload")} data-testid="file-upload-inputbox">
             {getStorage()}
             <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
-              100 MB of storage space is provided for free for storing PDFs and other documents commonly needed for church websites. We suggest using Google Drive or Dropbox to store files if additional space is needed.
+              {Locale.label("site.files.storageInfo")}
             </Typography>
             {usedSpace < 100000000 && (
               <Box sx={{

@@ -23,7 +23,7 @@ import {
 } from "@mui/icons-material";
 import type { LinkInterface } from "@churchapps/helpers";
 import { IconPicker } from "../../components/iconPicker";
-import { ApiHelper, UniqueIdHelper, ArrayHelper } from "@churchapps/apphelper";
+import { ApiHelper, UniqueIdHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { CardWithHeader, LoadingButton } from "../../components/ui";
 
 interface PageInterface {
@@ -81,7 +81,7 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
   }, [currentTab]);
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to delete this tab?")) {
+    if (window.confirm(Locale.label("settings.app.confirmDeleteTab"))) {
       ApiHelper.delete("/links/" + currentTab.id, "ContentApi").then(() => {
         setCurrentTab(null);
         updatedFunction();
@@ -173,7 +173,7 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
                     </IconButton>
                   )
                 }}
-                helperText="Choose a descriptive name for your tab"
+                helperText={Locale.label("settings.app.tabNameHelper")}
               />
 
               {/* Tab Type */}
@@ -209,7 +209,7 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
                   type="url"
                   value={currentTab?.url || ""}
                   onChange={handleChange}
-                  helperText="Enter the full URL (e.g., https://example.com)"
+                  helperText={Locale.label("settings.app.urlHelper")}
                 />
               )}
 

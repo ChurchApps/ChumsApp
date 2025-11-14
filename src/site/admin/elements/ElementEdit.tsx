@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense, lazy } from "react";
 import type { SelectChangeEvent } from "@mui/material";
 import type { AnimationsInterface, BlockInterface, ElementInterface, GlobalStyleInterface, InlineStylesInterface } from "../../../helpers";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Checkbox, FormGroup, FormControlLabel, Typography, Slider, Dialog } from "@mui/material";
-import { ErrorMessages, InputBox, ApiHelper, ArrayHelper, GalleryModal } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, ApiHelper, ArrayHelper, GalleryModal, Locale } from "@churchapps/apphelper";
 import React from "react";
 
 const HtmlEditorLazy = lazy(() => import("@churchapps/apphelper-markdown").then((mod) => ({ default: mod.HtmlEditor })));
@@ -125,15 +125,15 @@ export function ElementEdit(props: Props) {
     <FormControl fullWidth>
       <InputLabel>{label}</InputLabel>
       <Select fullWidth size="small" label="Text Alignment" name={fieldName} value={parsedData[fieldName] || "left"} onChange={handleChange} data-testid={`text-alignment-${fieldName}-select`} aria-label={`Select ${label.toLowerCase()}`}>
-        <MenuItem value="left" data-testid="text-align-left" aria-label="Align left">Left</MenuItem>
-        <MenuItem value="center" data-testid="text-align-center" aria-label="Align center">Center</MenuItem>
-        <MenuItem value="right" data-testid="text-align-right" aria-label="Align right">Right</MenuItem>
+        <MenuItem value="left" data-testid="text-align-left" aria-label="Align left">{Locale.label("common.left")}</MenuItem>
+        <MenuItem value="center" data-testid="text-align-center" aria-label="Align center">{Locale.label("common.center")}</MenuItem>
+        <MenuItem value="right" data-testid="text-align-right" aria-label="Align right">{Locale.label("common.right")}</MenuItem>
       </Select>
     </FormControl>
   )
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to permanently delete this element?")) {
+    if (window.confirm(Locale.label("site.elements.confirmDelete"))) {
       ApiHelper.delete("/elements/" + element.id.toString(), "ContentApi").then(() => props.updatedCallback(null));
     }
   };
@@ -187,10 +187,10 @@ export function ElementEdit(props: Props) {
     <FormControl fullWidth>
       <InputLabel>Photo Position</InputLabel>
       <Select fullWidth size="small" label="Photo Position" name="photoPosition" value={parsedData.photoPosition || ""} onChange={handleChange} data-testid="photo-position-select" aria-label="Select photo position">
-        <MenuItem value="left" data-testid="photo-position-left" aria-label="Position photo on left">Left</MenuItem>
-        <MenuItem value="right" data-testid="photo-position-right" aria-label="Position photo on right">Right</MenuItem>
-        <MenuItem value="top" data-testid="photo-position-top" aria-label="Position photo on top">Top</MenuItem>
-        <MenuItem value="bottom" data-testid="photo-position-bottom" aria-label="Position photo on bottom">Bottom</MenuItem>
+        <MenuItem value="left" data-testid="photo-position-left" aria-label="Position photo on left">{Locale.label("common.left")}</MenuItem>
+        <MenuItem value="right" data-testid="photo-position-right" aria-label="Position photo on right">{Locale.label("common.right")}</MenuItem>
+        <MenuItem value="top" data-testid="photo-position-top" aria-label="Position photo on top">{Locale.label("common.top")}</MenuItem>
+        <MenuItem value="bottom" data-testid="photo-position-bottom" aria-label="Position photo on bottom">{Locale.label("common.bottom")}</MenuItem>
       </Select>
     </FormControl>
     {getTextAlignment("textAlignment")}
@@ -270,7 +270,7 @@ export function ElementEdit(props: Props) {
   const getIframeFields = () => (
     <>
       <TextField fullWidth size="small" label="Source" name="iframeSrc" value={parsedData.iframeSrc || ""} onChange={handleChange} />
-      <TextField fullWidth size="small" label="Height (px)" name="iframeHeight" value={parsedData.iframeHeight || ""} placeholder="1000" onChange={handleChange} />
+      <TextField fullWidth size="small" label="Height (px)" name="iframeHeight" value={parsedData.iframeHeight || ""} placeholder={Locale.label("site.elements.heightPlaceholder")} onChange={handleChange} />
     </>
   )
 
@@ -338,8 +338,8 @@ export function ElementEdit(props: Props) {
 
   const getMapFields = () => (
     <>
-      <TextField fullWidth size="small" label="Address" name="mapAddress" onChange={handleChange} value={parsedData.mapAddress || ""} helperText="ex: City Hall, New York, NY" />
-      <TextField fullWidth size="small" label="Label" name="mapLabel" onChange={handleChange} value={parsedData.mapLabel || ""} helperText="ex: First Baptist Church" />
+      <TextField fullWidth size="small" label="Address" name="mapAddress" onChange={handleChange} value={parsedData.mapAddress || ""} helperText={Locale.label("site.elements.addressHelper")} />
+      <TextField fullWidth size="small" label="Label" name="mapLabel" onChange={handleChange} value={parsedData.mapLabel || ""} helperText={Locale.label("site.elements.nameHelper")} />
       <Typography fontSize="13px" sx={{ marginTop: 1 }}>Zoom-level</Typography>
       <Slider defaultValue={15} valueLabelDisplay="auto" step={1} min={8} max={20} name="mapZoom" value={parsedData?.mapZoom || 15} onChange={(e: any) => handleChange(e)} />
       <Typography fontSize="12px" fontStyle="italic">Ex: 0(the whole world) & 21(individual buildings)</Typography>
@@ -348,7 +348,7 @@ export function ElementEdit(props: Props) {
 
   const getGroupListFields = () => (
     <>
-      <TextField fullWidth size="small" label="Label" name="label" onChange={handleChange} value={parsedData.label || ""} helperText="ex: Small Groups, Sunday School" />
+      <TextField fullWidth size="small" label="Label" name="label" onChange={handleChange} value={parsedData.label || ""} helperText={Locale.label("site.elements.categoriesHelper")} />
     </>
   )
 
@@ -385,9 +385,9 @@ export function ElementEdit(props: Props) {
       <FormControl fullWidth sx={{ marginTop: 2 }}>
         <InputLabel>Image Alignment</InputLabel>
         <Select fullWidth size="small" label="Image Alignment" name="imageAlign" value={parsedData.imageAlign || "left"} onChange={handleChange}>
-          <MenuItem value="left">Left</MenuItem>
-          <MenuItem value="center">Center</MenuItem>
-          <MenuItem value="right">Right</MenuItem>
+          <MenuItem value="left">{Locale.label("common.left")}</MenuItem>
+          <MenuItem value="center">{Locale.label("common.center")}</MenuItem>
+          <MenuItem value="right">{Locale.label("common.right")}</MenuItem>
         </Select>
       </FormControl>
       {getAppearanceFields(["border", "background", "color", "height", "margin", "padding", "width"])}
@@ -489,7 +489,7 @@ export function ElementEdit(props: Props) {
 
   const handleDuplicate = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (confirm("Are you sure you wish to make a copy of this element and all of it's children?")) {
+    if (confirm(Locale.label("site.elements.confirmDuplicate"))) {
       ApiHelper.post("/elements/duplicate/" + props.element.id, {}, "ContentApi").then((data: any) => {
         props.updatedCallback(data);
       });
@@ -499,7 +499,7 @@ export function ElementEdit(props: Props) {
   if (!element) return <></>
   else return (
     <Dialog open={true} onClose={handleCancel} fullWidth maxWidth="md" id="elementEditDialog">
-      <InputBox id="dialogForm" headerText="Edit Element" headerIcon="school" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} headerActionContent={(props.element.id && <a href="about:blank" onClick={handleDuplicate}>Duplicate</a>)} data-testid="edit-element-inputbox">
+      <InputBox id="dialogForm" headerText={Locale.label("site.elements.editElement")} headerIcon="school" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} headerActionContent={(props.element.id && <a href="about:blank" onClick={handleDuplicate}>{Locale.label("common.duplicate")}</a>)} data-testid="edit-element-inputbox">
         <div id="dialogFormContent">
           {(element?.elementType === "block") ? getBlockFields() : getStandardFields()}
         </div>

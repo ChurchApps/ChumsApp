@@ -1,6 +1,6 @@
 import { TableHead, Table, TableCell, TableRow, TableBody } from "@mui/material";
 import React, { useState } from "react";
-import { ApiHelper, ErrorMessages, Banner, DisplayBox, DateHelper, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, ErrorMessages, Banner, DisplayBox, DateHelper, SmallButton, Locale } from "@churchapps/apphelper";
 import { PairScreen } from "./components/PairScreen";
 import { DeviceEdit } from "./components/DeviceEdit";
 
@@ -66,7 +66,7 @@ export const DevicesPage = () => {
           />
         )}
         <ErrorMessages errors={errors} />
-        <DisplayBox headerText="Devices" headerIcon="tv" editContent={editContent}>
+        <DisplayBox headerText={Locale.label("profile.devices.title")} headerIcon="tv" editContent={editContent}>
           <Table>
             <TableHead>
               <TableRow>

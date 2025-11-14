@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { SelectChangeEvent } from "@mui/material";
 import type { GlobalStyleInterface } from '../../../helpers';
-import { GalleryModal } from "@churchapps/apphelper";
+import { GalleryModal, Locale } from "@churchapps/apphelper";
 import { FormControl, InputLabel, Select, MenuItem, TextField, Tabs, Tab, Button, Grid } from '@mui/material';
 import { SliderPicker } from 'react-color';
 
@@ -126,7 +126,7 @@ export function PickColors(props: Props) {
         <Button variant="contained" onClick={() => setSelectPhotoField("photo")} data-testid="select-photo-button">Select photo</Button>
         {props?.onChange && (
           <TextField fullWidth size="small" label="Background Opacity" name="backgroundOpacity" value={props?.backgroundOpacity || "0.55"} onChange={props.onChange}
-            type="number" sx={{ marginTop: 2 }} helperText={<>The opacity of black gradient layer on top of the image.<br />Max value: 1</>} FormHelperTextProps={{ sx: { marginLeft: 1 } }} InputProps={{ inputProps: { min: "0", max: "1", step: "1" } }}
+            type="number" sx={{ marginTop: 2 }} helperText={Locale.label("site.pickColors.opacityHelper")} FormHelperTextProps={{ sx: { marginLeft: 1 } }} InputProps={{ inputProps: { min: "0", max: "1", step: "1" } }}
           />
         )}
       </>)
@@ -217,11 +217,11 @@ export function PickColors(props: Props) {
     <Grid size={{ xs: 6 }}>
 
       <div style={{marginBottom:20}}><b>Content</b></div>
-      <div><InputLabel>Heading Color</InputLabel></div>
+      <div><InputLabel>{Locale.label("site.pickColors.headingColor")}</InputLabel></div>
       {getThemeOptions("headingColor")}
-      <div><InputLabel>Text Color</InputLabel></div>
+      <div><InputLabel>{Locale.label("site.pickColors.textColor")}</InputLabel></div>
       {getThemeOptions("textColor")}
-      <div><InputLabel>Link Color</InputLabel></div>
+      <div><InputLabel>{Locale.label("site.pickColors.linkColor")}</InputLabel></div>
       {getThemeOptions("linkColor")}
     </Grid>
   </Grid>)
@@ -237,7 +237,7 @@ export function PickColors(props: Props) {
     <div style={{display:"block", backgroundColor:props.background, color:props.textColor, border:"1px solid " + props.textColor, borderRadius:5, padding:5, marginBottom:10 }}>Sample Text</div>
     <Tabs value={tabValue} onChange={(event: React.SyntheticEvent, newValue: string) => setTabValue(newValue)}>
       <Tab value="suggested" label="Suggested" />
-      <Tab value="custom" label="Custom" />
+      <Tab value="custom" label={Locale.label("common.custom")} />
     </Tabs>
     <div style={{ marginTop: 10 }}>
       {currentTab}

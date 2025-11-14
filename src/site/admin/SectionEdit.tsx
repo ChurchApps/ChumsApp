@@ -1,6 +1,6 @@
 import type { SelectChangeEvent } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { ErrorMessages, InputBox, ApiHelper, ArrayHelper } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, ApiHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
 import type { AnimationsInterface, BlockInterface, GlobalStyleInterface, SectionInterface } from "../../helpers";
 import { Button, Dialog, FormControl, Icon, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { PickColors } from "./elements/PickColors";
@@ -60,7 +60,7 @@ export function SectionEdit(props: Props) {
   };
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to permanently delete this section?")) {
+    if (window.confirm(Locale.label("site.section.confirmDelete"))) {
       ApiHelper.delete("/sections/" + section.id.toString(), "ContentApi").then(() => props.updatedCallback(null));
     }
   };
@@ -117,7 +117,7 @@ export function SectionEdit(props: Props) {
 
   const handleDuplicate = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (confirm("Are you sure you wish to make a copy of this section and all of it's contents?")) {
+    if (confirm(Locale.label("site.section.confirmDuplicate"))) {
       ApiHelper.post("/sections/duplicate/" + props.section.id, {}, "ContentApi").then((data: any) => {
         props.updatedCallback(data);
       });
@@ -141,7 +141,7 @@ export function SectionEdit(props: Props) {
     <Dialog open={true} onClose={handleCancel} fullWidth maxWidth="md">
       <InputBox
         id="sectionDetailsBox"
-        headerText="Edit Section"
+        headerText={Locale.label("site.section.editSection")}
         headerIcon="school"
         saveFunction={handleSave}
         cancelFunction={handleCancel}

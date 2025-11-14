@@ -244,7 +244,7 @@ export const DonationPage: React.FC<Props> = (props) => {
             church={props?.church}
             churchLogo={props?.churchLogo}
           />
-          <DisplayBox headerIcon="payments" headerText="Donations" editContent={getEditContent()}>
+          <DisplayBox headerIcon="payments" headerText={Locale.label("donation.donationPage.donations")} editContent={getEditContent()}>
             {getTable()}
           </DisplayBox>
           <RecurringDonations customerId={customerId} paymentMethods={paymentMethods} appName={appName} dataUpdate={handleDataUpdate} />

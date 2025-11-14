@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { TextField, Box, Typography, Stack, Button, Alert, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { Code as CodeIcon, Info as InfoIcon, Warning as WarningIcon, ExpandMore as ExpandMoreIcon, Terminal as TerminalIcon } from "@mui/icons-material";
+import { Locale } from "@churchapps/apphelper";
 import type { GlobalStyleInterface } from "../../helpers/Interfaces";
 import { CardWithHeader, LoadingButton } from "../../components/ui";
 
@@ -87,7 +88,7 @@ a:hover {
             </Box>
           </Stack>
           <Stack direction="row" spacing={1}>
-            <Button variant="outlined" onClick={() => props.updatedFunction(null)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>Cancel</Button>
+            <Button variant="outlined" onClick={() => props.updatedFunction(null)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>{Locale.label("common.cancel")}</Button>
             <LoadingButton loading={isSubmitting} loadingText="Saving..." variant="contained" onClick={handleSave} sx={{ backgroundColor: "#FFF", color: "var(--c1l2)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }}>Save Changes</LoadingButton>
           </Stack>
         </Stack>

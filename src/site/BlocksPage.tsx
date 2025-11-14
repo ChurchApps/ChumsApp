@@ -1,5 +1,5 @@
 import { JSX, useEffect, useState, useCallback } from "react";
-import { ApiHelper, Loading, PageHeader, UserHelper, Permissions } from "@churchapps/apphelper";
+import { ApiHelper, Loading, PageHeader, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import type { BlockInterface } from "../helpers";
 import { TableRow, TableCell, Table, TableBody, TableHead, Box, Typography, Stack, Button, Card, Icon } from "@mui/material";
 import { SmartButton as BlockIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
@@ -92,7 +92,7 @@ export const BlocksPage = () => {
             </Stack>
           </TableCell>
           <TableCell align="right">
-            <Button size="small" variant="outlined" component={Link} to={`/site/blocks/${block.id}`} startIcon={<EditIcon />} data-testid={`edit-block-${block.id}-button`} sx={{ textTransform: "none", minWidth: "auto" }}>Edit</Button>
+            <Button size="small" variant="outlined" component={Link} to={`/site/blocks/${block.id}`} startIcon={<EditIcon />} data-testid={`edit-block-${block.id}-button`} sx={{ textTransform: "none", minWidth: "auto" }}>{Locale.label("common.edit")}</Button>
           </TableCell>
         </TableRow>
       );

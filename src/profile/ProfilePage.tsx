@@ -199,7 +199,7 @@ export const ProfilePage = () => {
                         label={Locale.label("profile.profilePage.passNew")}
                         value={password}
                         onChange={handleChange}
-                        helperText="Leave blank to keep current password"
+                        helperText={Locale.label("profile.profilePage.passwordHelper")}
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">

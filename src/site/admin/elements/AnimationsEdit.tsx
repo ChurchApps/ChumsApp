@@ -1,6 +1,6 @@
 import type { AnimationsInterface } from "../../../helpers";
 import type { SelectChangeEvent } from "@mui/material";
-import { InputBox } from "@churchapps/apphelper";
+import { InputBox, Locale } from "@churchapps/apphelper";
 import { FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useEffect } from "react";
 
@@ -36,23 +36,23 @@ export const AnimationsEdit: React.FC<Props> = (props) => {
     setAnimations(a);
   }
 
-  return <InputBox saveFunction={handleSave} saveText="Update" headerText="Edit Animations" cancelFunction={() => { props.onSave(null) }}>
+  return <InputBox saveFunction={handleSave} saveText={Locale.label("common.update")} headerText={Locale.label("site.animations.editAnimations")} cancelFunction={() => { props.onSave(null) }}>
     <Grid container spacing={2}>
       <Grid size={{ xs: 6 }}>
         <FormControl size="small" fullWidth style={{marginTop:10}}>
-          <InputLabel>On Show Animation</InputLabel>
-          <Select size="small" fullWidth label="On Show Animation" name="onShow" value={animations?.onShow || ""} onChange={handleChange}>
-            <MenuItem value="">None</MenuItem>
-            <MenuItem value="slideLeft">Slide Left</MenuItem>
-            <MenuItem value="slideRight">Slide Right</MenuItem>
-            <MenuItem value="slideUp">Slide Up</MenuItem>
-            <MenuItem value="slideDown">Slide Down</MenuItem>
-            <MenuItem value="fadeIn">Fade In</MenuItem>
-            <MenuItem value="grow">Grow</MenuItem>
-            <MenuItem value="shrink">Shrink</MenuItem>
-            <MenuItem value="pulse">Pulse</MenuItem>
-            <MenuItem value="colorize">Colorize</MenuItem>
-            <MenuItem value="focus">Focus</MenuItem>
+          <InputLabel>{Locale.label("site.animations.onShowAnimation")}</InputLabel>
+          <Select size="small" fullWidth label={Locale.label("site.animations.onShowAnimation")} name="onShow" value={animations?.onShow || ""} onChange={handleChange}>
+            <MenuItem value="">{Locale.label("site.animations.none")}</MenuItem>
+            <MenuItem value="slideLeft">{Locale.label("site.animations.slideLeft")}</MenuItem>
+            <MenuItem value="slideRight">{Locale.label("site.animations.slideRight")}</MenuItem>
+            <MenuItem value="slideUp">{Locale.label("site.animations.slideUp")}</MenuItem>
+            <MenuItem value="slideDown">{Locale.label("site.animations.slideDown")}</MenuItem>
+            <MenuItem value="fadeIn">{Locale.label("site.animations.fadeIn")}</MenuItem>
+            <MenuItem value="grow">{Locale.label("site.animations.grow")}</MenuItem>
+            <MenuItem value="shrink">{Locale.label("site.animations.shrink")}</MenuItem>
+            <MenuItem value="pulse">{Locale.label("site.animations.pulse")}</MenuItem>
+            <MenuItem value="colorize">{Locale.label("site.animations.colorize")}</MenuItem>
+            <MenuItem value="focus">{Locale.label("site.animations.focus")}</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -60,9 +60,9 @@ export const AnimationsEdit: React.FC<Props> = (props) => {
         <FormControl size="small" fullWidth style={{marginTop:10}}>
           <InputLabel>On Show Speed</InputLabel>
           <Select size="small" fullWidth label="On Show Speed" name="onShowSpeed" value={animations?.onShowSpeed || "normal"} onChange={handleChange}>
-            <MenuItem value="slow">Slow</MenuItem>
-            <MenuItem value="normal">Normal</MenuItem>
-            <MenuItem value="fast">Fast</MenuItem>
+            <MenuItem value="slow">{Locale.label("site.animations.slow")}</MenuItem>
+            <MenuItem value="normal">{Locale.label("site.animations.normal")}</MenuItem>
+            <MenuItem value="fast">{Locale.label("site.animations.fast")}</MenuItem>
           </Select>
         </FormControl>
       </Grid>

@@ -18,7 +18,7 @@ import {
   TableContainer
 } from "@mui/material";
 import { Delete as DeleteIcon, CalendarMonth as CalendarIcon, Groups as GroupsIcon } from "@mui/icons-material";
-import { ApiHelper, UserHelper, Loading, PageHeader } from "@churchapps/apphelper";
+import { ApiHelper, UserHelper, Loading, PageHeader, Locale } from "@churchapps/apphelper";
 import { type CuratedCalendarInterface, type GroupInterface, type CuratedEventInterface, Permissions } from "@churchapps/helpers";
 import { CuratedCalendar } from "./components/CuratedCalendar";
 
@@ -51,7 +51,7 @@ export const CalendarPage = () => {
   };
 
   const handleGroupDelete = (groupId: string) => {
-    if (confirm("Are you sure you wish to remove this group from the calendar?")) {
+    if (confirm(Locale.label("calendars.calendarPage.confirmRemoveGroup"))) {
       ApiHelper.delete("/curatedEvents/calendar/" + curatedCalendarId + "/group/" + groupId, "ContentApi").then(() => {
         loadData();
         refresher({});

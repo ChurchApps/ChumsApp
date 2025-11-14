@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ErrorMessages, InputBox, ApiHelper, UserHelper, SlugHelper } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, ApiHelper, UserHelper, SlugHelper, Locale } from "@churchapps/apphelper";
 import { Permissions } from "@churchapps/helpers";
 import type { LinkInterface } from "@churchapps/helpers";
 import type { PageInterface } from "../../helpers/Interfaces";
@@ -108,7 +108,7 @@ export function PageLinkEdit(props: Props) {
     }
 
     if (page) {
-      if (window.confirm("Are you sure you wish to permanently delete this page?")) {
+      if (window.confirm(Locale.label("site.pageLink.confirmDelete"))) {
         ApiHelper.delete("/pages/" + page.id?.toString(), "ContentApi").then(() => {
           if (link) {
             ApiHelper.delete("/links/" + link.id?.toString(), "ContentApi").then(() => props.updatedCallback(null, null));
@@ -133,7 +133,7 @@ export function PageLinkEdit(props: Props) {
 
   const handleDuplicate = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (confirm("Are you sure you wish to make a copy of this page and all of it's contents?")) {
+    if (confirm(Locale.label("site.pageLink.confirmDuplicate"))) {
       ApiHelper.post("/pages/duplicate/" + page?.id, {}, "ContentApi").then((data: any) => {
         setPage(null);
         props.updatedCallback(data, link);
@@ -155,7 +155,7 @@ export function PageLinkEdit(props: Props) {
       <Dialog open={true} onClose={props.onDone} style={{ minWidth: 800 }}>
         <InputBox
           id="pageDetailsBox"
-          headerText={page ? "Page Settings" : "Link Settings"}
+          headerText={page ? Locale.label("site.pageLink.pageSettings") : Locale.label("site.pageLink.linkSettings")}
           headerIcon="article"
           saveFunction={handleSave}
           cancelFunction={handleCancel}
@@ -195,7 +195,7 @@ export function PageLinkEdit(props: Props) {
                     </Stack>
                   </Paper>
                 </div>)
-                : (<TextField size="small" fullWidth label="Url Path" name="url" value={page.url || ""} onChange={handleChange} helperText="ex: /camper-registration  (**Make sure to check before saving)" InputProps={{ endAdornment: (<Button variant="contained" color="primary" size="small" onClick={handleSlugValidation}>Check</Button>) }} />)
+                : (<TextField size="small" fullWidth label="Url Path" name="url" value={page.url || ""} onChange={handleChange} helperText={Locale.label("site.pageLink.urlHelper")} InputProps={{ endAdornment: (<Button variant="contained" color="primary" size="small" onClick={handleSlugValidation}>{Locale.label("site.pageLink.check")}</Button>) }} />)
               }
             </Grid>}
             {!page && link && <Grid size={{ xs: 6 }}>

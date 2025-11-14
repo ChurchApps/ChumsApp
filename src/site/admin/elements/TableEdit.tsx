@@ -2,6 +2,7 @@
 import type { SelectChangeEvent } from "@mui/material";
 import { MarkdownPreviewLight } from "@churchapps/apphelper-markdown";
 import { HtmlEditor } from "@churchapps/apphelper-markdown";
+import { Locale } from "@churchapps/apphelper";
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableRow, TextField } from "@mui/material";
 import React from "react";
 
@@ -65,7 +66,7 @@ export function TableEdit(props: Props) {
         data.contents = c;
         props.onRealtimeChange({ ...props.parsedData, contents: c });
       }} />
-      <Button style={{float:"right"}} onClick={() => { setEditCellIdx(null) }} data-testid="table-cell-done-button">Done</Button>
+      <Button style={{float:"right"}} onClick={() => { setEditCellIdx(null) }} data-testid="table-cell-done-button">{Locale.label("common.done")}</Button>
       <br />
     </>)
   }

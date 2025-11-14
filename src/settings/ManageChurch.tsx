@@ -54,7 +54,7 @@ export const ManageChurch = () => {
 
   if (redirectUrl !== "") return <Navigate to={redirectUrl}></Navigate>;
   if (church.isLoading) return <Loading />;
-  if (!church.data) return <div>No church data available</div>;
+  if (!church.data) return <Typography>{Locale.label("settings.manageChurch.noData")}</Typography>;
 
   return (
     <>
