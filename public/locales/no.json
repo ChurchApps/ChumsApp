@@ -204,7 +204,9 @@
     },
     "reportFilterField": {
       "any": "Hvilken som helst"
-    }
+    },
+    "saveChanges": "Lagre endringer",
+    "saving": "Lagrer..."
   },
   "components": {
     "footer": {
@@ -436,6 +438,12 @@
       "donFilt": "Donasjonsfilter",
       "donor": "Giver",
       "noDon": "Ingen donasjoner for valgt datoperiode"
+    },
+    "donationBatchesPage": {
+      "subtitle": "Administrer donasjonsbunker og spor poster"
+    },
+    "fundPage": {
+      "subtitle": "Spor donasjoner og bidrag til dette fondet"
     }
   },
   "forms": {
@@ -525,6 +533,9 @@
       "formSub": "Skjemainnsendelser",
       "questions": "Spørsmål",
       "unAuth": "Uautorisert"
+    },
+    "formPage": {
+      "subtitleConfig": "Skjemakonfigurasjon og innsendinger"
     }
   },
   "formSubmissionEdit": {
@@ -2220,6 +2231,52 @@
       "text": "Tekst",
       "textWithPhoto": "Tekst med bilde",
       "video": "Video"
+    },
+    "appearancePage": {
+      "title": "Nettstedstiler",
+      "subtitle": "Nedenfor er en forhåndsvisning av et eksempelside med dine farger, skrifter og logoer. Dette er ikke ditt faktiske nettstedinnhold."
+    },
+    "filesPage": {
+      "title": "Filer",
+      "subtitle": "Administrer filer og medier for nettstedet ditt"
+    },
+    "pagePreview": {
+      "title": "Nettstedsforhåndsvisning",
+      "subtitle": "Forhåndsvisning: {title}",
+      "editContent": "Rediger innhold",
+      "pageSettings": "Sideinnstillinger"
+    },
+    "sectionEdit": {
+      "convertToBlock": "Konverter til blokk",
+      "convertTo": "Konverter til",
+      "duplicate": "Dupliser",
+      "duplicateSection": "Dupliser seksjon"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Logoadministrasjon"
+    },
+    "cssEdit": {
+      "customCss": "Tilpasset CSS",
+      "customHtml": "Tilpasset HTML"
+    },
+    "filesManager": {
+      "noFilesYet": "Ingen filer lastet opp ennå",
+      "getStarted": "Kom i gang ved å laste opp din første fil",
+      "files": "Filer"
+    },
+    "fontEdit": {
+      "fontSelection": "Skriftvalg",
+      "typographyPreview": "Typografiforhåndsvisning",
+      "popularFontCombinations": "Populære skriftkombinasjoner"
+    },
+    "paletteEdit": {
+      "savePalette": "Lagre palett",
+      "colorValues": "Fargeverdier",
+      "suggestedPalettes": "Foreslåtte paletter",
+      "colorCombinationsPreview": "Fargekombinasjonsforhåndsvisning"
+    },
+    "stylesManager": {
+      "styleSettings": "Stilinnstillinger"
     }
   },
   "stockPhotos": {

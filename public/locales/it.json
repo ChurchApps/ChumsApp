@@ -204,7 +204,9 @@
     },
     "reportFilterField": {
       "any": "Qualunque"
-    }
+    },
+    "saveChanges": "Salva modifiche",
+    "saving": "Salvataggio..."
   },
   "components": {
     "footer": {
@@ -436,6 +438,12 @@
       "donFilt": "Filtro Donazioni",
       "donor": "Donatore",
       "noDon": "Nessuna donazione per l'intervallo di date selezionato"
+    },
+    "donationBatchesPage": {
+      "subtitle": "Gestisci lotti di donazioni e traccia i registri"
+    },
+    "fundPage": {
+      "subtitle": "Traccia donazioni e contributi a questo fondo"
     }
   },
   "forms": {
@@ -525,6 +533,9 @@
       "formSub": "Invii del Modulo",
       "questions": "Domande",
       "unAuth": "Non Autorizzato"
+    },
+    "formPage": {
+      "subtitleConfig": "Configurazione modulo e invii"
     }
   },
   "formSubmissionEdit": {
@@ -2220,6 +2231,52 @@
       "text": "Testo",
       "textWithPhoto": "Testo con foto",
       "video": "Video"
+    },
+    "appearancePage": {
+      "title": "Stili del sito",
+      "subtitle": "Di seguito è riportata un'anteprima di un sito di esempio con i tuoi colori, caratteri e loghi. Questo non è il contenuto effettivo del tuo sito."
+    },
+    "filesPage": {
+      "title": "File",
+      "subtitle": "Gestisci file e media per il tuo sito web"
+    },
+    "pagePreview": {
+      "title": "Anteprima del sito web",
+      "subtitle": "Anteprima: {title}",
+      "editContent": "Modifica contenuto",
+      "pageSettings": "Impostazioni pagina"
+    },
+    "sectionEdit": {
+      "convertToBlock": "Converti in blocco",
+      "convertTo": "Converti in",
+      "duplicate": "Duplica",
+      "duplicateSection": "Duplica sezione"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Gestione logo"
+    },
+    "cssEdit": {
+      "customCss": "CSS personalizzato",
+      "customHtml": "HTML personalizzato"
+    },
+    "filesManager": {
+      "noFilesYet": "Nessun file caricato ancora",
+      "getStarted": "Inizia caricando il tuo primo file",
+      "files": "File"
+    },
+    "fontEdit": {
+      "fontSelection": "Selezione carattere",
+      "typographyPreview": "Anteprima tipografia",
+      "popularFontCombinations": "Combinazioni di caratteri popolari"
+    },
+    "paletteEdit": {
+      "savePalette": "Salva tavolozza",
+      "colorValues": "Valori colore",
+      "suggestedPalettes": "Tavolozze suggerite",
+      "colorCombinationsPreview": "Anteprima combinazioni colori"
+    },
+    "stylesManager": {
+      "styleSettings": "Impostazioni stile"
     }
   },
   "stockPhotos": {

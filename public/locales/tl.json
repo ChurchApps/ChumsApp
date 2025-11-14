@@ -204,7 +204,9 @@
     },
     "reportFilterField": {
       "any": "Kahit Ano"
-    }
+    },
+    "saveChanges": "I-save ang mga pagbabago",
+    "saving": "Nagse-save..."
   },
   "components": {
     "footer": {
@@ -436,6 +438,12 @@
       "donFilt": "Filter ng Donasyon",
       "donor": "Donador",
       "noDon": "Walang mga donasyon para sa napiling hanay ng petsa"
+    },
+    "donationBatchesPage": {
+      "subtitle": "Pamahalaan ang mga batch ng donasyon at subaybayan ang mga rekord"
+    },
+    "fundPage": {
+      "subtitle": "Subaybayan ang mga donasyon at kontribusyon sa pondo"
     }
   },
   "forms": {
@@ -525,6 +533,9 @@
       "formSub": "Mga Pagsumite ng Form",
       "questions": "Mga Tanong",
       "unAuth": "Hindi Awtorisado"
+    },
+    "formPage": {
+      "subtitleConfig": "Configurasyon ng form at mga pagsusumite"
     }
   },
   "formSubmissionEdit": {
@@ -2220,6 +2231,52 @@
       "text": "Teksto",
       "textWithPhoto": "Teksto na may larawan",
       "video": "Video"
+    },
+    "appearancePage": {
+      "title": "Mga Istilo ng Site",
+      "subtitle": "Nasa ibaba ang preview ng sample site na may inyong mga kulay, font at logo. Ito ay hindi ang aktwal na nilalaman ng inyong site."
+    },
+    "filesPage": {
+      "title": "Mga File",
+      "subtitle": "Pamahalaan ang mga file at media para sa iyong website"
+    },
+    "pagePreview": {
+      "title": "Preview ng Website",
+      "subtitle": "Preview: {title}",
+      "editContent": "I-edit ang Nilalaman",
+      "pageSettings": "Mga Setting ng Pahina"
+    },
+    "sectionEdit": {
+      "convertToBlock": "I-convert sa Block",
+      "convertTo": "I-convert sa",
+      "duplicate": "Kopyahin",
+      "duplicateSection": "Kopyahin ang Seksyon"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Pamamahala ng Logo"
+    },
+    "cssEdit": {
+      "customCss": "Custom na CSS",
+      "customHtml": "Custom na HTML"
+    },
+    "filesManager": {
+      "noFilesYet": "Walang na-upload na file pa",
+      "getStarted": "Magsimula sa pag-upload ng iyong unang file",
+      "files": "Mga File"
+    },
+    "fontEdit": {
+      "fontSelection": "Pagpili ng Font",
+      "typographyPreview": "Preview ng Typography",
+      "popularFontCombinations": "Mga Sikat na Kombinasyon ng Font"
+    },
+    "paletteEdit": {
+      "savePalette": "I-save ang Palette",
+      "colorValues": "Mga Halaga ng Kulay",
+      "suggestedPalettes": "Mga Iminumungkahing Palette",
+      "colorCombinationsPreview": "Preview ng Kombinasyon ng Kulay"
+    },
+    "stylesManager": {
+      "styleSettings": "Mga Setting ng Istilo"
     }
   },
   "stockPhotos": {

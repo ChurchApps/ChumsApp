@@ -204,7 +204,9 @@
     },
     "reportFilterField": {
       "any": "Cualquiera"
-    }
+    },
+    "saveChanges": "Guardar cambios",
+    "saving": "Guardando..."
   },
   "components": {
     "footer": {
@@ -436,6 +438,12 @@
       "donFilt": "Filtro de Donaciones",
       "donor": "Donante",
       "noDon": "No hay donaciones para el rango de fechas seleccionado"
+    },
+    "donationBatchesPage": {
+      "subtitle": "Gestionar lotes de donaciones y realizar seguimiento de registros"
+    },
+    "fundPage": {
+      "subtitle": "Rastrear donaciones y contribuciones a este fondo"
     }
   },
   "forms": {
@@ -525,6 +533,9 @@
       "formSub": "Envíos del Formulario",
       "questions": "Preguntas",
       "unAuth": "No Autorizado"
+    },
+    "formPage": {
+      "subtitleConfig": "Configuración de formulario y envíos"
     }
   },
   "formSubmissionEdit": {
@@ -2220,6 +2231,52 @@
       "text": "Texto",
       "textWithPhoto": "Texto con foto",
       "video": "Video"
+    },
+    "appearancePage": {
+      "title": "Estilos del sitio",
+      "subtitle": "A continuación se muestra una vista previa de un sitio de muestra con sus colores, fuentes y logotipos. Este no es el contenido real de su sitio."
+    },
+    "filesPage": {
+      "title": "Archivos",
+      "subtitle": "Gestionar archivos y medios para su sitio web"
+    },
+    "pagePreview": {
+      "title": "Vista previa del sitio web",
+      "subtitle": "Vista previa: {title}",
+      "editContent": "Editar contenido",
+      "pageSettings": "Configuración de página"
+    },
+    "sectionEdit": {
+      "convertToBlock": "Convertir a bloque",
+      "convertTo": "Convertir a",
+      "duplicate": "Duplicar",
+      "duplicateSection": "Duplicar sección"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Gestión de logotipos"
+    },
+    "cssEdit": {
+      "customCss": "CSS personalizado",
+      "customHtml": "HTML personalizado"
+    },
+    "filesManager": {
+      "noFilesYet": "Aún no se han subido archivos",
+      "getStarted": "Comience subiendo su primer archivo",
+      "files": "Archivos"
+    },
+    "fontEdit": {
+      "fontSelection": "Selección de fuente",
+      "typographyPreview": "Vista previa de tipografía",
+      "popularFontCombinations": "Combinaciones de fuentes populares"
+    },
+    "paletteEdit": {
+      "savePalette": "Guardar paleta",
+      "colorValues": "Valores de color",
+      "suggestedPalettes": "Paletas sugeridas",
+      "colorCombinationsPreview": "Vista previa de combinaciones de colores"
+    },
+    "stylesManager": {
+      "styleSettings": "Configuración de estilos"
     }
   },
   "stockPhotos": {

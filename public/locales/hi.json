@@ -204,7 +204,9 @@
     },
     "reportFilterField": {
       "any": "कोई"
-    }
+    },
+    "saveChanges": "परिवर्तन सहेजें",
+    "saving": "सहेजा जा रहा है..."
   },
   "components": {
     "footer": {
@@ -436,6 +438,12 @@
       "donFilt": "दान फ़िल्टर",
       "donor": "दाता",
       "noDon": "चयनित तिथि सीमा के लिए कोई दान नहीं"
+    },
+    "donationBatchesPage": {
+      "subtitle": "दान बैचों को प्रबंधित करें और रिकॉर्ड ट्रैक करें"
+    },
+    "fundPage": {
+      "subtitle": "इस फंड में दान और योगदान को ट्रैक करें"
     }
   },
   "forms": {
@@ -525,6 +533,9 @@
       "formSub": "प्रपत्र प्रस्तुति",
       "questions": "प्रश्न",
       "unAuth": "अनधिकृत"
+    },
+    "formPage": {
+      "subtitleConfig": "फॉर्म कॉन्फ़िगरेशन और सबमिशन"
     }
   },
   "formSubmissionEdit": {
@@ -2220,6 +2231,52 @@
       "text": "मूलपाठ",
       "textWithPhoto": "फोटो के साथ पाठ",
       "video": "वीडियो"
+    },
+    "appearancePage": {
+      "title": "साइट शैलियाँ",
+      "subtitle": "नीचे आपके रंगों, फ़ॉन्ट्स और लोगो के साथ एक नमूना साइट का पूर्वावलोकन है। यह आपकी वास्तविक साइट सामग्री नहीं है।"
+    },
+    "filesPage": {
+      "title": "फ़ाइलें",
+      "subtitle": "अपनी वेबसाइट के लिए फ़ाइलें और मीडिया प्रबंधित करें"
+    },
+    "pagePreview": {
+      "title": "वेबसाइट पूर्वावलोकन",
+      "subtitle": "पूर्वावलोकन: {title}",
+      "editContent": "सामग्री संपादित करें",
+      "pageSettings": "पेज सेटिंग्स"
+    },
+    "sectionEdit": {
+      "convertToBlock": "ब्लॉक में कनवर्ट करें",
+      "convertTo": "में कनवर्ट करें",
+      "duplicate": "डुप्लिकेट",
+      "duplicateSection": "अनुभाग को डुप्लिकेट करें"
+    },
+    "appearanceEdit": {
+      "logoManagement": "लोगो प्रबंधन"
+    },
+    "cssEdit": {
+      "customCss": "कस्टम CSS",
+      "customHtml": "कस्टम HTML"
+    },
+    "filesManager": {
+      "noFilesYet": "अभी तक कोई फ़ाइल अपलोड नहीं की गई",
+      "getStarted": "अपनी पहली फ़ाइल अपलोड करके शुरू करें",
+      "files": "फ़ाइलें"
+    },
+    "fontEdit": {
+      "fontSelection": "फ़ॉन्ट चयन",
+      "typographyPreview": "टाइपोग्राफी पूर्वावलोकन",
+      "popularFontCombinations": "लोकप्रिय फ़ॉन्ट संयोजन"
+    },
+    "paletteEdit": {
+      "savePalette": "पैलेट सहेजें",
+      "colorValues": "रंग मान",
+      "suggestedPalettes": "सुझाए गए पैलेट",
+      "colorCombinationsPreview": "रंग संयोजन पूर्वावलोकन"
+    },
+    "stylesManager": {
+      "styleSettings": "शैली सेटिंग्स"
     }
   },
   "stockPhotos": {

@@ -204,7 +204,9 @@
     },
     "reportFilterField": {
       "any": "N'importe"
-    }
+    },
+    "saveChanges": "Enregistrer les modifications",
+    "saving": "Enregistrement..."
   },
   "components": {
     "footer": {
@@ -436,6 +438,12 @@
       "donFilt": "Filtre de don",
       "donor": "Donateur",
       "noDon": "Aucun don pour la plage de dates sélectionnée"
+    },
+    "donationBatchesPage": {
+      "subtitle": "Gérer les lots de dons et suivre les enregistrements"
+    },
+    "fundPage": {
+      "subtitle": "Suivre les dons et contributions à ce fonds"
     }
   },
   "forms": {
@@ -525,6 +533,9 @@
       "formSub": "Soumissions de formulaires",
       "questions": "Questions",
       "unAuth": "Non autorisé"
+    },
+    "formPage": {
+      "subtitleConfig": "Configuration du formulaire et soumissions"
     }
   },
   "formSubmissionEdit": {
@@ -2220,6 +2231,52 @@
       "text": "Texte",
       "textWithPhoto": "Texte avec photo",
       "video": "Vidéo"
+    },
+    "appearancePage": {
+      "title": "Styles du site",
+      "subtitle": "Voici un aperçu d'un site exemple avec vos couleurs, polices et logos. Ce n'est pas le contenu réel de votre site."
+    },
+    "filesPage": {
+      "title": "Fichiers",
+      "subtitle": "Gérer les fichiers et médias de votre site web"
+    },
+    "pagePreview": {
+      "title": "Aperçu du site web",
+      "subtitle": "Aperçu: {title}",
+      "editContent": "Modifier le contenu",
+      "pageSettings": "Paramètres de la page"
+    },
+    "sectionEdit": {
+      "convertToBlock": "Convertir en bloc",
+      "convertTo": "Convertir en",
+      "duplicate": "Dupliquer",
+      "duplicateSection": "Dupliquer la section"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Gestion du logo"
+    },
+    "cssEdit": {
+      "customCss": "CSS personnalisé",
+      "customHtml": "HTML personnalisé"
+    },
+    "filesManager": {
+      "noFilesYet": "Aucun fichier téléchargé pour le moment",
+      "getStarted": "Commencez par télécharger votre premier fichier",
+      "files": "Fichiers"
+    },
+    "fontEdit": {
+      "fontSelection": "Sélection de police",
+      "typographyPreview": "Aperçu de la typographie",
+      "popularFontCombinations": "Combinaisons de polices populaires"
+    },
+    "paletteEdit": {
+      "savePalette": "Enregistrer la palette",
+      "colorValues": "Valeurs de couleur",
+      "suggestedPalettes": "Palettes suggérées",
+      "colorCombinationsPreview": "Aperçu des combinaisons de couleurs"
+    },
+    "stylesManager": {
+      "styleSettings": "Paramètres de style"
     }
   },
   "stockPhotos": {

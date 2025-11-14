@@ -204,7 +204,9 @@
     },
     "reportFilterField": {
       "any": "Любой"
-    }
+    },
+    "saveChanges": "Сохранить изменения",
+    "saving": "Сохранение..."
   },
   "components": {
     "footer": {
@@ -436,6 +438,12 @@
       "donFilt": "Фильтр пожертвований",
       "donor": "Донор",
       "noDon": "Нет пожертвований за выбранный диапазон дат"
+    },
+    "donationBatchesPage": {
+      "subtitle": "Управление партиями пожертвований и отслеживание записей"
+    },
+    "fundPage": {
+      "subtitle": "Отслеживание пожертвований и взносов в этот фонд"
     }
   },
   "forms": {
@@ -525,6 +533,9 @@
       "formSub": "Отправки форм",
       "questions": "Вопросы",
       "unAuth": "Неавторизовано"
+    },
+    "formPage": {
+      "subtitleConfig": "Настройка формы и отправки"
     }
   },
   "formSubmissionEdit": {
@@ -2220,6 +2231,52 @@
       "text": "Текст",
       "textWithPhoto": "Текст с фото",
       "video": "Видео"
+    },
+    "appearancePage": {
+      "title": "Стили сайта",
+      "subtitle": "Ниже представлен предварительный просмотр примера сайта с вашими цветами, шрифтами и логотипами. Это не фактическое содержимое вашего сайта."
+    },
+    "filesPage": {
+      "title": "Файлы",
+      "subtitle": "Управление файлами и медиа для вашего сайта"
+    },
+    "pagePreview": {
+      "title": "Предварительный просмотр сайта",
+      "subtitle": "Предварительный просмотр: {title}",
+      "editContent": "Редактировать контент",
+      "pageSettings": "Настройки страницы"
+    },
+    "sectionEdit": {
+      "convertToBlock": "Преобразовать в блок",
+      "convertTo": "Преобразовать в",
+      "duplicate": "Дублировать",
+      "duplicateSection": "Дублировать секцию"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Управление логотипом"
+    },
+    "cssEdit": {
+      "customCss": "Пользовательский CSS",
+      "customHtml": "Пользовательский HTML"
+    },
+    "filesManager": {
+      "noFilesYet": "Файлы еще не загружены",
+      "getStarted": "Начните с загрузки первого файла",
+      "files": "Файлы"
+    },
+    "fontEdit": {
+      "fontSelection": "Выбор шрифта",
+      "typographyPreview": "Предварительный просмотр типографики",
+      "popularFontCombinations": "Популярные комбинации шрифтов"
+    },
+    "paletteEdit": {
+      "savePalette": "Сохранить палитру",
+      "colorValues": "Значения цвета",
+      "suggestedPalettes": "Предлагаемые палитры",
+      "colorCombinationsPreview": "Предварительный просмотр цветовых комбинаций"
+    },
+    "stylesManager": {
+      "styleSettings": "Настройки стиля"
     }
   },
   "stockPhotos": {

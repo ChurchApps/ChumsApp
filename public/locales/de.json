@@ -204,7 +204,9 @@
     },
     "reportFilterField": {
       "any": "Beliebig"
-    }
+    },
+    "saveChanges": "Änderungen speichern",
+    "saving": "Speichern..."
   },
   "components": {
     "footer": {
@@ -436,6 +438,12 @@
       "donFilt": "Spendenfilter",
       "donor": "Spender",
       "noDon": "Keine Spenden für den ausgewählten Datumsbereich"
+    },
+    "donationBatchesPage": {
+      "subtitle": "Spendenstapel verwalten und Spendenaufzeichnungen verfolgen"
+    },
+    "fundPage": {
+      "subtitle": "Spenden und Beiträge zu diesem Fonds verfolgen"
     }
   },
   "forms": {
@@ -525,6 +533,9 @@
       "formSub": "Formulareinreichungen",
       "questions": "Fragen",
       "unAuth": "Nicht autorisiert"
+    },
+    "formPage": {
+      "subtitleConfig": "Formularkonfiguration und Einreichungen"
     }
   },
   "formSubmissionEdit": {
@@ -2220,6 +2231,52 @@
       "text": "Text",
       "textWithPhoto": "Text mit Foto",
       "video": "Video"
+    },
+    "appearancePage": {
+      "title": "Website-Stile",
+      "subtitle": "Unten sehen Sie eine Vorschau einer Beispielseite mit Ihren Farben, Schriftarten und Logos. Dies ist nicht Ihr tatsächlicher Website-Inhalt."
+    },
+    "filesPage": {
+      "title": "Dateien",
+      "subtitle": "Dateien und Medien für Ihre Website verwalten"
+    },
+    "pagePreview": {
+      "title": "Website-Vorschau",
+      "subtitle": "Vorschau: {title}",
+      "editContent": "Inhalt bearbeiten",
+      "pageSettings": "Seiteneinstellungen"
+    },
+    "sectionEdit": {
+      "convertToBlock": "In Block konvertieren",
+      "convertTo": "Konvertieren zu",
+      "duplicate": "Duplizieren",
+      "duplicateSection": "Abschnitt duplizieren"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Logo-Verwaltung"
+    },
+    "cssEdit": {
+      "customCss": "Benutzerdefiniertes CSS",
+      "customHtml": "Benutzerdefiniertes HTML"
+    },
+    "filesManager": {
+      "noFilesYet": "Noch keine Dateien hochgeladen",
+      "getStarted": "Beginnen Sie mit dem Hochladen Ihrer ersten Datei",
+      "files": "Dateien"
+    },
+    "fontEdit": {
+      "fontSelection": "Schriftauswahl",
+      "typographyPreview": "Typografie-Vorschau",
+      "popularFontCombinations": "Beliebte Schriftkombinationen"
+    },
+    "paletteEdit": {
+      "savePalette": "Palette speichern",
+      "colorValues": "Farbwerte",
+      "suggestedPalettes": "Vorgeschlagene Paletten",
+      "colorCombinationsPreview": "Farbkombinationen-Vorschau"
+    },
+    "stylesManager": {
+      "styleSettings": "Stileinstellungen"
     }
   },
   "stockPhotos": {

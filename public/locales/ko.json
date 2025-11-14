@@ -204,7 +204,9 @@
     },
     "reportFilterField": {
       "any": "모든"
-    }
+    },
+    "saveChanges": "변경사항 저장",
+    "saving": "저장 중..."
   },
   "components": {
     "footer": {
@@ -436,6 +438,12 @@
       "donFilt": "기부 필터",
       "donor": "기부자",
       "noDon": "선택한 날짜 범위에 대한 기부가 없습니다"
+    },
+    "donationBatchesPage": {
+      "subtitle": "기부 배치 관리 및 기록 추적"
+    },
+    "fundPage": {
+      "subtitle": "이 기금에 대한 기부 및 기여 추적"
     }
   },
   "forms": {
@@ -525,6 +533,9 @@
       "formSub": "양식 제출",
       "questions": "질문",
       "unAuth": "승인되지 않음"
+    },
+    "formPage": {
+      "subtitleConfig": "양식 구성 및 제출"
     }
   },
   "formSubmissionEdit": {
@@ -2220,6 +2231,52 @@
       "text": "텍스트",
       "textWithPhoto": "사진이 포함된 텍스트",
       "video": "동영상"
+    },
+    "appearancePage": {
+      "title": "사이트 스타일",
+      "subtitle": "아래는 색상, 글꼴 및 로고가 적용된 샘플 사이트 미리보기입니다. 실제 사이트 콘텐츠가 아닙니다."
+    },
+    "filesPage": {
+      "title": "파일",
+      "subtitle": "웹사이트용 파일 및 미디어 관리"
+    },
+    "pagePreview": {
+      "title": "웹사이트 미리보기",
+      "subtitle": "미리보기: {title}",
+      "editContent": "콘텐츠 편집",
+      "pageSettings": "페이지 설정"
+    },
+    "sectionEdit": {
+      "convertToBlock": "블록으로 변환",
+      "convertTo": "변환",
+      "duplicate": "복제",
+      "duplicateSection": "섹션 복제"
+    },
+    "appearanceEdit": {
+      "logoManagement": "로고 관리"
+    },
+    "cssEdit": {
+      "customCss": "사용자 정의 CSS",
+      "customHtml": "사용자 정의 HTML"
+    },
+    "filesManager": {
+      "noFilesYet": "아직 업로드된 파일이 없습니다",
+      "getStarted": "첫 번째 파일을 업로드하여 시작하세요",
+      "files": "파일"
+    },
+    "fontEdit": {
+      "fontSelection": "글꼴 선택",
+      "typographyPreview": "타이포그래피 미리보기",
+      "popularFontCombinations": "인기 있는 글꼴 조합"
+    },
+    "paletteEdit": {
+      "savePalette": "팔레트 저장",
+      "colorValues": "색상 값",
+      "suggestedPalettes": "제안된 팔레트",
+      "colorCombinationsPreview": "색상 조합 미리보기"
+    },
+    "stylesManager": {
+      "styleSettings": "스타일 설정"
     }
   },
   "stockPhotos": {
