@@ -93,7 +93,7 @@ export function FilesManager() {
     : (
       <TableRow>
         <TableCell colSpan={3}>
-          <EmptyState icon={<FolderIcon />} title="No files uploaded yet" description="Get started by uploading your first file" variant="table" colSpan={3} />
+          <EmptyState icon={<FolderIcon />} title={Locale.label("site.filesManager.noFilesYet")} description={Locale.label("site.filesManager.getStarted")} variant="table" colSpan={3} />
         </TableCell>
       </TableRow>
     );
@@ -103,7 +103,7 @@ export function FilesManager() {
       <Grid container spacing={3}>
         <Grid size={{ md: 8, xs: 12 }}>
           <CardWithHeader
-            title="Files"
+            title={Locale.label("site.filesManager.files")}
             icon={<FileIcon sx={{ color: "primary.main" }} />}
             actions={
               <Typography variant="body2" color="text.secondary">

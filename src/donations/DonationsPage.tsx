@@ -10,7 +10,7 @@ export const DonationsPage = memo(() => {
 
   return (
     <>
-      <PageHeader icon={<DonationIcon />} title={Locale.label("donations.donationsPage.don")} subtitle="View donation summaries and analyze giving trends" />
+      <PageHeader icon={<DonationIcon />} title={Locale.label("donations.donationsPage.don")} subtitle={Locale.label("donations.donationsPage.subtitle")} />
 
       {/* Main Content */}
       <Box sx={{ p: 3 }}>

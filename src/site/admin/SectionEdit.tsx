@@ -152,7 +152,7 @@ export function SectionEdit(props: Props) {
         cancelFunction={handleCancel}
         deleteFunction={handleDelete}
         data-testid="edit-section-inputbox"
-        headerActionContent={props.section.id && (<><Button size="small" variant="outlined" onClick={handleConvertToBlock} title="Convert to Block" endIcon={<Icon>smart_button</Icon>} sx={{ marginRight: 2 }} data-testid="convert-to-block-button" aria-label="Convert section to block">Convert to</Button><Button size="small" variant="outlined" onClick={handleDuplicate} data-testid="duplicate-section-button" aria-label="Duplicate section">duplicate</Button></>)}
+        headerActionContent={props.section.id && (<><Button size="small" variant="outlined" onClick={handleConvertToBlock} title={Locale.label("site.sectionEdit.convertToBlock")} endIcon={<Icon>smart_button</Icon>} sx={{ marginRight: 2 }} data-testid="convert-to-block-button" aria-label={Locale.label("site.sectionEdit.convertToBlock")}>{Locale.label("site.sectionEdit.convertTo")}</Button><Button size="small" variant="outlined" onClick={handleDuplicate} data-testid="duplicate-section-button" aria-label={Locale.label("site.sectionEdit.duplicateSection")}>{Locale.label("site.sectionEdit.duplicate")}</Button></>)}
       >
         <div id="dialogFormContent">
           {(section?.targetBlockId) ? getBlockFields() : getStandardFields()}

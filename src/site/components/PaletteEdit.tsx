@@ -183,7 +183,7 @@ export function PaletteEdit(props: Props) {
           </Stack>
           <Stack direction="row" spacing={1}>
             <Button variant="outlined" onClick={() => props.updatedFunction(null)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>{Locale.label("common.cancel")}</Button>
-            <LoadingButton loading={isSubmitting} loadingText="Saving..." variant="contained" onClick={handleSave} sx={{ backgroundColor: "#FFF", color: "var(--c1l2)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }} data-testid="save-palette-button">Save Palette</LoadingButton>
+            <LoadingButton loading={isSubmitting} loadingText={Locale.label("common.saving")} variant="contained" onClick={handleSave} sx={{ backgroundColor: "#FFF", color: "var(--c1l2)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }} data-testid="save-palette-button">{Locale.label("site.paletteEdit.savePalette")}</LoadingButton>
           </Stack>
         </Stack>
       </Box>
@@ -191,7 +191,7 @@ export function PaletteEdit(props: Props) {
       <Box sx={{
         p: 3, backgroundColor: "#FFF", borderRadius: "0 0 12px 12px", border: "1px solid", borderColor: "grey.200", borderTop: "none" 
       }}>
-        <CardWithHeader title="Color Values" icon={<ColorLensIcon />}>
+        <CardWithHeader title={Locale.label("site.paletteEdit.colorValues")} icon={<ColorLensIcon />}>
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
               <TextField type="color" label="Light" fullWidth name="light" value={palette.light} onChange={handleChange} data-testid="light-color-input" aria-label="Light color" sx={{ "& .MuiInputBase-input": { height: 48 } }} />
@@ -214,13 +214,13 @@ export function PaletteEdit(props: Props) {
         <Box sx={{ mt: 3 }}>
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
-              <CardWithHeader title="Suggested Palettes" icon={<PaletteIcon />}>
+              <CardWithHeader title={Locale.label("site.paletteEdit.suggestedPalettes")} icon={<PaletteIcon />}>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>Click any palette to apply it instantly</Typography>
                 {getPalettes()}
               </CardWithHeader>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <CardWithHeader title="Color Combinations Preview" icon={<VisibilityIcon />}>
+              <CardWithHeader title={Locale.label("site.paletteEdit.colorCombinationsPreview")} icon={<VisibilityIcon />}>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>Preview how your colors work together</Typography>
                 {getPairings()}
               </CardWithHeader>

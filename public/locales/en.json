@@ -197,6 +197,8 @@
     },
     "right": "Right",
     "save": "Save",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
     "search": "Search",
     "searching": "Searching...",
     "sermons": "Sermons",
@@ -365,6 +367,18 @@
     }
   },
   "donations": {
+    "donationBatchesPage": {
+      "subtitle": "Manage donation batches and track giving records"
+    },
+    "donationsPage": {
+      "subtitle": "View donation summaries and analyze giving trends"
+    },
+    "fundPage": {
+      "subtitle": "Track donations and contributions to this fund"
+    },
+    "fundsPage": {
+      "subtitle": "Manage donation funds and track giving categories"
+    },
     "batchEdit": {
       "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
       "date": "Date",
@@ -439,6 +453,12 @@
     }
   },
   "forms": {
+    "formsPage": {
+      "subtitleManage": "Create and manage custom forms"
+    },
+    "formPage": {
+      "subtitleConfig": "Form configuration and submissions"
+    },
     "choicesEdit": {
       "act": "Action",
       "choices": "Choices",
@@ -1997,10 +2017,37 @@
     }
   },
   "site": {
+    "appearancePage": {
+      "title": "Site Styles",
+      "subtitle": "Below is a preview of a sample site with your colors, fonts and logos. This is not your actual site content."
+    },
+    "filesPage": {
+      "title": "Files",
+      "subtitle": "Manage files and media for your website"
+    },
+    "pagePreview": {
+      "title": "Website Preview",
+      "subtitle": "Previewing: {title}",
+      "editContent": "Edit Content",
+      "pageSettings": "Page Settings"
+    },
+    "sectionEdit": {
+      "convertToBlock": "Convert to Block",
+      "convertTo": "Convert to",
+      "duplicate": "duplicate",
+      "duplicateSection": "Duplicate section"
+    },
     "addPage": {
       "newLink": "New Link",
       "newPage": "New Page",
       "pageType": "Page Type"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Logo Management"
+    },
+    "cssEdit": {
+      "customCss": "Custom CSS",
+      "customHtml": "Custom HTML"
     },
     "animations": {
       "colorize": "Colorize",
@@ -2103,6 +2150,25 @@
       "storageInfo": "100 MB of storage space is provided for free for storing PDFs and other documents commonly needed for church websites. We suggest using Google Drive or Dropbox to store files if additional space is needed.",
       "upload": "Upload",
       "uploadFiles": "Upload Files"
+    },
+    "filesManager": {
+      "noFilesYet": "No files uploaded yet",
+      "getStarted": "Get started by uploading your first file",
+      "files": "Files"
+    },
+    "fontEdit": {
+      "fontSelection": "Font Selection",
+      "typographyPreview": "Typography Preview",
+      "popularFontCombinations": "Popular Font Combinations"
+    },
+    "paletteEdit": {
+      "savePalette": "Save Palette",
+      "colorValues": "Color Values",
+      "suggestedPalettes": "Suggested Palettes",
+      "colorCombinationsPreview": "Color Combinations Preview"
+    },
+    "stylesManager": {
+      "styleSettings": "Style Settings"
     },
     "navLink": {
       "addLink": "Add Link",

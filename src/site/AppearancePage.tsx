@@ -20,8 +20,8 @@ export const AppearancePage = () => {
     <>
       <PageHeader
         icon={<StyleIcon />}
-        title="Site Styles"
-        subtitle="Below is a preview of a sample site with your colors, fonts and logos. This is not your actual site content."
+        title={Locale.label("site.appearancePage.title")}
+        subtitle={Locale.label("site.appearancePage.subtitle")}
       />
       <Box sx={{ p: 3 }}>
         {UserHelper.currentUserChurch && UserHelper.checkAccess(Permissions.contentApi.content.edit) && (

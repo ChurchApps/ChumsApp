@@ -219,7 +219,7 @@ export const FundsPage = () => {
       <PageHeader
         icon={<FundIcon />}
         title={Locale.label("donations.donations.funds")}
-        subtitle="Manage donation funds and track giving categories"
+        subtitle={Locale.label("donations.fundsPage.subtitle")}
       >
         {stats.totalFunds > 0 && (
           <Stack

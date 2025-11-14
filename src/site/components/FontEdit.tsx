@@ -114,7 +114,7 @@ export function FontEdit(props: Props) {
       <Box sx={{
         p: 3, backgroundColor: "#FFF", borderRadius: "0 0 12px 12px", border: "1px solid", borderColor: "grey.200", borderTop: "none" 
       }}>
-        <CardWithHeader title="Font Selection" icon={<StyleIcon />}>
+        <CardWithHeader title={Locale.label("site.fontEdit.fontSelection")} icon={<StyleIcon />}>
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
               <Box sx={{ mb: 2 }}>
@@ -134,7 +134,7 @@ export function FontEdit(props: Props) {
         </CardWithHeader>
 
         <Box sx={{ mt: 3 }}>
-          <CardWithHeader title="Typography Preview" icon={<VisibilityIcon />}>
+          <CardWithHeader title={Locale.label("site.fontEdit.typographyPreview")} icon={<VisibilityIcon />}>
             <Box sx={{ p: 3, backgroundColor: alpha("#f5f5f5", 0.3), borderRadius: 2 }}>
               <Typography variant="h4" sx={{ fontFamily: fonts?.heading || "Roboto", fontWeight: 600, mb: 2, color: "primary.main" }}>Main Heading Preview</Typography>
               <Typography variant="body1" sx={{ fontFamily: fonts?.body || "Roboto", mb: 3, lineHeight: 1.6, color: "text.primary" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus urna neque viverra justo nec ultrices dui sapien. Faucibus pulvinar elementum integer enim neque volutpat ac tincidunt.</Typography>
@@ -145,7 +145,7 @@ export function FontEdit(props: Props) {
         </Box>
 
         <Box sx={{ mt: 3 }}>
-          <CardWithHeader title="Popular Font Combinations" icon={<StyleIcon />}>
+          <CardWithHeader title={Locale.label("site.fontEdit.popularFontCombinations")} icon={<StyleIcon />}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>Click any combination to apply it instantly</Typography>
             {getPairings()}
           </CardWithHeader>

@@ -209,7 +209,7 @@ export function AppearanceEdit(props: Props) {
           </Stack>
           <Stack direction="row" spacing={1}>
             <Button variant="outlined" onClick={handleCancel} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>{Locale.label("common.cancel")}</Button>
-            <LoadingButton loading={isSubmitting} loadingText="Saving..." variant="contained" onClick={handleSave} sx={{ backgroundColor: "#FFF", color: "var(--c1l2)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }} data-testid="save-appearance-button">Save Changes</LoadingButton>
+            <LoadingButton loading={isSubmitting} loadingText={Locale.label("common.saving")} variant="contained" onClick={handleSave} sx={{ backgroundColor: "#FFF", color: "var(--c1l2)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }} data-testid="save-appearance-button">{Locale.label("common.saveChanges")}</LoadingButton>
           </Stack>
         </Stack>
       </Box>
@@ -217,7 +217,7 @@ export function AppearanceEdit(props: Props) {
       <Box sx={{
         p: 3, backgroundColor: "#FFF", borderRadius: "0 0 12px 12px", border: "1px solid", borderColor: "grey.200", borderTop: "none" 
       }}>
-        <CardWithHeader title="Logo Management" icon={<ImageIcon />}>
+        <CardWithHeader title={Locale.label("site.appearanceEdit.logoManagement")} icon={<ImageIcon />}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>Upload your logos for different contexts. All images should have transparent backgrounds for best results.</Typography>
 
           <Stack spacing={3}>

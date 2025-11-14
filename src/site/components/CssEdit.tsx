@@ -115,7 +115,7 @@ a:hover {
           <Typography variant="body2"><strong>Advanced Feature:</strong> Custom CSS and JavaScript can affect your site's functionality. Please test changes thoroughly and ensure you have a backup of your current settings.</Typography>
         </Alert>
 
-        <CardWithHeader title="Custom CSS" icon={<CodeIcon />}>
+        <CardWithHeader title={Locale.label("site.cssEdit.customCss")} icon={<CodeIcon />}>
           <Stack spacing={3}>
             <Box>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>Add custom CSS to override default styles or create new styling rules.</Typography>
@@ -150,7 +150,7 @@ a {
         </CardWithHeader>
 
         <Box sx={{ mt: 3 }}>
-          <CardWithHeader title="Custom HTML" icon={<TerminalIcon />}>
+          <CardWithHeader title={Locale.label("site.cssEdit.customHtml")} icon={<TerminalIcon />}>
             <Stack spacing={3}>
               <Box>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>Add custom HTML code for third-party scripts like Google Analytics.</Typography>
