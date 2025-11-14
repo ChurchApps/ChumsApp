@@ -45,26 +45,62 @@
       "noImplement": "Не реализовано"
     }
   },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "Название календаря",
+      "namePlaceholder": "Введите название для этого календаря"
+    },
+    "calendarList": {
+      "active": "Активный"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "Вы уверены, что хотите удалить эту группу из календаря?"
+    },
+    "calendarEvent": {
+      "confirmDelete": "Вы уверены, что хотите удалить это событие?",
+      "noGroups": "Группы не найдены."
+    },
+    "editEvent": {
+      "selectGroup": "Выберите группу",
+      "addAllEvents": "Добавить все события группы",
+      "addSpecificEvents": "Добавить конкретные события"
+    }
+  },
   "common": {
     "add": "Добавить",
     "amount": "Сумма",
+    "bottom": "Внизу",
     "cancel": "Отмена",
+    "center": "Центр",
     "change": "Изменить",
     "changePhoto": "Изменить фото",
     "close": "Закрыть",
+    "custom": "Пользовательский",
     "delete": "Удалить",
+    "done": "Готово",
+    "duplicate": "Дублировать",
     "edit": "Редактировать",
+    "help": "Помощь",
+    "iconPicker": {
+      "searchLabel": "Поиск иконок",
+      "searchPlaceholder": "Введите для поиска (например, человек, дом, церковь)..."
+    },
+    "left": "Слева",
     "name": "Имя",
     "no": "Нет",
     "notes": "Примечания",
     "person": "Человек",
     "pleaseWait": "Пожалуйста, подождите...",
     "remove": "Удалить",
+    "right": "Справа",
     "save": "Сохранить",
     "search": "Поиск",
     "searching": "Поиск...",
+    "sermons": "Проповеди",
     "title": "Заголовок",
+    "top": "Вверху",
     "update": "Обновить",
+    "website": "Веб-сайт",
     "yes": "Да"
   },
   "components": {
@@ -108,6 +144,12 @@
     "tasks": "Задачи"
   },
   "donation": {
+    "donationPage": {
+      "donations": "Пожертвования"
+    },
+    "nonAuthDonation": {
+      "donate": "Пожертвовать"
+    },
     "page": {
       "amount": "Сумма",
       "batch": "Пакет",
@@ -155,6 +197,7 @@
       "editRecurring": "Изменить регулярное пожертвование",
       "fees": "Комиссии",
       "frequency": "Частота",
+      "frequencyLabel": "Частота",
       "fund": "Фонд",
       "funds": "Фонды",
       "make": "Сделать пожертвование",
@@ -389,6 +432,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "Добавить",
       "catName": "Название категории",
       "catReq": "Укажите название категории.",
       "group": "Группа",
@@ -397,14 +441,20 @@
       "new": "Новый ",
       "team": "Команда"
     },
+    "groupBanner": {
+      "team": "Команда"
+    },
     "groupDetails": {
       "attTrack": "Отслеживание посещаемости:",
       "cat": "Категория",
       "groupDet": "Детали группы",
+      "locationPlaceholder": "Дом Джонсонов",
       "meetingLocation": "Место встречи",
       "meetingTime": "Время встречи",
+      "meetingTimePlaceholder": "Вторник в 19:00",
       "parPick": "Родительская встреча:",
-      "prinName": "Печать бейджа:"
+      "prinName": "Печать бейджа:",
+      "slugPlaceholder": "название-группы"
     },
     "groupDetailsEdit": {
       "attTrack": "Отслеживать посещаемость",
@@ -473,6 +523,9 @@
       "sesAdd": "Добавить сессию",
       "sesDate": "Дата сессии",
       "srvTime": "Время служения"
+    },
+    "sessionCard": {
+      "active": "Активный"
     },
     "sessionEdit": {
       "deleteConfirm": "Вы уверены, что хотите навсегда удалить эту сессию?",
@@ -543,6 +596,15 @@
     "september": "Сентябрь"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "Введите значение...",
+      "search": "Поиск",
+      "valuePlaceholder": "Значение"
+    },
+    "aiSearch": {
+      "placeholder": "Покажите мне мужчин старше 30 лет с днями рождения в июле",
+      "title": "Поиск с помощью ИИ"
+    },
     "editCondition": {
       "act": "Активность",
       "anniMonth": "Месяц годовщины",
@@ -569,7 +631,8 @@
       "saveCon": "Сохранить условие",
       "startW": "начинается с",
       "to": "До",
-      "value": "Значение"
+      "value": "Значение",
+      "valuePlaceholder": "Значение"
     },
     "groups": {
       "groups": "Группы",
@@ -638,6 +701,7 @@
       "for": "для",
       "madeTo": "сделано в",
       "notIn": "Не в",
+      "placeholder": "Поиск по имени...",
       "simp": "Простой",
       "simpSearch": "Поиск людей",
       "active": "активный:",
@@ -655,6 +719,9 @@
       "service": "Служба",
       "serviceTime": "Время службы",
       "group": "Группа"
+    },
+    "personNav": {
+      "customForms": "Пользовательские формы"
     },
     "peopleSearchResults": {
       "noResMsg": "Результатов не найдено. Пожалуйста, выполните поиск по другому имени или добавьте нового человека"
@@ -754,6 +821,12 @@
       "done": "Готово",
       "editAssign": "Редактировать назначение",
       "noMem": "Участники группы не найдены."
+    },
+    "planType": {
+      "details": "Детали типа плана"
+    },
+    "songs": {
+      "links": "Ссылки"
     },
     "ministryList": {
       "mins": "Служения",
@@ -855,6 +928,11 @@
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "Добавить экран",
+      "editDevice": "Редактировать устройство",
+      "title": "Устройства"
+    },
     "profilePage": {
       "accDel": "Удаление учетной записи",
       "confirmMsg": "Вы уверены, что хотите навсегда удалить свою учетную запись?",
@@ -875,6 +953,7 @@
       "passMatch": "Пароли не совпадают.",
       "passNew": "Новый пароль",
       "passVer": "Подтвердите пароль",
+      "passwordHelper": "Оставьте пустым, чтобы сохранить текущий пароль",
       "permWarn": "Осторожно, эти действия необратимы",
       "profEdit": "Редактировать профиль",
       "saveChange": "Изменения сохранены.",
@@ -950,11 +1029,22 @@
     },
     "reportPage": {
       "report": "Отчет"
+    },
+    "translation": {
+      "title": "Поиск переводов Библии"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "Вы уверены, что хотите удалить эту вкладку?",
+      "tabNameHelper": "Выберите описательное название для вашей вкладки",
+      "urlHelper": "Введите полный URL (например, https://example.com)"
+    },
     "associatePerson": {
       "change": "Изменить"
+    },
+    "church": {
+      "subdomainHelper": "Уникальный веб-адрес вашей церкви"
     },
     "churchSettings": {
       "churchSet": "Настройки церкви",
@@ -970,6 +1060,10 @@
       "general": "Общее",
       "churchInfo": "Информация о церкви",
       "churchSettings": "Настройки церкви"
+    },
+    "domain": {
+      "domainPlaceholder": "вашсайт.com",
+      "doneAlert": "Готово. Пожалуйста, нажмите эту ссылку только один раз."
     },
     "domainSettingsEdit": {
       "act": "Действие",
@@ -997,18 +1091,34 @@
       "paypalFlatRate": "Фиксированная ставка [ PayPal ]",
       "paypalTransactionFee": "Комиссия за транзакцию [ PayPal ]"
     },
+    "giving": {
+      "secretPlaceholder": "********"
+    },
     "givingSettingsEdit": {
+      "apiCredentials": "Учетные данные API",
+      "developersApiKeys": "Разработчики → Ключи API",
       "forceMsg": "Автоматически заставляет пользователей покрывать комиссию за транзакцию",
       "giving": "Пожертвования",
       "none": "Нет",
+      "paypalCreateApp": "создайте приложение, чтобы получить ваш ID клиента и секрет.",
+      "paypalDeveloper": "Разработчик PayPal",
+      "paypalGoTo": "Перейдите в",
+      "paypalLogin": "войдите, затем в разделе",
       "prov": "Провайдер",
       "pubKey": "Публичный ключ",
       "secKey": "Секретный ключ",
+      "stripeCopyKeys": "чтобы скопировать ваши публичный и секретный ключи (тестовые и боевые).",
+      "stripeDashboard": "Панель Stripe",
+      "stripeGoTo": "и перейдите в",
       "stripe": "Stripe",
+      "stripeVisit": "Посетите",
       "paypal": "PayPal",
       "clientId": "ID клиента",
       "clientSecret": "Секрет клиента",
       "transFee": "Комиссия за транзакцию"
+    },
+    "manageChurch": {
+      "noData": "Нет данных о церкви"
     },
     "supportContactSettingsEdit": {
       "supportContact": "Контакт поддержки",
@@ -1095,6 +1205,10 @@
       "taskAssign": "Назначить задачу",
       "taskNote": "Примечание к задаче",
       "taskTitle": "Название задачи"
+    },
+    "selectGroup": {
+      "noResults": "Группы, соответствующие вашему поиску, не найдены",
+      "searchPrompt": "Найдите группу для выбора"
     },
     "automationDetails": {
       "acts": "Действия",
@@ -1517,6 +1631,102 @@
       "title": "Поиск песни",
       "inputLabel": "Название или исполнитель",
       "inputPlaceholder": "Введите название песни или имя исполнителя..."
+    }
+  },
+  "site": {
+    "addPage": {
+      "newLink": "Новая ссылка",
+      "newPage": "Новая страница",
+      "pageType": "Тип страницы"
+    },
+    "animations": {
+      "colorize": "Раскрасить",
+      "editAnimations": "Редактировать анимации",
+      "fadeIn": "Появление",
+      "fast": "Быстро",
+      "focus": "Фокус",
+      "grow": "Увеличение",
+      "none": "Нет",
+      "normal": "Обычно",
+      "onShowAnimation": "Анимация при показе",
+      "pulse": "Пульсация",
+      "shrink": "Уменьшение",
+      "slideDown": "Сдвиг вниз",
+      "slideLeft": "Сдвиг влево",
+      "slideRight": "Сдвиг вправо",
+      "slideUp": "Сдвиг вверх",
+      "slow": "Медленно"
+    },
+    "blocks": {
+      "confirmDelete": "Вы уверены, что хотите навсегда удалить этот блок?",
+      "editBlock": "Редактировать блок"
+    },
+    "donateLink": {
+      "add": "Добавить",
+      "amountPlaceholder": "10",
+      "maxAmountsAlert": "Вы можете добавить только пять сумм пожертвований.",
+      "noFunds": "Нет фондов",
+      "textHelper": "Например: (Пожертвовать сейчас), (Да, я помогу!), (Пожертвовать $10 на молодежный лагерь) и т.д.",
+      "textLabel": "Текст",
+      "urlHelper": "Совет: вы должны связать страницу из конструктора веб-сайтов, на которой есть элемент пожертвования.",
+      "urlLabel": "Url",
+      "urlPlaceholder": "/donate"
+    },
+    "elements": {
+      "addressHelper": "например: Мэрия, Нью-Йорк, NY",
+      "categoriesHelper": "например: Малые группы, Воскресная школа",
+      "confirmDelete": "Вы уверены, что хотите навсегда удалить этот элемент?",
+      "confirmDuplicate": "Вы уверены, что хотите сделать копию этого элемента и всех его дочерних элементов?",
+      "editElement": "Редактировать элемент",
+      "heightPlaceholder": "1000",
+      "nameHelper": "например: Первая баптистская церковь"
+    },
+    "files": {
+      "confirmDelete": "Вы уверены, что хотите удалить",
+      "storageInfo": "100 МБ пространства для хранения предоставляется бесплатно для хранения PDF и других документов, обычно необходимых для церковных веб-сайтов. Мы предлагаем использовать Google Drive или Dropbox для хранения файлов, если необходимо дополнительное пространство.",
+      "upload": "Загрузить",
+      "uploadFiles": "Загрузить файлы"
+    },
+    "navLink": {
+      "addLink": "Добавить ссылку",
+      "linkSettings": "Настройки ссылки"
+    },
+    "pageLink": {
+      "check": "Проверить",
+      "confirmDelete": "Вы уверены, что хотите навсегда удалить эту страницу?",
+      "confirmDuplicate": "Вы уверены, что хотите сделать копию этой страницы и всего её содержимого?",
+      "linkSettings": "Настройки ссылки",
+      "pageSettings": "Настройки страницы",
+      "urlHelper": "например: /регистрация-в-лагере (**Обязательно проверьте перед сохранением)"
+    },
+    "pages": {
+      "convert": "Конвертировать"
+    },
+    "pagesPage": {
+      "confirmConvert": "Хотите ли вы конвертировать эту автоматически созданную страницу в пользовательскую страницу?"
+    },
+    "pickColors": {
+      "headingColor": "Цвет заголовка",
+      "linkColor": "Цвет ссылки",
+      "opacityHelper": "Непрозрачность черного градиентного слоя поверх изображения. Максимальное значение: 1",
+      "textColor": "Цвет текста"
+    },
+    "row": {
+      "columnsHelper": "Числа представляют двенадцатые части страницы."
+    },
+    "section": {
+      "confirmDelete": "Вы уверены, что хотите навсегда удалить этот раздел?",
+      "confirmDuplicate": "Вы уверены, что хотите сделать копию этого раздела и всего его содержимого?",
+      "editSection": "Редактировать раздел"
+    },
+    "style": {
+      "editStyle": "Редактировать стиль"
+    },
+    "styleEdit": {
+      "property": "Свойство"
+    },
+    "templates": {
+      "viewSermons": "Просмотр проповедей"
     }
   },
   "stockPhotos": {

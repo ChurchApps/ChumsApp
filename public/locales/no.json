@@ -45,26 +45,62 @@
       "noImplement": "Ikke implementert"
     }
   },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "Kalendernavn",
+      "namePlaceholder": "Skriv inn et navn for denne kalenderen"
+    },
+    "calendarList": {
+      "active": "Aktiv"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "Er du sikker på at du vil fjerne denne gruppen fra kalenderen?"
+    },
+    "calendarEvent": {
+      "confirmDelete": "Er du sikker på at du vil slette denne hendelsen?",
+      "noGroups": "Ingen grupper funnet."
+    },
+    "editEvent": {
+      "selectGroup": "Velg en gruppe",
+      "addAllEvents": "Legg til alle hendelsene til gruppen",
+      "addSpecificEvents": "Legg til spesifikke hendelser"
+    }
+  },
   "common": {
     "add": "Legg til",
     "amount": "Beløp",
+    "bottom": "Bunn",
     "cancel": "Avbryt",
+    "center": "Senter",
     "change": "Endre",
     "changePhoto": "Endre foto",
     "close": "Lukk",
+    "custom": "Tilpasset",
     "delete": "Slett",
+    "done": "Ferdig",
+    "duplicate": "Dupliser",
     "edit": "Rediger",
+    "help": "Hjelp",
+    "iconPicker": {
+      "searchLabel": "Søk ikoner",
+      "searchPlaceholder": "Skriv for å søke (f.eks., person, hjem, kirke)..."
+    },
+    "left": "Venstre",
     "name": "Navn",
     "no": "Nei",
     "notes": "Notater",
     "person": "Person",
     "pleaseWait": "Vennligst vent...",
     "remove": "Fjern",
+    "right": "Høyre",
     "save": "Lagre",
     "search": "Søk",
     "searching": "Søker...",
+    "sermons": "Prekener",
     "title": "Tittel",
+    "top": "Topp",
     "update": "Oppdater",
+    "website": "Nettsted",
     "yes": "Ja"
   },
   "components": {
@@ -108,6 +144,12 @@
     "tasks": "Oppgaver"
   },
   "donation": {
+    "donationPage": {
+      "donations": "Donasjoner"
+    },
+    "nonAuthDonation": {
+      "donate": "Doner"
+    },
     "page": {
       "amount": "Beløp",
       "batch": "Batch",
@@ -155,6 +197,7 @@
       "editRecurring": "Rediger gjentakende donasjon",
       "fees": "Gebyrer",
       "frequency": "Frekvens",
+      "frequencyLabel": "Frekvens",
       "fund": "Fond",
       "funds": "Fond",
       "make": "Gi en donasjon",
@@ -389,6 +432,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "Legg til",
       "catName": "Kategorinavn",
       "catReq": "Kategorinavn er påkrevd.",
       "group": "Gruppe",
@@ -397,14 +441,20 @@
       "new": "Ny ",
       "team": "Team"
     },
+    "groupBanner": {
+      "team": "Team"
+    },
     "groupDetails": {
       "attTrack": "Spor oppmøte:",
       "cat": "Kategori",
       "groupDet": "Gruppedetaljer",
+      "locationPlaceholder": "Johnson Hjem",
       "meetingLocation": "Møtested",
       "meetingTime": "Møtetid",
+      "meetingTimePlaceholder": "Tirsdager kl. 19",
       "parPick": "Henting av foreldre:",
-      "prinName": "Skriv ut navnelapp:"
+      "prinName": "Skriv ut navnelapp:",
+      "slugPlaceholder": "gruppe-navn"
     },
     "groupDetailsEdit": {
       "attTrack": "Spor oppmøte",
@@ -473,6 +523,9 @@
       "sesAdd": "Legg til økt",
       "sesDate": "Øktsdato",
       "srvTime": "Tjenestetid"
+    },
+    "sessionCard": {
+      "active": "Aktiv"
     },
     "sessionEdit": {
       "deleteConfirm": "Er du sikker på at du ønsker å slette denne økten permanent?",
@@ -543,6 +596,15 @@
     "september": "September"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "Skriv inn verdi...",
+      "search": "Søk",
+      "valuePlaceholder": "Verdi"
+    },
+    "aiSearch": {
+      "placeholder": "Vis meg menn over 30 med bursdager i juli",
+      "title": "AI-søk"
+    },
     "editCondition": {
       "act": "Aktivitet",
       "anniMonth": "Jubileumsmåned",
@@ -569,7 +631,8 @@
       "saveCon": "Lagre betingelse",
       "startW": "begynner med",
       "to": "Til",
-      "value": "Verdi"
+      "value": "Verdi",
+      "valuePlaceholder": "Verdi"
     },
     "groups": {
       "groups": "Grupper",
@@ -638,6 +701,7 @@
       "for": "for",
       "madeTo": "laget til",
       "notIn": "Ikke i",
+      "placeholder": "Søk etter navn...",
       "simp": "Enkel",
       "simpSearch": "Personsøk",
       "active": "aktiv:",
@@ -655,6 +719,9 @@
       "service": "Tjeneste",
       "serviceTime": "Tjenestehorário",
       "group": "Gruppe"
+    },
+    "personNav": {
+      "customForms": "Tilpassede skjemaer"
     },
     "peopleSearchResults": {
       "noResMsg": "Ingen resultater funnet. Vennligst søk etter et annet navn eller legg til en ny person"
@@ -754,6 +821,12 @@
       "done": "Ferdig",
       "editAssign": "Rediger tildeling",
       "noMem": "Ingen gruppemedlemmer funnet."
+    },
+    "planType": {
+      "details": "Plantype detaljer"
+    },
+    "songs": {
+      "links": "Lenker"
     },
     "ministryList": {
       "mins": "Ministry",
@@ -855,6 +928,11 @@
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "Legg til skjerm",
+      "editDevice": "Rediger enhet",
+      "title": "Enheter"
+    },
     "profilePage": {
       "accDel": "Konto sletting",
       "confirmMsg": "Er du sikker på at du ønsker å slette kontoen din permanent?",
@@ -875,6 +953,7 @@
       "passMatch": "Passordene stemmer ikke overens.",
       "passNew": "Nytt passord",
       "passVer": "Bekreft passord",
+      "passwordHelper": "La stå tomt for å beholde gjeldende passord",
       "permWarn": "Forsiktig, disse handlingene er permanente",
       "profEdit": "Rediger profil",
       "saveChange": "Endringer lagret.",
@@ -950,11 +1029,22 @@
     },
     "reportPage": {
       "report": "Rapport"
+    },
+    "translation": {
+      "title": "Bibeloversettelser oppslag"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "Er du sikker på at du vil slette denne fanen?",
+      "tabNameHelper": "Velg et beskrivende navn for fanen din",
+      "urlHelper": "Skriv inn hele URL-en (f.eks., https://example.com)"
+    },
     "associatePerson": {
       "change": "Endre"
+    },
+    "church": {
+      "subdomainHelper": "Kirkens unike webadresse"
     },
     "churchSettings": {
       "churchSet": "Kirkeinnstillinger",
@@ -982,6 +1072,10 @@
       "domMsgConnect": "koble til",
       "domMsg4": ". Dette kan ta opptil 5 minutter."
     },
+    "domain": {
+      "domainPlaceholder": "dittsite.com",
+      "doneAlert": "Ferdig. Vennligst klikk bare på denne lenken en gang."
+    },
     "directoryApprovalSettingsEdit": {
       "directoryApprovalGroup": "Kataloggodkjenningsgruppe",
       "forceMsg": "Denne gruppen vil håndtere alle medlemskatalogoppdateringer. Endringer vil bare bli anvendt etter deres godkjenning.",
@@ -997,18 +1091,34 @@
       "paypalFlatRate": "Fast pris [ PayPal ]",
       "paypalTransactionFee": "Transaksjonsgebyr [ PayPal ]"
     },
+    "giving": {
+      "secretPlaceholder": "********"
+    },
     "givingSettingsEdit": {
+      "apiCredentials": "API-legitimasjon",
+      "developersApiKeys": "Utviklere → API-nøkler",
       "forceMsg": "Tvinger automatisk brukere til å dekke transaksjonsgebyrene",
       "giving": "Donasjoner",
       "none": "Ingen",
+      "paypalCreateApp": "opprett en app for å få din klient-ID og hemmelighet.",
+      "paypalDeveloper": "PayPal Developer",
+      "paypalGoTo": "Gå til",
+      "paypalLogin": "logg inn, deretter under",
       "prov": "Tilbyder",
       "pubKey": "Offentlig nøkkel",
       "secKey": "Hemmelig nøkkel",
+      "stripeCopyKeys": "for å kopiere dine publiserbare og hemmelige nøkler (test & live).",
+      "stripeDashboard": "Stripe Dashboard",
+      "stripeGoTo": "og gå til",
       "stripe": "Stripe",
+      "stripeVisit": "Besøk",
       "paypal": "PayPal",
       "clientId": "Klient-ID",
       "clientSecret": "Klienthemmelighet",
       "transFee": "Transaksjonsgebyr"
+    },
+    "manageChurch": {
+      "noData": "Ingen kirkedata tilgjengelig"
     },
     "supportContactSettingsEdit": {
       "supportContact": "Støttekontakt",
@@ -1095,6 +1205,10 @@
       "taskAssign": "Tildel en oppgave",
       "taskNote": "Oppgavenotat",
       "taskTitle": "Oppgavetittel"
+    },
+    "selectGroup": {
+      "noResults": "Ingen grupper funnet som matcher søket ditt",
+      "searchPrompt": "Søk etter en gruppe for å velge"
     },
     "automationDetails": {
       "acts": "Handlinger",
@@ -1517,6 +1631,102 @@
       "title": "Søk etter en sang",
       "inputLabel": "Tittel eller artist",
       "inputPlaceholder": "Skriv inn sangtittel eller artistnavn..."
+    }
+  },
+  "site": {
+    "addPage": {
+      "newLink": "Ny lenke",
+      "newPage": "Ny side",
+      "pageType": "Sidetype"
+    },
+    "animations": {
+      "colorize": "Fargelegg",
+      "editAnimations": "Rediger animasjoner",
+      "fadeIn": "Fade inn",
+      "fast": "Rask",
+      "focus": "Fokus",
+      "grow": "Voks",
+      "none": "Ingen",
+      "normal": "Normal",
+      "onShowAnimation": "Ved visningsanimasjon",
+      "pulse": "Puls",
+      "shrink": "Krymp",
+      "slideDown": "Gli ned",
+      "slideLeft": "Gli venstre",
+      "slideRight": "Gli høyre",
+      "slideUp": "Gli opp",
+      "slow": "Langsom"
+    },
+    "blocks": {
+      "confirmDelete": "Er du sikker på at du vil slette denne blokken permanent?",
+      "editBlock": "Rediger blokk"
+    },
+    "donateLink": {
+      "add": "Legg til",
+      "amountPlaceholder": "10",
+      "maxAmountsAlert": "Du kan bare legge til fem donasjonsbeløp.",
+      "noFunds": "Ingen fond",
+      "textHelper": "F.eks: (Doner nå), (Ja, jeg vil hjelpe!), (Doner $10 til ungdomsleir), etc..",
+      "textLabel": "Tekst",
+      "urlHelper": "Tips: du må lenke til siden fra nettstedbyggeren som har donasjons-elementet.",
+      "urlLabel": "Url",
+      "urlPlaceholder": "/doner"
+    },
+    "elements": {
+      "addressHelper": "f.eks: Rådhuset, Oslo, Norge",
+      "categoriesHelper": "f.eks: Smågrupper, Søndagsskole",
+      "confirmDelete": "Er du sikker på at du vil slette dette elementet permanent?",
+      "confirmDuplicate": "Er du sikker på at du vil lage en kopi av dette elementet og alle dets barn?",
+      "editElement": "Rediger element",
+      "heightPlaceholder": "1000",
+      "nameHelper": "f.eks: First Baptist Church"
+    },
+    "files": {
+      "confirmDelete": "Er du sikker på at du vil slette",
+      "storageInfo": "100 MB lagringsplass er tilgjengelig gratis for lagring av PDF-er og andre dokumenter som vanligvis trengs for kirkenettsted. Vi foreslår å bruke Google Drive eller Dropbox for å lagre filer hvis det trengs mer plass.",
+      "upload": "Last opp",
+      "uploadFiles": "Last opp filer"
+    },
+    "navLink": {
+      "addLink": "Legg til lenke",
+      "linkSettings": "Lenkeinnstillinger"
+    },
+    "pageLink": {
+      "check": "Sjekk",
+      "confirmDelete": "Er du sikker på at du vil slette denne siden permanent?",
+      "confirmDuplicate": "Er du sikker på at du vil lage en kopi av denne siden og alt innholdet?",
+      "linkSettings": "Lenkeinnstillinger",
+      "pageSettings": "Sideinnstillinger",
+      "urlHelper": "f.eks: /leir-registrering  (**Sørg for å sjekke før lagring)"
+    },
+    "pages": {
+      "convert": "Konverter"
+    },
+    "pagesPage": {
+      "confirmConvert": "Vil du konvertere denne automatisk genererte siden til en tilpasset side?"
+    },
+    "pickColors": {
+      "headingColor": "Overskriftsfarge",
+      "linkColor": "Lenkefarge",
+      "opacityHelper": "Opasiteten til det svarte gradientlaget på toppen av bildet. Maks verdi: 1",
+      "textColor": "Tekstfarge"
+    },
+    "row": {
+      "columnsHelper": "Tall representerer tolftedeler av siden."
+    },
+    "section": {
+      "confirmDelete": "Er du sikker på at du vil slette denne seksjonen permanent?",
+      "confirmDuplicate": "Er du sikker på at du vil lage en kopi av denne seksjonen og alt innholdet?",
+      "editSection": "Rediger seksjon"
+    },
+    "style": {
+      "editStyle": "Rediger stil"
+    },
+    "styleEdit": {
+      "property": "Egenskap"
+    },
+    "templates": {
+      "viewSermons": "Vis prekener"
     }
   },
   "stockPhotos": {

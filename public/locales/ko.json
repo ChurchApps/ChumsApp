@@ -45,26 +45,62 @@
       "noImplement": "구현되지 않음"
     }
   },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "캘린더 이름",
+      "namePlaceholder": "이 캘린더의 이름을 입력하세요"
+    },
+    "calendarList": {
+      "active": "활성"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "캘린더에서 이 그룹을 제거하시겠습니까?"
+    },
+    "calendarEvent": {
+      "confirmDelete": "이 이벤트를 삭제하시겠습니까?",
+      "noGroups": "그룹을 찾을 수 없습니다."
+    },
+    "editEvent": {
+      "selectGroup": "그룹 선택",
+      "addAllEvents": "그룹의 모든 이벤트 추가",
+      "addSpecificEvents": "특정 이벤트 추가"
+    }
+  },
   "common": {
     "add": "추가",
     "amount": "금액",
+    "bottom": "하단",
     "cancel": "취소",
+    "center": "중앙",
     "change": "변경",
     "changePhoto": "사진 변경",
     "close": "닫기",
+    "custom": "사용자 정의",
     "delete": "삭제",
+    "done": "완료",
+    "duplicate": "복제",
     "edit": "편집",
+    "help": "도움말",
+    "iconPicker": {
+      "searchLabel": "아이콘 검색",
+      "searchPlaceholder": "검색어 입력 (예: 사람, 집, 교회)..."
+    },
+    "left": "왼쪽",
     "name": "이름",
     "no": "아니요",
     "notes": "노트",
     "person": "사람",
     "pleaseWait": "기다려 주세요...",
     "remove": "제거",
+    "right": "오른쪽",
     "save": "저장",
     "search": "검색",
     "searching": "검색 중...",
+    "sermons": "설교",
     "title": "제목",
+    "top": "상단",
     "update": "업데이트",
+    "website": "웹사이트",
     "yes": "예"
   },
   "components": {
@@ -108,6 +144,12 @@
     "tasks": "작업"
   },
   "donation": {
+    "donationPage": {
+      "donations": "기부"
+    },
+    "nonAuthDonation": {
+      "donate": "기부하기"
+    },
     "page": {
       "amount": "금액",
       "batch": "배치",
@@ -155,6 +197,7 @@
       "editRecurring": "정기 기부 편집",
       "fees": "수수료",
       "frequency": "빈도",
+      "frequencyLabel": "빈도",
       "fund": "기금",
       "funds": "기금",
       "make": "기부하기",
@@ -389,6 +432,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "추가",
       "catName": "범주 이름",
       "catReq": "범주 이름이 필요합니다.",
       "group": "그룹",
@@ -397,14 +441,20 @@
       "new": "새로운 ",
       "team": "팀"
     },
+    "groupBanner": {
+      "team": "팀"
+    },
     "groupDetails": {
       "attTrack": "출석 추적:",
       "cat": "범주",
       "groupDet": "그룹 세부사항",
+      "locationPlaceholder": "Johnson 가정",
       "meetingLocation": "모임 장소",
       "meetingTime": "모임 시간",
+      "meetingTimePlaceholder": "화요일 오후 7시",
       "parPick": "부모 픽업:",
-      "prinName": "이름표 인쇄:"
+      "prinName": "이름표 인쇄:",
+      "slugPlaceholder": "group-name"
     },
     "groupDetailsEdit": {
       "attTrack": "출석 추적",
@@ -473,6 +523,9 @@
       "sesAdd": "세션 추가",
       "sesDate": "세션 날짜",
       "srvTime": "서비스 시간"
+    },
+    "sessionCard": {
+      "active": "활성"
     },
     "sessionEdit": {
       "deleteConfirm": "이 세션을 영구적으로 삭제하시겠습니까?",
@@ -543,6 +596,15 @@
     "september": "9월"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "값 입력...",
+      "search": "검색",
+      "valuePlaceholder": "값"
+    },
+    "aiSearch": {
+      "placeholder": "7월에 생일이 있는 30세 이상 남성 보기",
+      "title": "AI 검색"
+    },
     "editCondition": {
       "act": "활동",
       "anniMonth": "기념월",
@@ -569,7 +631,8 @@
       "saveCon": "조건 저장",
       "startW": "로 시작함",
       "to": "종료",
-      "value": "값"
+      "value": "값",
+      "valuePlaceholder": "값"
     },
     "groups": {
       "groups": "그룹",
@@ -638,6 +701,7 @@
       "for": "대상",
       "madeTo": "에 대한",
       "notIn": "포함되지 않음",
+      "placeholder": "이름으로 검색...",
       "simp": "단순",
       "simpSearch": "인물 검색",
       "active": "활성:",
@@ -655,6 +719,9 @@
       "service": "서비스",
       "serviceTime": "서비스 시간",
       "group": "그룹"
+    },
+    "personNav": {
+      "customForms": "사용자 정의 양식"
     },
     "peopleSearchResults": {
       "noResMsg": "검색 결과가 없습니다. 다른 이름으로 검색하거나 새 사람을 추가해주세요"
@@ -754,6 +821,12 @@
       "done": "완료",
       "editAssign": "할당 편집",
       "noMem": "그룹 멤버를 찾을 수 없습니다."
+    },
+    "planType": {
+      "details": "계획 유형 세부사항"
+    },
+    "songs": {
+      "links": "링크"
     },
     "ministryList": {
       "mins": "사역",
@@ -855,6 +928,11 @@
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "화면 추가",
+      "editDevice": "기기 편집",
+      "title": "기기"
+    },
     "profilePage": {
       "accDel": "계정 삭제",
       "confirmMsg": "계정을 영구적으로 삭제하시겠습니까?",
@@ -875,6 +953,7 @@
       "passMatch": "비밀번호가 일치하지 않습니다.",
       "passNew": "새 비밀번호",
       "passVer": "비밀번호 확인",
+      "passwordHelper": "현재 비밀번호를 유지하려면 비워 두세요",
       "permWarn": "주의: 이러한 작업은 영구적입니다",
       "profEdit": "프로필 편집",
       "saveChange": "변경사항이 저장되었습니다.",
@@ -950,11 +1029,22 @@
     },
     "reportPage": {
       "report": "보고서"
+    },
+    "translation": {
+      "title": "성경 번역 조회"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "이 탭을 삭제하시겠습니까?",
+      "tabNameHelper": "탭의 설명적인 이름을 선택하세요",
+      "urlHelper": "전체 URL 입력 (예: https://example.com)"
+    },
     "associatePerson": {
       "change": "변경"
+    },
+    "church": {
+      "subdomainHelper": "교회의 고유한 웹 주소"
     },
     "churchSettings": {
       "churchSet": "교회 설정",
@@ -970,6 +1060,10 @@
       "general": "일반",
       "churchInfo": "교회 정보",
       "churchSettings": "교회 설정"
+    },
+    "domain": {
+      "domainPlaceholder": "yoursite.com",
+      "doneAlert": "완료되었습니다. 이 링크는 한 번만 클릭하세요."
     },
     "domainSettingsEdit": {
       "act": "작업",
@@ -997,18 +1091,34 @@
       "paypalFlatRate": "정액 요금 [ PayPal ]",
       "paypalTransactionFee": "거래 수수료 [ PayPal ]"
     },
+    "giving": {
+      "secretPlaceholder": "********"
+    },
     "givingSettingsEdit": {
+      "apiCredentials": "API 자격 증명",
+      "developersApiKeys": "개발자 → API 키",
       "forceMsg": "사용자가 거래 수수료를 자동으로 부담하도록 강제합니다",
       "giving": "기부",
       "none": "없음",
+      "paypalCreateApp": "클라이언트 ID와 비밀키를 얻으려면 앱을 만드세요.",
+      "paypalDeveloper": "PayPal 개발자",
+      "paypalGoTo": "이동",
+      "paypalLogin": "로그인한 다음",
       "prov": "제공자",
       "pubKey": "공개 키",
       "secKey": "비밀 키",
+      "stripeCopyKeys": "게시 가능 키와 비밀 키(테스트 및 라이브)를 복사하세요.",
+      "stripeDashboard": "Stripe 대시보드",
+      "stripeGoTo": "그리고 이동",
       "stripe": "Stripe",
+      "stripeVisit": "방문",
       "paypal": "PayPal",
       "clientId": "클라이언트 ID",
       "clientSecret": "클라이언트 비밀키",
       "transFee": "거래 수수료"
+    },
+    "manageChurch": {
+      "noData": "사용 가능한 교회 데이터 없음"
     },
     "supportContactSettingsEdit": {
       "supportContact": "지원 연락처",
@@ -1095,6 +1205,10 @@
       "taskAssign": "작업 할당",
       "taskNote": "작업 메모",
       "taskTitle": "작업 제목"
+    },
+    "selectGroup": {
+      "noResults": "검색과 일치하는 그룹을 찾을 수 없습니다",
+      "searchPrompt": "선택할 그룹 검색"
     },
     "automationDetails": {
       "acts": "작업",
@@ -1193,10 +1307,6 @@
       "associateW": "연결 대상",
       "taskNew": "새 작업",
       "titleTask": "이 작업의 제목을 입력해주세요."
-    },
-    "selectGroup": {
-      "group": "그룹",
-      "sel": "선택"
     },
     "taskList": {
       "assignGroup": "내 그룹에 할당됨",
@@ -1517,6 +1627,102 @@
       "title": "노래 검색",
       "inputLabel": "제목 또는 아티스트",
       "inputPlaceholder": "노래 제목 또는 아티스트 이름 입력..."
+    }
+  },
+  "site": {
+    "addPage": {
+      "newLink": "새 링크",
+      "newPage": "새 페이지",
+      "pageType": "페이지 유형"
+    },
+    "animations": {
+      "colorize": "색상화",
+      "editAnimations": "애니메이션 편집",
+      "fadeIn": "페이드 인",
+      "fast": "빠름",
+      "focus": "포커스",
+      "grow": "확대",
+      "none": "없음",
+      "normal": "보통",
+      "onShowAnimation": "표시 시 애니메이션",
+      "pulse": "펄스",
+      "shrink": "축소",
+      "slideDown": "아래로 슬라이드",
+      "slideLeft": "왼쪽으로 슬라이드",
+      "slideRight": "오른쪽으로 슬라이드",
+      "slideUp": "위로 슬라이드",
+      "slow": "느림"
+    },
+    "blocks": {
+      "confirmDelete": "이 블록을 영구적으로 삭제하시겠습니까?",
+      "editBlock": "블록 편집"
+    },
+    "donateLink": {
+      "add": "추가",
+      "amountPlaceholder": "10",
+      "maxAmountsAlert": "최대 5개의 기부 금액만 추가할 수 있습니다.",
+      "noFunds": "기금 없음",
+      "textHelper": "예: (지금 기부), (네, 도와드릴게요!), (청소년 캠프에 $10 기부), 등..",
+      "textLabel": "텍스트",
+      "urlHelper": "팁: 기부 요소가 있는 웹사이트 빌더의 페이지를 링크해야 합니다.",
+      "urlLabel": "URL",
+      "urlPlaceholder": "/donate"
+    },
+    "elements": {
+      "addressHelper": "예: City Hall, New York, NY",
+      "categoriesHelper": "예: 소그룹, 주일학교",
+      "confirmDelete": "이 요소를 영구적으로 삭제하시겠습니까?",
+      "confirmDuplicate": "이 요소와 모든 하위 요소의 복사본을 만드시겠습니까?",
+      "editElement": "요소 편집",
+      "heightPlaceholder": "1000",
+      "nameHelper": "예: 제일 침례교회"
+    },
+    "files": {
+      "confirmDelete": "삭제하시겠습니까",
+      "storageInfo": "교회 웹사이트에 일반적으로 필요한 PDF 및 기타 문서를 저장하기 위해 100MB의 저장 공간이 무료로 제공됩니다. 추가 공간이 필요한 경우 Google Drive 또는 Dropbox를 사용하여 파일을 저장하는 것이 좋습니다.",
+      "upload": "업로드",
+      "uploadFiles": "파일 업로드"
+    },
+    "navLink": {
+      "addLink": "링크 추가",
+      "linkSettings": "링크 설정"
+    },
+    "pageLink": {
+      "check": "확인",
+      "confirmDelete": "이 페이지를 영구적으로 삭제하시겠습니까?",
+      "confirmDuplicate": "이 페이지와 모든 콘텐츠의 복사본을 만드시겠습니까?",
+      "linkSettings": "링크 설정",
+      "pageSettings": "페이지 설정",
+      "urlHelper": "예: /camper-registration  (**저장하기 전에 확인하세요)"
+    },
+    "pages": {
+      "convert": "변환"
+    },
+    "pagesPage": {
+      "confirmConvert": "이 자동 생성 페이지를 사용자 정의 페이지로 변환하시겠습니까?"
+    },
+    "pickColors": {
+      "headingColor": "제목 색상",
+      "linkColor": "링크 색상",
+      "opacityHelper": "이미지 위의 검은색 그라데이션 레이어의 불투명도입니다. 최대값: 1",
+      "textColor": "텍스트 색상"
+    },
+    "row": {
+      "columnsHelper": "숫자는 페이지의 12분의 1을 나타냅니다."
+    },
+    "section": {
+      "confirmDelete": "이 섹션을 영구적으로 삭제하시겠습니까?",
+      "confirmDuplicate": "이 섹션과 모든 콘텐츠의 복사본을 만드시겠습니까?",
+      "editSection": "섹션 편집"
+    },
+    "style": {
+      "editStyle": "스타일 편집"
+    },
+    "styleEdit": {
+      "property": "속성"
+    },
+    "templates": {
+      "viewSermons": "설교 보기"
     }
   },
   "stockPhotos": {

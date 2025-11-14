@@ -45,26 +45,62 @@
       "noImplement": "Non Implementato"
     }
   },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "Nome del Calendario",
+      "namePlaceholder": "Inserisca un nome per questo calendario"
+    },
+    "calendarList": {
+      "active": "Attivo"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "È sicuro di voler rimuovere questo gruppo dal calendario?"
+    },
+    "calendarEvent": {
+      "confirmDelete": "È sicuro di voler eliminare questo evento?",
+      "noGroups": "Nessun gruppo trovato."
+    },
+    "editEvent": {
+      "selectGroup": "Selezioni un Gruppo",
+      "addAllEvents": "Aggiunga tutti gli eventi del gruppo",
+      "addSpecificEvents": "Aggiunga eventi specifici"
+    }
+  },
   "common": {
     "add": "Aggiungi",
     "amount": "Importo",
+    "bottom": "Inferiore",
     "cancel": "Annulla",
+    "center": "Centro",
     "change": "Cambia",
     "changePhoto": "Cambia Foto",
     "close": "Chiudi",
+    "custom": "Personalizzato",
     "delete": "Elimina",
+    "done": "Fatto",
+    "duplicate": "Duplica",
     "edit": "Modifica",
+    "help": "Aiuto",
+    "iconPicker": {
+      "searchLabel": "Cerca Icone",
+      "searchPlaceholder": "Digiti per cercare (es., persona, casa, chiesa)..."
+    },
+    "left": "Sinistra",
     "name": "Nome",
     "no": "No",
     "notes": "Note",
     "person": "Persona",
     "pleaseWait": "Attendere prego...",
     "remove": "Rimuovi",
+    "right": "Destra",
     "save": "Salva",
     "search": "Ricerca",
     "searching": "Ricerca in corso...",
+    "sermons": "Sermoni",
     "title": "Titolo",
+    "top": "Superiore",
     "update": "Aggiorna",
+    "website": "Sito Web",
     "yes": "Sì"
   },
   "components": {
@@ -108,6 +144,12 @@
     "tasks": "Compiti"
   },
   "donation": {
+    "donationPage": {
+      "donations": "Donazioni"
+    },
+    "nonAuthDonation": {
+      "donate": "Dona"
+    },
     "page": {
       "amount": "Importo",
       "batch": "Lotto",
@@ -155,6 +197,7 @@
       "editRecurring": "Modifica Donazione Ricorrente",
       "fees": "Commissioni",
       "frequency": "Frequenza",
+      "frequencyLabel": "Frequenza",
       "fund": "Fondo",
       "funds": "Fondi",
       "make": "Fai una Donazione",
@@ -389,6 +432,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "Aggiungi",
       "catName": "Nome della Categoria",
       "catReq": "Il nome della categoria è obbligatorio.",
       "group": "Gruppo",
@@ -397,14 +441,20 @@
       "new": "Nuovo ",
       "team": "Squadra"
     },
+    "groupBanner": {
+      "team": "Squadra"
+    },
     "groupDetails": {
       "attTrack": "Traccia Partecipazione:",
       "cat": "Categoria",
       "groupDet": "Dettagli del Gruppo",
+      "locationPlaceholder": "Casa Johnson",
       "meetingLocation": "Luogo di Incontro",
       "meetingTime": "Orario di Incontro",
+      "meetingTimePlaceholder": "Martedì alle 19:00",
       "parPick": "Ritiro dei Genitori:",
-      "prinName": "Stampa Targhetta:"
+      "prinName": "Stampa Targhetta:",
+      "slugPlaceholder": "nome-gruppo"
     },
     "groupDetailsEdit": {
       "attTrack": "Traccia Partecipazione",
@@ -473,6 +523,9 @@
       "sesAdd": "Aggiungi una Sessione",
       "sesDate": "Data della Sessione",
       "srvTime": "Orario di Servizio"
+    },
+    "sessionCard": {
+      "active": "Attivo"
     },
     "sessionEdit": {
       "deleteConfirm": "Sei sicuro di voler eliminare definitivamente questa sessione?",
@@ -543,6 +596,15 @@
     "september": "Settembre"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "Inserisca un valore...",
+      "search": "Ricerca",
+      "valuePlaceholder": "Valore"
+    },
+    "aiSearch": {
+      "placeholder": "Mostrami gli uomini sopra i 30 anni con compleanni a luglio",
+      "title": "Ricerca AI"
+    },
     "editCondition": {
       "act": "Attività",
       "anniMonth": "Mese dell'Anniversario",
@@ -569,7 +631,8 @@
       "saveCon": "Salva Condizione",
       "startW": "inizia con",
       "to": "A",
-      "value": "Valore"
+      "value": "Valore",
+      "valuePlaceholder": "Valore"
     },
     "groups": {
       "groups": "Gruppi",
@@ -638,6 +701,7 @@
       "for": "per",
       "madeTo": "fatto a",
       "notIn": "Non In",
+      "placeholder": "Cerca per nome...",
       "simp": "Semplice",
       "simpSearch": "Ricerca Persone",
       "active": "attivo:",
@@ -655,6 +719,9 @@
       "service": "Servizio",
       "serviceTime": "Orario del Servizio",
       "group": "Gruppo"
+    },
+    "personNav": {
+      "customForms": "Moduli Personalizzati"
     },
     "peopleSearchResults": {
       "noResMsg": "Nessun risultato trovato. Si prega di cercare un nome diverso o aggiungere una nuova persona"
@@ -754,6 +821,12 @@
       "done": "Fatto",
       "editAssign": "Modifica Assegnazione",
       "noMem": "Nessun membro del gruppo trovato."
+    },
+    "planType": {
+      "details": "Dettagli del Tipo di Piano"
+    },
+    "songs": {
+      "links": "Link"
     },
     "ministryList": {
       "mins": "Ministeri",
@@ -855,6 +928,11 @@
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "Aggiungi Schermo",
+      "editDevice": "Modifica Dispositivo",
+      "title": "Dispositivi"
+    },
     "profilePage": {
       "accDel": "Cancellazione Account",
       "confirmMsg": "Sei sicuro di voler eliminare definitivamente il tuo account?",
@@ -875,6 +953,7 @@
       "passMatch": "Le password non corrispondono.",
       "passNew": "Nuova password",
       "passVer": "Verifica password",
+      "passwordHelper": "Lasci vuoto per mantenere la password corrente",
       "permWarn": "Attenzione, queste azioni sono permanenti",
       "profEdit": "Modifica Profilo",
       "saveChange": "Modifiche salvate.",
@@ -950,11 +1029,22 @@
     },
     "reportPage": {
       "report": "Rapporto"
+    },
+    "translation": {
+      "title": "Ricerche Traduzioni Bibliche"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "È sicuro di voler eliminare questa scheda?",
+      "tabNameHelper": "Scelga un nome descrittivo per la sua scheda",
+      "urlHelper": "Inserisca l'URL completo (es., https://example.com)"
+    },
     "associatePerson": {
       "change": "Cambia"
+    },
+    "church": {
+      "subdomainHelper": "L'indirizzo web unico della sua chiesa"
     },
     "churchSettings": {
       "churchSet": "Impostazioni della Chiesa",
@@ -970,6 +1060,10 @@
       "general": "Generale",
       "churchInfo": "Informazioni sulla Chiesa",
       "churchSettings": "Impostazioni della Chiesa"
+    },
+    "domain": {
+      "domainPlaceholder": "tuosito.com",
+      "doneAlert": "Fatto. Si prega di cliccare questo link solo una volta."
     },
     "domainSettingsEdit": {
       "act": "Azione",
@@ -997,18 +1091,34 @@
       "paypalFlatRate": "Tariffa Fissa [ PayPal ]",
       "paypalTransactionFee": "Commissione Transazione [ PayPal ]"
     },
+    "giving": {
+      "secretPlaceholder": "********"
+    },
     "givingSettingsEdit": {
+      "apiCredentials": "Credenziali API",
+      "developersApiKeys": "Sviluppatori → Chiavi API",
       "forceMsg": "Obbliga automaticamente gli utenti a coprire le commissioni di transazione",
       "giving": "Donazione",
       "none": "Nessuno",
+      "paypalCreateApp": "crei un'app per ottenere il suo ID Cliente e il Segreto.",
+      "paypalDeveloper": "Sviluppatore PayPal",
+      "paypalGoTo": "Vada su",
+      "paypalLogin": "acceda, quindi sotto",
       "prov": "Fornitore",
       "pubKey": "Chiave Pubblica",
       "secKey": "Chiave Segreta",
+      "stripeCopyKeys": "per copiare le sue chiavi Pubblicabili e Segrete (test e live).",
+      "stripeDashboard": "Dashboard Stripe",
+      "stripeGoTo": "e vada su",
       "stripe": "Stripe",
+      "stripeVisit": "Visiti",
       "paypal": "PayPal",
       "clientId": "ID Cliente",
       "clientSecret": "Segreto Cliente",
       "transFee": "Commissione di Transazione"
+    },
+    "manageChurch": {
+      "noData": "Nessun dato della chiesa disponibile"
     },
     "supportContactSettingsEdit": {
       "supportContact": "Contatto di Supporto",
@@ -1195,6 +1305,8 @@
       "titleTask": "Si prega di inserire un titolo per questo compito."
     },
     "selectGroup": {
+      "noResults": "Nessun gruppo trovato corrispondente alla sua ricerca",
+      "searchPrompt": "Cerchi un gruppo da selezionare",
       "group": "Gruppo",
       "sel": "Seleziona"
     },
@@ -1517,6 +1629,102 @@
       "title": "Cerca una Canzone",
       "inputLabel": "Titolo o Artista",
       "inputPlaceholder": "Inserisci il titolo della canzone o il nome dell'artista..."
+    }
+  },
+  "site": {
+    "addPage": {
+      "newLink": "Nuovo Link",
+      "newPage": "Nuova Pagina",
+      "pageType": "Tipo di Pagina"
+    },
+    "animations": {
+      "colorize": "Colorizza",
+      "editAnimations": "Modifica Animazioni",
+      "fadeIn": "Dissolvenza",
+      "fast": "Veloce",
+      "focus": "Focus",
+      "grow": "Ingrandisci",
+      "none": "Nessuna",
+      "normal": "Normale",
+      "onShowAnimation": "Animazione alla Visualizzazione",
+      "pulse": "Pulsazione",
+      "shrink": "Rimpicciolisci",
+      "slideDown": "Scorri Giù",
+      "slideLeft": "Scorri Sinistra",
+      "slideRight": "Scorri Destra",
+      "slideUp": "Scorri Su",
+      "slow": "Lento"
+    },
+    "blocks": {
+      "confirmDelete": "È sicuro di voler eliminare definitivamente questo blocco?",
+      "editBlock": "Modifica Blocco"
+    },
+    "donateLink": {
+      "add": "Aggiungi",
+      "amountPlaceholder": "10",
+      "maxAmountsAlert": "È consentito aggiungere solo cinque importi di donazione.",
+      "noFunds": "Nessun Fondo",
+      "textHelper": "Es: (Dona ora), (Sì, aiuterò!), (Dona 10€ al Campo Giovani), ecc..",
+      "textLabel": "Testo",
+      "urlHelper": "Suggerimento: deve collegare la pagina dal costruttore del sito web che ha l'elemento donazione.",
+      "urlLabel": "Url",
+      "urlPlaceholder": "/dona"
+    },
+    "elements": {
+      "addressHelper": "es: Municipio, Roma, RM",
+      "categoriesHelper": "es: Piccoli Gruppi, Scuola Domenicale",
+      "confirmDelete": "È sicuro di voler eliminare definitivamente questo elemento?",
+      "confirmDuplicate": "È sicuro di voler creare una copia di questo elemento e di tutti i suoi figli?",
+      "editElement": "Modifica Elemento",
+      "heightPlaceholder": "1000",
+      "nameHelper": "es: Prima Chiesa Battista"
+    },
+    "files": {
+      "confirmDelete": "È sicuro di voler eliminare",
+      "storageInfo": "Vengono forniti gratuitamente 100 MB di spazio di archiviazione per memorizzare PDF e altri documenti comunemente necessari per i siti web delle chiese. Si suggerisce di utilizzare Google Drive o Dropbox per archiviare i file se è necessario spazio aggiuntivo.",
+      "upload": "Carica",
+      "uploadFiles": "Carica File"
+    },
+    "navLink": {
+      "addLink": "Aggiungi Link",
+      "linkSettings": "Impostazioni Link"
+    },
+    "pageLink": {
+      "check": "Verifica",
+      "confirmDelete": "È sicuro di voler eliminare definitivamente questa pagina?",
+      "confirmDuplicate": "È sicuro di voler creare una copia di questa pagina e di tutti i suoi contenuti?",
+      "linkSettings": "Impostazioni Link",
+      "pageSettings": "Impostazioni Pagina",
+      "urlHelper": "es: /registrazione-campeggio (**Si assicuri di verificare prima di salvare)"
+    },
+    "pages": {
+      "convert": "Converti"
+    },
+    "pagesPage": {
+      "confirmConvert": "Desidera convertire questa pagina generata automaticamente in una pagina personalizzata?"
+    },
+    "pickColors": {
+      "headingColor": "Colore Intestazione",
+      "linkColor": "Colore Link",
+      "opacityHelper": "L'opacità del livello sfumato nero sopra l'immagine. Valore massimo: 1",
+      "textColor": "Colore Testo"
+    },
+    "row": {
+      "columnsHelper": "I numeri rappresentano dodicesimi di pagina."
+    },
+    "section": {
+      "confirmDelete": "È sicuro di voler eliminare definitivamente questa sezione?",
+      "confirmDuplicate": "È sicuro di voler creare una copia di questa sezione e di tutti i suoi contenuti?",
+      "editSection": "Modifica Sezione"
+    },
+    "style": {
+      "editStyle": "Modifica Stile"
+    },
+    "styleEdit": {
+      "property": "Proprietà"
+    },
+    "templates": {
+      "viewSermons": "Visualizza Sermoni"
     }
   },
   "stockPhotos": {

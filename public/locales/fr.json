@@ -45,26 +45,62 @@
       "noImplement": "Non Implémenté"
     }
   },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "Nom du Calendrier",
+      "namePlaceholder": "Entrez un nom pour ce calendrier"
+    },
+    "calendarList": {
+      "active": "Actif"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "Êtes-vous sûr de vouloir retirer ce groupe du calendrier ?"
+    },
+    "calendarEvent": {
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet événement ?",
+      "noGroups": "Aucun groupe trouvé."
+    },
+    "editEvent": {
+      "selectGroup": "Sélectionner un Groupe",
+      "addAllEvents": "Ajouter tous les événements du groupe",
+      "addSpecificEvents": "Ajouter des événements spécifiques"
+    }
+  },
   "common": {
     "add": "Ajouter",
     "amount": "Montant",
+    "bottom": "Bas",
     "cancel": "Annuler",
+    "center": "Centre",
     "change": "Changer",
     "changePhoto": "Changer la Photo",
     "close": "Fermer",
+    "custom": "Personnalisé",
     "delete": "Supprimer",
+    "done": "Terminé",
+    "duplicate": "Dupliquer",
     "edit": "Modifier",
+    "help": "Aide",
+    "iconPicker": {
+      "searchLabel": "Rechercher des Icônes",
+      "searchPlaceholder": "Tapez pour rechercher (ex: personne, maison, église)..."
+    },
+    "left": "Gauche",
     "name": "Nom",
     "no": "Non",
     "notes": "Notes",
     "person": "Personne",
     "pleaseWait": "Veuillez patienter...",
     "remove": "Retirer",
+    "right": "Droite",
     "save": "Enregistrer",
     "search": "Recherche",
     "searching": "Recherche en cours...",
+    "sermons": "Sermons",
     "title": "Titre",
+    "top": "Haut",
     "update": "Mettre à jour",
+    "website": "Site Web",
     "yes": "Oui"
   },
   "components": {
@@ -108,6 +144,12 @@
     "tasks": "Tâches"
   },
   "donation": {
+    "donationPage": {
+      "donations": "Dons"
+    },
+    "nonAuthDonation": {
+      "donate": "Faire un Don"
+    },
     "page": {
       "amount": "Montant",
       "batch": "Lot",
@@ -155,6 +197,7 @@
       "editRecurring": "Modifier le Don Récurrent",
       "fees": "Frais",
       "frequency": "Fréquence",
+      "frequencyLabel": "Fréquence",
       "fund": "Fonds",
       "funds": "Fonds",
       "make": "Faire un Don",
@@ -389,6 +432,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "Ajouter",
       "catName": "Nom de la catégorie",
       "catReq": "Le nom de la catégorie est requis.",
       "group": "Groupe",
@@ -397,14 +441,20 @@
       "new": "Nouveau ",
       "team": "Équipe"
     },
+    "groupBanner": {
+      "team": "Équipe"
+    },
     "groupDetails": {
       "attTrack": "Suivi de la présence :",
       "cat": "Catégorie",
       "groupDet": "Détails du groupe",
+      "locationPlaceholder": "Maison Johnson",
       "meetingLocation": "Lieu de Rencontre",
       "meetingTime": "Heure de Rencontre",
+      "meetingTimePlaceholder": "Mardis à 19h",
       "parPick": "Ramassage des parents :",
-      "prinName": "Imprimer l'Étiquette :"
+      "prinName": "Imprimer l'Étiquette :",
+      "slugPlaceholder": "nom-du-groupe"
     },
     "groupDetailsEdit": {
       "attTrack": "Suivi de la présence",
@@ -473,6 +523,9 @@
       "sesAdd": "Ajouter une session",
       "sesDate": "Date de session",
       "srvTime": "Heure de service"
+    },
+    "sessionCard": {
+      "active": "Actif"
     },
     "sessionEdit": {
       "deleteConfirm": "Êtes-vous sûr de vouloir supprimer définitivement cette session ?",
@@ -543,6 +596,15 @@
     "september": "Septembre"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "Entrez une valeur...",
+      "search": "Rechercher",
+      "valuePlaceholder": "Valeur"
+    },
+    "aiSearch": {
+      "placeholder": "Montrez-moi les hommes de plus de 30 ans avec des anniversaires en juillet",
+      "title": "Recherche IA"
+    },
     "editCondition": {
       "act": "Activité",
       "anniMonth": "Mois d'anniversaire",
@@ -569,7 +631,8 @@
       "saveCon": "Enregistrer la condition",
       "startW": "commence par",
       "to": "À",
-      "value": "Valeur"
+      "value": "Valeur",
+      "valuePlaceholder": "Valeur"
     },
     "groups": {
       "groups": "Groupes",
@@ -638,6 +701,7 @@
       "for": "pour",
       "madeTo": "fait à",
       "notIn": "Pas dans",
+      "placeholder": "Rechercher par nom...",
       "simp": "Simple",
       "simpSearch": "Recherche de Personnes",
       "active": "actif:",
@@ -655,6 +719,9 @@
       "service": "Service",
       "serviceTime": "Heure de Service",
       "group": "Groupe"
+    },
+    "personNav": {
+      "customForms": "Formulaires Personnalisés"
     },
     "peopleSearchResults": {
       "noResMsg": "Aucun résultat trouvé. Veuillez rechercher un autre nom ou ajouter une nouvelle personne"
@@ -754,6 +821,12 @@
       "done": "Terminé",
       "editAssign": "Modifier l'affectation",
       "noMem": "Aucun membre du groupe trouvé."
+    },
+    "planType": {
+      "details": "Détails du Type de Plan"
+    },
+    "songs": {
+      "links": "Liens"
     },
     "ministryList": {
       "mins": "Ministères",
@@ -855,6 +928,11 @@
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "Ajouter un Écran",
+      "editDevice": "Modifier l'Appareil",
+      "title": "Appareils"
+    },
     "profilePage": {
       "accDel": "Suppression du compte",
       "confirmMsg": "Êtes-vous sûr de vouloir supprimer définitivement votre compte ?",
@@ -875,6 +953,7 @@
       "passMatch": "Les mots de passe ne correspondent pas.",
       "passNew": "Nouveau mot de passe",
       "passVer": "Vérifier le mot de passe",
+      "passwordHelper": "Laissez vide pour conserver le mot de passe actuel",
       "permWarn": "Attention, ces actions sont permanentes",
       "profEdit": "Modifier le profil",
       "saveChange": "Modifications sauvegardées.",
@@ -950,11 +1029,22 @@
     },
     "reportPage": {
       "report": "Rapport"
+    },
+    "translation": {
+      "title": "Recherches de Traduction de la Bible"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "Êtes-vous sûr de vouloir supprimer cet onglet ?",
+      "tabNameHelper": "Choisissez un nom descriptif pour votre onglet",
+      "urlHelper": "Entrez l'URL complète (ex: https://example.com)"
+    },
     "associatePerson": {
       "change": "Changer"
+    },
+    "church": {
+      "subdomainHelper": "L'adresse web unique de votre église"
     },
     "churchSettings": {
       "churchSet": "Paramètres de l'église",
@@ -970,6 +1060,10 @@
       "general": "Général",
       "churchInfo": "Informations sur l'Église",
       "churchSettings": "Paramètres de l'Église"
+    },
+    "domain": {
+      "domainPlaceholder": "votresite.com",
+      "doneAlert": "Terminé. Veuillez ne cliquer sur ce lien qu'une seule fois."
     },
     "domainSettingsEdit": {
       "act": "Action",
@@ -997,18 +1091,34 @@
       "paypalFlatRate": "Tarif fixe [ PayPal ]",
       "paypalTransactionFee": "Frais de transaction [ PayPal ]"
     },
+    "giving": {
+      "secretPlaceholder": "********"
+    },
     "givingSettingsEdit": {
+      "apiCredentials": "Identifiants API",
+      "developersApiKeys": "Développeurs → Clés API",
       "forceMsg": "Force automatiquement les utilisateurs à couvrir les frais de transaction",
       "giving": "Don",
       "none": "Aucun",
+      "paypalCreateApp": "créez une application pour obtenir votre ID Client et Secret.",
+      "paypalDeveloper": "Développeur PayPal",
+      "paypalGoTo": "Allez sur",
+      "paypalLogin": "connectez-vous, puis sous",
       "prov": "Fournisseur",
       "pubKey": "Clé publique",
       "secKey": "Clé secrète",
+      "stripeCopyKeys": "pour copier vos clés Publishable et Secret (test et live).",
+      "stripeDashboard": "Tableau de bord Stripe",
+      "stripeGoTo": "et allez sur",
       "stripe": "Stripe",
+      "stripeVisit": "Visitez",
       "paypal": "PayPal",
       "clientId": "ID Client",
       "clientSecret": "Secret Client",
       "transFee": "Frais de transaction"
+    },
+    "manageChurch": {
+      "noData": "Aucune donnée d'église disponible"
     },
     "supportContactSettingsEdit": {
       "supportContact": "Contact de support",
@@ -1095,6 +1205,10 @@
       "taskAssign": "Attribuer une tâche",
       "taskNote": "Note de tâche",
       "taskTitle": "Titre de la tâche"
+    },
+    "selectGroup": {
+      "noResults": "Aucun groupe trouvé correspondant à votre recherche",
+      "searchPrompt": "Recherchez un groupe à sélectionner"
     },
     "automationDetails": {
       "acts": "Actions",
@@ -1517,6 +1631,102 @@
       "title": "Rechercher un Chant",
       "inputLabel": "Titre ou Artiste",
       "inputPlaceholder": "Entrez le titre du chant ou le nom de l'artiste..."
+    }
+  },
+  "site": {
+    "addPage": {
+      "newLink": "Nouveau Lien",
+      "newPage": "Nouvelle Page",
+      "pageType": "Type de Page"
+    },
+    "animations": {
+      "colorize": "Coloriser",
+      "editAnimations": "Modifier les Animations",
+      "fadeIn": "Apparition en Fondu",
+      "fast": "Rapide",
+      "focus": "Focus",
+      "grow": "Agrandir",
+      "none": "Aucun",
+      "normal": "Normal",
+      "onShowAnimation": "Animation à l'Affichage",
+      "pulse": "Pulsation",
+      "shrink": "Rétrécir",
+      "slideDown": "Glisser vers le Bas",
+      "slideLeft": "Glisser vers la Gauche",
+      "slideRight": "Glisser vers la Droite",
+      "slideUp": "Glisser vers le Haut",
+      "slow": "Lent"
+    },
+    "blocks": {
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer définitivement ce bloc ?",
+      "editBlock": "Modifier le Bloc"
+    },
+    "donateLink": {
+      "add": "Ajouter",
+      "amountPlaceholder": "10",
+      "maxAmountsAlert": "Vous ne pouvez ajouter que cinq montants de don.",
+      "noFunds": "Aucun Fonds",
+      "textHelper": "Ex: (Donnez maintenant), (Oui, je vais aider !), (Donnez 10$ au Camp Jeunesse), etc..",
+      "textLabel": "Texte",
+      "urlHelper": "Astuce: vous devez lier la page du constructeur de site web qui contient l'élément de don.",
+      "urlLabel": "Url",
+      "urlPlaceholder": "/don"
+    },
+    "elements": {
+      "addressHelper": "ex: Hôtel de Ville, New York, NY",
+      "categoriesHelper": "ex: Petits Groupes, École du Dimanche",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer définitivement cet élément ?",
+      "confirmDuplicate": "Êtes-vous sûr de vouloir faire une copie de cet élément et de tous ses enfants ?",
+      "editElement": "Modifier l'Élément",
+      "heightPlaceholder": "1000",
+      "nameHelper": "ex: Première Église Baptiste"
+    },
+    "files": {
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer",
+      "storageInfo": "100 Mo d'espace de stockage sont fournis gratuitement pour stocker des PDF et autres documents couramment nécessaires pour les sites web d'église. Nous suggérons d'utiliser Google Drive ou Dropbox pour stocker les fichiers si un espace supplémentaire est nécessaire.",
+      "upload": "Télécharger",
+      "uploadFiles": "Télécharger des Fichiers"
+    },
+    "navLink": {
+      "addLink": "Ajouter un Lien",
+      "linkSettings": "Paramètres du Lien"
+    },
+    "pageLink": {
+      "check": "Vérifier",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer définitivement cette page ?",
+      "confirmDuplicate": "Êtes-vous sûr de vouloir faire une copie de cette page et de tout son contenu ?",
+      "linkSettings": "Paramètres du Lien",
+      "pageSettings": "Paramètres de la Page",
+      "urlHelper": "ex: /inscription-campeur  (**Assurez-vous de vérifier avant d'enregistrer)"
+    },
+    "pages": {
+      "convert": "Convertir"
+    },
+    "pagesPage": {
+      "confirmConvert": "Souhaitez-vous convertir cette page générée automatiquement en page personnalisée ?"
+    },
+    "pickColors": {
+      "headingColor": "Couleur du Titre",
+      "linkColor": "Couleur du Lien",
+      "opacityHelper": "L'opacité de la couche de dégradé noir au-dessus de l'image. Valeur max: 1",
+      "textColor": "Couleur du Texte"
+    },
+    "row": {
+      "columnsHelper": "Les nombres représentent des douzièmes de page."
+    },
+    "section": {
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer définitivement cette section ?",
+      "confirmDuplicate": "Êtes-vous sûr de vouloir faire une copie de cette section et de tout son contenu ?",
+      "editSection": "Modifier la Section"
+    },
+    "style": {
+      "editStyle": "Modifier le Style"
+    },
+    "styleEdit": {
+      "property": "Propriété"
+    },
+    "templates": {
+      "viewSermons": "Voir les Sermons"
     }
   },
   "stockPhotos": {

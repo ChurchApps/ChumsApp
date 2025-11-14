@@ -45,26 +45,62 @@
       "noImplement": "未实现"
     }
   },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "日历名称",
+      "namePlaceholder": "输入此日历的名称"
+    },
+    "calendarList": {
+      "active": "活跃"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "您确定要从日历中删除此组吗？"
+    },
+    "calendarEvent": {
+      "confirmDelete": "您确定要删除此活动吗？",
+      "noGroups": "未找到组。"
+    },
+    "editEvent": {
+      "selectGroup": "选择一个组",
+      "addAllEvents": "添加组的所有活动",
+      "addSpecificEvents": "添加特定活动"
+    }
+  },
   "common": {
     "add": "添加",
     "amount": "金额",
+    "bottom": "底部",
     "cancel": "取消",
+    "center": "居中",
     "change": "更改",
     "changePhoto": "更改照片",
     "close": "关闭",
+    "custom": "自定义",
     "delete": "删除",
+    "done": "完成",
+    "duplicate": "复制",
     "edit": "编辑",
+    "help": "帮助",
+    "iconPicker": {
+      "searchLabel": "搜索图标",
+      "searchPlaceholder": "输入搜索（例如：person、home、church）..."
+    },
+    "left": "左",
     "name": "姓名",
     "no": "否",
     "notes": "笔记",
     "person": "人",
     "pleaseWait": "请稍候...",
     "remove": "移除",
+    "right": "右",
     "save": "保存",
     "search": "搜索",
     "searching": "搜索中...",
+    "sermons": "讲道",
     "title": "标题",
+    "top": "顶部",
     "update": "更新",
+    "website": "网站",
     "yes": "是"
   },
   "components": {
@@ -108,6 +144,12 @@
     "tasks": "任务"
   },
   "donation": {
+    "donationPage": {
+      "donations": "捐款"
+    },
+    "nonAuthDonation": {
+      "donate": "捐赠"
+    },
     "page": {
       "amount": "金额",
       "batch": "批次",
@@ -155,6 +197,7 @@
       "editRecurring": "编辑定期捐款",
       "fees": "费用",
       "frequency": "频率",
+      "frequencyLabel": "频率",
       "fund": "基金",
       "funds": "基金",
       "make": "进行捐赠",
@@ -389,6 +432,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "添加",
       "catName": "分类名称",
       "catReq": "类别名称为必填项。",
       "group": "团体",
@@ -397,14 +441,20 @@
       "new": "新建 ",
       "team": "团队"
     },
+    "groupBanner": {
+      "team": "团队"
+    },
     "groupDetails": {
       "attTrack": "追踪出席：",
       "cat": "类别",
       "groupDet": "团体详情",
+      "locationPlaceholder": "约翰逊家",
       "meetingLocation": "聚会地点",
       "meetingTime": "聚会时间",
+      "meetingTimePlaceholder": "每周二晚上7点",
       "parPick": "家长接送：",
-      "prinName": "打印名牌："
+      "prinName": "打印名牌：",
+      "slugPlaceholder": "group-name"
     },
     "groupDetailsEdit": {
       "attTrack": "追踪出席",
@@ -473,6 +523,9 @@
       "sesAdd": "添加会话",
       "sesDate": "会话日期",
       "srvTime": "服务时间"
+    },
+    "sessionCard": {
+      "active": "活跃"
     },
     "sessionEdit": {
       "deleteConfirm": "您确定要永久删除此会话吗？",
@@ -543,6 +596,15 @@
     "september": "九月"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "输入值...",
+      "search": "搜索",
+      "valuePlaceholder": "值"
+    },
+    "aiSearch": {
+      "placeholder": "显示30岁以上且7月生日的男性",
+      "title": "AI搜索"
+    },
     "editCondition": {
       "act": "活动",
       "anniMonth": "周年月份",
@@ -569,7 +631,8 @@
       "saveCon": "保存条件",
       "startW": "以...开头",
       "to": "至",
-      "value": "值"
+      "value": "值",
+      "valuePlaceholder": "值"
     },
     "groups": {
       "groups": "团体",
@@ -638,6 +701,7 @@
       "for": "为",
       "madeTo": "捐赠给",
       "notIn": "不在",
+      "placeholder": "按姓名搜索...",
       "simp": "简单",
       "simpSearch": "人员搜索",
       "active": "活跃:",
@@ -655,6 +719,9 @@
       "service": "服务",
       "serviceTime": "服务时间",
       "group": "小组"
+    },
+    "personNav": {
+      "customForms": "自定义表单"
     },
     "peopleSearchResults": {
       "noResMsg": "未找到结果。请搜索其他姓名或添加新人"
@@ -754,6 +821,12 @@
       "done": "完成",
       "editAssign": "编辑分配",
       "noMem": "未找到群组成员。"
+    },
+    "planType": {
+      "details": "计划类型详情"
+    },
+    "songs": {
+      "links": "链接"
     },
     "ministryList": {
       "mins": "事工",
@@ -855,6 +928,11 @@
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "添加屏幕",
+      "editDevice": "编辑设备",
+      "title": "设备"
+    },
     "profilePage": {
       "accDel": "账户删除",
       "confirmMsg": "您确定要永久删除您的账户吗？",
@@ -875,6 +953,7 @@
       "passMatch": "密码不匹配。",
       "passNew": "新密码",
       "passVer": "验证密码",
+      "passwordHelper": "留空以保持当前密码",
       "permWarn": "注意，这些操作是永久性的",
       "profEdit": "编辑个人资料",
       "saveChange": "更改已保存。",
@@ -950,11 +1029,22 @@
     },
     "reportPage": {
       "report": "报告"
+    },
+    "translation": {
+      "title": "圣经翻译查找"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "您确定要删除此标签吗？",
+      "tabNameHelper": "为您的标签选择一个描述性名称",
+      "urlHelper": "输入完整的URL（例如：https://example.com）"
+    },
     "associatePerson": {
       "change": "更改"
+    },
+    "church": {
+      "subdomainHelper": "您的教会独特的网址"
     },
     "churchSettings": {
       "churchSet": "教会设置",
@@ -970,6 +1060,10 @@
       "general": "常规",
       "churchInfo": "教会信息",
       "churchSettings": "教会设置"
+    },
+    "domain": {
+      "domainPlaceholder": "yoursite.com",
+      "doneAlert": "完成。请只点击此链接一次。"
     },
     "domainSettingsEdit": {
       "act": "操作",
@@ -997,18 +1091,34 @@
       "paypalFlatRate": "固定费率 [ PayPal ]",
       "paypalTransactionFee": "交易费 [ PayPal ]"
     },
+    "giving": {
+      "secretPlaceholder": "********"
+    },
     "givingSettingsEdit": {
+      "apiCredentials": "API凭证",
+      "developersApiKeys": "开发者 → API密钥",
       "forceMsg": "自动强制用户承担交易费用",
       "giving": "捐赠",
       "none": "无",
+      "paypalCreateApp": "创建应用以获取您的客户端ID和密钥。",
+      "paypalDeveloper": "PayPal开发者",
+      "paypalGoTo": "前往",
+      "paypalLogin": "登录，然后在",
       "prov": "提供商",
       "pubKey": "公钥",
       "secKey": "密钥",
+      "stripeCopyKeys": "复制您的可发布密钥和密钥（测试和生产）。",
+      "stripeDashboard": "Stripe仪表板",
+      "stripeGoTo": "并前往",
       "stripe": "Stripe",
+      "stripeVisit": "访问",
       "paypal": "PayPal",
       "clientId": "客户端 ID",
       "clientSecret": "客户端密钥",
       "transFee": "交易费"
+    },
+    "manageChurch": {
+      "noData": "没有可用的教会数据"
     },
     "supportContactSettingsEdit": {
       "supportContact": "支持联系人",
@@ -1095,6 +1205,12 @@
       "taskAssign": "分配任务",
       "taskNote": "任务备注",
       "taskTitle": "任务标题"
+    },
+    "selectGroup": {
+      "group": "团体",
+      "noResults": "未找到与您搜索匹配的组",
+      "searchPrompt": "搜索组以选择",
+      "sel": "选择"
     },
     "automationDetails": {
       "acts": "操作",
@@ -1194,10 +1310,6 @@
       "taskNew": "新任务",
       "titleTask": "请输入此任务的标题。"
     },
-    "selectGroup": {
-      "group": "团体",
-      "sel": "选择"
-    },
     "taskList": {
       "assignGroup": "分配给我的团体",
       "assignMe": "分配给我",
@@ -1229,6 +1341,102 @@
       "apply": "应用",
       "field": "字段",
       "value": "值"
+    }
+  },
+  "site": {
+    "addPage": {
+      "newLink": "新链接",
+      "newPage": "新页面",
+      "pageType": "页面类型"
+    },
+    "animations": {
+      "colorize": "着色",
+      "editAnimations": "编辑动画",
+      "fadeIn": "淡入",
+      "fast": "快速",
+      "focus": "聚焦",
+      "grow": "增大",
+      "none": "无",
+      "normal": "正常",
+      "onShowAnimation": "显示时动画",
+      "pulse": "脉冲",
+      "shrink": "缩小",
+      "slideDown": "向下滑动",
+      "slideLeft": "向左滑动",
+      "slideRight": "向右滑动",
+      "slideUp": "向上滑动",
+      "slow": "慢速"
+    },
+    "blocks": {
+      "confirmDelete": "您确定要永久删除此块吗？",
+      "editBlock": "编辑块"
+    },
+    "donateLink": {
+      "add": "添加",
+      "amountPlaceholder": "10",
+      "maxAmountsAlert": "您只能添加五个捐款金额。",
+      "noFunds": "无基金",
+      "textHelper": "例如：（现在捐赠）、（是的，我会帮助！）、（向青年营捐赠$10）等。",
+      "textLabel": "文本",
+      "urlHelper": "提示：您必须从网站构建器链接具有捐赠元素的页面。",
+      "urlLabel": "网址",
+      "urlPlaceholder": "/donate"
+    },
+    "elements": {
+      "addressHelper": "例如：市政厅，纽约，纽约",
+      "categoriesHelper": "例如：小组，主日学",
+      "confirmDelete": "您确定要永久删除此元素吗？",
+      "confirmDuplicate": "您确定要复制此元素及其所有子元素吗？",
+      "editElement": "编辑元素",
+      "heightPlaceholder": "1000",
+      "nameHelper": "例如：第一浸信会教堂"
+    },
+    "files": {
+      "confirmDelete": "您确定要删除",
+      "storageInfo": "免费提供100 MB的存储空间用于存储教会网站通常需要的PDF和其他文档。如果需要额外空间，我们建议使用Google Drive或Dropbox存储文件。",
+      "upload": "上传",
+      "uploadFiles": "上传文件"
+    },
+    "navLink": {
+      "addLink": "添加链接",
+      "linkSettings": "链接设置"
+    },
+    "pageLink": {
+      "check": "检查",
+      "confirmDelete": "您确定要永久删除此页面吗？",
+      "confirmDuplicate": "您确定要复制此页面及其所有内容吗？",
+      "linkSettings": "链接设置",
+      "pageSettings": "页面设置",
+      "urlHelper": "例如：/camper-registration  （**保存前请务必检查）"
+    },
+    "pages": {
+      "convert": "转换"
+    },
+    "pagesPage": {
+      "confirmConvert": "您想将此自动生成的页面转换为自定义页面吗？"
+    },
+    "pickColors": {
+      "headingColor": "标题颜色",
+      "linkColor": "链接颜色",
+      "opacityHelper": "图像顶部黑色渐变层的不透明度。最大值：1",
+      "textColor": "文本颜色"
+    },
+    "row": {
+      "columnsHelper": "数字表示页面的十二分之一。"
+    },
+    "section": {
+      "confirmDelete": "您确定要永久删除此部分吗？",
+      "confirmDuplicate": "您确定要复制此部分及其所有内容吗？",
+      "editSection": "编辑部分"
+    },
+    "style": {
+      "editStyle": "编辑样式"
+    },
+    "styleEdit": {
+      "property": "属性"
+    },
+    "templates": {
+      "viewSermons": "查看讲道"
     }
   },
   "sermons": {

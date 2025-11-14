@@ -45,26 +45,62 @@
       "noImplement": "Nicht implementiert"
     }
   },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "Kalendername",
+      "namePlaceholder": "Geben Sie einen Namen für diesen Kalender ein"
+    },
+    "calendarList": {
+      "active": "Aktiv"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "Sind Sie sicher, dass Sie diese Gruppe aus dem Kalender entfernen möchten?"
+    },
+    "calendarEvent": {
+      "confirmDelete": "Sind Sie sicher, dass Sie dieses Ereignis löschen möchten?",
+      "noGroups": "Keine Gruppen gefunden."
+    },
+    "editEvent": {
+      "selectGroup": "Gruppe auswählen",
+      "addAllEvents": "Alle Ereignisse der Gruppe hinzufügen",
+      "addSpecificEvents": "Bestimmte Ereignisse hinzufügen"
+    }
+  },
   "common": {
     "add": "Hinzufügen",
     "amount": "Betrag",
+    "bottom": "Unten",
     "cancel": "Abbrechen",
+    "center": "Mitte",
     "change": "Ändern",
     "changePhoto": "Foto ändern",
     "close": "Schließen",
+    "custom": "Benutzerdefiniert",
     "delete": "Löschen",
+    "done": "Fertig",
+    "duplicate": "Duplizieren",
     "edit": "Bearbeiten",
+    "help": "Hilfe",
+    "iconPicker": {
+      "searchLabel": "Symbole suchen",
+      "searchPlaceholder": "Zum Suchen eingeben (z.B. Person, Haus, Kirche)..."
+    },
+    "left": "Links",
     "name": "Name",
     "no": "Nein",
     "notes": "Notizen",
     "person": "Person",
     "pleaseWait": "Bitte warten...",
     "remove": "Entfernen",
+    "right": "Rechts",
     "save": "Speichern",
     "search": "Suchen",
     "searching": "Suchen...",
+    "sermons": "Predigten",
     "title": "Titel",
+    "top": "Oben",
     "update": "Aktualisieren",
+    "website": "Website",
     "yes": "Ja"
   },
   "components": {
@@ -108,6 +144,12 @@
     "tasks": "Aufgaben"
   },
   "donation": {
+    "donationPage": {
+      "donations": "Spenden"
+    },
+    "nonAuthDonation": {
+      "donate": "Spenden"
+    },
     "page": {
       "amount": "Betrag",
       "batch": "Charge",
@@ -155,6 +197,7 @@
       "editRecurring": "Wiederkehrende Spende bearbeiten",
       "fees": "Gebühren",
       "frequency": "Häufigkeit",
+      "frequencyLabel": "Häufigkeit",
       "fund": "Fonds",
       "funds": "Fonds",
       "make": "Spende tätigen",
@@ -389,6 +432,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "Hinzufügen",
       "catName": "Kategoriename",
       "catReq": "Kategoriename ist erforderlich.",
       "group": "Gruppe",
@@ -397,14 +441,20 @@
       "new": "Neu ",
       "team": "Team"
     },
+    "groupBanner": {
+      "team": "Team"
+    },
     "groupDetails": {
       "attTrack": "Anwesenheit verfolgen:",
       "cat": "Kategorie",
       "groupDet": "Gruppendetails",
+      "locationPlaceholder": "Johnson-Haus",
       "meetingLocation": "Treffpunkt",
       "meetingTime": "Treffzeit",
+      "meetingTimePlaceholder": "Dienstags um 19 Uhr",
       "parPick": "Abholung durch Eltern:",
-      "prinName": "Namensschild drucken:"
+      "prinName": "Namensschild drucken:",
+      "slugPlaceholder": "gruppenname"
     },
     "groupDetailsEdit": {
       "attTrack": "Anwesenheit verfolgen",
@@ -473,6 +523,9 @@
       "sesAdd": "Sitzung hinzufügen",
       "sesDate": "Sitzungsdatum",
       "srvTime": "Dienstzeit"
+    },
+    "sessionCard": {
+      "active": "Aktiv"
     },
     "sessionEdit": {
       "deleteConfirm": "Sind Sie sicher, dass Sie diese Sitzung dauerhaft löschen möchten?",
@@ -543,6 +596,15 @@
     "september": "September"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "Wert eingeben...",
+      "search": "Suchen",
+      "valuePlaceholder": "Wert"
+    },
+    "aiSearch": {
+      "placeholder": "Zeige mir Männer über 30 mit Geburtstagen im Juli",
+      "title": "KI-Suche"
+    },
     "editCondition": {
       "act": "Aktivität",
       "anniMonth": "Jubiläumsmonat",
@@ -569,7 +631,8 @@
       "saveCon": "Bedingung speichern",
       "startW": "beginnt mit",
       "to": "An",
-      "value": "Wert"
+      "value": "Wert",
+      "valuePlaceholder": "Wert"
     },
     "groups": {
       "groups": "Gruppen",
@@ -638,6 +701,7 @@
       "for": "für",
       "madeTo": "gemacht für",
       "notIn": "Nicht in",
+      "placeholder": "Nach Namen suchen...",
       "simp": "Einfach",
       "simpSearch": "Personensuche",
       "active": "aktiv:",
@@ -655,6 +719,9 @@
       "service": "Gottesdienst",
       "serviceTime": "Gottesdienstzeit",
       "group": "Gruppe"
+    },
+    "personNav": {
+      "customForms": "Benutzerdefinierte Formulare"
     },
     "peopleSearchResults": {
       "noResMsg": "Keine Ergebnisse gefunden. Bitte suchen Sie nach einem anderen Namen oder fügen Sie eine neue Person hinzu"
@@ -754,6 +821,12 @@
       "done": "Fertig",
       "editAssign": "Zuweisung bearbeiten",
       "noMem": "Keine Gruppenmitglieder gefunden."
+    },
+    "planType": {
+      "details": "Plantyp-Details"
+    },
+    "songs": {
+      "links": "Links"
     },
     "ministryList": {
       "mins": "Ministerien",
@@ -855,6 +928,11 @@
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "Bildschirm hinzufügen",
+      "editDevice": "Gerät bearbeiten",
+      "title": "Geräte"
+    },
     "profilePage": {
       "accDel": "Kontolöschung",
       "confirmMsg": "Sind Sie sicher, dass Sie Ihr Konto dauerhaft löschen möchten?",
@@ -875,6 +953,7 @@
       "passMatch": "Passwörter stimmen nicht überein.",
       "passNew": "Neues Passwort",
       "passVer": "Passwort bestätigen",
+      "passwordHelper": "Leer lassen, um aktuelles Passwort zu behalten",
       "permWarn": "Vorsicht, diese Aktionen sind dauerhaft",
       "profEdit": "Profil bearbeiten",
       "saveChange": "Änderungen gespeichert.",
@@ -950,11 +1029,22 @@
     },
     "reportPage": {
       "report": "Bericht"
+    },
+    "translation": {
+      "title": "Bibelübersetzungs-Nachschlagwerke"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "Sind Sie sicher, dass Sie diesen Tab löschen möchten?",
+      "tabNameHelper": "Wählen Sie einen beschreibenden Namen für Ihren Tab",
+      "urlHelper": "Geben Sie die vollständige URL ein (z.B. https://example.com)"
+    },
     "associatePerson": {
       "change": "Ändern"
+    },
+    "church": {
+      "subdomainHelper": "Die einzigartige Webadresse Ihrer Kirche"
     },
     "churchSettings": {
       "churchSet": "Kircheneinstellungen",
@@ -970,6 +1060,10 @@
       "general": "Allgemein",
       "churchInfo": "Kircheninformationen",
       "churchSettings": "Kircheneinstellungen"
+    },
+    "domain": {
+      "domainPlaceholder": "ihreseite.de",
+      "doneAlert": "Fertig. Bitte klicken Sie diesen Link nur einmal."
     },
     "domainSettingsEdit": {
       "act": "Aktion",
@@ -997,18 +1091,34 @@
       "paypalFlatRate": "Pauschalgebühr [ PayPal ]",
       "paypalTransactionFee": "Transaktionsgebühr [ PayPal ]"
     },
+    "giving": {
+      "secretPlaceholder": "********"
+    },
     "givingSettingsEdit": {
+      "apiCredentials": "API-Anmeldeinformationen",
+      "developersApiKeys": "Entwickler → API-Schlüssel",
       "forceMsg": "Erzwingt automatisch, dass Benutzer die Transaktionsgebühren übernehmen",
       "giving": "Spenden",
       "none": "Keine",
+      "paypalCreateApp": "erstellen Sie eine App, um Ihre Client-ID und Ihr Geheimnis zu erhalten.",
+      "paypalDeveloper": "PayPal-Entwickler",
+      "paypalGoTo": "Gehen Sie zu",
+      "paypalLogin": "melden Sie sich an, dann unter",
       "prov": "Anbieter",
       "pubKey": "Öffentlicher Schlüssel",
       "secKey": "Geheimer Schlüssel",
+      "stripeCopyKeys": "um Ihre Veröffentlichungs- und Geheimschlüssel zu kopieren (Test & Live).",
+      "stripeDashboard": "Stripe Dashboard",
+      "stripeGoTo": "und gehen Sie zu",
       "stripe": "Stripe",
+      "stripeVisit": "Besuchen Sie",
       "paypal": "PayPal",
       "clientId": "Client-ID",
       "clientSecret": "Client-Geheimnis",
       "transFee": "Transaktionsgebühr"
+    },
+    "manageChurch": {
+      "noData": "Keine Kirchendaten verfügbar"
     },
     "supportContactSettingsEdit": {
       "supportContact": "Support-Kontakt",
@@ -1095,6 +1205,10 @@
       "taskAssign": "Aufgabe zuweisen",
       "taskNote": "Aufgabennotiz",
       "taskTitle": "Aufgabentitel"
+    },
+    "selectGroup": {
+      "noResults": "Keine Gruppen gefunden, die Ihrer Suche entsprechen",
+      "searchPrompt": "Suchen Sie nach einer Gruppe zum Auswählen"
     },
     "automationDetails": {
       "acts": "Aktionen",
@@ -1517,6 +1631,102 @@
       "title": "Nach einem Lied suchen",
       "inputLabel": "Titel oder Künstler",
       "inputPlaceholder": "Geben Sie Liedtitel oder Künstlernamen ein..."
+    }
+  },
+  "site": {
+    "addPage": {
+      "newLink": "Neuer Link",
+      "newPage": "Neue Seite",
+      "pageType": "Seitentyp"
+    },
+    "animations": {
+      "colorize": "Einfärben",
+      "editAnimations": "Animationen bearbeiten",
+      "fadeIn": "Einblenden",
+      "fast": "Schnell",
+      "focus": "Fokus",
+      "grow": "Wachsen",
+      "none": "Keine",
+      "normal": "Normal",
+      "onShowAnimation": "Bei Anzeige-Animation",
+      "pulse": "Pulsieren",
+      "shrink": "Schrumpfen",
+      "slideDown": "Nach unten gleiten",
+      "slideLeft": "Nach links gleiten",
+      "slideRight": "Nach rechts gleiten",
+      "slideUp": "Nach oben gleiten",
+      "slow": "Langsam"
+    },
+    "blocks": {
+      "confirmDelete": "Sind Sie sicher, dass Sie diesen Block dauerhaft löschen möchten?",
+      "editBlock": "Block bearbeiten"
+    },
+    "donateLink": {
+      "add": "Hinzufügen",
+      "amountPlaceholder": "10",
+      "maxAmountsAlert": "Sie dürfen nur fünf Spendenbeträge hinzufügen.",
+      "noFunds": "Keine Fonds",
+      "textHelper": "Bsp.: (Jetzt spenden), (Ja, ich helfe!), (10 € für Jugendlager spenden), etc.",
+      "textLabel": "Text",
+      "urlHelper": "Tipp: Sie müssen die Seite aus dem Website-Builder verlinken, die das Spendenelement enthält.",
+      "urlLabel": "Url",
+      "urlPlaceholder": "/spenden"
+    },
+    "elements": {
+      "addressHelper": "Bsp.: Rathaus, Berlin, Deutschland",
+      "categoriesHelper": "Bsp.: Kleingruppen, Sonntagsschule",
+      "confirmDelete": "Sind Sie sicher, dass Sie dieses Element dauerhaft löschen möchten?",
+      "confirmDuplicate": "Sind Sie sicher, dass Sie eine Kopie dieses Elements und aller untergeordneten Elemente erstellen möchten?",
+      "editElement": "Element bearbeiten",
+      "heightPlaceholder": "1000",
+      "nameHelper": "Bsp.: Erste Baptistenkirche"
+    },
+    "files": {
+      "confirmDelete": "Sind Sie sicher, dass Sie löschen möchten",
+      "storageInfo": "100 MB Speicherplatz werden kostenlos zur Verfügung gestellt, um PDFs und andere Dokumente zu speichern, die häufig für Kirchen-Websites benötigt werden. Wir empfehlen die Verwendung von Google Drive oder Dropbox zum Speichern von Dateien, wenn zusätzlicher Speicherplatz benötigt wird.",
+      "upload": "Hochladen",
+      "uploadFiles": "Dateien hochladen"
+    },
+    "navLink": {
+      "addLink": "Link hinzufügen",
+      "linkSettings": "Link-Einstellungen"
+    },
+    "pageLink": {
+      "check": "Prüfen",
+      "confirmDelete": "Sind Sie sicher, dass Sie diese Seite dauerhaft löschen möchten?",
+      "confirmDuplicate": "Sind Sie sicher, dass Sie eine Kopie dieser Seite und aller Inhalte erstellen möchten?",
+      "linkSettings": "Link-Einstellungen",
+      "pageSettings": "Seiteneinstellungen",
+      "urlHelper": "Bsp.: /teilnehmer-anmeldung  (**Bitte vor dem Speichern prüfen)"
+    },
+    "pages": {
+      "convert": "Konvertieren"
+    },
+    "pagesPage": {
+      "confirmConvert": "Möchten Sie diese automatisch generierte Seite in eine benutzerdefinierte Seite konvertieren?"
+    },
+    "pickColors": {
+      "headingColor": "Überschriftenfarbe",
+      "linkColor": "Linkfarbe",
+      "opacityHelper": "Die Deckkraft der schwarzen Verlaufsebene über dem Bild. Maximalwert: 1",
+      "textColor": "Textfarbe"
+    },
+    "row": {
+      "columnsHelper": "Zahlen stellen Zwölftel der Seite dar."
+    },
+    "section": {
+      "confirmDelete": "Sind Sie sicher, dass Sie diesen Abschnitt dauerhaft löschen möchten?",
+      "confirmDuplicate": "Sind Sie sicher, dass Sie eine Kopie dieses Abschnitts und aller Inhalte erstellen möchten?",
+      "editSection": "Abschnitt bearbeiten"
+    },
+    "style": {
+      "editStyle": "Stil bearbeiten"
+    },
+    "styleEdit": {
+      "property": "Eigenschaft"
+    },
+    "templates": {
+      "viewSermons": "Predigten ansehen"
     }
   },
   "stockPhotos": {

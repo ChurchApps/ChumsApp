@@ -45,26 +45,62 @@
       "noImplement": "Hindi Naipatupad"
     }
   },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "Pangalan ng Kalendaryo",
+      "namePlaceholder": "Magpasok ng pangalan para sa kalendaryong ito"
+    },
+    "calendarList": {
+      "active": "Aktibo"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "Sigurado ka bang nais mong alisin ang grupong ito mula sa kalendaryo?"
+    },
+    "calendarEvent": {
+      "confirmDelete": "Sigurado ka bang nais mong tanggalin ang kaganapang ito?",
+      "noGroups": "Walang natagpuang grupo."
+    },
+    "editEvent": {
+      "selectGroup": "Pumili ng Grupo",
+      "addAllEvents": "Idagdag ang lahat ng kaganapan ng grupo",
+      "addSpecificEvents": "Idagdag ang mga partikular na kaganapan"
+    }
+  },
   "common": {
     "add": "Magdagdag",
     "amount": "Halaga",
+    "bottom": "Ibaba",
     "cancel": "Kanselahin",
+    "center": "Gitna",
     "change": "Palitan",
     "changePhoto": "Palitan ang Larawan",
     "close": "Isara",
+    "custom": "Pasadya",
     "delete": "Tanggalin",
+    "done": "Tapos na",
+    "duplicate": "Kopyahin",
     "edit": "I-edit",
+    "help": "Tulong",
+    "iconPicker": {
+      "searchLabel": "Maghanap ng mga Icon",
+      "searchPlaceholder": "Mag-type upang maghanap (hal., tao, bahay, simbahan)..."
+    },
+    "left": "Kaliwa",
     "name": "Pangalan",
     "no": "Hindi",
     "notes": "Mga Tala",
     "person": "Tao",
     "pleaseWait": "Mangyaring maghintay...",
     "remove": "Alisin",
+    "right": "Kanan",
     "save": "I-save",
     "search": "Maghanap",
     "searching": "Naghahanap...",
+    "sermons": "Mga Sermon",
     "title": "Pamagat",
+    "top": "Itaas",
     "update": "I-update",
+    "website": "Website",
     "yes": "Oo"
   },
   "components": {
@@ -108,6 +144,12 @@
     "tasks": "Mga Gawain"
   },
   "donation": {
+    "donationPage": {
+      "donations": "Mga Donasyon"
+    },
+    "nonAuthDonation": {
+      "donate": "Mag-donate"
+    },
     "page": {
       "amount": "Halaga",
       "batch": "Batch",
@@ -155,6 +197,7 @@
       "editRecurring": "I-edit ang Paulit-ulit na Donasyon",
       "fees": "Mga Bayad",
       "frequency": "Dalas",
+      "frequencyLabel": "Dalas",
       "fund": "Pondo",
       "funds": "Mga Pondo",
       "make": "Gumawa ng Donasyon",
@@ -389,6 +432,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "Magdagdag",
       "catName": "Pangalan ng Kategorya",
       "catReq": "Kinakailangan ang pangalan ng kategorya.",
       "group": "Grupo",
@@ -397,14 +441,20 @@
       "new": "Bago ",
       "team": "Koponan"
     },
+    "groupBanner": {
+      "team": "Koponan"
+    },
     "groupDetails": {
       "attTrack": "Pagsubaybay sa Pagdalo:",
       "cat": "Kategorya",
       "groupDet": "Mga Detalye ng Grupo",
+      "locationPlaceholder": "Bahay ni Johnson",
       "meetingLocation": "Lokasyon ng Pulong",
       "meetingTime": "Oras ng Pulong",
+      "meetingTimePlaceholder": "Martes ng 7pm",
       "parPick": "Pagkuha ng Magulang:",
-      "prinName": "I-print ang Name Tag:"
+      "prinName": "I-print ang Name Tag:",
+      "slugPlaceholder": "pangalan-ng-grupo"
     },
     "groupDetailsEdit": {
       "attTrack": "Pagsubaybay sa Pagdalo",
@@ -473,6 +523,9 @@
       "sesAdd": "Magdagdag ng Sasyon",
       "sesDate": "Petsa ng Sasyon",
       "srvTime": "Oras ng Serbisyo"
+    },
+    "sessionCard": {
+      "active": "Aktibo"
     },
     "sessionEdit": {
       "deleteConfirm": "Sigurado ka bang nais mong permanenteng tanggalin ang sesyon na ito?",
@@ -543,6 +596,15 @@
     "september": "Setyembre"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "Magpasok ng halaga...",
+      "search": "Maghanap",
+      "valuePlaceholder": "Halaga"
+    },
+    "aiSearch": {
+      "placeholder": "Ipakita sa akin ang mga lalaki na mahigit 30 taong gulang na may kaarawan sa Hulyo",
+      "title": "AI Search"
+    },
     "editCondition": {
       "act": "Aktibidad",
       "anniMonth": "Buwan ng Anibersaryo",
@@ -569,7 +631,8 @@
       "saveCon": "I-save ang Kundisyon",
       "startW": "nagsisimula sa",
       "to": "Sa",
-      "value": "Halaga"
+      "value": "Halaga",
+      "valuePlaceholder": "Halaga"
     },
     "groups": {
       "groups": "Mga Grupo",
@@ -638,6 +701,7 @@
       "for": "para sa",
       "madeTo": "ginawa sa",
       "notIn": "Hindi sa",
+      "placeholder": "Maghanap ayon sa pangalan...",
       "simp": "Simple",
       "simpSearch": "Paghahanap ng Tao",
       "active": "aktibo:",
@@ -651,10 +715,13 @@
       "activity": "Aktibidad",
       "type": "Uri",
       "fund": "Pondo",
-      "campus": "Campus",
+      "campus": "Kampus",
       "service": "Serbisyo",
       "serviceTime": "Oras ng Serbisyo",
       "group": "Grupo"
+    },
+    "personNav": {
+      "customForms": "Mga Custom na Form"
     },
     "peopleSearchResults": {
       "noResMsg": "Walang natagpuang resulta. Mangyaring maghanap ng ibang pangalan o magdagdag ng bagong tao"
@@ -754,6 +821,12 @@
       "done": "Tapos na",
       "editAssign": "I-edit ang Pagtatalaga",
       "noMem": "Walang natagpuang miyembro ng grupo."
+    },
+    "planType": {
+      "details": "Mga Detalye ng Uri ng Plano"
+    },
+    "songs": {
+      "links": "Mga Link"
     },
     "ministryList": {
       "mins": "Mga Ministro",
@@ -855,6 +928,11 @@
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "Magdagdag ng Screen",
+      "editDevice": "I-edit ang Device",
+      "title": "Mga Device"
+    },
     "profilePage": {
       "accDel": "Pagtanggal ng Account",
       "confirmMsg": "Sigurado ka bang nais mong permanenteng tanggalin ang iyong account?",
@@ -875,6 +953,7 @@
       "passMatch": "Hindi tumutugma ang mga password.",
       "passNew": "Bagong Password",
       "passVer": "I-verify ang Password",
+      "passwordHelper": "Iwanang blangko upang panatilihin ang kasalukuyang password",
       "permWarn": "Mag-ingat, ang mga aksyon na ito ay permanente",
       "profEdit": "I-edit ang Profile",
       "saveChange": "Nai-save ang mga pagbabago.",
@@ -950,11 +1029,22 @@
     },
     "reportPage": {
       "report": "Ulat"
+    },
+    "translation": {
+      "title": "Mga Lookup ng Salin ng Bibliya"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "Sigurado ka bang nais mong tanggalin ang tab na ito?",
+      "tabNameHelper": "Pumili ng malinaw na pangalan para sa iyong tab",
+      "urlHelper": "Ipasok ang buong URL (hal., https://example.com)"
+    },
     "associatePerson": {
       "change": "Palitan"
+    },
+    "church": {
+      "subdomainHelper": "Ang natatanging web address ng iyong simbahan"
     },
     "churchSettings": {
       "churchSet": "Mga Setting ng Simbahan",
@@ -970,6 +1060,10 @@
       "general": "Pangkalahatan",
       "churchInfo": "Impormasyon ng Simbahan",
       "churchSettings": "Mga Setting ng Simbahan"
+    },
+    "domain": {
+      "domainPlaceholder": "yoursite.com",
+      "doneAlert": "Tapos na. Mangyaring i-click lang ang link na ito nang isang beses."
     },
     "domainSettingsEdit": {
       "act": "Aksyon",
@@ -990,25 +1084,41 @@
       "noGroups": "Walang magagamit na grupo"
     },
     "feeOptionsSettings": {
-      "creditCardFlatRate": "Flat rate [ Credit Card ]",
-      "creditCardTransactionFee": "Bayarin sa transaksyon [ Credit Card ]",
-      "achFlatRate": "Flat rate [ ACH ]",
-      "achHardLimit": "Mahigpit na limitasyon [ ACH ]",
-      "paypalFlatRate": "Flat rate [ PayPal ]",
-      "paypalTransactionFee": "Bayarin sa transaksyon [ PayPal ]"
+      "creditCardFlatRate": "Flat Rate [ Credit Card ]",
+      "creditCardTransactionFee": "Bayad sa Transaksyon [ Credit Card ]",
+      "achFlatRate": "Flat Rate [ ACH ]",
+      "achHardLimit": "Mahigpit na Limitasyon [ ACH ]",
+      "paypalFlatRate": "Flat Rate [ PayPal ]",
+      "paypalTransactionFee": "Bayad sa Transaksyon [ PayPal ]"
+    },
+    "giving": {
+      "secretPlaceholder": "********"
     },
     "givingSettingsEdit": {
+      "apiCredentials": "Mga API Credentials",
+      "developersApiKeys": "Mga Developer → API keys",
       "forceMsg": "Awtomatikong pinipilit ang mga gumagamit na bayaran ang mga bayarin sa transaksyon",
       "giving": "Pagbibigay",
       "none": "Wala",
+      "paypalCreateApp": "lumikha ng app upang makuha ang iyong Client ID at Secret.",
+      "paypalDeveloper": "PayPal Developer",
+      "paypalGoTo": "Pumunta sa",
+      "paypalLogin": "mag-login, pagkatapos sa ilalim ng",
       "prov": "Provider",
       "pubKey": "Publikong Susi",
       "secKey": "Lihim na Susi",
+      "stripeCopyKeys": "upang kopyahin ang iyong Publishable at Secret keys (test at live).",
+      "stripeDashboard": "Stripe Dashboard",
+      "stripeGoTo": "at pumunta sa",
       "stripe": "Stripe",
+      "stripeVisit": "Bisitahin",
       "paypal": "PayPal",
       "clientId": "Client ID",
       "clientSecret": "Client Secret",
       "transFee": "Bayad sa Transaksyon"
+    },
+    "manageChurch": {
+      "noData": "Walang available na data ng simbahan"
     },
     "supportContactSettingsEdit": {
       "supportContact": "Kontak ng suporta",
@@ -1095,6 +1205,12 @@
       "taskAssign": "Italaga ang Gawain",
       "taskNote": "Nota ng Gawain",
       "taskTitle": "Pamagat ng Gawain"
+    },
+    "selectGroup": {
+      "group": "Grupo",
+      "noResults": "Walang natagpuang grupo na tumutugma sa iyong paghahanap",
+      "searchPrompt": "Maghanap ng grupo upang piliin",
+      "sel": "Piliin"
     },
     "automationDetails": {
       "acts": "Mga Aksyon",
@@ -1193,10 +1309,6 @@
       "associateW": "Iugnay Sa",
       "taskNew": "Bagong Gawain",
       "titleTask": "Mangyaring magpasok ng pamagat para sa gawain na ito."
-    },
-    "selectGroup": {
-      "group": "Grupo",
-      "sel": "Piliin"
     },
     "taskList": {
       "assignGroup": "Itinalaga sa Aking Mga Grupo",
@@ -1517,6 +1629,102 @@
       "title": "Maghanap ng Awit",
       "inputLabel": "Pamagat o Artista",
       "inputPlaceholder": "Ipasok ang pamagat ng awit o pangalan ng artista..."
+    }
+  },
+  "site": {
+    "addPage": {
+      "newLink": "Bagong Link",
+      "newPage": "Bagong Pahina",
+      "pageType": "Uri ng Pahina"
+    },
+    "animations": {
+      "colorize": "Kulayin",
+      "editAnimations": "I-edit ang mga Animation",
+      "fadeIn": "Fade In",
+      "fast": "Mabilis",
+      "focus": "Focus",
+      "grow": "Lumaki",
+      "none": "Wala",
+      "normal": "Normal",
+      "onShowAnimation": "Animation sa Pagpapakita",
+      "pulse": "Pulse",
+      "shrink": "Lumiliit",
+      "slideDown": "Slide Pababa",
+      "slideLeft": "Slide Pakaliwa",
+      "slideRight": "Slide Pakanan",
+      "slideUp": "Slide Pataas",
+      "slow": "Mabagal"
+    },
+    "blocks": {
+      "confirmDelete": "Sigurado ka bang nais mong permanenteng tanggalin ang block na ito?",
+      "editBlock": "I-edit ang Block"
+    },
+    "donateLink": {
+      "add": "Magdagdag",
+      "amountPlaceholder": "10",
+      "maxAmountsAlert": "Limang halaga ng donasyon lang ang maaaring idagdag.",
+      "noFunds": "Walang Pondo",
+      "textHelper": "Hal: (Mag-donate na), (Oo, tutulungan ko!), (Mag-donate ng $10 para sa Youth Camp), atbp..",
+      "textLabel": "Teksto",
+      "urlHelper": "Tip: dapat mong i-link ang pahina mula sa website builder na may donation element.",
+      "urlLabel": "Url",
+      "urlPlaceholder": "/donate"
+    },
+    "elements": {
+      "addressHelper": "hal: City Hall, New York, NY",
+      "categoriesHelper": "hal: Maliliit na Grupo, Paaralang Linggo",
+      "confirmDelete": "Sigurado ka bang nais mong permanenteng tanggalin ang element na ito?",
+      "confirmDuplicate": "Sigurado ka bang nais mong gumawa ng kopya ng element na ito at lahat ng mga anak nito?",
+      "editElement": "I-edit ang Element",
+      "heightPlaceholder": "1000",
+      "nameHelper": "hal: First Baptist Church"
+    },
+    "files": {
+      "confirmDelete": "Sigurado ka bang nais mong tanggalin",
+      "storageInfo": "100 MB ng espasyo sa storage ay ibinibigay nang libre para sa pag-store ng mga PDF at iba pang dokumento na karaniwang kailangan para sa mga website ng simbahan. Inirerekumenda naming gumamit ng Google Drive o Dropbox upang mag-store ng mga file kung kailangan ng karagdagang espasyo.",
+      "upload": "Mag-upload",
+      "uploadFiles": "Mag-upload ng mga File"
+    },
+    "navLink": {
+      "addLink": "Magdagdag ng Link",
+      "linkSettings": "Mga Setting ng Link"
+    },
+    "pageLink": {
+      "check": "Tingnan",
+      "confirmDelete": "Sigurado ka bang nais mong permanenteng tanggalin ang pahinang ito?",
+      "confirmDuplicate": "Sigurado ka bang nais mong gumawa ng kopya ng pahinang ito at lahat ng nilalaman nito?",
+      "linkSettings": "Mga Setting ng Link",
+      "pageSettings": "Mga Setting ng Pahina",
+      "urlHelper": "hal: /camper-registration  (**Siguraduhing tingnan bago i-save)"
+    },
+    "pages": {
+      "convert": "I-convert"
+    },
+    "pagesPage": {
+      "confirmConvert": "Nais mo bang i-convert ang auto-generated na pahinang ito sa custom na pahina?"
+    },
+    "pickColors": {
+      "headingColor": "Kulay ng Heading",
+      "linkColor": "Kulay ng Link",
+      "opacityHelper": "Ang opacity ng itim na gradient layer sa ibabaw ng imahe. Max na halaga: 1",
+      "textColor": "Kulay ng Teksto"
+    },
+    "row": {
+      "columnsHelper": "Ang mga numero ay kumakatawan sa labindalawang bahagi ng pahina."
+    },
+    "section": {
+      "confirmDelete": "Sigurado ka bang nais mong permanenteng tanggalin ang seksyon na ito?",
+      "confirmDuplicate": "Sigurado ka bang nais mong gumawa ng kopya ng seksyon na ito at lahat ng nilalaman nito?",
+      "editSection": "I-edit ang Seksyon"
+    },
+    "style": {
+      "editStyle": "I-edit ang Estilo"
+    },
+    "styleEdit": {
+      "property": "Property"
+    },
+    "templates": {
+      "viewSermons": "Tingnan ang mga Sermon"
     }
   },
   "stockPhotos": {
