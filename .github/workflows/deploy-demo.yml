@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'yarn'
+          cache: 'npm'
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -41,9 +41,7 @@ jobs:
           export SERVERLESS_ACCESS_KEY="$SERVERLESS_ACCESS_KEY"
 
       - name: Install Dependencies
-        run: |
-          rm -f package-lock.json
-          yarn install --frozen-lockfile
+        run: npm ci
           
       - name: Deploy
-        run: yarn deploy-demo
+        run: npm run deploy-demo
