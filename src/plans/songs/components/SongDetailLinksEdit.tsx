@@ -100,8 +100,10 @@ export const SongDetailLinksEdit = (props: Props) => {
   };
 
   const handleDelete = () => {
-    ApiHelper.delete("/songDetailLinks/" + editLink.id, "ContentApi");
-    setEditLink(null);
+    ApiHelper.delete("/songDetailLinks/" + editLink.id, "ContentApi").then(() => {
+      loadData();
+      setEditLink(null);
+    });
   };
 
   const handleSave = () => {
