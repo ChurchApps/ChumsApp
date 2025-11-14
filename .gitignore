@@ -3,7 +3,7 @@
 /public/apphelper
 /test-results.json
 .serena
-yarn.lock
+#yarn.lock
 
 # Logs
 logs
@@ -81,7 +81,7 @@ typings/
 .yarn-integrity
 
 # Yarn Lock file
-yarn.lock
+#yarn.lock
 
 # dotenv environment variables file
 .env
