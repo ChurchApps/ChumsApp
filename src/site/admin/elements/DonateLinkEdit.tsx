@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import type { SelectChangeEvent } from "@mui/material";
-import { Button, Chip, FormControl, Icon, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import {
+  Button, Chip, FormControl, Icon, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography 
+} from "@mui/material";
 import { ApiHelper, Locale } from "@churchapps/apphelper";
 
 type Props = {
@@ -91,8 +93,8 @@ export function DonateLinkEdit({ parsedData, onRealtimeChange }: Props) {
         )
         : (
           <FormControl fullWidth>
-            <InputLabel>Funds</InputLabel>
-            <Select fullWidth label="Funds" name="fundId" value={parsedData.fundId} onChange={handleChange} data-testid="donate-link-fund-select" aria-label="Select donation fund">
+            <InputLabel>{Locale.label("site.donateLink.funds")}</InputLabel>
+            <Select fullWidth label={Locale.label("site.donateLink.funds")} name="fundId" value={parsedData.fundId} onChange={handleChange} data-testid="donate-link-fund-select" aria-label={Locale.label("site.donateLink.selectFund")}>
               {funds.map((f: any) => (
                 <MenuItem key={f.id} value={f.id} data-testid={`fund-option-${f.id}`} aria-label={f.name}>{f.name}</MenuItem>
               ))}
@@ -101,14 +103,14 @@ export function DonateLinkEdit({ parsedData, onRealtimeChange }: Props) {
         )}
 
       {/* Donation Amounts */}
-      <Typography marginTop={1.5}>Donation Amounts</Typography>
+      <Typography marginTop={1.5}>{Locale.label("site.donateLink.donationAmounts")}</Typography>
       <Typography fontSize={12.5} marginTop={1}>
-        You can suggest some donation amounts like $5, $10, $20, etc..
+        {Locale.label("site.donateLink.donationAmountsHelper")}
       </Typography>
       <div>
         {amounts?.map((a) => (<Chip color="primary" size="small" label={`$ ${a}`} onDelete={() => { handleAmountDelete(a); }} sx={{ mr: 1, mt: 1, minWidth: 70 }} deleteIcon={<Icon sx={{ float: "right", marginLeft: "auto !important" }}>cancel</Icon>} data-testid={`amount-chip-${a}`} aria-label={`Remove $${a} donation amount`} />))}
       </div>
-      <TextField fullWidth size="small" type="number" placeholder={Locale.label("site.donateLink.amountPlaceholder")} label="Amount" name="amount" value={amountValue} onChange={handleChange} data-testid="donate-amount-input" aria-label="Donation amount" InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, endAdornment: <Button size="small" variant="contained" onClick={handleAmountAdd} disabled={!amountValue || amountValue === 0} data-testid="add-amount-button" aria-label="Add donation amount">{Locale.label("site.donateLink.add")}</Button>, inputProps: { min: 0 } }} />
+      <TextField fullWidth size="small" type="number" placeholder={Locale.label("site.donateLink.amountPlaceholder")} label={Locale.label("site.donateLink.amount")} name="amount" value={amountValue} onChange={handleChange} data-testid="donate-amount-input" aria-label={Locale.label("site.donateLink.donationAmount")} InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, endAdornment: <Button size="small" variant="contained" onClick={handleAmountAdd} disabled={!amountValue || amountValue === 0} data-testid="add-amount-button" aria-label={Locale.label("site.donateLink.addAmount")}>{Locale.label("site.donateLink.add")}</Button>, inputProps: { min: 0 } }} />
     </>
   );
 }

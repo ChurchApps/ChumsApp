@@ -3,7 +3,9 @@ import { ErrorMessages, InputBox, ApiHelper, UserHelper, SlugHelper, Locale } fr
 import { Permissions } from "@churchapps/helpers";
 import type { LinkInterface } from "@churchapps/helpers";
 import type { PageInterface } from "../../helpers/Interfaces";
-import { Button, Dialog, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
+import {
+  Button, Dialog, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography 
+} from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -32,7 +34,7 @@ export function PageLinkEdit(props: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
-    let p = { ...page } as PageInterface;
+    const p = { ...page } as PageInterface;
     const val = e.target.value;
     switch (e.target.name) {
       case "title":
@@ -41,7 +43,7 @@ export function PageLinkEdit(props: Props) {
       case "url":
         p.url = val.toLowerCase();
         if (link) {
-          let l = { ...link };
+          const l = { ...link };
           l.url = val.toLowerCase();
           setLink(l);
         }
@@ -55,7 +57,7 @@ export function PageLinkEdit(props: Props) {
 
   const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
-    let l = { ...link } as LinkInterface;
+    const l = { ...link } as LinkInterface;
     const val = e.target.value;
     switch (e.target.name) {
       case "linkText":
@@ -69,7 +71,7 @@ export function PageLinkEdit(props: Props) {
   };
 
   const validate = () => {
-    let errors = [];
+    const errors = [];
     if (!page?.url || page.url === "") errors.push("Please enter a path.");
     if (!page?.title || page.title === "") errors.push("Please enter a title.");
     if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push("Unauthorized to create pages");
@@ -97,7 +99,7 @@ export function PageLinkEdit(props: Props) {
   };
 
   const handleDelete = () => {
-    let errors = [];
+    const errors = [];
     if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) {
       errors.push("Unauthorized to delete pages");
     }
@@ -150,7 +152,7 @@ export function PageLinkEdit(props: Props) {
   }, [props.page, props.link]);
 
   if (!page && !link) return <></>;
-  else
+  else {
     return (
       <Dialog open={true} onClose={props.onDone} style={{ minWidth: 800 }}>
         <InputBox
@@ -205,4 +207,5 @@ export function PageLinkEdit(props: Props) {
         </InputBox>
       </Dialog>
     );
+  }
 }

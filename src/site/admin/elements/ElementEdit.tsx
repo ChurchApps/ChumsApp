@@ -1,14 +1,16 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 import type { SelectChangeEvent } from "@mui/material";
 import type { AnimationsInterface, BlockInterface, ElementInterface, GlobalStyleInterface, InlineStylesInterface } from "../../../helpers";
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Checkbox, FormGroup, FormControlLabel, Typography, Slider, Dialog } from "@mui/material";
+import {
+  Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Checkbox, FormGroup, FormControlLabel, Typography, Slider, Dialog 
+} from "@mui/material";
 import { ErrorMessages, InputBox, ApiHelper, ArrayHelper, GalleryModal, Locale } from "@churchapps/apphelper";
 import React from "react";
 
 const HtmlEditorLazy = lazy(() => import("@churchapps/apphelper-markdown").then((mod) => ({ default: mod.HtmlEditor })));
 
 const HtmlEditor = (props: any) => (
-  <Suspense fallback={<div>Loading editor...</div>}>
+  <Suspense fallback={<div>{Locale.label("site.elements.loadingEditor")}</div>}>
     <HtmlEditorLazy {...props} />
   </Suspense>
 );
@@ -34,15 +36,15 @@ export function ElementEdit(props: Props) {
   const [element, setElement] = useState<ElementInterface>(null);
   const [errors, setErrors] = useState([]);
   const [innerErrors, setInnerErrors] = useState([]);
-  let parsedData = (element?.answersJSON) ? JSON.parse(element.answersJSON) : {}
-  let parsedStyles = (element?.stylesJSON) ? JSON.parse(element.stylesJSON) : {}
-  let parsedAnimations = (element?.animationsJSON) ? JSON.parse(element.animationsJSON) : {}
+  const parsedData = (element?.answersJSON) ? JSON.parse(element.answersJSON) : {};
+  const parsedStyles = (element?.stylesJSON) ? JSON.parse(element.stylesJSON) : {};
+  const parsedAnimations = (element?.animationsJSON) ? JSON.parse(element.animationsJSON) : {};
 
   const handleCancel = () => props.updatedCallback(element);
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
-    let p = { ...element };
+    const p = { ...element };
     const val = e.target.value;
     switch (e.target.name) {
       case "elementType": p.elementType = val; break;
@@ -57,8 +59,8 @@ export function ElementEdit(props: Props) {
   };
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let p = { ...element };
-    let val: any = e.target.checked.toString();
+    const p = { ...element };
+    const val: any = e.target.checked.toString();
     switch (e.target.name) {
       case "elementType": p.elementType = val; break;
       case "answersJSON": p.answersJSON = val; break;
@@ -69,12 +71,12 @@ export function ElementEdit(props: Props) {
     }
     setElement(p);
     props.onRealtimeChange(p);
-  }
+  };
 
   const handleHtmlChange = (field: string, newValue: string) => {
     try {
       parsedData[field] = newValue;
-      let p = { ...element };
+      const p = { ...element };
       p.answers = parsedData;
       p.answersJSON = JSON.stringify(parsedData);
       if (p.answersJSON !== element.answersJSON) {
@@ -87,20 +89,20 @@ export function ElementEdit(props: Props) {
   };
 
   const handleStyleChange = (styles: InlineStylesInterface) => {
-    let p = { ...element };
+    const p = { ...element };
     p.styles = styles;
     p.stylesJSON = Object.keys(styles).length > 0 ? JSON.stringify(styles) : null;
 
     setElement(p);
-  }
+  };
 
   const handleAnimationChange = (animations: AnimationsInterface) => {
-    let p = { ...element };
+    const p = { ...element };
     p.animations = animations;
     p.animationsJSON = Object.keys(animations).length > 0 ? JSON.stringify(animations) : null;
 
     setElement(p);
-  }
+  };
 
   const handleSave = () => {
     if (innerErrors.length === 0) {
@@ -121,16 +123,16 @@ export function ElementEdit(props: Props) {
 
 
 
-  const getTextAlignment = (fieldName: string, label: string = "Text Alignment") => (
+  const getTextAlignment = (fieldName: string, label: string = Locale.label("site.elements.textAlignment")) => (
     <FormControl fullWidth>
       <InputLabel>{label}</InputLabel>
-      <Select fullWidth size="small" label="Text Alignment" name={fieldName} value={parsedData[fieldName] || "left"} onChange={handleChange} data-testid={`text-alignment-${fieldName}-select`} aria-label={`Select ${label.toLowerCase()}`}>
-        <MenuItem value="left" data-testid="text-align-left" aria-label="Align left">{Locale.label("common.left")}</MenuItem>
-        <MenuItem value="center" data-testid="text-align-center" aria-label="Align center">{Locale.label("common.center")}</MenuItem>
-        <MenuItem value="right" data-testid="text-align-right" aria-label="Align right">{Locale.label("common.right")}</MenuItem>
+      <Select fullWidth size="small" label={label} name={fieldName} value={parsedData[fieldName] || "left"} onChange={handleChange} data-testid={`text-alignment-${fieldName}-select`} aria-label={`Select ${label.toLowerCase()}`}>
+        <MenuItem value="left" data-testid="text-align-left" aria-label={Locale.label("site.elements.alignLeft")}>{Locale.label("common.left")}</MenuItem>
+        <MenuItem value="center" data-testid="text-align-center" aria-label={Locale.label("site.elements.alignCenter")}>{Locale.label("common.center")}</MenuItem>
+        <MenuItem value="right" data-testid="text-align-right" aria-label={Locale.label("site.elements.alignRight")}>{Locale.label("common.right")}</MenuItem>
       </Select>
     </FormControl>
-  )
+  );
 
   const handleDelete = () => {
     if (window.confirm(Locale.label("site.elements.confirmDelete"))) {
@@ -138,27 +140,29 @@ export function ElementEdit(props: Props) {
     }
   };
 
-  const getJsonFields = () => (<TextField fullWidth size="small" label="Answers JSON" name="answersJSON" value={element.answersJSON} onChange={handleChange} onKeyDown={handleKeyDown} multiline data-testid="answers-json-input" aria-label="Answers JSON data" />);
+  const getJsonFields = () => (<TextField fullWidth size="small" label={Locale.label("site.elements.answersJSON")} name="answersJSON" value={element.answersJSON} onChange={handleChange} onKeyDown={handleKeyDown} multiline data-testid="answers-json-input" aria-label={Locale.label("site.elements.answersJSONData")} />);
 
   const selectColors = (background: string, textColor: string, headingColor: string, linkColor: string) => {
-    let p = { ...element };
+    const p = { ...element };
     parsedData["background"] = background;
     parsedData["textColor"] = textColor;
     parsedData["headingColor"] = headingColor;
     parsedData["linkColor"] = linkColor;
     p.answersJSON = JSON.stringify(parsedData);
     setElement(p);
-  }
+  };
 
-  const getAppearanceFields = (fields: string[]) => <StylesAnimations fields={fields} styles={parsedStyles} onStylesChange={handleStyleChange} animations={parsedAnimations} onAnimationsChange={handleAnimationChange} />
+  const getAppearanceFields = (fields: string[]) => <StylesAnimations fields={fields} styles={parsedStyles} onStylesChange={handleStyleChange} animations={parsedAnimations} onAnimationsChange={handleAnimationChange} />;
 
   const getBoxFields = () => (
     <>
-      <FormControlLabel control={<Checkbox onChange={handleCheck} checked={parsedData.rounded === "true" ? true : false} />} name="rounded" label="Rounded Corners" />
-      <FormControlLabel control={<Checkbox onChange={handleCheck} checked={parsedData.translucent === "true" ? true : false} />} name="translucent" label="Translucent" />
+      <FormControlLabel control={<Checkbox onChange={handleCheck} checked={parsedData.rounded === "true" ? true : false} />} name="rounded" label={Locale.label("site.elements.roundedCorners")} />
+      <FormControlLabel control={<Checkbox onChange={handleCheck} checked={parsedData.translucent === "true" ? true : false} />} name="translucent" label={Locale.label("site.elements.translucent")} />
       <br />
       <PickColors background={parsedData?.background} textColor={parsedData?.textColor} headingColor={parsedData?.headingColor || parsedData?.textColor} linkColor={parsedData?.linkColor} updatedCallback={selectColors} globalStyles={props.globalStyles} />
-      {getAppearanceFields(["border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "text", "width"])}
+      {getAppearanceFields([
+        "border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "text", "width"
+      ])}
     </>
   );
 
@@ -181,16 +185,16 @@ export function ElementEdit(props: Props) {
 
   // TODO: add alt field while saving image and use it here, in image tage.
   const getTextWithPhotoFields = () => (<>
-    {parsedData.photo && <><img src={parsedData.photo} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="Image describing the topic" /><br /></>}
-    <Button variant="contained" onClick={() => setSelectPhotoField("photo")} data-testid="select-photo-button" aria-label="Select photo">Select photo</Button>
-    <TextField fullWidth size="small" label="Photo Label" name="photoAlt" value={parsedData.photoAlt || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="photo-alt-input" aria-label="Photo alternative text" />
+    {parsedData.photo && <><img src={parsedData.photo} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt={Locale.label("site.elements.imageDescribingTopic")} /><br /></>}
+    <Button variant="contained" onClick={() => setSelectPhotoField("photo")} data-testid="select-photo-button" aria-label={Locale.label("site.elements.selectPhoto")}>{Locale.label("site.elements.selectPhoto")}</Button>
+    <TextField fullWidth size="small" label={Locale.label("site.elements.photoLabel")} name="photoAlt" value={parsedData.photoAlt || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="photo-alt-input" aria-label={Locale.label("site.elements.photoAlternativeText")} />
     <FormControl fullWidth>
-      <InputLabel>Photo Position</InputLabel>
-      <Select fullWidth size="small" label="Photo Position" name="photoPosition" value={parsedData.photoPosition || ""} onChange={handleChange} data-testid="photo-position-select" aria-label="Select photo position">
-        <MenuItem value="left" data-testid="photo-position-left" aria-label="Position photo on left">{Locale.label("common.left")}</MenuItem>
-        <MenuItem value="right" data-testid="photo-position-right" aria-label="Position photo on right">{Locale.label("common.right")}</MenuItem>
-        <MenuItem value="top" data-testid="photo-position-top" aria-label="Position photo on top">{Locale.label("common.top")}</MenuItem>
-        <MenuItem value="bottom" data-testid="photo-position-bottom" aria-label="Position photo on bottom">{Locale.label("common.bottom")}</MenuItem>
+      <InputLabel>{Locale.label("site.elements.photoPosition")}</InputLabel>
+      <Select fullWidth size="small" label={Locale.label("site.elements.photoPosition")} name="photoPosition" value={parsedData.photoPosition || ""} onChange={handleChange} data-testid="photo-position-select" aria-label={Locale.label("site.elements.selectPhotoPosition")}>
+        <MenuItem value="left" data-testid="photo-position-left" aria-label={Locale.label("site.elements.positionPhotoLeft")}>{Locale.label("common.left")}</MenuItem>
+        <MenuItem value="right" data-testid="photo-position-right" aria-label={Locale.label("site.elements.positionPhotoRight")}>{Locale.label("common.right")}</MenuItem>
+        <MenuItem value="top" data-testid="photo-position-top" aria-label={Locale.label("site.elements.positionPhotoTop")}>{Locale.label("common.top")}</MenuItem>
+        <MenuItem value="bottom" data-testid="photo-position-bottom" aria-label={Locale.label("site.elements.positionPhotoBottom")}>{Locale.label("common.bottom")}</MenuItem>
       </Select>
     </FormControl>
     {getTextAlignment("textAlignment")}
@@ -203,17 +207,19 @@ export function ElementEdit(props: Props) {
         style={{ maxHeight: 200, overflowY: "scroll" }}
       />
     </Box>
-    {getAppearanceFields(["border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "text", "width"])}
+    {getAppearanceFields([
+      "border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "text", "width"
+    ])}
   </>);
 
   // TODO: add alt field while saving image and use it here, in image tage.
   const getCardFields = () => (<>
-    {parsedData.photo && <><img src={parsedData.photo} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="Image describing the topic" /><br /></>}
-    <Button variant="contained" onClick={() => setSelectPhotoField("photo")} data-testid="select-photo-button" aria-label="Select photo">Select photo</Button>
-    <TextField fullWidth size="small" label="Photo Label" name="photoAlt" value={parsedData.photoAlt || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="photo-alt-input" aria-label="Photo alternative text" />
-    <TextField fullWidth size="small" label="Link Url (optional)" name="url" value={parsedData.url || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-    {getTextAlignment("titleAlignment", "Title Alignment")}
-    <TextField fullWidth size="small" label="Title" name="title" value={parsedData.title || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+    {parsedData.photo && <><img src={parsedData.photo} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt={Locale.label("site.elements.imageDescribingTopic")} /><br /></>}
+    <Button variant="contained" onClick={() => setSelectPhotoField("photo")} data-testid="select-photo-button" aria-label={Locale.label("site.elements.selectPhoto")}>{Locale.label("site.elements.selectPhoto")}</Button>
+    <TextField fullWidth size="small" label={Locale.label("site.elements.photoLabel")} name="photoAlt" value={parsedData.photoAlt || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="photo-alt-input" aria-label={Locale.label("site.elements.photoAlternativeText")} />
+    <TextField fullWidth size="small" label={Locale.label("site.elements.linkUrlOptional")} name="url" value={parsedData.url || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+    {getTextAlignment("titleAlignment", Locale.label("site.elements.titleAlignment"))}
+    <TextField fullWidth size="small" label={Locale.label("site.elements.title")} name="title" value={parsedData.title || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
     {getTextAlignment("textAlignment")}
     <Box sx={{ marginTop: 2 }}>
       <HtmlEditor
@@ -224,22 +230,26 @@ export function ElementEdit(props: Props) {
         style={{ maxHeight: 200, overflowY: "scroll" }}
       />
     </Box>
-    {getAppearanceFields(["border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "text", "width"])}
+    {getAppearanceFields([
+      "border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "text", "width"
+    ])}
   </>);
 
   const getLogoFields = () => (<>
-    <TextField fullWidth size="small" label="Link Url (optional)" name="url" value={parsedData.url || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-    {getAppearanceFields(["border", "background", "height", "min", "max", "margin", "padding", "width"])}
+    <TextField fullWidth size="small" label={Locale.label("site.elements.linkUrlOptional")} name="url" value={parsedData.url || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+    {getAppearanceFields([
+      "border", "background", "height", "min", "max", "margin", "padding", "width"
+    ])}
   </>);
 
   const getStreamFields = () => {
-    let blockField = <></>
+    let blockField = <></>;
     if (parsedData.offlineContent === "block") {
-      let options: React.ReactElement[] = [];
-      blocks?.forEach(b => { options.push(<MenuItem value={b.id}>{b.name}</MenuItem>) });
+      const options: React.ReactElement[] = [];
+      blocks?.forEach(b => { options.push(<MenuItem value={b.id}>{b.name}</MenuItem>); });
       blockField = (<FormControl fullWidth>
-        <InputLabel>Block</InputLabel>
-        <Select fullWidth size="small" label="Block" name="targetBlockId" value={parsedData.targetBlockId || ""} onChange={handleChange}>
+        <InputLabel>{Locale.label("site.elements.block")}</InputLabel>
+        <Select fullWidth size="small" label={Locale.label("site.elements.block")} name="targetBlockId" value={parsedData.targetBlockId || ""} onChange={handleChange}>
           {options}
         </Select>
       </FormControl>);
@@ -247,144 +257,150 @@ export function ElementEdit(props: Props) {
     return (
       <>
         <FormControl fullWidth>
-          <InputLabel>Mode</InputLabel>
-          <Select fullWidth size="small" label="Mode" name="mode" value={parsedData.mode || "video"} onChange={handleChange}>
-            <MenuItem value="video">Video Only</MenuItem>
-            <MenuItem value="interaction">Video and Interaction</MenuItem>
+          <InputLabel>{Locale.label("site.elements.mode")}</InputLabel>
+          <Select fullWidth size="small" label={Locale.label("site.elements.mode")} name="mode" value={parsedData.mode || "video"} onChange={handleChange}>
+            <MenuItem value="video">{Locale.label("site.elements.videoOnly")}</MenuItem>
+            <MenuItem value="interaction">{Locale.label("site.elements.videoAndInteraction")}</MenuItem>
           </Select>
         </FormControl>
         <FormControl fullWidth>
-          <InputLabel>Offline Content</InputLabel>
-          <Select fullWidth size="small" label="Offline Content" name="offlineContent" value={parsedData.offlineContent || "countdown"} onChange={handleChange}>
-            <MenuItem value="countdown">Next Service Time</MenuItem>
-            <MenuItem value="hide">Hide</MenuItem>
-            <MenuItem value="block">Block</MenuItem>
+          <InputLabel>{Locale.label("site.elements.offlineContent")}</InputLabel>
+          <Select fullWidth size="small" label={Locale.label("site.elements.offlineContent")} name="offlineContent" value={parsedData.offlineContent || "countdown"} onChange={handleChange}>
+            <MenuItem value="countdown">{Locale.label("site.elements.nextServiceTime")}</MenuItem>
+            <MenuItem value="hide">{Locale.label("site.elements.hide")}</MenuItem>
+            <MenuItem value="block">{Locale.label("site.elements.block")}</MenuItem>
           </Select>
         </FormControl>
         {blockField}
-        {getAppearanceFields(["border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "width"])}
+        {getAppearanceFields([
+          "border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "width"
+        ])}
       </>
-    )
-  }
+    );
+  };
 
   const getIframeFields = () => (
     <>
-      <TextField fullWidth size="small" label="Source" name="iframeSrc" value={parsedData.iframeSrc || ""} onChange={handleChange} />
-      <TextField fullWidth size="small" label="Height (px)" name="iframeHeight" value={parsedData.iframeHeight || ""} placeholder={Locale.label("site.elements.heightPlaceholder")} onChange={handleChange} />
+      <TextField fullWidth size="small" label={Locale.label("site.elements.source")} name="iframeSrc" value={parsedData.iframeSrc || ""} onChange={handleChange} />
+      <TextField fullWidth size="small" label={Locale.label("site.elements.heightPx")} name="iframeHeight" value={parsedData.iframeHeight || ""} placeholder={Locale.label("site.elements.heightPlaceholder")} onChange={handleChange} />
     </>
-  )
+  );
 
   const getButtonLink = () => (
     <>
-      <TextField fullWidth size="small" label="Text" name="buttonLinkText" value={parsedData.buttonLinkText || ""} onChange={handleChange} />
-      <TextField fullWidth size="small" label="url" name="buttonLinkUrl" value={parsedData.buttonLinkUrl || ""} onChange={handleChange} />
+      <TextField fullWidth size="small" label={Locale.label("site.elements.text")} name="buttonLinkText" value={parsedData.buttonLinkText || ""} onChange={handleChange} />
+      <TextField fullWidth size="small" label={Locale.label("site.elements.url")} name="buttonLinkUrl" value={parsedData.buttonLinkUrl || ""} onChange={handleChange} />
       <FormControl fullWidth>
-        <InputLabel>Variant</InputLabel>
-        <Select fullWidth size="small" label="Button Type" name="buttonLinkVariant" value={parsedData.buttonLinkVariant || "contained"} onChange={handleChange}>
-          <MenuItem value="contained">Contained</MenuItem>
-          <MenuItem value="outlined">Outlined</MenuItem>
+        <InputLabel>{Locale.label("site.elements.variant")}</InputLabel>
+        <Select fullWidth size="small" label={Locale.label("site.elements.variant")} name="buttonLinkVariant" value={parsedData.buttonLinkVariant || "contained"} onChange={handleChange}>
+          <MenuItem value="contained">{Locale.label("site.elements.contained")}</MenuItem>
+          <MenuItem value="outlined">{Locale.label("site.elements.outlined")}</MenuItem>
         </Select>
       </FormControl>
       <FormControl fullWidth>
-        <InputLabel>Color</InputLabel>
-        <Select fullWidth size="small" label="Button Type" name="buttonLinkColor" value={parsedData.buttonLinkColor || "primary"} onChange={handleChange}>
-          <MenuItem value="primary">Primary</MenuItem>
-          <MenuItem value="secondary">Secondary</MenuItem>
-          <MenuItem value="error">Error</MenuItem>
-          <MenuItem value="warning">Warning</MenuItem>
-          <MenuItem value="info">Info</MenuItem>
-          <MenuItem value="success">Success</MenuItem>
+        <InputLabel>{Locale.label("site.elements.color")}</InputLabel>
+        <Select fullWidth size="small" label={Locale.label("site.elements.color")} name="buttonLinkColor" value={parsedData.buttonLinkColor || "primary"} onChange={handleChange}>
+          <MenuItem value="primary">{Locale.label("site.elements.primary")}</MenuItem>
+          <MenuItem value="secondary">{Locale.label("site.elements.secondary")}</MenuItem>
+          <MenuItem value="error">{Locale.label("site.elements.error")}</MenuItem>
+          <MenuItem value="warning">{Locale.label("site.elements.warning")}</MenuItem>
+          <MenuItem value="info">{Locale.label("site.elements.info")}</MenuItem>
+          <MenuItem value="success">{Locale.label("site.elements.success")}</MenuItem>
         </Select>
       </FormControl>
       <FormGroup sx={{ marginLeft: 1, marginY: 2 }}>
-        <FormControlLabel control={<Checkbox onChange={handleCheck} checked={parsedData.external === "true" ? true : false} />} name="external" label="Open in new Tab" />
-        <FormControlLabel control={<Checkbox onChange={handleCheck} checked={parsedData.fullWidth === "true" ? true : false} />} name="fullWidth" label="Full width" />
+        <FormControlLabel control={<Checkbox onChange={handleCheck} checked={parsedData.external === "true" ? true : false} />} name="external" label={Locale.label("site.elements.openInNewTab")} />
+        <FormControlLabel control={<Checkbox onChange={handleCheck} checked={parsedData.fullWidth === "true" ? true : false} />} name="fullWidth" label={Locale.label("site.elements.fullWidth")} />
       </FormGroup>
-      {getAppearanceFields(["border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "width"])}
+      {getAppearanceFields([
+        "border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "width"
+      ])}
     </>
-  )
+  );
 
   const getVideoFields = () => (
     <>
       <FormControl fullWidth>
-        <InputLabel>Type</InputLabel>
-        <Select fullWidth size="small" label="Type" name="videoType" onChange={handleChange} value={parsedData.videoType || "youtube"}>
-          <MenuItem value="youtube">Youtube</MenuItem>
-          <MenuItem value="vimeo">Vimeo</MenuItem>
+        <InputLabel>{Locale.label("site.elements.type")}</InputLabel>
+        <Select fullWidth size="small" label={Locale.label("site.elements.type")} name="videoType" onChange={handleChange} value={parsedData.videoType || "youtube"}>
+          <MenuItem value="youtube">{Locale.label("site.elements.youtube")}</MenuItem>
+          <MenuItem value="vimeo">{Locale.label("site.elements.vimeo")}</MenuItem>
         </Select>
       </FormControl>
-      <TextField fullWidth size="small" label="Id" name="videoId" value={parsedData.videoId || ""} onChange={handleChange} />
+      <TextField fullWidth size="small" label={Locale.label("site.elements.id")} name="videoId" value={parsedData.videoId || ""} onChange={handleChange} />
       {(!parsedData.videoType || parsedData.videoType === "youtube") && (
         <Typography fontSize="12px" fontStyle="italic">
-          video url - https://www.youtube.com/watch?v=dQw4w9WgXcQ <br /> id - dQw4w9WgXcQ
+          {Locale.label("site.elements.videoUrlYoutube")} <br /> {Locale.label("site.elements.idExample")}
         </Typography>
       )}
       {parsedData.videoType === "vimeo" && (
         <Typography fontSize="12px" fontStyle="italic">
-          video url - https://vimeo.com/751393851 <br /> id - 751393851
+          {Locale.label("site.elements.videoUrlVimeo")} <br /> {Locale.label("site.elements.idExampleVimeo")}
         </Typography>
       )}
-      {getAppearanceFields(["border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "width"])}
+      {getAppearanceFields([
+        "border", "background", "color", "font", "height", "min", "max", "line", "margin", "padding", "width"
+      ])}
     </>
 
-  )
+  );
 
   const getRawHTML = () => (
     <>
-      <TextField fullWidth label="HTML Content" name="rawHTML" onChange={handleChange} value={parsedData.rawHTML || ""} multiline minRows={7} maxRows={15} />
-      <TextField fullWidth label="Javascript (exlude <script> tag)" name="javascript" onChange={handleChange} value={parsedData.javascript || ""} multiline minRows={7} maxRows={15} />
+      <TextField fullWidth label={Locale.label("site.elements.htmlContent")} name="rawHTML" onChange={handleChange} value={parsedData.rawHTML || ""} multiline minRows={7} maxRows={15} />
+      <TextField fullWidth label={Locale.label("site.elements.javascriptExcludeTag")} name="javascript" onChange={handleChange} value={parsedData.javascript || ""} multiline minRows={7} maxRows={15} />
     </>
-  )
+  );
 
   const getMapFields = () => (
     <>
-      <TextField fullWidth size="small" label="Address" name="mapAddress" onChange={handleChange} value={parsedData.mapAddress || ""} helperText={Locale.label("site.elements.addressHelper")} />
-      <TextField fullWidth size="small" label="Label" name="mapLabel" onChange={handleChange} value={parsedData.mapLabel || ""} helperText={Locale.label("site.elements.nameHelper")} />
-      <Typography fontSize="13px" sx={{ marginTop: 1 }}>Zoom-level</Typography>
+      <TextField fullWidth size="small" label={Locale.label("site.elements.address")} name="mapAddress" onChange={handleChange} value={parsedData.mapAddress || ""} helperText={Locale.label("site.elements.addressHelper")} />
+      <TextField fullWidth size="small" label={Locale.label("site.elements.label")} name="mapLabel" onChange={handleChange} value={parsedData.mapLabel || ""} helperText={Locale.label("site.elements.nameHelper")} />
+      <Typography fontSize="13px" sx={{ marginTop: 1 }}>{Locale.label("site.elements.zoomLevel")}</Typography>
       <Slider defaultValue={15} valueLabelDisplay="auto" step={1} min={8} max={20} name="mapZoom" value={parsedData?.mapZoom || 15} onChange={(e: any) => handleChange(e)} />
-      <Typography fontSize="12px" fontStyle="italic">Ex: 0(the whole world) & 21(individual buildings)</Typography>
+      <Typography fontSize="12px" fontStyle="italic">{Locale.label("site.elements.zoomLevelExample")}</Typography>
     </>
-  )
+  );
 
   const getGroupListFields = () => (
     <>
-      <TextField fullWidth size="small" label="Label" name="label" onChange={handleChange} value={parsedData.label || ""} helperText={Locale.label("site.elements.categoriesHelper")} />
+      <TextField fullWidth size="small" label={Locale.label("site.elements.label")} name="label" onChange={handleChange} value={parsedData.label || ""} helperText={Locale.label("site.elements.categoriesHelper")} />
     </>
-  )
+  );
 
   const getCarouselFields = () => (
     <>
-      <TextField fullWidth size="small" type="number" label="Height(Px)" name="height" onChange={handleChange} value={parsedData.height || "250"} />
-      <TextField fullWidth size="small" type="number" label="Slides" name="slides" onChange={handleChange} value={parsedData.slides || ""} />
+      <TextField fullWidth size="small" type="number" label={Locale.label("site.elements.heightPx")} name="height" onChange={handleChange} value={parsedData.height || "250"} />
+      <TextField fullWidth size="small" type="number" label={Locale.label("site.elements.slides")} name="slides" onChange={handleChange} value={parsedData.slides || ""} />
       <FormControl fullWidth>
-        <InputLabel>Animation Options</InputLabel>
-        <Select fullWidth size="small" label="Animation Options" name="animationOptions" onChange={handleChange} value={parsedData.animationOptions || "fade"}>
-          <MenuItem value="fade">Fade</MenuItem>
-          <MenuItem value="slide">Slide</MenuItem>
+        <InputLabel>{Locale.label("site.elements.animationOptions")}</InputLabel>
+        <Select fullWidth size="small" label={Locale.label("site.elements.animationOptions")} name="animationOptions" onChange={handleChange} value={parsedData.animationOptions || "fade"}>
+          <MenuItem value="fade">{Locale.label("site.elements.fade")}</MenuItem>
+          <MenuItem value="slide">{Locale.label("site.elements.slide")}</MenuItem>
         </Select>
       </FormControl>
       <FormGroup>
-        <FormControlLabel control={<Checkbox size="small" onChange={handleCheck} checked={parsedData.autoplay === "true" ? true : false} />} name="autoplay" label="Autoplay" />
+        <FormControlLabel control={<Checkbox size="small" onChange={handleCheck} checked={parsedData.autoplay === "true" ? true : false} />} name="autoplay" label={Locale.label("site.elements.autoplay")} />
       </FormGroup>
       {parsedData.autoplay === "true" && (
-        <TextField fullWidth size="small" type="number" label="Slides Interval (seconds)" name="interval" onChange={handleChange} value={parsedData.interval || "4"} />
+        <TextField fullWidth size="small" type="number" label={Locale.label("site.elements.slidesIntervalSeconds")} name="interval" onChange={handleChange} value={parsedData.interval || "4"} />
       )}
     </>
-  )
+  );
 
   const getImageFields = () => (
     <>
-      {parsedData.photo && <><img src={parsedData.photo} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt="Image describing the topic" /><br /></>}
-      <Button variant="contained" onClick={() => setSelectPhotoField("photo")} data-testid="select-photo-button" aria-label="Select photo">Select photo</Button>
-      <TextField fullWidth size="small" label="Photo Label" name="photoAlt" value={parsedData.photoAlt || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
-      <TextField fullWidth size="small" label="Link Url (optional)" name="url" value={parsedData.url || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+      {parsedData.photo && <><img src={parsedData.photo} style={{ maxHeight: 100, maxWidth: "100%", width: "auto" }} alt={Locale.label("site.elements.imageDescribingTopic")} /><br /></>}
+      <Button variant="contained" onClick={() => setSelectPhotoField("photo")} data-testid="select-photo-button" aria-label={Locale.label("site.elements.selectPhoto")}>{Locale.label("site.elements.selectPhoto")}</Button>
+      <TextField fullWidth size="small" label={Locale.label("site.elements.photoLabel")} name="photoAlt" value={parsedData.photoAlt || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
+      <TextField fullWidth size="small" label={Locale.label("site.elements.linkUrlOptional")} name="url" value={parsedData.url || ""} onChange={handleChange} onKeyDown={handleKeyDown} />
       <FormGroup sx={{ marginLeft: 0.5 }}>
-        <FormControlLabel control={<Checkbox size="small" onChange={handleCheck} checked={parsedData.external === "true" ? true : false} />} name="external" label="Open link in new tab" />
-        <FormControlLabel control={<Checkbox size="small" onChange={handleCheck} checked={parsedData.noResize === "true" ? true : false} />} name="noResize" label="Do not resize image" />
+        <FormControlLabel control={<Checkbox size="small" onChange={handleCheck} checked={parsedData.external === "true" ? true : false} />} name="external" label={Locale.label("site.elements.openLinkInNewTab")} />
+        <FormControlLabel control={<Checkbox size="small" onChange={handleCheck} checked={parsedData.noResize === "true" ? true : false} />} name="noResize" label={Locale.label("site.elements.doNotResizeImage")} />
       </FormGroup>
       <FormControl fullWidth sx={{ marginTop: 2 }}>
-        <InputLabel>Image Alignment</InputLabel>
-        <Select fullWidth size="small" label="Image Alignment" name="imageAlign" value={parsedData.imageAlign || "left"} onChange={handleChange}>
+        <InputLabel>{Locale.label("site.elements.imageAlignment")}</InputLabel>
+        <Select fullWidth size="small" label={Locale.label("site.elements.imageAlignment")} name="imageAlign" value={parsedData.imageAlign || "left"} onChange={handleChange}>
           <MenuItem value="left">{Locale.label("common.left")}</MenuItem>
           <MenuItem value="center">{Locale.label("common.center")}</MenuItem>
           <MenuItem value="right">{Locale.label("common.right")}</MenuItem>
@@ -392,19 +408,23 @@ export function ElementEdit(props: Props) {
       </FormControl>
       {getAppearanceFields(["border", "background", "color", "height", "margin", "padding", "width"])}
     </>
-  )
+  );
 
   const getWhiteSpaceFields = () => (
     <>
-      <TextField fullWidth size="small" type="number" label="Height(Px)" name="height" onChange={handleChange} value={parsedData.height || "25"} />
+      <TextField fullWidth size="small" type="number" label={Locale.label("site.elements.heightPx")} name="height" onChange={handleChange} value={parsedData.height || "25"} />
     </>
-  )
+  );
 
   const getFields = () => {
     let result = getJsonFields();
     switch (element?.elementType) {
-      case "row": result = <><RowEdit parsedData={parsedData} onRealtimeChange={handleRowChange} setErrors={setInnerErrors} />{getAppearanceFields(["border", "background", "color", "font", "height", "line", "margin", "padding", "width"])}</>; break;
-      case "table": result = <><TableEdit parsedData={parsedData} onRealtimeChange={handleRowChange} />{getAppearanceFields(["border", "background", "color", "font", "height", "line", "margin", "padding", "width"])}</>; break;
+      case "row": result = <><RowEdit parsedData={parsedData} onRealtimeChange={handleRowChange} setErrors={setInnerErrors} />{getAppearanceFields([
+        "border", "background", "color", "font", "height", "line", "margin", "padding", "width"
+      ])}</>; break;
+      case "table": result = <><TableEdit parsedData={parsedData} onRealtimeChange={handleRowChange} />{getAppearanceFields([
+        "border", "background", "color", "font", "height", "line", "margin", "padding", "width"
+      ])}</>; break;
       case "box": result = getBoxFields(); break;
       case "text": result = getTextFields(); break;
       case "textWithPhoto": result = getTextWithPhotoFields(); break;
@@ -417,33 +437,39 @@ export function ElementEdit(props: Props) {
       case "buttonLink": result = getButtonLink(); break;
       case "video": result = getVideoFields(); break;
       case "rawHTML": result = getRawHTML(); break;
-      case "form": result = <><FormEdit parsedData={parsedData} handleChange={handleChange} />{getAppearanceFields(["border", "background", "color", "font", "height", "line", "margin", "padding", "width"])}</>; break;
-      case "faq": result = <><FaqEdit parsedData={parsedData} handleChange={handleChange} handleHtmlChange={handleHtmlChange} />{getAppearanceFields(["border", "background", "color", "font", "height", "line", "margin", "padding", "width"])}</>; break;
+      case "form": result = <><FormEdit parsedData={parsedData} handleChange={handleChange} />{getAppearanceFields([
+        "border", "background", "color", "font", "height", "line", "margin", "padding", "width"
+      ])}</>; break;
+      case "faq": result = <><FaqEdit parsedData={parsedData} handleChange={handleChange} handleHtmlChange={handleHtmlChange} />{getAppearanceFields([
+        "border", "background", "color", "font", "height", "line", "margin", "padding", "width"
+      ])}</>; break;
       case "map": result = getMapFields(); break;
       case "sermons": result = <></>; break;
       case "carousel": result = getCarouselFields(); break;
       case "image": result = getImageFields(); break;
       case "whiteSpace": result = getWhiteSpaceFields(); break;
-      case "calendar": result = <><CalendarElementEdit parsedData={parsedData} handleChange={handleChange} />{getAppearanceFields(["border", "background", "color", "font", "height", "line", "margin", "padding", "width"])}</>; break;
+      case "calendar": result = <><CalendarElementEdit parsedData={parsedData} handleChange={handleChange} />{getAppearanceFields([
+        "border", "background", "color", "font", "height", "line", "margin", "padding", "width"
+      ])}</>; break;
       case "groupList": result = getGroupListFields(); break;
     }
     return result;
-  }
+  };
 
   const handlePhotoSelected = (image: string) => {
-    let p = { ...element };
+    const p = { ...element };
     parsedData[selectPhotoField] = image;
     p.answersJSON = JSON.stringify(parsedData);
     setElement(p);
     props.onRealtimeChange(p);
     setSelectPhotoField(null);
-  }
+  };
 
   const handleRowChange = (parsedData: any) => {
-    let e = { ...element };
+    const e = { ...element };
     e.answersJSON = JSON.stringify(parsedData);
     setElement(e);
-  }
+  };
 
   useEffect(() => { setElement(props.element); }, [props.element]);
 
@@ -451,11 +477,11 @@ export function ElementEdit(props: Props) {
     const loadBlocks = async () => {
       if (blocks === null) {
         if (props.element.elementType === "block" || (props.element.elementType === "stream" && parsedData?.offlineContent === "block")) {
-          let result: BlockInterface[] = await ApiHelper.get("/blocks", "ContentApi");
+          const result: BlockInterface[] = await ApiHelper.get("/blocks", "ContentApi");
           setBlocks(ArrayHelper.getAll(result, "blockType", "elementBlock"));
         }
       }
-    }
+    };
 
     loadBlocks();
   }, [element]);
@@ -470,22 +496,22 @@ export function ElementEdit(props: Props) {
   const getStandardFields = () => (<>
     <ErrorMessages errors={errors} />
     {getFields()}
-  </>)
+  </>);
 
   const getBlockFields = () => {
-    let options: React.ReactElement[] = [];
+    const options: React.ReactElement[] = [];
     blocks?.forEach(b => {
-      options.push(<MenuItem value={b.id}>{b.name}</MenuItem>)
+      options.push(<MenuItem value={b.id}>{b.name}</MenuItem>);
     });
     return (<>
       <FormControl fullWidth>
-        <InputLabel>Block</InputLabel>
-        <Select fullWidth label="Block" name="targetBlockId" value={parsedData.targetBlockId || ""} onChange={handleChange}>
+        <InputLabel>{Locale.label("site.elements.block")}</InputLabel>
+        <Select fullWidth label={Locale.label("site.elements.block")} name="targetBlockId" value={parsedData.targetBlockId || ""} onChange={handleChange}>
           {options}
         </Select>
       </FormControl>
-    </>)
-  }
+    </>);
+  };
 
   const handleDuplicate = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -494,10 +520,11 @@ export function ElementEdit(props: Props) {
         props.updatedCallback(data);
       });
     }
-  }
+  };
 
-  if (!element) return <></>
-  else return (
+  if (!element) return <></>;
+  else {
+    return (
     <Dialog open={true} onClose={handleCancel} fullWidth maxWidth="md" id="elementEditDialog">
       <InputBox id="dialogForm" headerText={Locale.label("site.elements.editElement")} headerIcon="school" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} headerActionContent={(props.element.id && <a href="about:blank" onClick={handleDuplicate}>{Locale.label("common.duplicate")}</a>)} data-testid="edit-element-inputbox">
         <div id="dialogFormContent">
@@ -506,5 +533,6 @@ export function ElementEdit(props: Props) {
       </InputBox>
       {selectPhotoField && <GalleryModal onClose={() => setSelectPhotoField(null)} onSelect={handlePhotoSelected} aspectRatio={0} />}
     </Dialog>
-  );
+    );
+  }
 }

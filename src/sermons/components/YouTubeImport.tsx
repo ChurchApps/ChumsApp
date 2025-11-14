@@ -2,7 +2,9 @@ import { ErrorMessages, Locale } from "@churchapps/apphelper";
 import { InputBox } from "@churchapps/apphelper";
 import { ApiHelper } from "@churchapps/apphelper";
 import type { PlaylistInterface, SermonInterface } from "@churchapps/helpers";
-import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField } from "@mui/material";
+import {
+  Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField 
+} from "@mui/material";
 import React from "react";
 
 interface Props {
@@ -27,21 +29,20 @@ export const YouTubeImport = (props: Props) => {
   const loadSettings = () => {
     if (playlistId && channelId) {
       ApiHelper.get(`/settings/imports?type=youtube&playlistId=${playlistId}&channelId=${channelId}`, "ContentApi").then((data: any) => {
-        if (data.length === 1) { setAutoImportSettings(data[0]); setAutoImportSermons(true); }
-        else { setAutoImportSettings(null); setAutoImportSermons(false); }
+        if (data.length === 1) { setAutoImportSettings(data[0]); setAutoImportSermons(true); } else { setAutoImportSettings(null); setAutoImportSermons(false); }
       });
     }
-  }
+  };
 
   const handleCheck = (sermon:SermonInterface, checked: boolean) => {
     let newSelectedSermons = [...selectedSermons];
     if (checked) newSelectedSermons.push(sermon);
     else newSelectedSermons = newSelectedSermons.filter((s) => s.videoData !== sermon.videoData);
     setSelectedSermons(newSelectedSermons);
-  }
+  };
 
   const getRows = () => {
-    let rows: React.ReactElement[] = [];
+    const rows: React.ReactElement[] = [];
     sermons.forEach((ser) => {
       const sermon = ser;
       rows.push(<TableRow key={sermon.videoData}>
@@ -73,24 +74,24 @@ export const YouTubeImport = (props: Props) => {
   const handleFetch = () => {
     setIsFetching(true);
     ApiHelper.get("/sermons/youtubeImport/" + channelId, "ContentApi").then((data: any) => { setSermons(data); setIsFetching(false); });
-  }
+  };
 
   const handleSave = () => {
     if (playlistId === "") setErrors([Locale.label("sermons.bulkImport.selectPlaylist")]);
     else {
       if (autoImportSettings && autoImportSermons === false) {
-        ApiHelper.post("/settings", [{...autoImportSettings, value: "", public: 1}], "ContentApi");
+        ApiHelper.post("/settings", [{ ...autoImportSettings, value: "", public: 1 }], "ContentApi");
       }
       if (!autoImportSettings && autoImportSermons === true) {
         ApiHelper.post("/settings", [{ keyName: "youtubeChannelId", value: channelId, public: 1 }], "ContentApi").then((data: any) => {
           ApiHelper.post("/settings", [{ keyName: "autoImportSermons", value: `${playlistId}|#${data[0].id}`, public: 1 }], "ContentApi");
-        })
+        });
       }
-      let data = [...selectedSermons];
+      const data = [...selectedSermons];
       data.forEach((sermon) => { sermon.playlistId = playlistId; });
       ApiHelper.post("/sermons", data, "ContentApi").then(() => { props.handleDone(); });
     }
-  }
+  };
 
   if (!sermons) {
     return (<>
@@ -99,8 +100,7 @@ export const YouTubeImport = (props: Props) => {
         <TextField fullWidth label={Locale.label("sermons.bulkImport.youtubeChannelId")} name="channelId" value={channelId} onChange={(e) => { setChannelId(e.target.value); }} placeholder="UCfiDl90gAfZMkgbeCqX1WiA" />
       </InputBox>
     </>);
-  }
-  else
+  } else {
     return (<>
       <ErrorMessages errors={errors} />
       <InputBox headerIcon="video_library" headerText={Locale.label("sermons.bulkImport.import")} saveText={Locale.label("sermons.bulkImport.import")} saveFunction={handleSave} cancelFunction={props.handleDone}>
@@ -116,4 +116,5 @@ export const YouTubeImport = (props: Props) => {
         {getTable()}
       </InputBox>
     </>);
+  }
 };

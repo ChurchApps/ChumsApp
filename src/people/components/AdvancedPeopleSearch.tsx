@@ -880,33 +880,33 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                           <MenuItem key={f.id} value={f.id}>
                             {f.name}
                           </MenuItem>
-                        ))
+                      ))
                       : complexConfig.operator === "attendedCampus"
                         ? campuses.map((c) => (
                             <MenuItem key={c.id} value={c.id}>
                               {c.name}
                             </MenuItem>
-                          ))
+                        ))
                         : complexConfig.operator === "attendedService"
                           ? services.map((s) => (
                               <MenuItem key={s.id} value={s.id}>
                                 {s.campus.name} - {s.name}
                               </MenuItem>
-                            ))
+                          ))
                           : complexConfig.operator === "attendedServiceTime"
                             ? serviceTimes.map((st) => (
                                 <MenuItem key={st.id} value={st.id}>
                                   {st.longName}
                                 </MenuItem>
-                              ))
+                            ))
                             : groups.map((g) => (
                                 <MenuItem key={g.id} value={g.id}>
                                   {g.name}
                                 </MenuItem>
-                              ))}
+                            ))}
                   </Select>
                 </FormControl>
-              )}
+            )}
 
             <Stack direction="row" spacing={2}>
               <TextField
@@ -1044,33 +1044,33 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                           <MenuItem key={f.id} value={f.id}>
                             {f.name}
                           </MenuItem>
-                        ))
+                      ))
                       : complexConfig.operator === "attendedCampus"
                         ? campuses.map((c) => (
                             <MenuItem key={c.id} value={c.id}>
                               {c.name}
                             </MenuItem>
-                          ))
+                        ))
                         : complexConfig.operator === "attendedService"
                           ? services.map((s) => (
                               <MenuItem key={s.id} value={s.id}>
                                 {s.campus.name} - {s.name}
                               </MenuItem>
-                            ))
+                          ))
                           : complexConfig.operator === "attendedServiceTime"
                             ? serviceTimes.map((st) => (
                                 <MenuItem key={st.id} value={st.id}>
                                   {st.longName}
                                 </MenuItem>
-                              ))
+                            ))
                             : groups.map((g) => (
                                 <MenuItem key={g.id} value={g.id}>
                                   {g.name}
                                 </MenuItem>
-                              ))}
+                            ))}
                   </Select>
                 </FormControl>
-              )}
+            )}
 
             <Stack direction="row" spacing={2}>
               <TextField

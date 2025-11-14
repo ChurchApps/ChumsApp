@@ -56,9 +56,7 @@ export const PlanPage = () => {
     );
   }
 
-  const breadcrumbItems = [
-    { label: Locale.label("components.wrapper.plans") || "Plans", path: "/plans" }
-  ];
+  const breadcrumbItems = [{ label: Locale.label("components.wrapper.plans") || "Plans", path: "/plans" }];
 
   if (ministry) {
     breadcrumbItems.push({ label: ministry.name, path: `/plans/ministries/${ministry.id}` });

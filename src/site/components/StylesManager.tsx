@@ -23,15 +23,17 @@ export function StylesManager() {
 
     ApiHelper.get("/globalStyles", "ContentApi").then((gs: any) => {
       if (gs.palette) setGlobalStyle(gs);
-      else setGlobalStyle({
-        palette: JSON.stringify({
-          light: "#FFFFFF",
-          lightAccent: "#DDDDDD",
-          accent: "#0000DD",
-          darkAccent: "#9999DD",
-          dark: "#000000",
-        }),
-      });
+      else {
+        setGlobalStyle({
+          palette: JSON.stringify({
+            light: "#FFFFFF",
+            lightAccent: "#DDDDDD",
+            accent: "#0000DD",
+            darkAccent: "#9999DD",
+            dark: "#000000",
+          }),
+        });
+      }
     });
   };
 

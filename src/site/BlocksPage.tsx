@@ -1,7 +1,9 @@
 import { JSX, useEffect, useState, useCallback } from "react";
 import { ApiHelper, Loading, PageHeader, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import type { BlockInterface } from "../helpers";
-import { TableRow, TableCell, Table, TableBody, TableHead, Box, Typography, Stack, Button, Card, Icon } from "@mui/material";
+import {
+  TableRow, TableCell, Table, TableBody, TableHead, Box, Typography, Stack, Button, Card, Icon 
+} from "@mui/material";
 import { SmartButton as BlockIcon, Add as AddIcon, Edit as EditIcon } from "@mui/icons-material";
 import { Navigate, Link } from "react-router-dom";
 import { BlockEdit } from "./components";
@@ -50,12 +52,12 @@ export const BlocksPage = () => {
             <Stack spacing={2} alignItems="center">
               <BlockIcon sx={{ fontSize: 48, color: "text.secondary" }} />
               <Typography variant="h6" color="text.secondary">
-                No blocks found
+                {Locale.label("site.blocksPage.noBlocksFound")}
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                Get started by creating your first reusable block
+                {Locale.label("site.blocksPage.getStarted")}
               </Typography>
-              <Button variant="contained" startIcon={<AddIcon />} onClick={() => setEditBlock({ blockType: "elementBlock" })} sx={{ mt: 2 }}>Create First Block</Button>
+              <Button variant="contained" startIcon={<AddIcon />} onClick={() => setEditBlock({ blockType: "elementBlock" })} sx={{ mt: 2 }}>{Locale.label("site.blocksPage.createFirstBlock")}</Button>
             </Stack>
           </TableCell>
         </TableRow>
@@ -87,7 +89,7 @@ export const BlocksPage = () => {
                 {block.blockType === "elementBlock" ? "widgets" : "view_module"}
               </Icon>
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                {block.blockType === "elementBlock" ? "Element(s)" : "Section(s)"}
+                {block.blockType === "elementBlock" ? Locale.label("site.blocksPage.elements") : Locale.label("site.blocksPage.sections")}
               </Typography>
             </Stack>
           </TableCell>
@@ -108,17 +110,17 @@ export const BlocksPage = () => {
       <TableRow key="header">
         <TableCell sx={{ fontWeight: 600 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            Name
+            {Locale.label("common.name")}
           </Typography>
         </TableCell>
         <TableCell sx={{ fontWeight: 600 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            Type
+            {Locale.label("site.blocksPage.type")}
           </Typography>
         </TableCell>
         <TableCell sx={{ fontWeight: 600 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            Actions
+            {Locale.label("site.blocksPage.actions")}
           </Typography>
         </TableCell>
       </TableRow>
@@ -145,8 +147,8 @@ export const BlocksPage = () => {
       <>
         <PageHeader
           icon={<BlockIcon />}
-          title="Reusable Blocks"
-          subtitle="Create and manage reusable content blocks for your website"
+          title={Locale.label("site.blocksPage.reusableBlocks")}
+          subtitle={Locale.label("site.blocksPage.subtitle")}
         />
         <Box sx={{ p: 3 }}>
           <Loading />
@@ -157,8 +159,8 @@ export const BlocksPage = () => {
 
   return (
     <>
-      <PageHeader icon={<BlockIcon />} title="Reusable Blocks" subtitle="Create and manage reusable content blocks for your website" statistics={[{ icon: <BlockIcon />, value: stats.totalBlocks.toString(), label: "Total Blocks" }]}>
-        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => setEditBlock({ blockType: "elementBlock" })} data-testid="add-block-button" sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>Add Block</Button>
+      <PageHeader icon={<BlockIcon />} title={Locale.label("site.blocksPage.reusableBlocks")} subtitle={Locale.label("site.blocksPage.subtitle")} statistics={[{ icon: <BlockIcon />, value: stats.totalBlocks.toString(), label: Locale.label("site.blocksPage.totalBlocks") }]}>
+        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => setEditBlock({ blockType: "elementBlock" })} data-testid="add-block-button" sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>{Locale.label("site.blocksPage.addBlock")}</Button>
       </PageHeader>
 
       {/* Main Content */}
@@ -176,10 +178,10 @@ export const BlocksPage = () => {
             <Stack direction="row" justifyContent="space-between" alignItems="center">
               <Stack direction="row" spacing={1} alignItems="center">
                 <BlockIcon />
-                <Typography variant="h6">Blocks</Typography>
+                <Typography variant="h6">{Locale.label("site.blocksPage.blocks")}</Typography>
               </Stack>
               <Typography variant="body2" color="text.secondary">
-                {stats.totalBlocks} {stats.totalBlocks === 1 ? "block" : "blocks"}
+                {stats.totalBlocks} {stats.totalBlocks === 1 ? Locale.label("site.blocksPage.block") : Locale.label("site.blocksPage.blocks")}
               </Typography>
             </Stack>
           </Box>

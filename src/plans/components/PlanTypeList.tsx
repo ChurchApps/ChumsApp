@@ -1,5 +1,7 @@
 import React from "react";
-import { Box, Button, Paper, Typography, Card, CardContent, Stack, IconButton } from "@mui/material";
+import {
+  Box, Button, Paper, Typography, Card, CardContent, Stack, IconButton 
+} from "@mui/material";
 import { Add as AddIcon, Assignment as AssignmentIcon, Edit as EditIcon } from "@mui/icons-material";
 import { Locale, Loading, UserHelper, Permissions } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";

@@ -1,5 +1,6 @@
 import React from "react";
 import { TextField, MenuItem, Select, FormControl, InputLabel, type SelectChangeEvent } from "@mui/material";
+import { Locale } from "@churchapps/apphelper";
 
 interface Props {
   value: string;
@@ -56,7 +57,7 @@ export const ComboBox: React.FC<Props> = (props) => {
         {props.options.map((option) => (
           <MenuItem key={option} value={option}>{option}</MenuItem>
         ))}
-        <MenuItem value="__ADD_NEW__" data-testid="add-new-option">{props.addNewLabel || "Add New..."}</MenuItem>
+        <MenuItem value="__ADD_NEW__" data-testid="add-new-option">{props.addNewLabel || Locale.label("common.comboBox.addNew")}</MenuItem>
       </Select>
     </FormControl>
   );

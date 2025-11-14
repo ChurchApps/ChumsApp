@@ -1,5 +1,5 @@
 import { Grid, Icon, ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
-import { SmallButton } from "@churchapps/apphelper";
+import { SmallButton, Locale } from "@churchapps/apphelper";
 import type { PageInterface, BlockInterface } from "../../helpers/Interfaces";
 
 interface EditorToolbarProps {
@@ -47,15 +47,17 @@ export function EditorToolbar(props: EditorToolbarProps) {
   };
 
   return (
-    <div style={{ backgroundColor: "#FFF", position: "sticky", top: 0, width: "100%", zIndex: 1000, boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)", borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}>
+    <div style={{
+      backgroundColor: "#FFF", position: "sticky", top: 0, width: "100%", zIndex: 1000, boxShadow: "0 2px 12px rgba(0, 0, 0, 0.15)", borderBottom: "1px solid rgba(0, 0, 0, 0.12)" 
+    }}>
       <Grid container spacing={0} sx={{ margin: 0, padding: 2 }}>
         <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center" }}>
-          <SmallButton icon={"done"} text="Done" onClick={onDone} data-testid="content-editor-done-button" />
+          <SmallButton icon={"done"} text={Locale.label("common.done")} onClick={onDone} data-testid="content-editor-done-button" />
         </Grid>
         <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <b style={{ fontSize: "1rem", fontWeight: 600, color: "#333" }}>
-            {isPageMode && "Page: " + (container as PageInterface)?.title}
-            {!isPageMode && "Block: " + (container as BlockInterface)?.name}
+            {isPageMode && Locale.label("site.editorToolbar.page") + ": " + (container as PageInterface)?.title}
+            {!isPageMode && Locale.label("site.editorToolbar.block") + ": " + (container as BlockInterface)?.name}
           </b>
         </Grid>
         <Grid size={{ xs: 4 }} sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1 }}>
@@ -66,7 +68,7 @@ export function EditorToolbar(props: EditorToolbarProps) {
             sx={toggleButtonStyles}
           >
             <ToggleButton value="true" onClick={onToggleHelp}>
-              <Tooltip title="Help" placement="top">
+              <Tooltip title={Locale.label("common.help")} placement="top">
                 <Icon>help</Icon>
               </Tooltip>
             </ToggleButton>
@@ -79,7 +81,7 @@ export function EditorToolbar(props: EditorToolbarProps) {
             sx={toggleButtonStyles}
           >
             <ToggleButton value="true" onClick={onToggleAdd}>
-              <Tooltip title="Add Content" placement="top">
+              <Tooltip title={Locale.label("site.editorToolbar.addContent")} placement="top">
                 <Icon>add</Icon>
               </Tooltip>
             </ToggleButton>
@@ -89,22 +91,22 @@ export function EditorToolbar(props: EditorToolbarProps) {
             size="small"
             value={deviceType}
             exclusive
-            onChange={(e, newDeviceType) => { if (newDeviceType !== null) onDeviceTypeChange(newDeviceType) }}
+            onChange={(e, newDeviceType) => { if (newDeviceType !== null) onDeviceTypeChange(newDeviceType); }}
             sx={toggleButtonStyles}
           >
             <ToggleButton value="desktop">
-              <Tooltip title="Switch to Desktop View" placement="top">
+              <Tooltip title={Locale.label("site.editorToolbar.switchToDesktop")} placement="top">
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                   <Icon fontSize="small">computer</Icon>
-                  <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>Desktop</span>
+                  <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>{Locale.label("site.editorToolbar.desktop")}</span>
                 </div>
               </Tooltip>
             </ToggleButton>
             <ToggleButton value="mobile">
-              <Tooltip title="Switch to Mobile View" placement="top">
+              <Tooltip title={Locale.label("site.editorToolbar.switchToMobile")} placement="top">
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
                   <Icon fontSize="small">smartphone</Icon>
-                  <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>Mobile</span>
+                  <span style={{ fontSize: "0.875rem", fontWeight: 500 }}>{Locale.label("site.editorToolbar.mobile")}</span>
                 </div>
               </Tooltip>
             </ToggleButton>

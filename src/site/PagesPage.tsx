@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Card, Chip, Grid, Icon, IconButton, Stack, Switch, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
-import { Add as AddIcon, Article as ArticleIcon, ChevronRight as ChevronRightIcon, Description as DescriptionIcon, Edit as EditIcon, ExpandMore as ExpandMoreIcon, Public as PublicIcon, Transform as TransformIcon, Visibility as VisibilityIcon } from "@mui/icons-material";
+import {
+  Box, Button, Card, Chip, Grid, Icon, IconButton, Stack, Switch, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, Typography 
+} from "@mui/material";
+import {
+  Add as AddIcon, Article as ArticleIcon, ChevronRight as ChevronRightIcon, Description as DescriptionIcon, Edit as EditIcon, ExpandMore as ExpandMoreIcon, Public as PublicIcon, Transform as TransformIcon, Visibility as VisibilityIcon 
+} from "@mui/icons-material";
 import { ApiHelper, ErrorMessages, PageHeader, SmallButton, UserHelper, Locale } from "@churchapps/apphelper";
 import { useWindowWidth } from "@react-hook/window-size";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -31,9 +35,8 @@ export const PagesPage = () => {
           </IconButton>
         </Box>
       );
-    }
-    else return <Box sx={{ width: 32, ml: level * 2 }}></Box>;
-  }
+    } else return <Box sx={{ width: 32, ml: level * 2 }}></Box>;
+  };
 
   const getTreeLevel = (items: PageLink[], level: number) => {
     const result: React.ReactElement[] = [];
@@ -42,7 +45,7 @@ export const PagesPage = () => {
         <TableRow key={item.url} sx={{ '&:hover': { backgroundColor: 'action.hover' }, transition: 'background-color 0.2s ease' }}>
           <TableCell sx={{ width: 120 }}>
             {item.custom
-              ? (<Button variant="outlined" size="small" startIcon={<EditIcon />} onClick={() => { navigate("/site/pages/preview/" + item.pageId) }} data-testid="edit-page-button" sx={{ textTransform: 'none', minWidth: 'auto', fontSize: '0.75rem' }}>{Locale.label("common.edit")}</Button>)
+              ? (<Button variant="outlined" size="small" startIcon={<EditIcon />} onClick={() => { navigate("/site/pages/preview/" + item.pageId); }} data-testid="edit-page-button" sx={{ textTransform: 'none', minWidth: 'auto', fontSize: '0.75rem' }}>{Locale.label("common.edit")}</Button>)
               : (<Button variant="outlined" size="small" startIcon={<TransformIcon />} onClick={() => { if (confirm(Locale.label("site.pagesPage.confirmConvert"))) { setRequestedSlug(item.url); setAddMode("unlinked"); } }} color="secondary" data-testid="convert-page-button" sx={{ textTransform: 'none', minWidth: 'auto', fontSize: '0.75rem' }}>{Locale.label("site.pages.convert")}</Button>)}
           </TableCell>
           <TableCell>
@@ -51,8 +54,8 @@ export const PagesPage = () => {
               <Typography variant="body2" sx={{ fontFamily: 'monospace', cursor: 'pointer', color: 'primary.main', '&:hover': { textDecoration: 'underline' } }} onClick={() => window.open(EnvironmentHelper.B1Url.replace('{subdomain}', UserHelper.currentUserChurch.church.subDomain) + item.url, '_blank')}>
                 {item.url}
               </Typography>
-              <Tooltip title="Preview page"><IconButton size="small" onClick={() => window.open(EnvironmentHelper.B1Url.replace('{subdomain}', UserHelper.currentUserChurch.church.subDomain) + item.url, '_blank')} sx={{ p: 0.5 }}><VisibilityIcon sx={{ fontSize: 16 }} /></IconButton></Tooltip>
-              {!item.custom && (<Chip label="Generated" size="small" color="default" sx={{ fontSize: '0.7rem', height: 18 }} />)}
+              <Tooltip title={Locale.label("site.pagesPage.previewPage")}><IconButton size="small" onClick={() => window.open(EnvironmentHelper.B1Url.replace('{subdomain}', UserHelper.currentUserChurch.church.subDomain) + item.url, '_blank')} sx={{ p: 0.5 }}><VisibilityIcon sx={{ fontSize: 16 }} /></IconButton></Tooltip>
+              {!item.custom && (<Chip label={Locale.label("site.pagesPage.generated")} size="small" color="default" sx={{ fontSize: '0.7rem', height: 18 }} />)}
             </Stack>
           </TableCell>
           <TableCell>
@@ -65,7 +68,7 @@ export const PagesPage = () => {
       if (item.expanded && item.children) result.push(...getTreeLevel(item.children, level + 1));
     });
     return result;
-  }
+  };
 
   const loadData = () => {
     PageHelper.loadPageTree().then((data) => { setPageTree(data); });
@@ -74,7 +77,7 @@ export const PagesPage = () => {
       const loginSetting = data.filter((d: any) => d.keyName === "showLogin");
       if (loginSetting) setShowLogin(loginSetting[0]);
     });
-  }
+  };
 
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const setting: GenericSettingInterface = showLogin ? { ...showLogin, value: `${e.target.checked}` } : { keyName: "showLogin", value: `${e.target.checked}`, public: 1 };
@@ -91,7 +94,9 @@ export const PagesPage = () => {
         link.sort = index;
         ApiHelper.post("/links", [link], "ContentApi").then(() => { loadData(); });
       } else {
-        const newLink: LinkInterface = { id: "", churchId: UserHelper.currentUserChurch.church.id, category: "website", url: "/new-page", linkType: "url", linkData: "", icon: "", text: "New Link", sort: index, parentId: parentId };
+        const newLink: LinkInterface = {
+          id: "", churchId: UserHelper.currentUserChurch.church.id, category: "website", url: "/new-page", linkType: "url", linkData: "", icon: "", text: "New Link", sort: index, parentId: parentId 
+        };
         ApiHelper.post("/links", [newLink], "ContentApi").then(() => { loadData(); });
       }
     }
@@ -122,7 +127,7 @@ export const PagesPage = () => {
     };
 
     return countPages(pageTree);
-  }
+  };
 
   useEffect(() => {
     loadData();
@@ -133,34 +138,38 @@ export const PagesPage = () => {
   const checked = showLogin?.value === "true" ? true : false;
 
   if (windowWidth < 882) {
-    return <ErrorMessages errors={["Page editor is only available in desktop mode"]} />;
+    return <ErrorMessages errors={[Locale.label("site.pagesPage.desktopOnly")]} />;
   }
 
   return (
     <>
       {(addMode !== "") && <AddPageModal updatedCallback={() => { loadData(); setAddMode(""); setRequestedSlug(""); }} onDone={() => { setAddMode(""); setRequestedSlug(""); }} mode={addMode} requestedSlug={requestedSlug} />}
       {(editLink) && <NavLinkEdit updatedCallback={addLinkCallback} onDone={() => { setEditLink(null); }} link={editLink} />}
-      <PageHeader icon={<ArticleIcon />} title="Website Pages" subtitle="Manage your website pages, content, and navigation" statistics={[{ icon: <DescriptionIcon />, value: pageStats.total.toString(), label: "Total Pages" }, { icon: <EditIcon />, value: pageStats.custom.toString(), label: "Custom Pages" }, { icon: <PublicIcon />, value: pageStats.auto.toString(), label: "Auto-generated" }]}>
-        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => { setAddMode("unlinked"); }} data-testid="add-page-button" sx={{ color: '#FFF', borderColor: 'rgba(255,255,255,0.5)', '&:hover': { borderColor: '#FFF', backgroundColor: 'rgba(255,255,255,0.1)' } }}>Add Page</Button>
+      <PageHeader icon={<ArticleIcon />} title={Locale.label("site.pagesPage.websitePages")} subtitle={Locale.label("site.pagesPage.subtitle")} statistics={[{ icon: <DescriptionIcon />, value: pageStats.total.toString(), label: Locale.label("site.pagesPage.totalPages") }, { icon: <EditIcon />, value: pageStats.custom.toString(), label: Locale.label("site.pagesPage.customPages") }, { icon: <PublicIcon />, value: pageStats.auto.toString(), label: Locale.label("site.pagesPage.autoGenerated") }]}>
+        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => { setAddMode("unlinked"); }} data-testid="add-page-button" sx={{ color: '#FFF', borderColor: 'rgba(255,255,255,0.5)', '&:hover': { borderColor: '#FFF', backgroundColor: 'rgba(255,255,255,0.1)' } }}>{Locale.label("site.pagesPage.addPage")}</Button>
       </PageHeader>
       <Grid container spacing={3}>
         <Grid item xs={12} md={2} style={{ backgroundColor: "#FFF", paddingLeft: 40, paddingTop: 24, position: "relative", zIndex: 1 }}>
           <DndProvider backend={HTML5Backend}>
-            <h2 style={{ marginTop: 0 }}>Pages</h2>
+            <h2 style={{ marginTop: 0 }}>{Locale.label("site.pagesPage.pages")}</h2>
             <div>
               <Stack direction="row" alignItems="center" justifyContent="space-between">
                 <Stack direction="row" alignItems="center" spacing={0.5}>
-                  <Typography sx={{ fontSize: "13.5px", fontStyle: "italic" }}>Show Login</Typography>
-                  <Tooltip title="Show login button in the navigation bar" arrow><Icon color="primary" sx={{ fontSize: "18px !important", cursor: "pointer" }}>info</Icon></Tooltip>
+                  <Typography sx={{ fontSize: "13.5px", fontStyle: "italic" }}>{Locale.label("site.pagesPage.showLogin")}</Typography>
+                  <Tooltip title={Locale.label("site.pagesPage.showLoginTooltip")} arrow><Icon color="primary" sx={{ fontSize: "18px !important", cursor: "pointer" }}>info</Icon></Tooltip>
                 </Stack>
-                <Switch onChange={handleSwitchChange} checked={showLogin ? checked : true} inputProps={{ 'aria-label': "Toggle login button visibility" }} data-testid="show-login-switch" />
+                <Switch onChange={handleSwitchChange} checked={showLogin ? checked : true} inputProps={{ 'aria-label': Locale.label("site.pagesPage.toggleLoginVisibility") }} data-testid="show-login-switch" />
               </Stack>
             </div>
             <div>
               <span style={{ float: "right" }}>
-                <SmallButton icon="add" onClick={() => { setEditLink({ churchId: UserHelper.currentUserChurch.church.id, category: "website", linkType: "url", sort: 99, linkData: "", icon: "" }); }} data-testid="add-navigation-link" />
+                <SmallButton icon="add" onClick={() => {
+                  setEditLink({
+                    churchId: UserHelper.currentUserChurch.church.id, category: "website", linkType: "url", sort: 99, linkData: "", icon: "" 
+                  }); 
+                }} data-testid="add-navigation-link" />
               </span>
-              <h3>Main Navigation</h3>
+              <h3>{Locale.label("site.pagesPage.mainNavigation")}</h3>
             </div>
             <SiteNavigation links={links} refresh={loadData} select={(link) => { }} handleDrop={handleDrop} />
           </DndProvider>
@@ -173,14 +182,14 @@ export const PagesPage = () => {
                   <Stack direction="row" spacing={1} alignItems="center">
                     <ArticleIcon sx={{ color: 'primary.main' }} />
                     <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main' }}>
-                      Pages
+                      {Locale.label("site.pagesPage.pages")}
                     </Typography>
                   </Stack>
                 </Stack>
               </Box>
               <Box sx={{ p: 2 }}>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                  Below is a list of custom and auto-generated pages. You can add new pages, edit existing ones, or convert auto-generated pages to custom pages.
+                  {Locale.label("site.pagesPage.description")}
                 </Typography>
 
                 {pageTree.length === 0
@@ -188,10 +197,10 @@ export const PagesPage = () => {
                     <Box sx={{ textAlign: 'center', py: 8 }}>
                       <ArticleIcon sx={{ fontSize: 64, color: 'grey.400', mb: 2 }} />
                       <Typography variant="h6" color="text.secondary" gutterBottom>
-                        No pages found
+                        {Locale.label("site.pagesPage.noPagesFound")}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>Get started by adding your first page.</Typography>
-                      <Button variant="contained" startIcon={<AddIcon />} onClick={() => { setAddMode("unlinked"); }}>Add First Page</Button>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>{Locale.label("site.pagesPage.getStarted")}</Typography>
+                      <Button variant="contained" startIcon={<AddIcon />} onClick={() => { setAddMode("unlinked"); }}>{Locale.label("site.pagesPage.addFirstPage")}</Button>
                     </Box>
                   )
                   : (
@@ -200,17 +209,17 @@ export const PagesPage = () => {
                         <TableRow>
                           <TableCell>
                             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                              Actions
+                              {Locale.label("site.pagesPage.actions")}
                             </Typography>
                           </TableCell>
                           <TableCell>
                             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                              Path
+                              {Locale.label("site.pagesPage.path")}
                             </Typography>
                           </TableCell>
                           <TableCell>
                             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                              Title
+                              {Locale.label("common.title")}
                             </Typography>
                           </TableCell>
                         </TableRow>

@@ -30,14 +30,14 @@ export function AddPageModal(props: Props) {
   const handleKeyDown = (e: React.KeyboardEvent<any>) => { if (e.key === "Enter") { e.preventDefault(); handleSave(); } };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
-    let p = { ...page };
+    const p = { ...page };
     const val = e.target.value;
     switch (e.target.name) {
       case "title": p.title = val; break;
       case "url":
         p.url = val.toLowerCase();
         if (link) {
-          let l = { ...link };
+          const l = { ...link };
           l.url = val.toLowerCase();
           setLink(l);
         }
@@ -49,7 +49,7 @@ export function AddPageModal(props: Props) {
 
   const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
-    let l = { ...link };
+    const l = { ...link };
     const val = e.target.value;
     switch (e.target.name) {
       case "linkText": l.text = val; break;
@@ -59,7 +59,7 @@ export function AddPageModal(props: Props) {
   };
 
   const validate = () => {
-    let errors = [];
+    const errors = [];
     if (pageTemplate === "link") {
       if (!link.url || link.url === "") errors.push("Please enter a url.");
     } else {
@@ -80,7 +80,7 @@ export function AddPageModal(props: Props) {
         let pageData = null;
         let linkData = null;
         if (pageTemplate !== "link") {
-          let p = { ...page };
+          const p = { ...page };
           const slugString = link?.text || page.title || "new-page";
           p.url = props.requestedSlug || SlugHelper.slugifyString("/" + slugString.toLowerCase().replace(" ", "-"), "urlPath");
 
@@ -116,21 +116,22 @@ export function AddPageModal(props: Props) {
     setPage(p);
     setLink(l);
     setPageTemplate(template);
-  }
+  };
 
   const getTemplateButton = (key: string, icon: string, text: string) => (
     <Grid size={3}>
-      <Button variant={(pageTemplate.toLowerCase() === key) ? "contained" : "outlined"} startIcon={<Icon>{icon}</Icon>} onClick={() => { selectTemplate(key) }} fullWidth data-testid={`template-${key}-button`}>{text}</Button>
+      <Button variant={(pageTemplate.toLowerCase() === key) ? "contained" : "outlined"} startIcon={<Icon>{icon}</Icon>} onClick={() => { selectTemplate(key); }} fullWidth data-testid={`template-${key}-button`}>{text}</Button>
     </Grid>
-  )
+  );
 
   useEffect(() => {
     setPage({ layout: "headerFooter" });
     setLink({ churchId: UserHelper.currentUserChurch.church.id, category: "website", linkType: "url", sort: 99 } as LinkInterface);
   }, [props.mode]);
 
-  if (!page && !link) return <></>
-  else return (
+  if (!page && !link) return <></>;
+  else {
+    return (
 
     <Dialog open={true} onClose={props.onDone} className="dialogForm">
       <InputBox id="dialogForm" headerText={(pageTemplate === "link") ? Locale.label("site.addPage.newLink") : Locale.label("site.addPage.newPage")} headerIcon="article" saveFunction={handleSave} cancelFunction={handleCancel} data-testid="add-page-modal" isSubmitting={isSubmitting}>
@@ -162,5 +163,6 @@ export function AddPageModal(props: Props) {
       </InputBox>
 
     </Dialog>
-  );
+    );
+  }
 }

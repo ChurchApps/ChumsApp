@@ -21,7 +21,7 @@ export const AnimationsEdit: React.FC<Props> = (props) => {
   const handleSave = () => {
     props.onSave(animations);
     props.onSave(null);
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const val = e.target.value;
@@ -34,12 +34,12 @@ export const AnimationsEdit: React.FC<Props> = (props) => {
       case "onShowSpeed": a.onShowSpeed=val; break;
     }
     setAnimations(a);
-  }
+  };
 
-  return <InputBox saveFunction={handleSave} saveText={Locale.label("common.update")} headerText={Locale.label("site.animations.editAnimations")} cancelFunction={() => { props.onSave(null) }}>
+  return <InputBox saveFunction={handleSave} saveText={Locale.label("common.update")} headerText={Locale.label("site.animations.editAnimations")} cancelFunction={() => { props.onSave(null); }}>
     <Grid container spacing={2}>
       <Grid size={{ xs: 6 }}>
-        <FormControl size="small" fullWidth style={{marginTop:10}}>
+        <FormControl size="small" fullWidth style={{ marginTop: 10 }}>
           <InputLabel>{Locale.label("site.animations.onShowAnimation")}</InputLabel>
           <Select size="small" fullWidth label={Locale.label("site.animations.onShowAnimation")} name="onShow" value={animations?.onShow || ""} onChange={handleChange}>
             <MenuItem value="">{Locale.label("site.animations.none")}</MenuItem>
@@ -57,9 +57,9 @@ export const AnimationsEdit: React.FC<Props> = (props) => {
         </FormControl>
       </Grid>
       <Grid size={{ xs: 6 }}>
-        <FormControl size="small" fullWidth style={{marginTop:10}}>
-          <InputLabel>On Show Speed</InputLabel>
-          <Select size="small" fullWidth label="On Show Speed" name="onShowSpeed" value={animations?.onShowSpeed || "normal"} onChange={handleChange}>
+        <FormControl size="small" fullWidth style={{ marginTop: 10 }}>
+          <InputLabel>{Locale.label("site.animations.onShowSpeed")}</InputLabel>
+          <Select size="small" fullWidth label={Locale.label("site.animations.onShowSpeed")} name="onShowSpeed" value={animations?.onShowSpeed || "normal"} onChange={handleChange}>
             <MenuItem value="slow">{Locale.label("site.animations.slow")}</MenuItem>
             <MenuItem value="normal">{Locale.label("site.animations.normal")}</MenuItem>
             <MenuItem value="fast">{Locale.label("site.animations.fast")}</MenuItem>
@@ -69,6 +69,6 @@ export const AnimationsEdit: React.FC<Props> = (props) => {
     </Grid>
 
 
-  </InputBox>
+  </InputBox>;
 
-}
+};

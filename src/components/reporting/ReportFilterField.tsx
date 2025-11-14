@@ -27,7 +27,7 @@ export const ReportFilterField = (props: Props) => {
         break;
       case "campus":
         ApiHelper.get("/campuses", "AttendanceApi").then((data) => {
-          data.unshift({ id: "", name: "Any" });
+          data.unshift({ id: "", name: Locale.label("common.reportFilterField.any") });
           if (isMounted()) {
             setRawData(data);
           }
@@ -35,7 +35,7 @@ export const ReportFilterField = (props: Props) => {
         break;
       case "service":
         ApiHelper.get("/services", "AttendanceApi").then((data) => {
-          data.unshift({ id: "", name: "Any" });
+          data.unshift({ id: "", name: Locale.label("common.reportFilterField.any") });
           if (isMounted()) {
             setRawData(data);
           }
@@ -43,7 +43,7 @@ export const ReportFilterField = (props: Props) => {
         break;
       case "serviceTime":
         ApiHelper.get("/serviceTimes", "AttendanceApi").then((data) => {
-          data.unshift({ id: "", name: "Any" });
+          data.unshift({ id: "", name: Locale.label("common.reportFilterField.any") });
           if (isMounted()) {
             setRawData(data);
           }
@@ -51,7 +51,7 @@ export const ReportFilterField = (props: Props) => {
         break;
       case "group":
         ApiHelper.get("/groups", "MembershipApi").then((data) => {
-          data.unshift({ id: "", name: "Any" });
+          data.unshift({ id: "", name: Locale.label("common.reportFilterField.any") });
           if (isMounted()) {
             setRawData(data);
           }
@@ -117,16 +117,16 @@ export const ReportFilterField = (props: Props) => {
       switch (props.parameter.sourceKey) {
         case "service":
           result = ArrayHelper.getAllArray(rawData, "campusId", props.parameter.requiredParentIds);
-          result.unshift({ id: "", name: "Any" });
+          result.unshift({ id: "", name: Locale.label("common.reportFilterField.any") });
           break;
         case "serviceTime":
           result = ArrayHelper.getAllArray(rawData, "serviceId", props.parameter.requiredParentIds);
-          result.unshift({ id: "", name: "Any" });
+          result.unshift({ id: "", name: Locale.label("common.reportFilterField.any") });
           break;
         case "group":
           const times = ArrayHelper.getAllArray(secondaryData, "serviceTimeId", props.parameter.requiredParentIds);
           result = ArrayHelper.getAllArray(rawData, "id", ArrayHelper.getUniqueValues(times, "groupId"));
-          result.unshift({ id: "", name: "Any" });
+          result.unshift({ id: "", name: Locale.label("common.reportFilterField.any") });
           break;
       }
     }

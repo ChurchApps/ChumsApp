@@ -3,7 +3,9 @@ import type { SelectChangeEvent } from "@mui/material";
 import { MarkdownPreviewLight } from "@churchapps/apphelper-markdown";
 import { HtmlEditor } from "@churchapps/apphelper-markdown";
 import { Locale } from "@churchapps/apphelper";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableRow, TextField } from "@mui/material";
+import {
+  Button, FormControl, Grid, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableRow, TextField 
+} from "@mui/material";
 import React from "react";
 
 type Props = {
@@ -12,29 +14,29 @@ type Props = {
 };
 
 export function TableEdit(props: Props) {
-  const contents:string[][] = props.parsedData.contents || [["",""],["",""],["",""],["",""]];
+  const contents:string[][] = props.parsedData.contents || [["", ""], ["", ""], ["", ""], ["", ""]];
   const rows = contents.length;
   const cols = (contents.length>0) ? contents[0].length : 0;
   const markdown = props.parsedData.markdown || false;
   const [editCellIdx, setEditCellIdx] = React.useState<number[]>(null);
 
   const updateRows = (newRows: number) => {
-    let c = [...contents];
+    const c = [...contents];
     if (newRows > rows) {
       for (let i = rows; i < newRows; i++) c.push(new Array(cols).fill(""));
     } else c.splice(newRows, rows - newRows);
     return c;
-  }
+  };
 
   const updateCols = (newCols: number) => {
-    let c = [...contents];
+    const c = [...contents];
     for (let i = 0; i < c.length; i++) {
       if (newCols > cols) {
         for (let j = cols; j < newCols; j++) c[i].push("");
       } else c[i].splice(newCols, cols - newCols);
     }
     return c;
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
@@ -52,7 +54,7 @@ export function TableEdit(props: Props) {
       c[row][col] = e.target.value;
       data.contents = c;
     }
-    props.onRealtimeChange(data)
+    props.onRealtimeChange(data);
   };
 
   const getMarkdownEditor = () => {
@@ -66,23 +68,23 @@ export function TableEdit(props: Props) {
         data.contents = c;
         props.onRealtimeChange({ ...props.parsedData, contents: c });
       }} />
-      <Button style={{float:"right"}} onClick={() => { setEditCellIdx(null) }} data-testid="table-cell-done-button">{Locale.label("common.done")}</Button>
+      <Button style={{ float: "right" }} onClick={() => { setEditCellIdx(null); }} data-testid="table-cell-done-button">{Locale.label("common.done")}</Button>
       <br />
-    </>)
-  }
+    </>);
+  };
 
   const getGrid = () => {
-    let result: React.ReactElement[] = [];
+    const result: React.ReactElement[] = [];
     for (let i = 0; i < rows; i++) {
-      let row: React.ReactElement[] = [];
+      const row: React.ReactElement[] = [];
       for (let j = 0; j < cols; j++) {
-        if (markdown) row.push(<TableCell key={j} style={{cursor:"pointer"}} onClick={() => { setEditCellIdx([i,j]) }}><MarkdownPreviewLight value={contents[i][j] || "(empty)"} /></TableCell>);
-        else row.push(<TableCell key={j}><TextField fullWidth size="small" label="" style={{margin:0}} name={"cell-" + i + "-" + j} value={contents[i][j]} onChange={handleChange} data-testid={`table-cell-${i}-${j}-input`} /></TableCell>);
+        if (markdown) row.push(<TableCell key={j} style={{ cursor: "pointer" }} onClick={() => { setEditCellIdx([i, j]); }}><MarkdownPreviewLight value={contents[i][j] || "(empty)"} /></TableCell>);
+        else row.push(<TableCell key={j}><TextField fullWidth size="small" label="" style={{ margin: 0 }} name={"cell-" + i + "-" + j} value={contents[i][j]} onChange={handleChange} data-testid={`table-cell-${i}-${j}-input`} /></TableCell>);
       }
       result.push(<TableRow key={i}>{row}</TableRow>);
     }
     return (<Table size="small"><TableBody>{result}</TableBody></Table>);
-  }
+  };
 
   return (
     <>

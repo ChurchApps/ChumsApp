@@ -84,7 +84,8 @@ export function NavLinkEdit(props: Props) {
   useEffect(() => { PageHelper.loadPageTree().then((data) => { setPageTree(PageHelper.flatten(data)); }); }, []);
 
   if (!link) return <></>;
-  else return (
+  else {
+    return (
     <Dialog
       open={true}
       onClose={props.onDone}
@@ -97,5 +98,6 @@ export function NavLinkEdit(props: Props) {
         <TextField size="small" fullWidth label="Link Text" name="linkText" value={link.text || ""} onChange={handleLinkChange} onKeyDown={handleKeyDown} />
       </InputBox>
     </Dialog>
-  );
+    );
+  }
 }

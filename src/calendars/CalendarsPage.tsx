@@ -146,7 +146,7 @@ export const CalendarsPage = () => {
           </Stack>
         </TableCell>
       </TableRow>
-    ));
+  ));
 
   useEffect(() => {
     loadData();

@@ -170,7 +170,7 @@ export const Sermons = () => {
             </Stack>
           </TableCell>
           <TableCell align="right">
-            <Tooltip title="Edit">
+            <Tooltip title={Locale.label("common.edit")}>
               <IconButton
                 size="small"
                 onClick={() => { setCurrentSermon(video); }}

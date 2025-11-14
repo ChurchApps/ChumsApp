@@ -387,7 +387,9 @@ export const AttendanceSetup = memo(() => {
       rows.push(getRow({ name: Locale.label("attendance.attendanceSetup.unassigned") }, undefined, undefined, g, g.id.toString()));
     });
     return rows;
-  }, [attendance.data, getGroups, compare, unassignedGroups, selectCampus, selectService, selectServiceTime, handleAddService, handleAddServiceTime]);
+  }, [
+    attendance.data, getGroups, compare, unassignedGroups, selectCampus, selectService, selectServiceTime, handleAddService, handleAddServiceTime
+  ]);
 
   const table = useMemo(() => {
     if (attendance.isLoading) return <Loading />;
