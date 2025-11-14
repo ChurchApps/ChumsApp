@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { Box, Grid, Card, CardContent, Stack, Typography } from "@mui/material";
 import { Palette as PaletteIcon, TextFields as TextFieldsIcon, Code as CodeIcon, Image as ImageIcon, SmartButton as SmartButtonIcon, Style as StyleIcon } from "@mui/icons-material";
-import { ApiHelper, UserHelper } from "@churchapps/apphelper";
+import { ApiHelper, UserHelper, Locale } from "@churchapps/apphelper";
 import type { GlobalStyleInterface, BlockInterface, GenericSettingInterface } from "../../helpers/Interfaces";
 import { PaletteEdit, FontEdit, CssEdit, Preview, AppearanceEdit } from "./";
 import UserContext from "../../UserContext";

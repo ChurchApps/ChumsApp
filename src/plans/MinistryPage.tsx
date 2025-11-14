@@ -6,7 +6,7 @@ import { PlanTypeList } from "./components/PlanTypeList";
 import { TeamList } from "./components/TeamList";
 import { MinistryNavigation } from "./components/MinistryNavigation";
 import { useParams } from "react-router-dom";
-import { type GroupInterface, Loading, PageHeader } from "@churchapps/apphelper";
+import { type GroupInterface, Loading, PageHeader, Locale } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 
 export const MinistryPage = () => {

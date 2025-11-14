@@ -3,6 +3,7 @@
 /public/apphelper
 /test-results.json
 .serena
+.claude
 #yarn.lock
 
 # Logs

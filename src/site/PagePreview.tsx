@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { Box, Button, Stack, Typography, Paper } from "@mui/material";
 import { Edit as EditIcon, Settings as SettingsIcon, Web as WebIcon } from "@mui/icons-material";
-import { ApiHelper, PageHeader } from "@churchapps/apphelper";
+import { ApiHelper, PageHeader, Locale } from "@churchapps/apphelper";
 import UserContext from "../UserContext";
 import { EnvironmentHelper } from "../helpers/EnvironmentHelper";
 import type { PageInterface } from "../helpers/Interfaces";

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Box } from "@mui/material";
 import { FolderOpen as FolderOpenIcon } from "@mui/icons-material";
-import { UserHelper, Permissions, PageHeader } from "@churchapps/apphelper";
+import { UserHelper, Permissions, PageHeader, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { FilesManager } from "./components";
 
