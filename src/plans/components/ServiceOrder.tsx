@@ -186,8 +186,6 @@ export const ServiceOrder = memo((props: Props) => {
 
   const handleDrop = useCallback(
     (data: any, sort: number) => {
-      console.log(JSON.stringify(data));
-      console.log("handleDrop Header", data);
       const pi = data.data as PlanItemInterface;
       pi.sort = sort;
       ApiHelper.post("/planItems/sort", pi, "DoingApi").then(() => {
@@ -198,7 +196,8 @@ export const ServiceOrder = memo((props: Props) => {
   );
 
   const wrapPlanItem = useCallback(
-    (pi: PlanItemInterface, index: number) => (
+    (pi: PlanItemInterface, index: number) => {
+      return (
       <>
         {canEdit && !itemsFromLesson && showHeaderDrop && (
           <DroppableWrapper
@@ -224,7 +223,6 @@ export const ServiceOrder = memo((props: Props) => {
             dndType="planItemHeader"
             data={pi}
             draggingCallback={(isDragging) => {
-              console.log("isDragging", isDragging);
               setShowHeaderDrop(isDragging);
             }}>
             <PlanItem
@@ -232,7 +230,6 @@ export const ServiceOrder = memo((props: Props) => {
               setEditPlanItem={setEditPlanItem}
               showItemDrop={showItemDrop}
               onDragChange={(dragging) => {
-                console.log("Dragging", dragging);
                 setShowItemDrop(dragging);
               }}
               onChange={() => {
@@ -252,7 +249,8 @@ export const ServiceOrder = memo((props: Props) => {
           />
         )}
       </>
-    ),
+      );
+    },
     [canEdit, showHeaderDrop, showItemDrop, handleDrop, loadData, itemsFromLesson]
   );
 

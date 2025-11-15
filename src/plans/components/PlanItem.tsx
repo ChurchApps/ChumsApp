@@ -44,13 +44,11 @@ export const PlanItem = React.memo((props: Props) => {
   };
 
   const handleDrop = (data: any, sort: number) => {
-    console.log("handleDrop Before", data.data);
     const pi = data.data as PlanItemInterface;
     pi.sort = sort;
     pi.parentId = props.planItem.id;
-    console.log("handleDrop After", pi);
     ApiHelper.post("/planItems/sort", pi, "DoingApi").then(() => {
-      props.onChange();
+      if (props.onChange) props.onChange();
     });
   };
 
@@ -82,15 +80,13 @@ export const PlanItem = React.memo((props: Props) => {
             dndType="planItem"
             data={c}
             draggingCallback={(isDragging) => {
-              console.log("ISdragging", isDragging);
-              props.onDragChange(isDragging);
+              if (props.onDragChange) props.onDragChange(isDragging);
             }}>
             <PlanItem key={c.id} planItem={c} setEditPlanItem={props.setEditPlanItem} readOnly={props.readOnly} showItemDrop={props.showItemDrop} onDragChange={props.onDragChange} onChange={props.onChange} />
           </DraggableWrapper>
         </>
       );
     });
-    console.log("showItemDrop", props.showItemDrop);
     if (props.showItemDrop) {
       result.push(
         <>
