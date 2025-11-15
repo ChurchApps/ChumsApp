@@ -1,12 +1,12 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { ApiHelper, ArrayHelper, PageHeader, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
-import { useParams } from "react-router-dom";
+import { ApiHelper, ArrayHelper, PageHeader, UserHelper, Permissions, Locale, SmallButton } from "@churchapps/apphelper";
+import { useParams, useNavigate } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { useQuery } from "@tanstack/react-query";
 import {
-  Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, IconButton 
+  Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, IconButton
 } from "@mui/material";
-import { LibraryMusic as MusicIcon, Add as AddIcon, QueueMusic as ArrangementIcon, Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
+import { LibraryMusic as MusicIcon, Add as AddIcon, QueueMusic as ArrangementIcon, Edit as EditIcon } from "@mui/icons-material";
 import { Arrangement } from "./components/Arrangement";
 import { SongSearchDialog } from "./SongSearchDialog";
 import { SongDetailsEdit } from "./components/SongDetailsEdit";
@@ -20,6 +20,7 @@ export const SongPage = memo(() => {
   const [editLinks, setEditLinks] = React.useState(false);
   const [selectedArrangement, setSelectedArrangement] = React.useState(null);
   const params = useParams();
+  const navigate = useNavigate();
 
   const song = useQuery<SongInterface>({
     queryKey: ["/songs/" + params.id, "ContentApi"],
@@ -75,12 +76,12 @@ export const SongPage = memo(() => {
   }, [song, arrangements, songDetail, selectedArrangement?.id]);
 
   const handleDeleteSong = useCallback(() => {
-    if (window.confirm(Locale.label("songs.deleteSong.confirm") || "Are you sure you want to delete this song from your library?")) {
+    if (window.confirm(Locale.label("songs.deleteSong.confirm"))) {
       ApiHelper.delete("/songs/" + song.data?.id, "ContentApi").then(() => {
-        window.location.href = "/plans/songs";
+        navigate("/plans/songs");
       });
     }
-  }, [song.data?.id]);
+  }, [song.data?.id, navigate]);
 
   const handleAdd = useCallback(
     async (songDetail: SongDetailInterface) => {
@@ -235,20 +236,7 @@ export const SongPage = memo(() => {
             <EditIcon fontSize="small" />
           </IconButton>
         )}
-        {canEdit && (
-          <IconButton
-            onClick={handleDeleteSong}
-            sx={{
-              color: "rgba(255,255,255,0.8)",
-              "&:hover": {
-                color: "#FFF",
-                backgroundColor: "rgba(255,255,255,0.1)",
-              },
-            }}
-            size="small">
-            <DeleteIcon fontSize="small" />
-          </IconButton>
-        )}
+        {canEdit && <SmallButton color="error" icon="delete" onClick={handleDeleteSong} />}
         {canEdit && (
           <Button
             variant="outlined"

@@ -857,6 +857,7 @@
       "stand": "Standard"
     },
     "peoplePage": {
+      "addPerson": "Add Person",
       "bDay": "Birthday",
       "bDayNo": "Birthday (No Year)",
       "delete": "Delete",
