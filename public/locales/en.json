@@ -1443,6 +1443,15 @@
       "members": "Members",
       "groups": "Groups Only"
     },
+    "directoryVisibility": {
+      "title": "Member Directory Visibility",
+      "tooltip": "Controls who appears in the member directory based on their membership status",
+      "label": "Show in Directory",
+      "staff": "Staff Only",
+      "members": "Members & Staff",
+      "regularAttendees": "Regular Attendees & Above",
+      "everyone": "Everyone (Including Visitors)"
+    },
     "imageEditor": {
       "crop": "Crop",
       "upload": "Upload"
