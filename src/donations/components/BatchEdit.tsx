@@ -49,7 +49,7 @@ export const BatchEdit = memo((props: Props) => {
           b.name = e.currentTarget.value;
           break;
         case "date":
-          b.batchDate = new Date(e.currentTarget.value);
+          b.batchDate = new Date(e.currentTarget.value + "T00:00:00");
           if (isNaN(b.batchDate.getTime())) b.batchDate = null;
           break;
       }

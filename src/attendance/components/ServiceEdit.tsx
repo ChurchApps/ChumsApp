@@ -50,7 +50,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     }
   };
   const handleDelete = () => {
-    if (window.confirm(Locale.label("attendance.serviceEdit.validate.name"))) ApiHelper.delete("/services/" + service.id, "AttendanceApi").then(props.updatedFunction);
+    if (window.confirm(Locale.label("attendance.serviceEdit.confirmDelete"))) ApiHelper.delete("/services/" + service.id, "AttendanceApi").then(props.updatedFunction);
   };
 
   const loadData = React.useCallback(() => {
