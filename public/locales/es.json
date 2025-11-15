@@ -848,6 +848,7 @@
       "stand": "Estándar"
     },
     "peoplePage": {
+      "addPerson": "Agregar Persona",
       "bDay": "Cumpleaños",
       "bDayNo": "Cumpleaños (Sin Año)",
       "delete": "Eliminar",
