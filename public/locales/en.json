@@ -385,6 +385,27 @@
     "fundsPage": {
       "subtitle": "Manage donation funds and track giving categories"
     },
+    "batchStatements": {
+      "title": "Batch Giving Statements",
+      "subtitle": "Download giving statements for all donors",
+      "selectYear": "Select Year",
+      "year": "Year",
+      "summary": "Summary",
+      "totalDonors": "Total Donors:",
+      "totalDonations": "Total Donations:",
+      "totalAmount": "Total Amount:",
+      "downloadOptions": "Download Options",
+      "csvDownload": "Individual CSV Files",
+      "csvDescription": "Download a ZIP file containing individual CSV files for each donor with their detailed donation records",
+      "downloadCsv": "Download CSV",
+      "downloadZip": "Download ZIP ({count} files)",
+      "zipInfo": "This will download a ZIP file containing {count} individual CSV files, one for each donor.",
+      "printStatements": "Printable Statements",
+      "printDescription": "Generate a consolidated document with all giving statements for printing",
+      "printAllStatements": "Print All {count} Statements",
+      "printAllInfo": "This will open a single document with all {count} statements. Each statement will be on a separate page.",
+      "noDonations": "No donations found for {year}. Please select a different year."
+    },
     "batchEdit": {
       "confirmMsg": "Are you sure you wish to permanently delete this batch and all donations within it?",
       "date": "Date",
@@ -422,6 +443,7 @@
       "summary": "Summary",
       "batches": "Batches",
       "funds": "Funds",
+      "statements": "Giving Statements",
       "errMsg": "No fund found. Please create a fund before making a donation",
       "noDonMsg": "No donations have been tracked. Once donations are entered they will show up here.",
       "tableIdent": "Id",
@@ -1253,12 +1275,14 @@
       "dailyGroupAtt": "Daily Group Attendance",
       "donSum": "Donation Summary",
       "groupAtt": "Group Attendance",
+      "givingStatements": "Batch Giving Statements",
       "reports": "Reports",
       "attTrendDesc": "View attendance trends over time",
       "bDaysDesc": "View upcoming birthdays",
       "dailyGroupAttDesc": "View daily group attendance",
       "donSumDesc": "View donation summary",
       "groupAttDesc": "View group attendance",
+      "givingStatementsDesc": "Download giving statements for all donors as CSV or printable forms",
       "helpText": "Select a report to view detailed information",
       "subtitle": "View and download church reports"
     }
