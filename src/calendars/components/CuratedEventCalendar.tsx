@@ -8,6 +8,7 @@ import { EventHelper, UserHelper, Locale } from "@churchapps/apphelper";
 import { type CuratedEventWithEventInterface } from "@churchapps/helpers";
 import { EditCalendarEventModal } from "./EditCalendarEventModal";
 import { DisplayCalendarEventModal } from "./DisplayCalendarEventModal";
+import { EnvironmentHelper } from "../../helpers/EnvironmentHelper";
 
 interface Props {
   events: CuratedEventWithEventInterface[];
@@ -27,7 +28,7 @@ export function CuratedEventCalendar(props: Props) {
   const localizer = momentLocalizer(moment);
 
   const getIcsUrl = () => {
-    const contentApi = process.env.REACT_APP_CONTENT_API_URL || "";
+    const contentApi = EnvironmentHelper.Common.ContentApi;
     return `${contentApi}/events/subscribe?curatedCalendarId=${props.curatedCalendarId}&churchId=${UserHelper.currentUserChurch?.church?.id}`;
   };
 
