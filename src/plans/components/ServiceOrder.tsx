@@ -319,7 +319,7 @@ export const ServiceOrder = memo((props: Props) => {
                 </Box>
               ) : (
                 <>
-                  {planItems.map((pi, i) => wrapPlanItem(pi, i))}
+                  {planItems.map((pi, i) => <React.Fragment key={pi.id || `temp-${i}`}>{wrapPlanItem(pi, i)}</React.Fragment>)}
                   {showHeaderDrop && !itemsFromLesson && (
                     <DroppableWrapper
                       accept="planItemHeader"

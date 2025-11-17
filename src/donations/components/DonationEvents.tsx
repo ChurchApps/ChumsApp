@@ -51,30 +51,29 @@ export const DonationEvents = memo(() => {
   );
 
   const getErrorLogs = useCallback(() => {
-    const logs: React.ReactNode[] = [];
-    errorLogs.data?.forEach((log: any, i: number) => {
+    return errorLogs.data?.map((log: any) => {
       const eventType = log.eventType.replace(".", " ");
-      logs.push(
-        <Accordion key={i}>
+      return (
+        <Accordion key={log.id}>
           <AccordionSummary>
             <Icon sx={{ marginRight: "5px", color: !log.resolved ? "#dc3545" : "#000" }}>error</Icon>
             <span className="capitalize">{eventType}</span> - {DateHelper.prettyDate(log.created)}
           </AccordionSummary>
           <AccordionDetails>
             <ul>
-              <li key="person">
+              <li key={`person-${log.id}`}>
                 {Locale.label("common.person")}
                 <Link to={"/people/" + log.personId.toString()}>{getPersonName(log.personId)}</Link>
               </li>
-              <li key="event" className="capitalize">
+              <li key={`event-${log.id}`} className="capitalize">
                 {Locale.label("donations.donationEvents.event")}
                 <a href={"https://dashboard.stripe.com/events/" + log.id}>{eventType}</a>
               </li>
-              <li key="message">
+              <li key={`message-${log.id}`}>
                 {Locale.label("donations.donationEvents.msg")}
                 {log.message}
               </li>
-              <li key="actions" style={{ float: "right" }}>
+              <li key={`actions-${log.id}`} style={{ float: "right" }}>
                 <Button aria-label="resolve-button" variant={log.resolved ? "outlined" : "contained"} onClick={() => handleClick(log.id, log.resolved)}>
                   {Locale.label("donations.donationEvents.mark")}
                   {log.resolved ? "Unresolved" : "Resolved"}
@@ -84,8 +83,7 @@ export const DonationEvents = memo(() => {
           </AccordionDetails>
         </Accordion>
       );
-    });
-    return logs;
+    }) || [];
   }, [errorLogs.data, getPersonName, handleClick]);
 
   if (!errorLogs.data?.length) return null;

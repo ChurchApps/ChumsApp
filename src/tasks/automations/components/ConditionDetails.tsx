@@ -122,6 +122,7 @@ export const ConditionDetails = (props: Props) => {
                   </Typography>
                 </Stack>
               }
+              slotProps={{ primary: { component: 'div' } }}
             />
             <Stack direction="row" spacing={0.5}>
               <IconButton

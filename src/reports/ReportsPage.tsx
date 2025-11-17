@@ -103,6 +103,10 @@ export const ReportsPage = () => {
                               {item.description}
                             </Typography>
                           }
+                          slotProps={{
+                            primary: { component: 'div' },
+                            secondary: { component: 'div' }
+                          }}
                         />
                       </ListItemButton>
                     </ListItem>

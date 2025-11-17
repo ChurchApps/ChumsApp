@@ -70,6 +70,10 @@ export const AutomationsPage = () => {
                     {automation.active ? Locale.label("tasks.automationsPage.active") : Locale.label("tasks.automationsPage.inactive")} • {Locale.label("tasks.automationsPage.recurs")}: {automation.recurs}
                   </Typography>
                 }
+                slotProps={{
+                  primary: { component: 'div' },
+                  secondary: { component: 'div' }
+                }}
               />
             </ListItemButton>
           </ListItem>

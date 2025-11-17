@@ -85,6 +85,10 @@ export function AppTabs({ onSelected = () => {}, refreshKey = 0 }: Props) {
               {tab.linkType === 'url' ? tab.url : `${tab.linkType} - ${tab.linkData}`}
             </Typography>
           }
+          slotProps={{
+            primary: { component: 'div' },
+            secondary: { component: 'div' }
+          }}
         />
         <ListItemSecondaryAction>
           <Stack direction="row" spacing={0.5}>

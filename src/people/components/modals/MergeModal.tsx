@@ -172,8 +172,8 @@ export const MergeModal: React.FC<Props> = (props) => {
   React.useEffect(merge, [person1, person2]);
 
   const createConflictRows = () =>
-    conflicts.map((outer, i) => (
-      <FormControl key={i} fullWidth>
+    conflicts.map((outer) => (
+      <FormControl key={outer.value} fullWidth>
         <InputLabel>{getDisplayValue(outer.value)}</InputLabel>
         <Select
           name={outer.value}
@@ -186,7 +186,7 @@ export const MergeModal: React.FC<Props> = (props) => {
           {outer.options.map((name, i) => {
             const label = outer.value === "photo" ? <img src={EnvironmentHelper.Common.ContentRoot + name} alt={Locale.label("people.mergeModal.profile")} height="200px" width="200px" /> : name;
             return (
-              <MenuItem key={i} value={name}>
+              <MenuItem key={`${outer.value}-${name || i}`} value={name}>
                 {label}
               </MenuItem>
             );
