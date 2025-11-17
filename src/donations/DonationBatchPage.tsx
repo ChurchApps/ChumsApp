@@ -66,8 +66,6 @@ export const DonationBatchPage = () => {
 
   if (!UserHelper.checkAccess(Permissions.givingApi.donations.view)) return <></>;
 
-  console.log("BATCH IS", batch.data);
-
   return (
     <>
       <PageHeader

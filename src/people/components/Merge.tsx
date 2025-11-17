@@ -34,8 +34,8 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
       const results: PersonInterface[] = await ApiHelper.post("/people/search", { term: searchText }, "MembershipApi");
       const filteredList = results.filter((person) => person.id !== props.person.id);
       setSearchResults(filteredList);
-    } catch (err) {
-      console.log("Error occured in fetching search results: ", err);
+    } catch (error) {
+      console.log("Error occured in fetching search results: ", error);
     }
   };
 
@@ -43,8 +43,8 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     try {
       const members: PersonInterface[] = await ApiHelper.get("/people/household/" + householdId, "MembershipApi");
       return members;
-    } catch (err) {
-      console.log("Error occured in fetching household members: ", err);
+    } catch (error) {
+      console.log("Error occured in fetching household members: ", error);
     }
   };
 
@@ -52,8 +52,8 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     try {
       const groups: GroupMemberInterface[] = await ApiHelper.get(`/groupmembers?personId=${personId}`, "MembershipApi");
       return groups;
-    } catch (err) {
-      console.log("Error in fetching group's data: ", err);
+    } catch (error) {
+      console.log("Error in fetching group's data: ", error);
     }
   };
 
@@ -71,8 +71,8 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     try {
       const visits: VisitInterface[] = await ApiHelper.get(`/visits?personId=${personId}`, "AttendanceApi");
       return visits;
-    } catch (err) {
-      console.log("Error in fetching visits: ", err);
+    } catch (error) {
+      console.log("Error in fetching visits: ", error);
     }
   };
 
@@ -80,8 +80,8 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     try {
       const donations: DonationInterface[] = await ApiHelper.get(`/donations?personId=${personId}`, "GivingApi");
       return donations;
-    } catch (err) {
-      console.log("Error in fetching donations: ", err);
+    } catch (error) {
+      console.log("Error in fetching donations: ", error);
     }
   };
 
@@ -89,8 +89,8 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
     try {
       const formSubmissions: FormSubmissionInterface[] = await ApiHelper.get(`/formsubmissions?personId=${personId}`, "MembershipApi");
       return formSubmissions;
-    } catch (err) {
-      console.log("Error in fetching form submissions: ", err);
+    } catch (error) {
+      console.log("Error in fetching form submissions: ", error);
     }
   };
 
@@ -143,9 +143,9 @@ export const Merge: React.FunctionComponent<Props> = (props) => {
           setMergeInProgress(false);
         }
       });
-    } catch (err) {
+    } catch (error) {
       setMergeInProgress(false);
-      console.log("Error in merging records...!!", err);
+      console.log("Error in merging records...!!", error);
     }
   };
 

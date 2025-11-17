@@ -143,7 +143,6 @@ export const Assignment = (props: Props) => {
   React.useEffect(() => {
     loadData();
   }, [props.plan?.id, loadData]);
-  console.log("Position", position, "Assignment", assignment);
 
   return (
     <Grid container spacing={3}>

@@ -52,8 +52,6 @@ export const PraiseChartsProducts = (props: Props) => {
       }
     });
 
-    console.log("Root Excluded Skus", rootExcludedSkus);
-
     const result: any[] = [];
     allProducts.forEach((product: any) => {
       if (!rootExcludedSkus.includes(product.sku)) {

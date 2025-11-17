@@ -67,7 +67,6 @@ export const GroupDetailsEdit: React.FC<Props> = (props) => {
   };
 
   const handleArrayChange = (val: string[]) => {
-    console.log("Array change", val);
     const g = { ...group };
     g.labelArray = val;
     setGroup(g);

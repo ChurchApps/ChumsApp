@@ -46,7 +46,7 @@ export const Question: React.FC<Props> = memo((props) => {
           const localDate = new Date(theDate.getTime() + theDate.getTimezoneOffset() * 60000);
           displayValue = DateHelper.getShortDate(localDate);
         } catch (e) {
-          console.log(e);
+          // Date parsing failed
         }
       }
       break;

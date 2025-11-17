@@ -13,7 +13,6 @@ export const LinkEdit = (props: Props) => {
 
   useEffect(() => {
     setLink(props.link);
-    console.log("REceived link");
   }, [props.link]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

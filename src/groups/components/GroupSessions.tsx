@@ -45,9 +45,6 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
     if (session?.id) {
       ApiHelper.get("/visitsessions/download/" + session.id, "AttendanceApi").then((data) => {
         setDownloadData(data);
-        data.forEach((dp) => {
-          console.log("Name:", dp.personName ? dp.personName : "Nameless", "Status:", dp.status);
-        });
       });
     }
   }, [session?.id]);

@@ -234,7 +234,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
         const response = await ApiHelper.post("/donate/fee?churchId=" + props.churchId, { type: "creditCard", amount }, "GivingApi");
         return response.calculatedFee;
       } catch (error) {
-        console.log("Error calculating transaction fee: ", error);
+        console.log("Error calculating transaction fee:", error);
         return 0;
       }
     } else {

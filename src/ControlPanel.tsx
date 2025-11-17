@@ -33,7 +33,6 @@ export const ControlPanel = () => {
   };
 
   const customErrorHandler = (error: ErrorLogInterface) => {
-    console.log("customErrorHandler", error);
     //disabled for now.  This causes infinite loops when the error happens on useEffect page loads.
 
     /*
@@ -46,7 +45,6 @@ export const ControlPanel = () => {
   ErrorHelper.init(getErrorAppData, customErrorHandler);
 
   const user = React.useContext(UserContext).user; //to force rerender on login
-  if (user === null) console.log("Church is null");
   return (
     <>
       <ErrorMessages errors={errors} />

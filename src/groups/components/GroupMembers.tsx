@@ -54,7 +54,6 @@ export const GroupMembers: React.FC<Props> = memo((props) => {
   const handleToggleLeader = useCallback(
     (member: GroupMemberInterface) => {
       member.leader = !member.leader;
-      console.log("Member", member);
       ApiHelper.post("/groupmembers", [member], "MembershipApi").then(() => {
         groupMembers.refetch();
       });

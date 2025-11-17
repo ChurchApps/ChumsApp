@@ -19,7 +19,6 @@ export const PlanItemEdit = (props: Props) => {
     const pi = { ...planItem } as PlanItemInterface;
     if (isNaN(pi.seconds)) pi.seconds = 0;
     const value = e.target.value;
-    console.log(e.target.name, value, parseInt(value) * 60, pi.seconds % 60);
     switch (e.target.name) {
       case "label":
         pi.label = value;

@@ -34,7 +34,6 @@ export const ChurchesTab = () => {
   };
 
   const getChurchRows = () => {
-    console.log("getChurchRows");
     if (churches === null) return;
     const result: JSX.Element[] = [];
     churches.forEach((c, index) => {

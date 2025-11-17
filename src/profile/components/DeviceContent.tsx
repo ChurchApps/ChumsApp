@@ -35,7 +35,6 @@ export const DeviceContent = (props: Props) => {
         loadData();
       });
     } else {
-      console.log("CONTENTS ARE", contents);
       const existing = ArrayHelper.getOne(contents, "contentId", e.target.value);
       ApiHelper.delete("/deviceContents/" + existing.id, "MessagingApi").then(() => {
         loadData();
