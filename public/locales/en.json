@@ -376,14 +376,8 @@
     "donationBatchesPage": {
       "subtitle": "Manage donation batches and track giving records"
     },
-    "donationsPage": {
-      "subtitle": "View donation summaries and analyze giving trends"
-    },
     "fundPage": {
       "subtitle": "Track donations and contributions to this fund"
-    },
-    "fundsPage": {
-      "subtitle": "Manage donation funds and track giving categories"
     },
     "batchStatements": {
       "title": "Batch Giving Statements",
@@ -450,6 +444,7 @@
       "total": "Total"
     },
     "donationsPage": {
+      "subtitle": "View donation summaries and analyze giving trends",
       "batch": "Batch",
       "date": "Date",
       "don": "Donations",
@@ -468,6 +463,7 @@
       "noFund": "No funds found."
     },
     "fundsPage": {
+      "subtitle": "Manage donation funds and track giving categories",
       "amt": "Amount",
       "anon": "Anonymous",
       "batch": "Batch",
@@ -481,9 +477,6 @@
     }
   },
   "forms": {
-    "formsPage": {
-      "subtitleManage": "Create and manage custom forms"
-    },
     "formPage": {
       "subtitleConfig": "Form configuration and submissions"
     },
@@ -552,6 +545,7 @@
       "yesNo": "Yes/No"
     },
     "formsPage": {
+      "subtitleManage": "Create and manage custom forms",
       "addForm": "Add Form",
       "archForms": "Archived Forms",
       "confirmMsg1": "Are you sure you want to archive this form?",
