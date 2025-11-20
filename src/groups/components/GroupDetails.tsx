@@ -101,7 +101,7 @@ export const GroupDetails = memo((props: Props) => {
                     <Stack alignItems="center" spacing={1} sx={{ color: "grey.500" }}>
                       <GroupIcon sx={{ fontSize: 48 }} />
                       <Typography variant="body2" color="grey.500">
-                        No photo
+                        {Locale.label("groups.groupDetails.noPhoto")}
                       </Typography>
                     </Stack>
                   )}
@@ -127,7 +127,7 @@ export const GroupDetails = memo((props: Props) => {
                 {isStandard && (
                   <Box>
                     <Typography variant="h6" gutterBottom sx={{ color: "primary.main" }}>
-                      Meeting Information
+                      {Locale.label("groups.groupDetails.meetingInfo")}
                     </Typography>
                     <Stack spacing={2}>
                       {group.meetingTime && (
@@ -135,7 +135,7 @@ export const GroupDetails = memo((props: Props) => {
                           <ScheduleIcon sx={{ color: "text.secondary" }} />
                           <Box>
                             <Typography variant="body2" color="text.secondary">
-                              Meeting Time
+                              {Locale.label("groups.groupDetails.meetingTime")}
                             </Typography>
                             <Typography variant="body1">{group.meetingTime}</Typography>
                           </Box>
@@ -146,7 +146,7 @@ export const GroupDetails = memo((props: Props) => {
                           <LocationIcon sx={{ color: "text.secondary" }} />
                           <Box>
                             <Typography variant="body2" color="text.secondary">
-                              Meeting Location
+                              {Locale.label("groups.groupDetails.meetingLocation")}
                             </Typography>
                             <Typography variant="body1">{group.meetingLocation}</Typography>
                           </Box>
@@ -160,24 +160,24 @@ export const GroupDetails = memo((props: Props) => {
                 {isStandard && (
                   <Box>
                     <Typography variant="h6" gutterBottom sx={{ color: "primary.main" }}>
-                      Attendance Settings
+                      {Locale.label("groups.groupDetails.attendanceSettings")}
                     </Typography>
                     <Grid container spacing={2}>
                       <Grid size={{ xs: 12, sm: 4 }}>
                         <Typography variant="body2" color="text.secondary">
-                          Track Attendance
+                          {Locale.label("groups.groupDetails.trackAttendance")}
                         </Typography>
                         <Typography variant="body1">{booleanDisplays.trackAttendance}</Typography>
                       </Grid>
                       <Grid size={{ xs: 12, sm: 4 }}>
                         <Typography variant="body2" color="text.secondary">
-                          Parent Pickup
+                          {Locale.label("groups.groupDetails.parentPickup")}
                         </Typography>
                         <Typography variant="body1">{booleanDisplays.parentPickup}</Typography>
                       </Grid>
                       <Grid size={{ xs: 12, sm: 4 }}>
                         <Typography variant="body2" color="text.secondary">
-                          Print Nametag
+                          {Locale.label("groups.groupDetails.printNametag")}
                         </Typography>
                         <Typography variant="body1">{booleanDisplays.printNametag}</Typography>
                       </Grid>
@@ -191,7 +191,7 @@ export const GroupDetails = memo((props: Props) => {
                     <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
                       <LabelIcon sx={{ fontSize: 20, color: "text.secondary" }} />
                       <Typography variant="h6" sx={{ color: "primary.main" }}>
-                        Labels
+                        {Locale.label("groups.groupDetails.labels")}
                       </Typography>
                     </Stack>
                     <Box>{labelChips}</Box>
@@ -202,7 +202,7 @@ export const GroupDetails = memo((props: Props) => {
                 {isStandard && group.about && (
                   <Box>
                     <Typography variant="h6" gutterBottom sx={{ color: "primary.main" }}>
-                      About
+                      {Locale.label("groups.groupDetails.about")}
                     </Typography>
                     <MarkdownPreview value={group.about} />
                   </Box>

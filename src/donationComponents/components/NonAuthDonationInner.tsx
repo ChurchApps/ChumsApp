@@ -234,7 +234,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
         const response = await ApiHelper.post("/donate/fee?churchId=" + props.churchId, { type: "creditCard", amount }, "GivingApi");
         return response.calculatedFee;
       } catch (error) {
-        console.log("Error calculating transaction fee: ", error);
+        console.log("Error calculating transaction fee:", error);
         return 0;
       }
     } else {
@@ -263,9 +263,9 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
     return (
       <InputBox
         headerIcon={showHeader ? "volunteer_activism" : ""}
-        headerText={showHeader ? "Donate" : ""}
+        headerText={showHeader ? Locale.label("donation.nonAuthDonation.donate") : ""}
         saveFunction={handleSave}
-        saveText="Donate"
+        saveText={Locale.label("donation.nonAuthDonation.donate")}
         isSubmitting={processing || !captchaResponse || captchaResponse === "robot"}
         mainContainerCssProps={mainContainerCssProps}>
         <ErrorMessages errors={errors} />
@@ -312,9 +312,9 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
           <Grid container spacing={3} style={{ marginTop: 0 }}>
             <Grid size={{ xs: 12, md: 6 }}>
               <FormControl fullWidth>
-                <InputLabel>{Locale.label("donation.donationForm.frequency")}</InputLabel>
+                <InputLabel>{Locale.label("donation.donationForm.frequencyLabel")}</InputLabel>
                 <Select
-                  label="Frequency"
+                  label={Locale.label("donation.donationForm.frequencyLabel")}
                   name="interval"
                   aria-label="interval"
                   value={interval}
@@ -360,7 +360,7 @@ export const NonAuthDonationInner: React.FC<Props> = ({ mainContainerCssProps, s
                   />
                 </FormGroup>
               )}
-              <p>Total Donation Amount: ${total}</p>
+              <p>{Locale.label("donation.donationForm.totalAmount").replace("{}", CurrencyHelper.formatCurrency(total))}</p>
             </>
           )}
         </div>

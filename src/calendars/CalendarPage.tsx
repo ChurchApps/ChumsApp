@@ -18,7 +18,7 @@ import {
   TableContainer
 } from "@mui/material";
 import { Delete as DeleteIcon, CalendarMonth as CalendarIcon, Groups as GroupsIcon } from "@mui/icons-material";
-import { ApiHelper, UserHelper, Loading, PageHeader } from "@churchapps/apphelper";
+import { ApiHelper, UserHelper, Loading, PageHeader, Locale } from "@churchapps/apphelper";
 import { type CuratedCalendarInterface, type GroupInterface, type CuratedEventInterface, Permissions } from "@churchapps/helpers";
 import { CuratedCalendar } from "./components/CuratedCalendar";
 
@@ -51,7 +51,7 @@ export const CalendarPage = () => {
   };
 
   const handleGroupDelete = (groupId: string) => {
-    if (confirm("Are you sure you wish to remove this group from the calendar?")) {
+    if (confirm(Locale.label("calendars.calendarPage.confirmRemoveGroup"))) {
       ApiHelper.delete("/curatedEvents/calendar/" + curatedCalendarId + "/group/" + groupId, "ContentApi").then(() => {
         loadData();
         refresher({});
@@ -69,12 +69,12 @@ export const CalendarPage = () => {
         </Typography>
       </TableCell>
       <TableCell align="right">
-        <Tooltip title="Remove Group" arrow>
+        <Tooltip title={Locale.label("calendars.calendarPage.removeGroup")} arrow>
           <IconButton
             size="small"
             onClick={() => handleGroupDelete(g.id)}
             data-testid={`remove-group-${g.id}-button`}
-            aria-label={`Remove ${g.name} from calendar`}
+            aria-label={Locale.label("calendars.calendarPage.removeGroupAria", g.name)}
             sx={{
               color: "error.main",
               "&:hover": {
@@ -99,8 +99,8 @@ export const CalendarPage = () => {
     <>
       <PageHeader
         icon={<CalendarIcon />}
-        title={currentCalendar?.name || "Calendar"}
-        subtitle="Manage events and groups for this curated calendar"
+        title={currentCalendar?.name || Locale.label("calendars.calendarPage.calendar")}
+        subtitle={Locale.label("calendars.calendarPage.subtitle")}
       />
 
       <Box sx={{ p: 3 }}>
@@ -117,7 +117,7 @@ export const CalendarPage = () => {
                 <Stack direction="row" spacing={1} alignItems="center">
                   <CalendarIcon sx={{ color: "primary.main" }} />
                   <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
-                    Calendar Events
+                    {Locale.label("calendars.calendarPage.calendarEvents")}
                   </Typography>
                 </Stack>
               </Box>
@@ -146,7 +146,7 @@ export const CalendarPage = () => {
                 <Stack direction="row" spacing={1} alignItems="center">
                   <GroupsIcon sx={{ color: "primary.main" }} />
                   <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
-                    Groups in Calendar
+                    {Locale.label("calendars.calendarPage.groupsInCalendar")}
                   </Typography>
                 </Stack>
               </Box>
@@ -159,10 +159,10 @@ export const CalendarPage = () => {
                   <Box sx={{ p: 3, textAlign: "center" }}>
                     <GroupsIcon sx={{ fontSize: 48, color: "grey.400", mb: 1 }} />
                     <Typography variant="body2" color="text.secondary">
-                      No groups added yet
+                      {Locale.label("calendars.calendarPage.noGroupsAdded")}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      Add events from groups using the calendar
+                      {Locale.label("calendars.calendarPage.addEventsHint")}
                     </Typography>
                   </Box>
                 ) : (
@@ -170,10 +170,10 @@ export const CalendarPage = () => {
                     <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
                       <TableRow>
                         <TableCell sx={{ fontWeight: 600, color: "text.secondary" }}>
-                          Group Name
+                          {Locale.label("calendars.calendarPage.groupName")}
                         </TableCell>
                         <TableCell align="right" sx={{ fontWeight: 600, color: "text.secondary" }}>
-                          Actions
+                          {Locale.label("calendars.calendarPage.actions")}
                         </TableCell>
                       </TableRow>
                     </TableHead>

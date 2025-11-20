@@ -2,7 +2,7 @@ import React, { memo, useCallback, useMemo } from "react";
 import { Stack, Typography, Button, Box, Card, CardContent } from "@mui/material";
 import { Print as PrintIcon, Add as AddIcon, Album as AlbumIcon, MenuBook as MenuBookIcon, Edit as EditIcon } from "@mui/icons-material";
 import { type PlanInterface } from "@churchapps/helpers";
-import { ApiHelper, UserHelper, Permissions } from "@churchapps/apphelper";
+import { ApiHelper, UserHelper, Permissions, Locale } from "@churchapps/apphelper";
 import { type PlanItemInterface } from "../../helpers";
 import { PlanItemEdit } from "./PlanItemEdit";
 import { LessonSelector } from "./LessonSelector";
@@ -131,7 +131,7 @@ export const ServiceOrder = memo((props: Props) => {
             borderRadius: 2,
             fontWeight: 600,
           }}>
-          Print
+          {Locale.label("plans.serviceOrder.print")}
         </Button>
         {canEdit && (
           <>
@@ -146,7 +146,7 @@ export const ServiceOrder = memo((props: Props) => {
                   borderRadius: 2,
                   fontWeight: 600,
                 }}>
-                Add Section
+                {Locale.label("plans.serviceOrder.addSection")}
               </Button>
             )}
             {itemsFromLesson && planItems.length > 0 && (
@@ -160,7 +160,7 @@ export const ServiceOrder = memo((props: Props) => {
                   borderRadius: 2,
                   fontWeight: 600,
                 }}>
-                Customize
+                {Locale.label("plans.serviceOrder.customize")}
               </Button>
             )}
             {(planItems.length === 0 || itemsFromLesson) && (
@@ -174,7 +174,7 @@ export const ServiceOrder = memo((props: Props) => {
                   borderRadius: 2,
                   fontWeight: 600,
                 }}>
-                {itemsFromLesson ? "Switch Lesson" : "Associate Lesson"}
+                {itemsFromLesson ? Locale.label("plans.serviceOrder.switchLesson") : Locale.label("plans.serviceOrder.associateLesson")}
               </Button>
             )}
           </>
@@ -186,8 +186,6 @@ export const ServiceOrder = memo((props: Props) => {
 
   const handleDrop = useCallback(
     (data: any, sort: number) => {
-      console.log(JSON.stringify(data));
-      console.log("handleDrop Header", data);
       const pi = data.data as PlanItemInterface;
       pi.sort = sort;
       ApiHelper.post("/planItems/sort", pi, "DoingApi").then(() => {
@@ -198,7 +196,8 @@ export const ServiceOrder = memo((props: Props) => {
   );
 
   const wrapPlanItem = useCallback(
-    (pi: PlanItemInterface, index: number) => (
+    (pi: PlanItemInterface, index: number) => {
+      return (
       <>
         {canEdit && !itemsFromLesson && showHeaderDrop && (
           <DroppableWrapper
@@ -224,7 +223,6 @@ export const ServiceOrder = memo((props: Props) => {
             dndType="planItemHeader"
             data={pi}
             draggingCallback={(isDragging) => {
-              console.log("isDragging", isDragging);
               setShowHeaderDrop(isDragging);
             }}>
             <PlanItem
@@ -232,7 +230,6 @@ export const ServiceOrder = memo((props: Props) => {
               setEditPlanItem={setEditPlanItem}
               showItemDrop={showItemDrop}
               onDragChange={(dragging) => {
-                console.log("Dragging", dragging);
                 setShowItemDrop(dragging);
               }}
               onChange={() => {
@@ -252,7 +249,8 @@ export const ServiceOrder = memo((props: Props) => {
           />
         )}
       </>
-    ),
+      );
+    },
     [canEdit, showHeaderDrop, showItemDrop, handleDrop, loadData, itemsFromLesson]
   );
 
@@ -293,7 +291,7 @@ export const ServiceOrder = memo((props: Props) => {
             <Stack direction="row" alignItems="center" spacing={1}>
               <AlbumIcon sx={{ color: "primary.main", fontSize: 28 }} />
               <Typography variant="h6" sx={{ fontWeight: 600, color: "primary.main" }}>
-                Order of Service
+                {Locale.label("plans.serviceOrder.orderOfService")}
               </Typography>
             </Stack>
             {editContent}
@@ -317,11 +315,11 @@ export const ServiceOrder = memo((props: Props) => {
                     color: "text.secondary",
                   }}>
                   <AlbumIcon sx={{ fontSize: 48, mb: 2, color: "grey.400" }} />
-                  <Typography variant="body1">No service items yet. Add your first item to get started.</Typography>
+                  <Typography variant="body1">{Locale.label("plans.serviceOrder.noItems")}</Typography>
                 </Box>
               ) : (
                 <>
-                  {planItems.map((pi, i) => wrapPlanItem(pi, i))}
+                  {planItems.map((pi, i) => <React.Fragment key={pi.id || `temp-${i}`}>{wrapPlanItem(pi, i)}</React.Fragment>)}
                   {showHeaderDrop && !itemsFromLesson && (
                     <DroppableWrapper
                       accept="planItemHeader"

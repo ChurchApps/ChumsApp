@@ -27,10 +27,10 @@ export const StyleTextShadow: React.FC<Props> = (props) => {
       case "blurRadius": setBlurRadius(parseInt(e.target.value)); tempBlurRadius=parseInt(e.target.value); break;
       case "color": setColor(e.target.value); tempColor=e.target.value; break;
     }
-    let newString = `${tempOffsetX}px ${tempOffsetY}px ${tempBlurRadius}px ${tempColor}`
+    let newString = `${tempOffsetX}px ${tempOffsetY}px ${tempBlurRadius}px ${tempColor}`;
     if (tempBlurRadius === 0) newString = "";
     props.onChange(newString);
-  }
+  };
 
   useEffect(() => {
     const parts = props.value.replace(";", "").split(" ");
@@ -44,9 +44,9 @@ export const StyleTextShadow: React.FC<Props> = (props) => {
 
 
   return <>
-    <TextField fullWidth style={{marginTop:10}} size="small" label="Offset X - px" name="offsetX" value={offsetX} onChange={handleChange} type="number" />
-    <TextField fullWidth style={{marginTop:10}} size="small" label="Offset X - px" name="offsetY" value={offsetY} onChange={handleChange} type="number" />
-    <TextField fullWidth style={{marginTop:10}} size="small" label="Blur Radius - px" name="blurRadius" value={blurRadius} onChange={handleChange} type="number" />
+    <TextField fullWidth style={{ marginTop: 10 }} size="small" label="Offset X - px" name="offsetX" value={offsetX} onChange={handleChange} type="number" />
+    <TextField fullWidth style={{ marginTop: 10 }} size="small" label="Offset X - px" name="offsetY" value={offsetY} onChange={handleChange} type="number" />
+    <TextField fullWidth style={{ marginTop: 10 }} size="small" label="Blur Radius - px" name="blurRadius" value={blurRadius} onChange={handleChange} type="number" />
     <ColorPicker color={color} updatedCallback={(c) => setColor(c)} globalStyles={null} />
-  </>
-}
+  </>;
+};

@@ -2,7 +2,9 @@ import React, { useEffect, memo, useCallback, useMemo } from "react";
 import { type ArrangementInterface, type SongDetailInterface } from "../../../helpers";
 import { ChordProHelper } from "../../../helpers/ChordProHelper";
 import { ApiHelper, Locale, UserHelper, Permissions } from "@churchapps/apphelper";
-import { Card, CardContent, Typography, Stack, IconButton, Box, Alert, Button } from "@mui/material";
+import {
+  Card, CardContent, Typography, Stack, IconButton, Box, Alert, Button 
+} from "@mui/material";
 import { Edit as EditIcon, QueueMusic as ArrangementIcon } from "@mui/icons-material";
 import { Keys } from "./Keys";
 import { ArrangementEdit } from "./ArrangementEdit";

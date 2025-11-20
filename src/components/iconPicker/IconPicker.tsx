@@ -13,6 +13,7 @@ import {
   Pagination
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
+import { Locale } from "@churchapps/apphelper";
 import { IconNamesList } from "./IconNamesList";
 
 interface Props {
@@ -116,7 +117,7 @@ export const IconPicker: React.FC<Props> = (props) => {
             </Box>
             <Box>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                Select Icon
+                {Locale.label("common.iconPicker.title")}
               </Typography>
             </Box>
           </Stack>
@@ -130,13 +131,13 @@ export const IconPicker: React.FC<Props> = (props) => {
         </Stack>
       </DialogTitle>
 
-      <DialogContent sx={{ p: 2, pt: 3, marginTop:2 }}>
+      <DialogContent sx={{ p: 2, pt: 3, marginTop: 2 }}>
         <Stack spacing={2}>
           {/* Search Field */}
           <TextField
             fullWidth
-            label="Search Icons"
-            placeholder="Type to search (e.g., person, home, church)..."
+            label={Locale.label("common.iconPicker.searchLabel")}
+            placeholder={Locale.label("common.iconPicker.searchPlaceholder")}
             value={searchText}
             onChange={handleSearchChange}
             size="small"
@@ -205,10 +206,10 @@ export const IconPicker: React.FC<Props> = (props) => {
               >
                 <Icon sx={{ fontSize: 40, color: 'text.secondary' }}>search_off</Icon>
                 <Typography variant="body2" color="text.secondary">
-                  No icons found matching "{searchText}"
+                  {Locale.label("common.iconPicker.noResults", { searchText })}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  Try a different search term
+                  {Locale.label("common.iconPicker.tryDifferent")}
                 </Typography>
               </Box>
             )}
@@ -232,8 +233,8 @@ export const IconPicker: React.FC<Props> = (props) => {
               <Icon sx={{ fontSize: 14, color: 'text.secondary' }}>info</Icon>
               <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
                 {searchText
-                  ? `Showing ${filteredIcons.length} icons matching "${searchText}"`
-                  : `Showing ${defaultIcons.length} commonly used icons. Use search to find more.`
+                  ? Locale.label("common.iconPicker.showingMatching", { count: filteredIcons.length, searchText })
+                  : Locale.label("common.iconPicker.showingDefault", { count: defaultIcons.length })
                 }
               </Typography>
             </Stack>

@@ -127,14 +127,14 @@ export const AutomationEdit = (props: Props) => {
                 <MenuItem value="yearly">{Locale.label("tasks.automationEdit.yearly")}</MenuItem>
                 <MenuItem value="monthly">{Locale.label("tasks.automationEdit.monthly")}</MenuItem>
               </Select>
-              <FormHelperText>How often should this automation run?</FormHelperText>
+              <FormHelperText>{Locale.label("tasks.automationEdit.recurHelp")}</FormHelperText>
             </FormControl>
 
             <FormControlLabel
               control={<Switch checked={automation?.active || false} onChange={handleActiveToggle} color="primary" />}
               label={
                 <Typography variant="body1" sx={{ fontWeight: automation?.active ? 600 : 400 }}>
-                  {automation?.active ? "Active" : "Inactive"}
+                  {automation?.active ? Locale.label("tasks.automationEdit.active") : Locale.label("tasks.automationEdit.inactive")}
                 </Typography>
               }
             />

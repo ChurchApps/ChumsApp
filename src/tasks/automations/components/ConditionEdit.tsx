@@ -154,7 +154,7 @@ export const ConditionEdit = (props: Props) => {
             {/* Condition Details */}
             <Box>
               <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 2, color: "text.secondary" }}>
-                Condition Details
+                {Locale.label("tasks.conditionEdit.conDetails")}
               </Typography>
               {getQuestionDetails()}
             </Box>

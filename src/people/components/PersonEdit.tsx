@@ -220,8 +220,8 @@ export const PersonEdit = memo((props: Props) => {
         member.contactInfo = PersonHelper.changeOnlyAddress(member.contactInfo, person.contactInfo);
         try {
           await ApiHelper.post("/people", [member], "MembershipApi");
-        } catch {
-          console.log(`error in updating ${person.name.display}"s address`);
+        } catch (error) {
+          console.log(`error in updating ${person.name.display}"s address`, error);
         }
       })
     );
@@ -240,8 +240,8 @@ export const PersonEdit = memo((props: Props) => {
           setMembers(data);
         });
       }
-    } catch {
-      console.log(`Error occured in fetching household members`);
+    } catch (error) {
+      console.log(`Error occured in fetching household members`, error);
     }
   }, [props.person.householdId]);
 

@@ -148,7 +148,7 @@ export const PeoplePage = memo(() => {
                 window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
               }
             }}>
-            Add Person
+            {Locale.label("people.peoplePage.addPerson")}
           </Button>
         )}
       </PageHeader>

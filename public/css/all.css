@@ -749,3 +749,63 @@ label .description {
   #secondaryMenuAlt { display:none; width:100%; text-align: center;}
 
 }
+
+/* Website Editor: Disable links in edit mode to prevent navigation when editing elements */
+.elementWrapper a {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ===== Website Editor Polish Animations ===== */
+
+/* Fade in animation for new sections and elements */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bounce animation for newly dropped items */
+@keyframes dropBounce {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Pulse animation for scroll zones */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Apply fade-in to sections when in edit mode */
+.sectionWrapper {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Apply fade-in to elements when in edit mode */
+.elementWrapper {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Class for just-dropped elements (to be added dynamically) */
+.element-just-dropped {
+  animation: dropBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}

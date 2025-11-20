@@ -46,7 +46,6 @@ export class ChordProHelper {
   };
 
   static transposeChord = (chord: string, steps: number) => {
-    console.log("Transposing", chord, steps);
     // Handle slash chords (e.g., "C/E")
     const parts = chord.split("/");
     const mainChord = parts[0];
@@ -84,8 +83,6 @@ export class ChordProHelper {
       newIndex += 12;
     }
     const newRoot = this.noteNames[newIndex];
-
-    console.log(chordStr, newIndex, originalIndex, steps, root, modifier);
 
     return newRoot + modifier;
   };

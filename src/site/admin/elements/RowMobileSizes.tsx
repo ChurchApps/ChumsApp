@@ -9,7 +9,7 @@ type Props = {
 };
 
 export function RowMobileSizes(props: Props) {
-  const mobileSizes: number[] = []
+  const mobileSizes: number[] = [];
   props.parsedData.columns?.split(",").forEach((c: string) => mobileSizes.push(parseInt(c)));
   props.parsedData.mobileSizes?.split(",").forEach((c: string, idx:number) => mobileSizes[idx] = parseInt(c));
 
@@ -17,19 +17,19 @@ export function RowMobileSizes(props: Props) {
     const data = { ...props.parsedData };
     data.mobileSizes = mobileSizes.toString();
     props.onRealtimeChange(data);
-  }
+  };
 
   const handleColumnChange = (e: SelectChangeEvent<number>, idx: number) => {
     const val = parseInt(e.target.value.toString());
     mobileSizes[idx] = val;
     updateMobileSizes();
-  }
+  };
 
   const getCustomSizes = () => {
-    let result: React.ReactElement[] = [];
+    const result: React.ReactElement[] = [];
     props.cols.forEach((c:number, idx:number) => {
       const index = idx;
-      let mobileSize = (mobileSizes.length > idx) ? mobileSizes[idx] || c : c;
+      const mobileSize = (mobileSizes.length > idx) ? mobileSizes[idx] || c : c;
       result.push(<TableRow key={idx}>
         <TableCell>{c}</TableCell>
         <TableCell>
@@ -48,11 +48,11 @@ export function RowMobileSizes(props: Props) {
             <MenuItem value="12" data-testid="mobile-width-12" aria-label="Full width">12 - whole</MenuItem>
           </Select>
         </TableCell>
-      </TableRow>)
+      </TableRow>);
     });
 
     return (<>
-      <div style={{marginTop:10}}><b>Customize Mobile Layout</b></div>
+      <div style={{ marginTop: 10 }}><b>Customize Mobile Layout</b></div>
       <p><i>Mobile widths do not need to add up to 12.  Values that add up to 24 will span two rows.</i></p>
       <Table size="small">
         <TableHead>
@@ -65,7 +65,7 @@ export function RowMobileSizes(props: Props) {
           {result}
         </TableBody>
       </Table><br /></>);
-  }
+  };
 
   return (
     <>

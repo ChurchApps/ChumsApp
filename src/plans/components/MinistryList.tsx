@@ -68,7 +68,7 @@ export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
           {Locale.label("plans.ministryList.noMinMsg")}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Get started by creating your first ministry
+          {Locale.label("plans.ministryList.getStarted")}
         </Typography>
       </Paper>
     );
@@ -140,7 +140,7 @@ export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
                         {memberCount > 0 && (
                           <Chip
                             icon={<PeopleIcon />}
-                            label={`${memberCount} ${memberCount === 1 ? "member" : "members"}`}
+                            label={`${memberCount} ${memberCount === 1 ? Locale.label("plans.ministryList.member") : Locale.label("plans.ministryList.members")}`}
                             variant="outlined"
                             size="small"
                             sx={{
@@ -158,7 +158,7 @@ export const MinistryList = ({ showAdd = false, onCloseAdd }: Props) => {
                     <Box sx={{ ml: 2 }}>
                       <Chip
                         icon={<EditIcon />}
-                        label="Manage"
+                        label={Locale.label("plans.ministryList.manage")}
                         component={Link}
                         to={`/groups/${g.id}?tag=ministry`}
                         clickable

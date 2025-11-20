@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { ErrorMessages, InputBox, ApiHelper, UserHelper, SlugHelper } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, ApiHelper, UserHelper, SlugHelper, Locale } from "@churchapps/apphelper";
 import { Permissions } from "@churchapps/helpers";
 import type { LinkInterface } from "@churchapps/helpers";
 import type { PageInterface } from "../../helpers/Interfaces";
-import { Button, Dialog, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
+import {
+  Button, Dialog, FormControl, Grid, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography 
+} from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -32,7 +34,7 @@ export function PageLinkEdit(props: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
-    let p = { ...page } as PageInterface;
+    const p = { ...page } as PageInterface;
     const val = e.target.value;
     switch (e.target.name) {
       case "title":
@@ -41,7 +43,7 @@ export function PageLinkEdit(props: Props) {
       case "url":
         p.url = val.toLowerCase();
         if (link) {
-          let l = { ...link };
+          const l = { ...link };
           l.url = val.toLowerCase();
           setLink(l);
         }
@@ -55,7 +57,7 @@ export function PageLinkEdit(props: Props) {
 
   const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     e.preventDefault();
-    let l = { ...link } as LinkInterface;
+    const l = { ...link } as LinkInterface;
     const val = e.target.value;
     switch (e.target.name) {
       case "linkText":
@@ -69,7 +71,7 @@ export function PageLinkEdit(props: Props) {
   };
 
   const validate = () => {
-    let errors = [];
+    const errors = [];
     if (!page?.url || page.url === "") errors.push("Please enter a path.");
     if (!page?.title || page.title === "") errors.push("Please enter a title.");
     if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) errors.push("Unauthorized to create pages");
@@ -97,7 +99,7 @@ export function PageLinkEdit(props: Props) {
   };
 
   const handleDelete = () => {
-    let errors = [];
+    const errors = [];
     if (!UserHelper.checkAccess(Permissions.contentApi.content.edit)) {
       errors.push("Unauthorized to delete pages");
     }
@@ -108,7 +110,7 @@ export function PageLinkEdit(props: Props) {
     }
 
     if (page) {
-      if (window.confirm("Are you sure you wish to permanently delete this page?")) {
+      if (window.confirm(Locale.label("site.pageLink.confirmDelete"))) {
         ApiHelper.delete("/pages/" + page.id?.toString(), "ContentApi").then(() => {
           if (link) {
             ApiHelper.delete("/links/" + link.id?.toString(), "ContentApi").then(() => props.updatedCallback(null, null));
@@ -133,7 +135,7 @@ export function PageLinkEdit(props: Props) {
 
   const handleDuplicate = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (confirm("Are you sure you wish to make a copy of this page and all of it's contents?")) {
+    if (confirm(Locale.label("site.pageLink.confirmDuplicate"))) {
       ApiHelper.post("/pages/duplicate/" + page?.id, {}, "ContentApi").then((data: any) => {
         setPage(null);
         props.updatedCallback(data, link);
@@ -150,12 +152,12 @@ export function PageLinkEdit(props: Props) {
   }, [props.page, props.link]);
 
   if (!page && !link) return <></>;
-  else
+  else {
     return (
       <Dialog open={true} onClose={props.onDone} style={{ minWidth: 800 }}>
         <InputBox
           id="pageDetailsBox"
-          headerText={page ? "Page Settings" : "Link Settings"}
+          headerText={page ? Locale.label("site.pageLink.pageSettings") : Locale.label("site.pageLink.linkSettings")}
           headerIcon="article"
           saveFunction={handleSave}
           cancelFunction={handleCancel}
@@ -195,7 +197,7 @@ export function PageLinkEdit(props: Props) {
                     </Stack>
                   </Paper>
                 </div>)
-                : (<TextField size="small" fullWidth label="Url Path" name="url" value={page.url || ""} onChange={handleChange} helperText="ex: /camper-registration  (**Make sure to check before saving)" InputProps={{ endAdornment: (<Button variant="contained" color="primary" size="small" onClick={handleSlugValidation}>Check</Button>) }} />)
+                : (<TextField size="small" fullWidth label="Url Path" name="url" value={page.url || ""} onChange={handleChange} helperText={Locale.label("site.pageLink.urlHelper")} InputProps={{ endAdornment: (<Button variant="contained" color="primary" size="small" onClick={handleSlugValidation}>{Locale.label("site.pageLink.check")}</Button>) }} />)
               }
             </Grid>}
             {!page && link && <Grid size={{ xs: 6 }}>
@@ -205,4 +207,5 @@ export function PageLinkEdit(props: Props) {
         </InputBox>
       </Dialog>
     );
+  }
 }

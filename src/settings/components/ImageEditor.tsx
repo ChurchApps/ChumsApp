@@ -86,7 +86,7 @@ export const ImageEditor: React.FC<Props> = (props) => {
       headerIcon=""
       headerText={Locale.label("settings.imageEditor.crop")}
       saveFunction={handleSave}
-      saveText={"Update"}
+      saveText={Locale.label("common.update")}
       cancelFunction={handleCancel}
       headerActionContent={getHeaderButton()}>
       <Cropper onReady={onCropperInit} src={currentUrl} style={{ height: 150, width: "100%" }} aspectRatio={props.aspectRatio} guides={false} crop={handleCrop} />

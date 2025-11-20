@@ -45,9 +45,6 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
     if (session?.id) {
       ApiHelper.get("/visitsessions/download/" + session.id, "AttendanceApi").then((data) => {
         setDownloadData(data);
-        data.forEach((dp) => {
-          console.log("Name:", dp.personName ? dp.personName : "Nameless", "Status:", dp.status);
-        });
       });
     }
   }, [session?.id]);
@@ -258,7 +255,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
         ))}
         {availableYears.length > 1 && (
           <Chip
-            label="All Years"
+            label={Locale.label("groups.groupSessions.allYears")}
             onClick={() => {
               setSelectedYear("all");
               setCurrentPage(1);
@@ -292,10 +289,10 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
         <Paper sx={{ p: 4, textAlign: "center", mb: 3 }}>
           <Icon sx={{ fontSize: 48, color: "text.secondary", mb: 2 }}>search_off</Icon>
           <Typography variant="h6" color="text.secondary" gutterBottom>
-            No sessions found
+            {Locale.label("groups.groupSessions.noSessionsFound")}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Try adjusting your filters or search term
+            {Locale.label("groups.groupSessions.tryAdjusting")}
           </Typography>
         </Paper>
       );
@@ -386,7 +383,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
       return (
         <Paper sx={{ p: 4, textAlign: "center" }}>
           <Typography variant="body1" color="text.secondary">
-            Select a session above to view attendance
+            {Locale.label("groups.groupSessions.selectSession")}
           </Typography>
         </Paper>
       );
@@ -400,7 +397,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
               {Locale.label("groups.groupSessions.attFor")} {group.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Session: {session.displayName}
+              {Locale.label("groups.groupSessions.session")}: {session.displayName}
               {session.serviceTime?.name && ` • ${session.serviceTime.name}`}
             </Typography>
           </Box>
@@ -409,7 +406,7 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
 
         {visitSessions.length === 0 ? (
           <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 4 }}>
-            No attendance recorded for this session
+            {Locale.label("groups.groupSessions.noAttendance")}
           </Typography>
         ) : (
           <Table id="groupMemberTable">

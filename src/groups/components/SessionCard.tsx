@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, Typography, Button, Box, Chip, Avatar } from "@mui/material";
 import { Icon } from "@mui/material";
 import { type SessionInterface } from "@churchapps/helpers";
-import { DateHelper } from "@churchapps/apphelper";
+import { DateHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   session: SessionInterface;
@@ -62,13 +62,13 @@ export const SessionCard: React.FC<Props> = ({
           <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
             {getSessionTitle()}
           </Typography>
-          {isSelected && <Chip label="Active" color="primary" size="small" variant="outlined" />}
+          {isSelected && <Chip label={Locale.label("groups.sessionCard.active")} color="primary" size="small" variant="outlined" />}
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
           <Avatar sx={{ width: 24, height: 24, mr: 1, fontSize: "12px" }}>{getAttendanceIcon(attendanceCount)}</Avatar>
           <Typography variant="body2" color="text.secondary">
-            {attendanceCount} {attendanceCount === 1 ? "person" : "people"}
+            {attendanceCount} {attendanceCount === 1 ? Locale.label("groups.sessionCard.person") : Locale.label("groups.sessionCard.people")}
           </Typography>
         </Box>
 
@@ -88,7 +88,7 @@ export const SessionCard: React.FC<Props> = ({
             }}
             startIcon={<Icon>visibility</Icon>}
             fullWidth>
-            View
+            {Locale.label("groups.sessionCard.view")}
           </Button>
           {canEdit && (
             <Button
@@ -100,7 +100,7 @@ export const SessionCard: React.FC<Props> = ({
               }}
               startIcon={<Icon>edit</Icon>}
               fullWidth>
-              Edit
+              {Locale.label("groups.sessionCard.edit")}
             </Button>
           )}
         </Box>

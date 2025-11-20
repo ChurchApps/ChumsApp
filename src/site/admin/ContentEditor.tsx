@@ -1,17 +1,16 @@
 import { useEffect, useState, useContext } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Dialog, Grid, Icon, ThemeProvider, ToggleButton, ToggleButtonGroup, Tooltip, createTheme } from "@mui/material";
+import { ThemeProvider, createTheme, useMediaQuery, Container, Skeleton } from "@mui/material";
 import { useWindowWidth } from "@react-hook/window-size";
 import type { BlockInterface, ElementInterface, PageInterface, SectionInterface, GlobalStyleInterface } from "../../helpers/Interfaces";
 import { ApiHelper, ArrayHelper, UserHelper } from "../../helpers";
 import { Permissions } from "@churchapps/helpers";
-import { SmallButton, DisplayBox } from "@churchapps/apphelper";
 import { Section } from "./Section";
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import React from "react";
-import { DroppableArea, Theme } from "@churchapps/apphelper-website";
+import { Theme, DroppableArea } from "@churchapps/apphelper-website";
 import { SectionBlock } from "./SectionBlock";
 import { StyleHelper } from "../../helpers/StyleHelper";
 import { ElementAdd } from "./elements/ElementAdd";
@@ -19,6 +18,10 @@ import { ElementEdit } from "./elements/ElementEdit";
 import { SectionEdit } from "./SectionEdit";
 import { DroppableScroll } from "./DroppableScroll";
 import UserContext from "../../UserContext";
+import { EditorToolbar } from "./EditorToolbar";
+import { HelpDialog } from "./HelpDialog";
+import { ZoneBox } from "./ZoneBox";
+import { EmptyState } from "./EmptyState";
 
 interface ConfigInterface {
   globalStyles?: GlobalStyleInterface;
@@ -43,6 +46,7 @@ export function ContentEditor(props: Props) {
   const [scrollTop, setScrollTop] = useState(0);
   const [deviceType, setDeviceType] = useState("desktop");
   const windowWidth = useWindowWidth();
+  const isMobileViewport = useMediaQuery('(max-width:900px)');
 
   const [showAdd, setShowAdd] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
@@ -54,8 +58,8 @@ export function ContentEditor(props: Props) {
   const zones: any = {
     cleanCentered: ["main"],
     embed: ["main"],
-    headerFooter: ["main", "footer"],
-  }
+    headerFooter: ["main", "siteFooter"],
+  };
 
   const churchSettings = props.config?.appearance || context?.userChurch?.settings || {};
 
@@ -70,7 +74,7 @@ export function ContentEditor(props: Props) {
       if (element.elements && element.elements.length > 0) element.elements = normalizeElements(element.elements);
       return element;
     });
-  }
+  };
 
   const loadDataInternal = () => {
     if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) {
@@ -83,62 +87,65 @@ export function ContentEditor(props: Props) {
         setContainer(p);
       });
     }
-  }
+  };
 
   useEffect(loadDataInternal, [props.pageId, props.blockId]);
 
   useEffect(() => {
-    if (windowWidth < 883) navigate("/site");
-  }, [windowWidth]);
+    if (isMobileViewport) navigate("/site");
+  }, [isMobileViewport]);
 
   const handleDrop = (data: any, sort: number, zone: string) => {
     if (data.data) {
       const section: SectionInterface = data.data;
       section.sort = sort;
       section.zone = zone;
-      section.pageId = (zone === "footer") ? null : props.pageId;
-      ApiHelper.post("/sections", [section], "ContentApi").then(() => { loadDataInternal() });
-    }
-    else {
-      const sec = { sort, background: "#FFF", textColor: "dark", pageId: props.pageId, blockId: props.blockId, targetBlockId: data.blockId, zone: zone }
-      if (sec.zone === "footer") sec.pageId = null;
+      section.pageId = (zone === "siteFooter") ? null : props.pageId;
+      ApiHelper.post("/sections", [section], "ContentApi").then(() => { loadDataInternal(); });
+    } else {
+      const sec = {
+        sort, background: "#FFF", textColor: "dark", pageId: props.pageId, blockId: props.blockId, targetBlockId: data.blockId, zone: zone 
+      };
+      if (sec.zone === "siteFooter") sec.pageId = null;
       setEditSection(sec);
     }
-  }
+  };
 
-  const getAddSection = (s: number, zone: string, droppableAreaText?: string) => {
+  const getAddSection = (s: number, zone: string) => {
     const sort = s;
-    return (<DroppableArea key={"addSection_" + zone + "_" + s.toString()} text={droppableAreaText} accept={["section", "sectionBlock"]} onDrop={(data) => handleDrop(data, sort, zone)} />);
-  }
+    return (<DroppableArea key={"addSection_" + zone + "_" + s.toString()} text="Drop here to add section" accept={["section", "sectionBlock"]} onDrop={(data) => handleDrop(data, sort, zone)} />);
+  };
 
   const getSections = (zone: string) => {
-    const result: React.ReactElement[] = []
+    const result: React.ReactElement[] = [];
     result.push(getAddSection(0, zone));
     const sections = (zone === "block") ? container?.sections : ArrayHelper.getAll(container?.sections, "zone", zone);
     sections?.forEach(section => {
-      if (section.targetBlockId) result.push(<SectionBlock key={section.id} section={section} churchSettings={churchSettings} onEdit={handleSectionEdit} onMove={() => { loadDataInternal() }} />)
-      else result.push(<Section key={section.id} section={section} churchSettings={churchSettings} onEdit={handleSectionEdit} onMove={() => { loadDataInternal() }} church={context?.userChurch?.church} />)
+      if (section.targetBlockId) result.push(<SectionBlock key={section.id} section={section} churchSettings={churchSettings} onEdit={handleSectionEdit} onMove={() => { loadDataInternal(); }} />);
+      else result.push(<Section key={section.id} section={section} churchSettings={churchSettings} onEdit={handleSectionEdit} onMove={() => { loadDataInternal(); }} church={context?.userChurch?.church} />);
       result.push(getAddSection(section.sort + 0.1, zone));
     });
 
-    if (sections.length === 0) result.push(<Container key="empty"><p>Add a section to get started</p></Container>)
+    if (sections.length === 0) {
+      result.push(<EmptyState key="empty" />);
+    }
     return result;
-  }
+  };
 
   const handleSectionEdit = (s: SectionInterface, e: ElementInterface) => {
     if (s) {
       if (s.targetBlockId) navigate(`/site/blocks/${s.targetBlockId}`);
       else setEditSection(s);
     } else if (e) setEditElement(e);
-  }
+  };
 
-  let rightBarStyle: CSSProperties = {}
+  let rightBarStyle: CSSProperties = {};
 
   if (typeof window !== "undefined") {
     const editorBar = document.getElementById("editorBar");
     if (window.innerWidth > 900) {
       if (window?.innerHeight) {
-        if (scrollTop < 50) rightBarStyle = { paddingTop: 70 };
+        if (scrollTop < 50) rightBarStyle = { paddingTop: '70px' };
       }
     }
   }
@@ -153,7 +160,7 @@ export function ContentEditor(props: Props) {
     }
     if (props.onDone) props.onDone(url);
     else navigate(`/site/pages/preview/${props.pageId}`);
-  }
+  };
 
   useEffect(() => {
     const onScroll = (e: any) => { setScrollTop(e.target.documentElement.scrollTop); };
@@ -166,9 +173,9 @@ export function ContentEditor(props: Props) {
     const c = { ...container };
     c.sections.forEach(s => {
       realtimeUpdateElement(element, s.elements);
-    })
+    });
     setContainer(c);
-  }
+  };
 
   const realtimeUpdateElement = (element: ElementInterface, elements: ElementInterface[]) => {
     for (let i = 0; i < elements.length; i++) {
@@ -180,40 +187,37 @@ export function ContentEditor(props: Props) {
         realtimeUpdateElement(element, elements[i].elements);
       }
     }
-  }
+  };
 
   const getTheme = () => {
-    if (deviceType === "mobile") return createTheme({
-      breakpoints: {
-        values: { xs: 0, sm: 2000, md: 3000, lg: 4000, xl: 5000 },
-      },
-      components: {
-        MuiTextField: { defaultProps: { margin: "normal" } },
-        MuiFormControl: { defaultProps: { margin: "normal" } }
-      }
-    });
-    else return createTheme({
-      components: {
-        MuiTextField: { defaultProps: { margin: "normal" } },
-        MuiFormControl: { defaultProps: { margin: "normal" } }
-      }
-    });
-  }
+    if (deviceType === "mobile") {
+      return createTheme({
+        breakpoints: {
+          values: { xs: 0, sm: 2000, md: 3000, lg: 4000, xl: 5000 },
+        },
+        components: {
+          MuiTextField: { defaultProps: { margin: "normal" } },
+          MuiFormControl: { defaultProps: { margin: "normal" } }
+        }
+      });
+    } else {
+      return createTheme({
+        components: {
+          MuiTextField: { defaultProps: { margin: "normal" } },
+          MuiFormControl: { defaultProps: { margin: "normal" } }
+        }
+      });
+    }
+  };
 
-  const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => <div key={"zone-" + keyName} style={{ minHeight: 100 }}>
-    <div style={{ position: "absolute", backgroundColor: "#FFF", zIndex: 99, padding: 10, border: "1px solid #999", opacity: 0.5 }}>Zone: {keyName}</div>
-    <div style={{ minHeight: 100 }}>
-      <>
-        <div className="page" style={(deviceType === "mobile" ? { width: 400, marginLeft: "auto", marginRight: "auto" } : {})}>
-          {getSections(keyName)}
-        </div>
-      </>
-    </div>
-    <div style={{ height: "31px" }}></div>
-  </div>
+  const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => (
+    <ZoneBox sections={sections} name={name} keyName={keyName} deviceType={deviceType}>
+      {getSections(keyName)}
+    </ZoneBox>
+  );
 
   const getZoneBoxes = () => {
-    let result: any[] = [];
+    const result: any[] = [];
     let idx = 0;
     if (props.pageId) {
       const page = container as PageInterface;
@@ -227,57 +231,56 @@ export function ContentEditor(props: Props) {
       const block = container as BlockInterface;
       if (block) result.push(getZoneBox((container as BlockInterface)?.sections, "Block Preview", "block"));
     }
-    return <>{result}</>
+    return <>{result}</>;
+  };
+
+
+
+
+  if (!container) {
+    return (
+      <>
+        <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
+        <EditorToolbar
+          onDone={handleDone}
+          container={container}
+          isPageMode={!!props.pageId}
+          showHelp={showHelp}
+          onToggleHelp={() => setShowHelp(!showHelp)}
+          showAdd={showAdd}
+          onToggleAdd={() => setShowAdd(!showAdd)}
+          deviceType={deviceType}
+          onDeviceTypeChange={setDeviceType}
+        />
+        <Container sx={{ mt: 5 }}>
+          <Skeleton variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 2 }} animation="wave" />
+          <Skeleton variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 2 }} animation="wave" />
+          <Skeleton variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 2 }} animation="wave" />
+        </Container>
+      </>
+    );
   }
-
-  const getHelp = () => (
-    <Dialog open={true} onClose={() => { setShowHelp(false) }} fullWidth maxWidth="sm">
-      <DisplayBox id="dialogForm" headerIcon="help" headerText="Help">
-        <p>Use the plus icon in the corner to add new sections and elements to a page.  All elements must go within a section.</p>
-        <p>Doubleclick any section or element to edit or remove it.</p>
-        <p>Click and drag and section or element to rearrange content.</p>
-      </DisplayBox>
-    </Dialog>
-  )
-
-
 
   return (<>
     <Theme globalStyles={props.config?.globalStyles} appearance={props.config?.appearance} />
     <style>{css}</style>
 
-    <div style={{ backgroundColor: "#FFF", position: "sticky", top: 0, width: "100%", zIndex: 1000, boxShadow: "0px 2px 2px black", marginBottom: 10 }}>
-      <Grid container spacing={2}>
-        <Grid size={{ xs: 4 }} style={{ paddingLeft: 40, paddingTop: 8 }}>
-          <SmallButton icon={"done"} text="Done" onClick={handleDone} data-testid="content-editor-done-button" />
-        </Grid>
-        <Grid size={{ xs: 4 }} style={{ textAlign: "center" }}>
-          <b>
-            {props.pageId && "Page: " + (container as PageInterface)?.title}
-            {props.blockId && "Block: " + (container as BlockInterface)?.name}
-          </b>
-        </Grid>
-        <Grid size={{ xs: 4 }} style={{ textAlign: "right", paddingTop: 5, paddingBottom: 5, paddingRight: 15 }}>
-          <div style={{ float: "right", display: "flex", backgroundColor: "#1976d2" }}>
-            <ToggleButtonGroup value={showHelp.toString()} exclusive size="small">
-              <ToggleButton value="true" onClick={() => setShowHelp(!showHelp)} style={{ borderRight: "1px solid #FFF", color: "#FFF" }}><Tooltip title="Help" placement="top"><Icon>help</Icon></Tooltip></ToggleButton>
-            </ToggleButtonGroup>
-            <ToggleButtonGroup value={showAdd.toString()} exclusive size="small">
-              <ToggleButton value="true" onClick={() => setShowAdd(!showAdd)} style={{ borderRight: "1px solid #FFF", color: "#FFF" }}><Tooltip title="Add Content" placement="top"><Icon>add</Icon></Tooltip></ToggleButton>
-            </ToggleButtonGroup>
-            <ToggleButtonGroup size="small" value={deviceType} exclusive onChange={(e, newDeviceType) => { if (newDeviceType !== null) setDeviceType(newDeviceType) }}>
-              {deviceType === "desktop" && <ToggleButton size="small" value="mobile" style={{ color: "#FFF" }}><Tooltip title="Desktop" placement="top"><Icon>computer</Icon></Tooltip></ToggleButton>}
-              {deviceType === "mobile" && <ToggleButton size="small" value="desktop" style={{ color: "#FFF" }}><Tooltip title="Mobile" placement="top"><Icon>smartphone</Icon></Tooltip></ToggleButton>}
-            </ToggleButtonGroup>
-          </div>
-        </Grid>
-      </Grid>
-    </div>
+    <EditorToolbar
+      onDone={handleDone}
+      container={container}
+      isPageMode={!!props.pageId}
+      showHelp={showHelp}
+      onToggleHelp={() => setShowHelp(!showHelp)}
+      showAdd={showAdd}
+      onToggleAdd={() => setShowAdd(!showAdd)}
+      deviceType={deviceType}
+      onDeviceTypeChange={setDeviceType}
+    />
 
 
 
     <DndProvider backend={HTML5Backend}>
-      {showHelp && getHelp()}
+      <HelpDialog open={showHelp} onClose={() => setShowHelp(false)} />
       {showAdd && <ElementAdd includeBlocks={!elementOnlyMode} includeSection={!elementOnlyMode} updateCallback={() => { setShowAdd(false); }} draggingCallback={() => setShowAdd(false)} />}
       {editElement && <ElementEdit element={editElement} updatedCallback={(updatedElement) => {
         setEditElement(null);
@@ -297,17 +300,24 @@ export function ContentEditor(props: Props) {
       }} onRealtimeChange={handleRealtimeChange} globalStyles={props.config?.globalStyles} />}
       {editSection && <SectionEdit section={editSection} updatedCallback={() => { setEditSection(null); loadDataInternal(); }} globalStyles={props.config?.globalStyles} />}
 
-      <div>
-        {scrollTop > 150
-          && <div style={{ position: "fixed", bottom: 30, zIndex: 1000, width: 500, marginLeft: 300 }}>
-            <DroppableScroll key={"scrollDown"} text={"Scroll Down"} direction="down" />
-          </div>}
-        {scrollTop > 150 && <div style={{ position: "fixed", top: 50, zIndex: 1000, width: 500, marginLeft: 300 }}>
-          <DroppableScroll key={"scrollUp"} text={"Scroll Up"} direction="up" />
-        </div>}
+      <div style={{ marginTop: 0, paddingTop: 0 }}>
+        {scrollTop > 150 && (
+          <>
+            <div style={{
+              position: "fixed", bottom: '30px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" 
+            }}>
+              <DroppableScroll key={"scrollDown"} text={"Scroll Down"} direction="down" />
+            </div>
+            <div style={{
+              position: "fixed", top: '50px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" 
+            }}>
+              <DroppableScroll key={"scrollUp"} text={"Scroll Up"} direction="up" />
+            </div>
+          </>
+        )}
 
 
-        <h1 style={{ marginTop: -50 }}>Edit Page</h1>
+
         <ThemeProvider theme={getTheme()}>
           {getZoneBoxes()}
         </ThemeProvider>

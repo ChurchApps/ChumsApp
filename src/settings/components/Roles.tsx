@@ -79,8 +79,6 @@ export const Roles = memo(({ selectRoleId, selectedRoleId, church }: Props) => {
 
   const addRole = useCallback(
     async (role: any) => {
-      console.log("made it");
-      console.log(role);
       handleClose();
       if (window.confirm(Locale.label("settings.roles.roleCreate") + role.name + Locale.label("settings.roles.itMsg") + role.description.toLowerCase())) {
         const rolesData = await ApiHelper.post("/roles", [{ name: role.name }], "MembershipApi");

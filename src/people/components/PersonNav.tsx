@@ -61,7 +61,7 @@ export const PersonNav: React.FC<Props> = (props) => {
         </li>
       </ul>
 
-      <div className="subhead">Custom Forms</div>
+      <div className="subhead">{Locale.label("people.personNav.customForms")}</div>
       <ul>
         <li>
           <Button variant="text" color="inherit" sx={{ p: 0, minWidth: 0 }}>Discipleship</Button>

@@ -83,7 +83,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
   const relink = (e: React.MouseEvent) => {
     e.preventDefault();
     ApiHelper.get("/domains/caddy", "MembershipApi").then(() => {
-      alert("Done.  Please only click this link once.");
+      alert(Locale.label("settings.domain.doneAlert"));
     });
   };
 
@@ -117,7 +117,7 @@ export const DomainSettingsEdit: React.FC<Props> = (props) => {
               {getRows()}
               <TableRow>
                 <TableCell>
-                  <TextField fullWidth name="domainName" size="small" value={addDomainName} onChange={handleChange} placeholder="yoursite.com" />
+                  <TextField fullWidth name="domainName" size="small" value={addDomainName} onChange={handleChange} placeholder={Locale.label("settings.domain.domainPlaceholder")} />
                 </TableCell>
                 <TableCell>
                   <button type="button" onClick={handleAdd} style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>

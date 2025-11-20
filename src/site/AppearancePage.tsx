@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Box } from "@mui/material";
 import { Style as StyleIcon } from "@mui/icons-material";
-import { UserHelper, Permissions, PageHeader } from "@churchapps/apphelper";
+import { UserHelper, Permissions, PageHeader, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import { StylesManager } from "./components";
 
@@ -20,8 +20,8 @@ export const AppearancePage = () => {
     <>
       <PageHeader
         icon={<StyleIcon />}
-        title="Site Styles"
-        subtitle="Below is a preview of a sample site with your colors, fonts and logos. This is not your actual site content."
+        title={Locale.label("site.appearancePage.title")}
+        subtitle={Locale.label("site.appearancePage.subtitle")}
       />
       <Box sx={{ p: 3 }}>
         {UserHelper.currentUserChurch && UserHelper.checkAccess(Permissions.contentApi.content.edit) && (

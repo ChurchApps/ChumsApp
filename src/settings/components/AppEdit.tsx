@@ -23,7 +23,7 @@ import {
 } from "@mui/icons-material";
 import type { LinkInterface } from "@churchapps/helpers";
 import { IconPicker } from "../../components/iconPicker";
-import { ApiHelper, UniqueIdHelper, ArrayHelper } from "@churchapps/apphelper";
+import { ApiHelper, UniqueIdHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
 import { CardWithHeader, LoadingButton } from "../../components/ui";
 
 interface PageInterface {
@@ -81,7 +81,7 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
   }, [currentTab]);
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you wish to delete this tab?")) {
+    if (window.confirm(Locale.label("settings.app.confirmDeleteTab"))) {
       ApiHelper.delete("/links/" + currentTab.id, "ContentApi").then(() => {
         setCurrentTab(null);
         updatedFunction();
@@ -110,8 +110,8 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
       }
       return (
         <FormControl fullWidth>
-          <InputLabel id="page">Page</InputLabel>
-          <Select labelId="page" label="Page" name="page" value={currentTab?.linkData} onChange={handleChange} data-testid="page-select">
+          <InputLabel id="page">{Locale.label("settings.appEdit.page")}</InputLabel>
+          <Select labelId="page" label={Locale.label("settings.appEdit.page")} name="page" value={currentTab?.linkData} onChange={handleChange} data-testid="page-select">
             {options}
           </Select>
         </FormControl>
@@ -124,7 +124,7 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
   return (
     <>
       <CardWithHeader
-        title={UniqueIdHelper.isMissing(currentTab?.id) ? "Add New Tab" : "Edit Tab"}
+        title={UniqueIdHelper.isMissing(currentTab?.id) ? Locale.label("settings.appEdit.addTab") : Locale.label("settings.appEdit.editTab")}
         icon={<EditIcon />}
         actions={
           <Stack direction="row" spacing={1}>
@@ -136,18 +136,18 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
               size="small"
               sx={{ textTransform: 'none' }}
             >
-              Cancel
+              {Locale.label("common.cancel")}
             </Button>
             <LoadingButton
               loading={isSaving}
-              loadingText="Saving..."
+              loadingText={Locale.label("settings.appEdit.saving")}
               variant="contained"
               startIcon={<SaveIcon />}
               onClick={handleSave}
               size="small"
               sx={{ textTransform: 'none' }}
             >
-              Save Tab
+              {Locale.label("settings.appEdit.saveTab")}
             </LoadingButton>
           </Stack>
         }
@@ -158,7 +158,7 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
               {/* Tab Name and Icon */}
               <TextField
                 fullWidth
-                label="Tab Name"
+                label={Locale.label("settings.appEdit.tabName")}
                 name="text"
                 value={currentTab?.text || ""}
                 onChange={handleChange}
@@ -173,30 +173,30 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
                     </IconButton>
                   )
                 }}
-                helperText="Choose a descriptive name for your tab"
+                helperText={Locale.label("settings.app.tabNameHelper")}
               />
 
               {/* Tab Type */}
               <FormControl fullWidth>
-                <InputLabel id="type">Tab Type</InputLabel>
+                <InputLabel id="type">{Locale.label("settings.appEdit.tabType")}</InputLabel>
                 <Select
                   labelId="type"
-                  label="Tab Type"
+                  label={Locale.label("settings.appEdit.tabType")}
                   name="type"
                   value={currentTab?.linkType || ""}
                   onChange={handleChange}
                 >
-                  <MenuItem value="bible">Bible</MenuItem>
-                  <MenuItem value="stream">Live Stream</MenuItem>
-                  <MenuItem value="votd">Verse of the Day</MenuItem>
-                  <MenuItem value="checkin">Checkin</MenuItem>
-                  <MenuItem value="donation">Donation</MenuItem>
-                  <MenuItem value="donationLanding">Donation Landing</MenuItem>
-                  <MenuItem value="directory">Member Directory</MenuItem>
-                  <MenuItem value="groups">My Groups</MenuItem>
-                  <MenuItem value="lessons">Lessons.church</MenuItem>
-                  <MenuItem value="url">External URL</MenuItem>
-                  <MenuItem value="page">Internal Page</MenuItem>
+                  <MenuItem value="bible">{Locale.label("settings.appEdit.bible")}</MenuItem>
+                  <MenuItem value="stream">{Locale.label("settings.appEdit.liveStream")}</MenuItem>
+                  <MenuItem value="votd">{Locale.label("settings.appEdit.verseOfDay")}</MenuItem>
+                  <MenuItem value="checkin">{Locale.label("settings.appEdit.checkin")}</MenuItem>
+                  <MenuItem value="donation">{Locale.label("settings.appEdit.donation")}</MenuItem>
+                  <MenuItem value="donationLanding">{Locale.label("settings.appEdit.donationLanding")}</MenuItem>
+                  <MenuItem value="directory">{Locale.label("settings.appEdit.memberDirectory")}</MenuItem>
+                  <MenuItem value="groups">{Locale.label("settings.appEdit.myGroups")}</MenuItem>
+                  <MenuItem value="lessons">{Locale.label("settings.appEdit.lessons")}</MenuItem>
+                  <MenuItem value="url">{Locale.label("settings.appEdit.externalUrl")}</MenuItem>
+                  <MenuItem value="page">{Locale.label("settings.appEdit.internalPage")}</MenuItem>
                 </Select>
               </FormControl>
 
@@ -204,12 +204,12 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
               {currentTab?.linkType === "url" && (
                 <TextField
                   fullWidth
-                  label="URL"
+                  label={Locale.label("settings.appEdit.url")}
                   name="url"
                   type="url"
                   value={currentTab?.url || ""}
                   onChange={handleChange}
-                  helperText="Enter the full URL (e.g., https://example.com)"
+                  helperText={Locale.label("settings.app.urlHelper")}
                 />
               )}
 
@@ -229,7 +229,7 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
                       size="small"
                       sx={{ textTransform: 'none' }}
                     >
-                      Delete Tab
+                      {Locale.label("settings.appEdit.deleteTab")}
                     </Button>
                   </Box>
                 </>

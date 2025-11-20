@@ -49,16 +49,14 @@ export const PlanPage = () => {
       <Container maxWidth="lg" sx={{ py: 3 }}>
         <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
           <Typography variant="body1" color="text.secondary">
-            Loading plan...
+            {Locale.label("plans.planPage.loadingPlan")}
           </Typography>
         </Box>
       </Container>
     );
   }
 
-  const breadcrumbItems = [
-    { label: Locale.label("components.wrapper.plans") || "Plans", path: "/plans" }
-  ];
+  const breadcrumbItems = [{ label: Locale.label("components.wrapper.plans") || "Plans", path: "/plans" }];
 
   if (ministry) {
     breadcrumbItems.push({ label: ministry.name, path: `/plans/ministries/${ministry.id}` });
@@ -90,7 +88,7 @@ export const PlanPage = () => {
         <Breadcrumbs items={breadcrumbItems} showHome={true} />
       </Box>
       <Box sx={{ marginTop: '-1.5rem' }}>
-        <PageHeader icon={<AssignmentIcon />} title={plan.name || Locale.label("plans.planPage.servicePlan")} subtitle="Service plan details and team assignments" />
+        <PageHeader icon={<AssignmentIcon />} title={plan.name || Locale.label("plans.planPage.servicePlan")} subtitle={Locale.label("plans.planPage.subtitle")} />
       </Box>
       <PlanNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} plan={plan} />
 

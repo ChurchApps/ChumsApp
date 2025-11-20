@@ -30,11 +30,9 @@ export const OldArrangement = (props: Props) => {
   };
 
   const getKeySelect = () => {
-    console.log("ORIGINAL KEY", props.originalKey);
     if (!props.originalKey) return <></>;
     else {
       const originalIndex = ChordProHelper.noteMap[props.originalKey];
-      console.log("OriginalIndex", originalIndex);
       if (originalIndex === undefined) return <></>;
       else {
         return (

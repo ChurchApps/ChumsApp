@@ -139,6 +139,10 @@ export const Groups: React.FC<Props> = memo((props) => {
                           </Stack>
                         </Box>
                       }
+                      slotProps={{
+                        primary: { component: 'div' },
+                        secondary: { component: 'div' }
+                      }}
                     />
                   </ListItemButton>
                 </ListItem>

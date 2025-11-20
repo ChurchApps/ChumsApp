@@ -53,8 +53,6 @@ export const GroupPage = () => {
     loadData();
   };
 
-  console.log("GROUP", group);
-
   return (
     <>
       <Banner>

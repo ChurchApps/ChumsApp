@@ -11,7 +11,7 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import { ApiHelper } from "@churchapps/apphelper";
+import { ApiHelper, Locale } from "@churchapps/apphelper";
 
 interface Props {
   open: boolean;
@@ -117,15 +117,15 @@ export const LessonSelector: React.FC<Props> = ({ open, onClose, onSelect }) => 
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Associate Lesson</DialogTitle>
+      <DialogTitle>{Locale.label("plans.lessonSelector.associateLesson")}</DialogTitle>
       <DialogContent>
         <Stack spacing={3} sx={{ mt: 1 }}>
           <FormControl fullWidth>
-            <InputLabel>Program</InputLabel>
+            <InputLabel>{Locale.label("plans.lessonSelector.program")}</InputLabel>
             <Select
               value={selectedProgram}
               onChange={(e) => handleProgramChange(e.target.value)}
-              label="Program"
+              label={Locale.label("plans.lessonSelector.program")}
             >
               {lessonTree?.programs?.map((program: any) => (
                 <MenuItem key={program.id} value={program.id}>
@@ -136,11 +136,11 @@ export const LessonSelector: React.FC<Props> = ({ open, onClose, onSelect }) => 
           </FormControl>
 
           <FormControl fullWidth disabled={!selectedProgram}>
-            <InputLabel>Study</InputLabel>
+            <InputLabel>{Locale.label("plans.lessonSelector.study")}</InputLabel>
             <Select
               value={selectedStudy}
               onChange={(e) => handleStudyChange(e.target.value)}
-              label="Study"
+              label={Locale.label("plans.lessonSelector.study")}
             >
               {currentProgram?.studies?.map((study: any) => (
                 <MenuItem key={study.id} value={study.id}>
@@ -151,11 +151,11 @@ export const LessonSelector: React.FC<Props> = ({ open, onClose, onSelect }) => 
           </FormControl>
 
           <FormControl fullWidth disabled={!selectedStudy}>
-            <InputLabel>Lesson</InputLabel>
+            <InputLabel>{Locale.label("plans.lessonSelector.lesson")}</InputLabel>
             <Select
               value={selectedLesson}
               onChange={(e) => handleLessonChange(e.target.value)}
-              label="Lesson"
+              label={Locale.label("plans.lessonSelector.lesson")}
             >
               {currentStudy?.lessons?.map((lesson: any) => (
                 <MenuItem key={lesson.id} value={lesson.id}>
@@ -166,11 +166,11 @@ export const LessonSelector: React.FC<Props> = ({ open, onClose, onSelect }) => 
           </FormControl>
 
           <FormControl fullWidth disabled={!selectedLesson}>
-            <InputLabel>Venue</InputLabel>
+            <InputLabel>{Locale.label("plans.lessonSelector.venue")}</InputLabel>
             <Select
               value={selectedVenue}
               onChange={(e) => handleVenueChange(e.target.value)}
-              label="Venue"
+              label={Locale.label("plans.lessonSelector.venue")}
             >
               {currentLesson?.venues?.map((venue: any) => (
                 <MenuItem key={venue.id} value={venue.id}>
@@ -184,9 +184,9 @@ export const LessonSelector: React.FC<Props> = ({ open, onClose, onSelect }) => 
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>{Locale.label("common.cancel")}</Button>
         <Button onClick={handleSelect} disabled={!selectedVenue} variant="contained">
-          Associate Lesson
+          {Locale.label("plans.lessonSelector.associateLesson")}
         </Button>
       </DialogActions>
     </Dialog>

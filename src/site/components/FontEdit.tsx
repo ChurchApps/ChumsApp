@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import { Button, Grid, type SelectChangeEvent, Box, Typography, Card, CardContent, Stack, alpha } from "@mui/material";
+import {
+  Button, Grid, type SelectChangeEvent, Box, Typography, Card, CardContent, Stack, alpha 
+} from "@mui/material";
 import { TextFields as TextFieldsIcon, Visibility as VisibilityIcon, FormatSize as FormatSizeIcon, Style as StyleIcon } from "@mui/icons-material";
+import { Locale } from "@churchapps/apphelper";
 import type { GlobalStyleInterface } from "../../helpers/Interfaces";
 import { CardWithHeader, LoadingButton } from "../../components/ui";
 import { CustomFontModal } from "./CustomFontModal";
@@ -20,7 +23,9 @@ export function FontEdit(props: Props) {
   const [showFont, setShowFont] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const fontList = ["Open Sans", "Montserrat", "Oswald", "Roboto", "Poppins", "Playfair Display", "Lato", "Raleway", "Inter"];
+  const fontList = [
+    "Open Sans", "Montserrat", "Oswald", "Roboto", "Poppins", "Playfair Display", "Lato", "Raleway", "Inter"
+  ];
 
   useEffect(() => {
     if (props.globalStyle) setFonts(JSON.parse(props.globalStyle.fonts));
@@ -62,7 +67,9 @@ export function FontEdit(props: Props) {
             <CardContent sx={{ p: 1.5 }}>
               <Stack spacing={1}>
                 {fontList.map(body => (
-                  <Box key={`${heading}-${body}`} onClick={() => setFonts({ body, heading })} sx={{ p: 1.5, borderRadius: 1, cursor: "pointer", border: "1px solid", borderColor: "transparent", transition: "all 0.2s ease-in-out", "&:hover": { backgroundColor: "action.hover", borderColor: "primary.main", transform: "translateY(-1px)" } }}>
+                  <Box key={`${heading}-${body}`} onClick={() => setFonts({ body, heading })} sx={{
+                    p: 1.5, borderRadius: 1, cursor: "pointer", border: "1px solid", borderColor: "transparent", transition: "all 0.2s ease-in-out", "&:hover": { backgroundColor: "action.hover", borderColor: "primary.main", transform: "translateY(-1px)" } 
+                  }}>
                     <Typography variant="body2" sx={{ fontFamily: body, color: "text.primary", fontSize: "0.875rem" }}>{heading} heading with {body} body</Typography>
                   </Box>
                 ))}
@@ -87,7 +94,9 @@ export function FontEdit(props: Props) {
       <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", p: 3, borderRadius: "12px 12px 0 0", mb: 0 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Stack direction="row" spacing={2} alignItems="center">
-            <Box sx={{ backgroundColor: "rgba(255,255,255,0.2)", borderRadius: "8px", p: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Box sx={{
+              backgroundColor: "rgba(255,255,255,0.2)", borderRadius: "8px", p: 1, display: "flex", alignItems: "center", justifyContent: "center" 
+            }}>
               <TextFieldsIcon sx={{ fontSize: 24, color: "#FFF" }} />
             </Box>
             <Box>
@@ -96,14 +105,16 @@ export function FontEdit(props: Props) {
             </Box>
           </Stack>
           <Stack direction="row" spacing={1}>
-            <Button variant="outlined" onClick={() => props.updatedFunction(null)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>Cancel</Button>
+            <Button variant="outlined" onClick={() => props.updatedFunction(null)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>{Locale.label("common.cancel")}</Button>
             <LoadingButton loading={isSubmitting} loadingText="Saving..." variant="contained" onClick={handleSave} sx={{ backgroundColor: "#FFF", color: "var(--c1l2)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }} data-testid="save-fonts-button">Save Fonts</LoadingButton>
           </Stack>
         </Stack>
       </Box>
 
-      <Box sx={{ p: 3, backgroundColor: "#FFF", borderRadius: "0 0 12px 12px", border: "1px solid", borderColor: "grey.200", borderTop: "none" }}>
-        <CardWithHeader title="Font Selection" icon={<StyleIcon />}>
+      <Box sx={{
+        p: 3, backgroundColor: "#FFF", borderRadius: "0 0 12px 12px", border: "1px solid", borderColor: "grey.200", borderTop: "none" 
+      }}>
+        <CardWithHeader title={Locale.label("site.fontEdit.fontSelection")} icon={<StyleIcon />}>
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
               <Box sx={{ mb: 2 }}>
@@ -123,7 +134,7 @@ export function FontEdit(props: Props) {
         </CardWithHeader>
 
         <Box sx={{ mt: 3 }}>
-          <CardWithHeader title="Typography Preview" icon={<VisibilityIcon />}>
+          <CardWithHeader title={Locale.label("site.fontEdit.typographyPreview")} icon={<VisibilityIcon />}>
             <Box sx={{ p: 3, backgroundColor: alpha("#f5f5f5", 0.3), borderRadius: 2 }}>
               <Typography variant="h4" sx={{ fontFamily: fonts?.heading || "Roboto", fontWeight: 600, mb: 2, color: "primary.main" }}>Main Heading Preview</Typography>
               <Typography variant="body1" sx={{ fontFamily: fonts?.body || "Roboto", mb: 3, lineHeight: 1.6, color: "text.primary" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus urna neque viverra justo nec ultrices dui sapien. Faucibus pulvinar elementum integer enim neque volutpat ac tincidunt.</Typography>
@@ -134,7 +145,7 @@ export function FontEdit(props: Props) {
         </Box>
 
         <Box sx={{ mt: 3 }}>
-          <CardWithHeader title="Popular Font Combinations" icon={<StyleIcon />}>
+          <CardWithHeader title={Locale.label("site.fontEdit.popularFontCombinations")} icon={<StyleIcon />}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>Click any combination to apply it instantly</Typography>
             {getPairings()}
           </CardWithHeader>

@@ -113,7 +113,9 @@ export const FormMembers: React.FC<Props> = memo((props) => {
               <button
                 type="button"
                 onClick={() => handleRemoveMember(fm.memberId)}
-                style={{ display: "flex", alignItems: "center", color: "#dc3545", background: "none", border: 0, padding: 0, cursor: "pointer" }}>
+                style={{
+                  display: "flex", alignItems: "center", color: "#dc3545", background: "none", border: 0, padding: 0, cursor: "pointer" 
+                }}>
                 <Icon sx={{ marginRight: "5px" }}>person_remove</Icon> {Locale.label("common.remove")}
               </button>
             }

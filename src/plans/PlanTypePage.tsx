@@ -1,8 +1,8 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Box, Container, Typography } from "@mui/material";
 import { Assignment as AssignmentIcon } from "@mui/icons-material";
-import { Loading, PageHeader, Locale } from "@churchapps/apphelper";
+import { Loading, PageHeader, Locale, SmallButton, ApiHelper, UserHelper, Permissions } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
 import { type GroupInterface } from "@churchapps/helpers";
 import { type PlanTypeInterface } from "../helpers";
@@ -11,6 +11,8 @@ import { Breadcrumbs } from "../components/ui";
 
 export const PlanTypePage = () => {
   const params = useParams();
+  const navigate = useNavigate();
+  const canEdit = UserHelper.checkAccess(Permissions.membershipApi.plans.edit);
 
   const planType = useQuery<PlanTypeInterface>({
     queryKey: [`/planTypes/${params.id}`, "DoingApi"],
@@ -22,6 +24,14 @@ export const PlanTypePage = () => {
     enabled: !!planType.data?.ministryId,
   });
 
+  const handleDeletePlanType = React.useCallback(() => {
+    if (window.confirm(Locale.label("plans.planTypePage.deleteConfirm"))) {
+      ApiHelper.delete("/planTypes/" + planType.data?.id, "DoingApi").then(() => {
+        navigate("/plans/ministries/" + ministry.data?.id);
+      });
+    }
+  }, [planType.data?.id, ministry.data?.id, navigate]);
+
   if (planType.isLoading || ministry.isLoading) return <Loading />;
   
   if (!planType.data || !ministry.data) {
@@ -29,7 +39,7 @@ export const PlanTypePage = () => {
       <Container maxWidth="lg" sx={{ py: 3 }}>
         <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
           <Typography variant="body1" color="text.secondary">
-            Plan type not found
+            {Locale.label("plans.planTypePage.notFound")}
           </Typography>
         </Box>
       </Container>
@@ -64,9 +74,10 @@ export const PlanTypePage = () => {
       <Box sx={{ marginTop: '-1.5rem' }}>
         <PageHeader
           icon={<AssignmentIcon />}
-          title={planType.data.name || "Plan Type"}
-          subtitle="Manage service plans for this type"
-        />
+          title={planType.data.name || Locale.label("plans.planTypePage.planType")}
+          subtitle={Locale.label("plans.planTypePage.subtitle")}>
+          {canEdit && <SmallButton color="error" icon="delete" onClick={handleDeletePlanType} />}
+        </PageHeader>
       </Box>
 
       {/* Content */}

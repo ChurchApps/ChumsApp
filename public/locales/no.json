@@ -11,7 +11,13 @@
       "groupAttMsg": "Gruppens oppmøte vil vises når økter er lagt til en gruppe og folk har deltatt på disse øktene.",
       "groups": "Grupper",
       "service": "Tjeneste",
-      "time": "Tid"
+      "time": "Tid",
+      "campuses": "Campuser",
+      "scheduled": "Planlagt",
+      "services": "Tjenester",
+      "subtitle": "Spor oppmøte for tjenester og grupper",
+      "totalGroups": "Totale grupper",
+      "unscheduled": "Uplanlagt"
     },
     "campusEdit": {
       "confirmDelete": "Er du sikker på at du vil slette denne campusen?",
@@ -43,29 +49,164 @@
       "attTrend": "Oppmøtetrend",
       "groupAtt": "Gruppens oppmøte",
       "noImplement": "Ikke implementert"
+    },
+    "attendanceSetup": {
+      "addService": "Legg til tjeneste",
+      "addServiceTime": "Legg til tjenestetid",
+      "newCampus": "Ny campus",
+      "newService": "Ny tjeneste",
+      "newServiceTime": "Ny servicetid",
+      "setupMessage": "Sett opp studiesteder, tjenester og tjenestetider for å begynne å spore oppmøte.",
+      "unassigned": "Ikke tilordnet"
+    }
+  },
+  "calendars": {
+    "calendarEdit": {
+      "calendarName": "Kalendernavn",
+      "namePlaceholder": "Skriv inn et navn for denne kalenderen",
+      "calendarDetails": "Kalenderdetaljer",
+      "calendarDetailsDesc": "Konfigurer kalenderinnstillingene dine",
+      "calendarNameAria": "Kalendernavn",
+      "cancel": "Avbryt",
+      "confirmDelete": "Er du sikker på at du vil slette denne kalenderen?",
+      "create": "Skape",
+      "createCalendar": "Lag kalender",
+      "delete": "Slett",
+      "deleting": "Sletter...",
+      "editCalendar": "Rediger kalender",
+      "nameRequired": "Kalendernavn er obligatorisk",
+      "save": "Lagre",
+      "saving": "Lagrer...",
+      "unauthorizedCreate": "Uautorisert til å lage kalendere",
+      "unauthorizedDelete": "Uautorisert til å slette kalendere"
+    },
+    "calendarList": {
+      "active": "Aktiv",
+      "aboutParagraph1": "Kalendere lar deg organisere og vise arrangementer for kirken din.",
+      "aboutParagraph2": "Du kan opprette flere kalendere for forskjellige formål som gudstjenester, ungdomsarrangementer og samfunnsoppsøk.",
+      "aboutParagraph3": "Del kalenderne dine med medlemmer gjennom ICS-feeder eller bygg dem inn på nettstedet ditt.",
+      "aboutTitle": "Om kalendere",
+      "actions": "Handlinger",
+      "addCalendar": "Legg til kalender",
+      "calendar": "Kalender",
+      "calendars": "Kalendere",
+      "createCalendar": "Lag kalender",
+      "createFirstCalendar": "Lag første kalender",
+      "curatedCalendar": "Kuratert kalender",
+      "edit": "Rediger",
+      "manageEvents": "Administrer hendelser",
+      "noCalendars": "Finner ingen kalendere",
+      "status": "Status",
+      "subtitleEmpty": "Kom i gang ved å lage din første kalender",
+      "title": "Kalendere"
+    },
+    "calendarPage": {
+      "confirmRemoveGroup": "Er du sikker på at du vil fjerne denne gruppen fra kalenderen?",
+      "actions": "Handlinger",
+      "addEventsHint": "Legg til hendelser ved å velge grupper",
+      "calendar": "Kalender",
+      "calendarEvents": "Kalenderhendelser",
+      "groupName": "Gruppenavn",
+      "groupsInCalendar": "Grupper i Kalender",
+      "noGroupsAdded": "Ingen grupper lagt til ennå",
+      "removeGroup": "Fjern gruppe",
+      "subtitle": "Administrer kalenderhendelser og grupper"
+    },
+    "calendarEvent": {
+      "confirmDelete": "Er du sikker på at du vil slette denne hendelsen?",
+      "noGroups": "Ingen grupper funnet.",
+      "cancel": "Avbryt",
+      "delete": "Slett"
+    },
+    "editEvent": {
+      "selectGroup": "Velg en gruppe",
+      "addAllEvents": "Legg til alle hendelsene til gruppen",
+      "addSpecificEvents": "Legg til spesifikke hendelser",
+      "addGroup": "Legg til gruppe",
+      "cancel": "Avbryt",
+      "clickToAdd": "Klikk for å legge til",
+      "noEventsFound": "Ingen hendelser funnet",
+      "save": "Lagre"
+    },
+    "calendar": {
+      "add": "Legg til",
+      "copiedToClipboard": "Kopiert til utklippstavlen",
+      "copyIcsLink": "Kopier ICS Link",
+      "downloadIcsFile": "Last ned ICS-fil",
+      "subscribe": "Abonner",
+      "subscribeTitle": "Abonner på Kalender"
     }
   },
   "common": {
     "add": "Legg til",
     "amount": "Beløp",
+    "bottom": "Bunn",
     "cancel": "Avbryt",
+    "center": "Senter",
     "change": "Endre",
     "changePhoto": "Endre foto",
     "close": "Lukk",
+    "custom": "Tilpasset",
     "delete": "Slett",
+    "done": "Ferdig",
+    "duplicate": "Dupliser",
     "edit": "Rediger",
+    "help": "Hjelp",
+    "iconPicker": {
+      "searchLabel": "Søk ikoner",
+      "searchPlaceholder": "Skriv for å søke (f.eks., person, hjem, kirke)...",
+      "title": "Velg ikon",
+      "noResults": "Ingen ikoner funnet som samsvarer med \"{{searchText}}\"",
+      "tryDifferent": "Prøv et annet søkeord",
+      "showingMatching": "Viser {{count}} ikoner som samsvarer med \"{{searchText}}\"",
+      "showingDefault": "Viser {{count}} ofte brukte ikoner. Bruk søk ​​for å finne mer."
+    },
+    "left": "Venstre",
     "name": "Navn",
     "no": "Nei",
     "notes": "Notater",
     "person": "Person",
     "pleaseWait": "Vennligst vent...",
     "remove": "Fjern",
+    "right": "Høyre",
     "save": "Lagre",
     "search": "Søk",
     "searching": "Søker...",
+    "sermons": "Prekener",
     "title": "Tittel",
+    "top": "Topp",
     "update": "Oppdater",
-    "yes": "Ja"
+    "website": "Nettsted",
+    "yes": "Ja",
+    "comboBox": {
+      "addNew": "Legg til ny..."
+    },
+    "createPerson": {
+      "confirmDuplicate": "{{existingName}} eksisterer allerede med e-postadressen {{existingEmail}}. Er du sikker på at du vil legge til {{firstName}} {{lastName}}?",
+      "validate": {
+        "firstName": "Vennligst skriv inn et fornavn.",
+        "lastName": "Vennligst skriv inn et etternavn.",
+        "validEmail": "Vennligst skriv inn en gyldig e-postadresse."
+      }
+    },
+    "errorBoundary": {
+      "title": "Oops! Det oppstod en feil",
+      "message": "Noe gikk galt. Vennligst prøv igjen eller kontakt kundestøtte hvis problemet vedvarer.",
+      "retry": "Prøv på nytt"
+    },
+    "formSubmission": {
+      "noData": "Ingen data tilgjengelig",
+      "edit": "Rediger",
+      "noQuestions": "Ingen spørsmål funnet"
+    },
+    "reportFilter": {
+      "title": "Filterrapport"
+    },
+    "reportFilterField": {
+      "any": "Hvilken som helst"
+    },
+    "saveChanges": "Lagre endringer",
+    "saving": "Lagrer..."
   },
   "components": {
     "footer": {
@@ -96,7 +237,8 @@
   },
   "dashboard": {
     "dashboardPage": {
-      "dash": "Dashbord"
+      "dash": "Dashbord",
+      "subtitle": "Velkommen til kirkens administrasjonspanel. Søk etter personer, se gruppene dine og administrer åpne oppgaver."
     },
     "myGroups": "Mine grupper",
     "people": "Personer",
@@ -108,13 +250,23 @@
     "tasks": "Oppgaver"
   },
   "donation": {
+    "donationPage": {
+      "donations": "Donasjoner"
+    },
+    "nonAuthDonation": {
+      "donate": "Doner"
+    },
     "page": {
       "amount": "Beløp",
       "batch": "Batch",
       "date": "Dato",
       "fund": "Fond",
       "method": "Metode",
-      "willAppear": "Donasjoner vil vises her når de er gjort."
+      "willAppear": "Donasjoner vil vises her når de er gjort.",
+      "currentYearCsv": "Gjeldende år CSV",
+      "currentYearPrint": "Utskrift for inneværende år",
+      "lastYearCsv": "CSV i fjor",
+      "lastYearPrint": "Siste års utskrift"
     },
     "bankForm": {
       "accountNumber": "Kontonummer",
@@ -155,6 +307,7 @@
       "editRecurring": "Rediger gjentakende donasjon",
       "fees": "Gebyrer",
       "frequency": "Frekvens",
+      "frequencyLabel": "Frekvens",
       "fund": "Fond",
       "funds": "Fond",
       "make": "Gi en donasjon",
@@ -176,7 +329,8 @@
         "firstName": "Fornavn er påkrevd.",
         "lastName": "Etternavn er påkrevd.",
         "validEmail": "Vennligst skriv inn en gyldig e-postadresse."
-      }
+      },
+      "totalAmount": "Totalt beløp"
     },
     "fundDonations": {
       "addMore": "Legg til et annet fond",
@@ -285,6 +439,17 @@
       "donFilt": "Donasjonsfilter",
       "donor": "Giver",
       "noDon": "Ingen donasjoner for valgt datoperiode"
+    },
+    "donationBatchesPage": {
+      "subtitle": "Administrer donasjonsbunker og spor poster"
+    },
+    "fundPage": {
+      "subtitle": "Spor donasjoner og bidrag til dette fondet"
+    },
+    "donationBatchPage": {
+      "title": "Donasjonsbunt",
+      "subtitle": "Administrer donasjoner i denne bunten",
+      "batchDate": "Buntdato:"
     }
   },
   "forms": {
@@ -374,6 +539,9 @@
       "formSub": "Skjemainnsendelser",
       "questions": "Spørsmål",
       "unAuth": "Uautorisert"
+    },
+    "formPage": {
+      "subtitleConfig": "Skjemakonfigurasjon og innsendinger"
     }
   },
   "formSubmissionEdit": {
@@ -389,6 +557,7 @@
   },
   "groups": {
     "groupAdd": {
+      "add": "Legg til",
       "catName": "Kategorinavn",
       "catReq": "Kategorinavn er påkrevd.",
       "group": "Gruppe",
@@ -397,14 +566,36 @@
       "new": "Ny ",
       "team": "Team"
     },
+    "groupBanner": {
+      "team": "Team",
+      "associatedServices": "Tilknyttede tjenester",
+      "labels": "Etiketter",
+      "meetingInfo": "Møteinformasjon",
+      "moreLabels": "Flere etiketter",
+      "parentPickup": "Henting av foreldre",
+      "printNametag": "Skriv ut navnelapp",
+      "settings": "Innstillinger",
+      "trackAttendance": "Spor oppmøte"
+    },
     "groupDetails": {
       "attTrack": "Spor oppmøte:",
       "cat": "Kategori",
       "groupDet": "Gruppedetaljer",
+      "locationPlaceholder": "Johnson Hjem",
       "meetingLocation": "Møtested",
       "meetingTime": "Møtetid",
+      "meetingTimePlaceholder": "Tirsdager kl. 19",
       "parPick": "Henting av foreldre:",
-      "prinName": "Skriv ut navnelapp:"
+      "prinName": "Skriv ut navnelapp:",
+      "slugPlaceholder": "gruppe-navn",
+      "about": "Om",
+      "attendanceSettings": "Oppmøteinnstillinger",
+      "labels": "Etiketter",
+      "meetingInfo": "Møteinformasjon",
+      "noPhoto": "Ingen bilde tilgjengelig",
+      "parentPickup": "Henting av foreldre",
+      "printNametag": "Skriv ut navnelapp",
+      "trackAttendance": "Spor oppmøte"
     },
     "groupDetailsEdit": {
       "attTrack": "Spor oppmøte",
@@ -421,7 +612,10 @@
       "parPick": "Henting av foreldre",
       "prinName": "Skriv ut navnelapp",
       "selImg": "Velg bilde",
-      "slug": "Slug (nøkkelnavn brukt for url-er)"
+      "slug": "Slug (nøkkelnavn brukt for url-er)",
+      "addPhoto": "Legg til bilde",
+      "attendance": "Oppmøte",
+      "clickToAddPhoto": "Klikk for å legge til bilde"
     },
     "groupMembers": {
       "groupMem": "Gruppemedlemmer",
@@ -446,7 +640,13 @@
       "attFor": "Oppmøte for",
       "new": "Ny",
       "noSesMsg": "Det er ingen økter.",
-      "sessions": "Økter"
+      "sessions": "Økter",
+      "allYears": "Alle år",
+      "noAttendance": "Fant ingen fremmøteregistrering",
+      "noSessionsFound": "Ingen økter funnet",
+      "selectSession": "Velg Sesjon",
+      "session": "Sesjon",
+      "tryAdjusting": "Prøv å justere søket"
     },
     "groupsPage": {
       "cat": "Kategori",
@@ -455,7 +655,15 @@
       "noGroupMsg": "Ingen grupper funnet. Vennligst opprett en gruppe.",
       "pers": "1 person",
       "ppl": "Personer",
-      "spPpl": " personer"
+      "spPpl": " personer",
+      "addGroup": "Legg til gruppe",
+      "categories": "Kategorier",
+      "subtitle": {
+        "create": "Kom i gang ved å opprette din første gruppe",
+        "manage": "Organiser og administrer kirkegruppene dine"
+      },
+      "totalGroups": "Totale grupper",
+      "totalMembers": "Totalt antall medlemmer"
     },
     "membersAdd": {
       "availableMem": "Tilgjengelige gruppemedlemmer",
@@ -474,6 +682,13 @@
       "sesDate": "Øktsdato",
       "srvTime": "Tjenestetid"
     },
+    "sessionCard": {
+      "active": "Aktiv",
+      "edit": "Rediger",
+      "people": "folk",
+      "person": "person",
+      "view": "Utsikt"
+    },
     "sessionEdit": {
       "deleteConfirm": "Er du sikker på at du ønsker å slette denne økten permanent?",
       "sesEdit": "Rediger økt"
@@ -482,6 +697,14 @@
       "mem": "Medlemmer",
       "noImplement": "Ikke implementert",
       "ses": "Økter"
+    },
+    "groupLabelsEdit": {
+      "addNewLabel": "Legg til ny etikett",
+      "labels": "Etiketter"
+    },
+    "groupNavigation": {
+      "members": "Medlemmer",
+      "sessions": "Økter"
     }
   },
   "login": {
@@ -543,6 +766,15 @@
     "september": "September"
   },
   "people": {
+    "advancedSearch": {
+      "enterValuePlaceholder": "Skriv inn verdi...",
+      "search": "Søk",
+      "valuePlaceholder": "Verdi"
+    },
+    "aiSearch": {
+      "placeholder": "Vis meg menn over 30 med bursdager i juli",
+      "title": "AI-søk"
+    },
     "editCondition": {
       "act": "Aktivitet",
       "anniMonth": "Jubileumsmåned",
@@ -569,7 +801,8 @@
       "saveCon": "Lagre betingelse",
       "startW": "begynner med",
       "to": "Til",
-      "value": "Verdi"
+      "value": "Verdi",
+      "valuePlaceholder": "Verdi"
     },
     "groups": {
       "groups": "Grupper",
@@ -638,6 +871,7 @@
       "for": "for",
       "madeTo": "laget til",
       "notIn": "Ikke i",
+      "placeholder": "Søk etter navn...",
       "simp": "Enkel",
       "simpSearch": "Personsøk",
       "active": "aktiv:",
@@ -655,6 +889,9 @@
       "service": "Tjeneste",
       "serviceTime": "Tjenestehorário",
       "group": "Gruppe"
+    },
+    "personNav": {
+      "customForms": "Tilpassede skjemaer"
     },
     "peopleSearchResults": {
       "noResMsg": "Ingen resultater funnet. Vennligst søk etter et annet navn eller legg til en ny person"
@@ -755,14 +992,25 @@
       "editAssign": "Rediger tildeling",
       "noMem": "Ingen gruppemedlemmer funnet."
     },
+    "planType": {
+      "details": "Plantype detaljer"
+    },
+    "songs": {
+      "links": "Lenker"
+    },
     "ministryList": {
       "mins": "Ministry",
-      "noMinMsg": "Ingen ministrier funnet. Vennligst opprett et ministrium."
+      "noMinMsg": "Ingen ministrier funnet. Vennligst opprett et ministrium.",
+      "getStarted": "Kom i gang ved å opprette din første tjeneste",
+      "manage": "Administrer",
+      "member": "medlem",
+      "members": "medlemmer"
     },
     "ministryPage": {
       "planTypes": "Plantyper",
       "plans": "Planer",
-      "teams": "Team"
+      "teams": "Team",
+      "subtitle": "Organisere tjenesteteam og tjenesteplaner"
     },
     "planEdit": {
       "copy": "Kopier fra",
@@ -776,7 +1024,12 @@
     },
     "planList": {
       "noPlan": "Ingen planer er lagt til ennå.",
-      "plans": "Planer"
+      "plans": "Planer",
+      "createFirst": "Lag første plan",
+      "createPlan": "Lag plan",
+      "newPlan": "Ny plan",
+      "noPlans": "Ingen planer funnet",
+      "serviceOrder": "Tjenesteorden"
     },
     "planPage": {
       "assign": "Teamtildelinger",
@@ -784,10 +1037,14 @@
       "band": "Band",
       "noteSave": "Notat lagret",
       "serviceOrder": "Tjenesteorden",
-      "servicePlan": "Tjenesteplan"
+      "servicePlan": "Tjenesteplan",
+      "loadingPlan": "Laster inn plan ...",
+      "subtitle": "Planlegg og planlegg tjenesten din"
     },
     "plansPage": {
-      "selMin": "Velg et ministrium"
+      "selMin": "Velg et ministrium",
+      "addMinistry": "Legg til departementet",
+      "subtitle": "Administrere departementer og tjenesteplaner"
     },
     "planValidation": {
       "and": "og",
@@ -829,7 +1086,14 @@
     },
     "teamList": {
       "noTeam": "Ingen team funnet. Vennligst opprett et team.",
-      "teams": "Team"
+      "teams": "Team",
+      "createTeam": "Opprett team",
+      "createTeams": "Opprett lag",
+      "manage": "Administrer",
+      "member": "medlem",
+      "members": "medlemmer",
+      "newTeam": "Nytt lag",
+      "team": "Team"
     },
     "timeEdit": {
       "disName": "Visningsnavn",
@@ -841,7 +1105,9 @@
       "timeAdd": "Legg til en tid",
       "timeEdit": "Rediger tid",
       "timeEnd": "Slutttid",
-      "timeStart": "Starttid"
+      "timeStart": "Starttid",
+      "followGuide": "Følg veiledningen nedenfor for å sette opp servicetider",
+      "tip": "Tupp"
     },
     "timeList": {
       "noTime": "Ingen tider er lagt til ennå",
@@ -852,9 +1118,73 @@
       "serviceOrder": "TJENESTEORDEN",
       "time": "Tid",
       "length": "Lengde"
+    },
+    "assignment": {
+      "addPosition": "Legg til posisjon",
+      "autoAssign": "Automatisk tilordning",
+      "saveNotes": "Lagre notater"
+    },
+    "lessonSelector": {
+      "associateLesson": "Associate Leksjon",
+      "lesson": "Lekse",
+      "program": "Program",
+      "study": "Studere",
+      "venue": "Sted"
+    },
+    "planItem": {
+      "item": "Punkt",
+      "song": "Sang"
+    },
+    "planItemEdit": {
+      "description": "Beskrivelse",
+      "edit": "Rediger",
+      "editHeader": "Rediger topptekst",
+      "editSong": "Rediger sang",
+      "enterSearch": "Skriv inn søkeord",
+      "key": "Toneart",
+      "minutes": "Minutter",
+      "seconds": "Sekunder"
+    },
+    "planTypeEdit": {
+      "add": "Legg til",
+      "edit": "Rediger",
+      "errorSaving": "Feil under lagring av plantype",
+      "nameRequired": "Plantypenavn er påkrevd",
+      "planType": "Plantype",
+      "planTypeName": "Plantypenavn"
+    },
+    "planTypeList": {
+      "addPlanType": "Legg til plantype",
+      "createPlanType": "Opprett plantype",
+      "createPlanTypes": "Lag plantyper",
+      "noPlanTypes": "Finner ingen plantyper",
+      "planTypes": "Plantyper"
+    },
+    "planTypePage": {
+      "notFound": "Plantype ikke funnet",
+      "planType": "Plantype",
+      "subtitle": "Konfigurer plantypeinnstillinger"
+    },
+    "serviceOrder": {
+      "addSection": "Legg til seksjon",
+      "associateLesson": "Associate Leksjon",
+      "customize": "Tilpass",
+      "noItems": "Ingen varer i serviceordre",
+      "orderOfService": "Serviceordre",
+      "print": "Trykk",
+      "switchLesson": "Bytt leksjon"
     }
   },
   "profile": {
+    "devices": {
+      "addScreen": "Legg til skjerm",
+      "editDevice": "Rediger enhet",
+      "title": "Enheter",
+      "device": "Enhet",
+      "label": "Etikett",
+      "lastActiveDate": "Siste aktive dato",
+      "registrationDate": "Registreringsdato"
+    },
     "profilePage": {
       "accDel": "Konto sletting",
       "confirmMsg": "Er du sikker på at du ønsker å slette kontoen din permanent?",
@@ -875,10 +1205,32 @@
       "passMatch": "Passordene stemmer ikke overens.",
       "passNew": "Nytt passord",
       "passVer": "Bekreft passord",
+      "passwordHelper": "La stå tomt for å beholde gjeldende passord",
       "permWarn": "Forsiktig, disse handlingene er permanente",
       "profEdit": "Rediger profil",
       "saveChange": "Endringer lagret.",
-      "valEmail": "Vennligst skriv inn en gyldig e-postadresse."
+      "valEmail": "Vennligst skriv inn en gyldig e-postadresse.",
+      "deleteError": "Kunne ikke slette kontoen",
+      "saveChanges": "Lagre endringer",
+      "saveError": "Kunne ikke lagre endringer",
+      "subtitle": "Administrer profilen din og preferanser"
+    },
+    "deviceContent": {
+      "associatedContent": "Tilknyttet innhold"
+    },
+    "deviceEdit": {
+      "label": "Etikett",
+      "labelRequired": "Etikett kreves"
+    },
+    "linkedAccounts": {
+      "link": "Lenke",
+      "signUp": "Registrer deg",
+      "unlink": "Fjern tilknytningen"
+    },
+    "pairScreen": {
+      "codeRequired": "Paringskode kreves",
+      "invalidCode": "Ugyldig sammenkoblingskode",
+      "pairingCode": "Paringskode"
     }
   },
   "reports": {
@@ -891,7 +1243,14 @@
       "dailyGroupAtt": "Daglig gruppeoppmøte",
       "donSum": "Donasjonssammendrag",
       "groupAtt": "Gruppens oppmøte",
-      "reports": "Rapporter"
+      "reports": "Rapporter",
+      "attTrendDesc": "Se oppmøtetrender over tid",
+      "bDaysDesc": "Se kommende bursdager",
+      "dailyGroupAttDesc": "Se daglig gruppeoppmøte",
+      "donSumDesc": "Se donasjonssammendrag",
+      "groupAttDesc": "Se gruppedeltakelse",
+      "helpText": "Velg en rapport for å se detaljert informasjon",
+      "subtitle": "Se og last ned kirkelige rapporter"
     }
   },
   "reporting": {
@@ -946,15 +1305,36 @@
       "regist": "Registrert",
       "servAdmin": "Serveradmin",
       "usageTrends": "Brukstrender",
-      "valueNotes": "Notater om hvordan verdiene beregnes"
+      "valueNotes": "Notater om hvordan verdiene beregnes",
+      "location": "Sted",
+      "subtitle": "Administrer server-omfattende innstillinger og kirker",
+      "translationLookups": "Oversettelsesoppslag"
     },
     "reportPage": {
-      "report": "Rapport"
+      "report": "Rapport",
+      "adminOnly": "Kun administrator",
+      "serverAdmin": "Server Admin"
+    },
+    "translation": {
+      "title": "Bibeloversettelser oppslag",
+      "abbreviations": "Forkortelser",
+      "endDate": "Sluttdato",
+      "lookups": "Oppslag",
+      "search": "Søk",
+      "startDate": "Startdato"
     }
   },
   "settings": {
+    "app": {
+      "confirmDeleteTab": "Er du sikker på at du vil slette denne fanen?",
+      "tabNameHelper": "Velg et beskrivende navn for fanen din",
+      "urlHelper": "Skriv inn hele URL-en (f.eks., https://example.com)"
+    },
     "associatePerson": {
       "change": "Endre"
+    },
+    "church": {
+      "subdomainHelper": "Kirkens unike webadresse"
     },
     "churchSettings": {
       "churchSet": "Kirkeinnstillinger",
@@ -982,6 +1362,10 @@
       "domMsgConnect": "koble til",
       "domMsg4": ". Dette kan ta opptil 5 minutter."
     },
+    "domain": {
+      "domainPlaceholder": "dittsite.com",
+      "doneAlert": "Ferdig. Vennligst klikk bare på denne lenken en gang."
+    },
     "directoryApprovalSettingsEdit": {
       "directoryApprovalGroup": "Kataloggodkjenningsgruppe",
       "forceMsg": "Denne gruppen vil håndtere alle medlemskatalogoppdateringer. Endringer vil bare bli anvendt etter deres godkjenning.",
@@ -997,18 +1381,41 @@
       "paypalFlatRate": "Fast pris [ PayPal ]",
       "paypalTransactionFee": "Transaksjonsgebyr [ PayPal ]"
     },
+    "giving": {
+      "secretPlaceholder": "********"
+    },
     "givingSettingsEdit": {
+      "apiCredentials": "API-legitimasjon",
+      "developersApiKeys": "Utviklere → API-nøkler",
       "forceMsg": "Tvinger automatisk brukere til å dekke transaksjonsgebyrene",
       "giving": "Donasjoner",
       "none": "Ingen",
+      "paypalCreateApp": "opprett en app for å få din klient-ID og hemmelighet.",
+      "paypalDeveloper": "PayPal Developer",
+      "paypalGoTo": "Gå til",
+      "paypalLogin": "logg inn, deretter under",
       "prov": "Tilbyder",
       "pubKey": "Offentlig nøkkel",
       "secKey": "Hemmelig nøkkel",
+      "stripeCopyKeys": "for å kopiere dine publiserbare og hemmelige nøkler (test & live).",
+      "stripeDashboard": "Stripe Dashboard",
+      "stripeGoTo": "og gå til",
       "stripe": "Stripe",
+      "stripeVisit": "Besøk",
       "paypal": "PayPal",
       "clientId": "Klient-ID",
       "clientSecret": "Klienthemmelighet",
-      "transFee": "Transaksjonsgebyr"
+      "transFee": "Transaksjonsgebyr",
+      "saveError": "Kunne ikke lagre gi-innstillingene"
+    },
+    "manageChurch": {
+      "imEx": "Importer/eksporter",
+      "manage": "Administrer",
+      "tools": "Verktøy",
+      "mobileApps": "Mobilapper",
+      "noData": "Ingen kirkedata tilgjengelig",
+      "subtitle": "Konfigurer kirkeinnstillinger og preferanser",
+      "title": "Administrer kirken"
     },
     "supportContactSettingsEdit": {
       "supportContact": "Støttekontakt",
@@ -1029,11 +1436,6 @@
     "imageEditor": {
       "crop": "Beskjær",
       "upload": "Last opp"
-    },
-    "manageChurch": {
-      "imEx": "Importer/eksporter",
-      "manage": "Administrer",
-      "tools": "Verktøy"
     },
     "preview": {
       "preview": "Forhåndsvisning"
@@ -1085,6 +1487,42 @@
       "noAcc": "Har du ikke en brukerkonto?",
       "valEmail": "Vennligst skriv inn en gyldig e-post",
       "valEmailMsg": "Skriv inn en gyldig e-post"
+    },
+    "appEdit": {
+      "addTab": "Legg til fane",
+      "bible": "bibel",
+      "checkin": "Innsjekking",
+      "deleteTab": "Slett fane",
+      "donation": "Donasjon",
+      "donationLanding": "Donasjonslanding",
+      "editTab": "Rediger fane",
+      "externalUrl": "Ekstern URL",
+      "internalPage": "Intern side",
+      "lessons": "Leksjoner",
+      "liveStream": "Direktestrøm",
+      "memberDirectory": "Medlemskatalog",
+      "myGroups": "Mine grupper",
+      "page": "Side",
+      "saveTab": "Lagre fane",
+      "saving": "Lagrer...",
+      "tabName": "Fanenavn",
+      "tabType": "Fanetype",
+      "url": "URL",
+      "verseOfDay": "Dagens vers"
+    },
+    "appTabs": {
+      "editTab": "Rediger fane",
+      "moveDown": "Flytt ned",
+      "moveUp": "Flytt opp",
+      "noTabs": "Ingen faner er konfigurert",
+      "noTabsDesc": "Legg til faner for å tilpasse appnavigasjonen din",
+      "title": "App-faner",
+      "untitled": "Uten tittel"
+    },
+    "mobileAppSettings": {
+      "addTab": "Legg til fane",
+      "subtitle": "Konfigurer innstillinger for mobilapper",
+      "title": "Innstillinger for mobilapper"
     }
   },
   "tasks": {
@@ -1094,24 +1532,45 @@
       "editAct": "Rediger handling",
       "taskAssign": "Tildel en oppgave",
       "taskNote": "Oppgavenotat",
-      "taskTitle": "Oppgavetittel"
+      "taskTitle": "Oppgavetittel",
+      "actTypeHelp": "Velg typen handling som skal utføres"
+    },
+    "selectGroup": {
+      "group": "Gruppe",
+      "sel": "Velg",
+      "noResults": "Ingen grupper funnet som samsvarer med søket ditt",
+      "searchPrompt": "Søk etter en gruppe å velge"
     },
     "automationDetails": {
       "acts": "Handlinger",
       "auto": "Automatiseringsdetaljer",
       "rep": "Gjentas",
-      "task": "Oppgave"
+      "task": "Oppgave",
+      "active": "Aktiv",
+      "addAct": "Legg til handling",
+      "inactive": "Inaktiv",
+      "noAct": "Ingen handlinger er konfigurert",
+      "recurs": "Går igjen"
     },
     "automationEdit": {
       "autoEdit": "Rediger automatisering",
       "monthly": "Månedlig",
       "never": "Aldri",
       "rep": "Gjenta",
-      "yearly": "Årlig"
+      "yearly": "Årlig",
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "recurHelp": "Angi hvor ofte denne automatiseringen skal kjøre"
     },
     "automationsPage": {
       "auto": "Automatiserte oppgaver",
-      "manageAuto": "Administrer automatiserte oppgaver"
+      "manageAuto": "Administrer automatiserte oppgaver",
+      "active": "Aktiv",
+      "addAuto": "Legg til automatisering",
+      "inactive": "Inaktiv",
+      "noAuto": "Ingen automatisering er konfigurert",
+      "recurs": "Går igjen",
+      "subtitle": "Automatiser oppgaver basert på forhold"
     },
     "conditionAttendance": {
       "anywhere": "Hvor som helst",
@@ -1152,7 +1611,11 @@
       "all": "Alle",
       "any": "Hvilken som helst",
       "con": "Betingelser:",
-      "trueCon": "av disse betingelsene er sanne"
+      "trueCon": "av disse betingelsene er sanne",
+      "addCondition": "Legg til betingelse",
+      "and": "OG",
+      "noCond": "Ingen betingelser lagt til",
+      "or": "ELLER"
     },
     "conditionEdit": {
       "conEdit": "Rediger betingelse",
@@ -1161,7 +1624,8 @@
       "conType": "Betingelsestype",
       "gen": "Generelt",
       "persAtt": "Personlige attributter",
-      "today": "Dagens dato"
+      "today": "Dagens dato",
+      "conDetails": "Tilstandsdetaljer"
     },
     "conditionSelect": {
       "is": "er",
@@ -1192,17 +1656,21 @@
       "associatePers": "Vennligst assosier denne oppgaven med en person.",
       "associateW": "Assosier med",
       "taskNew": "Ny oppgave",
-      "titleTask": "Vennligst skriv inn en tittel for denne oppgaven."
-    },
-    "selectGroup": {
-      "group": "Gruppe",
-      "sel": "Velg"
+      "titleTask": "Vennligst skriv inn en tittel for denne oppgaven.",
+      "newAssign": "Ny oppgave",
+      "saving": "Lagrer..."
     },
     "taskList": {
       "assignGroup": "Tildelt mine grupper",
       "assignMe": "Tildelt meg",
       "reqMe": "Forespurt av meg",
-      "tasks": "Oppgaver"
+      "tasks": "Oppgaver",
+      "addTask": "Legg til oppgave",
+      "assignedTo": "Tildelt til",
+      "associatedWith": "Tilknyttet",
+      "noTasks": "Ingen oppgaver funnet",
+      "notSpecified": "Ikke spesifisert",
+      "unassigned": "Ikke tilordnet"
     },
     "taskPage": {
       "ago": "siden",
@@ -1216,19 +1684,31 @@
       "open": "Åpen",
       "opened": "Åpnet",
       "stat": "Status",
-      "taskDet": "Oppgavedetaljer"
+      "taskDet": "Oppgavedetaljer",
+      "assign": "Tildele",
+      "assigned": "Tildelt",
+      "associate": "Medarbeider",
+      "associated": "Tilknyttet",
+      "created": "Opprettet",
+      "editAssigned": "Rediger tildelt",
+      "editAssoc": "Rediger tilknyttet",
+      "notSpec": "Ikke spesifisert",
+      "unassigned": "Ikke tilordnet"
     },
     "tasksPage": {
       "auto": "Automatiseringer",
       "showClosed": "Vis lukkede",
       "showOpen": "Vis åpne",
-      "tasks": "Oppgaver"
+      "tasks": "Oppgaver",
+      "subtitle": "Administrer oppgaver og automatiseringer"
     },
     "requestedChanges": {
       "requestedChanges": "Forespurte endringer",
       "apply": "Bruk",
       "field": "Felt",
-      "value": "Verdi"
+      "value": "Verdi",
+      "applied": "Endringer tatt i bruk",
+      "newProfile": "Ny profil"
     }
   },
   "sermons": {
@@ -1274,7 +1754,8 @@
       "unauthorizedDelete": "Ikke autorisert til å slette prekener",
       "newSermon": "Ny preken",
       "currentLiveService": "Gjeldende direktesendt tjeneste",
-      "channelIdPlaceholder": "Dette er ikke kanal-URLen din - Se hjelpelenken ovenfor"
+      "channelIdPlaceholder": "Dette er ikke kanal-URLen din - Se hjelpelenken ovenfor",
+      "none": "Ingen"
     },
     "playlists": {
       "title": "Spillelister",
@@ -1343,7 +1824,8 @@
       },
       "navigationLinks": {
         "title": "Navigasjonslenker",
-        "add": "Legg til"
+        "add": "Legg til",
+        "home": "Hjem"
       },
       "sidebarTabs": {
         "title": "Sidefelt-faner",
@@ -1445,6 +1927,10 @@
         "editUsers": "Rediger brukere",
         "viewYourStream": "Se strømmen din"
       }
+    },
+    "duration": {
+      "minutes": "Minutter",
+      "seconds": "Sekunder"
     }
   },
   "songs": {
@@ -1517,6 +2003,286 @@
       "title": "Søk etter en sang",
       "inputLabel": "Tittel eller artist",
       "inputPlaceholder": "Skriv inn sangtittel eller artistnavn..."
+    },
+    "songPage": {
+      "loading": "Laster...",
+      "subtitle": "Administrer sangdetaljer og arrangementer"
+    },
+    "songsPage": {
+      "songs": "Sanger",
+      "subtitle": "Administrer musikkbiblioteket ditt"
+    }
+  },
+  "site": {
+    "addPage": {
+      "newLink": "Ny lenke",
+      "newPage": "Ny side",
+      "pageType": "Sidetype"
+    },
+    "animations": {
+      "colorize": "Fargelegg",
+      "editAnimations": "Rediger animasjoner",
+      "fadeIn": "Fade inn",
+      "fast": "Rask",
+      "focus": "Fokus",
+      "grow": "Voks",
+      "none": "Ingen",
+      "normal": "Normal",
+      "onShowAnimation": "Ved visningsanimasjon",
+      "pulse": "Puls",
+      "shrink": "Krymp",
+      "slideDown": "Gli ned",
+      "slideLeft": "Gli venstre",
+      "slideRight": "Gli høyre",
+      "slideUp": "Gli opp",
+      "slow": "Langsom",
+      "onShowSpeed": "På Vis hastighet"
+    },
+    "blocks": {
+      "confirmDelete": "Er du sikker på at du vil slette denne blokken permanent?",
+      "editBlock": "Rediger blokk"
+    },
+    "donateLink": {
+      "add": "Legg til",
+      "amountPlaceholder": "10",
+      "maxAmountsAlert": "Du kan bare legge til fem donasjonsbeløp.",
+      "noFunds": "Ingen fond",
+      "textHelper": "F.eks: (Doner nå), (Ja, jeg vil hjelpe!), (Doner $10 til ungdomsleir), etc..",
+      "textLabel": "Tekst",
+      "urlHelper": "Tips: du må lenke til siden fra nettstedbyggeren som har donasjons-elementet.",
+      "urlLabel": "Url",
+      "urlPlaceholder": "/doner",
+      "addAmount": "Legg til donasjonsbeløp",
+      "amount": "Beløp",
+      "donationAmount": "Donasjonsbeløp",
+      "donationAmounts": "Donasjonsbeløp",
+      "donationAmountsHelper": "Du kan foreslå noen donasjonsbeløp som $5, $10, $20, etc..",
+      "funds": "Fond",
+      "selectFund": "Velg donasjonsfond"
+    },
+    "elements": {
+      "addressHelper": "f.eks: Rådhuset, Oslo, Norge",
+      "categoriesHelper": "f.eks: Smågrupper, Søndagsskole",
+      "confirmDelete": "Er du sikker på at du vil slette dette elementet permanent?",
+      "confirmDuplicate": "Er du sikker på at du vil lage en kopi av dette elementet og alle dets barn?",
+      "editElement": "Rediger element",
+      "heightPlaceholder": "1000",
+      "nameHelper": "f.eks: First Baptist Church",
+      "alignCenter": "Senter",
+      "alignLeft": "Venstre",
+      "alignRight": "Høyre",
+      "answersJSON": "Svar JSON",
+      "answersJSONData": "JSON-dataformat for skjemasvar",
+      "imageDescribingTopic": "Bilde som beskriver emnet",
+      "linkUrlOptional": "Link URL (valgfritt)",
+      "loadingEditor": "Laster inn editor...",
+      "photoAlternativeText": "Foto alternativ tekst",
+      "photoLabel": "Fotoetikett",
+      "photoPosition": "Fotoposisjon",
+      "positionPhotoBottom": "Bunn",
+      "positionPhotoLeft": "Venstre",
+      "positionPhotoRight": "Høyre",
+      "positionPhotoTop": "Topp",
+      "roundedCorners": "Avrundede hjørner",
+      "selectPhoto": "Velg bilde",
+      "selectPhotoPosition": "Velg bildeposisjon",
+      "textAlignment": "Tekstjustering",
+      "title": "Tittel",
+      "titleAlignment": "Titteljustering",
+      "translucent": "Gjennomsiktig"
+    },
+    "files": {
+      "confirmDelete": "Er du sikker på at du vil slette",
+      "storageInfo": "100 MB lagringsplass er tilgjengelig gratis for lagring av PDF-er og andre dokumenter som vanligvis trengs for kirkenettsted. Vi foreslår å bruke Google Drive eller Dropbox for å lagre filer hvis det trengs mer plass.",
+      "upload": "Last opp",
+      "uploadFiles": "Last opp filer"
+    },
+    "navLink": {
+      "addLink": "Legg til lenke",
+      "linkSettings": "Lenkeinnstillinger"
+    },
+    "pageLink": {
+      "check": "Sjekk",
+      "confirmDelete": "Er du sikker på at du vil slette denne siden permanent?",
+      "confirmDuplicate": "Er du sikker på at du vil lage en kopi av denne siden og alt innholdet?",
+      "linkSettings": "Lenkeinnstillinger",
+      "pageSettings": "Sideinnstillinger",
+      "urlHelper": "f.eks: /leir-registrering  (**Sørg for å sjekke før lagring)"
+    },
+    "pages": {
+      "convert": "Konverter"
+    },
+    "pagesPage": {
+      "confirmConvert": "Vil du konvertere denne automatisk genererte siden til en tilpasset side?",
+      "actions": "Handlinger",
+      "addFirstPage": "Legg til første side",
+      "addPage": "Legg til side",
+      "autoGenerated": "Autogenerert",
+      "customPages": "Egendefinerte sider",
+      "description": "Nedenfor er en liste over egendefinerte og automatisk genererte sider. Du kan legge til nye sider, redigere eksisterende eller konvertere automatisk genererte sider til egendefinerte sider.",
+      "desktopOnly": "Sideredigering er bare tilgjengelig i skrivebordsmodus",
+      "generated": "Generert",
+      "getStarted": "Kom i gang ved å legge til din første side.",
+      "mainNavigation": "Hovednavigasjon",
+      "noPagesFound": "Ingen sider funnet",
+      "pages": "Sider",
+      "path": "Sti",
+      "previewPage": "Forhåndsvisningsside",
+      "showLogin": "Vis pålogging",
+      "showLoginTooltip": "Vis påloggingsknapp i navigasjonslinjen",
+      "subtitle": "Administrer nettsidene dine, innholdet og navigasjonen",
+      "toggleLoginVisibility": "Slå påloggingsknappens synlighet",
+      "totalPages": "Totalt antall sider",
+      "websitePages": "Nettsidesider"
+    },
+    "pickColors": {
+      "headingColor": "Overskriftsfarge",
+      "linkColor": "Lenkefarge",
+      "opacityHelper": "Opasiteten til det svarte gradientlaget på toppen av bildet. Maks verdi: 1",
+      "textColor": "Tekstfarge"
+    },
+    "row": {
+      "columnsHelper": "Tall representerer tolftedeler av siden.",
+      "addColumn": "Legg til kolonne",
+      "columnsError": "Kolonner må legge til 12",
+      "commonOptions": "Vanlige alternativer",
+      "halves": "Halver",
+      "hideMobileOrder": "Skjul mobilbestilling",
+      "hideMobileSizes": "Skjul mobilstørrelser",
+      "preview": "Forhåndsvisning",
+      "previewHelper": "Tall representerer tolvtedeler av siden",
+      "quarters": "Kvarter",
+      "remove": "Fjern",
+      "showMobileOrder": "Vis mobilbestilling",
+      "showMobileSizes": "Vis mobilstørrelser",
+      "size1": "1 - 1/12",
+      "size10": "10 - 5/6",
+      "size11": "11 - 11/12",
+      "size12": "12 - Full",
+      "size2": "2 - 1/6",
+      "size3": "3 - 1/4",
+      "size4": "4 - 1/3",
+      "size5": "5 - 5/12",
+      "size6": "6 - 1/2",
+      "size7": "7 - 7/12",
+      "size8": "8 - 2/3",
+      "size9": "9 - 3/4-deler",
+      "thirds": "Tredeler",
+      "totalInvalid": "Totalt: {total}/12",
+      "totalValid": "Totalt: 12/12",
+      "width": "Bredde"
+    },
+    "section": {
+      "confirmDelete": "Er du sikker på at du vil slette denne seksjonen permanent?",
+      "confirmDuplicate": "Er du sikker på at du vil lage en kopi av denne seksjonen og alt innholdet?",
+      "editSection": "Rediger seksjon"
+    },
+    "style": {
+      "editStyle": "Rediger stil"
+    },
+    "styleEdit": {
+      "property": "Egenskap"
+    },
+    "templates": {
+      "viewSermons": "Vis prekener"
+    },
+    "blocksPage": {
+      "actions": "Handlinger",
+      "addBlock": "Legg til blokk",
+      "block": "blokkere",
+      "blocks": "Blokker",
+      "createFirstBlock": "Lag første blokk",
+      "elements": "Element(er)",
+      "getStarted": "Kom i gang ved å lage din første gjenbrukbare blokk",
+      "noBlocksFound": "Ingen blokker funnet",
+      "reusableBlocks": "Gjenbrukbare blokker",
+      "sections": "Seksjon(er)",
+      "subtitle": "Opprett og administrer gjenbrukbare innholdsblokker for nettstedet ditt",
+      "totalBlocks": "Totale blokker",
+      "type": "Type"
+    },
+    "editorToolbar": {
+      "addContent": "Legg til innhold",
+      "block": "Blokkere",
+      "desktop": "Skrivebord",
+      "mobile": "Mobil",
+      "page": "Side",
+      "switchToDesktop": "Bytt til skrivebordsvisning",
+      "switchToMobile": "Bytt til mobilvisning"
+    },
+    "elementAdd": {
+      "blocks": "Blokker",
+      "box": "Eske",
+      "calendar": "Kalender",
+      "card": "Kort",
+      "carousel": "Karusell",
+      "churchSpecific": "Kirkespesifikk",
+      "donateLink": "Doner lenke",
+      "donation": "Donasjon",
+      "dragAndDrop": "Dra og slipp på siden",
+      "embedPage": "Bygg inn side",
+      "expandable": "Utvidbar",
+      "form": "Skjema",
+      "groupList": "Gruppeliste",
+      "html": "HTML",
+      "image": "Bilde",
+      "location": "Sted",
+      "logo": "Logo",
+      "noBlocksFound": "Ingen blokker funnet",
+      "row": "Rad",
+      "section": "Del",
+      "simpleElements": "Enkle elementer",
+      "stream": "Strøm",
+      "table": "Bord",
+      "text": "Tekst",
+      "textWithPhoto": "Tekst med bilde",
+      "video": "Video"
+    },
+    "appearancePage": {
+      "title": "Nettstedstiler",
+      "subtitle": "Nedenfor er en forhåndsvisning av et eksempelside med dine farger, skrifter og logoer. Dette er ikke ditt faktiske nettstedinnhold."
+    },
+    "filesPage": {
+      "title": "Filer",
+      "subtitle": "Administrer filer og medier for nettstedet ditt"
+    },
+    "pagePreview": {
+      "title": "Nettstedsforhåndsvisning",
+      "subtitle": "Forhåndsvisning: {title}",
+      "editContent": "Rediger innhold",
+      "pageSettings": "Sideinnstillinger"
+    },
+    "sectionEdit": {
+      "convertToBlock": "Konverter til blokk",
+      "convertTo": "Konverter til",
+      "duplicate": "Dupliser",
+      "duplicateSection": "Dupliser seksjon"
+    },
+    "appearanceEdit": {
+      "logoManagement": "Logoadministrasjon"
+    },
+    "cssEdit": {
+      "customCss": "Tilpasset CSS",
+      "customHtml": "Tilpasset HTML"
+    },
+    "filesManager": {
+      "noFilesYet": "Ingen filer lastet opp ennå",
+      "getStarted": "Kom i gang ved å laste opp din første fil",
+      "files": "Filer"
+    },
+    "fontEdit": {
+      "fontSelection": "Skriftvalg",
+      "typographyPreview": "Typografiforhåndsvisning",
+      "popularFontCombinations": "Populære skriftkombinasjoner"
+    },
+    "paletteEdit": {
+      "savePalette": "Lagre palett",
+      "colorValues": "Fargeverdier",
+      "suggestedPalettes": "Foreslåtte paletter",
+      "colorCombinationsPreview": "Fargekombinasjonsforhåndsvisning"
+    },
+    "stylesManager": {
+      "styleSettings": "Stilinnstillinger"
     }
   },
   "stockPhotos": {

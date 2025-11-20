@@ -72,7 +72,7 @@ export function PeopleSearch(props: Props) {
             id="searchText"
             name="searchText"
             type="text"
-            placeholder="Search by name..."
+            placeholder={Locale.label("people.peopleSearch.placeholder")}
             value={searchText}
             onChange={handleChange}
             data-testid="people-search-input"

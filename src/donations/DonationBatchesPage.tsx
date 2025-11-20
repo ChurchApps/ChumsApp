@@ -144,7 +144,7 @@ export const DonationBatchesPage = () => {
         </Typography>
       );
 
-      const dateObj = new Date(b.batchDate + "T00:00:00");
+      const dateObj = new Date(b.batchDate.toString().split("T")[0] + "T00:00:00");
 
       result.push(
         <TableRow
@@ -270,7 +270,7 @@ export const DonationBatchesPage = () => {
       <PageHeader
         icon={<DonationIcon />}
         title={Locale.label("donations.donations.batches")}
-        subtitle="Manage donation batches and track giving records"
+        subtitle={Locale.label("donations.donationBatchesPage.subtitle")}
       >
         <Stack
           direction={{ xs: "column", md: "row" }}

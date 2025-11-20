@@ -2,7 +2,7 @@
 
 import { Box } from "@mui/material";
 import React, { CSSProperties } from "react";
-import { useDrop } from 'react-dnd'
+import { useDrop } from 'react-dnd';
 
 type Props = {
   direction: "up" | "down",
@@ -28,25 +28,27 @@ export function DroppableScroll(props: Props) {
 
   const scrollUp = () => {
     stepsRef.current++;
-    const newY = window.scrollY - 50;
+    const acceleration = Math.min(10 + stepsRef.current * 2, 100);
+    const newY = window.scrollY - acceleration;
     if (newY < 0 && intervalIdRef.current) clearInterval(intervalIdRef.current);
-    else window.scrollTo(0, newY);
+    else window.scrollTo({ top: newY, behavior: 'auto' });
     if (stepsRef.current > 100) handleMouseOut();
-  }
+  };
 
   const scrollDown = () => {
     stepsRef.current++;
-    const newY = window.scrollY + 50;
-    window.scrollTo(0, newY);
+    const acceleration = Math.min(10 + stepsRef.current * 2, 100);
+    const newY = window.scrollY + acceleration;
+    window.scrollTo({ top: newY, behavior: 'auto' });
     if (stepsRef.current > 100) handleMouseOut();
-  }
+  };
 
   const handleMouseOver = () => {
     handleMouseOut();
     stepsRef.current = 0;
     const id: any = setInterval((props.direction === "up") ? scrollUp : scrollDown, 50);
     intervalIdRef.current = id as number;
-  }
+  };
 
   const handleMouseOut = () => {
     if (intervalIdRef.current) {
@@ -54,12 +56,28 @@ export function DroppableScroll(props: Props) {
       intervalIdRef.current = null;
     }
     stepsRef.current = 0;
-  }
+  };
 
-  let droppableStyle:CSSProperties = { position: "absolute", top: 0, left: 0, height: 30, width: "100%", zIndex: 1, backgroundColor: (isOver) ? "#00FF00" : "#28a745" }
+  const droppableStyle:CSSProperties = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: 30,
+    width: "100%",
+    zIndex: 1,
+    backgroundColor: isOver ? "rgba(25, 118, 210, 0.9)" : "rgba(25, 118, 210, 0.75)",
+    borderRadius: "4px",
+    background: isOver
+      ? "linear-gradient(to bottom, rgba(25, 118, 210, 0.9), rgba(21, 101, 192, 0.9))"
+      : "linear-gradient(to bottom, rgba(25, 118, 210, 0.75), rgba(21, 101, 192, 0.75))",
+    backdropFilter: "blur(8px)",
+    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+    animation: canDrop && !isOver ? "pulse 1.5s ease-in-out infinite" : "none"
+  };
 
 
-  if (canDrop) return (
+  if (canDrop) {
+    return (
     <div style={{ position: "relative" }}>
       <div style={droppableStyle}>
         <div style={{ textAlign: "center", color: "#FFFFFF", width: "100%" }} ref={drop as any}>
@@ -69,6 +87,6 @@ export function DroppableScroll(props: Props) {
         </div>
       </div>
     </div>
-  );
-  else return <></>
+    );
+  } else return <></>;
 }

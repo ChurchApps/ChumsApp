@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ErrorMessages, InputBox, UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
+import { ErrorMessages, InputBox, UserHelper, Permissions, ApiHelper, Locale } from "@churchapps/apphelper";
 import { FormControl, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material";
 import type { BlockInterface } from "../../helpers";
 
@@ -51,7 +51,7 @@ export function BlockEdit(props: Props) {
       return;
     }
 
-    if (window.confirm("Are you sure you wish to permanently delete this block?")) {
+    if (window.confirm(Locale.label("site.blocks.confirmDelete"))) {
       ApiHelper.delete("/blocks/" + block.id.toString(), "ContentApi").then(() => props.updatedCallback(null));
     }
   };
@@ -61,7 +61,7 @@ export function BlockEdit(props: Props) {
   if (!block) return <></>;
   return (
     <>
-      <InputBox id="blockDetailsBox" headerText="Edit Block" headerIcon="school" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} data-testid="edit-block-inputbox">
+      <InputBox id="blockDetailsBox" headerText={Locale.label("site.blocks.editBlock")} headerIcon="school" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={handleDelete} data-testid="edit-block-inputbox">
         <ErrorMessages errors={errors} />
         <TextField fullWidth label="Name" name="name" value={block.name || ""} onChange={handleChange} onKeyDown={handleKeyDown} data-testid="block-name-input" aria-label="Block name" />
         <FormControl fullWidth>

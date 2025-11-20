@@ -1,5 +1,5 @@
 import { type GroupInterface, type GroupServiceTimeInterface } from "@churchapps/helpers";
-import { UserHelper, Permissions, ApiHelper } from "@churchapps/apphelper";
+import { UserHelper, Permissions, ApiHelper, Locale } from "@churchapps/apphelper";
 import { Typography, Chip, IconButton, Stack, Box } from "@mui/material";
 import {
   Edit as EditIcon,
@@ -41,7 +41,7 @@ export const GroupBanner = memo((props: Props) => {
     if (group.tags.indexOf("team") > -1) {
       return (
         <Chip
-          label="Team"
+          label={Locale.label("groups.groupBanner.team")}
           size="small"
           sx={{
             backgroundColor: "#e3f2fd",
@@ -97,24 +97,24 @@ export const GroupBanner = memo((props: Props) => {
     if (group.trackAttendance !== undefined) {
       info.push({
         icon: group.trackAttendance ? <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
-        label: "Track Attendance",
-        value: group.trackAttendance ? "Yes" : "No",
+        label: Locale.label("groups.groupBanner.trackAttendance"),
+        value: group.trackAttendance ? Locale.label("common.yes") : Locale.label("common.no"),
       });
     }
 
     if (group.printNametag !== undefined) {
       info.push({
         icon: group.printNametag ? <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
-        label: "Print Nametag",
-        value: group.printNametag ? "Yes" : "No",
+        label: Locale.label("groups.groupBanner.printNametag"),
+        value: group.printNametag ? Locale.label("common.yes") : Locale.label("common.no"),
       });
     }
 
     if (group.parentPickup !== undefined) {
       info.push({
         icon: group.parentPickup ? <CheckIcon sx={{ color: "#4caf50", fontSize: 16, mr: 0.5 }} /> : <CancelIcon sx={{ color: "#f44336", fontSize: 16, mr: 0.5 }} />,
-        label: "Parent Pickup",
-        value: group.parentPickup ? "Yes" : "No",
+        label: Locale.label("groups.groupBanner.parentPickup"),
+        value: group.parentPickup ? Locale.label("common.yes") : Locale.label("common.no"),
       });
     }
 
@@ -197,7 +197,7 @@ export const GroupBanner = memo((props: Props) => {
                       textTransform: "uppercase",
                       letterSpacing: "0.5px",
                     }}>
-                    Meeting Info
+                    {Locale.label("groups.groupBanner.meetingInfo")}
                   </Typography>
                 )}
                 {quickStats.map((stat, idx) => (
@@ -229,7 +229,7 @@ export const GroupBanner = memo((props: Props) => {
                         textTransform: "uppercase",
                         letterSpacing: "0.5px",
                       }}>
-                      Settings
+                      {Locale.label("groups.groupBanner.settings")}
                     </Typography>
                     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
                       {attendanceInfo.map((info, idx) => (
@@ -270,7 +270,7 @@ export const GroupBanner = memo((props: Props) => {
                           textTransform: "uppercase",
                           letterSpacing: "0.5px",
                         }}>
-                        Labels
+                        {Locale.label("groups.groupBanner.labels")}
                       </Typography>
                       <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                         {validLabels.slice(0, 4).map((label, idx) => (
@@ -288,7 +288,7 @@ export const GroupBanner = memo((props: Props) => {
                         ))}
                         {validLabels.length > 4 && (
                           <Chip
-                            label={`+${validLabels.length - 4} more`}
+                            label={Locale.label("groups.groupBanner.moreLabels").replace("{count}", (validLabels.length - 4).toString())}
                             size="small"
                             sx={{
                               backgroundColor: "rgba(255,255,255,0.1)",
@@ -321,7 +321,7 @@ export const GroupBanner = memo((props: Props) => {
                 textTransform: "uppercase",
                 letterSpacing: "0.5px",
               }}>
-              Associated Services
+              {Locale.label("groups.groupBanner.associatedServices")}
             </Typography>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
               {groupServiceTimes.map((gst, idx) => (

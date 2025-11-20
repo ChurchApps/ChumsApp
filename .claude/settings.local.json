@@ -8,7 +8,8 @@
       "Bash(npm run test:e2e:*)",
       "Bash(sudo apt-get:*)",
       "Bash(sudo apt-get install:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(python:*)"
     ],
     "deny": []
   }

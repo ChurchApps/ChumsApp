@@ -37,6 +37,8 @@ const SongPage = React.lazy(() => import("./plans/songs/SongPage").then((module)
 const PrintPlan = React.lazy(() => import("./plans/PrintPlan").then((module) => ({ default: module.PrintPlan })));
 const DevicesPage = React.lazy(() => import("./profile/DevicesPage").then((module) => ({ default: module.DevicesPage })));
 const PrintDonationPage = React.lazy(() => import("./donations/PrintDonationPage").then((module) => ({ default: module.PrintDonationPage })));
+const PrintAllStatementsPage = React.lazy(() => import("./donations/PrintAllStatementsPage").then((module) => ({ default: module.PrintAllStatementsPage })));
+const BatchGivingStatementsPage = React.lazy(() => import("./donations/BatchGivingStatementsPage").then((module) => ({ default: module.BatchGivingStatementsPage })));
 const OAuthPage = React.lazy(() => import("./OAuth").then((module) => ({ default: module.OAuthPage })));
 const SermonsPage = React.lazy(() => import("./sermons/SermonsPage").then((module) => ({ default: module.SermonsPage })));
 const PlaylistsPage = React.lazy(() => import("./sermons/PlaylistsPage").then((module) => ({ default: module.PlaylistsPage })));
@@ -98,6 +100,7 @@ export const Authenticated: React.FC = () => {
           <Route path="/donations/funds" element={<FundsPage />} />
           <Route path="/donations/batches/:id" element={<DonationBatchPage />} />
           <Route path="/donations/batches" element={<DonationBatchesPage />} />
+          <Route path="/donations/statements" element={<BatchGivingStatementsPage />} />
           <Route path="/donations" element={<DonationsPage />} />
           <Route path="/forms/:id" element={<FormPage />} />
           <Route path="/forms" element={<FormsPage />} />
@@ -138,6 +141,14 @@ export const Authenticated: React.FC = () => {
           element={
             <Suspense fallback={<LoadingFallback />}>
               <PrintDonationPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/donations/print-all"
+          element={
+            <Suspense fallback={<LoadingFallback />}>
+              <PrintAllStatementsPage />
             </Suspense>
           }
         />

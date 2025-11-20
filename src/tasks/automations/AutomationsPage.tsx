@@ -36,7 +36,7 @@ export const AutomationsPage = () => {
           }}>
           <AutomationsIcon sx={{ fontSize: 48, color: "grey.400", mb: 2 }} />
           <Typography variant="body1" color="text.secondary">
-            No automations configured. Create your first automation to get started!
+            {Locale.label("tasks.automationsPage.noAuto")}
           </Typography>
         </Paper>
       );
@@ -67,9 +67,13 @@ export const AutomationsPage = () => {
                 }
                 secondary={
                   <Typography variant="body2" color="text.secondary">
-                    {automation.active ? "Active" : "Inactive"} • Recurs: {automation.recurs}
+                    {automation.active ? Locale.label("tasks.automationsPage.active") : Locale.label("tasks.automationsPage.inactive")} • {Locale.label("tasks.automationsPage.recurs")}: {automation.recurs}
                   </Typography>
                 }
+                slotProps={{
+                  primary: { component: 'div' },
+                  secondary: { component: 'div' }
+                }}
               />
             </ListItemButton>
           </ListItem>
@@ -95,7 +99,7 @@ export const AutomationsPage = () => {
 
   return (
     <>
-      <PageHeader icon={<AutomationsIcon />} title={Locale.label("tasks.automationsPage.manageAuto") || "Automations"} subtitle="Automate tasks and workflows for your organization">
+      <PageHeader icon={<AutomationsIcon />} title={Locale.label("tasks.automationsPage.manageAuto")} subtitle={Locale.label("tasks.automationsPage.subtitle")}>
         <Button
           variant="outlined"
           startIcon={<AddIcon />}
@@ -111,7 +115,7 @@ export const AutomationsPage = () => {
               backgroundColor: "rgba(255,255,255,0.1)",
             },
           }}>
-          Add Automation
+          {Locale.label("tasks.automationsPage.addAuto")}
         </Button>
       </PageHeader>
       <TasksNavigation selectedTab="automations" onTabChange={handleTabChange} />

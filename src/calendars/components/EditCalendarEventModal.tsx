@@ -22,7 +22,7 @@ import {
 import type { SelectChangeEvent } from "@mui/material/Select";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { Loading, EventHelper, ApiHelper } from "@churchapps/apphelper";
+import { Loading, EventHelper, ApiHelper, Locale } from "@churchapps/apphelper";
 import { type GroupInterface, type EventInterface } from "@churchapps/helpers";
 
 interface Props {
@@ -134,7 +134,7 @@ export function EditCalendarEventModal(props: Props) {
 
   return (
     <Dialog open={true} onClose={handleDone} fullWidth scroll="body" fullScreen={fullScreen}>
-      <DialogTitle>Add a Group</DialogTitle>
+      <DialogTitle>{Locale.label("calendars.editEvent.addGroup")}</DialogTitle>
       <DialogContent>
         {isLoadingGroups ? (
           <Loading />
@@ -142,10 +142,10 @@ export function EditCalendarEventModal(props: Props) {
           <>
             {groups?.length > 0 ? (
               <FormControl fullWidth>
-                <InputLabel>Select a Group</InputLabel>
+                <InputLabel>{Locale.label("calendars.editEvent.selectGroup")}</InputLabel>
                 <Select
                   fullWidth
-                  label="Select a Group"
+                  label={Locale.label("calendars.editEvent.selectGroup")}
                   value={selectedGroupId}
                   onChange={(e: SelectChangeEvent) => setSelectedGroupId(e.target.value)}
                   data-testid="calendar-group-select"
@@ -158,7 +158,7 @@ export function EditCalendarEventModal(props: Props) {
                 </Select>
               </FormControl>
             ) : (
-              <Typography>No groups found.</Typography>
+              <Typography>{Locale.label("calendars.calendarEvent.noGroups")}</Typography>
             )}
           </>
         )}
@@ -166,8 +166,8 @@ export function EditCalendarEventModal(props: Props) {
           <FormControl fullWidth>
             <RadioGroup value={addType} onChange={(e) => setAddType(e.target.value)}>
               <Stack direction={{ xs: "column", sm: "row" }}>
-                <FormControlLabel control={<Radio size="small" />} value="group" label="Add all the events of the group" />
-                <FormControlLabel control={<Radio size="small" />} value="events" label="Add specific events" />
+                <FormControlLabel control={<Radio size="small" />} value="group" label={Locale.label("calendars.editEvent.addAllEvents")} />
+                <FormControlLabel control={<Radio size="small" />} value="events" label={Locale.label("calendars.editEvent.addSpecificEvents")} />
               </Stack>
             </RadioGroup>
           </FormControl>
@@ -175,7 +175,7 @@ export function EditCalendarEventModal(props: Props) {
         {addType === "events" && groupEvents.length > 0 && (
           <div style={{ marginTop: 11 }}>
             <Typography align="center" fontSize="15px" fontStyle="italic" marginBottom={3} color="#757575">
-              *Click on an event to add it to the Curated Calendar.*
+              {Locale.label("calendars.editEvent.clickToAdd")}
             </Typography>
             <Calendar
               localizer={localizer}
@@ -192,14 +192,14 @@ export function EditCalendarEventModal(props: Props) {
         {addType === "events" && groupEvents.length <= 0 && (
           <div style={{ marginTop: 11 }}>
             <Alert sx={{ align: "center", fontSize: "15px", fontStyle: "italic", marginBottom: "3" }} severity="error">
-              *No events found. Please add events to the individual group before adding to the Curated Calendar.*
+              {Locale.label("calendars.editEvent.noEventsFound")}
             </Alert>
           </div>
         )}
       </DialogContent>
       <DialogActions>
         <Button variant="text" onClick={handleDone} data-testid="calendar-edit-cancel-button">
-          cancel
+          {Locale.label("calendars.editEvent.cancel")}
         </Button>
         <Button
           variant="contained"
@@ -207,7 +207,7 @@ export function EditCalendarEventModal(props: Props) {
           disabled={!selectedGroupId || (addType === "events" && eventIdsList.length === 0)}
           data-testid="calendar-edit-save-button"
         >
-          Save
+          {Locale.label("calendars.editEvent.save")}
         </Button>
       </DialogActions>
     </Dialog>

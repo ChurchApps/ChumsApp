@@ -128,7 +128,7 @@ export const ChurchSettingsEdit: React.FC<Props> = (props) => {
               onKeyDown={handleKeyDown}
               data-testid="subdomain-input"
               aria-label="Subdomain"
-              helperText="Your church's unique web address"
+              helperText={Locale.label("settings.church.subdomainHelper")}
             />
           </Grid>
         </Grid>

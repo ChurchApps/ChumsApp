@@ -60,7 +60,7 @@ export const TeamList = memo((props: Props) => {
             {Locale.label("plans.teamList.noTeam")}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            Create teams to organize volunteers for your ministry
+            {Locale.label("plans.teamList.createTeams")}
           </Typography>
           {UserHelper.checkAccess(Permissions.membershipApi.groups.edit) && (
             <Button
@@ -73,7 +73,7 @@ export const TeamList = memo((props: Props) => {
                 py: 1.5,
                 px: 3,
               }}>
-              Create Team
+              {Locale.label("plans.teamList.createTeam")}
             </Button>
           )}
         </Paper>
@@ -103,7 +103,7 @@ export const TeamList = memo((props: Props) => {
                   boxShadow: 2,
                 },
               }}>
-              New Team
+              {Locale.label("plans.teamList.newTeam")}
             </Button>
           )}
         </Stack>
@@ -112,7 +112,7 @@ export const TeamList = memo((props: Props) => {
       <Stack spacing={2}>
         {groups.map((g) => {
           const memberCount = g.memberCount || 0;
-          const memberLabel = memberCount === 1 ? "1 member" : `${memberCount} members`;
+          const memberLabel = memberCount === 1 ? `1 ${Locale.label("plans.teamList.member")}` : `${memberCount} ${Locale.label("plans.teamList.members")}`;
 
           return (
             <Card
@@ -172,7 +172,7 @@ export const TeamList = memo((props: Props) => {
                           }}
                         />
                         <Chip
-                          label="Team"
+                          label={Locale.label("plans.teamList.team")}
                           variant="outlined"
                           size="small"
                           sx={{
@@ -199,7 +199,7 @@ export const TeamList = memo((props: Props) => {
                           borderColor: "primary.dark",
                         },
                       }}>
-                      Manage
+                      {Locale.label("plans.teamList.manage")}
                     </Button>
                   </Box>
                 </Stack>

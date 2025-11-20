@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Box, Button } from "@mui/material";
 import { PhoneIphone as PhoneIcon, Add as AddIcon } from "@mui/icons-material";
-import { UserHelper, Permissions, PageHeader } from "@churchapps/apphelper";
+import { UserHelper, Permissions, PageHeader, Locale } from "@churchapps/apphelper";
 import { Navigate } from "react-router-dom";
 import type { LinkInterface } from "@churchapps/helpers";
 import { AppTabs, AppEdit } from "./components";
@@ -42,8 +42,8 @@ export const MobileAppSettingsPage = () => {
     <>
       <PageHeader
         icon={<PhoneIcon />}
-        title="Mobile App Settings"
-        subtitle="Configure navigation tabs and settings for your church mobile app"
+        title={Locale.label("settings.mobileAppSettings.title")}
+        subtitle={Locale.label("settings.mobileAppSettings.subtitle")}
       >
         <Button
           variant="outlined"
@@ -58,7 +58,7 @@ export const MobileAppSettingsPage = () => {
             }
           }}
         >
-          Add Tab
+          {Locale.label("settings.mobileAppSettings.addTab")}
         </Button>
       </PageHeader>
 

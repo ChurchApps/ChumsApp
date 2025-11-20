@@ -35,24 +35,24 @@ export const SectionBlock: React.FC<Props> = props => {
         </div>
       );
     }
-  }
+  };
 
   const getSections = () => {
-    const result: React.ReactElement[] = []
+    const result: React.ReactElement[] = [];
     props.section.sections.forEach(section => {
-      result.push(<Section key={section.id} section={section} churchSettings={props.churchSettings} />)
+      result.push(<Section key={section.id} section={section} churchSettings={props.churchSettings} />);
     });
     return result;
-  }
+  };
 
   const getClassName = () => {
     let result = "";
     if (props.onEdit) result += "sectionBlock sectionWrapper";
     return result;
-  }
+  };
 
   return (<div style={{ minHeight: 30, position: "relative" }} className={getClassName()}>
     {getEdit()}
     {getSections()}
   </div>);
-}
+};

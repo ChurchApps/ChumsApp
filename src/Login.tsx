@@ -18,7 +18,6 @@ export const Login: React.FC = () => {
   const returnUrl = search.get("returnUrl") || location.state?.from?.pathname || defaultRedirect;
 
   const handleRedirect = (url: string) => {
-    console.log("HANDLE REDIRECT", url);
     navigate(url);
   };
 
