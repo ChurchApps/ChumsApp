@@ -23,7 +23,7 @@ import {
 } from "@mui/icons-material";
 import type { LinkInterface } from "@churchapps/helpers";
 import { IconPicker } from "../../components/iconPicker";
-import { ApiHelper, UniqueIdHelper, ArrayHelper, Locale } from "@churchapps/apphelper";
+import { ApiHelper, UniqueIdHelper, ArrayHelper, Locale, GalleryModal } from "@churchapps/apphelper";
 import { CardWithHeader, LoadingButton } from "../../components/ui";
 
 interface PageInterface {
@@ -43,6 +43,7 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
   const [pages, setPages] = useState<PageInterface[]>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [showPhotoGallery, setShowPhotoGallery] = useState<boolean>(false);
 
   useEffect(() => {
     setCurrentTab(currentTabFromProps);
@@ -87,6 +88,13 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
         updatedFunction();
       });
     }
+  };
+
+  const handlePhotoSelected = (image: string) => {
+    const t = { ...currentTab };
+    (t as any).photo = image;
+    setCurrentTab(t);
+    setShowPhotoGallery(false);
   };
 
   const loadPages = () => {
@@ -176,6 +184,32 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
                 helperText={Locale.label("settings.app.tabNameHelper")}
               />
 
+              {/* Tab Image */}
+              <Box>
+                {(currentTab as any)?.photo && (
+                  <Box sx={{ mb: 2, maxWidth: 300 }}>
+                    <img
+                      src={(currentTab as any).photo}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        aspectRatio: "16/9",
+                        objectFit: "cover",
+                        borderRadius: 4
+                      }}
+                      alt="Tab icon"
+                    />
+                  </Box>
+                )}
+                <Button
+                  variant="outlined"
+                  onClick={() => setShowPhotoGallery(true)}
+                  sx={{ textTransform: 'none' }}
+                >
+                  {(currentTab as any)?.photo ? Locale.label("settings.appEdit.changeImage") : Locale.label("settings.appEdit.selectImage")}
+                </Button>
+              </Box>
+
               {/* Tab Type */}
               <FormControl fullWidth>
                 <InputLabel id="type">{Locale.label("settings.appEdit.tabType")}</InputLabel>
@@ -244,6 +278,15 @@ export function AppEdit({ currentTab: currentTabFromProps, updatedFunction = () 
         <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} maxWidth="md" fullWidth>
           <IconPicker currentIcon={currentTab?.icon} onUpdate={onSelect} onClose={() => setIsModalOpen(false)} />
         </Dialog>
+      )}
+
+      {/* Photo Gallery Modal */}
+      {showPhotoGallery && (
+        <GalleryModal
+          onClose={() => setShowPhotoGallery(false)}
+          onSelect={handlePhotoSelected}
+          aspectRatio={16 / 9}
+        />
       )}
     </>
   );

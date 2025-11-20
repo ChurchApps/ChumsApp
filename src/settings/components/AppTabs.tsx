@@ -60,19 +60,39 @@ export function AppTabs({ onSelected = () => {}, refreshKey = 0 }: Props) {
     <React.Fragment key={index}>
       <ListItem sx={{ py: 2 }}>
         <ListItemIcon>
-          <Box
-            sx={{
-              backgroundColor: 'primary.main',
-              borderRadius: '8px',
-              p: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white'
-            }}
-          >
-            <Icon sx={{ fontSize: 20 }}>{tab.icon}</Icon>
-          </Box>
+          {(tab as any)?.photo ? (
+            <Box
+              sx={{
+                borderRadius: '8px',
+                overflow: 'hidden',
+                width: 71,
+                height: 40,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <img
+                src={(tab as any).photo}
+                alt={tab.text || "Tab icon"}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                backgroundColor: 'primary.main',
+                borderRadius: '8px',
+                p: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white'
+              }}
+            >
+              <Icon sx={{ fontSize: 20 }}>{tab.icon}</Icon>
+            </Box>
+          )}
         </ListItemIcon>
         <ListItemText
           primary={

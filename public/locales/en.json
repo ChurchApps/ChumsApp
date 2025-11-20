@@ -1534,6 +1534,7 @@
     "appEdit": {
       "addTab": "Add Tab",
       "bible": "Bible",
+      "changeImage": "Change Image",
       "checkin": "Check-in",
       "deleteTab": "Delete Tab",
       "donation": "Donation",
@@ -1548,6 +1549,7 @@
       "page": "Page",
       "saveTab": "Save Tab",
       "saving": "Saving...",
+      "selectImage": "Select Image",
       "tabName": "Tab Name",
       "tabType": "Tab Type",
       "url": "URL",
