@@ -110,7 +110,9 @@ export const GroupSessions: React.FC<Props> = memo((props) => {
 
   const handleRemove = useCallback(
     (vs: VisitSessionInterface) => {
-      ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + vs.visit.personId, "AttendanceApi").then(loadAttendance);
+      ApiHelper.delete("/visitsessions?sessionId=" + session.id + "&personId=" + vs.visit.personId, "AttendanceApi").then(() => {
+        loadAttendance();
+      });
     },
     [session?.id, loadAttendance]
   );
