@@ -7,9 +7,7 @@ type Props = {
 };
 
 export function DraggableIcon(props: Props) {
-  const dragRef = React.useRef(null);
-
-  const [{ isDragging }, drag, preview] = useDrag(
+  const [{ isDragging }, drag] = useDrag(
     () => ({
       type: props.dndType,
       item: { elementType: props.elementType, data: props.data },
@@ -18,12 +16,10 @@ export function DraggableIcon(props: Props) {
     [props.data],
   );
 
-  drag(dragRef);
-
   const opacity = isDragging ? 0.5 : 1;
 
   return (
-    <div ref={dragRef} style={{ opacity, transition: "opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1)" }} className="dragButton">
+    <div ref={drag} style={{ opacity, transition: "opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1)", cursor: isDragging ? 'grabbing' : 'grab' }} className="dragButton">
       <Icon>open_with</Icon><br />
     </div>
   );

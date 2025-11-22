@@ -11,7 +11,6 @@ type Props = {
 
 export function DraggableWrapper(props: Props) {
   const { dndType, data, draggingCallback, onDoubleClick, children } = props;
-  const dragRef = React.useRef(null);
   const callbackRef = React.useRef(draggingCallback);
 
   useEffect(() => {
@@ -33,8 +32,6 @@ export function DraggableWrapper(props: Props) {
     [data, dndType]
   );
 
-  drag(dragRef);
-
   const opacity = isDragging ? 0.5 : 1;
 
   useEffect(() => {
@@ -42,7 +39,14 @@ export function DraggableWrapper(props: Props) {
   }, [isDragging]);
 
   return (
-    <div ref={dragRef} style={{ opacity, transition: "opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1)" }} className="dragButton" onDoubleClick={onDoubleClick} data-testid="draggable-wrapper" aria-label="Draggable item">
+    <div
+      ref={drag}
+      style={{ opacity, transition: "opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1)", cursor: isDragging ? 'grabbing' : 'grab' }}
+      className="dragButton"
+      onDoubleClick={onDoubleClick}
+      data-testid="draggable-wrapper"
+      aria-label="Draggable item"
+    >
       {children}
     </div>
   );
