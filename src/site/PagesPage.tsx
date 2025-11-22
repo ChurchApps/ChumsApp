@@ -161,15 +161,15 @@ export const PagesPage = () => {
                 <Switch onChange={handleSwitchChange} checked={showLogin ? checked : true} inputProps={{ 'aria-label': Locale.label("site.pagesPage.toggleLoginVisibility") }} data-testid="show-login-switch" />
               </Stack>
             </div>
-            <div>
-              <span style={{ float: "right" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8, minHeight: 36 }}>
+              <h3 style={{ margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", flex: 1, minWidth: 0 }}>{Locale.label("site.pagesPage.mainNavigation")}</h3>
+              <div style={{ flexShrink: 0, marginLeft: 8 }}>
                 <SmallButton icon="add" onClick={() => {
                   setEditLink({
-                    churchId: UserHelper.currentUserChurch.church.id, category: "website", linkType: "url", sort: 99, linkData: "", icon: "" 
-                  }); 
+                    churchId: UserHelper.currentUserChurch.church.id, category: "website", linkType: "url", sort: 99, linkData: "", icon: ""
+                  });
                 }} data-testid="add-navigation-link" />
-              </span>
-              <h3>{Locale.label("site.pagesPage.mainNavigation")}</h3>
+              </div>
             </div>
             <SiteNavigation links={links} refresh={loadData} select={(link) => { }} handleDrop={handleDrop} />
           </DndProvider>
