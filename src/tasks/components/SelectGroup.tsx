@@ -141,7 +141,7 @@ export const SelectGroup: React.FC<Props> = (props: Props) => {
             }}>
             <GroupIcon sx={{ fontSize: 48, color: "grey.400", mb: 1 }} />
             <Typography variant="body2" color="text.secondary">
-              {searchResults.length === 0 && searchText ? "No groups found matching your search" : "Search for a group to select"}
+              {searchResults.length === 0 && searchText ? Locale.label("tasks.selectGroup.noResults") : Locale.label("tasks.selectGroup.searchPrompt")}
             </Typography>
           </Paper>
         )

@@ -7,8 +7,8 @@ import type { BlockInterface, ElementInterface, PageInterface, SectionInterface,
 import { ApiHelper, ArrayHelper, UserHelper } from "../../helpers";
 import { Permissions } from "@churchapps/helpers";
 import { Section } from "./Section";
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import React from "react";
 import { Theme, DroppableArea } from "@churchapps/apphelper-website";
 import { SectionBlock } from "./SectionBlock";
@@ -59,7 +59,7 @@ export function ContentEditor(props: Props) {
     cleanCentered: ["main"],
     embed: ["main"],
     headerFooter: ["main", "siteFooter"],
-  }
+  };
 
   const churchSettings = props.config?.appearance || context?.userChurch?.settings || {};
 
@@ -74,7 +74,7 @@ export function ContentEditor(props: Props) {
       if (element.elements && element.elements.length > 0) element.elements = normalizeElements(element.elements);
       return element;
     });
-  }
+  };
 
   const loadDataInternal = () => {
     if (UserHelper.checkAccess(Permissions.contentApi.content.edit)) {
@@ -87,7 +87,7 @@ export function ContentEditor(props: Props) {
         setContainer(p);
       });
     }
-  }
+  };
 
   useEffect(loadDataInternal, [props.pageId, props.blockId]);
 
@@ -101,27 +101,28 @@ export function ContentEditor(props: Props) {
       section.sort = sort;
       section.zone = zone;
       section.pageId = (zone === "siteFooter") ? null : props.pageId;
-      ApiHelper.post("/sections", [section], "ContentApi").then(() => { loadDataInternal() });
-    }
-    else {
-      const sec = { sort, background: "#FFF", textColor: "dark", pageId: props.pageId, blockId: props.blockId, targetBlockId: data.blockId, zone: zone }
+      ApiHelper.post("/sections", [section], "ContentApi").then(() => { loadDataInternal(); });
+    } else {
+      const sec = {
+        sort, background: "#FFF", textColor: "dark", pageId: props.pageId, blockId: props.blockId, targetBlockId: data.blockId, zone: zone 
+      };
       if (sec.zone === "siteFooter") sec.pageId = null;
       setEditSection(sec);
     }
-  }
+  };
 
   const getAddSection = (s: number, zone: string) => {
     const sort = s;
     return (<DroppableArea key={"addSection_" + zone + "_" + s.toString()} text="Drop here to add section" accept={["section", "sectionBlock"]} onDrop={(data) => handleDrop(data, sort, zone)} />);
-  }
+  };
 
   const getSections = (zone: string) => {
-    const result: React.ReactElement[] = []
+    const result: React.ReactElement[] = [];
     result.push(getAddSection(0, zone));
     const sections = (zone === "block") ? container?.sections : ArrayHelper.getAll(container?.sections, "zone", zone);
     sections?.forEach(section => {
-      if (section.targetBlockId) result.push(<SectionBlock key={section.id} section={section} churchSettings={churchSettings} onEdit={handleSectionEdit} onMove={() => { loadDataInternal() }} />)
-      else result.push(<Section key={section.id} section={section} churchSettings={churchSettings} onEdit={handleSectionEdit} onMove={() => { loadDataInternal() }} church={context?.userChurch?.church} />)
+      if (section.targetBlockId) result.push(<SectionBlock key={section.id} section={section} churchSettings={churchSettings} onEdit={handleSectionEdit} onMove={() => { loadDataInternal(); }} />);
+      else result.push(<Section key={section.id} section={section} churchSettings={churchSettings} onEdit={handleSectionEdit} onMove={() => { loadDataInternal(); }} church={context?.userChurch?.church} />);
       result.push(getAddSection(section.sort + 0.1, zone));
     });
 
@@ -129,16 +130,16 @@ export function ContentEditor(props: Props) {
       result.push(<EmptyState key="empty" />);
     }
     return result;
-  }
+  };
 
   const handleSectionEdit = (s: SectionInterface, e: ElementInterface) => {
     if (s) {
       if (s.targetBlockId) navigate(`/site/blocks/${s.targetBlockId}`);
       else setEditSection(s);
     } else if (e) setEditElement(e);
-  }
+  };
 
-  let rightBarStyle: CSSProperties = {}
+  let rightBarStyle: CSSProperties = {};
 
   if (typeof window !== "undefined") {
     const editorBar = document.getElementById("editorBar");
@@ -159,7 +160,7 @@ export function ContentEditor(props: Props) {
     }
     if (props.onDone) props.onDone(url);
     else navigate(`/site/pages/preview/${props.pageId}`);
-  }
+  };
 
   useEffect(() => {
     const onScroll = (e: any) => { setScrollTop(e.target.documentElement.scrollTop); };
@@ -172,9 +173,9 @@ export function ContentEditor(props: Props) {
     const c = { ...container };
     c.sections.forEach(s => {
       realtimeUpdateElement(element, s.elements);
-    })
+    });
     setContainer(c);
-  }
+  };
 
   const realtimeUpdateElement = (element: ElementInterface, elements: ElementInterface[]) => {
     for (let i = 0; i < elements.length; i++) {
@@ -186,34 +187,37 @@ export function ContentEditor(props: Props) {
         realtimeUpdateElement(element, elements[i].elements);
       }
     }
-  }
+  };
 
   const getTheme = () => {
-    if (deviceType === "mobile") return createTheme({
-      breakpoints: {
-        values: { xs: 0, sm: 2000, md: 3000, lg: 4000, xl: 5000 },
-      },
-      components: {
-        MuiTextField: { defaultProps: { margin: "normal" } },
-        MuiFormControl: { defaultProps: { margin: "normal" } }
-      }
-    });
-    else return createTheme({
-      components: {
-        MuiTextField: { defaultProps: { margin: "normal" } },
-        MuiFormControl: { defaultProps: { margin: "normal" } }
-      }
-    });
-  }
+    if (deviceType === "mobile") {
+      return createTheme({
+        breakpoints: {
+          values: { xs: 0, sm: 2000, md: 3000, lg: 4000, xl: 5000 },
+        },
+        components: {
+          MuiTextField: { defaultProps: { margin: "normal" } },
+          MuiFormControl: { defaultProps: { margin: "normal" } }
+        }
+      });
+    } else {
+      return createTheme({
+        components: {
+          MuiTextField: { defaultProps: { margin: "normal" } },
+          MuiFormControl: { defaultProps: { margin: "normal" } }
+        }
+      });
+    }
+  };
 
   const getZoneBox = (sections: SectionInterface[], name: string, keyName: string) => (
     <ZoneBox sections={sections} name={name} keyName={keyName} deviceType={deviceType}>
       {getSections(keyName)}
     </ZoneBox>
-  )
+  );
 
   const getZoneBoxes = () => {
-    let result: any[] = [];
+    const result: any[] = [];
     let idx = 0;
     if (props.pageId) {
       const page = container as PageInterface;
@@ -227,8 +231,8 @@ export function ContentEditor(props: Props) {
       const block = container as BlockInterface;
       if (block) result.push(getZoneBox((container as BlockInterface)?.sections, "Block Preview", "block"));
     }
-    return <>{result}</>
-  }
+    return <>{result}</>;
+  };
 
 
 
@@ -299,10 +303,14 @@ export function ContentEditor(props: Props) {
       <div style={{ marginTop: 0, paddingTop: 0 }}>
         {scrollTop > 150 && (
           <>
-            <div style={{ position: "fixed", bottom: '30px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" }}>
+            <div style={{
+              position: "fixed", bottom: '30px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" 
+            }}>
               <DroppableScroll key={"scrollDown"} text={"Scroll Down"} direction="down" />
             </div>
-            <div style={{ position: "fixed", top: '50px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" }}>
+            <div style={{
+              position: "fixed", top: '50px', left: "50%", transform: "translateX(-50%)", zIndex: 1000, width: "min(600px, 80%)", maxWidth: "600px" 
+            }}>
               <DroppableScroll key={"scrollUp"} text={"Scroll Up"} direction="up" />
             </div>
           </>

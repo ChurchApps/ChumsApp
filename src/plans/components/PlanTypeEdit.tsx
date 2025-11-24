@@ -25,7 +25,7 @@ export const PlanTypeEdit: React.FC<Props> = ({ planType, onClose }) => {
       
       onClose();
     } catch (error: any) {
-      setErrors([error.message || "An error occurred while saving"]);
+      setErrors([error.message || Locale.label("plans.planTypeEdit.errorSaving")]);
     }
     
     setLoading(false);
@@ -37,7 +37,7 @@ export const PlanTypeEdit: React.FC<Props> = ({ planType, onClose }) => {
 
   const validate = () => {
     const newErrors: string[] = [];
-    if (!current.name?.trim()) newErrors.push("Plan type name is required");
+    if (!current.name?.trim()) newErrors.push(Locale.label("plans.planTypeEdit.nameRequired"));
     setErrors(newErrors);
     return newErrors.length === 0;
   };
@@ -48,17 +48,17 @@ export const PlanTypeEdit: React.FC<Props> = ({ planType, onClose }) => {
 
   return (
     <Dialog open={true} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{current.id ? "Edit" : "Add"} Plan Type</DialogTitle>
+      <DialogTitle>{current.id ? Locale.label("plans.planTypeEdit.edit") : Locale.label("plans.planTypeEdit.add")} {Locale.label("plans.planTypeEdit.planType")}</DialogTitle>
       <DialogContent>
         <Box sx={{ pt: 1 }}>
           <ErrorMessages errors={errors} />
           
           <InputBox
             headerIcon="assignment"
-            headerText="Plan Type Details">
+            headerText={Locale.label("plans.planType.details")}>
             <TextField
               fullWidth
-              label="Plan Type Name"
+              label={Locale.label("plans.planTypeEdit.planTypeName")}
               value={current.name || ""}
               onChange={(e) => handleChange("name", e.target.value)}
               required
@@ -69,13 +69,13 @@ export const PlanTypeEdit: React.FC<Props> = ({ planType, onClose }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} disabled={loading}>
-          Cancel
+          {Locale.label("common.cancel")}
         </Button>
-        <Button 
-          onClick={handleSave} 
-          variant="contained" 
+        <Button
+          onClick={handleSave}
+          variant="contained"
           disabled={loading || !current.name?.trim()}>
-          Save
+          {Locale.label("common.save")}
         </Button>
       </DialogActions>
     </Dialog>

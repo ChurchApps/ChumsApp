@@ -46,7 +46,7 @@ export const Links: React.FC<Props> = (props) => {
 
   const handleAdd = () => {
     const link: LinkInterface = {
-      churchId: UserHelper.currentUserChurch.church.id, sort: links.length, text: "Home", url: "/", linkType: "url", linkData: "", category: cat, icon: "" 
+      churchId: UserHelper.currentUserChurch.church.id, sort: links.length, text: Locale.label("sermons.liveStreamTimes.navigationLinks.home"), url: "/", linkType: "url", linkData: "", category: cat, icon: "" 
     };
     setCurrentLink(link);
   };

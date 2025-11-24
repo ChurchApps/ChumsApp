@@ -227,7 +227,7 @@ export const SermonEdit: React.FC<Props> = (props) => {
             <FormControl fullWidth>
               <InputLabel>{Locale.label("sermons.playlist")}</InputLabel>
               <Select label={Locale.label("sermons.playlist")} name="playlistId" value={currentSermon?.playlistId || ""} onChange={handleChange} data-testid="sermon-playlist-select" aria-label="Select playlist">
-                <MenuItem value="">None</MenuItem>
+                <MenuItem value="">{Locale.label("sermons.sermonEdit.none")}</MenuItem>
                 {getPlaylists()}
               </Select>
             </FormControl>

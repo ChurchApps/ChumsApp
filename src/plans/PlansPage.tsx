@@ -12,7 +12,7 @@ export const PlansPage = () => {
 
   return (
     <>
-      <PageHeader icon={<AssignmentIcon />} title={Locale.label("plans.plansPage.selMin")} subtitle="Manage your ministry teams, service plans, and team assignments">
+      <PageHeader icon={<AssignmentIcon />} title={Locale.label("plans.plansPage.selMin")} subtitle={Locale.label("plans.plansPage.subtitle")}>
         <Button
           variant="outlined"
           startIcon={<AddIcon />}
@@ -25,7 +25,7 @@ export const PlansPage = () => {
               backgroundColor: "rgba(255,255,255,0.1)",
             },
           }}>
-          Add Ministry
+          {Locale.label("plans.plansPage.addMinistry")}
         </Button>
       </PageHeader>
 

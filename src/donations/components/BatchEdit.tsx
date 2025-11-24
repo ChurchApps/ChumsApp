@@ -20,6 +20,8 @@ export const BatchEdit = memo((props: Props) => {
       ...batch,
       batchDate: batch.batchDate ? DateHelper.formatHtml5Date(batch.batchDate) : null,
     };
+    
+    if (batch.id) batchToSave.id = batch.id;
     return ApiHelper.post("/donationbatches", [batchToSave], "GivingApi").then(() => props.updatedFunction());
   }, [batch, props.updatedFunction]);
 
@@ -49,7 +51,7 @@ export const BatchEdit = memo((props: Props) => {
           b.name = e.currentTarget.value;
           break;
         case "date":
-          b.batchDate = new Date(e.currentTarget.value);
+          b.batchDate = new Date(e.currentTarget.value + "T00:00:00");
           if (isNaN(b.batchDate.getTime())) b.batchDate = null;
           break;
       }

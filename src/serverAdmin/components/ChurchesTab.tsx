@@ -34,7 +34,6 @@ export const ChurchesTab = () => {
   };
 
   const getChurchRows = () => {
-    console.log("getChurchRows");
     if (churches === null) return;
     const result: JSX.Element[] = [];
     churches.forEach((c, index) => {
@@ -69,7 +68,7 @@ export const ChurchesTab = () => {
     result.unshift(
       <tr>
         <th>{Locale.label("serverAdmin.adminPage.church")}</th>
-        <th>Location</th>
+        <th>{Locale.label("serverAdmin.adminPage.location")}</th>
         <th>{Locale.label("serverAdmin.adminPage.regist")}</th>
         <th>{Locale.label("serverAdmin.adminPage.act")}</th>
       </tr>
@@ -80,7 +79,9 @@ export const ChurchesTab = () => {
   const getManageAccessLink = (church: ChurchInterface) => {
     let result: JSX.Element = null;
     result = (
-      <button type="button" data-churchid={church.id} onClick={handleEditAccess} style={{ marginRight: 40, background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
+      <button type="button" data-churchid={church.id} onClick={handleEditAccess} style={{
+        marginRight: 40, background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" 
+      }}>
         {church.name}
       </button>
     );

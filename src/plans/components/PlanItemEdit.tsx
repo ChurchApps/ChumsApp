@@ -19,7 +19,6 @@ export const PlanItemEdit = (props: Props) => {
     const pi = { ...planItem } as PlanItemInterface;
     if (isNaN(pi.seconds)) pi.seconds = 0;
     const value = e.target.value;
-    console.log(e.target.name, value, parseInt(value) * 60, pi.seconds % 60);
     switch (e.target.name) {
       case "label":
         pi.label = value;
@@ -52,10 +51,9 @@ export const PlanItemEdit = (props: Props) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getHeaderText = () => {
-    let result = "Edit";
-    if (planItem?.itemType === "header") result += " Header";
-    else if (planItem?.itemType === "arrangementKey") result += " Song";
-    return result;
+    if (planItem?.itemType === "header") return Locale.label("plans.planItemEdit.editHeader");
+    else if (planItem?.itemType === "arrangementKey") return Locale.label("plans.planItemEdit.editSong");
+    return Locale.label("plans.planItemEdit.edit");
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +63,7 @@ export const PlanItemEdit = (props: Props) => {
   const handleSearch = () => {
     setErrors([]);
     if (searchText === "") {
-      setErrors(["Please enter a search term."]);
+      setErrors([Locale.label("plans.planItemEdit.enterSearch")]);
       return;
     } else {
       ApiHelper.get("/songs/search?q=" + encodeURIComponent(searchText), "ContentApi").then((data) => setSongs(data));
@@ -122,7 +120,7 @@ export const PlanItemEdit = (props: Props) => {
           <td>
             {sd.title} - {sd.artist}
             <div style={{ paddingLeft: 15 }}>
-              <b>Key:</b> {links}
+              <b>{Locale.label("plans.planItemEdit.key")}:</b> {links}
             </div>
           </td>
         </tr>
@@ -181,7 +179,7 @@ export const PlanItemEdit = (props: Props) => {
         <TextField
           multiline
           fullWidth
-          label="Description"
+          label={Locale.label("plans.planItemEdit.description")}
           id="description"
           name="description"
           type="text"
@@ -196,7 +194,7 @@ export const PlanItemEdit = (props: Props) => {
           <Grid size={{ xs: 6 }}>
             <TextField
               fullWidth
-              label="Minutes"
+              label={Locale.label("plans.planItemEdit.minutes")}
               name="minutes"
               type="number"
               value={Math.floor(planItem?.seconds / 60)}
@@ -208,7 +206,7 @@ export const PlanItemEdit = (props: Props) => {
           <Grid size={{ xs: 6 }}>
             <TextField
               fullWidth
-              label="Seconds"
+              label={Locale.label("plans.planItemEdit.seconds")}
               name="seconds"
               type="number"
               value={planItem?.seconds % 60}

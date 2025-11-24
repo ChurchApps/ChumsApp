@@ -132,7 +132,7 @@ export const ActionEdit = (props: Props) => {
                 startAdornment={<TaskIcon sx={{ color: "action.active", ml: 1, mr: 0.5 }} />}>
                 <MenuItem value="task">{Locale.label("tasks.actionEdit.taskAssign")}</MenuItem>
               </Select>
-              <FormHelperText>What type of action should be performed?</FormHelperText>
+              <FormHelperText>{Locale.label("tasks.actionEdit.actTypeHelp")}</FormHelperText>
             </FormControl>
 
             <TextField

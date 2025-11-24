@@ -16,7 +16,7 @@ export const TasksPage = () => {
 
   return (
     <>
-      <PageHeader icon={<TaskIcon />} title={Locale.label("tasks.tasksPage.tasks")} subtitle="Manage tasks, assignments, and automated workflows" />
+      <PageHeader icon={<TaskIcon />} title={Locale.label("tasks.tasksPage.tasks")} subtitle={Locale.label("tasks.tasksPage.subtitle")} />
       <TasksNavigation selectedTab="tasks" onTabChange={handleTabChange} />
 
       {/* Task List */}

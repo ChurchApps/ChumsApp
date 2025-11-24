@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  FormControl, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography 
+  FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, Tooltip, Typography
 } from "@mui/material";
 import { type GenericSettingInterface, type GroupInterface } from "@churchapps/helpers";
 import { ApiHelper, Locale, UniqueIdHelper } from "@churchapps/apphelper";
@@ -14,13 +14,17 @@ export const DirectoryApproveSettingsEdit: React.FC<Props> = (props) => {
   const [groups, setGroups] = React.useState<GroupInterface[]>(null);
   const [selectedGroupId, setSelectedGroupId] = React.useState<string>("");
   const [setting, setSetting] = React.useState<GenericSettingInterface>(null);
+  const [directoryVisibility, setDirectoryVisibility] = React.useState<string>("Members");
+  const [visibilitySetting, setVisibilitySetting] = React.useState<GenericSettingInterface>(null);
 
   const save = () => {
-    // if (selectedGroupId !== "") {
-    const s: GenericSettingInterface = setting === null ? { churchId: props.churchId, public: 1, keyName: "directoryApprovalGroupId" } : setting;
-    s.value = selectedGroupId;
-    ApiHelper.post("/settings", [s], "MembershipApi");
-    // }
+    const approvalSetting: GenericSettingInterface = setting === null ? { churchId: props.churchId, public: 1, keyName: "directoryApprovalGroupId" } : setting;
+    approvalSetting.value = selectedGroupId;
+
+    const visibilitySett: GenericSettingInterface = visibilitySetting === null ? { churchId: props.churchId, public: 1, keyName: "directoryVisibility" } : visibilitySetting;
+    visibilitySett.value = directoryVisibility;
+
+    ApiHelper.post("/settings", [approvalSetting, visibilitySett], "MembershipApi");
   };
 
   const checkSave = () => {
@@ -39,10 +43,17 @@ export const DirectoryApproveSettingsEdit: React.FC<Props> = (props) => {
     const groups = await ApiHelper.get("/groups/tag/standard", "MembershipApi");
     setGroups(groups);
     const publicSettings = await ApiHelper.get("/settings", "MembershipApi");
+
     const approvalGroupSetting = publicSettings.filter((d: GenericSettingInterface) => d.keyName === "directoryApprovalGroupId");
     if (approvalGroupSetting.length > 0) {
       setSetting(approvalGroupSetting[0]);
       setSelectedGroupId(approvalGroupSetting[0].value);
+    }
+
+    const directorySetting = publicSettings.filter((d: GenericSettingInterface) => d.keyName === "directoryVisibility");
+    if (directorySetting.length > 0) {
+      setVisibilitySetting(directorySetting[0]);
+      setDirectoryVisibility(directorySetting[0].value || "Members");
     }
   };
 
@@ -61,19 +72,40 @@ export const DirectoryApproveSettingsEdit: React.FC<Props> = (props) => {
           </Icon>
         </Tooltip>
       </Stack>
-      <FormControl fullWidth>
-        <InputLabel id="groups">{Locale.label("settings.directoryApprovalSettingsEdit.groups")}</InputLabel>
-        <Select labelId="groups" name="groups" label={Locale.label("settings.directoryApprovalSettingsEdit.groups")} value={selectedGroupId} onChange={(e) => setSelectedGroupId(e.target.value)}>
-          <MenuItem value="">{Locale.label("settings.directoryApprovalSettingsEdit.none")}</MenuItem>
-          {groups?.length > 0 ? (
-            getFields()
-          ) : (
-            <MenuItem value="" disabled>
-              {Locale.label("settings.directoryApprovalSettingsEdit.noGroups")}
-            </MenuItem>
-          )}
-        </Select>
-      </FormControl>
+      <Grid container spacing={{ xs: 0, sm: 1, md: 2 }}>
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <FormControl fullWidth>
+            <InputLabel id="groups">{Locale.label("settings.directoryApprovalSettingsEdit.groups")}</InputLabel>
+            <Select labelId="groups" name="groups" label={Locale.label("settings.directoryApprovalSettingsEdit.groups")} value={selectedGroupId} onChange={(e) => setSelectedGroupId(e.target.value)}>
+              <MenuItem value="">{Locale.label("settings.directoryApprovalSettingsEdit.none")}</MenuItem>
+              {groups?.length > 0 ? (
+                getFields()
+              ) : (
+                <MenuItem value="" disabled>
+                  {Locale.label("settings.directoryApprovalSettingsEdit.noGroups")}
+                </MenuItem>
+              )}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <FormControl fullWidth>
+            <InputLabel id="directoryVisibility">{Locale.label("settings.directoryVisibility.label")}</InputLabel>
+            <Select
+              fullWidth
+              labelId="directoryVisibility"
+              label={Locale.label("settings.directoryVisibility.label")}
+              name="directoryVisibility"
+              value={directoryVisibility}
+              onChange={(e) => setDirectoryVisibility(e.target.value)}>
+              <MenuItem value="Staff">{Locale.label("settings.directoryVisibility.staff")}</MenuItem>
+              <MenuItem value="Members">{Locale.label("settings.directoryVisibility.members")}</MenuItem>
+              <MenuItem value="Regular Attendees">{Locale.label("settings.directoryVisibility.regularAttendees")}</MenuItem>
+              <MenuItem value="Everyone">{Locale.label("settings.directoryVisibility.everyone")}</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
     </div>
   );
 };

@@ -9,7 +9,6 @@ export class EnvironmentHelper {
 
   static init = async () => {
     const stage = process.env.REACT_APP_STAGE;
-    console.log(`Environment stage: ${stage}`);
 
     switch (stage) {
       case "staging":
@@ -55,7 +54,6 @@ export class EnvironmentHelper {
     this.initStaging();
     EnvironmentHelper.LessonsApi = process.env.REACT_APP_LESSONS_API || EnvironmentHelper.LessonsApi;
     EnvironmentHelper.B1Url = process.env.REACT_APP_B1_WEBSITE_URL || EnvironmentHelper.B1Url;
-    console.log("LessonsAPI is", EnvironmentHelper.LessonsApi, process.env.REACT_APP_LESSONS_API);
   };
 
   //NOTE: None of these values are secret.

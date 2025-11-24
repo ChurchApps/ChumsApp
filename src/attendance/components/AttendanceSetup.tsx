@@ -109,15 +109,15 @@ export const AttendanceSetup = memo(() => {
   );
 
   const handleAddCampus = useCallback(() => {
-    selectCampus({ id: "", name: "New Campus" });
+    selectCampus({ id: "", name: Locale.label("attendance.attendanceSetup.newCampus") });
   }, [selectCampus]);
 
   const handleAddService = useCallback(() => {
-    selectService({ id: "", campusId: "", name: "New Service" });
+    selectService({ id: "", campusId: "", name: Locale.label("attendance.attendanceSetup.newService") });
   }, [selectService]);
 
   const handleAddServiceTime = useCallback(() => {
-    selectServiceTime({ id: "", serviceId: "", name: "New Service Time" });
+    selectServiceTime({ id: "", serviceId: "", name: Locale.label("attendance.attendanceSetup.newServiceTime") });
   }, [selectServiceTime]);
 
   const editLinks = useMemo(
@@ -163,7 +163,7 @@ export const AttendanceSetup = memo(() => {
                 {Locale.label("attendance.attendancePage.groupAttMsg")}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Set up campuses, services, and service times to get started
+                {Locale.label("attendance.attendanceSetup.setupMessage")}
               </Typography>
             </Stack>
           </TableCell>
@@ -311,7 +311,7 @@ export const AttendanceSetup = memo(() => {
               pl: 2,
               "&:hover": { color: "#1565C0", backgroundColor: "rgba(21, 101, 192, 0.04)" },
             }}>
-            Add Service
+            {Locale.label("attendance.attendanceSetup.addService")}
           </Button>
         </TableCell>
         <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
@@ -336,7 +336,7 @@ export const AttendanceSetup = memo(() => {
               pl: 4,
               "&:hover": { color: "#1565C0", backgroundColor: "rgba(21, 101, 192, 0.04)" },
             }}>
-            Add Service Time
+            {Locale.label("attendance.attendanceSetup.addServiceTime")}
           </Button>
         </TableCell>
         <TableCell sx={{ py: 0.5, border: 0 }}></TableCell>
@@ -384,10 +384,12 @@ export const AttendanceSetup = memo(() => {
     });
 
     unassignedGroups.forEach((g) => {
-      rows.push(getRow({ name: "Unassigned" }, undefined, undefined, g, g.id.toString()));
+      rows.push(getRow({ name: Locale.label("attendance.attendanceSetup.unassigned") }, undefined, undefined, g, g.id.toString()));
     });
     return rows;
-  }, [attendance.data, getGroups, compare, unassignedGroups, selectCampus, selectService, selectServiceTime, handleAddService, handleAddServiceTime]);
+  }, [
+    attendance.data, getGroups, compare, unassignedGroups, selectCampus, selectService, selectServiceTime, handleAddService, handleAddServiceTime
+  ]);
 
   const table = useMemo(() => {
     if (attendance.isLoading) return <Loading />;

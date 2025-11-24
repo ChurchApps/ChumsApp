@@ -23,8 +23,8 @@ export function CreatePerson({ onCreate = () => {}, showInModal = false, ...prop
 
   const validate = () => {
     const result = [];
-    if (!person.name?.first) result.push("Please enter a first name.");
-    if (!person.name?.last) result.push("Please enter a last name.");
+    if (!person.name?.first) result.push(Locale.label("common.createPerson.validate.firstName"));
+    if (!person.name?.last) result.push(Locale.label("common.createPerson.validate.lastName"));
     setErrors(result);
     return result.length === 0;
   };
@@ -81,13 +81,18 @@ export function CreatePerson({ onCreate = () => {}, showInModal = false, ...prop
     if (validate()) {
       if (person.contactInfo.email && (person.contactInfo.email?.trim() !== undefined || person.contactInfo.email?.trim() !== "")) {
         if (!validateEmail(person.contactInfo.email)) {
-          setErrors(["Please enter a valid email address."]);
+          setErrors([Locale.label("common.createPerson.validate.validEmail")]);
         } else {
           const existingPerson = await checkExistingEmail();
           if (existingPerson) {
             if (
               window.confirm(
-                `${existingPerson.name.display} already exists with an email of ${existingPerson.contactInfo.email}. Are you sure you wish to add ${person.name.first} ${person.name.last}?`
+                Locale.label("common.createPerson.confirmDuplicate", {
+                  existingName: existingPerson.name.display,
+                  existingEmail: existingPerson.contactInfo.email,
+                  firstName: person.name.first,
+                  lastName: person.name.last
+                })
               )
             ) {
               handleSave();

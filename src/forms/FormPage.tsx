@@ -58,7 +58,7 @@ export const FormPage = () => {
 
   return form.data?.id ? (
     <>
-      <PageHeader icon={<DescriptionIcon />} title={form.data.name} subtitle="Form configuration and submissions" />
+      <PageHeader icon={<DescriptionIcon />} title={form.data.name} subtitle={Locale.label("forms.formPage.subtitleConfig")} />
       <FormNavigation selectedTab={selectedTab} onTabChange={setSelectedTab} form={form.data} memberPermission={memberPermission.data} />
 
       {/* Tab Content */}

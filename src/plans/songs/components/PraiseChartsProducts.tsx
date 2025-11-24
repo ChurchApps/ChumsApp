@@ -52,8 +52,6 @@ export const PraiseChartsProducts = (props: Props) => {
       }
     });
 
-    console.log("Root Excluded Skus", rootExcludedSkus);
-
     const result: any[] = [];
     allProducts.forEach((product: any) => {
       if (!rootExcludedSkus.includes(product.sku)) {
@@ -169,11 +167,7 @@ export const PraiseChartsProducts = (props: Props) => {
     );
 
     if (expandedSkus.includes(product.sku)) {
-      const items = [result];
-      product.children?.forEach((child: any) => {
-        items.push(getProductRow(child, indent + 1) as JSX.Element);
-      });
-      return items;
+      return [result, ...(product.children?.map((child: any) => getProductRow(child, indent + 1)) || [])];
     }
 
     return result;

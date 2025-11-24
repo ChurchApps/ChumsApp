@@ -38,15 +38,12 @@ export const PlanValidation = (props: Props) => {
     const conflicts: { person: PersonInterface; blockout: BlockoutDateInterface }[] = [];
     props.people.forEach((person) => {
       const assignments: AssignmentInterface[] = ArrayHelper.getAll(props.assignments, "personId", person.id);
-      if (person.id === "bTrK6d0kvF6") console.log("ASSIGNMENTS", assignments);
       const positionIds = ArrayHelper.getIds(assignments, "positionId");
       const positions: PositionInterface[] = ArrayHelper.getAllArray(props.positions, "id", positionIds);
-      if (person.id === "bTrK6d0kvF6") console.log("POSITIONS", positions);
 
       const times: TimeInterface[] = [];
       positions.forEach((p) => {
         const posTimes = props.times.filter((t) => t?.teams?.indexOf(p.categoryName) > -1);
-        if (person.id === "bTrK6d0kvF6") console.log("TIMES", posTimes, p, props.times);
         times.push(...posTimes);
       });
 
@@ -54,7 +51,6 @@ export const PlanValidation = (props: Props) => {
       blockouts.forEach((b) => {
         b.endDate = new Date(b.endDate);
         b.endDate.setHours(23, 59, 59, 999);
-        console.log("CHECKING BLOCKOUT", b, times);
         let conflict = false;
         times.forEach((t) => {
           if (new Date(b.startDate) < new Date(t.endTime) && new Date(b.endDate) > new Date(t.startTime)) conflict = true;

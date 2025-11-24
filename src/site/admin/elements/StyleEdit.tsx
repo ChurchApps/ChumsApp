@@ -1,5 +1,5 @@
 import type { StyleOption } from "../../../helpers";
-import { InputBox } from "@churchapps/apphelper";
+import { InputBox, Locale } from "@churchapps/apphelper";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { ColorPicker } from "../ColorPicker";
@@ -23,28 +23,28 @@ export const StyleEdit: React.FC<Props> = (props) => {
 
     switch (field.type) {
       case "text":
-        result = <TextField fullWidth size="small" label={field.label} name="value" value={value} onChange={(e:any) => { setValue(e.target.value) }}  />
+        result = <TextField fullWidth size="small" label={field.label} name="value" value={value} onChange={(e:any) => { setValue(e.target.value); }} />;
         break;
       case "select":
-        result = <FormControl size="small" fullWidth style={{marginTop:10}}>
+        result = <FormControl size="small" fullWidth style={{ marginTop: 10 }}>
           <InputLabel>{field.label}</InputLabel>
-          <Select size="small" fullWidth label={field.label} name="value" value={value} onChange={(e) => { setValue(e.target.value) }}>
+          <Select size="small" fullWidth label={field.label} name="value" value={value} onChange={(e) => { setValue(e.target.value); }}>
             {field.options.map(o => <MenuItem value={o}>{o}</MenuItem>)}
           </Select>
-        </FormControl>
+        </FormControl>;
         break;
       case "px":
-        result = <TextField fullWidth style={{marginTop:10}} size="small" label={field.label + " - px"} name="value" value={value} onChange={(e:any) => { setValue(e.target.value) }} type="number" />
+        result = <TextField fullWidth style={{ marginTop: 10 }} size="small" label={field.label + " - px"} name="value" value={value} onChange={(e:any) => { setValue(e.target.value); }} type="number" />;
         break;
       case "color":
-        result = <ColorPicker color={value} updatedCallback={(c) => setValue(c)} globalStyles={null} />
+        result = <ColorPicker color={value} updatedCallback={(c) => setValue(c)} globalStyles={null} />;
         break;
       case "text-shadow":
-        result = <StyleTextShadow value={value} onChange={(v) => setValue(v)} />
+        result = <StyleTextShadow value={value} onChange={(v) => setValue(v)} />;
         break;
     }
     return result;
-  }
+  };
 
   useEffect(() => {
     if (name===props.style.name) setValue(props.style.value.replace("px", ""));
@@ -55,16 +55,16 @@ export const StyleEdit: React.FC<Props> = (props) => {
     let storedValue = value;
     if (field.type==="px") storedValue = value + "px";
     props.onSave(props.style.platform, name, storedValue);
-  }
+  };
 
-  return <InputBox saveFunction={handleSave} saveText="Update" headerText="Edit Style" cancelFunction={() => { props.onSave("", "", "") }} deleteFunction={(props.style.name) ? () => { props.onSave(props.style.platform, props.style.name, null )} : null}>
+  return <InputBox saveFunction={handleSave} saveText={Locale.label("common.update")} headerText={Locale.label("site.style.editStyle")} cancelFunction={() => { props.onSave("", "", ""); }} deleteFunction={(props.style.name) ? () => { props.onSave(props.style.platform, props.style.name, null ); } : null}>
     <FormControl size="small" fullWidth>
-      <InputLabel>Property</InputLabel>
-      <Select size="small" fullWidth label="Property" name="name" value={name} onChange={(e) => {setName(e.target.value)}}>
+      <InputLabel>{Locale.label("site.styleEdit.property")}</InputLabel>
+      <Select size="small" fullWidth label={Locale.label("site.styleEdit.property")} name="name" value={name} onChange={(e) => { setName(e.target.value); }}>
         {props.fieldOptions.map(o => <MenuItem value={o.key}>{o.label}</MenuItem>)}
       </Select>
     </FormControl>
     {getInputField()}
-  </InputBox>
+  </InputBox>;
 
-}
+};

@@ -20,7 +20,7 @@ export class StyleHelper {
   };
 
   private static getStyle = (id:string, styles:any): string | undefined => {
-    let result:string[] = [];
+    const result:string[] = [];
     Object.keys(styles).forEach((key:string) => {
       const val = styles[key];
       const noQuote = val.endsWith("px") || val.endsWith("em") || val.endsWith("pt") || val.startsWith("#") || val.startsWith("--");
@@ -29,7 +29,7 @@ export class StyleHelper {
     });
     if (result.length > 0) return `#${id} { ${result.join(" ")} }`;
     return undefined;
-  }
+  };
 
   private static getSectionCss = (section:SectionInterface, all:string[], desktop:string[], mobile:string[]) => {
     const id = (section.answers?.sectionId) ? "section-" + section.answers?.sectionId : "section-" + section.id;
@@ -47,7 +47,7 @@ export class StyleHelper {
       const style = this.getStyle(id, section.styles.mobile);
       if (style) mobile.push(style);
     }
-  }
+  };
 
   private static getElementCss = (element:ElementInterface, all:string[], desktop:string[], mobile:string[]) => {
     if (element.styles?.all) {
@@ -65,12 +65,12 @@ export class StyleHelper {
     if (element.elements?.length > 0) {
       element.elements.forEach((e:ElementInterface) => this.getElementCss(e, all, desktop, mobile));
     }
-  }
+  };
 
   static getAllStyles = (sections: SectionInterface[]) => {
-    let all:string[] = [];
-    let desktop:string[] = [];
-    let mobile:string[] = [];
+    const all:string[] = [];
+    const desktop:string[] = [];
+    const mobile:string[] = [];
 
     sections?.forEach((section:SectionInterface) => {
       this.getSectionCss(section, all, desktop, mobile);
@@ -79,14 +79,15 @@ export class StyleHelper {
       });
     });
 
-    return {all, desktop, mobile};
-  }
+    return { all, desktop, mobile };
+  };
 
   static getCss = (sections: SectionInterface[], forceDevice?:string) => {
-    const {all, desktop, mobile} = this.getAllStyles(sections);
+    const { all, desktop, mobile } = this.getAllStyles(sections);
     if (forceDevice === "desktop") return all.join("\n") + "\n" + desktop.join("\n");
     else if (forceDevice === "mobile") return all.join("\n") + "\n" + mobile.join("\n");
-    else return `
+    else {
+      return `
       ${all.join("\n")}
       @media (min-width: 768px) {
         ${desktop.join("\n")}
@@ -94,12 +95,13 @@ export class StyleHelper {
       @media (max-width: 767px) {
         ${mobile.join("\n")}
       }`;
-  }
+    }
+  };
 
 
   static getStyles = (element: ElementInterface | SectionInterface) => {
-    let result:any = {};
+    const result:any = {};
     return result;
-  }
+  };
 
 }

@@ -1,5 +1,6 @@
 import { Grid, TextField } from "@mui/material";
 import React from "react";
+import { Locale } from "@churchapps/apphelper";
 
 interface Props { totalSeconds: number, updatedFunction?: (totalSeconds: number) => void }
 
@@ -20,10 +21,10 @@ export const Duration: React.FC<Props> = (props) => {
   return (
     <Grid container spacing={3}>
       <Grid size={{ xs: 6 }}>
-        <TextField fullWidth label="Minutes" type="number" InputProps={{ inputProps: { min: 0, step: 1, max: 59 } }} name="min" value={min || ""} onChange={handleChange} />
+        <TextField fullWidth label={Locale.label("sermons.duration.minutes")} type="number" InputProps={{ inputProps: { min: 0, step: 1, max: 59 } }} name="min" value={min || ""} onChange={handleChange} />
       </Grid>
       <Grid size={{ xs: 6 }}>
-        <TextField fullWidth label="Seconds" type="number" InputProps={{ inputProps: { min: 0, step: 1, max: 59 } }} name="sec" value={sec || ""} onChange={handleChange} />
+        <TextField fullWidth label={Locale.label("sermons.duration.seconds")} type="number" InputProps={{ inputProps: { min: 0, step: 1, max: 59 } }} name="sec" value={sec || ""} onChange={handleChange} />
       </Grid>
     </Grid>
   );

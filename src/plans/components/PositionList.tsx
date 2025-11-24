@@ -56,7 +56,9 @@ export const PositionList = (props: Props) => {
           <button
             type="button"
             onClick={() => props.onAssignmentSelect(position, assignment || { positionId: position.id })}
-            style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}>
+            style={{
+              background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" 
+            }}>
             {wrappedImage}
             {person.name.display}
           </button>

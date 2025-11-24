@@ -21,19 +21,17 @@ export class PageHelper {
     customPages.forEach((p: any) => {
       const page: PageLink = { pageId: p.id, title: p.title, url: p.url, custom: true };
       if (p.url.indexOf("/groups") === -1) {
-        let existing = result.find((r) => r.url === p.url);
-        if (existing) { existing.title = p.title; existing.custom = true; existing.pageId = p.id; }
-        else result.push(page);
+        const existing = result.find((r) => r.url === p.url);
+        if (existing) { existing.title = p.title; existing.custom = true; existing.pageId = p.id; } else result.push(page);
       } else {
-        let existing = groupPage.children.find((r) => r.url === p.url);
-        if (existing) { existing.title = p.title; existing.custom = true; existing.pageId = p.id; }
-        else groupPage.children.push(page);
+        const existing = groupPage.children.find((r) => r.url === p.url);
+        if (existing) { existing.title = p.title; existing.custom = true; existing.pageId = p.id; } else groupPage.children.push(page);
       }
     });
     groupPage.children = PageHelper.sortLevel(groupPage.children);
     result = PageHelper.sortLevel(result);
     return result;
-  }
+  };
 
   static flatten = (tree: PageLink[]) => {
     let result: PageLink[] = [];
@@ -45,7 +43,7 @@ export class PageHelper {
       }
     });
     return result;
-  }
+  };
 
   static getTemplatePages = async () => {
     const templatePages: PageLink[] = [
@@ -54,7 +52,7 @@ export class PageHelper {
       { title: "Sermons", url: "/sermons", custom: false },
       { title: "Stream", url: "/stream", custom: false },
       { title: "Verse of the Day", url: "/votd", custom: false }
-    ]
+    ];
 
     const groupPage: PageLink = { title: "Groups", url: "/groups", custom: false, children: [] };
     const groups: GroupInterface[] = await ApiHelper.get("/groups", "MembershipApi");
@@ -76,7 +74,7 @@ export class PageHelper {
     });
     templatePages.push(groupPage);
     return templatePages;
-  }
+  };
 
 
 }

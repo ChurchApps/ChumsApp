@@ -3,7 +3,7 @@ import { Question } from "./";
 import { Grid, Box, IconButton, Tooltip, Typography, Stack } from "@mui/material";
 import { Edit as EditIcon } from "@mui/icons-material";
 import { type FormSubmissionInterface } from "@churchapps/helpers";
-import { Permissions, ApiHelper, UserHelper, UniqueIdHelper, Loading } from "@churchapps/apphelper";
+import { Permissions, ApiHelper, UserHelper, UniqueIdHelper, Loading, Locale } from "@churchapps/apphelper";
 
 interface Props {
   formSubmissionId: string;
@@ -51,7 +51,7 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
   if (!formSubmission) {
     return (
       <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 2 }}>
-        No form submission data available.
+        {Locale.label("common.formSubmission.noData")}
       </Typography>
     );
   }
@@ -72,7 +72,7 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
             right: 0,
             zIndex: 1,
           }}>
-          <Tooltip title="Edit form submission">
+          <Tooltip title={Locale.label("common.formSubmission.edit")}>
             <IconButton
               onClick={() => props.editFunction(props.formSubmissionId)}
               size="small"
@@ -84,7 +84,7 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
                 },
               }}
               data-testid="edit-form-submission-button"
-              aria-label="Edit form submission">
+              aria-label={Locale.label("common.formSubmission.edit")}>
               <EditIcon />
             </IconButton>
           </Tooltip>
@@ -114,7 +114,7 @@ export const FormSubmission: React.FC<Props> = memo((props) => {
           </Grid>
         ) : (
           <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center", py: 2 }}>
-            No questions found in this form submission.
+            {Locale.label("common.formSubmission.noQuestions")}
           </Typography>
         )}
       </Box>

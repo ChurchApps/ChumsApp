@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ApiHelper, InputBox } from "@churchapps/apphelper";
+import { ApiHelper, InputBox, Locale } from "@churchapps/apphelper";
 import { type SongDetailLinkInterface } from "../../../helpers";
 import {
   FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, TextField, type SelectChangeEvent, Stack, Typography, Box, IconButton 
@@ -100,8 +100,10 @@ export const SongDetailLinksEdit = (props: Props) => {
   };
 
   const handleDelete = () => {
-    ApiHelper.delete("/songDetailLinks/" + editLink.id, "ContentApi");
-    setEditLink(null);
+    ApiHelper.delete("/songDetailLinks/" + editLink.id, "ContentApi").then(() => {
+      loadData();
+      setEditLink(null);
+    });
   };
 
   const handleSave = () => {
@@ -132,7 +134,7 @@ export const SongDetailLinksEdit = (props: Props) => {
   if (editLink) {
     return (
       <InputBox
-        headerText="Links"
+        headerText={Locale.label("plans.songs.links")}
         headerIcon="link"
         cancelFunction={() => {
           setEditLink(null);

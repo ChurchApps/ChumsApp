@@ -114,7 +114,7 @@ export const ConditionDetails = (props: Props) => {
             <ListItemText
               primary={
                 <Stack direction="row" alignItems="center" spacing={1}>
-                  <Chip label={isOr ? "OR" : "AND"} color={isOr ? "warning" : "primary"} size="small" sx={{ fontWeight: 600 }} />
+                  <Chip label={isOr ? Locale.label("tasks.conditionDetails.or") : Locale.label("tasks.conditionDetails.and")} color={isOr ? "warning" : "primary"} size="small" sx={{ fontWeight: 600 }} />
                   <Typography variant="body2" sx={{ fontStyle: "italic" }}>
                     {isOr
                       ? `${Locale.label("tasks.conditionDetails.any")} ${Locale.label("tasks.conditionDetails.trueCon")}`
@@ -122,6 +122,7 @@ export const ConditionDetails = (props: Props) => {
                   </Typography>
                 </Stack>
               }
+              slotProps={{ primary: { component: 'div' } }}
             />
             <Stack direction="row" spacing={0.5}>
               <IconButton
@@ -163,13 +164,13 @@ export const ConditionDetails = (props: Props) => {
           data-testid="add-automation-condition-button"
           aria-label="Add condition"
           sx={{ textTransform: "none" }}>
-          Add Condition
+          {Locale.label("tasks.conditionDetails.addCondition")}
         </Button>
       </Stack>
 
       {tree.length === 0 && (!props.conditions || props.conditions.length === 0) ? (
         <Typography variant="body2" color="text.secondary" sx={{ fontStyle: "italic", textAlign: "center", py: 2 }}>
-          No conditions configured
+          {Locale.label("tasks.conditionDetails.noCond")}
         </Typography>
       ) : (
         <List sx={{ p: 0 }}>{getLevel(tree, [], 0)}</List>

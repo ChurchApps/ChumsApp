@@ -1,10 +1,10 @@
 import React, { memo, useCallback, useMemo } from "react";
-import { ApiHelper, ArrayHelper, PageHeader, UserHelper, Permissions } from "@churchapps/apphelper";
-import { useParams } from "react-router-dom";
+import { ApiHelper, ArrayHelper, PageHeader, UserHelper, Permissions, Locale, SmallButton } from "@churchapps/apphelper";
+import { useParams, useNavigate } from "react-router-dom";
 import { type ArrangementInterface, type ArrangementKeyInterface, type SongDetailInterface, type SongInterface } from "../../helpers";
 import { useQuery } from "@tanstack/react-query";
 import {
-  Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, IconButton 
+  Grid, Box, Card, CardContent, Typography, Stack, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Button, Paper, IconButton
 } from "@mui/material";
 import { LibraryMusic as MusicIcon, Add as AddIcon, QueueMusic as ArrangementIcon, Edit as EditIcon } from "@mui/icons-material";
 import { Arrangement } from "./components/Arrangement";
@@ -20,6 +20,7 @@ export const SongPage = memo(() => {
   const [editLinks, setEditLinks] = React.useState(false);
   const [selectedArrangement, setSelectedArrangement] = React.useState(null);
   const params = useParams();
+  const navigate = useNavigate();
 
   const song = useQuery<SongInterface>({
     queryKey: ["/songs/" + params.id, "ContentApi"],
@@ -73,6 +74,14 @@ export const SongPage = memo(() => {
       }
     }
   }, [song, arrangements, songDetail, selectedArrangement?.id]);
+
+  const handleDeleteSong = useCallback(() => {
+    if (window.confirm(Locale.label("songs.deleteSong.confirm"))) {
+      ApiHelper.delete("/songs/" + song.data?.id, "ContentApi").then(() => {
+        navigate("/plans/songs");
+      });
+    }
+  }, [song.data?.id, navigate]);
 
   const handleAdd = useCallback(
     async (songDetail: SongDetailInterface) => {
@@ -212,7 +221,7 @@ export const SongPage = memo(() => {
 
   return (
     <>
-      <PageHeader icon={<MusicIcon />} title={songDetail.data?.title || song.data?.name || "Loading..."} subtitle="Manage song arrangements and details">
+      <PageHeader icon={<MusicIcon />} title={songDetail.data?.title || song.data?.name || Locale.label("songs.songPage.loading")} subtitle={Locale.label("songs.songPage.subtitle")}>
         {canEdit && (
           <IconButton
             onClick={() => setEditSongDetails(true)}
@@ -227,6 +236,7 @@ export const SongPage = memo(() => {
             <EditIcon fontSize="small" />
           </IconButton>
         )}
+        {canEdit && <SmallButton color="error" icon="delete" onClick={handleDeleteSong} />}
         {canEdit && (
           <Button
             variant="outlined"

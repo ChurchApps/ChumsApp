@@ -583,10 +583,10 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
     }
 
     if (field.type === "number") {
-      return <TextField size="small" type="number" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} variant="outlined" placeholder="Value" sx={styles.inputCommon} />;
+      return <TextField size="small" type="number" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} variant="outlined" placeholder={Locale.label("people.advancedSearch.valuePlaceholder")} sx={styles.inputCommon} />;
     }
 
-    return <TextField size="small" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} placeholder="Enter value..." variant="outlined" sx={styles.inputCommon} />;
+    return <TextField size="small" fullWidth value={activeFilters[field.key].value} onChange={(e) => updateFilterValue(field.key, e.target.value)} placeholder={Locale.label("people.advancedSearch.enterValuePlaceholder")} variant="outlined" sx={styles.inputCommon} />;
   };
 
   const renderComplexFilterButton = (field: FilterField) => {
@@ -880,33 +880,33 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                           <MenuItem key={f.id} value={f.id}>
                             {f.name}
                           </MenuItem>
-                        ))
+                      ))
                       : complexConfig.operator === "attendedCampus"
                         ? campuses.map((c) => (
                             <MenuItem key={c.id} value={c.id}>
                               {c.name}
                             </MenuItem>
-                          ))
+                        ))
                         : complexConfig.operator === "attendedService"
                           ? services.map((s) => (
                               <MenuItem key={s.id} value={s.id}>
                                 {s.campus.name} - {s.name}
                               </MenuItem>
-                            ))
+                          ))
                           : complexConfig.operator === "attendedServiceTime"
                             ? serviceTimes.map((st) => (
                                 <MenuItem key={st.id} value={st.id}>
                                   {st.longName}
                                 </MenuItem>
-                              ))
+                            ))
                             : groups.map((g) => (
                                 <MenuItem key={g.id} value={g.id}>
                                   {g.name}
                                 </MenuItem>
-                              ))}
+                            ))}
                   </Select>
                 </FormControl>
-              )}
+            )}
 
             <Stack direction="row" spacing={2}>
               <TextField
@@ -953,7 +953,7 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
           )
         }
         saveFunction={handleAdvancedSearch}
-        saveText="Search"
+        saveText={Locale.label("people.advancedSearch.search")}
         isSubmitting={Object.keys(activeFilters).length < 1}
         help="b1Admin/advanced-search">
         {renderContent()}
@@ -1044,33 +1044,33 @@ export const AdvancedPeopleSearch = memo(function AdvancedPeopleSearch(props: Pr
                           <MenuItem key={f.id} value={f.id}>
                             {f.name}
                           </MenuItem>
-                        ))
+                      ))
                       : complexConfig.operator === "attendedCampus"
                         ? campuses.map((c) => (
                             <MenuItem key={c.id} value={c.id}>
                               {c.name}
                             </MenuItem>
-                          ))
+                        ))
                         : complexConfig.operator === "attendedService"
                           ? services.map((s) => (
                               <MenuItem key={s.id} value={s.id}>
                                 {s.campus.name} - {s.name}
                               </MenuItem>
-                            ))
+                          ))
                           : complexConfig.operator === "attendedServiceTime"
                             ? serviceTimes.map((st) => (
                                 <MenuItem key={st.id} value={st.id}>
                                   {st.longName}
                                 </MenuItem>
-                              ))
+                            ))
                             : groups.map((g) => (
                                 <MenuItem key={g.id} value={g.id}>
                                   {g.name}
                                 </MenuItem>
-                              ))}
+                            ))}
                   </Select>
                 </FormControl>
-              )}
+            )}
 
             <Stack direction="row" spacing={2}>
               <TextField

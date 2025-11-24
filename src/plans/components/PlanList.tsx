@@ -84,10 +84,10 @@ export const PlanList = memo((props: Props) => {
           }}>
           <EventNoteIcon sx={{ fontSize: 64, color: "grey.400", mb: 2 }} />
           <Typography variant="h6" color="text.secondary" gutterBottom>
-            No service plans yet
+            {Locale.label("plans.planList.noPlans")}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            Create your first service plan to get started with planning
+            {Locale.label("plans.planList.createFirst")}
           </Typography>
           {canEdit && (
             <Button
@@ -100,7 +100,7 @@ export const PlanList = memo((props: Props) => {
                 py: 1.5,
                 px: 3,
               }}>
-              Create Service Plan
+              {Locale.label("plans.planList.createPlan")}
             </Button>
           )}
         </Paper>
@@ -131,7 +131,7 @@ export const PlanList = memo((props: Props) => {
                   boxShadow: 2,
                 },
               }}>
-              New Plan
+              {Locale.label("plans.planList.newPlan")}
             </Button>
           )}
         </Stack>
@@ -199,7 +199,7 @@ export const PlanList = memo((props: Props) => {
                       )}
                       {p.serviceOrder && (
                         <Chip
-                          label="Service Order"
+                          label={Locale.label("plans.planList.serviceOrder")}
                           variant="outlined"
                           size="small"
                           sx={{
@@ -228,7 +228,7 @@ export const PlanList = memo((props: Props) => {
                           borderColor: "primary.dark",
                         },
                       }}>
-                      Edit
+                      {Locale.label("common.edit")}
                     </Button>
                   </Box>
                 )}

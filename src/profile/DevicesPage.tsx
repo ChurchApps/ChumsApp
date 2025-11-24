@@ -1,6 +1,6 @@
 import { TableHead, Table, TableCell, TableRow, TableBody } from "@mui/material";
 import React, { useState } from "react";
-import { ApiHelper, ErrorMessages, Banner, DisplayBox, DateHelper, SmallButton } from "@churchapps/apphelper";
+import { ApiHelper, ErrorMessages, Banner, DisplayBox, DateHelper, SmallButton, Locale } from "@churchapps/apphelper";
 import { PairScreen } from "./components/PairScreen";
 import { DeviceEdit } from "./components/DeviceEdit";
 
@@ -45,7 +45,7 @@ export const DevicesPage = () => {
   return (
     <>
       <Banner>
-        <h1>Devices</h1>
+        <h1>{Locale.label("profile.devices.title")}</h1>
       </Banner>
       <div id="mainContent">
         {showAdd && (
@@ -66,13 +66,13 @@ export const DevicesPage = () => {
           />
         )}
         <ErrorMessages errors={errors} />
-        <DisplayBox headerText="Devices" headerIcon="tv" editContent={editContent}>
+        <DisplayBox headerText={Locale.label("profile.devices.title")} headerIcon="tv" editContent={editContent}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Label</TableCell>
-                <TableCell>Registration Date</TableCell>
-                <TableCell>Last Active Date</TableCell>
+                <TableCell>{Locale.label("profile.devices.label")}</TableCell>
+                <TableCell>{Locale.label("profile.devices.registrationDate")}</TableCell>
+                <TableCell>{Locale.label("profile.devices.lastActiveDate")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -83,7 +83,7 @@ export const DevicesPage = () => {
                       type="button"
                       onClick={() => setEditDevice(device)}
                       style={{ background: "none", border: 0, padding: 0, color: "#1976d2", cursor: "pointer" }}>
-                      {device.label || "Device"}
+                      {device.label || Locale.label("profile.devices.device")}
                     </button>
                   </TableCell>
                   <TableCell>{DateHelper.toDate(device.registrationDate).toLocaleDateString()}</TableCell>

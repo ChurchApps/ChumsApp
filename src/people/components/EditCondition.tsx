@@ -200,12 +200,12 @@ export function EditCondition(props: Props) {
         result = (
           <TextField
             fullWidth
-            label="Value"
+            label={Locale.label("people.editCondition.value")}
             type="date"
             InputLabelProps={{ shrink: true }}
             style={{ marginBottom: 5 }}
             name="value"
-            placeholder="Value"
+            placeholder={Locale.label("people.editCondition.valuePlaceholder")}
             value={condition.value}
             onChange={handleChange}
           />
@@ -213,7 +213,7 @@ export function EditCondition(props: Props) {
         break;
       case "age":
       case "yearsMarried":
-        result = <TextField fullWidth label="Value" type="number" style={{ marginBottom: 5 }} name="value" placeholder="Value" value={condition.value} onChange={handleChange} />;
+        result = <TextField fullWidth label={Locale.label("people.editCondition.value")} type="number" style={{ marginBottom: 5 }} name="value" placeholder={Locale.label("people.editCondition.valuePlaceholder")} value={condition.value} onChange={handleChange} />;
         break;
       case "memberDonations":
         let defaultDonationValue;
@@ -319,7 +319,7 @@ export function EditCondition(props: Props) {
         );
         break;
       default:
-        result = <TextField fullWidth label="Value" style={{ marginBottom: 5 }} name="value" type="text" placeholder="Value" value={condition.value} onChange={handleChange} />;
+        result = <TextField fullWidth label={Locale.label("people.editCondition.value")} style={{ marginBottom: 5 }} name="value" type="text" placeholder={Locale.label("people.editCondition.valuePlaceholder")} value={condition.value} onChange={handleChange} />;
         break;
     }
     return result;

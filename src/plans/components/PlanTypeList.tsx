@@ -1,5 +1,7 @@
 import React from "react";
-import { Box, Button, Paper, Typography, Card, CardContent, Stack, IconButton } from "@mui/material";
+import {
+  Box, Button, Paper, Typography, Card, CardContent, Stack, IconButton 
+} from "@mui/material";
 import { Add as AddIcon, Assignment as AssignmentIcon, Edit as EditIcon } from "@mui/icons-material";
 import { Locale, Loading, UserHelper, Permissions } from "@churchapps/apphelper";
 import { useQuery } from "@tanstack/react-query";
@@ -57,10 +59,10 @@ export const PlanTypeList = React.memo(({ ministry }: Props) => {
         }}>
         <AssignmentIcon sx={{ fontSize: 64, color: "grey.400", mb: 2 }} />
         <Typography variant="h6" color="text.secondary" gutterBottom>
-          No plan types found
+          {Locale.label("plans.planTypeList.noPlanTypes")}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Create plan types to organize your ministry plans
+          {Locale.label("plans.planTypeList.createPlanTypes")}
         </Typography>
         {canEdit && (
           <Button 
@@ -72,7 +74,7 @@ export const PlanTypeList = React.memo(({ ministry }: Props) => {
               py: 1.5,
               px: 3,
             }}>
-            Create Plan Type
+            {Locale.label("plans.planTypeList.createPlanType")}
           </Button>
         )}
       </Paper>
@@ -85,7 +87,7 @@ export const PlanTypeList = React.memo(({ ministry }: Props) => {
         <Stack direction="row" alignItems="center" spacing={2}>
           <AssignmentIcon sx={{ color: "primary.main" }} />
           <Typography variant="h5" sx={{ fontWeight: 600, color: "text.primary" }}>
-            Plan Types
+            {Locale.label("plans.planTypeList.planTypes")}
           </Typography>
         </Stack>
         {canEdit && (
@@ -94,7 +96,7 @@ export const PlanTypeList = React.memo(({ ministry }: Props) => {
             startIcon={<AddIcon />} 
             onClick={handleAdd}
             size="medium">
-            Add Plan Type
+            {Locale.label("plans.planTypeList.addPlanType")}
           </Button>
         )}
       </Stack>

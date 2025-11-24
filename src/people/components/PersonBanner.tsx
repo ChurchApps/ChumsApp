@@ -117,8 +117,8 @@ export const PersonBanner = memo((props: Props) => {
             </Stack>
             <Stack direction="row" flexWrap="wrap" gap={1}>
               {membershipStatus}
-              {quickStats.map((stat, idx) => (
-                <Typography key={idx} variant="body2" sx={{ color: "#FFF", opacity: 0.9 }}>
+              {quickStats.map((stat) => (
+                <Typography key={`${stat.label}-${stat.value}`} variant="body2" sx={{ color: "#FFF", opacity: 0.9 }}>
                   {stat.value}
                 </Typography>
               ))}
@@ -128,8 +128,8 @@ export const PersonBanner = memo((props: Props) => {
 
         {/* Column 2: Contact Info */}
         <Stack spacing={0.5} sx={{ position: { xs: "static", lg: "absolute" }, left: { lg: "50%" }, top: { lg: "50%" }, transform: { lg: "translateY(-50%)" }, minWidth: 0 }}>
-          {contactInfo.map((info, idx) => (
-            <Stack key={idx} direction="row" spacing={1} alignItems="center" sx={{ minWidth: 0 }}>
+          {contactInfo.map((info) => (
+            <Stack key={info.value} direction="row" spacing={1} alignItems="center" sx={{ minWidth: 0 }}>
               {info.icon}
               <Typography
                 variant="body2"

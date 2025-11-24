@@ -270,7 +270,7 @@ export const DonationBatchesPage = () => {
       <PageHeader
         icon={<DonationIcon />}
         title={Locale.label("donations.donations.batches")}
-        subtitle="Manage donation batches and track giving records"
+        subtitle={Locale.label("donations.donationBatchesPage.subtitle")}
       >
         <Stack
           direction={{ xs: "column", md: "row" }}

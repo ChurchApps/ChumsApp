@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import { TextField, Box, Typography, Stack, Button, Alert, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import {
+  TextField, Box, Typography, Stack, Button, Alert, Accordion, AccordionSummary, AccordionDetails 
+} from "@mui/material";
 import { Code as CodeIcon, Info as InfoIcon, Warning as WarningIcon, ExpandMore as ExpandMoreIcon, Terminal as TerminalIcon } from "@mui/icons-material";
+import { Locale } from "@churchapps/apphelper";
 import type { GlobalStyleInterface } from "../../helpers/Interfaces";
 import { CardWithHeader, LoadingButton } from "../../components/ui";
 
@@ -38,39 +41,49 @@ export function CssEdit(props: Props) {
   if (!globalStyle) return null;
 
   const cssExamples = [
-    { title: "Change link colors", code: `a {
+    {
+      title: "Change link colors", code: `a {
   color: #1976d2;
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
-}` },
-    { title: "Custom button styling", code: `.custom-button {
+}` 
+    },
+    {
+      title: "Custom button styling", code: `.custom-button {
   background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
   border-radius: 8px;
   padding: 12px 24px;
-}` },
-    { title: "Hide elements", code: `.element-to-hide {
+}` 
+    },
+    {
+      title: "Hide elements", code: `.element-to-hide {
   display: none !important;
-}` }
+}` 
+    }
   ];
 
   const jsExamples = [
-    { title: "Google Analytics", code: `<!-- Google Analytics -->
+    {
+      title: "Google Analytics", code: `<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'GA_MEASUREMENT_ID');
-</script>` },
-    { title: "Custom HTML", code: `<script>
+</script>` 
+    },
+    {
+      title: "Custom HTML", code: `<script>
   // Custom functionality
   function customFunction() {
     console.log('Custom function executed');
   }
-</script>` }
+</script>` 
+    }
   ];
 
   return (
@@ -78,7 +91,9 @@ a:hover {
       <Box sx={{ backgroundColor: "var(--c1l2)", color: "#FFF", p: 3, borderRadius: "12px 12px 0 0", mb: 0 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Stack direction="row" spacing={2} alignItems="center">
-            <Box sx={{ backgroundColor: "rgba(255,255,255,0.2)", borderRadius: "8px", p: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Box sx={{
+              backgroundColor: "rgba(255,255,255,0.2)", borderRadius: "8px", p: 1, display: "flex", alignItems: "center", justifyContent: "center" 
+            }}>
               <CodeIcon sx={{ fontSize: 24, color: "#FFF" }} />
             </Box>
             <Box>
@@ -87,18 +102,20 @@ a:hover {
             </Box>
           </Stack>
           <Stack direction="row" spacing={1}>
-            <Button variant="outlined" onClick={() => props.updatedFunction(null)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>Cancel</Button>
+            <Button variant="outlined" onClick={() => props.updatedFunction(null)} sx={{ color: "#FFF", borderColor: "rgba(255,255,255,0.5)", "&:hover": { borderColor: "#FFF", backgroundColor: "rgba(255,255,255,0.1)" } }}>{Locale.label("common.cancel")}</Button>
             <LoadingButton loading={isSubmitting} loadingText="Saving..." variant="contained" onClick={handleSave} sx={{ backgroundColor: "#FFF", color: "var(--c1l2)", "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" } }}>Save Changes</LoadingButton>
           </Stack>
         </Stack>
       </Box>
 
-      <Box sx={{ p: 3, backgroundColor: "#FFF", borderRadius: "0 0 12px 12px", border: "1px solid", borderColor: "grey.200", borderTop: "none" }}>
+      <Box sx={{
+        p: 3, backgroundColor: "#FFF", borderRadius: "0 0 12px 12px", border: "1px solid", borderColor: "grey.200", borderTop: "none" 
+      }}>
         <Alert severity="warning" icon={<WarningIcon />} sx={{ mb: 3 }}>
           <Typography variant="body2"><strong>Advanced Feature:</strong> Custom CSS and JavaScript can affect your site's functionality. Please test changes thoroughly and ensure you have a backup of your current settings.</Typography>
         </Alert>
 
-        <CardWithHeader title="Custom CSS" icon={<CodeIcon />}>
+        <CardWithHeader title={Locale.label("site.cssEdit.customCss")} icon={<CodeIcon />}>
           <Stack spacing={3}>
             <Box>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>Add custom CSS to override default styles or create new styling rules.</Typography>
@@ -133,7 +150,7 @@ a {
         </CardWithHeader>
 
         <Box sx={{ mt: 3 }}>
-          <CardWithHeader title="Custom HTML" icon={<TerminalIcon />}>
+          <CardWithHeader title={Locale.label("site.cssEdit.customHtml")} icon={<TerminalIcon />}>
             <Stack spacing={3}>
               <Box>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>Add custom HTML code for third-party scripts like Google Analytics.</Typography>

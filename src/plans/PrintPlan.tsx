@@ -105,7 +105,6 @@ export const PrintPlan = () => {
         );
         totalSeconds += pi.seconds;
       }
-      console.log("PI", pi);
       if (pi.children) result = result.concat(getPlanItems(pi.children));
     });
     return result;

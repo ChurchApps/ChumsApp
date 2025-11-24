@@ -205,6 +205,7 @@ export const SongDetails = memo((props: Props) => {
                         />
                       </Stack>
                     }
+                    slotProps={{ primary: { component: 'div' } }}
                   />
                 </ListItem>
                 {index < songDetailItems.length - 1 && <Divider />}

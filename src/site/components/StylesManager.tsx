@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { Box, Grid, Card, CardContent, Stack, Typography } from "@mui/material";
 import { Palette as PaletteIcon, TextFields as TextFieldsIcon, Code as CodeIcon, Image as ImageIcon, SmartButton as SmartButtonIcon, Style as StyleIcon } from "@mui/icons-material";
-import { ApiHelper, UserHelper } from "@churchapps/apphelper";
+import { ApiHelper, UserHelper, Locale } from "@churchapps/apphelper";
 import type { GlobalStyleInterface, BlockInterface, GenericSettingInterface } from "../../helpers/Interfaces";
 import { PaletteEdit, FontEdit, CssEdit, Preview, AppearanceEdit } from "./";
 import UserContext from "../../UserContext";
@@ -23,15 +23,17 @@ export function StylesManager() {
 
     ApiHelper.get("/globalStyles", "ContentApi").then((gs: any) => {
       if (gs.palette) setGlobalStyle(gs);
-      else setGlobalStyle({
-        palette: JSON.stringify({
-          light: "#FFFFFF",
-          lightAccent: "#DDDDDD",
-          accent: "#0000DD",
-          darkAccent: "#9999DD",
-          dark: "#000000",
-        }),
-      });
+      else {
+        setGlobalStyle({
+          palette: JSON.stringify({
+            light: "#FFFFFF",
+            lightAccent: "#DDDDDD",
+            accent: "#0000DD",
+            darkAccent: "#9999DD",
+            dark: "#000000",
+          }),
+        });
+      }
     });
   };
 
@@ -127,7 +129,7 @@ export function StylesManager() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <CardWithHeader title="Style Settings" icon={<StyleIcon sx={{ color: "primary.main" }} />}>
+          <CardWithHeader title={Locale.label("site.stylesManager.styleSettings")} icon={<StyleIcon sx={{ color: "primary.main" }} />}>
             <Stack spacing={2}>
               {styleOptions.map((option) => (
                 <Card

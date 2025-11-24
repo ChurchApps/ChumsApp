@@ -117,10 +117,10 @@ export const PersonEdit = memo((props: Props) => {
           p.donorNumber = value;
           break;
         case "anniversary":
-          p.anniversary = DateHelper.toDate(value);
+          p.anniversary = value ? DateHelper.toDate(value) : null;
           break;
         case "birthDate":
-          p.birthDate = DateHelper.toDate(value);
+          p.birthDate = value ? DateHelper.toDate(value) : null;
           break;
         case "photo":
           p.photo = value;
@@ -206,9 +206,14 @@ export const PersonEdit = memo((props: Props) => {
 
   const updatePerson = useCallback(
     async (p: PersonInterface) => {
-      await ApiHelper.post("/people/", [p], "MembershipApi");
-      props.updatedFunction();
-      setIsSubmitting(false);
+      try {
+        await ApiHelper.post("/people/", [p], "MembershipApi");
+        props.updatedFunction();
+        setIsSubmitting(false);
+      } catch (error) {
+        console.error("Error updating person:", error);
+        setIsSubmitting(false);
+      }
     },
     [props.updatedFunction]
   );
@@ -220,8 +225,8 @@ export const PersonEdit = memo((props: Props) => {
         member.contactInfo = PersonHelper.changeOnlyAddress(member.contactInfo, person.contactInfo);
         try {
           await ApiHelper.post("/people", [member], "MembershipApi");
-        } catch {
-          console.log(`error in updating ${person.name.display}"s address`);
+        } catch (error) {
+          console.log(`error in updating ${person.name.display}"s address`, error);
         }
       })
     );
@@ -240,8 +245,8 @@ export const PersonEdit = memo((props: Props) => {
           setMembers(data);
         });
       }
-    } catch {
-      console.log(`Error occured in fetching household members`);
+    } catch (error) {
+      console.log(`Error occured in fetching household members`, error);
     }
   }, [props.person.householdId]);
 

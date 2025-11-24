@@ -39,13 +39,13 @@ export const AdminPage = () => {
     {
       key: "translation",
       icon: <TranslationIcon />,
-      label: "Translation Lookups",
+      label: Locale.label("serverAdmin.adminPage.translationLookups"),
     },
   ];
 
   return (
     <>
-      <PageHeader icon={<AdminIcon />} title={Locale.label("serverAdmin.adminPage.servAdmin")} subtitle="Manage server administration settings and monitor usage" />
+      <PageHeader icon={<AdminIcon />} title={Locale.label("serverAdmin.adminPage.servAdmin")} subtitle={Locale.label("serverAdmin.adminPage.subtitle")} />
 
       <Box sx={{ p: 3 }}>
         <Grid container spacing={3}>
