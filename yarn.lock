@@ -240,9 +240,10 @@
     marked "^16.1.2"
     material-symbols "^0.33.0"
 
-"@churchapps/apphelper-website@file:../AppHelper/packages/apphelper-website":
-  version "0.5.12"
-  resolved "file:../AppHelper/packages/apphelper-website"
+"@churchapps/apphelper-website@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.npmjs.org/@churchapps/apphelper-website/-/apphelper-website-0.5.13.tgz"
+  integrity sha512-7UNp6LkO4NoPebdew5jCP9v3xQhg840FYQu14LXuFZTRrVeeJvE+0LZTBxs1qTgu4XxuXxfDZg8MBJslokIDzA==
   dependencies:
     rrule "^2.8.1"
 
@@ -907,7 +908,7 @@
   resolved "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-7.3.4.tgz"
   integrity sha512-BIktMapG3r4iXwIhYNpvk97ZfYWTreBBQTWjQKbNbzI64+ULHfYavQEX2w99aSWHS58DvXESWIgbD9adKcUOBw==
 
-"@mui/icons-material@^7.1.2":
+"@mui/icons-material@^7.1.2", "@mui/icons-material@^7.3.4":
   version "7.3.4"
   resolved "https://registry.npmjs.org/@mui/icons-material/-/icons-material-7.3.4.tgz"
   integrity sha512-9n6Xcq7molXWYb680N2Qx+FRW8oT6j/LXF5PZFH3ph9X/Rct0B/BlLAsFI7iL9ySI6LVLuQIVtrLiPT82R7OZw==
@@ -2792,7 +2793,7 @@ moment-timezone@^0.5.40:
   dependencies:
     moment "^2.29.4"
 
-moment@^2.29.4, moment@^2.30.1:
+moment@^2.29.4, moment@^2.30.0, moment@^2.30.1:
   version "2.30.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz"
   integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
@@ -3037,7 +3038,7 @@ react-async-script@^1.2.0:
     hoist-non-react-statics "^3.3.0"
     prop-types "^15.5.0"
 
-react-big-calendar@^1.19.4:
+react-big-calendar@^1.15.0, react-big-calendar@^1.19.4:
   version "1.19.4"
   resolved "https://registry.npmjs.org/react-big-calendar/-/react-big-calendar-1.19.4.tgz"
   integrity sha512-FrvbDx2LF6JAWFD96LU1jjloppC5OgIvMYUYIPzAw5Aq+ArYFPxAjLqXc4DyxfsQDN0TJTMuS/BIbcSB7Pg0YA==
