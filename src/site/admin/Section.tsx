@@ -153,7 +153,7 @@ export const Section: React.FC<Props> = props => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <DraggableWrapper dndType="section" elementType="section" data={props.section} onDoubleClick={() => props.onEdit(props.section, null)}>
+        <DraggableWrapper dndType="section" elementType="section" data={props.section} onDoubleClick={(e: React.MouseEvent) => { const target = e.target as HTMLElement; if (!target.closest('.elementWrapper')) { props.onEdit(props.section, null); } }}>
           {result}
         </DraggableWrapper>
       </div>
